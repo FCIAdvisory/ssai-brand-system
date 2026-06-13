@@ -3,99 +3,423 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SSAI — Brand System</title>
-<meta name="description" content="The SSAI brand system: homepage concept, brand book, and interactive kit.">
+<script>(function(){try{if(localStorage.getItem('ssai-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+<title>SSAI — Science for life on Earth</title>
+<meta name="description" content="Science Systems and Applications, Inc. — nearly fifty years turning observation of the Sun, the Earth, and the universe into knowledge that improves life on Earth.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* Tactic Sans — the licensed brand display face. Drop files into assets/fonts/ and these
+   load automatically; until then Chakra Petch Italic carries the display, as in the book. */
 @font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BoldItalic.woff2') format('woff2'),url('assets/fonts/TacticSans-BoldItalic.otf') format('opentype');font-weight:700;font-style:italic;font-display:swap}
-:root{--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--muted:#7e84bf;--hair:rgba(166,171,230,.16);--hair2:rgba(166,171,230,.32);--blue:var(--accent);--teal:var(--accent);--disp:'Tactic Sans','Chakra Petch',system-ui,sans-serif;--body:'Inter',-apple-system,Helvetica,Arial,sans-serif}
+@font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BlackItalic.woff2') format('woff2'),url('assets/fonts/TacticSans-BlackItalic.otf') format('opentype');font-weight:800;font-style:italic;font-display:swap}
+
+:root{
+  --space:#050314; --space-2:#0a0926; --indigo:#16145f; --indigo-2:#221f7a;
+  --star:#f4f5ff; --neb:#a6abe6; --muted:#7e84bf;
+  --hair:rgba(166,171,230,.16); --hair-2:rgba(166,171,230,.30);
+  --bg-rgb:5,3,20; --panel-rgb:12,10,40;
+  --blue:#3c7be0; --teal:#2fd9c3; --amber:#f2b43c; --violet:#8a5cff; --green:#7fd957; --coral:#f2673c;
+  --accent:#2fd9c3; --accent-rgb:47,217,195; --accent-ink:#04201c;
+  --accent-label:var(--accent);
+  --hero-ink:var(--star); --hero-em:#ffffff; --hero-lede:#dfe0ff; --lede-ink:#dfe0ff;
+  --disp:'Tactic Sans','Chakra Petch',system-ui,sans-serif;
+  --body:'Inter',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  --label:'Chakra Petch',ui-sans-serif,system-ui,sans-serif;
+  --maxw:1240px;
+}
+:root[data-theme="light"]{
+  --space:#eef1f8; --space-2:#ffffff;
+  --star:#161438; --neb:#54597f; --muted:#8a8fb0;
+  --hair:rgba(22,20,95,.14); --hair-2:rgba(22,20,95,.24);
+  --bg-rgb:238,241,248; --panel-rgb:255,255,255;
+  --accent-label:color-mix(in srgb, var(--accent) 68%, #0b0930);
+  --hero-ink:#161438; --hero-em:#16145f; --hero-lede:#3c4066; --lede-ink:#3c4066;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--space);color:var(--star);font-family:var(--body);-webkit-font-smoothing:antialiased;min-height:100vh}
-a{text-decoration:none;color:inherit}
-.cover{position:relative;min-height:100vh;display:flex;flex-direction:column;overflow:hidden}
-.plate{position:absolute;inset:0;z-index:0}
-.plate img{width:100%;height:100%;object-fit:cover}
-.wash{position:absolute;inset:0;z-index:1;background:var(--indigo);mix-blend-mode:multiply;opacity:.55}
-.vig{position:absolute;inset:0;z-index:2;background:radial-gradient(130% 110% at 60% 30%,transparent 25%,rgba(5,3,20,.78) 100%)}
-.scrim{position:absolute;inset:0;z-index:3;background:linear-gradient(180deg,rgba(5,3,20,.55),rgba(5,3,20,.35) 35%,rgba(5,3,20,.78))}
-nav{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:22px clamp(20px,5vw,56px)}
-nav img{height:30px;width:auto}
-nav .tag{font-family:var(--body);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--neb)}
-.cover-inner{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1200px;width:100%;margin:0 auto;padding:36px clamp(20px,5vw,56px) 28px}
-.eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--blue);margin:0 0 16px}
-h1{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(36px,7vw,88px);line-height:.92;letter-spacing:-.02em;margin:0 0 16px;text-shadow:0 0 50px rgba(120,150,255,.35)}
-h1 .em{text-shadow:0 0 60px rgba(120,150,255,.6)}
-.sub{font-size:clamp(15px,1.6vw,19px);color:var(--neb);font-weight:300;max-width:52ch;margin:0 0 40px;line-height:1.6}
-.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.choice{display:flex;flex-direction:column;border:1px solid var(--hair);border-radius:18px;overflow:hidden;background:rgba(10,9,40,.5);backdrop-filter:blur(4px);transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
-.choice:hover{transform:translateY(-6px);border-color:var(--hair2);box-shadow:0 20px 50px rgba(5,3,20,.6)}
-.choice.flagship{border-color:rgba(60,123,224,.4)}
-.thumb{position:relative;aspect-ratio:16/10;overflow:hidden}
-.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
-.choice:hover .thumb img{transform:scale(1.06)}
-.thumb .tw{position:absolute;inset:0;background:var(--indigo);mix-blend-mode:multiply;opacity:.4}
-.thumb .tg{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,9,40,.85))}
-.thumb .badge{position:absolute;top:12px;left:12px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#04201c;background:var(--teal);border-radius:20px;padding:4px 11px;font-weight:600}
-.cbody{padding:20px 22px 24px}
-.cnum{font-family:var(--disp);font-style:italic;font-weight:700;font-size:12px;color:var(--blue);letter-spacing:.1em}
-.cbody h2{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(20px,2.2vw,26px);letter-spacing:-.01em;margin:6px 0 9px;color:#fff}
-.cbody p{font-size:13.5px;color:var(--neb);line-height:1.55;margin:0 0 16px;font-weight:300}
-.open{font-weight:500;font-size:13.5px;color:var(--teal);display:inline-flex;align-items:center;gap:8px;transition:gap .25s ease}
-.choice:hover .open{gap:14px}
-footer{position:relative;z-index:5;text-align:center;padding:24px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-@media(max-width:900px){.choices{grid-template-columns:1fr}h1{font-size:clamp(36px,11vw,60px)}}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--space);color:var(--star);font-family:var(--body);font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .5s ease,color .5s ease}
+::selection{background:var(--accent);color:var(--accent-ink)}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(22px,5vw,64px)}
+.disp{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;line-height:.92;letter-spacing:-.018em}
+.lab{font-family:var(--label);font-weight:600;text-transform:uppercase;letter-spacing:.26em;font-size:11.5px}
+.reveal{opacity:1}
+body[data-motion="on"] .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
+body[data-motion="on"] .reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
 
-:root{--accent:#3cc8ff;--blue:var(--accent);--teal:var(--accent);--amber:var(--accent);--violet:var(--accent);--green:var(--accent);--coral:var(--accent)}.spectrum-bar,.specbar,.lrule,.doc .rule,.rule{background:var(--accent)!important}.acc-grad .spectrum-bar,.acc-grad .specbar,.acc-grad .lrule,.acc-grad .doc .rule,.acc-grad .rule,.acc-grad .btn-primary{background:linear-gradient(90deg,#8a5cff,#3cc8ff,#2fd9c3)!important}.ssai-back{position:fixed;left:16px;bottom:16px;z-index:99999;display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;letter-spacing:.02em;color:#f4f5ff;background:rgba(5,3,20,.62);border:1px solid rgba(166,171,230,.25);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:border-color .2s,background .2s;text-decoration:none}.ssai-back:hover{border-color:var(--accent);background:rgba(5,3,20,.85)}.ssai-accent{position:fixed;right:16px;bottom:16px;z-index:99999;display:flex;gap:8px;align-items:center;padding:8px 12px;background:rgba(5,3,20,.7);border:1px solid rgba(166,171,230,.25);border-radius:30px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}.ssai-accent .lbl{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#a6abe6;margin-right:2px}.ssai-accent button{width:20px;height:20px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:var(--s);cursor:pointer;padding:0;transition:transform .15s}.ssai-accent button:hover{transform:scale(1.18)}.ssai-accent button.on{box-shadow:0 0 0 2px #050314,0 0 0 4px var(--s)}.ssai-accent button.grad{background:conic-gradient(from 0deg,#8a5cff,#3cc8ff,#2fd9c3,#ffb23c,#ff6ea8,#8a5cff)}@media(max-width:600px){.ssai-back{font-size:12px;padding:8px 13px}.ssai-accent .lbl{display:none}.ssai-accent button{width:18px;height:18px}}</style>
+/* ---------------------------------------------------------------- NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;justify-content:space-between;
+  padding:15px clamp(22px,5vw,64px);background:linear-gradient(rgba(var(--bg-rgb),.9),rgba(var(--bg-rgb),0));backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.nav .brand{display:flex;align-items:center;gap:13px}
+.nav .brand img{width:74px;height:auto;filter:drop-shadow(0 0 14px rgba(120,150,255,.35))}
+.nav .brand .bt{font-family:var(--label);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--hair-2);padding-left:13px;line-height:1.5}
+.nav .links{display:flex;align-items:center;gap:30px}
+.nav .links a{font-family:var(--label);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--neb);transition:color .2s}
+.nav .links a:hover{color:var(--star)}
+.nav .cta{font-family:var(--label);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--star);border:1px solid var(--hair-2);border-radius:30px;padding:10px 20px;transition:.22s}
+.nav .cta:hover{background:rgba(var(--accent-rgb),.16);border-color:rgba(var(--accent-rgb),.6)}
+.theme-tog{display:inline-flex;align-items:center;gap:8px;height:38px;flex:0 0 auto;padding:0 16px;border-radius:30px;border:1px solid var(--hair-2);background:transparent;color:var(--neb);font-family:var(--label);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.theme-tog:hover{color:var(--star);border-color:var(--neb);background:rgba(var(--accent-rgb),.14)}
+.theme-tog svg{width:16px;height:16px;display:block}
+.theme-tog .i-moon,.theme-tog .lbl-dark{display:none}
+.theme-tog .i-sun,.theme-tog .lbl-light{display:block}
+:root[data-theme="light"] .theme-tog .i-sun,:root[data-theme="light"] .theme-tog .lbl-light{display:none}
+:root[data-theme="light"] .theme-tog .i-moon,:root[data-theme="light"] .theme-tog .lbl-dark{display:block}
+@media(max-width:880px){.nav .links a:not(.cta){display:none}}
+
+/* ---------------------------------------------------------------- HERO */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;isolation:isolate}
+.hero-layer{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity .7s ease}
+.hero[data-hero="globe"] .hero-globe{opacity:1}
+.hero[data-hero="cinematic"] .hero-cine{opacity:1}
+.hero[data-hero="starfield"] .hero-stars{opacity:1}
+.hero-globe canvas,.hero-stars canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+.hero-globe canvas:active{cursor:grabbing}
+.hero-cine img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-cine .scrim{position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(5,3,20,.92),rgba(5,3,20,.55) 42%,rgba(5,3,20,.12) 78%),
+  linear-gradient(0deg,rgba(5,3,20,.96),rgba(5,3,20,0) 38%),
+  radial-gradient(120% 100% at 70% 30%,transparent 30%,rgba(5,3,20,.6))}
+.hero-globe .glow,.hero-stars .glow{position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(var(--bg-rgb),.86),rgba(var(--bg-rgb),.42) 40%,transparent 72%),
+  linear-gradient(0deg,rgba(var(--bg-rgb),.7),transparent 36%)}
+.hero-stars .glow{background:linear-gradient(90deg,rgba(var(--bg-rgb),.78),rgba(var(--bg-rgb),.30) 46%,transparent 80%),linear-gradient(0deg,rgba(var(--bg-rgb),.62),transparent 40%)}
+
+.hero-content{position:relative;z-index:3;width:100%}
+.hero-content .inner{max-width:var(--maxw);margin:0 auto;padding:96px clamp(22px,5vw,64px) 0}
+.hero .eyebrow{font-family:var(--label);font-weight:600;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent-label);margin:0 0 22px;display:flex;align-items:center;gap:12px}
+.hero .eyebrow::before{content:"";width:34px;height:1px;background:linear-gradient(90deg,var(--accent),transparent)}
+.hero h1{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(46px,9vw,128px);line-height:.9;letter-spacing:-.02em;margin:0 0 26px;max-width:13ch;color:var(--hero-ink)}
+.hero h1 .em{color:var(--hero-em);text-shadow:0 0 60px rgba(120,150,255,.55)}
+.hero .lede{font-size:clamp(16px,1.7vw,21px);color:var(--hero-lede);font-weight:300;max-width:48ch;line-height:1.62;margin:0 0 36px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn{font-family:var(--label);font-weight:600;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;border-radius:30px;padding:14px 26px;transition:transform .22s ease,filter .22s ease;display:inline-flex;align-items:center;gap:10px;cursor:pointer}
+.btn-primary{color:var(--accent-ink);background:var(--accent);box-shadow:0 10px 40px -12px rgba(var(--accent-rgb),.7)}
+.btn-primary:hover{filter:brightness(1.07);transform:translateY(-2px)}
+.btn-ghost{color:var(--star);border:1px solid var(--hair-2)}
+.btn-ghost:hover{background:rgba(166,171,230,.12);border-color:var(--neb)}
+.hero-cue{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:3;font-family:var(--label);font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px}
+body[data-motion="on"] .hero-cue i{display:inline-block;animation:bob 1.9s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.hero-hint{position:absolute;right:clamp(18px,4vw,40px);bottom:26px;z-index:3;font-family:var(--label);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:.8}
+.hero[data-hero="globe"] .hero-hint{opacity:.8}.hero:not([data-hero="globe"]) .hero-hint{opacity:0}
+@media(max-width:880px){.hero-hint{display:none}}
+
+/* ---------------------------------------------------------------- STAT BAND */
+.stats{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:linear-gradient(180deg,var(--space-2),var(--space))}
+.stats .grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:32px clamp(18px,2.4vw,30px);border-left:1px solid var(--hair)}
+.stat:first-child{border-left:0}
+.stat .stat-n{font-family:var(--disp);font-style:italic;font-weight:700;font-size:clamp(34px,4.4vw,58px);line-height:.9;display:flex;align-items:baseline;gap:1px}
+.stat .stat-pre{font-size:.6em;color:var(--neb);margin-right:2px}
+.stat .stat-suf{font-size:.62em;color:var(--accent-label)}
+.stat .stat-k{font-family:var(--label);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--neb);margin-top:12px;line-height:1.5}
+.stat.c0 .stat-n{color:var(--amber)}.stat.c1 .stat-n{color:var(--blue)}.stat.c2 .stat-n{color:var(--teal)}.stat.c3 .stat-n{color:var(--violet)}
+@media(max-width:760px){.stats .grid{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0}.stat:nth-child(odd){border-left:0}.stat{border-top:1px solid var(--hair)}.stat:first-child,.stat:nth-child(2){border-top:0}}
+
+/* ---------------------------------------------------------------- SECTIONS */
+.sec{padding:clamp(78px,11vw,140px) 0;position:relative}
+.sec-eyebrow{font-family:var(--label);font-weight:600;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent-label);margin:0 0 16px;display:flex;align-items:center;gap:12px}
+.sec-eyebrow::before{content:"";width:30px;height:1px;background:linear-gradient(90deg,var(--accent),transparent)}
+.sec h2{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(30px,5vw,66px);line-height:.96;letter-spacing:-.018em;margin:0 0 22px;max-width:18ch}
+.sec .lede{font-size:clamp(16px,1.5vw,19px);color:var(--neb);font-weight:300;line-height:1.66;max-width:60ch;margin:0}
+
+/* VISION — split with parallax plate */
+.vision .row{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,70px);align-items:center}
+.vision .plate{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--hair)}
+.vision .plate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform}
+.vision .plate .pscrim{position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,3,20,.6),transparent 55%),radial-gradient(120% 90% at 50% 0%,rgba(22,20,95,.3),transparent 60%)}
+.vision .plate .pcap{position:absolute;left:18px;bottom:16px;font-family:var(--label);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--neb);z-index:2}
+.vision .convs{margin-top:30px;display:grid;gap:0;border-top:1px solid var(--hair)}
+.vision .cv{padding:18px 0;border-bottom:1px solid var(--hair)}
+.vision .cv .k{font-family:var(--label);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-label);margin-bottom:7px}
+.vision .cv p{font-size:14.5px;color:var(--lede-ink);font-weight:300;margin:0;max-width:48ch;line-height:1.55}
+@media(max-width:860px){.vision .row{grid-template-columns:1fr}.vision .plate{aspect-ratio:16/11;order:-1}}
+
+/* LENSES */
+.lenses .head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:40px}
+.lensgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.lens{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--hair);min-height:clamp(360px,42vw,460px);display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate;transition:transform .4s cubic-bezier(.2,.7,.2,1),border-color .4s}
+.lens img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.lens .lscrim{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(5,3,20,.92),rgba(5,3,20,.35) 52%,rgba(5,3,20,.1));transition:background .4s}
+.lens .lbody{position:relative;z-index:2;padding:26px 24px}
+.lens .ldot{width:10px;height:10px;border-radius:50%;margin-bottom:14px}
+.lens .lkey{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);margin-bottom:8px}
+.lens h3{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(24px,3vw,34px);letter-spacing:-.01em;margin:0 0 10px}
+.lens p{font-size:13.5px;color:#dfe0ff;font-weight:300;line-height:1.55;margin:0;max-width:34ch}
+.lens:hover{transform:translateY(-6px)}
+.lens:hover img{transform:scale(1.06)}
+.lens.sun{--c:var(--amber)}.lens.earth{--c:var(--teal)}.lens.univ{--c:var(--violet)}
+.lens .ldot{background:var(--c);box-shadow:0 0 12px var(--c)}
+.lens h3{color:var(--c)}
+.lens:hover{border-color:color-mix(in srgb,var(--c) 55%,var(--hair))}
+@media(max-width:860px){.lensgrid{grid-template-columns:1fr}.lens{min-height:300px}}
+
+/* SYSTEM — the three portal cards */
+.system{background:linear-gradient(180deg,var(--space),var(--space-2) 60%,var(--space));border-top:1px solid var(--hair)}
+.system .head{margin-bottom:46px}
+.cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{display:flex;flex-direction:column;border:1px solid var(--hair);border-radius:20px;overflow:hidden;background:rgba(var(--panel-rgb),.5);transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,box-shadow .35s;will-change:transform}
+.pcard:hover{border-color:var(--hair-2);box-shadow:0 30px 70px -30px rgba(5,3,20,.9)}
+.pcard .thumb{position:relative;aspect-ratio:16/11;overflow:hidden}
+.pcard .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.pcard:hover .thumb img{transform:scale(1.07)}
+.pcard .thumb .tscrim{position:absolute;inset:0;background:linear-gradient(0deg,rgba(var(--panel-rgb),.92),transparent 58%)}
+.pcard .badge{position:absolute;top:14px;left:14px;font-family:var(--label);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent);border-radius:30px;padding:5px 12px;font-weight:600;z-index:2}
+.pcard .cbody{padding:24px 26px 26px;display:flex;flex-direction:column;flex:1}
+.pcard .cnum{font-family:var(--disp);font-style:italic;font-weight:700;font-size:12px;color:var(--accent-label);letter-spacing:.1em;margin-bottom:8px}
+.pcard h3{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(22px,2.5vw,30px);letter-spacing:-.01em;margin:0 0 11px;color:var(--star)}
+.pcard p{font-size:14px;color:var(--neb);font-weight:300;line-height:1.55;margin:0 0 20px;flex:1}
+.pcard .open{font-family:var(--label);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-label);display:inline-flex;align-items:center;gap:9px;transition:gap .25s}
+.pcard:hover .open{gap:16px}
+.pcard .meta{font-family:var(--label);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--hair)}
+@media(max-width:900px){.cardgrid{grid-template-columns:1fr}}
+
+/* SHOWCASE layout variant */
+.system[data-layout="showcase"] .cardgrid{grid-template-columns:1fr;gap:18px}
+.system[data-layout="showcase"] .pcard{flex-direction:row;align-items:stretch}
+.system[data-layout="showcase"] .pcard .thumb{flex:0 0 46%;aspect-ratio:auto}
+.system[data-layout="showcase"] .pcard .thumb .tscrim{background:linear-gradient(90deg,transparent 40%,rgba(var(--panel-rgb),.6))}
+.system[data-layout="showcase"] .pcard .cbody{justify-content:center;padding:clamp(24px,4vw,48px)}
+.system[data-layout="showcase"] .pcard h3{font-size:clamp(26px,3.4vw,40px)}
+.system[data-layout="showcase"] .pcard p{font-size:15.5px;max-width:52ch}
+@media(max-width:760px){.system[data-layout="showcase"] .pcard{flex-direction:column}.system[data-layout="showcase"] .pcard .thumb{flex:none;aspect-ratio:16/10}.system[data-layout="showcase"] .pcard .thumb .tscrim{background:linear-gradient(0deg,rgba(var(--panel-rgb),.92),transparent 58%)}}
+
+/* CLOSING CTA */
+.closing{position:relative;text-align:center;padding:clamp(90px,13vw,170px) 0;border-top:1px solid var(--hair);overflow:hidden}
+.closing .bg{position:absolute;inset:0;z-index:0}
+.closing .bg img{width:100%;height:100%;object-fit:cover;opacity:.26}
+.closing .bg .ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--bg-rgb),.84),rgba(var(--bg-rgb),.94)),radial-gradient(110% 80% at 50% 0%,rgba(60,123,224,.18),transparent 60%)}
+.closing .inner{position:relative;z-index:2}
+.closing .ce{font-family:var(--label);font-weight:600;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent-label);margin:0 0 22px}
+.closing h2{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(34px,7vw,92px);line-height:.92;letter-spacing:-.02em;margin:0 auto 34px;max-width:16ch}
+.closing .btn-primary{font-size:13px;padding:16px 32px}
+
+/* FOOTER */
+.foot{border-top:1px solid var(--hair);background:var(--space-2);padding:clamp(40px,6vw,64px) 0}
+.foot .row{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
+.foot .brandblock{display:flex;flex-direction:column;gap:16px}
+.foot img{width:112px;height:auto;filter:drop-shadow(0 0 16px rgba(120,150,255,.3))}
+.foot .fnav{display:flex;gap:24px;flex-wrap:wrap}
+.foot .fnav a{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--neb);transition:color .2s}
+.foot .fnav a:hover{color:#fff}
+.foot .meta{font-family:var(--label);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:2.1}
+@media(max-width:680px){.foot .row{flex-direction:column;align-items:flex-start}.foot .meta{text-align:left}}
+
+/* ---------------------------------------------------------------- LIGHT THEME */
+:root[data-theme="light"] .nav .brand img{filter:none}
+:root[data-theme="light"] .foot img{filter:none}
+:root[data-theme="light"] .hero[data-hero="cinematic"]{--hero-ink:#ffffff;--hero-em:#ffffff;--hero-lede:#e8e9ff}
+:root[data-theme="light"] .hero[data-hero="globe"] h1 .em,
+:root[data-theme="light"] .hero[data-hero="starfield"] h1 .em{text-shadow:none}
+:root[data-theme="light"] .pcard{background:#fff;box-shadow:0 14px 40px -26px rgba(22,20,95,.45)}
+:root[data-theme="light"] .pcard:hover{box-shadow:0 30px 72px -34px rgba(22,20,95,.5)}
+:root[data-theme="light"] .stat.c0 .stat-n{color:color-mix(in srgb,var(--amber) 80%,#0b0930)}
+:root[data-theme="light"] .stat.c1 .stat-n{color:color-mix(in srgb,var(--blue) 90%,#0b0930)}
+:root[data-theme="light"] .stat.c2 .stat-n{color:color-mix(in srgb,var(--teal) 66%,#0b0930)}
+:root[data-theme="light"] .stat.c3 .stat-n{color:color-mix(in srgb,var(--violet) 88%,#0b0930)}
+</style>
 </head>
-<body>
-<main class="cover">
-  <div class="plate"><img src="assets/images/orbital-sunrise-limb.jpg" alt="" fetchpriority="high"></div>
-  <div class="wash"></div><div class="vig"></div><div class="scrim"></div>
+<body data-motion="on">
 
-  <nav>
-    <img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc.">
-    <span class="tag">Brand System · 2026</span>
-  </nav>
+<nav class="nav">
+  <a class="brand" href="#top" aria-label="SSAI home">
+    <img id="navMark" src="assets/logo/ssai-white-mark.png" alt="SSAI">
+    <span class="bt">Science<br>Systems</span>
+  </a>
+  <div class="links">
+    <a href="vision.html">Overview ↗</a>
+    <a href="#vision">Approach</a>
+    <a href="#science">Science</a>
+    <a href="#system">The System</a>
+    <a class="cta" href="mailto:BD@ssaihq.com">Contact</a>
+    <button class="theme-tog" id="themeTog" type="button" aria-label="Switch between light and dark mode">
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.6v2.4M12 19v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.6 12h2.4M19 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7"></path></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      <span class="lbl-light">Light</span><span class="lbl-dark">Dark</span>
+    </button>
+  </div>
+</nav>
 
-  <div class="cover-inner">
-    <p class="eyebrow">Prepared for SSAI · by FCI Advisory</p>
-    <h1>Science for<br>life on <span class="em">Earth.</span></h1>
-    <p class="sub">The SSAI brand system, in three parts. Choose where to begin.</p>
+<!-- ============================================================= HERO -->
+<header class="hero" id="top" data-hero="globe" data-screen-label="Hero">
+  <div class="hero-layer hero-globe" aria-hidden="true"><canvas></canvas><div class="glow"></div></div>
+  <div class="hero-layer hero-cine" aria-hidden="true"><img src="assets/images/orbital-sunrise-limb.jpg" alt=""><div class="scrim"></div></div>
+  <div class="hero-layer hero-stars" aria-hidden="true"><canvas></canvas><div class="glow"></div></div>
 
-    <div class="choices">
-      <a class="choice flagship" href="homepage.html">
-        <div class="thumb"><img src="assets/images/aurora-iss-robotic-arm.jpg" alt="Aurora from the ISS"><div class="tw"></div><div class="tg"></div><span class="badge">Live concept</span></div>
+  <div class="hero-content">
+    <div class="inner">
+      <p class="eyebrow" style="color: rgb(47, 217, 195)">Science Systems and Applications, Inc. · Est. 1977</p>
+      <h1 class="disp">Science for<br>life on <span class="em">Earth.</span></h1>
+      <p class="lede">For nearly fifty years, SSAI has turned what we observe from space — the Sun, the Earth, the universe — into knowledge that improves life on the ground.</p>
+      <div class="hero-btns">
+        <a class="btn btn-primary" href="#system">Explore the brand system</a>
+        <a class="btn btn-ghost" href="#vision">See the vision</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-cue">Scroll <i>↓</i></div>
+  <div class="hero-hint">Drag the globe ↻</div>
+</header>
+
+<!-- ============================================================= STATS -->
+<section class="stats" data-counters>
+  <div class="wrap">
+    <div class="grid">
+      <div class="stat c0"><div class="stat-n"><span class="stat-val" data-target="48">48</span></div><div class="stat-k">Years alongside NASA</div></div>
+      <div class="stat c1"><div class="stat-n"><span class="stat-val" data-target="150">150</span><span class="stat-suf">+</span></div><div class="stat-k">Earth &amp; space missions</div></div>
+      <div class="stat c2"><div class="stat-n"><span class="stat-pre">≈</span><span class="stat-val" data-target="7000" data-comma="1">7,000</span></div><div class="stat-k">Lives aided · NOAA SARSAT</div></div>
+      <div class="stat c3"><div class="stat-n"><span class="stat-val" data-target="3">3</span></div><div class="stat-k">Domains · Sun · Earth · Universe</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= VISION -->
+<section class="sec vision" id="vision">
+  <div class="wrap">
+    <div class="row">
+      <div class="reveal">
+        <p class="sec-eyebrow">The vision</p>
+        <h2>From observation to understanding.</h2>
+        <p class="lede">SSAI is the science that turns what we see from space into knowledge humanity can trust — and act on. Not just the instruments and the data, but the layer that makes them mean something.</p>
+        <div class="convs">
+          <div class="cv"><div class="k">The understanding layer</div><p>We build the models, calibration, data assimilation and AI that turn raw observation into validated scientific truth.</p></div>
+          <div class="cv"><div class="k">Mission-proven heritage</div><p>Nearly five decades and 150+ missions alongside NASA and NOAA — the science partner the agencies stake decisions on.</p></div>
+          <div class="cv"><div class="k">Science for life on Earth</div><p>Cleaner air, safer skies, resilient harvests, thousands of lives saved — the human outcomes of understanding made real.</p></div>
+        </div>
+      </div>
+      <div class="plate reveal d1">
+        <img src="assets/images/earthrise-apollo8.jpg" alt="Earthrise photographed from Apollo 8" data-parallax="0.16" loading="lazy">
+        <div class="pscrim"></div>
+        <div class="pcap">Earthrise · Apollo 8 · 1968</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= LENSES -->
+<section class="sec lenses" id="science">
+  <div class="wrap">
+    <div class="head">
+      <div class="reveal">
+        <p class="sec-eyebrow">Three lenses, one mission</p>
+        <h2>The Sun. The Earth.<br>The Universe.</h2>
+      </div>
+      <p class="lede reveal d1">We study the star that powers our planet, the world we are trying to protect, and the cosmos that puts it all in context — then turn each into understanding that serves life on Earth.</p>
+    </div>
+    <div class="lensgrid">
+      <article class="lens sun reveal">
+        <img src="assets/images/sun-flare-gold-sdo.jpg" alt="The Sun in extreme ultraviolet, observed by SDO" loading="lazy">
+        <div class="lscrim"></div>
+        <div class="lbody"><div class="ldot"></div><div class="lkey">Heliophysics</div><h3>The Sun</h3><p>The star we forecast — irradiance, space weather and the radiation that reaches crews and grids on Earth.</p></div>
+      </article>
+      <article class="lens earth reveal d1">
+        <img src="assets/images/earth-night-limb-airglow.jpg" alt="Earth's night limb with city lights and airglow" loading="lazy">
+        <div class="lscrim"></div>
+        <div class="lbody"><div class="ldot"></div><div class="lkey">Geoscience</div><h3>The Earth</h3><p>The planet we watch — air quality, oceans, ice, climate and disaster response, measured from orbit every day.</p></div>
+      </article>
+      <article class="lens univ reveal d2">
+        <img src="assets/images/pillars-of-creation-jwst.jpg" alt="The Pillars of Creation, James Webb Space Telescope" loading="lazy">
+        <div class="lscrim"></div>
+        <div class="lbody"><div class="ldot"></div><div class="lkey">Astrophysics</div><h3>The Universe</h3><p>The context for everything — the deep-field science that tells us where our pale blue dot sits in the cosmos.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= SYSTEM -->
+<section class="sec system" id="system" data-layout="grid" data-screen-label="The System">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="sec-eyebrow">The brand system, in three parts</p>
+      <h2>Where to begin.</h2>
+      <p class="lede">A living homepage concept, the complete brand book, and a kit of web-ready interactive modules — three ways into the new SSAI.</p>
+    </div>
+    <div class="cardgrid">
+      <a class="pcard reveal" href="homepage.html">
+        <div class="thumb"><img src="assets/images/aurora-iss-robotic-arm.jpg" alt="Aurora seen from the International Space Station" loading="lazy"><div class="tscrim"></div><span class="badge">Live concept</span></div>
         <div class="cbody">
           <span class="cnum">01</span>
-          <h2>Homepage</h2>
-          <p>A modern, living website concept — interactive globe, data, coverage, and missions, blended into one experience.</p>
+          <h3>Homepage</h3>
+          <p>A modern, living website concept — interactive globe, data, coverage and missions, blended into one cinematic experience.</p>
           <span class="open">Enter the experience →</span>
+          <span class="meta">Interactive · Full page</span>
         </div>
       </a>
-      <a class="choice" href="brand-book.html">
-        <div class="thumb"><img src="assets/images/cosmic-cliffs-carina.jpg" alt="Cosmic Cliffs, JWST"><div class="tw"></div><div class="tg"></div></div>
+      <a class="pcard reveal d1" href="brand-book.html">
+        <div class="thumb"><img src="assets/images/cosmic-cliffs-carina.jpg" alt="The Cosmic Cliffs in the Carina Nebula, JWST" loading="lazy"><div class="tscrim"></div></div>
         <div class="cbody">
           <span class="cnum">02</span>
-          <h2>Brand Book</h2>
-          <p>The complete brand — story, positioning, voice &amp; tone, logo, color, type, imagery, and applications.</p>
+          <h3>Brand Book</h3>
+          <p>The complete brand — story, positioning, voice &amp; tone, logo, color, type, imagery and applications, in fourteen parts.</p>
           <span class="open">Open the brand book →</span>
+          <span class="meta">Guidelines · 14 sections</span>
         </div>
       </a>
-      <a class="choice" href="interactive-kit.html">
-        <div class="thumb"><img src="assets/images/black-marble-hemisphere.jpg" alt="Black Marble, Earth at night"><div class="tw"></div><div class="tg"></div></div>
+      <a class="pcard reveal d2" href="interactive-kit.html">
+        <div class="thumb"><img src="assets/images/black-marble-hemisphere.jpg" alt="Earth at night — the Black Marble" loading="lazy"><div class="tscrim"></div></div>
         <div class="cbody">
           <span class="cnum">03</span>
-          <h2>Interactive Kit</h2>
-          <p>Eighteen modular, web‑ready interactive modules — globe, Sun, deep‑field, mission tools, data‑as‑art.</p>
+          <h3>Interactive Kit</h3>
+          <p>Eighteen modular, web-ready interactive modules — globe, Sun, deep-field, mission tools and data-as-art.</p>
           <span class="open">Explore the kit →</span>
+          <span class="meta">Components · 18 modules</span>
         </div>
       </a>
     </div>
   </div>
+</section>
 
-  <footer>Science Systems and Applications, Inc. · Brand System · FCI Advisory · 2026</footer>
-</main>
-<div class="ssai-accent" role="group" aria-label="Accent color"><span class="lbl">Accent</span><button data-acc="#3cc8ff" style="--s:#3cc8ff" title="Ion" aria-label="Ion"></button><button data-acc="#2fd9c3" style="--s:#2fd9c3" title="Aurora" aria-label="Aurora"></button><button data-acc="#7c8bff" style="--s:#7c8bff" title="Orbit" aria-label="Orbit"></button><button data-acc="#b66cff" style="--s:#b66cff" title="Plasma" aria-label="Plasma"></button><button data-acc="#ff6ea8" style="--s:#ff6ea8" title="Nebula" aria-label="Nebula"></button><button data-acc="#ffb23c" style="--s:#ffb23c" title="Solar" aria-label="Solar"></button><button class="grad" data-acc="grad" title="Spectrum" aria-label="Spectrum gradient"></button></div><script>(function(){var KEY='ssaiAccent';function apply(v){var r=document.documentElement;if(v==='grad'){r.style.setProperty('--accent','#3cc8ff');r.classList.add('acc-grad');}else{r.style.setProperty('--accent',v);r.classList.remove('acc-grad');}var b=document.querySelectorAll('.ssai-accent button');for(var i=0;i<b.length;i++){b[i].classList.toggle('on',b[i].getAttribute('data-acc')===v);}}var s=null;try{s=localStorage.getItem(KEY);}catch(e){}apply(s||'#3cc8ff');document.addEventListener('click',function(e){var t=e.target;var b=t.closest?t.closest('.ssai-accent button'):null;if(!b)return;var v=b.getAttribute('data-acc');apply(v);try{localStorage.setItem(KEY,v);}catch(e){}});})();</script></body>
+<!-- ============================================================= CLOSING -->
+<section class="closing">
+  <div class="bg"><img src="assets/images/earth-night-limb-airglow.jpg" alt=""><div class="ov"></div></div>
+  <div class="inner wrap reveal">
+    <p class="ce">Partner with the science</p>
+    <h2 class="disp">From observation<br>to understanding.</h2>
+    <a class="btn btn-primary" href="mailto:BD@ssaihq.com">Start a conversation</a>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="row">
+      <div class="brandblock">
+        <img id="footLogo" src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc.">
+        <div class="fnav">
+          <a href="#vision">Vision</a>
+          <a href="#science">Science</a>
+          <a href="#system">The System</a>
+          <a href="mailto:BD@ssaihq.com">Contact</a>
+        </div>
+      </div>
+      <div class="meta">Science Systems and Applications, Inc. · Founded 1977 · Lanham, MD<br>ssaihq.com · BD@ssaihq.com<br>Brand system &amp; concept by FCI Advisory · 2026 · Imagery NASA / ESA</div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/gateway.js"></script>
+<script>
+(function(){
+  var html=document.documentElement;
+  var btn=document.getElementById('themeTog');
+  var navMark=document.getElementById('navMark');
+  var footLogo=document.getElementById('footLogo');
+  function apply(t,save){
+    if(t==='light')html.setAttribute('data-theme','light');else html.removeAttribute('data-theme');
+    if(navMark)navMark.setAttribute('src',t==='light'?'assets/logo/ssai-indigo-mark.png':'assets/logo/ssai-white-mark.png');
+    if(footLogo)footLogo.setAttribute('src',t==='light'?'assets/logo/ssai-color-full.png':'assets/logo/ssai-white-full.png');
+    if(window.__setGatewayTheme)window.__setGatewayTheme(t);
+    if(save){try{localStorage.setItem('ssai-theme',t);}catch(e){}}
+  }
+  var cur=html.getAttribute('data-theme')==='light'?'light':'dark';
+  apply(cur,false);
+  if(btn)btn.addEventListener('click',function(){cur=(cur==='light')?'dark':'light';apply(cur,true);});
+})();
+</script>
+<script src="assets/js/switcher.js"></script>
+</body>
 </html>

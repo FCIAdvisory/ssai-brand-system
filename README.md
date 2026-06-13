@@ -1,20 +1,24 @@
 # SSAI Brand System
 
-The SSAI brand system, delivered as a small website. Open **`index.html`** to choose a deliverable, or use the live link (GitHub Pages).
+A small website delivering the SSAI brand system. Open **`index.html`** (the gateway), or use the live link (GitHub Pages).
 
-## Deliverables
+## Pages
+- **`index.html`** — Gateway / landing: interactive dot‑globe hero, light & dark, choose a destination.
+- **`vision.html`** — The brand vision and rationale ("a brand as ambitious as the science").
+- **`homepage.html`** — Modern homepage concept blending the interactive modules.
+- **`brand-book.html`** — The full brand book (story, positioning, voice, identity, standards).
+- **`interactive-kit.html`** — 18 reusable interactive space modules.
 
-- **Brand Book** — [`brand-book.html`](brand-book.html)
-  The complete brand: story, positioning, voice & tone, messaging architecture, verbal style, logo, color, typography, imagery & art direction, light/dark modes, and applications.
+## Built‑in controls (every page)
+- **Bottom dock** — cross‑page navigation (Overview · Gateway · Homepage · Brand Book · Kit) **plus** a 6‑color accent picker that recolors the page's accents; the choice persists per visitor.
+- **Light / dark theme** toggle (top of page); persists per visitor.
 
-- **Interactive Kit** — [`interactive-kit.html`](interactive-kit.html)
-  Eighteen modular, reusable interactive modules in SSAI's style — a rotating dot‑globe, a living Sun, a deep‑field explorer, an orbit tracker, mission filter & timeline, an EM‑spectrum explorer, data‑as‑art, planet & moon viewers, animated counters, and more. Each is self‑contained and can be lifted straight into a website or a deck.
+## Tech
+- All vanilla JavaScript — `assets/js/gateway.js`, `assets/js/switcher.js`, `assets/js/theme.js`. No build step, no frameworks. Fonts load from Google Fonts.
 
 ## Notes
-
-- **Display font:** titles are designed for **Tactic Sans Italic** (SSAI's licensed commercial display font). It is not bundled here, so the pages fall back to **Chakra Petch Italic**. To render Tactic true, drop the licensed `TacticSans-*.woff2` / `.otf` files into `assets/fonts/`.
-- **Imagery:** NASA · NASA Earth Observatory · NASA/SDO · NASA/JPL‑Caltech (public domain) and ESA/Webb (CC BY 4.0). Credited in the brand book.
-- **Tech:** all pages are responsive, reduced‑motion aware, and dependency‑free (fonts load from Google Fonts). Best viewed in a current browser, maximized.
+- **Tactic Sans** (the display font) is a licensed commercial font and is not bundled — titles fall back to **Chakra Petch Italic**. Drop `TacticSans-*.woff2`/`.otf` into `assets/fonts/` to render it true.
+- **Imagery:** NASA · NASA Earth Observatory · NASA/SDO · NASA/JPL‑Caltech (public domain) and ESA/Webb (CC BY 4.0).
 
 ---
 Prepared by **FCI Advisory** for **SSAI** · 2026

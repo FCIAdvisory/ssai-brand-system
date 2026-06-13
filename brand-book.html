@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SSAI — Brand System</title>
+<title>SSAI — Brand System</title><script>(function(){try{if(localStorage.getItem('ssai-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -20,12 +20,34 @@
 :root{
   --space:#050314; --space-2:#0c0a26; --indigo:#16145f; --indigo-2:#221f7a;
   --starlight:#f4f5ff; --nebula:#a6abe6; --muted:#7e84bf; --hair:rgba(166,171,230,.16); --hair-2:rgba(166,171,230,.32);
-  --amber:var(--accent); --teal:var(--accent); --blue:var(--accent); --green:var(--accent); --violet:var(--accent); --coral:var(--accent);
+  --amber:#f2b43c; --teal:#2fd9c3; --blue:#3c7be0; --green:#7fd957; --violet:#8a5cff; --coral:#f2673c;
   --display:'Tactic Sans','Chakra Petch',system-ui,sans-serif;
   --body:'Inter',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
   --label:'Chakra Petch',ui-sans-serif,system-ui,sans-serif;
   --maxw:1180px;
 }
+:root[data-theme="light"]{
+  --space:#eef1f8; --space-2:#ffffff;
+  --starlight:#161438; --nebula:#46496f; --muted:#7e7fa6;
+  --hair:rgba(22,20,95,.14); --hair-2:rgba(22,20,95,.22);
+}
+/* keep cinematic photo sections & dark specimen cards on their dark palette */
+:root[data-theme="light"] .cine,
+:root[data-theme="light"] .contents,
+:root[data-theme="light"] .clear,
+:root[data-theme="light"] .lp.dark,
+:root[data-theme="light"] .lp.img,
+:root[data-theme="light"] .modecard.dark{--starlight:#f4f5ff;--nebula:#a6abe6;--muted:#7e84bf;--hair:rgba(166,171,230,.16);--hair-2:rgba(166,171,230,.32)}
+body{transition:background .5s ease,color .5s ease}
+:root[data-theme="light"] .hud{background:linear-gradient(rgba(238,241,248,.92),rgba(238,241,248,0))}
+.theme-tog{pointer-events:auto;display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 13px;border-radius:30px;border:1px solid var(--hair-2);background:rgba(10,9,38,.4);color:var(--nebula);font-family:var(--label);font-weight:600;font-size:10px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:.2s}
+:root[data-theme="light"] .theme-tog{background:rgba(255,255,255,.6)}
+.theme-tog:hover{color:var(--starlight);border-color:var(--blue)}
+.theme-tog svg{width:14px;height:14px;display:block}
+.theme-tog .i-moon,.theme-tog .lbl-dark{display:none}
+.theme-tog .i-sun,.theme-tog .lbl-light{display:block}
+:root[data-theme="light"] .theme-tog .i-sun,:root[data-theme="light"] .theme-tog .lbl-light{display:none}
+:root[data-theme="light"] .theme-tog .i-moon,:root[data-theme="light"] .theme-tog .lbl-dark{display:block}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:46px}
 body{margin:0;background:var(--space);color:var(--starlight);font-family:var(--body);font-weight:400;line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -166,7 +188,7 @@ p{max-width:62ch}
 .spec .inner{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px)}
 .spec h2.disp{font-size:clamp(30px,5vw,64px);margin:0 0 10px;color:var(--starlight)}
 .spec .eyrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.specbar{height:4px;width:130px;border-radius:4px;margin:0 0 26px;background:linear-gradient(90deg,var(--accent),var(--accent),var(--accent),var(--accent),var(--accent),var(--accent))}
+.specbar{height:4px;width:130px;border-radius:4px;margin:0 0 26px;background:linear-gradient(90deg,#8a5cff,#3c7be0,#2fd9c3,#7fd957,#f2b43c,#f2673c)}
 .rules{columns:2;column-gap:38px;margin-top:24px}
 .rules .r{break-inside:avoid;margin-bottom:18px;border-left:2px solid var(--hair-2);padding-left:16px}
 .rules .r .ix{font-family:var(--label);font-size:10px;letter-spacing:.2em;color:var(--muted)}
@@ -282,7 +304,7 @@ p{max-width:62ch}
 .modecard{border:1px solid var(--hair);border-radius:14px;min-height:230px;display:flex;flex-direction:column;justify-content:space-between;padding:24px;overflow:hidden}
 .modecard .tag{font-family:var(--label);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
 .modecard .ttl{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(22px,3vw,34px);letter-spacing:-.01em;line-height:.95;margin:10px 0}
-.modecard .accent{height:4px;width:90px;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent));margin-bottom:14px}
+.modecard .accent{height:4px;width:90px;border-radius:4px;background:linear-gradient(90deg,#3c7be0,#2fd9c3);margin-bottom:14px}
 .modecard img{height:28px}
 .modecard.dark{background:linear-gradient(135deg,#0a0930,#16145f)}
 .modecard.dark .tag{color:var(--nebula)} .modecard.dark .ttl{color:#fff}
@@ -292,7 +314,7 @@ p{max-width:62ch}
 .doc .top{background:#16145f;padding:16px 26px;display:flex;align-items:center;justify-content:space-between}
 .doc .top img{height:24px}
 .doc .top .dlab{font-family:var(--label);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#c7c9f0}
-.doc .rule{height:4px;background:linear-gradient(90deg,var(--accent),var(--accent),var(--accent),var(--accent),var(--accent),var(--accent))}
+.doc .rule{height:4px;background:linear-gradient(90deg,#8a5cff,#3c7be0,#2fd9c3,#7fd957,#f2b43c,#f2673c)}
 .doc .bd{padding:28px 26px}
 .doc .bd .mlab{font-family:var(--label);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7a7fae;margin-bottom:8px}
 .doc .bd h3{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;color:#16145f;font-size:clamp(20px,2.6vw,30px);letter-spacing:-.01em;margin:0 0 12px}
@@ -385,7 +407,7 @@ p{max-width:62ch}
 .liteapps{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
 .la{border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:#fff}
 .la-cap{font-family:var(--label);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:9px}
-.la .lrule{height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent),var(--accent),var(--accent),var(--accent),var(--accent))}
+.la .lrule{height:3px;border-radius:3px;background:linear-gradient(90deg,#8a5cff,#3c7be0,#2fd9c3,#7fd957,#f2b43c,#f2673c)}
 .la img.lg{height:32px;width:auto;max-width:60%;align-self:flex-start;object-fit:contain}
 .la.letter{aspect-ratio:8.5/11;padding:24px;display:flex;flex-direction:column}
 .la.letter .bars{margin:auto 0;display:flex;flex-direction:column;gap:8px}
@@ -424,15 +446,14 @@ p{max-width:62ch}
 .motion .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
 .motion .reveal.in{opacity:1;transform:none}
 .spec .reveal{transition-delay:.05s}
-
-:root{--accent:#3cc8ff;--blue:var(--accent);--teal:var(--accent);--amber:var(--accent);--violet:var(--accent);--green:var(--accent);--coral:var(--accent)}.spectrum-bar,.specbar,.lrule,.doc .rule,.rule{background:var(--accent)!important}.acc-grad .spectrum-bar,.acc-grad .specbar,.acc-grad .lrule,.acc-grad .doc .rule,.acc-grad .rule,.acc-grad .btn-primary{background:linear-gradient(90deg,#8a5cff,#3cc8ff,#2fd9c3)!important}.ssai-back{position:fixed;left:16px;bottom:16px;z-index:99999;display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;letter-spacing:.02em;color:#f4f5ff;background:rgba(5,3,20,.62);border:1px solid rgba(166,171,230,.25);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:border-color .2s,background .2s;text-decoration:none}.ssai-back:hover{border-color:var(--accent);background:rgba(5,3,20,.85)}.ssai-accent{position:fixed;right:16px;bottom:16px;z-index:99999;display:flex;gap:8px;align-items:center;padding:8px 12px;background:rgba(5,3,20,.7);border:1px solid rgba(166,171,230,.25);border-radius:30px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}.ssai-accent .lbl{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#a6abe6;margin-right:2px}.ssai-accent button{width:20px;height:20px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:var(--s);cursor:pointer;padding:0;transition:transform .15s}.ssai-accent button:hover{transform:scale(1.18)}.ssai-accent button.on{box-shadow:0 0 0 2px #050314,0 0 0 4px var(--s)}.ssai-accent button.grad{background:conic-gradient(from 0deg,#8a5cff,#3cc8ff,#2fd9c3,#ffb23c,#ff6ea8,#8a5cff)}@media(max-width:600px){.ssai-back{font-size:12px;padding:8px 13px}.ssai-accent .lbl{display:none}.ssai-accent button{width:18px;height:18px}}</style>
+</style>
 </head>
 <body>
 
 <div class="prog" id="prog"></div>
 <div class="hud">
-  <div class="l"><img src="assets/logo/ssai-white-mark.png" alt="SSAI"></div>
-  <div class="r"><span>Brand Guidelines</span></div>
+  <div class="l"><img id="navMark" src="assets/logo/ssai-white-mark.png" alt="SSAI"></div>
+  <div class="r"><span>Brand Guidelines</span><button class="theme-tog" id="themeTog" type="button" aria-label="Switch between light and dark mode"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.6v2.4M12 19v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.6 12h2.4M19 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7"></path></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><span class="lbl-light">Light</span><span class="lbl-dark">Dark</span></button></div>
 </div>
 <nav class="nav" id="dotnav"></nav>
 
@@ -802,7 +823,7 @@ p{max-width:62ch}
     <div class="eyrow"><span class="lab lab-bl">11 / Light &amp; dark</span></div>
     <div class="specbar"></div>
     <h2 class="disp">Built for daylight, too.</h2>
-    <p style="color:var(--nebula);max-width:64ch">The brand lives in two modes that share one DNA. <b style="color:#fff;font-weight:500">Deep Space</b> is the default — the hero, the web, social, the big moments, where the cosmos does the talking. <b style="color:#fff;font-weight:500">Daylight</b> is for documents, proposals, letterhead, email, and print: the same system, set on white.</p>
+    <p style="color:var(--nebula);max-width:64ch">The brand lives in two modes that share one DNA. <b style="color:var(--starlight);font-weight:600">Deep Space</b> is the default — the hero, the web, social, the big moments, where the cosmos does the talking. <b style="color:var(--starlight);font-weight:600">Daylight</b> is for documents, proposals, letterhead, email, and print: the same system, set on white.</p>
     <div class="modepair">
       <div class="modecard dark"><div class="tag">Deep space · default</div><div class="ttl">Science for life on Earth.</div><div><div class="accent"></div><img src="assets/logo/ssai-white-mark.png" alt=""></div></div>
       <div class="modecard lite"><div class="tag">Daylight · documents &amp; print</div><div class="ttl">Science for life on Earth.</div><div><div class="accent"></div><img src="assets/logo/ssai-color-full.png" alt=""></div></div>
@@ -990,5 +1011,7 @@ p{max-width:62ch}
   }
 })();
 </script>
-<a class="ssai-back" href="index.html">← Back to overview</a><div class="ssai-accent" role="group" aria-label="Accent color"><span class="lbl">Accent</span><button data-acc="#3cc8ff" style="--s:#3cc8ff" title="Ion" aria-label="Ion"></button><button data-acc="#2fd9c3" style="--s:#2fd9c3" title="Aurora" aria-label="Aurora"></button><button data-acc="#7c8bff" style="--s:#7c8bff" title="Orbit" aria-label="Orbit"></button><button data-acc="#b66cff" style="--s:#b66cff" title="Plasma" aria-label="Plasma"></button><button data-acc="#ff6ea8" style="--s:#ff6ea8" title="Nebula" aria-label="Nebula"></button><button data-acc="#ffb23c" style="--s:#ffb23c" title="Solar" aria-label="Solar"></button><button class="grad" data-acc="grad" title="Spectrum" aria-label="Spectrum gradient"></button></div><script>(function(){var KEY='ssaiAccent';function apply(v){var r=document.documentElement;if(v==='grad'){r.style.setProperty('--accent','#3cc8ff');r.classList.add('acc-grad');}else{r.style.setProperty('--accent',v);r.classList.remove('acc-grad');}var b=document.querySelectorAll('.ssai-accent button');for(var i=0;i<b.length;i++){b[i].classList.toggle('on',b[i].getAttribute('data-acc')===v);}}var s=null;try{s=localStorage.getItem(KEY);}catch(e){}apply(s||'#3cc8ff');document.addEventListener('click',function(e){var t=e.target;var b=t.closest?t.closest('.ssai-accent button'):null;if(!b)return;var v=b.getAttribute('data-acc');apply(v);try{localStorage.setItem(KEY,v);}catch(e){}});})();</script></body>
+<script src="assets/js/theme.js"></script>
+<script src="assets/js/switcher.js"></script>
+</body>
 </html>
