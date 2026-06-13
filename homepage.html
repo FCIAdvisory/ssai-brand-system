@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SSAI — Science for life on Earth</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"><style>
-:root{--space:#050314;--space2:#0a0926;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--muted:#7e84bf;--hair:rgba(166,171,230,.16);--hair2:rgba(166,171,230,.3);--blue:#3c7be0;--teal:#2fd9c3;--amber:#f2b43c;--violet:#8a5cff;--coral:#f2673c;--disp:'Tactic Sans','Chakra Petch',system-ui,sans-serif;--body:'Inter',-apple-system,Helvetica,Arial,sans-serif}
+:root{--space:#050314;--space2:#0a0926;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--muted:#7e84bf;--hair:rgba(166,171,230,.16);--hair2:rgba(166,171,230,.3);--blue:var(--accent);--teal:var(--accent);--amber:var(--accent);--violet:var(--accent);--coral:var(--accent);--disp:'Tactic Sans','Chakra Petch',system-ui,sans-serif;--body:'Inter',-apple-system,Helvetica,Arial,sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:70px}
 body{margin:0;background:var(--space);color:var(--star);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -104,7 +104,7 @@ a{color:inherit;text-decoration:none}
   width:38%;
   z-index:2;
   pointer-events:none;
-  background:linear-gradient(100deg,transparent, var(--cc-accent,#3c7be0), transparent);
+  background:linear-gradient(100deg,transparent, var(--cc-accent,var(--accent)), transparent);
   opacity:0;
   mix-blend-mode:screen;
   filter:blur(1px);
@@ -131,9 +131,9 @@ a{color:inherit;text-decoration:none}
 #kit-counter-cluster .cc-stat.is-live .cc-num{text-shadow:0 0 26px var(--cc-shadow,rgba(60,123,224,0.28));}
 #kit-counter-cluster .cc-suf{
   font-size:0.62em;
-  color:var(--cc-accent,#3c7be0);
+  color:var(--cc-accent,var(--accent));
   margin-left:1px;
-  -webkit-text-fill-color:var(--cc-accent,#3c7be0);
+  -webkit-text-fill-color:var(--cc-accent,var(--accent));
 }
 #kit-counter-cluster .cc-meter{
   position:relative;
@@ -150,8 +150,8 @@ a{color:inherit;text-decoration:none}
   height:100%;
   width:0%;
   border-radius:2px;
-  background:linear-gradient(90deg,transparent, var(--cc-accent,#3c7be0));
-  box-shadow:0 0 8px var(--cc-accent,#3c7be0);
+  background:linear-gradient(90deg,transparent, var(--cc-accent,var(--accent)));
+  box-shadow:0 0 8px var(--cc-accent,var(--accent));
   will-change:width;
 }
 #kit-counter-cluster .cc-label{
@@ -336,12 +336,12 @@ a{color:inherit;text-decoration:none}
 #kit-data-chart{
   --kdc-bg:#050314;
   --kdc-indigo:#16145f;
-  --kdc-orbit:#3c7be0;
+  --kdc-orbit:var(--accent);
   --kdc-text:#f4f5ff;
   --kdc-muted:#a6abe6;
   --kdc-hair:rgba(166,171,230,0.16);
-  --kdc-amber:#f2b43c;
-  --kdc-teal:#2fd9c3;
+  --kdc-amber:var(--accent);
+  --kdc-teal:var(--accent);
   position:relative;
   box-sizing:border-box;
   width:100%;
@@ -476,14 +476,14 @@ a{color:inherit;text-decoration:none}
 #kit-coverage-map .kit-cm-legend-label{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:clamp(11px,1.15vw,14px);color:#f4f5ff;margin-bottom:3px}
 #kit-coverage-map .kit-cm-legend-row{display:flex;align-items:center;gap:9px;font-size:clamp(10.5px,1vw,12.5px);color:#a6abe6;line-height:1.2}
 #kit-coverage-map .kit-cm-swatch{flex:none;width:9px;height:9px;border-radius:50%}
-#kit-coverage-map .kit-cm-swatch-blue{background:#3c7be0;box-shadow:0 0 8px rgba(60,123,224,0.85)}
-#kit-coverage-map .kit-cm-swatch-teal{background:#2fd9c3;box-shadow:0 0 8px rgba(47,217,195,0.8)}
+#kit-coverage-map .kit-cm-swatch-blue{background:var(--accent);box-shadow:0 0 8px rgba(60,123,224,0.85)}
+#kit-coverage-map .kit-cm-swatch-teal{background:var(--accent);box-shadow:0 0 8px rgba(47,217,195,0.8)}
 @media (max-width:560px){#kit-coverage-map .kit-cm-legend{padding:10px 12px;gap:5px}}
 /* mission-wall */
 #kit-mission-wall{
-  --mw-bg:#050314; --mw-indigo:#16145f; --mw-blue:#3c7be0;
+  --mw-bg:#050314; --mw-indigo:#16145f; --mw-blue:var(--accent);
   --mw-text:#f4f5ff; --mw-muted:#a6abe6; --mw-line:rgba(166,171,230,0.16);
-  --mw-earth:#2fd9c3; --mw-sun:#f2b43c; --mw-universe:#8a5cff;
+  --mw-earth:var(--accent); --mw-sun:var(--accent); --mw-universe:var(--accent);
   position:relative; box-sizing:border-box; width:100%;
   padding:clamp(20px,4vw,40px); border-radius:20px;
   background:
@@ -617,7 +617,8 @@ a{color:inherit;text-decoration:none}
   #kit-mission-wall .kit-mission-wall-grid{transform:none !important; transition:none;}
   #kit-mission-wall .kit-mission-wall-card{transition:border-color 0.2s ease, box-shadow 0.2s ease;}
   #kit-mission-wall .kit-mission-wall-card:hover{transform:none;}
-}</style></head><body><nav class="hp-nav"><a class="brand" href="#top"><img src="assets/logo/ssai-white-mark.png" alt="SSAI"></a><div class="links"><a href="#science">Science</a><a href="#record">Data</a><a href="#coverage">Coverage</a><a href="#missions">Missions</a><a href="#impact">Impact</a></div><a class="hp-cta" href="mailto:BD@ssaihq.com">Contact</a></nav>
+}
+:root{--accent:#3cc8ff;--blue:var(--accent);--teal:var(--accent);--amber:var(--accent);--violet:var(--accent);--green:var(--accent);--coral:var(--accent)}.spectrum-bar,.specbar,.lrule,.doc .rule,.rule{background:var(--accent)!important}.acc-grad .spectrum-bar,.acc-grad .specbar,.acc-grad .lrule,.acc-grad .doc .rule,.acc-grad .rule,.acc-grad .btn-primary{background:linear-gradient(90deg,#8a5cff,#3cc8ff,#2fd9c3)!important}.ssai-back{position:fixed;left:16px;bottom:16px;z-index:99999;display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;letter-spacing:.02em;color:#f4f5ff;background:rgba(5,3,20,.62);border:1px solid rgba(166,171,230,.25);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:border-color .2s,background .2s;text-decoration:none}.ssai-back:hover{border-color:var(--accent);background:rgba(5,3,20,.85)}.ssai-accent{position:fixed;right:16px;bottom:16px;z-index:99999;display:flex;gap:8px;align-items:center;padding:8px 12px;background:rgba(5,3,20,.7);border:1px solid rgba(166,171,230,.25);border-radius:30px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}.ssai-accent .lbl{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#a6abe6;margin-right:2px}.ssai-accent button{width:20px;height:20px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:var(--s);cursor:pointer;padding:0;transition:transform .15s}.ssai-accent button:hover{transform:scale(1.18)}.ssai-accent button.on{box-shadow:0 0 0 2px #050314,0 0 0 4px var(--s)}.ssai-accent button.grad{background:conic-gradient(from 0deg,#8a5cff,#3cc8ff,#2fd9c3,#ffb23c,#ff6ea8,#8a5cff)}@media(max-width:600px){.ssai-back{font-size:12px;padding:8px 13px}.ssai-accent .lbl{display:none}.ssai-accent button{width:18px;height:18px}}</style></head><body><nav class="hp-nav"><a class="brand" href="#top"><img src="assets/logo/ssai-white-mark.png" alt="SSAI"></a><div class="links"><a href="#science">Science</a><a href="#record">Data</a><a href="#coverage">Coverage</a><a href="#missions">Missions</a><a href="#impact">Impact</a></div><a class="hp-cta" href="mailto:BD@ssaihq.com">Contact</a></nav>
 <section class="hp-hero" id="top"><div class="hp-hero-bg"><div class="kfig" id="kit-hero-globe">
   <h2 class="kit-hero-globe-sr">Rotating dot-globe of Earth with glowing NASA mission sites and animated data-link arcs radiating from Goddard.</h2>
   <canvas class="kit-hero-globe-canvas" aria-hidden="true"></canvas>
@@ -1685,4 +1686,4 @@ a{color:inherit;text-decoration:none}
     resizeTimer=setTimeout(setDepth,120);
   });
 })();
-</script></body></html>
+</script><a class="ssai-back" href="index.html">← Back to overview</a><div class="ssai-accent" role="group" aria-label="Accent color"><span class="lbl">Accent</span><button data-acc="#3cc8ff" style="--s:#3cc8ff" title="Ion" aria-label="Ion"></button><button data-acc="#2fd9c3" style="--s:#2fd9c3" title="Aurora" aria-label="Aurora"></button><button data-acc="#7c8bff" style="--s:#7c8bff" title="Orbit" aria-label="Orbit"></button><button data-acc="#b66cff" style="--s:#b66cff" title="Plasma" aria-label="Plasma"></button><button data-acc="#ff6ea8" style="--s:#ff6ea8" title="Nebula" aria-label="Nebula"></button><button data-acc="#ffb23c" style="--s:#ffb23c" title="Solar" aria-label="Solar"></button><button class="grad" data-acc="grad" title="Spectrum" aria-label="Spectrum gradient"></button></div><script>(function(){var KEY='ssaiAccent';function apply(v){var r=document.documentElement;if(v==='grad'){r.style.setProperty('--accent','#3cc8ff');r.classList.add('acc-grad');}else{r.style.setProperty('--accent',v);r.classList.remove('acc-grad');}var b=document.querySelectorAll('.ssai-accent button');for(var i=0;i<b.length;i++){b[i].classList.toggle('on',b[i].getAttribute('data-acc')===v);}}var s=null;try{s=localStorage.getItem(KEY);}catch(e){}apply(s||'#3cc8ff');document.addEventListener('click',function(e){var t=e.target;var b=t.closest?t.closest('.ssai-accent button'):null;if(!b)return;var v=b.getAttribute('data-acc');apply(v);try{localStorage.setItem(KEY,v);}catch(e){}});})();</script></body></html>
