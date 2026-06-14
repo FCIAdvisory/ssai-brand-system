@@ -88,7 +88,8 @@ body.mb-embed #kit-ndvi-seasons [class*='stage'],body.mb-embed #kit-ndvi-seasons
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
-  <div class="mb-stage"><div class="kfig" id="kit-ndvi-seasons"><canvas class="ndx-map"></canvas><div class="ndx-controls ndx-layers"><button class="ndx-layer is-on" type="button" data-l="0">NDVI</button></div><div class="ndx-controls ndx-datebar"><button class="ndx-db" type="button" data-d="-1" aria-label="Previous day">&#8249;</button><span class="ndx-date">&mdash;</span><button class="ndx-db" type="button" data-d="1" aria-label="Next day">&#8250;</button></div><div class="ndx-controls ndx-zoom"><button class="ndx-zb" type="button" data-z="1" aria-label="Zoom in">+</button><button class="ndx-zb" type="button" data-z="-1" aria-label="Zoom out">&minus;</button></div><div class="ndx-hud"><div class="ndx-coord">&mdash;</div><div class="ndx-desc">&mdash;</div></div><div class="ndx-load ndx-on"><span class="ndx-spin"></span>Loading live imagery&hellip;</div><div class="ndx-legend"><span class="ndx-lg-t">NDVI</span><div class="ndx-lg-bar"></div><div class="ndx-lg-sc"><span>0.8 dense</span><span>0.4</span><span>0.1</span><span>bare</span></div></div></div></div>
+  <div class="mb-stage"><div class="kfig" id="kit-ndvi-seasons">
+<div class="mb-geosearch"><div class="mb-geosearch-bar"><svg class="mb-geosearch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input class="mb-geosearch-input" type="text" placeholder="Search city or country…" autocomplete="off" spellcheck="false" aria-label="Search for a place"><button class="mb-geosearch-x" type="button" aria-label="Clear">×</button></div><div class="mb-geosearch-list" role="listbox"></div></div><canvas class="ndx-map"></canvas><div class="ndx-controls ndx-layers"><button class="ndx-layer is-on" type="button" data-l="0">NDVI</button></div><div class="ndx-controls ndx-datebar"><button class="ndx-db" type="button" data-d="-1" aria-label="Previous day">&#8249;</button><span class="ndx-date">&mdash;</span><button class="ndx-db" type="button" data-d="1" aria-label="Next day">&#8250;</button></div><div class="ndx-controls ndx-zoom"><button class="ndx-zb" type="button" data-z="1" aria-label="Zoom in">+</button><button class="ndx-zb" type="button" data-z="-1" aria-label="Zoom out">&minus;</button></div><div class="ndx-hud"><div class="ndx-coord">&mdash;</div><div class="ndx-desc">&mdash;</div></div><div class="ndx-load ndx-on"><span class="ndx-spin"></span>Loading live imagery&hellip;</div><div class="ndx-legend"><span class="ndx-lg-t">NDVI</span><div class="ndx-lg-bar"></div><div class="ndx-lg-sc"><span>0.8 dense</span><span>0.4</span><span>0.1</span><span>bare</span></div></div></div></div>
   <footer class="mb-credit">
     <span class="mb-c-int">Drag to pan, scroll to zoom into live MODIS imagery recoloured by NDVI = (NIR−Red)/(NIR+Red); step the date day by day to watch vegetation green up and senesce. The legend maps colour to NDVI value.</span>
     <span class="mb-c-src">Data · NASA MODIS — W. Kansas</span>
@@ -139,6 +140,7 @@ body.mb-embed #kit-ndvi-seasons [class*='stage'],body.mb-embed #kit-ndvi-seasons
   },1700); });
 })();
 </script>
+<script src="../assets/js/geosearch.js"></script>
 <script>
 (function(){
   var root=document.getElementById('kit-ndvi-seasons'); if(!root) return;
@@ -209,6 +211,7 @@ body.mb-embed #kit-ndvi-seasons [class*='stage'],body.mb-embed #kit-ndvi-seasons
   if(window.ResizeObserver){try{new ResizeObserver(resize).observe(root);}catch(e){}}
   window.addEventListener('resize',resize);
   setTimeout(function(){if(loadEl) loadEl.classList.remove('ndx-on');},4000);
+;if(window.SSAIGeoSearch)SSAIGeoSearch(root,{flyTo:function(_lo,_la,_z){lon=_lo;lat=_la;zoom=Math.min(_z,lay().ms);clamp();scheduleDraw();try{showCoord();}catch(e){}}});
 })();
 </script>
 </body></html>

@@ -199,6 +199,7 @@ body.mb-embed #kit-wildfire-detect [class*='stage'],body.mb-embed #kit-wildfire-
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-wildfire-detect">
+<div class="mb-geosearch"><div class="mb-geosearch-bar"><svg class="mb-geosearch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input class="mb-geosearch-input" type="text" placeholder="Search city or country…" autocomplete="off" spellcheck="false" aria-label="Search for a place"><button class="mb-geosearch-x" type="button" aria-label="Clear">×</button></div><div class="mb-geosearch-list" role="listbox"></div></div>
 <h2 class="wfd2-sr">Live, pannable and zoomable NASA satellite map of active wildfires. The basemap streams real MODIS imagery from NASA GIBS — optical true colour, or shortwave-infrared in which active fire and fresh burn scars glow red and orange — and active fire and fresh burn scars are detected live from the shortwave-infrared Bands 7-2-1 layer.</h2>
   <div class="wfd2-head">
     <div>
@@ -282,6 +283,7 @@ body.mb-embed #kit-wildfire-detect [class*='stage'],body.mb-embed #kit-wildfire-
   },1700); });
 })();
 </script>
+<script src="../assets/js/geosearch.js"></script>
 <script>
 (function(){
   var root=document.getElementById('kit-wildfire-detect');
@@ -566,6 +568,7 @@ body.mb-embed #kit-wildfire-detect [class*='stage'],body.mb-embed #kit-wildfire-
   draw();                                  /* first draw on init */
   setTimeout(draw,80);                      /* setTimeout-scheduled redraw (headless-safe) */
   setTimeout(function(){ if(loadEl) loadEl.classList.add('wfd2-hide'); },4000); /* safety: clear loader */
+;if(window.SSAIGeoSearch)SSAIGeoSearch(root,{flyTo:function(_lo,_la,_z){lon=_lo;lat=_la;zoom=Math.min(_z,lay().ms);clamp();scheduleDraw();try{showCoord();}catch(e){}}});
 })();
 </script>
 </body></html>

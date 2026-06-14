@@ -87,6 +87,7 @@ body.mb-embed #kit-earth-explorer [class*='stage'],body.mb-embed #kit-earth-expl
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-earth-explorer">
+<div class="mb-geosearch"><div class="mb-geosearch-bar"><svg class="mb-geosearch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input class="mb-geosearch-input" type="text" placeholder="Search city or country…" autocomplete="off" spellcheck="false" aria-label="Search for a place"><button class="mb-geosearch-x" type="button" aria-label="Clear">×</button></div><div class="mb-geosearch-list" role="listbox"></div></div>
   <canvas class="exq-map" aria-label="Interactive map of live NASA satellite imagery"></canvas>
   <div class="exq-vig"></div>
   <div class="exq-controls exq-layers">
@@ -160,6 +161,7 @@ body.mb-embed #kit-earth-explorer [class*='stage'],body.mb-embed #kit-earth-expl
   },1700); });
 })();
 </script>
+<script src="../assets/js/geosearch.js"></script>
 <script>
 (function(){
   var root=document.getElementById('kit-earth-explorer'); if(!root) return;
@@ -296,6 +298,7 @@ body.mb-embed #kit-earth-explorer [class*='stage'],body.mb-embed #kit-earth-expl
   draw();
   // safety: clear the loading chip even if some tiles are slow
   setTimeout(function(){ if(loadEl) loadEl.classList.remove('exq-on'); },4000);
+;if(window.SSAIGeoSearch)SSAIGeoSearch(root,{flyTo:function(_lo,_la,_z){lon=_lo;lat=_la;zoom=Math.min(_z,lay().ms);clamp();scheduleDraw();try{showCoord();}catch(e){}}});
 })();
 </script>
 </body></html>

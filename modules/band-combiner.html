@@ -84,7 +84,8 @@ body.mb-embed #kit-band-combiner [class*='stage'],body.mb-embed #kit-band-combin
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
-  <div class="mb-stage"><div class="kfig" id="kit-band-combiner"><canvas class="bcx-map"></canvas><div class="bcx-controls bcx-layers"><button class="bcx-layer is-on" type="button" data-l="0">Natural</button><button class="bcx-layer" type="button" data-l="1">Vegetation &amp; fire</button><button class="bcx-layer" type="button" data-l="2">Snow &amp; ice</button></div><div class="bcx-controls bcx-datebar"><button class="bcx-db" type="button" data-d="-1" aria-label="Previous day">&#8249;</button><span class="bcx-date">&mdash;</span><button class="bcx-db" type="button" data-d="1" aria-label="Next day">&#8250;</button></div><div class="bcx-controls bcx-zoom"><button class="bcx-zb" type="button" data-z="1" aria-label="Zoom in">+</button><button class="bcx-zb" type="button" data-z="-1" aria-label="Zoom out">&minus;</button></div><div class="bcx-hud"><div class="bcx-coord">&mdash;</div><div class="bcx-desc">&mdash;</div></div><div class="bcx-load bcx-on"><span class="bcx-spin"></span>Loading live imagery&hellip;</div></div></div>
+  <div class="mb-stage"><div class="kfig" id="kit-band-combiner">
+<div class="mb-geosearch"><div class="mb-geosearch-bar"><svg class="mb-geosearch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input class="mb-geosearch-input" type="text" placeholder="Search city or country…" autocomplete="off" spellcheck="false" aria-label="Search for a place"><button class="mb-geosearch-x" type="button" aria-label="Clear">×</button></div><div class="mb-geosearch-list" role="listbox"></div></div><canvas class="bcx-map"></canvas><div class="bcx-controls bcx-layers"><button class="bcx-layer is-on" type="button" data-l="0">Natural</button><button class="bcx-layer" type="button" data-l="1">Vegetation &amp; fire</button><button class="bcx-layer" type="button" data-l="2">Snow &amp; ice</button></div><div class="bcx-controls bcx-datebar"><button class="bcx-db" type="button" data-d="-1" aria-label="Previous day">&#8249;</button><span class="bcx-date">&mdash;</span><button class="bcx-db" type="button" data-d="1" aria-label="Next day">&#8250;</button></div><div class="bcx-controls bcx-zoom"><button class="bcx-zb" type="button" data-z="1" aria-label="Zoom in">+</button><button class="bcx-zb" type="button" data-z="-1" aria-label="Zoom out">&minus;</button></div><div class="bcx-hud"><div class="bcx-coord">&mdash;</div><div class="bcx-desc">&mdash;</div></div><div class="bcx-load bcx-on"><span class="bcx-spin"></span>Loading live imagery&hellip;</div></div></div>
   <footer class="mb-credit">
     <span class="mb-c-int">Drag to pan and scroll to zoom into live MODIS imagery; switch the band recipe (Natural / Vegetation &amp; fire / Snow &amp; ice) to remap the wavelengths to R·G·B and watch fires, vegetation and ice pop; step the date day by day.</span>
     <span class="mb-c-src">Data · NASA MODIS surface reflectance</span>
@@ -135,6 +136,7 @@ body.mb-embed #kit-band-combiner [class*='stage'],body.mb-embed #kit-band-combin
   },1700); });
 })();
 </script>
+<script src="../assets/js/geosearch.js"></script>
 <script>
 (function(){
   var root=document.getElementById('kit-band-combiner'); if(!root) return;
@@ -203,6 +205,7 @@ body.mb-embed #kit-band-combiner [class*='stage'],body.mb-embed #kit-band-combin
   if(window.ResizeObserver){try{new ResizeObserver(resize).observe(root);}catch(e){}}
   window.addEventListener('resize',resize);
   setTimeout(function(){if(loadEl) loadEl.classList.remove('bcx-on');},4000);
+;if(window.SSAIGeoSearch)SSAIGeoSearch(root,{flyTo:function(_lo,_la,_z){lon=_lo;lat=_la;zoom=Math.min(_z,lay().ms);clamp();scheduleDraw();try{showCoord();}catch(e){}}});
 })();
 </script>
 </body></html>

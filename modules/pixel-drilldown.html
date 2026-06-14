@@ -92,7 +92,8 @@ body.mb-embed #kit-pixel-drilldown [class*='stage'],body.mb-embed #kit-pixel-dri
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
-  <div class="mb-stage"><div class="kfig" id="kit-pixel-drilldown"><canvas class="pxx-map"></canvas><div class="pxx-controls pxx-datebar"><button class="pxx-db" type="button" data-d="-1">&#8249;</button><span class="pxx-date">&mdash;</span><button class="pxx-db" type="button" data-d="1">&#8250;</button></div><div class="pxx-controls pxx-zoom"><button class="pxx-zb" type="button" data-z="1">+</button><button class="pxx-zb" type="button" data-z="-1">&minus;</button></div><div class="pxx-pin"></div><div class="pxx-read"><div class="pxx-rd-t">Click the map</div><div class="pxx-rd-co">to sample real reflectance</div></div><div class="pxx-hint">Tap any point — read its live MODIS bands &amp; NDVI</div><div class="pxx-load pxx-on"><span class="pxx-spin"></span>Loading live imagery&hellip;</div></div></div>
+  <div class="mb-stage"><div class="kfig" id="kit-pixel-drilldown">
+<div class="mb-geosearch"><div class="mb-geosearch-bar"><svg class="mb-geosearch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input class="mb-geosearch-input" type="text" placeholder="Search city or country…" autocomplete="off" spellcheck="false" aria-label="Search for a place"><button class="mb-geosearch-x" type="button" aria-label="Clear">×</button></div><div class="mb-geosearch-list" role="listbox"></div></div><canvas class="pxx-map"></canvas><div class="pxx-controls pxx-datebar"><button class="pxx-db" type="button" data-d="-1">&#8249;</button><span class="pxx-date">&mdash;</span><button class="pxx-db" type="button" data-d="1">&#8250;</button></div><div class="pxx-controls pxx-zoom"><button class="pxx-zb" type="button" data-z="1">+</button><button class="pxx-zb" type="button" data-z="-1">&minus;</button></div><div class="pxx-pin"></div><div class="pxx-read"><div class="pxx-rd-t">Click the map</div><div class="pxx-rd-co">to sample real reflectance</div></div><div class="pxx-hint">Tap any point — read its live MODIS bands &amp; NDVI</div><div class="pxx-load pxx-on"><span class="pxx-spin"></span>Loading live imagery&hellip;</div></div></div>
   <footer class="mb-credit">
     <span class="mb-c-int">Pan and zoom the live MODIS map, then click/tap a point to drop a pin and sample the genuine satellite reflectance at that location: the five bands, NDVI = (NIR−Red)/(NIR+Red), and a land-cover guess. Step the date to compare days.</span>
     <span class="mb-c-src">Data · NASA MODIS multispectral</span>
@@ -143,6 +144,7 @@ body.mb-embed #kit-pixel-drilldown [class*='stage'],body.mb-embed #kit-pixel-dri
   },1700); });
 })();
 </script>
+<script src="../assets/js/geosearch.js"></script>
 <script>
 (function(){
   var root=document.getElementById('kit-pixel-drilldown'); if(!root) return;
@@ -224,6 +226,7 @@ body.mb-embed #kit-pixel-drilldown [class*='stage'],body.mb-embed #kit-pixel-dri
   if(window.ResizeObserver){try{new ResizeObserver(resize).observe(root);}catch(e){}}
   window.addEventListener('resize',resize);
   setTimeout(function(){if(loadEl) loadEl.classList.remove('pxx-on');},4000);
+;if(window.SSAIGeoSearch)SSAIGeoSearch(root,{flyTo:function(_lo,_la,_z){lon=_lo;lat=_la;zoom=Math.min(_z,lay().ms);clamp();scheduleDraw();try{showCoord();}catch(e){}}});
 })();
 </script>
 </body></html>
