@@ -410,7 +410,7 @@ body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-view
       dia:'6,779 km', day:'24.6 h', year:'687 d', moons:'2', temp:'−65 °C', dist:'1.52 AU', glow:[224,120,80]},
     jupiter:{name:'JUPITER', tag:'A gas giant wrapped in churning storms',       img:'../assets/images/planets/jupiter.jpg', disk:true,
       dia:'139,820 km', day:'9.9 h', year:'11.9 yr', moons:'95', temp:'−110 °C', dist:'5.20 AU', glow:[224,190,150]},
-    saturn:{name:'SATURN',   tag:'The ringed jewel of the Solar System',         img:'../assets/images/planets/saturn.jpg',  disk:true, wide:true,
+    saturn:{name:'SATURN',   tag:'The ringed jewel of the Solar System',         img:'../assets/images/planets/saturn.png',  disk:true, wide:true,
       dia:'116,460 km', day:'10.7 h', year:'29.4 yr', moons:'146', temp:'−140 °C', dist:'9.54 AU', glow:[230,206,150]},
     uranus:{name:'URANUS',   tag:'A serene ice giant tipped on its side',        img:'../assets/images/planets/uranus.jpg',  disk:true,
       dia:'50,724 km', day:'17.2 h', year:'84 yr', moons:'28', temp:'−195 °C', dist:'19.2 AU', glow:[150,224,228]},
@@ -628,33 +628,16 @@ body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-view
   }
 
   // Saturn: preserve full frame incl. rings (no circular clip)
-  // ringed planets: key the photo's black background to transparent (once, cached)
-  // so the full planet + rings float in space with no letterbox rectangle.
-  var wideBuf=null, wideBufKey=null;
-  function buildWideBuf(im){
-    var oc=document.createElement('canvas');
-    oc.width=im.naturalWidth||im.width; oc.height=im.naturalHeight||im.height;
-    var octx=oc.getContext('2d'); octx.drawImage(im,0,0,oc.width,oc.height);
-    var id=octx.getImageData(0,0,oc.width,oc.height), p=id.data, i, mx;
-    for(i=0;i<p.length;i+=4){
-      mx=p[i]; if(p[i+1]>mx)mx=p[i+1]; if(p[i+2]>mx)mx=p[i+2];
-      if(mx<=10) p[i+3]=0;                       // pure black -> transparent
-      else if(mx<42) p[i+3]=((mx-10)/32)*255;    // feather the halo, keep ring gaps
-    }
-    octx.putImageData(id,0,0);
-    return oc;
-  }
+  // ringed planets: the source is a transparent-background PNG (baked offline), so the full
+  // planet + rings float in space with no letterbox rectangle and no runtime keying.
   function drawWide(key, scale, dy){
     var im=imgs[key]; if(!im)return;
-    if(wideBufKey!==key){ try{ wideBuf=buildWideBuf(im); wideBufKey=key; }catch(e){ wideBuf=null; } }
-    var src=wideBuf||im;
-    var iw=src.width, ih=src.height;
-    // contain-fit the full keyed planet+rings within the frame (bg is transparent, so the
-    // whole ring span shows with margin and never clips into a rectangle)
+    var iw=im.naturalWidth||im.width, ih=im.naturalHeight||im.height;
+    // contain-fit the whole planet+rings within the frame (with margin), never clipping
     var s=Math.min((W*0.94)/iw,(H*0.92)/ih)*scale;
     var dw=iw*s, dh=ih*s;
     ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
-    ctx.drawImage(src, cx-dw/2, cy+dy-dh/2, dw, dh);
+    ctx.drawImage(im, cx-dw/2, cy+dy-dh/2, dw, dh);
   }
 
   function draw(){
