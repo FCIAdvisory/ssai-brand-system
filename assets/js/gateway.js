@@ -123,8 +123,20 @@
     function slerp(a, b, t) { var d = a.x * b.x + a.y * b.y + a.z * b.z; d = Math.max(-1, Math.min(1, d)); var o = Math.acos(d); if (o < 1e-4) return { x: a.x, y: a.y, z: a.z }; var s = Math.sin(o), w1 = Math.sin((1 - t) * o) / s, w2 = Math.sin(t * o) / s; return { x: a.x * w1 + b.x * w2, y: a.y * w1 + b.y * w2, z: a.z * w1 + b.z * w2 }; }
     var arcs = [];
     for (var k = 1; k < SITES.length; k++) { var pts = [], N = 46; for (var s = 0; s <= N; s++) pts.push(slerp(hub, SITES[k], s / N)); arcs.push({ pts: pts, phase: Math.random() }); }
-    var DOTS = [], ND = reduce ? 800 : 1400;
-    (function () { var off = 2 / ND, inc = Math.PI * (3 - Math.sqrt(5)); for (var d = 0; d < ND; d++) { var y = d * off - 1 + off / 2, r = Math.sqrt(Math.max(0, 1 - y * y)), ph = d * inc; DOTS.push({ x: Math.cos(ph) * r, y: y, z: Math.sin(ph) * r }); } })();
+    /* --- real NASA Blue Marble (orthographic texture) --- */
+    var SRCW = 0, SRCH = 0, src = null, ready = false;
+    var gbuf = document.createElement('canvas'), gctx = gbuf.getContext('2d');
+    var gimg = null, GR = 0, srcRow = null, baseCol = null, shade = null, gmask = null, lastTilt = 999;
+    var bm = new Image();
+    function buildSource() {
+      SRCW = bm.naturalWidth || 2048; SRCH = bm.naturalHeight || 1024;
+      var oc = document.createElement('canvas'); oc.width = SRCW; oc.height = SRCH;
+      var octx = oc.getContext('2d', { willReadFrequently: true }); octx.drawImage(bm, 0, 0, SRCW, SRCH);
+      try { src = octx.getImageData(0, 0, SRCW, SRCH).data; ready = true; } catch (e) { ready = false; }
+    }
+    bm.onload = function () { buildSource(); if (W > 1) { buildLUT(); frame(performance.now()); } };
+    bm.src = 'assets/images/blue-marble-world.jpg';
+    if (bm.complete && bm.naturalWidth) buildSource();
 
     var W = 0, H = 0, dpr = 1, cx = 0, cy = 0, R = 0;
     function resize() {
@@ -135,6 +147,31 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       cx = W * (W < 720 ? 0.5 : 0.66); cy = H * 0.5;
       R = Math.min(W * 0.42, H * 0.62); R = Math.max(R, Math.min(W, H) * 0.34);
+      buildLUT();
+    }
+    function buildLUT() {
+      if (!ready || R < 2) return;
+      GR = Math.round(R); var D = GR * 2;
+      gbuf.width = D; gbuf.height = D; gimg = gctx.createImageData(D, D);
+      srcRow = new Int32Array(D * D); baseCol = new Int32Array(D * D);
+      shade = new Float32Array(D * D); gmask = new Uint8Array(D * D);
+      var ct = Math.cos(curTilt), st = Math.sin(curTilt), RAD = 180 / Math.PI;
+      for (var sy = 0; sy < D; sy++) {
+        for (var sx = 0; sx < D; sx++) {
+          var i = sy * D + sx;
+          var nx = (sx - GR + 0.5) / GR, ny = (GR - sy - 0.5) / GR, rr = nx * nx + ny * ny;
+          if (rr > 1) { gmask[i] = 0; continue; }
+          var nz = Math.sqrt(1 - rr);
+          var py = ny * ct + nz * st, z1 = -ny * st + nz * ct;
+          var pp = Math.acos(py < -1 ? -1 : py > 1 ? 1 : py);
+          var lat = 90 - pp * RAD;
+          var lon0 = Math.atan2(z1, -nx) * RAD - 180;
+          var col = ((lon0 + 180) / 360 * SRCW) % SRCW; if (col < 0) col += SRCW;
+          var row = (90 - lat) / 180 * SRCH; row = row < 0 ? 0 : row > SRCH - 1 ? SRCH - 1 : row;
+          srcRow[i] = row | 0; baseCol[i] = col | 0; shade[i] = 0.5 + 0.5 * nz; gmask[i] = 1;
+        }
+      }
+      lastTilt = curTilt;
     }
     var rotY = 0, vel = 0.0016, curTilt = -0.34, t0 = 0, dragging = false, lastX = 0, lastY = 0, lastT = 0, raf = null, running = false;
     function rotate(p) {
@@ -151,13 +188,23 @@
       var halo = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, R * 1.25);
       halo.addColorStop(0, 'rgba(' + COL.halo + ',0.30)'); halo.addColorStop(0.6, 'rgba(' + COL.halo + ',0.10)'); halo.addColorStop(1, 'rgba(' + COL.halo + ',0)');
       ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(cx, cy, R * 1.25, 0, 7); ctx.fill();
-      for (var i = 0; i < DOTS.length; i++) {
-        var p = rotate(DOTS[i]); var depth = (p.z + 1) / 2; var front = p.z > 0;
-        var col = front ? COL.front : COL.back;
-        var a = front ? (0.14 + depth * 0.5) : (0.10 + depth * 0.22);
-        var rad = front ? (0.7 + depth * 1.1) : (0.5 + depth * 0.6);
-        ctx.fillStyle = 'rgba(' + col + ',' + a.toFixed(3) + ')';
-        ctx.beginPath(); ctx.arc(p.x, p.y, rad, 0, 7); ctx.fill();
+      if (ready) {
+        if (curTilt !== lastTilt) buildLUT();
+        var out = gimg.data, rotOff = Math.round(-rotY / (2 * Math.PI) * SRCW);
+        for (var i = 0; i < srcRow.length; i++) {
+          var o = i * 4;
+          if (!gmask[i]) { out[o + 3] = 0; continue; }
+          var col = (baseCol[i] + rotOff) % SRCW; if (col < 0) col += SRCW;
+          var sidx = (srcRow[i] * SRCW + col) * 4, sh = shade[i];
+          out[o] = src[sidx] * sh; out[o + 1] = src[sidx + 1] * sh; out[o + 2] = src[sidx + 2] * sh; out[o + 3] = 255;
+        }
+        gctx.putImageData(gimg, 0, 0);
+        ctx.save();
+        ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.clip();
+        ctx.drawImage(gbuf, cx - GR, cy - GR, GR * 2, GR * 2);
+        ctx.restore();
+        ctx.strokeStyle = 'rgba(' + COL.arc + ',0.22)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.stroke();
       }
       for (var ai = 0; ai < arcs.length; ai++) {
         var arc = arcs[ai], ap = [];
