@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vegetation index (NDVI) · SSAI</title>
+<title>Live NDVI · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,52 +41,30 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-ndvi-seasons{--nsx-accent:#3cc8ff;width:100%;font-family:var(--body,'Inter',Arial,sans-serif);color:var(--star,#f4f5ff);box-sizing:border-box}
-#kit-ndvi-seasons *{box-sizing:border-box}
-#kit-ndvi-seasons .nsx-wrap{display:grid;grid-template-columns:1.45fr .95fr;gap:18px;align-items:stretch;width:100%}
-#kit-ndvi-seasons .nsx-stage{position:relative;grid-column:1;grid-row:1;border:1px solid var(--hair,rgba(166,171,230,.16));border-radius:14px;overflow:hidden;background:#070418;min-height:300px;aspect-ratio:1/1}
-#kit-ndvi-seasons .nsx-cv{display:block;width:100%;height:100%;position:absolute;inset:0}
-#kit-ndvi-seasons .nsx-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--muted,#7e84bf);background:radial-gradient(120% 120% at 50% 40%,rgba(22,20,95,.5),#070418)}
-#kit-ndvi-seasons .nsx-cap{position:absolute;left:0;right:0;bottom:0;padding:9px 12px;font-size:10.5px;letter-spacing:.05em;color:var(--neb,#a6abe6);background:linear-gradient(to top,rgba(5,3,20,.82),rgba(5,3,20,0));text-transform:uppercase;font-weight:500}
-#kit-ndvi-seasons .nsx-mode{position:absolute;top:10px;right:10px;z-index:2;font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:10.5px;color:var(--star,#f4f5ff);background:rgba(7,4,24,.62);border:1px solid var(--hair,rgba(166,171,230,.22));border-radius:8px;padding:6px 11px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:border-color .25s,background .25s,color .25s}
-#kit-ndvi-seasons .nsx-mode:hover{border-color:var(--nsx-accent);color:var(--nsx-accent)}
-#kit-ndvi-seasons .nsx-mode.on{color:var(--nsx-accent);border-color:color-mix(in srgb,var(--nsx-accent) 60%,transparent);box-shadow:0 0 16px -6px var(--nsx-accent)}
-#kit-ndvi-seasons .nsx-panel{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:16px;padding:18px 18px 16px;border:1px solid var(--hair,rgba(166,171,230,.16));border-radius:14px;background:linear-gradient(180deg,rgba(22,20,95,.18),rgba(7,4,24,.32))}
-#kit-ndvi-seasons .nsx-k{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:10.5px;color:var(--muted,#7e84bf)}
-#kit-ndvi-seasons .nsx-valrow{display:flex;align-items:baseline;gap:10px;margin-top:4px;flex-wrap:wrap}
-#kit-ndvi-seasons .nsx-num{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;font-size:clamp(34px,6vw,46px);line-height:.92;color:var(--star,#f4f5ff);letter-spacing:-.01em;font-variant-numeric:tabular-nums;text-shadow:0 0 24px -8px var(--nsx-accent)}
-#kit-ndvi-seasons .nsx-cls{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--nsx-accent);padding:3px 9px;border:1px solid color-mix(in srgb,var(--nsx-accent) 45%,transparent);border-radius:7px}
-#kit-ndvi-seasons .nsx-date{margin-top:7px;font-size:11px;letter-spacing:.05em;color:var(--neb,#a6abe6);text-transform:uppercase;font-weight:500}
-#kit-ndvi-seasons .nsx-bands{display:flex;flex-direction:column;gap:9px}
-#kit-ndvi-seasons .nsx-band{display:flex;align-items:center;gap:9px}
-#kit-ndvi-seasons .nsx-bk{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:9.5px;color:var(--muted,#7e84bf);width:54px;flex:none}
-#kit-ndvi-seasons .nsx-bar{position:relative;flex:1;height:6px;border-radius:5px;background:rgba(166,171,230,.12);overflow:hidden}
-#kit-ndvi-seasons .nsx-fill{position:absolute;left:0;top:0;bottom:0;width:2%;border-radius:5px;transition:width .35s cubic-bezier(.4,0,.2,1)}
-#kit-ndvi-seasons .nsx-fill[data-b="nir"]{background:linear-gradient(90deg,#2a7d63,#5dcaa5)}
-#kit-ndvi-seasons .nsx-fill[data-b="red"]{background:linear-gradient(90deg,#7a2f24,#e06a52)}
-#kit-ndvi-seasons .nsx-bv{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;font-size:11px;color:var(--star,#f4f5ff);width:30px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
-#kit-ndvi-seasons .nsx-cbwrap{position:relative;margin-top:2px}
-#kit-ndvi-seasons .nsx-cb{display:block;width:100%;height:12px;border-radius:6px;border:1px solid var(--hair,rgba(166,171,230,.2))}
-#kit-ndvi-seasons .nsx-marker{position:absolute;top:-4px;bottom:-4px;width:2px;left:0;background:var(--star,#f4f5ff);box-shadow:0 0 9px var(--star,#f4f5ff);transform:translateX(-1px);transition:left .35s cubic-bezier(.4,0,.2,1);border-radius:2px}
-#kit-ndvi-seasons .nsx-marker:before{content:'';position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--star,#f4f5ff)}
-#kit-ndvi-seasons .nsx-ticks{display:flex;justify-content:space-between;margin-top:5px;font-family:var(--disp,system-ui);font-style:italic;font-weight:700;font-size:9.5px;color:var(--muted,#7e84bf);font-variant-numeric:tabular-nums}
-#kit-ndvi-seasons .nsx-ctr{grid-column:1/3;grid-row:2;display:flex;align-items:center;gap:12px;margin-top:2px;flex-wrap:wrap}
-#kit-ndvi-seasons .nsx-play{display:inline-flex;align-items:center;gap:8px;font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--star,#f4f5ff);background:rgba(22,20,95,.5);border:1px solid var(--hair,rgba(166,171,230,.24));border-radius:9px;padding:9px 15px;cursor:pointer;transition:border-color .25s,background .25s,color .25s}
-#kit-ndvi-seasons .nsx-play:hover{border-color:var(--nsx-accent);color:var(--nsx-accent)}
-#kit-ndvi-seasons .nsx-play.on{color:var(--nsx-accent);border-color:color-mix(in srgb,var(--nsx-accent) 60%,transparent);box-shadow:0 0 18px -7px var(--nsx-accent)}
-#kit-ndvi-seasons .nsx-pi{font-size:10px;font-style:normal}
-#kit-ndvi-seasons .nsx-seg{display:inline-flex;border:1px solid var(--hair,rgba(166,171,230,.2));border-radius:9px;overflow:hidden;background:rgba(7,4,24,.4)}
-#kit-ndvi-seasons .nsx-segb{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;color:var(--muted,#7e84bf);background:transparent;border:none;border-right:1px solid var(--hair,rgba(166,171,230,.14));padding:9px 13px;cursor:pointer;transition:color .25s,background .25s}
-#kit-ndvi-seasons .nsx-segb:last-child{border-right:none}
-#kit-ndvi-seasons .nsx-segb:hover{color:var(--star,#f4f5ff)}
-#kit-ndvi-seasons .nsx-segb.on{color:var(--space,#050314);background:var(--nsx-accent)}
-#kit-ndvi-seasons .nsx-slwrap{grid-column:1/3;grid-row:3;margin-top:2px}
-#kit-ndvi-seasons .nsx-slider{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:linear-gradient(90deg,rgba(166,171,230,.18),rgba(166,171,230,.3));outline:none;cursor:pointer}
-#kit-ndvi-seasons .nsx-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--nsx-accent);border:3px solid var(--space,#050314);box-shadow:0 0 12px -2px var(--nsx-accent);cursor:pointer;transition:transform .15s}
-#kit-ndvi-seasons .nsx-slider::-webkit-slider-thumb:hover{transform:scale(1.12)}
-#kit-ndvi-seasons .nsx-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--nsx-accent);border:3px solid var(--space,#050314);box-shadow:0 0 12px -2px var(--nsx-accent);cursor:pointer}
-@media(max-width:620px){#kit-ndvi-seasons .nsx-wrap{grid-template-columns:1fr}#kit-ndvi-seasons .nsx-stage{grid-column:1;grid-row:1}#kit-ndvi-seasons .nsx-panel{grid-column:1;grid-row:2}#kit-ndvi-seasons .nsx-ctr{grid-column:1;grid-row:3}#kit-ndvi-seasons .nsx-slwrap{grid-column:1;grid-row:4}}
-@media(prefers-reduced-motion:reduce){#kit-ndvi-seasons .nsx-fill,#kit-ndvi-seasons .nsx-marker{transition:none}}
+#kit-ndvi-seasons{position:relative;width:100%;height:100%;overflow:hidden;background:#05030f;font-family:'Inter',system-ui,-apple-system,sans-serif;color:#eef1ff;-webkit-user-select:none;user-select:none}
+#kit-ndvi-seasons .ndx-map{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#kit-ndvi-seasons .ndx-map:active{cursor:grabbing}
+#kit-ndvi-seasons .ndx-controls{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;background:rgba(8,6,24,.5);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:5px;backdrop-filter:blur(13px) saturate(130%);-webkit-backdrop-filter:blur(13px) saturate(130%);box-shadow:0 10px 36px -16px rgba(0,0,0,.8)}
+#kit-ndvi-seasons .ndx-layers{left:16px;top:16px;max-width:calc(100% - 200px);flex-wrap:wrap}
+#kit-ndvi-seasons .ndx-layer{appearance:none;cursor:pointer;font:600 11.5px/1 'Inter',sans-serif;color:rgba(228,236,255,.66);background:transparent;border:0;padding:8px 13px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s}
+#kit-ndvi-seasons .ndx-layer:hover{color:#fff}
+#kit-ndvi-seasons .ndx-layer.is-on{color:#04121c;background:var(--accent,#3cc8ff);box-shadow:0 2px 12px -2px var(--accent,#3cc8ff)}
+#kit-ndvi-seasons .ndx-datebar{right:16px;top:16px;gap:10px;padding:5px 8px}
+#kit-ndvi-seasons .ndx-date{font:600 12px/1 'Inter',sans-serif;color:#fff;font-variant-numeric:tabular-nums;min-width:92px;text-align:center}
+#kit-ndvi-seasons .ndx-db,#kit-ndvi-seasons .ndx-zb{appearance:none;cursor:pointer;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#eaf0ff;font:600 15px/1 'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s}
+#kit-ndvi-seasons .ndx-db:hover,#kit-ndvi-seasons .ndx-zb:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+#kit-ndvi-seasons .ndx-zoom{right:16px;bottom:18px;flex-direction:column;gap:4px;padding:4px;border-radius:16px}
+#kit-ndvi-seasons .ndx-hud{position:absolute;left:16px;bottom:18px;z-index:6;display:flex;flex-direction:column;gap:3px;padding:9px 13px;border-radius:13px;background:rgba(8,6,24,.46);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);pointer-events:none;max-width:60%}
+#kit-ndvi-seasons .ndx-coord{font:600 13px/1.1 'Inter',sans-serif;color:#fff;font-variant-numeric:tabular-nums}
+#kit-ndvi-seasons .ndx-desc{font-size:10.5px;letter-spacing:.04em;color:rgba(196,206,236,.62)}
+#kit-ndvi-seasons .ndx-load{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:7;display:none;align-items:center;gap:9px;padding:10px 16px;border-radius:999px;background:rgba(8,6,24,.66);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:11.5px;letter-spacing:.06em;color:#dfe5ff}
+#kit-ndvi-seasons .ndx-load.ndx-on{display:flex}
+#kit-ndvi-seasons .ndx-spin{width:13px;height:13px;border-radius:50%;border:2px solid rgba(166,171,230,.28);border-top-color:var(--accent,#3cc8ff);animation:ndx-rot .9s linear infinite}
+@keyframes ndx-rot{to{transform:rotate(360deg)}}
+#kit-ndvi-seasons .ndx-legend{position:absolute;right:16px;bottom:64px;z-index:6;display:flex;align-items:center;gap:8px;padding:8px 11px;border-radius:12px;background:rgba(8,6,24,.5);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+#kit-ndvi-seasons .ndx-lg-t{font:600 10px/1 'Inter';letter-spacing:.14em;color:rgba(220,228,255,.7)}
+#kit-ndvi-seasons .ndx-lg-bar{width:14px;height:96px;border-radius:4px;background:linear-gradient(#1eb24a,#9bd34a,#d9c84a,#9c7a32,#3a2a1e)}
+#kit-ndvi-seasons .ndx-lg-sc{display:flex;flex-direction:column;justify-content:space-between;height:96px;font:500 9px/1 'Inter';color:rgba(200,210,236,.6)}
 
 body.mb-embed #kit-ndvi-seasons{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-ndvi-seasons [class*='frame'],body.mb-embed #kit-ndvi-seasons [class*='shell'],body.mb-embed #kit-ndvi-seasons [class*='-inner'],body.mb-embed #kit-ndvi-seasons [class*='wrapper']{display:contents!important;}
@@ -103,13 +81,13 @@ body.mb-embed #kit-ndvi-seasons [class*='stage'],body.mb-embed #kit-ndvi-seasons
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Vegetation index (NDVI)</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Live NDVI</div></div>
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
-  <div class="mb-stage"><div class="kfig" id="kit-ndvi-seasons"></div></div>
+  <div class="mb-stage"><div class="kfig" id="kit-ndvi-seasons"><canvas class="ndx-map"></canvas><div class="ndx-controls ndx-layers"><button class="ndx-layer is-on" type="button" data-l="0">NDVI</button></div><div class="ndx-controls ndx-datebar"><button class="ndx-db" type="button" data-d="-1" aria-label="Previous day">&#8249;</button><span class="ndx-date">&mdash;</span><button class="ndx-db" type="button" data-d="1" aria-label="Next day">&#8250;</button></div><div class="ndx-controls ndx-zoom"><button class="ndx-zb" type="button" data-z="1" aria-label="Zoom in">+</button><button class="ndx-zb" type="button" data-z="-1" aria-label="Zoom out">&minus;</button></div><div class="ndx-hud"><div class="ndx-coord">&mdash;</div><div class="ndx-desc">&mdash;</div></div><div class="ndx-load ndx-on"><span class="ndx-spin"></span>Loading live imagery&hellip;</div><div class="ndx-legend"><span class="ndx-lg-t">NDVI</span><div class="ndx-lg-bar"></div><div class="ndx-lg-sc"><span>0.8 dense</span><span>0.4</span><span>0.1</span><span>bare</span></div></div></div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Tap winter/spring/summer/autumn or drag the year slider (or press Play) to crossfade the real per-pixel NDVI raster; toggle True color to compare against the natural-color MODIS scene. The mean NDVI, vegetation class, NIR/Red band bars, date and colorbar marker all update live.</span>
+    <span class="mb-c-int">Drag to pan, scroll to zoom into live MODIS imagery recoloured by NDVI = (NIR−Red)/(NIR+Red); step the date day by day to watch vegetation green up and senesce. The legend maps colour to NDVI value.</span>
     <span class="mb-c-src">Data · NASA MODIS — W. Kansas</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -161,272 +139,73 @@ body.mb-embed #kit-ndvi-seasons [class*='stage'],body.mb-embed #kit-ndvi-seasons
 <script>
 (function(){
   var root=document.getElementById('kit-ndvi-seasons'); if(!root) return;
-
-  var SEASONS=['winter','spring','summer','autumn'];
-  var FALLBACK={
-    region:'Western Kansas, USA (center-pivot irrigation)',
-    sensor:'MODIS / Terra',
-    bbox:[-101.05,37.5,-100.05,38.28],
-    dates:{winter:'2023-01-12',spring:'2023-05-26',summer:'2023-07-20',autumn:'2023-11-01'}
-  };
-  var meta=JSON.parse(JSON.stringify(FALLBACK));
-
-  function accent(){
-    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    return v||'#3cc8ff';
+  var canvas=root.querySelector('.ndx-map'), ctx=canvas.getContext('2d');
+  var coordEl=root.querySelector('.ndx-coord'), descEl=root.querySelector('.ndx-desc');
+  var dateEl=root.querySelector('.ndx-date'), loadEl=root.querySelector('.ndx-load');
+  var TS=256, LAYERS=[{id:'MODIS_Terra_CorrectedReflectance_Bands721',ms:9,ext:'jpg',desc:'Live NDVI \u2014 vegetation greenness from NIR vs Red (MODIS)'}]; var Lx=0; function lay(){return LAYERS[Lx];}
+  function pad(n){return (n<10?'0':'')+n;}
+  function fmt(d){return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate());}
+  var dayMs=86400000, date=new Date(Date.now()-2*dayMs), dateStr=fmt(date);
+  function setDate(){dateStr=fmt(date); if(dateEl) dateEl.textContent=dateStr;}
+  var lon=-55, lat=-12, zoom=4.0;
+  var cache={}, loading={}, inflight=0, MAXLOAD=10, firstLoaded=false; var work=document.createElement('canvas'),wctx=work.getContext('2d',{willReadFrequently:true}); var proc={};
+  function url(layer,z,x,y){return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+layer.id+'/default/'+dateStr+'/GoogleMapsCompatible_Level'+layer.ms+'/'+z+'/'+y+'/'+x+'.'+layer.ext;}
+  function tile(layer,z,x,y){
+    var n=Math.pow(2,z); if(y<0||y>=n) return null; x=((x%n)+n)%n;
+    var k=layer.id+'|'+dateStr+'|'+z+'|'+x+'|'+y; var c=cache[k]; if(c) return c;
+    if(loading[k]||inflight>=MAXLOAD) return null;
+    loading[k]=1; inflight++;
+    var im=new Image(); try{im.crossOrigin='anonymous';}catch(e){}
+    im.onload=function(){cache[k]=im; delete loading[k]; inflight--; scheduleDraw(); if(!firstLoaded){firstLoaded=true; if(loadEl) loadEl.classList.remove('ndx-on');}};
+    im.onerror=function(){cache[k]='e'; delete loading[k]; inflight--;};
+    im.src=url(layer,z,x,y); return null;
   }
-
-  var NDVI_STOPS=[
-    {t:-0.20, c:[34,28,56]},
-    {t:-0.05, c:[120,96,72]},
-    {t: 0.05, c:[156,120,78]},
-    {t: 0.15, c:[198,170,106]},
-    {t: 0.28, c:[226,216,122]},
-    {t: 0.42, c:[150,190,84]},
-    {t: 0.58, c:[78,150,58]},
-    {t: 0.80, c:[26,96,40]},
-    {t: 1.01, c:[14,64,28]}
-  ];
-  function ndviColor(v){
-    var s=NDVI_STOPS, i;
-    if(v<=s[0].t) return s[0].c;
-    for(i=0;i<s.length-1;i++){
-      if(v<=s[i+1].t){
-        var a=s[i], b=s[i+1], f=(v-a.t)/(b.t-a.t);
-        return [a.c[0]+(b.c[0]-a.c[0])*f, a.c[1]+(b.c[1]-a.c[1])*f, a.c[2]+(b.c[2]-a.c[2])*f];
-      }
-    }
-    return s[s.length-1].c;
+  function lon2tx(lo,z){return (lo+180)/360*Math.pow(2,z);}
+  function lat2ty(la,z){var s=Math.sin(la*Math.PI/180); s=Math.max(-0.99999,Math.min(0.99999,s)); return (0.5-Math.log((1+s)/(1-s))/(4*Math.PI))*Math.pow(2,z);}
+  function tx2lon(tx,z){return tx/Math.pow(2,z)*360-180;}
+  function ty2lat(ty,z){var k=Math.PI-2*Math.PI*ty/Math.pow(2,z); return 180/Math.PI*Math.atan(0.5*(Math.exp(k)-Math.exp(-k)));}
+  var W=1,H=1,DPR=1,pending=false;
+  function resize(){DPR=Math.min(window.devicePixelRatio||1,2); W=root.clientWidth||800; H=root.clientHeight||500; canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR); canvas.style.width=W+'px'; canvas.style.height=H+'px'; ctx.setTransform(DPR,0,0,DPR,0,0); scheduleDraw();}
+  function clamp(){var mz=lay().ms; if(zoom>mz) zoom=mz; if(zoom<1.2) zoom=1.2; if(lat>83) lat=83; if(lat<-83) lat=-83;}
+  function drawParent(layer,z,x,y,sx,sy,ts){for(var dz=1;dz<=4;dz++){var pz=z-dz; if(pz<0) break; var f=Math.pow(2,dz); var px=Math.floor(x/f),py=Math.floor(y/f); var n=Math.pow(2,pz); var pk=layer.id+'|'+dateStr+'|'+pz+'|'+(((px%n)+n)%n)+'|'+py; var pt=cache[pk]; if(pt&&pt!=='e'){var sub=1/f; ctx.drawImage(pt,(x-px*f)/f*256,(y-py*f)/f*256,256*sub,256*sub,sx,sy,ts+1,ts+1); return;}} ctx.fillStyle='rgba(16,18,42,.55)'; ctx.fillRect(sx,sy,ts+1,ts+1);}
+  function draw(){
+    clamp(); var layer=lay();
+    var z=Math.max(1,Math.min(layer.ms,Math.floor(zoom))), scale=Math.pow(2,zoom-z), ts=TS*scale;
+    var cTx=lon2tx(lon,z), cTy=lat2ty(lat,z), ox=cTx-(W/2)/ts, oy=cTy-(H/2)/ts, n=Math.pow(2,z);
+    ctx.fillStyle='#05030f'; ctx.fillRect(0,0,W,H);
+    var x0=Math.floor(ox),x1=Math.floor(ox+W/ts),y0=Math.floor(oy),y1=Math.floor(oy+H/ts);
+    for(var ty=y0;ty<=y1;ty++){ if(ty<0||ty>=n) continue;
+      for(var tx=x0;tx<=x1;tx++){ var sx=(tx-ox)*ts, sy=(ty-oy)*ts; var t=tile(layer,z,tx,ty);
+        if(t&&t!=='e'){ var pk=z+'|'+((tx%n+n)%n)+'|'+ty+'|'+dateStr; var pc=proc[pk];
+ if(!pc){ work.width=256;work.height=256; wctx.drawImage(t,0,0,256,256); var im;try{im=wctx.getImageData(0,0,256,256);}catch(e){im=null;}
+  if(im){ var d=im.data; for(var i=0;i<d.length;i+=4){ var nir=d[i+1],red=d[i+2]; var nd=(nir+red)?(nir-red)/(nir+red):0;
+    var r,g,b; if(nd<0.05){r=58;g=42;b=30;} else if(nd<0.2){var u=(nd-0.05)/0.15;r=150-20*u;g=120+30*u;b=50;} else if(nd<0.4){var u=(nd-0.2)/0.2;r=150-110*u;g=150+30*u;b=40;} else {var u=Math.min(1,(nd-0.4)/0.45);r=40-20*u;g=180-40*u;b=40-15*u;}
+    var br=(nir+red)/2; if(br<22){r=8;g=14;b=34;} d[i]=r;d[i+1]=g;d[i+2]=b; }
+   wctx.putImageData(im,0,0); pc=document.createElement('canvas');pc.width=256;pc.height=256;pc.getContext('2d').drawImage(work,0,0); proc[pk]=pc; } else { pc=t; }
+ } ctx.drawImage(pc,sx,sy,ts+1,ts+1); } else { drawParent(layer,z,((tx%n)+n)%n,ty,sx,sy,ts); } } }
+    pending=false;
   }
-  function classify(m){
-    if(m<0.1) return 'Barren';
-    if(m<0.25) return 'Sparse';
-    if(m<0.45) return 'Moderate';
-    return 'Dense';
-  }
-  function cap1(s){return s.charAt(0).toUpperCase()+s.slice(1);}
-  function lerp(a,b,f){return a+(b-a)*f;}
-
-  var data={}, loaded=false, current=0, target=0, anim=0, playing=false, compare=false;
-  var visible=true, reduced=false, ndviCache={};
-
-  function el(tag,cls){var e=document.createElement(tag); if(cls)e.className=cls; return e;}
-
-  function buildScaffold(){
-    root.innerHTML='';
-    var w=el('div','nsx-wrap');
-
-    var stage=el('div','nsx-stage');
-    var cv=el('canvas','nsx-cv'); stage.appendChild(cv);
-    var load=el('div','nsx-loading'); load.textContent='Loading NASA imagery…'; stage.appendChild(load);
-    var modeBtn=el('button','nsx-mode'); modeBtn.type='button'; modeBtn.textContent='True color'; stage.appendChild(modeBtn);
-    var cap=el('div','nsx-cap'); stage.appendChild(cap);
-    w.appendChild(stage);
-
-    var panel=el('div','nsx-panel');
-    var read=el('div','nsx-read');
-    var rk=el('div','nsx-k'); rk.textContent='Scene mean NDVI'; read.appendChild(rk);
-    var rv=el('div','nsx-valrow');
-    var num=el('span','nsx-num'); num.textContent='—';
-    var cls=el('span','nsx-cls'); cls.textContent='';
-    rv.appendChild(num); rv.appendChild(cls); read.appendChild(rv);
-    var dateEl=el('div','nsx-date'); read.appendChild(dateEl);
-    panel.appendChild(read);
-
-    var bands=el('div','nsx-bands');
-    function band(label){
-      var b=el('div','nsx-band');
-      var k=el('span','nsx-bk'); k.textContent=label;
-      var bar=el('span','nsx-bar'); var fill=el('span','nsx-fill'); bar.appendChild(fill);
-      var v=el('span','nsx-bv');
-      b.appendChild(k); b.appendChild(bar); b.appendChild(v);
-      return {row:b,fill:fill,val:v};
-    }
-    var nirB=band('NIR 858'); nirB.fill.setAttribute('data-b','nir');
-    var redB=band('Red 645'); redB.fill.setAttribute('data-b','red');
-    bands.appendChild(nirB.row); bands.appendChild(redB.row);
-    panel.appendChild(bands);
-
-    var cbWrap=el('div','nsx-cbwrap');
-    var cb=el('canvas','nsx-cb'); cbWrap.appendChild(cb);
-    var marker=el('div','nsx-marker'); cbWrap.appendChild(marker);
-    panel.appendChild(cbWrap);
-    var ticks=el('div','nsx-ticks');
-    ['-0.1','0.2','0.5','0.8'].forEach(function(t){var s=el('span'); s.textContent=t; ticks.appendChild(s);});
-    panel.appendChild(ticks);
-    w.appendChild(panel);
-
-    var ctr=el('div','nsx-ctr');
-    var play=el('button','nsx-play'); play.type='button';
-    play.innerHTML='<span class="nsx-pi">▶</span><span class="nsx-pl">Play year</span>';
-    ctr.appendChild(play);
-
-    var seg=el('div','nsx-seg'); seg.setAttribute('role','tablist');
-    var segBtns=[];
-    SEASONS.forEach(function(s,i){
-      var b=el('button','nsx-segb'); b.type='button';
-      b.textContent=cap1(s); b.setAttribute('data-i',i);
-      seg.appendChild(b); segBtns.push(b);
-    });
-    ctr.appendChild(seg);
-    w.appendChild(ctr);
-
-    var sl=el('div','nsx-slwrap');
-    var slider=el('input'); slider.type='range'; slider.className='nsx-slider';
-    slider.min='0'; slider.max='300'; slider.step='1'; slider.value='0';
-    slider.setAttribute('aria-label','Scrub season of the year');
-    sl.appendChild(slider);
-    w.appendChild(sl);
-
-    root.appendChild(w);
-    return {cv:cv,load:load,cap:cap,modeBtn:modeBtn,num:num,cls:cls,dateEl:dateEl,
-      nirFill:nirB.fill,nirVal:nirB.val,redFill:redB.fill,redVal:redB.val,
-      cb:cb,marker:marker,play:play,segBtns:segBtns,slider:slider};
-  }
-
-  var ui=buildScaffold();
-  reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function loadImg(src){return new Promise(function(res,rej){var im=new Image(); im.onload=function(){res(im);}; im.onerror=function(){rej(src);}; im.src=src;});}
-  function readData(img){var W=img.naturalWidth,H=img.naturalHeight;var c=el('canvas');c.width=W;c.height=H;var x=c.getContext('2d');x.drawImage(img,0,0);return {W:W,H:H,data:x.getImageData(0,0,W,H).data};}
-
-  function processSeason(s,rgbImg,irImg){
-    var rgb=readData(rgbImg), ir=readData(irImg);
-    var W=ir.W,H=ir.H,n=W*H;
-    var ndvi=new Float32Array(n), valid=new Uint8Array(n);
-    var sum=0,cnt=0,nirSum=0,redSum=0,d=ir.data;
-    for(var p=0;p<n;p++){
-      var k=p*4, nir=d[k+1], red=d[k+2], den=nir+red;
-      var v=den>0?(nir-red)/den:0; ndvi[p]=v;
-      if(nir+red>14){valid[p]=1;sum+=v;cnt++;nirSum+=nir;redSum+=red;}
-    }
-    var rc=el('canvas'); rc.width=rgb.W; rc.height=rgb.H;
-    rc.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(rgb.data),rgb.W,rgb.H),0,0);
-    data[s]={W:W,H:H,ndvi:ndvi,valid:valid,mean:cnt?sum/cnt:0,nir:cnt?nirSum/cnt:0,red:cnt?redSum/cnt:0,rgb:rc};
-  }
-
-  function tryManifest(){
-    return fetch('../assets/scenes/manifest.json').then(function(r){return r.json();}).then(function(j){
-      if(j&&j.seasons){meta.region=j.seasons.region||meta.region; meta.bbox=j.seasons.bbox_WSEN||meta.bbox; if(j.seasons.dates)meta.dates=j.seasons.dates;}
-      if(j&&j.scenes&&j.scenes.agriculture&&j.scenes.agriculture.sensor)meta.sensor=j.scenes.agriculture.sensor;
-    }).catch(function(){});
-  }
-
-  function loadAll(){
-    var jobs=[];
-    SEASONS.forEach(function(s){
-      jobs.push(Promise.all([loadImg('../assets/scenes/seasons/'+s+'_rgb.jpg'),loadImg('../assets/scenes/seasons/'+s+'_ir.png')]).then(function(pair){processSeason(s,pair[0],pair[1]);}));
-    });
-    tryManifest().then(function(){return Promise.all(jobs);}).then(function(){
-      loaded=true; ui.load.style.display='none'; drawColorbar(); render(0);
-    }).catch(function(){ui.load.textContent='NASA imagery unavailable';});
-  }
-
-  var work=el('canvas');
-  function paintNDVI(s){
-    var D=data[s]; if(!D) return null;
-    work.width=D.W; work.height=D.H;
-    var img=new ImageData(D.W,D.H), o=img.data, ndvi=D.ndvi, valid=D.valid, n=D.W*D.H;
-    for(var p=0;p<n;p++){var k=p*4,c; if(!valid[p])c=[26,22,48]; else c=ndviColor(ndvi[p]); o[k]=c[0]|0;o[k+1]=c[1]|0;o[k+2]=c[2]|0;o[k+3]=255;}
-    work.getContext('2d').putImageData(img,0,0); return work;
-  }
-  function getLayer(s){
-    if(!ndviCache[s]){var c=paintNDVI(s); var out=el('canvas'); out.width=c.width; out.height=c.height; out.getContext('2d').drawImage(c,0,0); ndviCache[s]=out;}
-    return ndviCache[s];
-  }
-
-  function blendTo(A,B,f){
-    var cv=ui.cv, rect=cv.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
-    var cw=Math.max(2,Math.round(rect.width*dpr)), ch=Math.max(2,Math.round(rect.height*dpr));
-    if(cv.width!==cw||cv.height!==ch){cv.width=cw;cv.height=ch;}
-    var g=cv.getContext('2d'); g.clearRect(0,0,cw,ch); g.imageSmoothingEnabled=true; g.globalAlpha=1;
-    g.drawImage(A,0,0,cw,ch);
-    if(B&&f>0){g.globalAlpha=f; g.drawImage(B,0,0,cw,ch); g.globalAlpha=1;}
-  }
-
-  function render(pos){
-    if(!loaded) return;
-    var i0=Math.floor(pos), i1=Math.min(SEASONS.length-1,i0+1), f=pos-i0;
-    var sA=SEASONS[i0], sB=SEASONS[i1], DA=data[sA], DB=data[sB];
-    if(compare) blendTo(DA.rgb, f>0?DB.rgb:null, f);
-    else blendTo(getLayer(sA), f>0?getLayer(sB):null, f);
-
-    var mean=lerp(DA.mean,DB.mean,f), nir=lerp(DA.nir,DB.nir,f), red=lerp(DA.red,DB.red,f);
-    ui.num.textContent=(mean>=0?'+':'')+mean.toFixed(3);
-    ui.cls.textContent=classify(mean);
-    ui.nirFill.style.width=Math.max(2,Math.min(100,nir/255*100)).toFixed(1)+'%';
-    ui.redFill.style.width=Math.max(2,Math.min(100,red/255*100)).toFixed(1)+'%';
-    ui.nirVal.textContent=Math.round(nir);
-    ui.redVal.textContent=Math.round(red);
-
-    var mn=-0.1,mx=0.8,t=Math.max(0,Math.min(1,(mean-mn)/(mx-mn)));
-    ui.marker.style.left=(t*100).toFixed(1)+'%';
-
-    var near=f<0.5?sA:sB, dlabel=meta.dates[near]||'';
-    ui.dateEl.textContent=cap1(near)+' · '+dlabel;
-    ui.cap.textContent=meta.region+'  ·  '+meta.sensor+'  ·  '+dlabel;
-
-    var act=Math.round(pos);
-    ui.segBtns.forEach(function(b,bi){b.classList.toggle('on',bi===act);});
-    var sv=Math.round(pos/(SEASONS.length-1)*300);
-    if(parseInt(ui.slider.value,10)!==sv) ui.slider.value=String(sv);
-  }
-
-  function drawColorbar(){
-    var cb=ui.cb, rect=cb.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
-    var w=Math.max(40,Math.round(rect.width*dpr)), h=Math.max(8,Math.round(rect.height*dpr));
-    cb.width=w; cb.height=h;
-    var g=cb.getContext('2d'), mn=-0.1, mx=0.8;
-    for(var x=0;x<w;x++){var v=mn+(x/(w-1))*(mx-mn),c=ndviColor(v); g.fillStyle='rgb('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+')'; g.fillRect(x,0,1,h);}
-  }
-
-  function step(){
-    if(!playing) return;
-    target+=reduced?0.02:0.011;
-    if(target>=SEASONS.length-1){target=SEASONS.length-1; current=target; render(current); stopPlay(); return;}
-    current=target; render(current); anim=requestAnimationFrame(step);
-  }
-  function startPlay(){
-    if(playing) return;
-    if(current>=SEASONS.length-1){current=0;target=0;render(0);}
-    playing=true; ui.play.classList.add('on');
-    ui.play.querySelector('.nsx-pi').textContent='❚❚';
-    ui.play.querySelector('.nsx-pl').textContent='Pause';
-    target=current; anim=requestAnimationFrame(step);
-  }
-  function stopPlay(){
-    playing=false; cancelAnimationFrame(anim); ui.play.classList.remove('on');
-    ui.play.querySelector('.nsx-pi').textContent='▶';
-    ui.play.querySelector('.nsx-pl').textContent='Play year';
-  }
-  function seekTo(i){stopPlay(); current=i; target=i; if(loaded)render(i);}
-
-  ui.play.addEventListener('click',function(){playing?stopPlay():startPlay();});
-  ui.segBtns.forEach(function(b){b.addEventListener('click',function(){seekTo(parseInt(b.getAttribute('data-i'),10));});});
-  ui.modeBtn.addEventListener('click',function(){
-    compare=!compare; ui.modeBtn.textContent=compare?'NDVI':'True color';
-    ui.modeBtn.classList.toggle('on',compare); if(loaded)render(current);
-  });
-  ui.slider.addEventListener('input',function(){
-    stopPlay();
-    var p=parseInt(ui.slider.value,10)/300*(SEASONS.length-1);
-    current=p; target=p; if(loaded)render(p);
-  });
-
-  var rT;
-  function onResize(){clearTimeout(rT); rT=setTimeout(function(){if(loaded){drawColorbar();render(current);}},120);}
-  window.addEventListener('resize',onResize);
-
-  function applyAccent(){root.style.setProperty('--nsx-accent',accent());}
-  applyAccent();
-  setInterval(applyAccent,800);
-
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){visible=e.isIntersecting; if(!visible&&playing)stopPlay();});},{threshold:0.05});
-    io.observe(root);
-  }
-
-  loadAll();
+  function scheduleDraw(){ if(pending) return; pending=true; setTimeout(function(){pending=false; draw();},16); }
+  function fmtCoord(la,lo){var ns=la>=0?'N':'S',ew=lo>=0?'E':'W'; return Math.abs(la).toFixed(2)+'\u00b0'+ns+'  '+Math.abs(lo).toFixed(2)+'\u00b0'+ew+'   z'+zoom.toFixed(1);}
+  function pxToGeo(px,py){var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))),scale=Math.pow(2,zoom-z),ts=TS*scale; var cTx=lon2tx(lon,z),cTy=lat2ty(lat,z); var tx=cTx+(px-W/2)/ts,ty=cTy+(py-H/2)/ts; return [ty2lat(ty,z),tx2lon(tx,z)];}
+  function showCoord(px,py){var g=(px==null)?[lat,lon]:pxToGeo(px,py); if(coordEl) coordEl.textContent=fmtCoord(g[0],g[1]);}
+  var drag=false,lpx=0,lpy=0,moved=false;
+  function relXY(e){var r=canvas.getBoundingClientRect(); var t=e.touches?e.touches[0]:e; return [t.clientX-r.left,t.clientY-r.top];}
+  canvas.addEventListener('pointerdown',function(e){drag=true;moved=false;var p=relXY(e);lpx=p[0];lpy=p[1];try{canvas.setPointerCapture(e.pointerId);}catch(_){}});
+  canvas.addEventListener('pointermove',function(e){var p=relXY(e); if(drag){var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))),scale=Math.pow(2,zoom-z),ts=TS*scale; var cTx=lon2tx(lon,z)-(p[0]-lpx)/ts,cTy=lat2ty(lat,z)-(p[1]-lpy)/ts; if(Math.abs(p[0]-lpx)+Math.abs(p[1]-lpy)>3)moved=true; lon=tx2lon(cTx,z);lat=ty2lat(cTy,z);lpx=p[0];lpy=p[1];clamp();scheduleDraw();} showCoord(p[0],p[1]);});
+  function endDrag(){drag=false;}
+  canvas.addEventListener('pointerup',function(e){  endDrag(); });
+  canvas.addEventListener('pointercancel',endDrag); canvas.addEventListener('pointerleave',function(){drag=false;showCoord(null);});
+  canvas.addEventListener('wheel',function(e){e.preventDefault(); var p=relXY(e),g=pxToGeo(p[0],p[1]); zoom+=(-e.deltaY)*0.0016; clamp(); var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))),scale=Math.pow(2,zoom-z),ts=TS*scale; var gTx=lon2tx(g[1],z),gTy=lat2ty(g[0],z),cTx=gTx-(p[0]-W/2)/ts,cTy=gTy-(p[1]-H/2)/ts; lon=tx2lon(cTx,z);lat=ty2lat(cTy,z);clamp();scheduleDraw();showCoord(p[0],p[1]);},{passive:false});
+  root.querySelectorAll('.ndx-zb').forEach(function(b){b.addEventListener('click',function(){zoom+=(+b.dataset.z)*0.9;clamp();scheduleDraw();showCoord(null);});});
+  root.querySelectorAll('.ndx-layer').forEach(function(b){b.addEventListener('click',function(){Lx=+b.dataset.l; root.querySelectorAll('.ndx-layer').forEach(function(x){x.classList.toggle('is-on',x===b);}); if(descEl) descEl.textContent=lay().desc; proc={}; clamp();firstLoaded=true;scheduleDraw();showCoord(null);});});
+  root.querySelectorAll('.ndx-db').forEach(function(b){b.addEventListener('click',function(){date=new Date(date.getTime()+(+b.dataset.d)*dayMs); var mx=new Date(Date.now()-dayMs); if(date>mx)date=mx; setDate();cache={};scheduleDraw();});});
+  setDate(); if(descEl) descEl.textContent=lay().desc; if(loadEl) loadEl.classList.add('ndx-on');
+  
+  resize(); showCoord(null); draw();
+  if(window.ResizeObserver){try{new ResizeObserver(resize).observe(root);}catch(e){}}
+  window.addEventListener('resize',resize);
+  setTimeout(function(){if(loadEl) loadEl.classList.remove('ndx-on');},4000);
 })();
 </script>
 </body></html>

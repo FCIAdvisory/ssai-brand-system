@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pixel drill-down · SSAI</title>
+<title>Pixel Drill-Down · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,157 +41,34 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-pixel-drilldown{
-  --pdx-bg:#050314; --pdx-indigo:#16145f; --pdx-ink:#f4f5ff; --pdx-mute:#a6abe6;
-  --pdx-line:rgba(166,171,230,0.16); --pdx-accent:#3cc8ff; --pdx-accent-rgb:60,200,255;
-  --pdx-disp:'Chakra Petch','Inter',system-ui,sans-serif;
-  --pdx-body:'Inter',-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
-  width:100%; box-sizing:border-box; color:var(--pdx-ink);
-  font-family:var(--pdx-body); -webkit-font-smoothing:antialiased;
-}
-#kit-pixel-drilldown *{ box-sizing:border-box; }
-#kit-pixel-drilldown .pdx-card{
-  position:relative; border:1px solid var(--pdx-line); border-radius:16px;
-  background:radial-gradient(140% 130% at 8% -10%, #0b0833 0%, #060418 56%, #050314 100%);
-  padding:20px; overflow:hidden;
-}
-#kit-pixel-drilldown .pdx-card::before{
-  content:""; position:absolute; inset:0; pointer-events:none;
-  background:linear-gradient(180deg, rgba(var(--pdx-accent-rgb),0.05), transparent 22%);
-}
-
-#kit-pixel-drilldown .pdx-head{
-  position:relative; display:flex; align-items:flex-end; justify-content:space-between;
-  gap:18px; flex-wrap:wrap; margin-bottom:16px;
-}
-#kit-pixel-drilldown .pdx-eyebrow{
-  font-size:10.5px; letter-spacing:.26em; text-transform:uppercase;
-  color:var(--pdx-mute); margin-bottom:8px;
-}
-#kit-pixel-drilldown .pdx-title{
-  font-family:var(--pdx-disp); font-style:italic; font-weight:700; text-transform:uppercase;
-  font-size:clamp(22px,3.2vw,32px); line-height:.94; letter-spacing:.01em; color:var(--pdx-ink);
-}
-#kit-pixel-drilldown .pdx-prov{ text-align:right; min-width:160px; }
-#kit-pixel-drilldown .pdx-prov-name{
-  font-family:var(--pdx-disp); font-style:italic; font-weight:700; text-transform:uppercase;
-  font-size:13px; letter-spacing:.04em; color:var(--pdx-ink); line-height:1.1;
-}
-#kit-pixel-drilldown .pdx-prov-meta{ font-size:11px; color:var(--pdx-mute); margin-top:4px; letter-spacing:.02em; }
-
-#kit-pixel-drilldown .pdx-ctrls{
-  display:flex; flex-wrap:wrap; gap:16px 22px; align-items:flex-start; margin-bottom:16px;
-}
-#kit-pixel-drilldown .pdx-group{ display:flex; flex-direction:column; gap:7px; }
-#kit-pixel-drilldown .pdx-group-mode{ flex:1 1 360px; min-width:260px; }
-#kit-pixel-drilldown .pdx-grouplbl{
-  font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--pdx-mute);
-}
-#kit-pixel-drilldown .pdx-seg{
-  display:flex; flex-wrap:wrap; gap:3px; padding:4px;
-  border:1px solid var(--pdx-line); border-radius:11px; background:rgba(8,5,30,0.62);
-}
-#kit-pixel-drilldown .pdx-segbtn{
-  appearance:none; border:0; cursor:pointer; background:transparent; color:var(--pdx-mute);
-  font-family:var(--pdx-disp); font-style:italic; font-weight:700; text-transform:uppercase;
-  letter-spacing:.04em; font-size:11.5px; padding:7px 12px; border-radius:8px;
-  transition:background .18s ease, color .18s ease, box-shadow .18s ease; white-space:nowrap;
-}
-#kit-pixel-drilldown .pdx-segbtn:hover{ color:var(--pdx-ink); background:rgba(var(--pdx-accent-rgb),0.10); }
-#kit-pixel-drilldown .pdx-segbtn:focus-visible{ outline:2px solid rgba(var(--pdx-accent-rgb),0.7); outline-offset:1px; }
-#kit-pixel-drilldown .pdx-segbtn.is-on{
-  color:var(--pdx-bg); background:var(--pdx-accent);
-  box-shadow:0 2px 14px rgba(var(--pdx-accent-rgb),0.35);
-}
-
-#kit-pixel-drilldown .pdx-body{ display:grid; grid-template-columns:minmax(0,1fr) 304px; gap:18px; align-items:start; }
-#kit-pixel-drilldown .pdx-stagewrap{ display:flex; flex-direction:column; gap:9px; min-width:0; }
-#kit-pixel-drilldown .pdx-stage{
-  position:relative; width:100%; border:1px solid var(--pdx-line); border-radius:12px;
-  overflow:hidden; background:#070522; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.4);
-}
-#kit-pixel-drilldown .pdx-canvas{ display:block; width:100%; cursor:crosshair; touch-action:none; }
-#kit-pixel-drilldown .pdx-hint{ font-size:11px; color:var(--pdx-mute); letter-spacing:.04em; }
-
-#kit-pixel-drilldown .pdx-xh{ position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .12s ease; }
-#kit-pixel-drilldown .pdx-stage.pdx-active .pdx-xh{ opacity:1; }
-#kit-pixel-drilldown .pdx-xh-v{ position:absolute; top:0; bottom:0; width:1px; background:rgba(var(--pdx-accent-rgb),0.55); }
-#kit-pixel-drilldown .pdx-xh-h{ position:absolute; left:0; right:0; height:1px; background:rgba(var(--pdx-accent-rgb),0.55); }
-
-#kit-pixel-drilldown .pdx-loupe{
-  position:absolute; width:120px; height:120px; border-radius:10px; overflow:hidden;
-  border:1px solid rgba(var(--pdx-accent-rgb),0.6); box-shadow:0 8px 26px rgba(0,0,0,0.55);
-  pointer-events:none; opacity:0; transform:scale(.92); transition:opacity .12s ease, transform .12s ease;
-  background:#070522;
-}
-#kit-pixel-drilldown .pdx-stage.pdx-active .pdx-loupe{ opacity:1; transform:scale(1); }
-#kit-pixel-drilldown .pdx-loupe-cv{ display:block; width:100%; height:100%; image-rendering:pixelated; }
-#kit-pixel-drilldown .pdx-loupe-center{
-  position:absolute; left:50%; top:50%; width:calc(100%/11); height:calc(100%/11);
-  transform:translate(-50%,-50%); border:1.5px solid rgba(var(--pdx-accent-rgb),0.95);
-  box-shadow:0 0 0 1px rgba(0,0,0,0.6);
-}
-
-#kit-pixel-drilldown .pdx-status{
-  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-  font-family:var(--pdx-disp); font-style:italic; font-weight:700; text-transform:uppercase;
-  letter-spacing:.08em; font-size:12px; color:var(--pdx-mute); padding:10px 16px;
-  border:1px solid var(--pdx-line); border-radius:10px; background:rgba(6,4,24,0.82);
-  opacity:0; pointer-events:none; transition:opacity .2s ease;
-}
-#kit-pixel-drilldown .pdx-status.is-show{ opacity:1; }
-
-#kit-pixel-drilldown .pdx-panel{
-  border:1px solid var(--pdx-line); border-radius:12px; background:rgba(8,5,30,0.55);
-  padding:16px; display:flex; flex-direction:column; gap:14px;
-}
-#kit-pixel-drilldown .pdx-pxhead{ display:flex; align-items:center; justify-content:space-between; }
-#kit-pixel-drilldown .pdx-class{ display:flex; align-items:center; gap:9px; }
-#kit-pixel-drilldown .pdx-class-dot{ width:11px; height:11px; border-radius:50%; background:var(--pdx-mute); box-shadow:0 0 0 3px rgba(255,255,255,0.04); }
-#kit-pixel-drilldown .pdx-class-txt{
-  font-family:var(--pdx-disp); font-style:italic; font-weight:700; text-transform:uppercase;
-  letter-spacing:.03em; font-size:14px; color:var(--pdx-ink);
-}
-
-#kit-pixel-drilldown .pdx-coordrow{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
-#kit-pixel-drilldown .pdx-coord{
-  border:1px solid var(--pdx-line); border-radius:9px; padding:8px 9px; background:rgba(6,4,24,0.45);
-}
-#kit-pixel-drilldown .pdx-coord-lbl{ font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--pdx-mute); margin-bottom:4px; }
-#kit-pixel-drilldown .pdx-coord-val{
-  font-family:var(--pdx-disp); font-style:italic; font-weight:700; font-size:13px; color:var(--pdx-ink); letter-spacing:.01em;
-}
-
-#kit-pixel-drilldown .pdx-spectro-lbl{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--pdx-mute); margin-bottom:-4px; }
-#kit-pixel-drilldown .pdx-spectro{ display:flex; flex-direction:column; gap:9px; }
-#kit-pixel-drilldown .pdx-band{ display:flex; flex-direction:column; gap:5px; }
-#kit-pixel-drilldown .pdx-band-top{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
-#kit-pixel-drilldown .pdx-band-name{ display:flex; align-items:center; gap:7px; font-size:12px; color:var(--pdx-ink); }
-#kit-pixel-drilldown .pdx-band-dot{ width:8px; height:8px; border-radius:2px; flex:0 0 auto; }
-#kit-pixel-drilldown .pdx-band-wl{ font-size:10px; color:var(--pdx-mute); letter-spacing:.02em; }
-#kit-pixel-drilldown .pdx-band-val{
-  font-family:var(--pdx-disp); font-style:italic; font-weight:700; font-size:13px; color:var(--pdx-ink);
-  font-variant-numeric:tabular-nums; min-width:42px; text-align:right;
-}
-#kit-pixel-drilldown .pdx-band-track{ height:5px; border-radius:3px; background:rgba(166,171,230,0.12); overflow:hidden; }
-#kit-pixel-drilldown .pdx-band-fill{ height:100%; width:0%; border-radius:3px; transition:width .08s linear; }
-
-#kit-pixel-drilldown .pdx-pxxy{
-  font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--pdx-mute);
-  font-variant-numeric:tabular-nums; border-top:1px solid var(--pdx-line); padding-top:11px;
-}
-#kit-pixel-drilldown .pdx-sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-
-@media (max-width:760px){
-  #kit-pixel-drilldown .pdx-body{ grid-template-columns:1fr; }
-  #kit-pixel-drilldown .pdx-prov{ text-align:left; }
-  #kit-pixel-drilldown .pdx-head{ align-items:flex-start; }
-}
-@media (prefers-reduced-motion: reduce){
-  #kit-pixel-drilldown .pdx-loupe,
-  #kit-pixel-drilldown .pdx-xh,
-  #kit-pixel-drilldown .pdx-band-fill{ transition:none; }
-}
+#kit-pixel-drilldown{position:relative;width:100%;height:100%;overflow:hidden;background:#05030f;font-family:'Inter',system-ui,-apple-system,sans-serif;color:#eef1ff;-webkit-user-select:none;user-select:none}
+#kit-pixel-drilldown .pxx-map{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#kit-pixel-drilldown .pxx-map:active{cursor:grabbing}
+#kit-pixel-drilldown .pxx-controls{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;background:rgba(8,6,24,.5);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:5px;backdrop-filter:blur(13px) saturate(130%);-webkit-backdrop-filter:blur(13px) saturate(130%);box-shadow:0 10px 36px -16px rgba(0,0,0,.8)}
+#kit-pixel-drilldown .pxx-layers{left:16px;top:16px;max-width:calc(100% - 200px);flex-wrap:wrap}
+#kit-pixel-drilldown .pxx-layer{appearance:none;cursor:pointer;font:600 11.5px/1 'Inter',sans-serif;color:rgba(228,236,255,.66);background:transparent;border:0;padding:8px 13px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s}
+#kit-pixel-drilldown .pxx-layer:hover{color:#fff}
+#kit-pixel-drilldown .pxx-layer.is-on{color:#04121c;background:var(--accent,#3cc8ff);box-shadow:0 2px 12px -2px var(--accent,#3cc8ff)}
+#kit-pixel-drilldown .pxx-datebar{right:16px;top:16px;gap:10px;padding:5px 8px}
+#kit-pixel-drilldown .pxx-date{font:600 12px/1 'Inter',sans-serif;color:#fff;font-variant-numeric:tabular-nums;min-width:92px;text-align:center}
+#kit-pixel-drilldown .pxx-db,#kit-pixel-drilldown .pxx-zb{appearance:none;cursor:pointer;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#eaf0ff;font:600 15px/1 'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s}
+#kit-pixel-drilldown .pxx-db:hover,#kit-pixel-drilldown .pxx-zb:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+#kit-pixel-drilldown .pxx-zoom{right:16px;bottom:18px;flex-direction:column;gap:4px;padding:4px;border-radius:16px}
+#kit-pixel-drilldown .pxx-hud{position:absolute;left:16px;bottom:18px;z-index:6;display:flex;flex-direction:column;gap:3px;padding:9px 13px;border-radius:13px;background:rgba(8,6,24,.46);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);pointer-events:none;max-width:60%}
+#kit-pixel-drilldown .pxx-coord{font:600 13px/1.1 'Inter',sans-serif;color:#fff;font-variant-numeric:tabular-nums}
+#kit-pixel-drilldown .pxx-desc{font-size:10.5px;letter-spacing:.04em;color:rgba(196,206,236,.62)}
+#kit-pixel-drilldown .pxx-load{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:7;display:none;align-items:center;gap:9px;padding:10px 16px;border-radius:999px;background:rgba(8,6,24,.66);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:11.5px;letter-spacing:.06em;color:#dfe5ff}
+#kit-pixel-drilldown .pxx-load.pxx-on{display:flex}
+#kit-pixel-drilldown .pxx-spin{width:13px;height:13px;border-radius:50%;border:2px solid rgba(166,171,230,.28);border-top-color:var(--accent,#3cc8ff);animation:pxx-rot .9s linear infinite}
+@keyframes pxx-rot{to{transform:rotate(360deg)}}
+#kit-pixel-drilldown .pxx-read{position:absolute;right:16px;top:60px;z-index:6;width:208px;padding:13px 15px;border-radius:14px;background:rgba(8,6,24,.62);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 16px 44px -22px #000}
+#kit-pixel-drilldown .pxx-rd-t{font:600 13px/1.2 'Inter';color:#fff;margin-bottom:3px}
+#kit-pixel-drilldown .pxx-rd-co{font:500 10.5px/1.3 'Inter';color:rgba(196,206,236,.66);margin-bottom:9px;font-variant-numeric:tabular-nums}
+#kit-pixel-drilldown .pxx-rd-r{display:flex;align-items:center;justify-content:space-between;gap:10px;font:500 11.5px/1.7 'Inter';color:rgba(214,222,248,.82)}
+#kit-pixel-drilldown .pxx-rd-r b{color:#fff;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:6px}
+#kit-pixel-drilldown .pxx-rd-r i{width:9px;height:9px;border-radius:2px;display:inline-block}
+#kit-pixel-drilldown .pxx-hint{position:absolute;left:16px;bottom:18px;z-index:6;font:500 11px/1.3 'Inter';color:rgba(200,210,236,.6);padding:8px 12px;border-radius:10px;background:rgba(8,6,24,.46);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#kit-pixel-drilldown .pxx-pin{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 2px rgba(0,0,0,.5),0 0 12px var(--accent,#3cc8ff);z-index:5;display:none;pointer-events:none}
 
 body.mb-embed #kit-pixel-drilldown{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-pixel-drilldown [class*='frame'],body.mb-embed #kit-pixel-drilldown [class*='shell'],body.mb-embed #kit-pixel-drilldown [class*='-inner'],body.mb-embed #kit-pixel-drilldown [class*='wrapper']{display:contents!important;}
@@ -208,13 +85,13 @@ body.mb-embed #kit-pixel-drilldown [class*='stage'],body.mb-embed #kit-pixel-dri
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Pixel drill-down</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Pixel Drill-Down</div></div>
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
-  <div class="mb-stage"><div class="kfig" id="kit-pixel-drilldown"></div></div>
+  <div class="mb-stage"><div class="kfig" id="kit-pixel-drilldown"><canvas class="pxx-map"></canvas><div class="pxx-controls pxx-datebar"><button class="pxx-db" type="button" data-d="-1">&#8249;</button><span class="pxx-date">&mdash;</span><button class="pxx-db" type="button" data-d="1">&#8250;</button></div><div class="pxx-controls pxx-zoom"><button class="pxx-zb" type="button" data-z="1">+</button><button class="pxx-zb" type="button" data-z="-1">&minus;</button></div><div class="pxx-pin"></div><div class="pxx-read"><div class="pxx-rd-t">Click the map</div><div class="pxx-rd-co">to sample real reflectance</div></div><div class="pxx-hint">Tap any point — read its live MODIS bands &amp; NDVI</div><div class="pxx-load pxx-on"><span class="pxx-spin"></span>Loading live imagery&hellip;</div></div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Switch between four real NASA MODIS scenes (agriculture, river delta, urban, wildfire) and eight display modes (True color, False color/color-IR, NDVI, and single Blue/Green/Red/NIR/SWIR bands) — the canvas re-renders live from the real pixel data. Hover or tap anywhere on the scene: a crosshair and magnified pixel loupe follow the cursor while the side panel reads that exact pixel&#x27;s five-band reflectance (with bars), computed NDVI, real latitude/longitude, and a classified surface type (Water / Dense vegetation / Crops / Bare soil / Built-up). The default True-color scene paints immediately on load with no interaction required.</span>
+    <span class="mb-c-int">Pan and zoom the live MODIS map, then click/tap a point to drop a pin and sample the genuine satellite reflectance at that location: the five bands, NDVI = (NIR−Red)/(NIR+Red), and a land-cover guess. Step the date to compare days.</span>
     <span class="mb-c-src">Data · NASA MODIS multispectral</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -265,394 +142,85 @@ body.mb-embed #kit-pixel-drilldown [class*='stage'],body.mb-embed #kit-pixel-dri
 </script>
 <script>
 (function(){
-  "use strict";
-  var ROOT = document.getElementById('kit-pixel-drilldown');
-  if(!ROOT || ROOT.getAttribute('data-pdx-init')==='1') return;
-  ROOT.setAttribute('data-pdx-init','1');
-
-  /* ===================== metadata ===================== */
-  var SCENES = {
-    agriculture:{ key:'agriculture', label:'Agriculture', name:'San Joaquin Valley cropland', region:'California, USA', sensor:'MODIS / Terra', date:'2023-07-28', bbox:[-120.1,35.85,-119.15,36.78] },
-    delta:      { key:'delta',       label:'River delta', name:'Nile Delta',                    region:'Egypt',              sensor:'MODIS / Terra', date:'2023-09-28', bbox:[30.0,30.0,32.3,31.7] },
-    urban:      { key:'urban',       label:'Urban',       name:'Phoenix metro',                region:'Arizona, USA',       sensor:'MODIS / Terra', date:'2023-05-10', bbox:[-112.5,33.12,-111.6,33.82] },
-    wildfire:   { key:'wildfire',    label:'Wildfire',    name:'Dixie Fire burn scar',         region:'Sierra Nevada, USA', sensor:'MODIS / Aqua',  date:'2021-10-08', bbox:[-121.8,39.5,-120.7,40.5] }
-  };
-  var SCENE_ORDER = ['agriculture','delta','urban','wildfire'];
-  var MODES = [
-    {key:'true', label:'True color'},
-    {key:'false',label:'False color'},
-    {key:'ndvi', label:'NDVI'},
-    {key:'blue', label:'Blue'},
-    {key:'green',label:'Green'},
-    {key:'red',  label:'Red'},
-    {key:'nir',  label:'NIR'},
-    {key:'swir', label:'SWIR'}
-  ];
-  var BANDS = [
-    {key:'blue', label:'Blue', nm:'469 nm', col:'#5b8dff'},
-    {key:'green',label:'Green',nm:'555 nm', col:'#46d07a'},
-    {key:'red',  label:'Red',  nm:'645 nm', col:'#ff6a6a'},
-    {key:'nir',  label:'NIR',  nm:'858 nm', col:'#d98cff'},
-    {key:'swir', label:'SWIR', nm:'2130 nm',col:'#ffb454'}
-  ];
-
-  /* ===================== accent ===================== */
-  function readAccent(){
-    var a='';
-    try{ a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); }catch(e){}
-    if(!a) a='#3cc8ff';
-    return a;
+  var root=document.getElementById('kit-pixel-drilldown'); if(!root) return;
+  var canvas=root.querySelector('.pxx-map'), ctx=canvas.getContext('2d');
+  var coordEl=root.querySelector('.pxx-coord'), descEl=root.querySelector('.pxx-desc');
+  var dateEl=root.querySelector('.pxx-date'), loadEl=root.querySelector('.pxx-load');
+  var TS=256, LAYERS=[{id:'MODIS_Terra_CorrectedReflectance_TrueColor',ms:9,ext:'jpg',desc:'Live MODIS true colour \u2014 click anywhere to read the bands'}]; var Lx=0; function lay(){return LAYERS[Lx];}
+  function pad(n){return (n<10?'0':'')+n;}
+  function fmt(d){return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate());}
+  var dayMs=86400000, date=new Date(Date.now()-2*dayMs), dateStr=fmt(date);
+  function setDate(){dateStr=fmt(date); if(dateEl) dateEl.textContent=dateStr;}
+  var lon=-99, lat=37, zoom=4.5;
+  var cache={}, loading={}, inflight=0, MAXLOAD=10, firstLoaded=false; var rd=root.querySelector('.pxx-read'), pin=root.querySelector('.pxx-pin'); var B721={id:'MODIS_Terra_CorrectedReflectance_Bands721',ms:9,ext:'jpg'};
+ var samp=document.createElement('canvas'); samp.width=samp.height=1; var sctx=samp.getContext('2d',{willReadFrequently:true});
+ function sampleTile(layer,z,x,y,fx,fy,cb){ var k=layer.id+'|'+dateStr+'|'+z+'|'+x+'|'+y; var im=cache[k];
+   function go(img){ try{ sctx.clearRect(0,0,1,1); sctx.drawImage(img,fx*256,fy*256,1,1,0,0,1,1); var d=sctx.getImageData(0,0,1,1).data; cb([d[0],d[1],d[2]]); }catch(e){ cb(null); } }
+   if(im&&im!=='e'){ go(im); return; } var nim=new Image(); try{nim.crossOrigin='anonymous';}catch(e){} nim.onload=function(){cache[k]=nim;go(nim);}; nim.onerror=function(){cb(null);}; nim.src=url(layer,z,x,y); }
+ function cls(ndvi,b){ if(b[0]+b[1]+b[2]<70) return 'Water / shadow'; if(ndvi>0.5) return 'Dense vegetation'; if(ndvi>0.3) return 'Vegetation'; if(ndvi>0.15) return 'Sparse / cropland'; if(b[0]>170&&b[1]>170&&b[2]>170) return 'Cloud / snow'; return 'Bare soil / urban'; }
+  function url(layer,z,x,y){return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+layer.id+'/default/'+dateStr+'/GoogleMapsCompatible_Level'+layer.ms+'/'+z+'/'+y+'/'+x+'.'+layer.ext;}
+  function tile(layer,z,x,y){
+    var n=Math.pow(2,z); if(y<0||y>=n) return null; x=((x%n)+n)%n;
+    var k=layer.id+'|'+dateStr+'|'+z+'|'+x+'|'+y; var c=cache[k]; if(c) return c;
+    if(loading[k]||inflight>=MAXLOAD) return null;
+    loading[k]=1; inflight++;
+    var im=new Image(); try{im.crossOrigin='anonymous';}catch(e){}
+    im.onload=function(){cache[k]=im; delete loading[k]; inflight--; scheduleDraw(); if(!firstLoaded){firstLoaded=true; if(loadEl) loadEl.classList.remove('pxx-on');}};
+    im.onerror=function(){cache[k]='e'; delete loading[k]; inflight--;};
+    im.src=url(layer,z,x,y); return null;
   }
-  function hexToRgb(h){
-    h=(h||'').trim(); if(h.charAt(0)==='#') h=h.slice(1);
-    if(h.length===3) h=h.charAt(0)+h.charAt(0)+h.charAt(1)+h.charAt(1)+h.charAt(2)+h.charAt(2);
-    var n=parseInt(h,16); if(isNaN(n)) return [60,200,255];
-    return [(n>>16)&255,(n>>8)&255,n&255];
+  function lon2tx(lo,z){return (lo+180)/360*Math.pow(2,z);}
+  function lat2ty(la,z){var s=Math.sin(la*Math.PI/180); s=Math.max(-0.99999,Math.min(0.99999,s)); return (0.5-Math.log((1+s)/(1-s))/(4*Math.PI))*Math.pow(2,z);}
+  function tx2lon(tx,z){return tx/Math.pow(2,z)*360-180;}
+  function ty2lat(ty,z){var k=Math.PI-2*Math.PI*ty/Math.pow(2,z); return 180/Math.PI*Math.atan(0.5*(Math.exp(k)-Math.exp(-k)));}
+  var W=1,H=1,DPR=1,pending=false;
+  function resize(){DPR=Math.min(window.devicePixelRatio||1,2); W=root.clientWidth||800; H=root.clientHeight||500; canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR); canvas.style.width=W+'px'; canvas.style.height=H+'px'; ctx.setTransform(DPR,0,0,DPR,0,0); scheduleDraw();}
+  function clamp(){var mz=lay().ms; if(zoom>mz) zoom=mz; if(zoom<1.2) zoom=1.2; if(lat>83) lat=83; if(lat<-83) lat=-83;}
+  function drawParent(layer,z,x,y,sx,sy,ts){for(var dz=1;dz<=4;dz++){var pz=z-dz; if(pz<0) break; var f=Math.pow(2,dz); var px=Math.floor(x/f),py=Math.floor(y/f); var n=Math.pow(2,pz); var pk=layer.id+'|'+dateStr+'|'+pz+'|'+(((px%n)+n)%n)+'|'+py; var pt=cache[pk]; if(pt&&pt!=='e'){var sub=1/f; ctx.drawImage(pt,(x-px*f)/f*256,(y-py*f)/f*256,256*sub,256*sub,sx,sy,ts+1,ts+1); return;}} ctx.fillStyle='rgba(16,18,42,.55)'; ctx.fillRect(sx,sy,ts+1,ts+1);}
+  function draw(){
+    clamp(); var layer=lay();
+    var z=Math.max(1,Math.min(layer.ms,Math.floor(zoom))), scale=Math.pow(2,zoom-z), ts=TS*scale;
+    var cTx=lon2tx(lon,z), cTy=lat2ty(lat,z), ox=cTx-(W/2)/ts, oy=cTy-(H/2)/ts, n=Math.pow(2,z);
+    ctx.fillStyle='#05030f'; ctx.fillRect(0,0,W,H);
+    var x0=Math.floor(ox),x1=Math.floor(ox+W/ts),y0=Math.floor(oy),y1=Math.floor(oy+H/ts);
+    for(var ty=y0;ty<=y1;ty++){ if(ty<0||ty>=n) continue;
+      for(var tx=x0;tx<=x1;tx++){ var sx=(tx-ox)*ts, sy=(ty-oy)*ts; var t=tile(layer,z,tx,ty);
+        if(t&&t!=='e'){ ctx.drawImage(t,sx,sy,ts+1,ts+1); } else { drawParent(layer,z,((tx%n)+n)%n,ty,sx,sy,ts); } } }
+    pending=false;
   }
-  var accent=readAccent(), accentRGB=hexToRgb(accent);
-  function applyAccent(){
-    accent=readAccent(); accentRGB=hexToRgb(accent);
-    ROOT.style.setProperty('--pdx-accent', accent);
-    ROOT.style.setProperty('--pdx-accent-rgb', accentRGB.join(','));
-  }
-  applyAccent();
-
-  /* ===================== helpers ===================== */
-  function el(tag,cls,txt){ var d=document.createElement(tag); if(cls)d.className=cls; if(txt!=null)d.textContent=txt; return d; }
-  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
-  function fmtCoord(v,pos,neg){ var s=v>=0?pos:neg; return Math.abs(v).toFixed(4)+'° '+s; }
-
-  /* ===================== build UI ===================== */
-  ROOT.innerHTML='';
-  var card=el('div','pdx-card'); ROOT.appendChild(card);
-
-  var sr=el('h2','pdx-sr','Interactive multispectral satellite pixel inspector built on real NASA MODIS imagery: switch scenes and display modes, then hover any pixel to read its Blue, Green, Red, near-infrared and shortwave-infrared reflectance, computed NDVI, latitude and longitude, and classified surface type.');
-  card.appendChild(sr);
-
-  var head=el('div','pdx-head');
-  var htl=el('div','pdx-titlewrap');
-  htl.appendChild(el('div','pdx-eyebrow','Multispectral analysis'));
-  htl.appendChild(el('div','pdx-title','Pixel drill-down'));
-  head.appendChild(htl);
-  var prov=el('div','pdx-prov');
-  var provName=el('div','pdx-prov-name','');
-  var provMeta=el('div','pdx-prov-meta','');
-  prov.appendChild(provName); prov.appendChild(provMeta);
-  head.appendChild(prov);
-  card.appendChild(head);
-
-  var ctrls=el('div','pdx-ctrls');
-  var sceneGroup=el('div','pdx-group');
-  sceneGroup.appendChild(el('div','pdx-grouplbl','Scene'));
-  var sceneSeg=el('div','pdx-seg'); var sceneBtns={};
-  SCENE_ORDER.forEach(function(k){
-    var b=el('button','pdx-segbtn',SCENES[k].label);
-    b.type='button'; b.setAttribute('data-scene',k);
-    b.addEventListener('click',function(){ setScene(k); });
-    sceneSeg.appendChild(b); sceneBtns[k]=b;
-  });
-  sceneGroup.appendChild(sceneSeg); ctrls.appendChild(sceneGroup);
-
-  var modeGroup=el('div','pdx-group pdx-group-mode');
-  modeGroup.appendChild(el('div','pdx-grouplbl','Display'));
-  var modeSeg=el('div','pdx-seg pdx-seg-mode'); var modeBtns={};
-  MODES.forEach(function(m){
-    var b=el('button','pdx-segbtn',m.label);
-    b.type='button'; b.setAttribute('data-mode',m.key);
-    b.addEventListener('click',function(){ setMode(m.key); });
-    modeSeg.appendChild(b); modeBtns[m.key]=b;
-  });
-  modeGroup.appendChild(modeSeg); ctrls.appendChild(modeGroup);
-  card.appendChild(ctrls);
-
-  var body=el('div','pdx-body');
-  var stageWrap=el('div','pdx-stagewrap');
-  var stage=el('div','pdx-stage');
-  var canvas=el('canvas','pdx-canvas'); stage.appendChild(canvas);
-  var xh=el('div','pdx-xh'); var xhV=el('div','pdx-xh-v'); var xhH=el('div','pdx-xh-h');
-  xh.appendChild(xhV); xh.appendChild(xhH); stage.appendChild(xh);
-  var loupe=el('div','pdx-loupe'); var loupeCv=el('canvas','pdx-loupe-cv'); var loupeCenter=el('div','pdx-loupe-center');
-  loupe.appendChild(loupeCv); loupe.appendChild(loupeCenter); stage.appendChild(loupe);
-  var status=el('div','pdx-status',''); stage.appendChild(status);
-  stageWrap.appendChild(stage);
-  stageWrap.appendChild(el('div','pdx-hint','Hover or tap the scene to inspect any pixel'));
-  body.appendChild(stageWrap);
-
-  var panel=el('div','pdx-panel');
-  var pxHead=el('div','pdx-pxhead');
-  var pxClass=el('div','pdx-class');
-  var pxClassDot=el('span','pdx-class-dot'); var pxClassTxt=el('span','pdx-class-txt','—');
-  pxClass.appendChild(pxClassDot); pxClass.appendChild(pxClassTxt);
-  pxHead.appendChild(pxClass); panel.appendChild(pxHead);
-
-  var coordRow=el('div','pdx-coordrow');
-  function coordCell(lbl){ var c=el('div','pdx-coord'); c.appendChild(el('div','pdx-coord-lbl',lbl)); var v=el('div','pdx-coord-val','—'); c.appendChild(v); return {wrap:c,val:v}; }
-  var cLat=coordCell('Latitude'), cLon=coordCell('Longitude'), cNdvi=coordCell('NDVI');
-  coordRow.appendChild(cLat.wrap); coordRow.appendChild(cLon.wrap); coordRow.appendChild(cNdvi.wrap);
-  panel.appendChild(coordRow);
-
-  panel.appendChild(el('div','pdx-spectro-lbl','Per-band reflectance'));
-  var spectro=el('div','pdx-spectro'); var bandRows={};
-  BANDS.forEach(function(bd){
-    var row=el('div','pdx-band'); var top=el('div','pdx-band-top');
-    var nm=el('div','pdx-band-name');
-    var dot=el('span','pdx-band-dot'); dot.style.background=bd.col;
-    nm.appendChild(dot); nm.appendChild(el('span',null,bd.label));
-    nm.appendChild(el('span','pdx-band-wl',bd.nm));
-    var val=el('div','pdx-band-val','—');
-    top.appendChild(nm); top.appendChild(val);
-    var track=el('div','pdx-band-track'); var fill=el('div','pdx-band-fill'); fill.style.background=bd.col; track.appendChild(fill);
-    row.appendChild(top); row.appendChild(track); spectro.appendChild(row);
-    bandRows[bd.key]={val:val,fill:fill};
-  });
-  panel.appendChild(spectro);
-
-  var px=el('div','pdx-pxxy'); px.textContent='Pixel —, —'; panel.appendChild(px);
-  body.appendChild(panel); card.appendChild(body);
-
-  /* ===================== canvas / data ===================== */
-  var ctx=canvas.getContext('2d');
-  var loupeCtx=loupeCv.getContext('2d');
-  var dpr=Math.max(1, Math.min(3, window.devicePixelRatio||1));
-  var displayW=0, displayH=0, imgW=0, imgH=0;
-  var cache={};
-  var state={ scene:'agriculture', mode:'true', loading:false, hover:null };
-  var renderCanvas=null, renderData=null;
-
-  function sample(sc,x,y){
-    var w=sc.w, i=(y*w+x)*4; var rgb=sc.rgb, ir=sc.ir;
-    var blue=rgb[i+2]/255, green=rgb[i+1]/255, red=rgb[i]/255;
-    var nir=ir[i+1]/255, swir=ir[i]/255;
-    var den=(nir+red); var ndvi = den>1e-6 ? (nir-red)/den : 0;
-    return {blue:blue,green:green,red:red,nir:nir,swir:swir,ndvi:ndvi};
-  }
-  function classify(p){
-    if(p.ndvi<0 && p.nir<0.18) return {k:'water', label:'Water', col:'#3a7bd5'};
-    if(p.ndvi>0.5) return {k:'dense', label:'Dense vegetation', col:'#2fbf63'};
-    if(p.ndvi>=0.3) return {k:'crop', label:'Crops / vegetation', col:'#8fd14f'};
-    if(p.swir>0.45 && p.ndvi<0.2) return {k:'built', label:'Built-up / urban', col:'#c9a24b'};
-    if(p.ndvi>=0.1) return {k:'soil', label:'Bare soil', col:'#b07a4a'};
-    if(p.ndvi<0 && p.nir>=0.18) return {k:'built', label:'Built-up / urban', col:'#c9a24b'};
-    return {k:'soil', label:'Bare / sparse', col:'#9b7a55'};
-  }
-
-  function ndviColor(n){
-    var stops=[
-      [-1.0,[60,42,30]],[-0.2,[90,70,48]],[0.05,[150,120,70]],
-      [0.2,[200,190,90]],[0.35,[150,200,80]],[0.55,[60,170,60]],[0.8,[16,110,40]],[1.0,[8,70,28]]
-    ];
-    n=clamp(n,-1,1);
-    for(var i=0;i<stops.length-1;i++){
-      if(n<=stops[i+1][0]){
-        var a=stops[i],b=stops[i+1]; var t=(n-a[0])/(b[0]-a[0]+1e-9);
-        return [a[1][0]+(b[1][0]-a[1][0])*t, a[1][1]+(b[1][1]-a[1][1])*t, a[1][2]+(b[1][2]-a[1][2])*t];
-      }
-    }
-    return stops[stops.length-1][1];
-  }
-
-  function buildRender(sc,mode){
-    var w=sc.w,h=sc.h, n=w*h; var out=new Uint8ClampedArray(n*4);
-    var rgb=sc.rgb, ir=sc.ir; var i,j;
-    if(mode==='true'){
-      for(i=0;i<n;i++){ j=i*4; out[j]=rgb[j]; out[j+1]=rgb[j+1]; out[j+2]=rgb[j+2]; out[j+3]=255; }
-    } else if(mode==='false'){
-      for(i=0;i<n;i++){ j=i*4; out[j]=ir[j+1]; out[j+1]=rgb[j]; out[j+2]=rgb[j+1]; out[j+3]=255; }
-    } else if(mode==='ndvi'){
-      for(i=0;i<n;i++){ j=i*4;
-        var red=rgb[j], nir=ir[j+1]; var den=nir+red; var nd= den>0 ? (nir-red)/den : 0;
-        var c=ndviColor(nd); out[j]=c[0]; out[j+1]=c[1]; out[j+2]=c[2]; out[j+3]=255;
-      }
-    } else {
-      var srcArr, srcOff;
-      if(mode==='blue'){srcArr=rgb;srcOff=2;}
-      else if(mode==='green'){srcArr=rgb;srcOff=1;}
-      else if(mode==='red'){srcArr=rgb;srcOff=0;}
-      else if(mode==='nir'){srcArr=ir;srcOff=1;}
-      else {srcArr=ir;srcOff=0;}
-      for(i=0;i<n;i++){ j=i*4; var v=srcArr[j+srcOff]; out[j]=v; out[j+1]=v; out[j+2]=v; out[j+3]=255; }
-    }
-    return new ImageData(out,w,h);
-  }
-
-  function ensureRender(){
-    var sc=cache[state.scene]; if(!sc) return;
-    var key=state.mode; if(!sc.render) sc.render={};
-    if(!sc.render[key]) sc.render[key]=buildRender(sc,key);
-    renderData=sc.render[key];
-    if(!renderCanvas){ renderCanvas=document.createElement('canvas'); }
-    renderCanvas.width=sc.w; renderCanvas.height=sc.h;
-    renderCanvas.getContext('2d').putImageData(renderData,0,0);
-    imgW=sc.w; imgH=sc.h;
-  }
-
-  function sizeCanvas(){
-    var rect=stage.getBoundingClientRect();
-    var cw=Math.max(40, rect.width);
-    var ar = (imgW&&imgH)? (imgH/imgW) : 0.66;
-    var ch=cw*ar;
-    var maxH=Math.min(560, Math.max(280, window.innerHeight?window.innerHeight*0.6:520));
-    if(ch>maxH){ ch=maxH; }
-    displayW=cw; displayH=ch;
-    dpr=Math.max(1,Math.min(3,window.devicePixelRatio||1));
-    canvas.width=Math.round(cw*dpr); canvas.height=Math.round(ch*dpr);
-    canvas.style.width=cw+'px'; canvas.style.height=ch+'px';
-    stage.style.height=ch+'px';
-    drawCanvas();
-  }
-
-  var fit={ox:0,oy:0,scale:1,drawW:0,drawH:0};
-  function computeFit(){
-    if(!imgW||!imgH){ fit={ox:0,oy:0,scale:1,drawW:displayW,drawH:displayH}; return; }
-    var s=Math.min(displayW/imgW, displayH/imgH);
-    var dw=imgW*s, dh=imgH*s;
-    fit={ ox:(displayW-dw)/2, oy:(displayH-dh)/2, scale:s, drawW:dw, drawH:dh };
-  }
-  function drawCanvas(){
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    ctx.clearRect(0,0,displayW,displayH);
-    ctx.fillStyle='#070522'; ctx.fillRect(0,0,displayW,displayH);
-    if(!renderCanvas){ return; }
-    computeFit();
-    ctx.imageSmoothingEnabled=true;
-    ctx.drawImage(renderCanvas,0,0,imgW,imgH,fit.ox,fit.oy,fit.drawW,fit.drawH);
-  }
-
-  function displayToPixel(cx,cy){
-    if(!imgW) return null;
-    var pxc=(cx-fit.ox)/fit.scale, pyc=(cy-fit.oy)/fit.scale;
-    if(pxc<0||pyc<0||pxc>=imgW||pyc>=imgH) return null;
-    return {x:Math.floor(pxc),y:Math.floor(pyc)};
-  }
-  function geo(sc,x,y){
-    var meta=SCENES[sc.key||state.scene]; var bb=meta.bbox; /* W,S,E,N */
-    var lon=bb[0]+(x/sc.w)*(bb[2]-bb[0]);
-    var lat=bb[3]-(y/sc.h)*(bb[3]-bb[1]);
-    return {lat:lat,lon:lon};
-  }
-
-  function setReadout(p){
-    var sc=cache[state.scene]; if(!sc) return;
-    var sm=sample(sc,p.x,p.y); var cl=classify(sm);
-    pxClassDot.style.background=cl.col; pxClassTxt.textContent=cl.label;
-    var g=geo(sc,p.x,p.y);
-    cLat.val.textContent=fmtCoord(g.lat,'N','S');
-    cLon.val.textContent=fmtCoord(g.lon,'E','W');
-    cNdvi.val.textContent=sm.ndvi.toFixed(3);
-    cNdvi.val.style.color = sm.ndvi>=0.3 ? '#8fd14f' : (sm.ndvi<0 ? '#6fa8e6' : '');
-    var map={blue:sm.blue,green:sm.green,red:sm.red,nir:sm.nir,swir:sm.swir};
-    BANDS.forEach(function(bd){
-      var v=map[bd.key]; var r=bandRows[bd.key];
-      r.val.textContent=v.toFixed(3); r.fill.style.width=(clamp(v,0,1)*100).toFixed(1)+'%';
-    });
-    px.textContent='Pixel '+p.x+', '+p.y;
-  }
-
-  function drawLoupe(p){
-    var sc=cache[state.scene]; if(!sc||!renderCanvas) return;
-    var span=11; var half=(span-1)/2; var sx=p.x-half, sy=p.y-half;
-    loupeCtx.imageSmoothingEnabled=false;
-    loupeCtx.clearRect(0,0,loupeCv.width,loupeCv.height);
-    loupeCtx.fillStyle='#070522'; loupeCtx.fillRect(0,0,loupeCv.width,loupeCv.height);
-    loupeCtx.drawImage(renderCanvas, sx, sy, span, span, 0,0, loupeCv.width, loupeCv.height);
-  }
-
-  function positionXh(cx,cy){ xhV.style.left=cx+'px'; xhH.style.top=cy+'px'; }
-  function positionLoupe(cx,cy){
-    var lw=loupe.offsetWidth||120, lh=loupe.offsetHeight||120; var pad=14;
-    var lx=cx+pad, ly=cy+pad;
-    if(lx+lw>displayW) lx=cx-pad-lw;
-    if(ly+lh>displayH) ly=cy-pad-lh;
-    lx=clamp(lx,2,Math.max(2,displayW-lw-2)); ly=clamp(ly,2,Math.max(2,displayH-lh-2));
-    loupe.style.left=lx+'px'; loupe.style.top=ly+'px';
-  }
-
-  function onMove(ev){
-    if(!imgW) return;
-    var rect=canvas.getBoundingClientRect();
-    var pt = ev.touches&&ev.touches[0] ? ev.touches[0] : ev;
-    var cx=pt.clientX-rect.left, cy=pt.clientY-rect.top;
-    var p=displayToPixel(cx,cy);
-    if(!p){ hideHover(); return; }
-    state.hover=p; stage.classList.add('pdx-active');
-    positionXh(cx,cy); positionLoupe(cx,cy); setReadout(p); drawLoupe(p);
-  }
-  function hideHover(){ state.hover=null; stage.classList.remove('pdx-active'); }
-
-  canvas.addEventListener('mousemove',onMove);
-  canvas.addEventListener('mouseleave',hideHover);
-  canvas.addEventListener('touchstart',function(ev){ onMove(ev); if(ev.cancelable)ev.preventDefault(); },{passive:false});
-  canvas.addEventListener('touchmove',function(ev){ onMove(ev); if(ev.cancelable)ev.preventDefault(); },{passive:false});
-
-  function syncButtons(){
-    SCENE_ORDER.forEach(function(k){ sceneBtns[k].classList.toggle('is-on',k===state.scene); sceneBtns[k].setAttribute('aria-pressed',k===state.scene?'true':'false'); });
-    MODES.forEach(function(m){ var on=m.key===state.mode; modeBtns[m.key].classList.toggle('is-on',on); modeBtns[m.key].setAttribute('aria-pressed',on?'true':'false'); });
-  }
-  function setMode(m){
-    if(state.mode===m) return;
-    state.mode=m; syncButtons();
-    if(cache[state.scene]){ ensureRender(); drawCanvas(); if(state.hover){ drawLoupe(state.hover); } }
-  }
-  function setScene(k){
-    if(state.scene===k && cache[k]) return;
-    state.scene=k; syncButtons(); hideHover();
-    var meta=SCENES[k];
-    provName.textContent=meta.name;
-    provMeta.textContent=meta.sensor+' · '+meta.date+' · '+meta.region;
-    if(cache[k]){ ensureRender(); sizeCanvas(); } else { loadScene(k); }
-  }
-
-  function loadImage(src){
-    return new Promise(function(resolve,reject){
-      var img=new Image();
-      function done(){
-        try{
-          var c=document.createElement('canvas');
-          c.width=img.naturalWidth; c.height=img.naturalHeight;
-          var cc=c.getContext('2d',{willReadFrequently:true});
-          cc.drawImage(img,0,0);
-          var d=cc.getImageData(0,0,c.width,c.height);
-          resolve({data:d.data,w:c.width,h:c.height});
-        }catch(err){ reject(err); }
-      }
-      img.onload=done;
-      img.onerror=function(){ reject(new Error('load '+src)); };
-      img.src=src;
-      if(img.complete && img.naturalWidth){ done(); }
-    });
-  }
-  function loadScene(k){
-    state.loading=true;
-    status.textContent='Loading '+SCENES[k].label+' scene…';
-    status.classList.add('is-show');
-    var base='../assets/scenes/'+k+'/';
-    Promise.all([ loadImage(base+'rgb.jpg'), loadImage(base+'ir.png') ]).then(function(res){
-      var rgb=res[0], ir=res[1];
-      cache[k]={ key:k, rgb:rgb.data, ir:ir.data, w:rgb.w, h:rgb.h, render:{} };
-      state.loading=false; status.classList.remove('is-show');
-      if(state.scene===k){ ensureRender(); sizeCanvas(); }
-    }).catch(function(err){
-      state.loading=false;
-      status.textContent='Imagery unavailable for this scene.';
-      status.classList.add('is-show');
-    });
-  }
-
-  var rT=null;
-  function onResize(){ if(rT)clearTimeout(rT); rT=setTimeout(function(){ applyAccent(); sizeCanvas(); },80); }
-  window.addEventListener('resize',onResize);
-
-  (function initLoupe(){ var s=120; loupeCv.width=s; loupeCv.height=s; })();
-
-  /* ===================== boot (un-gated) ===================== */
-  syncButtons();
-  (function initProv(){
-    var meta=SCENES[state.scene];
-    provName.textContent=meta.name;
-    provMeta.textContent=meta.sensor+' · '+meta.date+' · '+meta.region;
-  })();
-  sizeCanvas();
-  loadScene(state.scene);
+  function scheduleDraw(){ if(pending) return; pending=true; setTimeout(function(){pending=false; draw();},16); }
+  function fmtCoord(la,lo){var ns=la>=0?'N':'S',ew=lo>=0?'E':'W'; return Math.abs(la).toFixed(2)+'\u00b0'+ns+'  '+Math.abs(lo).toFixed(2)+'\u00b0'+ew+'   z'+zoom.toFixed(1);}
+  function pxToGeo(px,py){var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))),scale=Math.pow(2,zoom-z),ts=TS*scale; var cTx=lon2tx(lon,z),cTy=lat2ty(lat,z); var tx=cTx+(px-W/2)/ts,ty=cTy+(py-H/2)/ts; return [ty2lat(ty,z),tx2lon(tx,z)];}
+  function showCoord(px,py){var g=(px==null)?[lat,lon]:pxToGeo(px,py); if(coordEl) coordEl.textContent=fmtCoord(g[0],g[1]);}
+  var drag=false,lpx=0,lpy=0,moved=false;
+  function relXY(e){var r=canvas.getBoundingClientRect(); var t=e.touches?e.touches[0]:e; return [t.clientX-r.left,t.clientY-r.top];}
+  canvas.addEventListener('pointerdown',function(e){drag=true;moved=false;var p=relXY(e);lpx=p[0];lpy=p[1];try{canvas.setPointerCapture(e.pointerId);}catch(_){}});
+  canvas.addEventListener('pointermove',function(e){var p=relXY(e); if(drag){var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))),scale=Math.pow(2,zoom-z),ts=TS*scale; var cTx=lon2tx(lon,z)-(p[0]-lpx)/ts,cTy=lat2ty(lat,z)-(p[1]-lpy)/ts; if(Math.abs(p[0]-lpx)+Math.abs(p[1]-lpy)>3)moved=true; lon=tx2lon(cTx,z);lat=ty2lat(cTy,z);lpx=p[0];lpy=p[1];clamp();scheduleDraw();} showCoord(p[0],p[1]);});
+  function endDrag(){drag=false;}
+  canvas.addEventListener('pointerup',function(e){ if(!moved){ var p=relXY(e); var g=pxToGeo(p[0],p[1]); var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom)));
+  var tx=lon2tx(g[1],z), ty=lat2ty(g[0],z); var n=Math.pow(2,z); var X=((Math.floor(tx)%n)+n)%n, Y=Math.floor(ty); var fx=tx-Math.floor(tx), fy=ty-Math.floor(ty);
+  if(pin){ pin.style.left=p[0]+'px'; pin.style.top=p[1]+'px'; pin.style.display='block'; }
+  sampleTile(lay(),z,X,Y,fx,fy,function(tc){ sampleTile(B721,z,X,Y,fx,fy,function(ir){
+    if(!tc){ if(rd) rd.innerHTML='<div class="pxx-rd-t">No data here</div>'; return; }
+    var red=tc[0],grn=tc[1],blu=tc[2]; var nir=ir?ir[1]:0, swir=ir?ir[0]:0; var ndvi=(nir+red)?((nir-red)/(nir+red)):0;
+    function row(k,v,c){return '<div class="pxx-rd-r"><span>'+k+'</span><b'+(c?' style="color:'+c+'"':'')+'>'+v+'</b></div>';}
+    if(rd) rd.innerHTML='<div class="pxx-rd-t">'+cls(ndvi,tc)+'</div>'+
+      '<div class="pxx-rd-co">'+Math.abs(g[0]).toFixed(3)+'\u00b0'+(g[0]>=0?'N':'S')+'  '+Math.abs(g[1]).toFixed(3)+'\u00b0'+(g[1]>=0?'E':'W')+'</div>'+
+      row('Red 645','<i style="background:rgb('+red+',0,0)"></i>'+red)+row('Green 555','<i style="background:rgb(0,'+grn+',0)"></i>'+grn)+row('Blue 469','<i style="background:rgb(0,0,'+blu+')"></i>'+blu)+
+      row('NIR 858',nir)+row('SWIR 2130',swir)+row('NDVI',ndvi.toFixed(2),ndvi>0.3?'#7ee08a':(ndvi>0.15?'#d9c84a':'#d98a6a'));
+  }); });
+} endDrag(); });
+  canvas.addEventListener('pointercancel',endDrag); canvas.addEventListener('pointerleave',function(){drag=false;showCoord(null);});
+  canvas.addEventListener('wheel',function(e){e.preventDefault(); var p=relXY(e),g=pxToGeo(p[0],p[1]); zoom+=(-e.deltaY)*0.0016; clamp(); var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))),scale=Math.pow(2,zoom-z),ts=TS*scale; var gTx=lon2tx(g[1],z),gTy=lat2ty(g[0],z),cTx=gTx-(p[0]-W/2)/ts,cTy=gTy-(p[1]-H/2)/ts; lon=tx2lon(cTx,z);lat=ty2lat(cTy,z);clamp();scheduleDraw();showCoord(p[0],p[1]);},{passive:false});
+  root.querySelectorAll('.pxx-zb').forEach(function(b){b.addEventListener('click',function(){zoom+=(+b.dataset.z)*0.9;clamp();scheduleDraw();showCoord(null);});});
+  root.querySelectorAll('.pxx-layer').forEach(function(b){b.addEventListener('click',function(){Lx=+b.dataset.l; root.querySelectorAll('.pxx-layer').forEach(function(x){x.classList.toggle('is-on',x===b);}); if(descEl) descEl.textContent=lay().desc;  clamp();firstLoaded=true;scheduleDraw();showCoord(null);});});
+  root.querySelectorAll('.pxx-db').forEach(function(b){b.addEventListener('click',function(){date=new Date(date.getTime()+(+b.dataset.d)*dayMs); var mx=new Date(Date.now()-dayMs); if(date>mx)date=mx; setDate();cache={};scheduleDraw();});});
+  setDate(); if(descEl) descEl.textContent=lay().desc; if(loadEl) loadEl.classList.add('pxx-on');
+  
+  resize(); showCoord(null); draw();
+  if(window.ResizeObserver){try{new ResizeObserver(resize).observe(root);}catch(e){}}
+  window.addEventListener('resize',resize);
+  setTimeout(function(){if(loadEl) loadEl.classList.remove('pxx-on');},4000);
 })();
 </script>
 </body></html>

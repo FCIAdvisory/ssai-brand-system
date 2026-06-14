@@ -149,32 +149,32 @@
     },
     {
       "slug": "band-combiner",
-      "title": "False-color composite",
+      "title": "Band Combiner",
       "collection": "remote-sensing",
       "source": "NASA",
       "credit": "Data \u00b7 NASA MODIS surface reflectance",
-      "blurb": "A real false-color composite builder on genuine NASA MODIS imagery. Visitors assign any spectral band (Blue, Green, Red, NIR, SWIR) to each of the R, G, B display channels, or hit a preset, and the satellite scene recomposites live from its actual pixel data, teaching how Earth-observation imagery is constructed and what each band combination reveals.",
-      "interaction": "Loads with the agriculture scene in Natural color, rendered immediately with no interaction. Switch scenes (Agriculture, Delta, Urban, Wildfire) to load other real MODIS scenes with live provenance. Tap a preset (Natural, Color-IR, Agriculture, Urban) to set all three channels at once, or use the three-row by five-button band-to-channel matrix to build a custom composite; the image recolors live, the active R/G/B mapping and an explanatory note update, and matching presets auto-highlight. Hover or touch the image to read that pixel real five-band reflectance values, computed NDVI with surface class, and latitude/longitude.",
+      "blurb": "Switch the same LIVE NASA scene between band combinations \u2014 natural colour, vegetation/fire false colour, and snow/ice \u2014 and zoom in anywhere on Earth to see how mapping different wavelengths to red/green/blue reveals different things.",
+      "interaction": "Drag to pan and scroll to zoom into live MODIS imagery; switch the band recipe (Natural / Vegetation & fire / Snow & ice) to remap the wavelengths to R\u00b7G\u00b7B and watch fires, vegetation and ice pop; step the date day by day.",
       "real": true
     },
     {
       "slug": "ndvi-seasons",
-      "title": "Vegetation index (NDVI)",
+      "title": "Live NDVI",
       "collection": "remote-sensing",
       "source": "NASA",
       "credit": "Data \u00b7 NASA MODIS \u2014 W. Kansas",
-      "blurb": "Scrub a real year of MODIS imagery over western-Kansas center-pivot irrigation and watch per-pixel NDVI green up in summer and senesce by autumn.",
-      "interaction": "Tap winter/spring/summer/autumn or drag the year slider (or press Play) to crossfade the real per-pixel NDVI raster; toggle True color to compare against the natural-color MODIS scene. The mean NDVI, vegetation class, NIR/Red band bars, date and colorbar marker all update live.",
+      "blurb": "A LIVE, zoomable vegetation-greenness map: NDVI computed in your browser from real MODIS near-infrared and red bands, so dense vegetation reads green and bare ground brown \u2014 anywhere on Earth, any day.",
+      "interaction": "Drag to pan, scroll to zoom into live MODIS imagery recoloured by NDVI = (NIR\u2212Red)/(NIR+Red); step the date day by day to watch vegetation green up and senesce. The legend maps colour to NDVI value.",
       "real": true
     },
     {
       "slug": "pixel-drilldown",
-      "title": "Pixel drill-down",
+      "title": "Pixel Drill-Down",
       "collection": "remote-sensing",
       "source": "NASA",
       "credit": "Data \u00b7 NASA MODIS multispectral",
-      "blurb": "Explore the multispectral data hidden inside a satellite image \u2014 hover any pixel to read its per-band reflectance, NDVI, lat/lon and classified surface type.",
-      "interaction": "Switch between four real NASA MODIS scenes (agriculture, river delta, urban, wildfire) and eight display modes (True color, False color/color-IR, NDVI, and single Blue/Green/Red/NIR/SWIR bands) \u2014 the canvas re-renders live from the real pixel data. Hover or tap anywhere on the scene: a crosshair and magnified pixel loupe follow the cursor while the side panel reads that exact pixel's five-band reflectance (with bars), computed NDVI, real latitude/longitude, and a classified surface type (Water / Dense vegetation / Crops / Bare soil / Built-up). The default True-color scene paints immediately on load with no interaction required.",
+      "blurb": "Click ANY point on a live, zoomable NASA map and read that pixel's real MODIS reflectance \u2014 Red, Green, Blue, NIR and SWIR \u2014 plus the computed NDVI and a surface classification.",
+      "interaction": "Pan and zoom the live MODIS map, then click/tap a point to drop a pin and sample the genuine satellite reflectance at that location: the five bands, NDVI = (NIR\u2212Red)/(NIR+Red), and a land-cover guess. Step the date to compare days.",
       "real": true
     },
     {
