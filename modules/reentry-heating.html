@@ -185,7 +185,7 @@ body.mb-embed #kit-reentry-heating [class*='stage'],body.mb-embed #kit-reentry-h
   var limbImg=new Image(),limbReady=false;
   limbImg.onload=function(){limbReady=true;};
   limbImg.onerror=function(){limbReady=false;};
-  try{limbImg.src='../assets/images/orbital-sunrise-limb.jpg';}catch(e){}
+  try{limbImg.src='../assets/images/earth-night-limb-airglow.jpg';}catch(e){}
 
   // ---- sizing (self-healing) ----
   function resize(){
@@ -279,12 +279,13 @@ body.mb-embed #kit-reentry-heating [class*='stage'],body.mb-embed #kit-reentry-h
     // 1) vertical atmosphere gradient: space-black -> deep blue -> orange plasma glow
     var heatRise=intensity; // hotter -> orange creeps higher
     var g=ctx.createLinearGradient(0,0,0,H);
-    g.addColorStop(0,'#040210');
-    g.addColorStop(0.30,'#06091f');
-    g.addColorStop(0.55-heatRise*0.12,'#0a1838');
-    g.addColorStop(0.74-heatRise*0.10,'rgb('+(34+heatRise*120)+','+(40+heatRise*40)+','+(96-heatRise*40)+')');
-    g.addColorStop(0.88,'rgb('+(190+heatRise*55)+','+(96+heatRise*60)+','+(46)+')');
-    g.addColorStop(1,'rgb('+(255)+','+(150+heatRise*60)+','+(60)+')');
+    // night reentry over Earth: deep space -> atmosphere blue (the real night-limb image
+    // supplies the surface below; heat shows only as a faint warm shift at peak heating).
+    g.addColorStop(0,'#020108');
+    g.addColorStop(0.34,'#05081c');
+    g.addColorStop(0.60,'#081530');
+    g.addColorStop(0.80,'rgb('+(14+heatRise*70)+','+(30+heatRise*26)+','+(64-heatRise*14)+')');
+    g.addColorStop(1,'rgb('+(28+heatRise*120)+','+(48+heatRise*44)+','+(86-heatRise*26)+')');
     ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
 
     // 2) stars (upper region), fading where atmosphere thickens
@@ -301,12 +302,12 @@ body.mb-embed #kit-reentry-heating [class*='stage'],body.mb-embed #kit-reentry-h
     ctx.globalAlpha=1;
 
     // 3) Earth limb glow at bottom (real image draped along the curve, fallback procedural)
-    var limbTop=H*0.80;
-    // bloom behind limb
-    var bloom=ctx.createRadialGradient(W*0.5,H*1.18,H*0.2,W*0.5,H*1.18,H*0.95);
-    bloom.addColorStop(0,'rgba(255,'+(168+heatRise*50)+',86,0.92)');
-    bloom.addColorStop(0.45,'rgba(255,'+(120+heatRise*40)+',56,0.45)');
-    bloom.addColorStop(1,'rgba(60,30,80,0)');
+    var limbTop=H*0.66;
+    // thin atmospheric airglow band hugging the horizon (teal airglow + faint sodium warmth)
+    var bloom=ctx.createRadialGradient(W*0.5,limbTop+H*0.02,H*0.04,W*0.5,limbTop+H*0.02,H*0.5);
+    bloom.addColorStop(0,'rgba(150,220,200,'+(0.14+heatRise*0.05)+')');
+    bloom.addColorStop(0.35,'rgba(90,150,210,0.10)');
+    bloom.addColorStop(1,'rgba(20,30,60,0)');
     ctx.fillStyle=bloom;ctx.fillRect(0,limbTop-H*0.22,W,H-(limbTop-H*0.22));
 
     // curved limb mask region
@@ -329,13 +330,12 @@ body.mb-embed #kit-reentry-heating [class*='stage'],body.mb-embed #kit-reentry-h
       var iw=limbImg.width,ih=limbImg.height;
       var scale=Math.max(W/iw,bandH/ih);
       var dw=iw*scale,dh=ih*scale;
-      ctx.globalAlpha=0.92;
-      ctx.drawImage(limbImg,(W-dw)/2,bandTop+(bandH-dh)+dh*0.12,dw,dh);
       ctx.globalAlpha=1;
-      // warm tint over image to fuse with plasma scene
+      ctx.drawImage(limbImg,(W-dw)/2,bandTop+(bandH-dh)+dh*0.12,dw,dh);
+      // faint warm tint only at peak heating, so the real night Earth stays visible
       var tint=ctx.createLinearGradient(0,bandTop,0,H);
       tint.addColorStop(0,'rgba(255,150,60,0)');
-      tint.addColorStop(1,'rgba(255,120,40,'+(0.28+heatRise*0.18)+')');
+      tint.addColorStop(1,'rgba(255,140,70,'+(0.05+heatRise*0.13)+')');
       ctx.fillStyle=tint;ctx.fillRect(0,bandTop,W,H-bandTop);
     }else{
       var pg=ctx.createLinearGradient(0,limbTop,0,H);
@@ -358,9 +358,9 @@ body.mb-embed #kit-reentry-heating [class*='stage'],body.mb-embed #kit-reentry-h
 
     // 4) the capsule + plasma sheath streaking down
     // position along descent (slight S-curve trajectory)
-    var capX=W*0.5+Math.sin(d*3.0+0.4)*W*0.16*(1-d*0.4);
-    var capY=H*(0.10+0.66*dClamp);
-    var capR=Math.max(10,Math.min(W,H)*0.030);
+    var capX=W*0.5+Math.sin(d*1.6+0.4)*W*0.07*(1-d*0.4);
+    var capY=H*(0.10+0.62*dClamp);
+    var capR=Math.max(12,Math.min(W,H)*0.040);
 
     // ember trail spawning (more when hot)
     var spawnN=Math.floor(intensity*9)+1;

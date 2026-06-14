@@ -628,15 +628,32 @@ body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-view
   }
 
   // Saturn: preserve full frame incl. rings (no circular clip)
+  // ringed planets: key the photo's black background to transparent (once, cached)
+  // so the full planet + rings float in space with no letterbox rectangle.
+  var wideBuf=null, wideBufKey=null;
+  function buildWideBuf(im){
+    var oc=document.createElement('canvas');
+    oc.width=im.naturalWidth||im.width; oc.height=im.naturalHeight||im.height;
+    var octx=oc.getContext('2d'); octx.drawImage(im,0,0,oc.width,oc.height);
+    var id=octx.getImageData(0,0,oc.width,oc.height), p=id.data, i, mx;
+    for(i=0;i<p.length;i+=4){
+      mx=p[i]; if(p[i+1]>mx)mx=p[i+1]; if(p[i+2]>mx)mx=p[i+2];
+      if(mx<=10) p[i+3]=0;                       // pure black -> transparent
+      else if(mx<42) p[i+3]=((mx-10)/32)*255;    // feather the halo, keep ring gaps
+    }
+    octx.putImageData(id,0,0);
+    return oc;
+  }
   function drawWide(key, scale, dy){
     var im=imgs[key]; if(!im)return;
-    var iw=im.naturalWidth||im.width, ih=im.naturalHeight||im.height;
-    // fit the planet body to ~2R: use height of frame relative to disk
-    var target=R*2*scale*1.18;
-    var s=target/iw;
+    if(wideBufKey!==key){ try{ wideBuf=buildWideBuf(im); wideBufKey=key; }catch(e){ wideBuf=null; } }
+    var src=wideBuf||im;
+    var iw=src.width, ih=src.height;
+    // size so the planet + full ring span fill the frame (rings extend past the body)
+    var s=(R*2*scale*1.32)/ih;
     var dw=iw*s, dh=ih*s;
     ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
-    ctx.drawImage(im, cx-dw/2, cy+dy-dh/2, dw, dh);
+    ctx.drawImage(src, cx-dw/2, cy+dy-dh/2, dw, dh);
   }
 
   function draw(){

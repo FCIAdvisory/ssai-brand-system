@@ -414,13 +414,12 @@ body.mb-embed #kit-orbit-types [class*='stage'],body.mb-embed #kit-orbit-types [
     ctx.save();
     ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
     if(earthReady){
-      // slow longitudinal drift by panning the source crop
+      // real Blue Marble disk, centered + cover-fit, fixed in place (no slide)
       var iw=earthImg.naturalWidth||960,ih=earthImg.naturalHeight||961;
-      var pan=(time*6)%iw;
-      var d=r*2;
-      // draw twice for seamless wrap
-      ctx.drawImage(earthImg, pan,0, iw,ih, cx-r-(pan/iw)*d + (pan/iw)*0, cy-r, d, d);
-      // simpler robust approach: draw centered, rotate slight via global var
+      var s=Math.max((r*2)/iw,(r*2)/ih);
+      var dw=iw*s,dh=ih*s;
+      ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+      ctx.drawImage(earthImg, cx-dw/2, cy-dh/2, dw, dh);
     } else {
       // procedural ocean/land fallback
       var g=ctx.createRadialGradient(cx-r*0.3,cy-r*0.35,r*0.1,cx,cy,r);
