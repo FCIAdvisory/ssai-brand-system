@@ -361,11 +361,11 @@
       "slug": "moon-phase",
       "title": "Moon phase",
       "collection": "solar-system",
-      "source": "",
-      "credit": "",
-      "blurb": "An interactive lunar phase explorer: a procedurally crater-textured Moon whose terminator shadow sweeps from new to full as you drag the disc or move the slider, with live phase name and illuminated percentage.",
+      "source": "NASA",
+      "credit": "Imagery \u00b7 NASA Goddard SVS / LRO",
+      "blurb": "An interactive lunar phase explorer over a real NASA/LRO full-Moon image: the terminator shadow sweeps from new to full as you drag the disc or move the slider, with live phase name and illuminated percentage.",
       "interaction": "Drag the Moon left/right (or move the slider) to scrub the full synodic cycle; tap New / First quarter / Full / Last quarter chips for a smooth eased jump. The terminator, phase name, and illumination readout update live.",
-      "real": false
+      "real": true
     },
     {
       "slug": "orrery",

@@ -222,16 +222,7 @@ body.mb-embed #kit-moon-phase .kmoon-stage{ flex:none !important; position:absol
 }
 
 /* phase NAME becomes the big readout, pulled up into the primary chip */
-#kit-moon-phase .kmoon-name{
-  position:absolute; top:34px; left:24px; right:auto; z-index:8;
-  margin:0; text-align:left;
-  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.04em;
-  font-size:clamp(15px,2.4vw,20px); line-height:1; color:#f4f5ff;
-  text-shadow:0 1px 14px rgba(5,3,20,0.9);
-}
-/* give the head room for the absolutely-stacked name */
-#kit-moon-phase .kmoon-head{ padding-bottom:30px; }
+#kit-moon-phase .kmoon-name{order:2;position:static;margin:1px 0;text-align:left;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;font-size:clamp(15px,2.2vw,19px);line-height:1.05;color:#f4f5ff;}
 
 /* ---- CAPTION / HINT :: bottom-right, above the corner toggle ---- */
 #kit-moon-phase .kmoon-hint{
@@ -309,18 +300,18 @@ body.mb-embed #kit-moon-phase .kmoon-stage{ flex:none !important; position:absol
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
       <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Moon phase</div></div>
     </div>
-    
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-moon-phase">
   <h2 class="kmoon-sr">Interactive Moon: drag the disc or move the slider to step the lunar phase from new to full and read its name and illuminated percentage.</h2>
   <div class="kmoon-head">
     <span class="kmoon-eyebrow">Universe &middot; Lunar phase</span>
+    <div class="kmoon-name">First quarter</div>
     <span class="kmoon-illumwrap">Illuminated <span class="kmoon-illum">50%</span></span>
   </div>
   <div class="kmoon-stage">
     <canvas class="kmoon-canvas"></canvas>
   </div>
-  <div class="kmoon-name">First quarter</div>
   <div class="kmoon-hint">Drag the Moon or use the slider</div>
   <div class="kmoon-controls">
     <input class="kmoon-slider" type="range" min="0" max="1000" step="1" value="500" aria-label="Lunar phase from new moon to next new moon" />
@@ -334,7 +325,7 @@ body.mb-embed #kit-moon-phase .kmoon-stage{ flex:none !important; position:absol
 </div></div>
   <footer class="mb-credit">
     <span class="mb-c-int">Drag the Moon left/right (or move the slider) to scrub the full synodic cycle; tap New / First quarter / Full / Last quarter chips for a smooth eased jump. The terminator, phase name, and illumination readout update live.</span>
-    <span class="mb-c-src">Concept · SSAI</span>
+    <span class="mb-c-src">Imagery · NASA Goddard SVS / LRO</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg>
@@ -396,6 +387,13 @@ body.mb-embed #kit-moon-phase .kmoon-stage{ flex:none !important; position:absol
   var nameEl = root.querySelector('.kmoon-name');
   var illumEl = root.querySelector('.kmoon-illum');
   var stage = root.querySelector('.kmoon-stage');
+
+  // ---- real lunar surface (NASA GSFC / LRO full-moon render) ----
+  var moonImg = new Image();
+  var moonReady = false;
+  moonImg.onload = function(){ moonReady = true; draw(); };
+  moonImg.src = '../assets/textures/moon.jpg';
+  var MOON_DISK_FRAC = 0.848; // disk radius as a fraction of the texture's half-width
 
   var PHASE_NAMES = [
     'New moon','Waxing crescent','First quarter','Waxing gibbous',
@@ -473,6 +471,16 @@ body.mb-embed #kit-moon-phase .kmoon-stage{ flex:none !important; position:absol
     ctx.save();
     ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
 
+    // ---- lunar surface ----
+    if (moonReady){
+      // black out the clipped corners, then map the texture's disc onto our circle
+      ctx.fillStyle = '#050314';
+      ctx.fillRect(cx-R, cy-R, R*2, R*2);
+      var _iw = moonImg.naturalWidth || 1920;
+      var _s = R / ((_iw/2) * MOON_DISK_FRAC);
+      var _dw = _iw * _s;
+      ctx.drawImage(moonImg, cx - _dw/2, cy - _dw/2, _dw, _dw);
+    } else {
     // base sphere shading: spherical falloff so the disc reads as a globe.
     // light from upper-left -> brightest toward that quadrant, silvery-cream.
     var sphere = ctx.createRadialGradient(cx-R*0.30,cy-R*0.32,R*0.08, cx,cy,R*1.14);
@@ -526,6 +534,7 @@ body.mb-embed #kit-moon-phase .kmoon-stage{ flex:none !important; position:absol
       ctx.fillStyle = hl;
       ctx.beginPath(); ctx.arc(px,py,pr*0.95,0,Math.PI*2); ctx.fill();
     }
+    } // end procedural-surface fallback
 
     // limb darkening — gentle edge falloff to enhance the spherical read
     var limb = ctx.createRadialGradient(cx,cy,R*0.78, cx,cy,R);
