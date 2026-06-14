@@ -64,7 +64,7 @@ body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
 body.mb-embed #kit-eclipse-sim{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-eclipse-sim [class*='frame'],body.mb-embed #kit-eclipse-sim [class*='shell'],body.mb-embed #kit-eclipse-sim [class*='-inner'],body.mb-embed #kit-eclipse-sim [class*='wrapper']{display:contents!important;}
 body.mb-embed #kit-eclipse-sim [class*='stage'],body.mb-embed #kit-eclipse-sim [class*='scene'],body.mb-embed #kit-eclipse-sim [class*='map'],body.mb-embed #kit-eclipse-sim [class*='plot'],body.mb-embed #kit-eclipse-sim [class*='canvas'],body.mb-embed #kit-eclipse-sim [class*='globe'],body.mb-embed #kit-eclipse-sim canvas,body.mb-embed #kit-eclipse-sim svg{aspect-ratio:auto!important;max-height:none!important;max-width:none!important;min-height:0!important;}
-body.mb-embed #kit-eclipse-sim [class*='wrap'],body.mb-embed #kit-eclipse-sim [class*='body'],body.mb-embed #kit-eclipse-sim [class*='grid'],body.mb-embed #kit-eclipse-sim [class*='layout'],body.mb-embed #kit-eclipse-sim [class*='main'],body.mb-embed #kit-eclipse-sim [class*='stagewrap']{height:100%!important;min-height:0!important;align-items:stretch!important;align-content:stretch!important;}
+body.mb-embed #kit-eclipse-sim [class*='wrap'],body.mb-embed #kit-eclipse-sim [class*='-body'],body.mb-embed #kit-eclipse-sim [class*='grid'],body.mb-embed #kit-eclipse-sim [class*='layout'],body.mb-embed #kit-eclipse-sim [class*='main'],body.mb-embed #kit-eclipse-sim [class*='stagewrap']{height:100%!important;min-height:0!important;align-items:stretch!important;align-content:stretch!important;}
 body.mb-embed #kit-eclipse-sim canvas{height:100%!important;width:100%!important;}
 body.mb-embed #kit-eclipse-sim{display:flex!important;flex-direction:column!important;gap:clamp(6px,1vh,12px)!important;}
 body.mb-embed #kit-eclipse-sim>*{flex:0 0 auto;min-height:0;}
@@ -190,6 +190,7 @@ body.mb-embed #kit-eclipse-sim [class*='stage'],body.mb-embed #kit-eclipse-sim [
     DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2.5));
     var nw=Math.max(2,Math.round(cw*DPR)), nh=Math.max(2,Math.round(ch*DPR));
     if(nw!==canvas.width||nh!==canvas.height){canvas.width=nw;canvas.height=nh;}
+    ctx.setTransform(DPR,0,0,DPR,0,0);
     W=cw;H=ch;
   }
   if(window.ResizeObserver){var ro=new ResizeObserver(resize);ro.observe(root);}
