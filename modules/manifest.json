@@ -263,8 +263,8 @@
       "collection": "satellites-orbits",
       "source": "NASA",
       "credit": "Basemap \u00b7 NASA Blue Marble",
-      "blurb": "Lets a prospect design a LEO imaging constellation on the real NASA Blue Marble and instantly see how fleet size, altitude and inclination drive global daily coverage and revisit.",
-      "interaction": "Drag three sliders -- satellites (1-40), altitude (400-1200 km) and inclination (0-98 deg, or tap an SSO/Polar/Mid/Equatorial preset) -- and circular ground footprints tile across the real Earth while global coverage %, average revisit and passes/day update live; Reset restores the default fleet.",
+      "blurb": "Build a low-Earth-orbit imaging constellation over real NASA Blue Marble imagery \u2014 set fleet size, altitude and inclination and watch ground footprints tile the planet as global coverage climbs.",
+      "interaction": "Drag the satellites, altitude and inclination sliders (or pick an orbit preset) to reshape the fleet; circular ground footprints tile the live Blue Marble map and the coverage %, revisit, passes/day and swath update in real time.",
       "real": true
     },
     {

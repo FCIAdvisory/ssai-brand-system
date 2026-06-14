@@ -42,52 +42,44 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-constellation-coverage .cc2-title{display:none!important;}
-#kit-constellation-coverage{--cc2-bg:#050314;--cc2-indigo:#16145f;--cc2-text:#f4f5ff;--cc2-muted:#a6abe6;--cc2-line:rgba(166,171,230,0.16);--cc2-acc:#3cc8ff;--cc2-acc-rgb:60,200,255;position:relative;width:100%;box-sizing:border-box;padding:22px;border-radius:18px;background:radial-gradient(120% 140% at 80% -10%,rgba(22,20,95,0.55),rgba(5,3,20,0) 60%),var(--cc2-bg);border:1px solid var(--cc2-line);color:var(--cc2-text);font-family:'Inter',system-ui,sans-serif;overflow:hidden}
-#kit-constellation-coverage *{box-sizing:border-box}
-#kit-constellation-coverage .cc2-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-#kit-constellation-coverage .cc2-head{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
-#kit-constellation-coverage .cc2-kicker{display:inline-block;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--cc2-acc);margin-bottom:8px;transition:color .4s ease}
-#kit-constellation-coverage .cc2-title{flex:1 1 320px}
-#kit-constellation-coverage .cc2-title h3{margin:0;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:26px;line-height:1.02;color:var(--cc2-text)}
-#kit-constellation-coverage .cc2-title p{margin:6px 0 0;font-size:13px;line-height:1.5;color:var(--cc2-muted);max-width:46ch}
-#kit-constellation-coverage .cc2-readout{text-align:right;min-width:150px;flex:0 0 auto}
-#kit-constellation-coverage .cc2-pct{display:flex;align-items:baseline;justify-content:flex-end;gap:2px;line-height:1}
-#kit-constellation-coverage .cc2-pctval{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:56px;letter-spacing:-.01em;color:var(--cc2-acc);text-shadow:0 0 26px rgba(var(--cc2-acc-rgb),0.45);font-variant-numeric:tabular-nums;transition:color .4s ease}
-#kit-constellation-coverage .cc2-pctsign{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:24px;color:var(--cc2-acc);transition:color .4s ease}
-#kit-constellation-coverage .cc2-pctlabel{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--cc2-muted);margin-top:2px}
-#kit-constellation-coverage .cc2-stage{position:relative;width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--cc2-line);background:#03020d;aspect-ratio:2 / 1;min-height:220px}
-#kit-constellation-coverage .cc2-canvas{display:block;width:100%;height:100%}
-#kit-constellation-coverage .cc2-legend{position:absolute;left:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:14px;padding:8px 12px;border-radius:10px;background:rgba(5,3,20,0.55);border:1px solid var(--cc2-line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-#kit-constellation-coverage .cc2-lg{display:inline-flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.04em;color:var(--cc2-muted)}
-#kit-constellation-coverage .cc2-lg i{width:11px;height:11px;border-radius:3px;display:inline-block}
-#kit-constellation-coverage .cc2-lg-acc i{background:rgba(var(--cc2-acc-rgb),0.35);border:1px solid var(--cc2-acc);box-shadow:0 0 10px rgba(var(--cc2-acc-rgb),0.5);transition:border-color .4s ease,box-shadow .4s ease}
-#kit-constellation-coverage .cc2-lg-sat i{width:9px;height:9px;border-radius:50%;background:var(--cc2-text);box-shadow:0 0 8px rgba(244,245,255,0.7)}
-#kit-constellation-coverage .cc2-lg-src{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:9.5px;color:var(--cc2-muted);opacity:.8;margin-left:auto}
-#kit-constellation-coverage .cc2-controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:26px;margin-top:18px}
-#kit-constellation-coverage .cc2-sliders{flex:1 1 420px;min-width:260px;display:flex;flex-direction:column;gap:16px}
-#kit-constellation-coverage .cc2-sliderwrap{display:flex;flex-direction:column}
-#kit-constellation-coverage .cc2-slabel{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--cc2-muted);margin-bottom:9px}
-#kit-constellation-coverage .cc2-sval{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;letter-spacing:0;text-transform:none;font-size:15px;color:var(--cc2-text);font-variant-numeric:tabular-nums}
-#kit-constellation-coverage .cc2-range{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--cc2-acc) 0%,var(--cc2-acc) var(--cc2-fill,18%),rgba(166,171,230,0.18) var(--cc2-fill,18%),rgba(166,171,230,0.18) 100%);outline:none;cursor:pointer;transition:background .12s linear}
-#kit-constellation-coverage .cc2-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--cc2-text);border:3px solid var(--cc2-acc);box-shadow:0 0 0 4px rgba(var(--cc2-acc-rgb),0.18),0 0 14px rgba(var(--cc2-acc-rgb),0.5);cursor:pointer;transition:transform .12s ease}
-#kit-constellation-coverage .cc2-range::-webkit-slider-thumb:hover{transform:scale(1.12)}
-#kit-constellation-coverage .cc2-range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--cc2-text);border:3px solid var(--cc2-acc);box-shadow:0 0 14px rgba(var(--cc2-acc-rgb),0.5);cursor:pointer}
-#kit-constellation-coverage .cc2-range:focus-visible{box-shadow:0 0 0 3px rgba(var(--cc2-acc-rgb),0.35)}
-#kit-constellation-coverage .cc2-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
-#kit-constellation-coverage .cc2-chip{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.04em;padding:6px 11px;border-radius:8px;border:1px solid var(--cc2-line);background:rgba(22,20,95,0.28);color:var(--cc2-muted);cursor:pointer;transition:border-color .2s ease,background .2s ease,color .2s ease}
-#kit-constellation-coverage .cc2-chip:hover{border-color:rgba(var(--cc2-acc-rgb),0.5);color:var(--cc2-text)}
-#kit-constellation-coverage .cc2-chip.cc2-on{border-color:var(--cc2-acc);background:rgba(var(--cc2-acc-rgb),0.16);color:var(--cc2-text);box-shadow:0 0 12px rgba(var(--cc2-acc-rgb),0.25)}
-#kit-constellation-coverage .cc2-side{flex:0 0 auto;display:flex;flex-direction:column;gap:16px;align-items:flex-end}
-#kit-constellation-coverage .cc2-stats{display:flex;gap:22px}
-#kit-constellation-coverage .cc2-stat{display:flex;flex-direction:column;gap:3px;min-width:64px;text-align:left}
-#kit-constellation-coverage .cc2-snum{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:19px;color:var(--cc2-text);font-variant-numeric:tabular-nums}
-#kit-constellation-coverage .cc2-slab{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--cc2-muted);line-height:1.2}
-#kit-constellation-coverage .cc2-btn{align-self:flex-end;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;border:1px solid var(--cc2-line);background:rgba(22,20,95,0.35);color:var(--cc2-text);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:border-color .25s ease,background .25s ease,transform .1s ease}
-#kit-constellation-coverage .cc2-btn:hover{border-color:rgba(var(--cc2-acc-rgb),0.55);background:rgba(22,20,95,0.6)}
-#kit-constellation-coverage .cc2-btn:active{transform:scale(.97)}
-#kit-constellation-coverage .cc2-btnico{font-size:14px;color:var(--cc2-acc);transition:color .4s ease}
-@media (max-width:640px){#kit-constellation-coverage{padding:16px}#kit-constellation-coverage .cc2-title h3{font-size:21px}#kit-constellation-coverage .cc2-pctval{font-size:42px}#kit-constellation-coverage .cc2-controls{gap:18px}#kit-constellation-coverage .cc2-side{align-items:flex-start;width:100%}#kit-constellation-coverage .cc2-stats{gap:16px;flex-wrap:wrap}}
+#kit-constellation-coverage{position:relative;width:100%;height:100%;overflow:hidden;background:#05030f;color:#f4f5ff;font-family:'Inter',system-ui,-apple-system,sans-serif;--cc2-text:#f4f5ff;--cc2-muted:#a6abe6;--cc2-hair:rgba(166,171,230,0.16);--cc2-acc:var(--accent,#3cc8ff)}
+#kit-constellation-coverage .cc2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#kit-constellation-coverage .cc2-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* frosted box tokens (shared with orbit-tracker design language) */
+#kit-constellation-coverage .cc2-readout{position:absolute;left:16px;top:14px;z-index:6;display:flex;flex-direction:column;gap:2px;padding:8px 13px;border:1px solid var(--cc2-hair);border-radius:10px;background:rgba(8,6,28,0.46);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+#kit-constellation-coverage .cc2-rlabel{font-size:8.5px;letter-spacing:0.22em;font-weight:700;text-transform:uppercase;color:var(--cc2-muted)}
+#kit-constellation-coverage .cc2-pct{display:flex;align-items:baseline;gap:1px;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;color:var(--cc2-acc);line-height:1}
+#kit-constellation-coverage .cc2-pctval{font-size:30px;font-variant-numeric:tabular-nums}
+#kit-constellation-coverage .cc2-pctsign{font-size:15px}
+/* mission stats: top-right legend-style column */
+#kit-constellation-coverage .cc2-stats{position:absolute;right:16px;top:14px;z-index:6;display:flex;flex-direction:column;gap:5px;align-items:flex-end;pointer-events:none}
+#kit-constellation-coverage .cc2-stat{display:flex;align-items:baseline;gap:9px;padding:5px 11px;border:1px solid var(--cc2-hair);border-radius:8px;background:rgba(8,6,28,0.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#kit-constellation-coverage .cc2-snum{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:14px;color:var(--cc2-text);font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+#kit-constellation-coverage .cc2-slab{font-size:8.5px;letter-spacing:0.16em;font-weight:700;text-transform:uppercase;color:var(--cc2-muted)}
+/* control panel: bottom-left frosted */
+#kit-constellation-coverage .cc2-panel{position:absolute;left:16px;bottom:16px;z-index:7;display:flex;flex-direction:column;gap:10px;width:min(340px,54%);padding:13px 15px 14px;border:1px solid var(--cc2-hair);border-radius:13px;background:rgba(8,6,28,0.5);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);box-shadow:0 12px 40px -18px rgba(0,0,0,0.8)}
+#kit-constellation-coverage .cc2-srow{display:grid;grid-template-columns:72px 1fr 56px;align-items:center;gap:11px}
+#kit-constellation-coverage .cc2-slabel{font-size:9px;letter-spacing:0.13em;font-weight:700;text-transform:uppercase;color:var(--cc2-muted)}
+#kit-constellation-coverage .cc2-sval{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:12.5px;color:var(--cc2-text);font-variant-numeric:tabular-nums;text-align:right}
+#kit-constellation-coverage .cc2-range{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--cc2-acc),rgba(255,255,255,0.14));outline:none;cursor:pointer;margin:0}
+#kit-constellation-coverage .cc2-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--cc2-acc);box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16),0 2px 6px rgba(0,0,0,0.5);cursor:pointer}
+#kit-constellation-coverage .cc2-range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--cc2-acc);cursor:pointer}
+#kit-constellation-coverage .cc2-range::-moz-range-track{height:3px;border-radius:3px;background:transparent}
+#kit-constellation-coverage .cc2-chips{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-top:1px}
+#kit-constellation-coverage .cc2-chip{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:9.5px;letter-spacing:0.01em;color:var(--cc2-muted);background:transparent;border:1px solid var(--cc2-hair);border-radius:6px;padding:5px 8px;cursor:pointer;transition:color .16s,background .16s,border-color .16s;font-variant-numeric:tabular-nums}
+#kit-constellation-coverage .cc2-chip:hover{color:var(--cc2-text);border-color:rgba(166,171,230,0.4)}
+#kit-constellation-coverage .cc2-chip.cc2-chip-on{color:#050314;background:var(--cc2-acc);border-color:transparent;box-shadow:0 0 12px -2px var(--cc2-acc)}
+#kit-constellation-coverage .cc2-reset{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font:700 9px/1 'Inter',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:var(--cc2-muted);background:rgba(255,255,255,0.05);border:1px solid var(--cc2-hair);border-radius:6px;padding:5px 9px;cursor:pointer;transition:color .16s,background .16s}
+#kit-constellation-coverage .cc2-reset:hover{color:var(--cc2-text);background:rgba(255,255,255,0.12)}
+#kit-constellation-coverage .cc2-rico{font-size:12px}
+/* footprint legend: bottom-right, above the controls toggle */
+#kit-constellation-coverage .cc2-legend{position:absolute;right:16px;bottom:58px;z-index:6;display:flex;flex-direction:column;gap:5px;align-items:flex-end;pointer-events:none}
+#kit-constellation-coverage .cc2-lg{display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--cc2-hair);border-radius:7px;background:rgba(8,6,28,0.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:9.5px;letter-spacing:0.05em;font-weight:500;color:var(--cc2-text)}
+#kit-constellation-coverage .cc2-lg i{width:11px;height:11px;border-radius:50%;flex:none}
+#kit-constellation-coverage .cc2-lg-acc i{background:rgba(var(--accent-rgb,60,200,255),0.28);border:1px solid var(--cc2-acc)}
+#kit-constellation-coverage .cc2-lg-sat i{background:var(--cc2-acc);box-shadow:0 0 8px var(--cc2-acc)}
+#kit-constellation-coverage .cc2-lg-src{color:var(--cc2-muted);font-style:italic;letter-spacing:0.04em}
+@media (max-width:640px){#kit-constellation-coverage .cc2-panel{width:min(300px,64%)}#kit-constellation-coverage .cc2-stats .cc2-slab{display:none}#kit-constellation-coverage .cc2-legend{display:none}}
 
 body.mb-embed #kit-constellation-coverage{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-constellation-coverage [class*='frame'],body.mb-embed #kit-constellation-coverage [class*='shell'],body.mb-embed #kit-constellation-coverage [class*='-inner'],body.mb-embed #kit-constellation-coverage [class*='wrapper']{display:contents!important;}
@@ -109,61 +101,49 @@ body.mb-embed #kit-constellation-coverage [class*='stage'],body.mb-embed #kit-co
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-constellation-coverage">
-  <h2 class="cc2-sr">Interactive map over NASA Blue Marble imagery: build a low-Earth-orbit imaging constellation by setting the number of satellites, altitude, and inclination; circular ground footprints tile across the real Earth and a live global coverage percentage and revisit estimate update as the fleet grows.</h2>
-  <div class="cc2-head">
-    <div class="cc2-title">
-      <span class="cc2-kicker">Satellites &amp; orbits</span>
-      <h3>Build a constellation</h3>
-      <p>Set fleet size, altitude and inclination — watch real ground footprints tile NASA Blue Marble and global coverage climb.</p>
+  <h2 class="cc2-sr">Interactive map over NASA Blue Marble imagery: build a low-Earth-orbit imaging constellation by setting the number of satellites, altitude and inclination; circular ground footprints tile across the real Earth and a live global coverage percentage and revisit estimate update as the fleet grows.</h2>
+  <canvas class="cc2-canvas" data-cc2-canvas></canvas>
+  <div class="cc2-readout">
+    <span class="cc2-rlabel">Global coverage / day</span>
+    <span class="cc2-pct"><span class="cc2-pctval" data-cc2-pct>66</span><span class="cc2-pctsign">%</span></span>
+  </div>
+  <div class="cc2-stats">
+    <div class="cc2-stat"><span class="cc2-snum" data-cc2-revisit>0.6</span><span class="cc2-slab">Avg revisit / hr</span></div>
+    <div class="cc2-stat"><span class="cc2-snum" data-cc2-passes>90</span><span class="cc2-slab">Passes / day</span></div>
+    <div class="cc2-stat"><span class="cc2-snum" data-cc2-foot>2,435</span><span class="cc2-slab">km swath</span></div>
+  </div>
+  <div class="cc2-panel">
+    <div class="cc2-srow">
+      <span class="cc2-slabel">Satellites</span>
+      <input class="cc2-range" type="range" min="1" max="40" step="1" value="6" data-cc2-n aria-label="Number of satellites in the constellation">
+      <span class="cc2-sval"><span data-cc2-count>6</span></span>
     </div>
-    <div class="cc2-readout">
-      <div class="cc2-pct"><span class="cc2-pctval" data-cc2-pct>66</span><span class="cc2-pctsign">%</span></div>
-      <div class="cc2-pctlabel">global coverage / day</div>
+    <div class="cc2-srow">
+      <span class="cc2-slabel">Altitude</span>
+      <input class="cc2-range" type="range" min="400" max="1200" step="25" value="550" data-cc2-alt aria-label="Orbital altitude in kilometres">
+      <span class="cc2-sval"><span data-cc2-altval>550</span> km</span>
+    </div>
+    <div class="cc2-srow">
+      <span class="cc2-slabel">Inclination</span>
+      <input class="cc2-range" type="range" min="0" max="98" step="1" value="98" data-cc2-inc aria-label="Orbital inclination in degrees">
+      <span class="cc2-sval"><span data-cc2-incval>98</span>&deg;</span>
+    </div>
+    <div class="cc2-chips" role="group" aria-label="Inclination presets">
+      <button type="button" class="cc2-chip" data-cc2-chip="98">SSO 98&deg;</button>
+      <button type="button" class="cc2-chip" data-cc2-chip="90">Polar 90&deg;</button>
+      <button type="button" class="cc2-chip" data-cc2-chip="51">Mid 51&deg;</button>
+      <button type="button" class="cc2-chip" data-cc2-chip="0">Equatorial 0&deg;</button>
+      <button type="button" class="cc2-reset" data-cc2-reset><span class="cc2-rico">&#8635;</span> Reset</button>
     </div>
   </div>
-
-  <div class="cc2-stage">
-    <canvas class="cc2-canvas" data-cc2-canvas></canvas>
-    <div class="cc2-legend">
-      <span class="cc2-lg cc2-lg-acc"><i></i>Imaged footprint</span>
-      <span class="cc2-lg cc2-lg-sat"><i></i>Satellite</span>
-      <span class="cc2-lg cc2-lg-src">NASA Blue Marble</span>
-    </div>
-  </div>
-
-  <div class="cc2-controls">
-    <div class="cc2-sliders">
-      <div class="cc2-sliderwrap">
-        <label class="cc2-slabel" for="cc2-n">Satellites <span class="cc2-sval"><span data-cc2-count>6</span></span></label>
-        <input id="cc2-n" class="cc2-range" type="range" min="1" max="40" step="1" value="6" data-cc2-n aria-label="Number of satellites in the constellation" />
-      </div>
-      <div class="cc2-sliderwrap">
-        <label class="cc2-slabel" for="cc2-alt">Altitude <span class="cc2-sval"><span data-cc2-altval>550</span> km</span></label>
-        <input id="cc2-alt" class="cc2-range" type="range" min="400" max="1200" step="25" value="550" data-cc2-alt aria-label="Orbital altitude in kilometres" />
-      </div>
-      <div class="cc2-sliderwrap">
-        <label class="cc2-slabel" for="cc2-inc">Inclination <span class="cc2-sval"><span data-cc2-incval>98</span>&deg;</span></label>
-        <input id="cc2-inc" class="cc2-range" type="range" min="0" max="98" step="1" value="98" data-cc2-inc aria-label="Orbital inclination in degrees" />
-        <div class="cc2-chips" role="group" aria-label="Inclination presets">
-          <button type="button" class="cc2-chip" data-cc2-chip="98">SSO 98&deg;</button>
-          <button type="button" class="cc2-chip" data-cc2-chip="90">Polar 90&deg;</button>
-          <button type="button" class="cc2-chip" data-cc2-chip="51">Mid 51&deg;</button>
-          <button type="button" class="cc2-chip" data-cc2-chip="0">Equatorial 0&deg;</button>
-        </div>
-      </div>
-    </div>
-    <div class="cc2-side">
-      <div class="cc2-stats">
-        <div class="cc2-stat"><span class="cc2-snum" data-cc2-revisit>0.6</span><span class="cc2-slab">avg revisit (hr)</span></div>
-        <div class="cc2-stat"><span class="cc2-snum" data-cc2-passes>90</span><span class="cc2-slab">passes / day</span></div>
-        <div class="cc2-stat"><span class="cc2-snum" data-cc2-foot>2,435</span><span class="cc2-slab">km swath</span></div>
-      </div>
-      <button class="cc2-btn" type="button" data-cc2-reset><span class="cc2-btnico">&#8635;</span> Reset fleet</button>
-    </div>
+  <div class="cc2-legend">
+    <span class="cc2-lg cc2-lg-acc"><i></i>Imaged footprint</span>
+    <span class="cc2-lg cc2-lg-sat"><i></i>Satellite</span>
+    <span class="cc2-lg cc2-lg-src">NASA Blue Marble</span>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag three sliders -- satellites (1-40), altitude (400-1200 km) and inclination (0-98 deg, or tap an SSO/Polar/Mid/Equatorial preset) -- and circular ground footprints tile across the real Earth while global coverage %, average revisit and passes/day update live; Reset restores the default fleet.</span>
+    <span class="mb-c-int">Drag the satellites, altitude and inclination sliders (or pick an orbit preset) to reshape the fleet; circular ground footprints tile the live Blue Marble map and the coverage %, revisit, passes/day and swath update in real time.</span>
     <span class="mb-c-src">Basemap · NASA Blue Marble</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
