@@ -299,13 +299,13 @@
     },
     {
       "slug": "solar-disk",
-      "title": "The living Sun",
+      "title": "The Living Sun",
       "collection": "sun-space-weather",
-      "source": "",
-      "credit": "",
-      "blurb": "A mesmerizing animated Sun \u2014 limb-darkened amber disc with churning granulation, a soft corona, and flare arcs that erupt and fade off the limb \u2014 for a heliophysics / \"the Sun\" lens.",
-      "interaction": "Ambient and self-running: granulation drifts continuously and a flare arc erupts off the limb every few seconds; honors prefers-reduced-motion by rendering a single static frame.",
-      "real": false
+      "source": "NASA",
+      "credit": "Image \u00b7 NASA / SDO (AIA)",
+      "blurb": "A cinematic, living solar disk built on real NASA SDO imagery with a wavelength switcher (171\u00c5 gold corona / cooler teal channel), slow rotation, breathing coronal glow, and an atmospheric halo \u2014 used as the hero \"real science\" centerpiece in the SSAI brand book.",
+      "interaction": "Click the wavelength chips (or press 1 / 2, or use arrow keys) to switch between the gold 171\u00c5 and cooler teal SDO channels with a cross-dissolve; the disk slowly rotates, the corona breathes, and a live caption ticks \u2014 hover the disk to pause rotation and reveal a focus reticle.",
+      "real": true
     },
     {
       "slug": "space-weather",
@@ -429,23 +429,23 @@
     },
     {
       "slug": "deep-field",
-      "title": "Deep-field explorer",
+      "title": "Deep-Field Explorer",
       "collection": "cosmos",
-      "source": "",
-      "credit": "",
-      "blurb": "An awe-inducing generated JWST-style deep field \u2014 hundreds of stars and faint galaxies across parallax depth layers that visitors can pan and zoom through.",
-      "interaction": "Drag to pan and scroll-wheel or the +/\u2212 buttons to zoom; nearer layers parallax faster, and when left idle the field resumes a slow cosmic drift.",
-      "real": false
+      "source": "NASA / ESA",
+      "credit": "Image \u00b7 NASA, ESA, CSA, STScI \u2014 JWST (SMACS 0723)",
+      "blurb": "An immersive pan-and-zoom explorer built on JWST's real first deep field (SMACS 0723) that lets viewers dive into thousands of real galaxies and annotated lensing features.",
+      "interaction": "Drag to pan and scroll, pinch, or use the +/- buttons to zoom deep into the real galaxies; hover or tap to reveal elegant annotation pins on lensed arcs, ancient galaxies and the foreground cluster, with a live scale/redshift readout.",
+      "real": true
     },
     {
       "slug": "nebula-viewer",
-      "title": "Nebula viewer",
+      "title": "Nebula Viewer \u2014 JWST",
       "collection": "cosmos",
-      "source": "",
-      "credit": "",
-      "blurb": "A generated, slowly drifting and breathing nebula of layered violet/teal/coral clouds with embedded twinkling stars; hovering reveals a \"Star-forming region\" label \u2014 an ambient, premium cosmic hero/section piece for SSAI's Universe content.",
-      "interaction": "Moving the pointer over the canvas reveals a floating \"Star-forming region\" label that tracks the cursor; the nebula otherwise drifts, breathes, and twinkles on its own. Honors prefers-reduced-motion by rendering a single static frame.",
-      "real": false
+      "source": "NASA / ESA",
+      "credit": "Image \u00b7 NASA, ESA, CSA, STScI \u2014 JWST",
+      "blurb": "An observatory-grade viewer for switching, panning, zooming, and annotating real JWST nebula imagery (Cosmic Cliffs & Pillars of Creation).",
+      "interaction": "Drag to pan and scroll/pinch or the +/- controls to zoom into the real nebula; click the named tabs to crossfade between Cosmic Cliffs and Pillars of Creation; hover or tap the glowing pins to reveal one-line facts about each star-forming feature.",
+      "real": true
     },
     {
       "slug": "galaxy-gen",

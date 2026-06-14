@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The living Sun · SSAI</title>
+<title>The Living Sun · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -34,73 +34,278 @@ body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overfl
 body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-solar-disk{
+  --lsun-bg:#050314;
+  --lsun-indigo:#16145f;
+  --lsun-text:#f4f5ff;
+  --lsun-muted:#a6abe6;
+  --lsun-hair:rgba(166,171,230,0.16);
+  --lsun-accent:#3cc8ff;
+  --lsun-gold:#ffb347;
+  --lsun-teal:#39e6d8;
   position:relative;
   width:100%;
-  aspect-ratio:1 / 1;
-  min-height:260px;
-  max-height:520px;
-  margin:0 auto;
+  height:100%;
+  min-height:340px;
+  margin:0;
+  background:
+    radial-gradient(140% 120% at 50% 18%, rgba(22,20,95,0.55) 0%, rgba(5,3,20,0) 55%),
+    var(--lsun-bg);
+  color:var(--lsun-text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
   overflow:hidden;
-  background:transparent;
-  border-radius:14px;
-  -webkit-user-select:none;
-  user-select:none;
+  -webkit-font-smoothing:antialiased;
 }
-#kit-solar-disk .kit-solar-disk-stage{
-  display:block;
+#kit-solar-disk *{box-sizing:border-box;}
+
+#kit-solar-disk .lsun-stage{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
+  overflow:hidden;
 }
-#kit-solar-disk .kit-solar-disk-label{
+#kit-solar-disk .lsun-canvas{
   position:absolute;
-  left:16px;
-  bottom:14px;
-  display:flex;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+#kit-solar-disk .lsun-vignette{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(120% 120% at 50% 50%, rgba(5,3,20,0) 58%, rgba(5,3,20,0.55) 88%, rgba(5,3,20,0.92) 100%);
+  mix-blend-mode:multiply;
+}
+
+/* HUD shells */
+#kit-solar-disk .lsun-hud{
+  position:absolute;
+  z-index:5;
+  pointer-events:none;
+  text-transform:uppercase;
+}
+#kit-solar-disk .lsun-hud--tl{top:clamp(12px,3.2vmin,26px);left:clamp(12px,3.2vmin,26px);}
+#kit-solar-disk .lsun-hud--tr{top:clamp(12px,3.2vmin,26px);right:clamp(12px,3.2vmin,26px);text-align:right;display:flex;gap:clamp(14px,3vmin,30px);}
+#kit-solar-disk .lsun-hud--bl{left:clamp(12px,3.2vmin,26px);bottom:clamp(12px,3.2vmin,24px);max-width:min(62%,520px);text-align:left;}
+
+#kit-solar-disk .lsun-badge{
+  display:inline-flex;
   align-items:center;
   gap:8px;
-  padding:6px 12px;
+  padding:6px 11px;
+  border:1px solid var(--lsun-hair);
   border-radius:999px;
-  background:rgba(5,3,20,0.42);
-  border:1px solid rgba(166,171,230,0.16);
-  -webkit-backdrop-filter:blur(6px);
-  backdrop-filter:blur(6px);
-  pointer-events:none;
+  background:rgba(8,7,28,0.5);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
 }
-#kit-solar-disk .kit-solar-disk-dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#f2b43c;
-  box-shadow:0 0 8px 1px rgba(242,180,60,0.9);
-  animation:kit-solar-disk-pulse 3.2s ease-in-out infinite;
+#kit-solar-disk .lsun-badge-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--lsun-accent);
+  box-shadow:0 0 9px var(--lsun-accent);
+  animation:lsun-pulse 2.6s ease-in-out infinite;
 }
-#kit-solar-disk .kit-solar-disk-name{
+#kit-solar-disk .lsun-badge-txt{
   font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:0.06em;
-  font-size:12px;
-  color:#f4f5ff;
+  font-style:italic;font-weight:700;
+  font-size:clamp(9px,1.55vmin,12px);
+  letter-spacing:0.16em;
+  color:var(--lsun-text);
 }
-#kit-solar-disk .kit-solar-disk-sep{
-  color:#a6abe6;
-  font-size:12px;
-  opacity:0.7;
+#kit-solar-disk .lsun-badge-live{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:clamp(8px,1.35vmin,10px);
+  letter-spacing:0.22em;
+  color:var(--lsun-bg);
+  background:var(--lsun-accent);
+  padding:1px 6px;border-radius:4px;
+  box-shadow:0 0 12px rgba(60,200,255,0.5);
 }
-#kit-solar-disk .kit-solar-disk-tag{
-  font-family:'Inter',sans-serif;
-  font-weight:400;
-  font-size:11.5px;
+
+#kit-solar-disk .lsun-wl{margin-top:clamp(10px,2.4vmin,18px);}
+#kit-solar-disk .lsun-wl-val{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:clamp(30px,8vmin,72px);
+  line-height:0.92;
+  letter-spacing:0.01em;
+  color:var(--lsun-text);
+  text-shadow:0 0 26px rgba(60,200,255,0.28);
+  transition:color .6s ease,text-shadow .6s ease;
+}
+#kit-solar-disk .lsun-wl-sub{
+  margin-top:6px;
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:clamp(8.5px,1.5vmin,11.5px);
+  letter-spacing:0.2em;
+  color:var(--lsun-muted);
+}
+
+#kit-solar-disk .lsun-stat-k{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:clamp(8px,1.4vmin,10.5px);
+  letter-spacing:0.2em;
+  color:var(--lsun-muted);
+}
+#kit-solar-disk .lsun-stat-v{
+  margin-top:4px;
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:clamp(13px,2.6vmin,21px);
   letter-spacing:0.04em;
-  color:#a6abe6;
+  color:var(--lsun-text);
 }
-@keyframes kit-solar-disk-pulse{
-  0%,100%{ transform:scale(1); opacity:1; box-shadow:0 0 8px 1px rgba(242,180,60,0.9); }
-  50%{ transform:scale(1.35); opacity:0.78; box-shadow:0 0 13px 2px rgba(242,180,60,0.6); }
+
+#kit-solar-disk .lsun-cap{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:clamp(9.5px,1.7vmin,13px);
+  letter-spacing:0.11em;
+  color:var(--lsun-text);
+  text-transform:uppercase;
+  line-height:1.35;
+  min-height:1.35em;
 }
-@media (prefers-reduced-motion: reduce){
-  #kit-solar-disk .kit-solar-disk-dot{ animation:none; }
+#kit-solar-disk .lsun-cap .lsun-caret{
+  display:inline-block;width:0.5ch;margin-left:1px;
+  background:var(--lsun-accent);
+  color:transparent;
+  animation:lsun-blink 1s steps(2) infinite;
+}
+#kit-solar-disk .lsun-cred{
+  margin-top:7px;
+  font-family:'Inter',sans-serif;
+  font-style:normal;font-weight:500;
+  text-transform:none;
+  font-size:clamp(9px,1.45vmin,11.5px);
+  letter-spacing:0.02em;
+  color:var(--lsun-muted);
+  opacity:0.78;
+}
+
+/* Switch */
+#kit-solar-disk .lsun-switch{
+  position:absolute;
+  z-index:6;
+  right:clamp(12px,3.2vmin,26px);
+  bottom:clamp(12px,3.2vmin,24px);
+  display:flex;
+  gap:8px;
+  padding:6px;
+  border:1px solid var(--lsun-hair);
+  border-radius:14px;
+  background:rgba(8,7,28,0.55);
+  backdrop-filter:blur(9px);
+  -webkit-backdrop-filter:blur(9px);
+}
+#kit-solar-disk .lsun-chip{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:8px 13px 8px 9px;
+  border:1px solid transparent;
+  border-radius:10px;
+  background:transparent;
+  color:var(--lsun-muted);
+  cursor:pointer;
+  text-align:left;
+  font-family:'Inter',sans-serif;
+  transition:background .25s ease,border-color .25s ease,color .25s ease,transform .15s ease;
+}
+#kit-solar-disk .lsun-chip:hover{background:rgba(166,171,230,0.07);color:var(--lsun-text);}
+#kit-solar-disk .lsun-chip:active{transform:translateY(1px);}
+#kit-solar-disk .lsun-chip.is-active{
+  background:rgba(60,200,255,0.10);
+  border-color:rgba(60,200,255,0.35);
+  color:var(--lsun-text);
+}
+#kit-solar-disk .lsun-chip:focus-visible{
+  outline:2px solid var(--lsun-accent);
+  outline-offset:2px;
+}
+#kit-solar-disk .lsun-chip-sw{
+  width:13px;height:13px;border-radius:50%;
+  flex:0 0 auto;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.08) inset;
+}
+#kit-solar-disk .lsun-chip-sw--gold{
+  background:radial-gradient(circle at 35% 30%, #fff2cf, var(--lsun-gold) 60%, #b3590f);
+  box-shadow:0 0 9px rgba(255,179,71,0.7),0 0 0 1px rgba(255,255,255,0.08) inset;
+}
+#kit-solar-disk .lsun-chip-sw--teal{
+  background:radial-gradient(circle at 35% 30%, #d3fff8, var(--lsun-teal) 60%, #0c6b67);
+  box-shadow:0 0 9px rgba(57,230,216,0.6),0 0 0 1px rgba(255,255,255,0.08) inset;
+}
+#kit-solar-disk .lsun-chip-tx{display:flex;flex-direction:column;line-height:1.05;}
+#kit-solar-disk .lsun-chip-tx b{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:clamp(10px,1.7vmin,13px);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+#kit-solar-disk .lsun-chip-tx i{
+  font-family:'Inter',sans-serif;
+  font-style:normal;font-weight:500;
+  font-size:clamp(8.5px,1.35vmin,10.5px);
+  letter-spacing:0.04em;
+  margin-top:3px;
+  opacity:0.72;
+  text-transform:none;
+}
+
+/* reticle */
+#kit-solar-disk .lsun-reticle{
+  position:absolute;
+  z-index:4;
+  width:clamp(78px,16vmin,150px);
+  height:clamp(78px,16vmin,150px);
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(60,200,255,0.5);
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .3s ease;
+  box-shadow:0 0 22px rgba(60,200,255,0.18),inset 0 0 22px rgba(60,200,255,0.10);
+}
+#kit-solar-disk .lsun-reticle.is-on{opacity:1;}
+#kit-solar-disk .lsun-ret-c{
+  position:absolute;inset:0;
+}
+#kit-solar-disk .lsun-ret-c::before,
+#kit-solar-disk .lsun-ret-c::after{
+  content:"";position:absolute;background:rgba(60,200,255,0.55);
+}
+#kit-solar-disk .lsun-ret-c::before{left:50%;top:8%;bottom:8%;width:1px;transform:translateX(-50%);}
+#kit-solar-disk .lsun-ret-c::after{top:50%;left:8%;right:8%;height:1px;transform:translateY(-50%);}
+
+#kit-solar-disk .lsun-stage.is-grab .lsun-reticle{cursor:none;}
+
+@keyframes lsun-pulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:0.35;transform:scale(0.78);}
+}
+@keyframes lsun-blink{
+  0%,49%{opacity:1;}
+  50%,100%{opacity:0;}
+}
+
+@media (max-width:560px){
+  #kit-solar-disk .lsun-hud--tr{display:none;}
+  #kit-solar-disk .lsun-hud--bl{max-width:90%;}
+  #kit-solar-disk .lsun-chip-tx i{display:none;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  #kit-solar-disk .lsun-badge-dot{animation:none;}
+  #kit-solar-disk .lsun-cap .lsun-caret{animation:none;}
 }
 
 body.mb-embed #kit-solar-disk{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -115,22 +320,63 @@ body.mb-embed #kit-solar-disk [class*='stage'],body.mb-embed #kit-solar-disk [cl
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">The living Sun</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">The Living Sun</div></div>
     </div>
-    
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-solar-disk">
-  <canvas class="kit-solar-disk-stage" aria-hidden="true"></canvas>
-  <div class="kit-solar-disk-label">
-    <span class="kit-solar-disk-dot"></span>
-    <span class="kit-solar-disk-name">The Sun</span>
-    <span class="kit-solar-disk-sep">·</span>
-    <span class="kit-solar-disk-tag">heliophysics</span>
+  <div class="lsun-stage" data-lsun-stage>
+    <canvas class="lsun-canvas" data-lsun-canvas></canvas>
+
+    <div class="lsun-vignette" aria-hidden="true"></div>
+
+    <div class="lsun-hud lsun-hud--tl">
+      <div class="lsun-badge">
+        <span class="lsun-badge-dot" data-lsun-dot></span>
+        <span class="lsun-badge-txt">NASA / SDO</span>
+        <span class="lsun-badge-live" data-lsun-live>LIVE</span>
+      </div>
+      <div class="lsun-wl" data-lsun-wlwrap>
+        <div class="lsun-wl-val" data-lsun-wlval>171 &#197;</div>
+        <div class="lsun-wl-sub" data-lsun-wlsub>EXTREME ULTRAVIOLET &middot; CORONA</div>
+      </div>
+    </div>
+
+    <div class="lsun-hud lsun-hud--tr">
+      <div class="lsun-stat">
+        <div class="lsun-stat-k">PLASMA TEMP</div>
+        <div class="lsun-stat-v" data-lsun-temp>~ 1.0 MK</div>
+      </div>
+      <div class="lsun-stat">
+        <div class="lsun-stat-k">CADENCE</div>
+        <div class="lsun-stat-v" data-lsun-cad>12 s</div>
+      </div>
+    </div>
+
+    <div class="lsun-hud lsun-hud--bl">
+      <div class="lsun-cap" data-lsun-cap>Active region rotating into view &middot; quiescent corona</div>
+      <div class="lsun-cred">NASA / SDO (AIA) &middot; Solar Dynamics Observatory</div>
+    </div>
+
+    <div class="lsun-switch" data-lsun-switch role="group" aria-label="Wavelength channel">
+      <button class="lsun-chip is-active" data-lsun-chip="gold" type="button" aria-pressed="true">
+        <span class="lsun-chip-sw lsun-chip-sw--gold"></span>
+        <span class="lsun-chip-tx"><b>171 &#197;</b><i>Gold corona</i></span>
+      </button>
+      <button class="lsun-chip" data-lsun-chip="teal" type="button" aria-pressed="false">
+        <span class="lsun-chip-sw lsun-chip-sw--teal"></span>
+        <span class="lsun-chip-tx"><b>Cooler</b><i>Teal channel</i></span>
+      </button>
+    </div>
+
+    <div class="lsun-reticle" data-lsun-reticle aria-hidden="true">
+      <span class="lsun-ret-c"></span>
+    </div>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Ambient and self-running: granulation drifts continuously and a flare arc erupts off the limb every few seconds; honors prefers-reduced-motion by rendering a single static frame.</span>
-    <span class="mb-c-src">Concept · SSAI</span>
+    <span class="mb-c-int">Click the wavelength chips (or press 1 / 2, or use arrow keys) to switch between the gold 171Å and cooler teal SDO channels with a cross-dissolve; the disk slowly rotates, the corona breathes, and a live caption ticks — hover the disk to pause rotation and reveal a focus reticle.</span>
+    <span class="mb-c-src">Image · NASA / SDO (AIA)</span>
   </footer>
 </div>
 <script>
@@ -143,336 +389,479 @@ body.mb-embed #kit-solar-disk [class*='stage'],body.mb-embed #kit-solar-disk [cl
     var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
     if(q.get('embed')==='1') document.body.classList.add('mb-embed');
   }catch(e){}
+  /* safety: some modules forget to hide their loading overlay after the image resolves */
+  window.addEventListener('load',function(){ setTimeout(function(){
+    var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
+    for(var i=0;i<ov.length;i++){ var el=ov[i], p=getComputedStyle(el).position;
+      if(p==='absolute'||p==='fixed'){ el.style.transition='opacity .45s ease'; el.style.opacity='0'; el.style.pointerEvents='none';
+        (function(e){setTimeout(function(){e.style.display='none';},500);})(el); } }
+  },1700); });
 })();
 </script>
 <script>
 (function(){
   var root = document.getElementById('kit-solar-disk');
   if(!root) return;
-  var canvas = root.querySelector('.kit-solar-disk-stage');
-  if(!canvas) return;
-  var ctx = canvas.getContext('2d');
-  if(!ctx) return;
+
+  var stage   = root.querySelector('[data-lsun-stage]');
+  var canvas  = root.querySelector('[data-lsun-canvas]');
+  var ctx     = canvas.getContext('2d');
+  var wlVal   = root.querySelector('[data-lsun-wlval]');
+  var wlSub   = root.querySelector('[data-lsun-wlsub]');
+  var tempEl  = root.querySelector('[data-lsun-temp]');
+  var capEl   = root.querySelector('[data-lsun-cap]');
+  var liveEl  = root.querySelector('[data-lsun-live]');
+  var dotEl   = root.querySelector('[data-lsun-dot]');
+  var chips   = Array.prototype.slice.call(root.querySelectorAll('[data-lsun-chip]'));
+  var reticle = root.querySelector('[data-lsun-reticle]');
 
   var reduce = false;
-  try{ reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  try{ reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
 
-  var W = 0, H = 0, dpr = 1;
-  var cx = 0, cy = 0, R = 0;
+  function accent(){
+    var v='';
+    try{ v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); }catch(e){}
+    return v || '#3cc8ff';
+  }
+  var ACCENT = accent();
+  root.style.setProperty('--lsun-accent', ACCENT);
 
-  // --- offscreen granulation texture (procedural cellular noise) ---
-  var gran = document.createElement('canvas');
-  var gctx = gran.getContext('2d');
-  var GRES = 150;              // granulation field resolution
-  var cells = [];             // seed points for cellular pattern
-  var phases = [];            // per-cell flicker phase
-  var NCELL = 150;
-
-  // value-noise lattice for slow large-scale turbulence
-  var NL = 9;
-  var lattice = new Float32Array(NL * NL);
-
-  function rand(){ return Math.random(); }
-
-  function buildFields(){
-    cells.length = 0; phases.length = 0;
-    for(var i=0;i<NCELL;i++){
-      cells.push([rand(), rand()]);
-      phases.push(rand()*Math.PI*2);
+  // ---- channel config -------------------------------------------------
+  var CHANNELS = {
+    gold:{
+      src:'../assets/images/sun-flare-gold-sdo.jpg',
+      label:'171 Å',
+      sub:'EXTREME ULTRAVIOLET · CORONA',
+      temp:'~ 0.6 MK',
+      halo:[255,176,86],
+      tint:[255,196,120],
+      tintAmt:0.0
+    },
+    teal:{
+      src:'../assets/images/sun-flare-teal-sdo.jpg',
+      label:'TEAL',
+      sub:'COOLER CHANNEL · TRANSITION REGION',
+      temp:'~ 1.5 MK',
+      halo:[70,224,210],
+      tint:[120,236,226],
+      tintAmt:0.0
     }
-    for(var k=0;k<lattice.length;k++){ lattice[k] = rand(); }
+  };
+  var ORDER=['gold','teal'];
+  var images={}, loaded={};
+
+  function loadImg(key){
+    var c=CHANNELS[key];
+    var img=new Image();
+    images[key]=img;
+    loaded[key]=false;
+    img.onload=function(){ loaded[key]=true; };
+    img.onerror=function(){ loaded[key]=false; };
+    img.src=c.src;
+    if(img.complete && img.naturalWidth>0){ loaded[key]=true; }
   }
+  ORDER.forEach(loadImg);
 
-  function smooth(t){ return t*t*(3-2*t); }
-  function latticeAt(x, y){
-    // x,y in [0,1) -> bilinear smoothed value noise
-    var fx = x*(NL-1), fy = y*(NL-1);
-    var ix = Math.floor(fx), iy = Math.floor(fy);
-    var tx = smooth(fx-ix), ty = smooth(fy-iy);
-    var ix1 = Math.min(ix+1, NL-1), iy1 = Math.min(iy+1, NL-1);
-    var a = lattice[iy*NL+ix],  b = lattice[iy*NL+ix1];
-    var c = lattice[iy1*NL+ix], d = lattice[iy1*NL+ix1];
-    var ab = a + (b-a)*tx, cd = c + (d-c)*tx;
-    return ab + (cd-ab)*ty;
-  }
+  // ---- state ----------------------------------------------------------
+  var current='gold';
+  var fadeFrom=null;       // key we are fading from
+  var fadeT=1;             // 0..1, 1 = fully on current
+  var rot=0;               // disk rotation (radians)
+  var hovering=false;
+  var paused=false;
+  var visible=true;
+  var mouseX=0, mouseY=0;
 
-  // render granulation into a small offscreen buffer; tDrift slowly advances
-  function renderGranulation(tDrift, flick){
-    gctx.clearRect(0,0,GRES,GRES);
-    var img = gctx.createImageData(GRES, GRES);
-    var data = img.data;
-    var drift = tDrift * 0.018;
-    var idx = 0;
-    for(var y=0;y<GRES;y++){
-      for(var x=0;x<GRES;x++){
-        var nx = x/GRES, ny = y/GRES;
-        // cellular: distance to nearest two drifting seed points
-        var d1 = 9, d2 = 9;
-        for(var c=0;c<NCELL;c++){
-          var sx = cells[c][0] + Math.sin(drift + phases[c])*0.012;
-          var sy = cells[c][1] + Math.cos(drift*0.9 + phases[c])*0.012;
-          var ddx = nx - sx, ddy = ny - sy;
-          var dd = ddx*ddx + ddy*ddy;
-          if(dd < d1){ d2 = d1; d1 = dd; }
-          else if(dd < d2){ d2 = dd; }
-        }
-        var edge = Math.sqrt(d2) - Math.sqrt(d1);   // ridge between cells = cool lanes
-        var cellVal = Math.min(1, edge*7.5);         // bright grains, dark intergranular lanes
-        // large-scale slow turbulence overlay
-        var turb = latticeAt((nx+drift*0.05)%1, (ny+drift*0.03)%1);
-        var bright = cellVal*0.72 + turb*0.28;
-        // gentle global flicker
-        bright *= (0.92 + 0.08*flick);
-
-        // amber/gold mapping: dark lanes -> deep ember, grains -> bright gold
-        var t = bright;
-        var r = 150 + t*105;     // 150..255
-        var g = 70  + t*135;     // 70..205
-        var b = 18  + t*70;      // 18..88
-        data[idx]   = r;
-        data[idx+1] = g;
-        data[idx+2] = b;
-        data[idx+3] = 255;
-        idx += 4;
-      }
-    }
-    gctx.putImageData(img, 0, 0);
-  }
-
-  // --- flares ---
-  var flares = [];
-  function spawnFlare(now){
-    var ang = rand()*Math.PI*2;
-    flares.push({
-      ang: ang,
-      // arc loop geometry
-      spread: 0.16 + rand()*0.16,    // angular width of the loop footpoints
-      height: 0.18 + rand()*0.26,    // loop apex height as fraction of R
-      born: now,
-      life: 2600 + rand()*2200,
-      hue: rand() < 0.35 ? 'coral' : 'amber'
-    });
-  }
-
+  // ---- sizing ---------------------------------------------------------
+  var W=0,H=0,DPR=1;
   function resize(){
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var rect = root.getBoundingClientRect();
-    W = Math.max(1, Math.round(rect.width));
-    H = Math.max(1, Math.round(rect.height));
-    canvas.width = Math.round(W * dpr);
-    canvas.height = Math.round(H * dpr);
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cx = W * 0.5;
-    cy = H * 0.5;
-    R = Math.min(W, H) * 0.30;
-    // size granulation buffer relative to disc, capped for perf
-    GRES = Math.max(90, Math.min(190, Math.round(R*2.2)));
-    gran.width = GRES; gran.height = GRES;
-    buildFields();
+    var r=stage.getBoundingClientRect();
+    W=Math.max(1,r.width); H=Math.max(1,r.height);
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(W*DPR);
+    canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,1*0,0);
+    draw(performance.now());
   }
 
-  // draw the corona halo (soft radial glow) — uses gradients (off the hot loop, fine)
-  function drawCorona(){
-    var g1 = ctx.createRadialGradient(cx, cy, R*0.92, cx, cy, R*2.35);
-    g1.addColorStop(0, 'rgba(242,180,60,0.30)');
-    g1.addColorStop(0.28, 'rgba(242,150,60,0.14)');
-    g1.addColorStop(0.6, 'rgba(138,92,80,0.05)');
-    g1.addColorStop(1, 'rgba(5,3,20,0)');
-    ctx.fillStyle = g1;
-    ctx.beginPath();
-    ctx.arc(cx, cy, R*2.35, 0, Math.PI*2);
-    ctx.fill();
-
-    // inner hot rim glow
-    var g2 = ctx.createRadialGradient(cx, cy, R*0.7, cx, cy, R*1.18);
-    g2.addColorStop(0, 'rgba(255,210,120,0)');
-    g2.addColorStop(0.82, 'rgba(255,196,96,0.0)');
-    g2.addColorStop(0.93, 'rgba(255,214,130,0.45)');
-    g2.addColorStop(1, 'rgba(255,170,70,0)');
-    ctx.fillStyle = g2;
-    ctx.beginPath();
-    ctx.arc(cx, cy, R*1.18, 0, Math.PI*2);
-    ctx.fill();
+  // disk geometry: largest square that fits, sun occupies ~78% of it
+  function geom(){
+    var cx=W*0.5, cy=H*0.5;
+    var R=Math.min(W,H)*0.5*0.80;   // sun radius in CSS px
+    return {cx:cx,cy:cy,R:R};
   }
 
-  function drawDisc(rot){
+  // ---- offscreen disk renderer ---------------------------------------
+  // We draw the (square) SDO image clipped to a circle, rotated, into the
+  // main canvas. The source square is centered/cover-cropped.
+  function drawDisk(key, alpha, g, t){
+    var img=images[key];
+    if(!img || !loaded[key]) return false;
+    var c=CHANNELS[key];
+
+    var iw=img.naturalWidth, ih=img.naturalHeight;
+    var side=Math.min(iw,ih);
+    var sx=(iw-side)/2, sy=(ih-side)/2;
+
+    var R=g.R;
+    // breathing scale on the disk (subtle)
+    var breath = reduce ? 1 : (1 + Math.sin(t*0.00026)*0.012);
+    var dR = R*breath;
+
     ctx.save();
-    // clip to disc
+    ctx.globalAlpha=alpha;
     ctx.beginPath();
-    ctx.arc(cx, cy, R, 0, Math.PI*2);
+    ctx.arc(g.cx,g.cy,R*0.998,0,Math.PI*2);
     ctx.closePath();
     ctx.clip();
 
-    // base granulation texture, slightly oversized + slow rotation for life
-    var sz = R*2.12;
-    ctx.translate(cx, cy);
+    ctx.translate(g.cx,g.cy);
     ctx.rotate(rot);
-    ctx.imageSmoothingEnabled = true;
-    ctx.drawImage(gran, -sz/2, -sz/2, sz, sz);
-    ctx.rotate(-rot);
-    ctx.translate(-cx, -cy);
-
-    // limb darkening: darken toward edge
-    var ld = ctx.createRadialGradient(cx, cy, R*0.15, cx, cy, R);
-    ld.addColorStop(0, 'rgba(255,230,150,0.18)');
-    ld.addColorStop(0.55, 'rgba(255,190,90,0.0)');
-    ld.addColorStop(0.82, 'rgba(120,52,12,0.30)');
-    ld.addColorStop(1, 'rgba(60,22,6,0.78)');
-    ctx.fillStyle = ld;
-    ctx.beginPath();
-    ctx.arc(cx, cy, R, 0, Math.PI*2);
-    ctx.fill();
-
-    // subtle bright core bloom
-    var core = ctx.createRadialGradient(cx-R*0.12, cy-R*0.12, 0, cx, cy, R*0.85);
-    core.addColorStop(0, 'rgba(255,238,180,0.22)');
-    core.addColorStop(1, 'rgba(255,238,180,0)');
-    ctx.fillStyle = core;
-    ctx.beginPath();
-    ctx.arc(cx, cy, R, 0, Math.PI*2);
-    ctx.fill();
-
+    // draw square image to cover the disk (slightly oversize to hide rotation edges)
+    var d=dR*2.08;
+    ctx.drawImage(img, sx, sy, side, side, -d/2, -d/2, d, d);
     ctx.restore();
 
-    // crisp hot rim line on top of disc edge
-    ctx.lineWidth = Math.max(1, R*0.012);
-    ctx.strokeStyle = 'rgba(255,212,128,0.55)';
-    ctx.beginPath();
-    ctx.arc(cx, cy, R*0.997, 0, Math.PI*2);
-    ctx.stroke();
+    return true;
   }
 
-  function drawFlares(now){
-    for(var i=flares.length-1;i>=0;i--){
-      var f = flares[i];
-      var age = now - f.born;
-      var p = age / f.life;
-      if(p >= 1){ flares.splice(i,1); continue; }
+  // limb darkening / atmospheric rim INSIDE the disk to sell depth
+  function drawLimb(g,t){
+    var R=g.R;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(g.cx,g.cy,R,0,Math.PI*2);
+    ctx.clip();
+    // subtle inner shadow ring near the limb
+    var lg=ctx.createRadialGradient(g.cx,g.cy,R*0.62,g.cx,g.cy,R);
+    lg.addColorStop(0,'rgba(0,0,0,0)');
+    lg.addColorStop(0.86,'rgba(0,0,0,0)');
+    lg.addColorStop(1,'rgba(8,4,2,0.42)');
+    ctx.fillStyle=lg;
+    ctx.fillRect(g.cx-R,g.cy-R,R*2,R*2);
+    ctx.restore();
+  }
 
-      // envelope: quick rise, slow fade
-      var env = p < 0.22 ? (p/0.22) : (1 - (p-0.22)/0.78);
-      env = Math.max(0, env);
-      env = env*env*(3-2*env);
+  // shimmering limb prominences: a few faint arcs riding the edge
+  var proms=[];
+  (function seedProms(){
+    var n=7;
+    for(var i=0;i<n;i++){
+      proms.push({
+        a: Math.random()*Math.PI*2,
+        spread: 0.14+Math.random()*0.26,
+        amp: 0.5+Math.random()*0.5,
+        ph: Math.random()*Math.PI*2,
+        sp: 0.0006+Math.random()*0.0012
+      });
+    }
+  })();
 
-      var a1 = f.ang - f.spread*0.5;
-      var a2 = f.ang + f.spread*0.5;
-      var foot1x = cx + Math.cos(a1)*R*0.985;
-      var foot1y = cy + Math.sin(a1)*R*0.985;
-      var foot2x = cx + Math.cos(a2)*R*0.985;
-      var foot2y = cy + Math.sin(a2)*R*0.985;
-      // apex pushed radially outward
-      var apexR = R*(1 + f.height*env);
-      var apx = cx + Math.cos(f.ang)*apexR;
-      var apy = cy + Math.sin(f.ang)*apexR;
-
-      var col = f.hue === 'coral'
-        ? ['rgba(255,150,90,', 'rgba(242,103,60,']
-        : ['rgba(255,214,120,', 'rgba(242,180,60,'];
-
-      // outer soft halo of the loop
-      ctx.lineCap = 'round';
+  function drawProms(g,t,col){
+    if(reduce) return;
+    var R=g.R;
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    for(var i=0;i<proms.length;i++){
+      var p=proms[i];
+      var ang=p.a + rot; // ride along with rotation
+      var pulse=(Math.sin(t*p.sp+p.ph)*0.5+0.5);
+      var ints=p.amp*(0.22+pulse*0.55);
+      if(ints<=0.02) continue;
+      var ex=g.cx+Math.cos(ang)*R;
+      var ey=g.cy+Math.sin(ang)*R;
+      var rad=R*(0.10+p.spread*0.6)*(0.7+pulse*0.5);
+      var grd=ctx.createRadialGradient(ex,ey,0,ex,ey,rad);
+      grd.addColorStop(0,'rgba('+col[0]+','+col[1]+','+col[2]+','+(0.30*ints).toFixed(3)+')');
+      grd.addColorStop(0.5,'rgba('+col[0]+','+col[1]+','+col[2]+','+(0.10*ints).toFixed(3)+')');
+      grd.addColorStop(1,'rgba('+col[0]+','+col[1]+','+col[2]+',0)');
+      ctx.fillStyle=grd;
       ctx.beginPath();
-      ctx.moveTo(foot1x, foot1y);
-      ctx.quadraticCurveTo(apx, apy, foot2x, foot2y);
-      ctx.lineWidth = Math.max(2, R*0.07)*env + 1;
-      ctx.strokeStyle = col[1] + (0.16*env) + ')';
-      ctx.stroke();
-
-      // bright core of the loop
-      ctx.beginPath();
-      ctx.moveTo(foot1x, foot1y);
-      ctx.quadraticCurveTo(apx, apy, foot2x, foot2y);
-      ctx.lineWidth = Math.max(1.2, R*0.02)*env + 0.6;
-      ctx.strokeStyle = col[0] + (0.85*env) + ')';
-      ctx.stroke();
-
-      // ejected sparks rising from apex
-      var sparkN = 5;
-      for(var s=0;s<sparkN;s++){
-        var sp = ((age*0.0006) + s/sparkN) % 1;
-        var sr = apexR + sp*R*0.5*env;
-        var jitter = Math.sin(s*12.9 + f.ang*7.0)*f.spread*0.5;
-        var sa = f.ang + jitter*(1-sp);
-        var sx = cx + Math.cos(sa)*sr;
-        var sy = cy + Math.sin(sa)*sr;
-        var sAlpha = env*(1-sp)*0.7;
-        if(sAlpha <= 0.01) continue;
-        ctx.beginPath();
-        ctx.arc(sx, sy, Math.max(0.6, R*0.012)*(1-sp*0.5), 0, Math.PI*2);
-        ctx.fillStyle = col[0] + sAlpha + ')';
-        ctx.fill();
-      }
-
-      // footpoint glints
-      var fpA = env*0.6;
-      ctx.fillStyle = col[0] + fpA + ')';
-      ctx.beginPath();
-      ctx.arc(foot1x, foot1y, R*0.03*env+0.5, 0, Math.PI*2);
-      ctx.arc(foot2x, foot2y, R*0.03*env+0.5, 0, Math.PI*2);
+      ctx.arc(ex,ey,rad,0,Math.PI*2);
       ctx.fill();
     }
+    ctx.restore();
   }
 
-  function frame(now, animated){
+  function mix(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+  function curHalo(){
+    var to=CHANNELS[current].halo;
+    if(fadeFrom && fadeT<1){
+      return mix(CHANNELS[fadeFrom].halo,to,fadeT);
+    }
+    return to;
+  }
+
+  // atmospheric corona halo around the disk
+  function drawHalo(g,t,col){
+    var R=g.R;
+    var breath = reduce ? 0.5 : (Math.sin(t*0.00031)*0.5+0.5);
+    var reach = R*(1.62 + breath*0.16);
+    var aIn = 0.30 + breath*0.10;
+    var grd=ctx.createRadialGradient(g.cx,g.cy,R*0.92,g.cx,g.cy,reach);
+    grd.addColorStop(0,'rgba('+(col[0]|0)+','+(col[1]|0)+','+(col[2]|0)+','+aIn.toFixed(3)+')');
+    grd.addColorStop(0.35,'rgba('+(col[0]|0)+','+(col[1]|0)+','+(col[2]|0)+','+(aIn*0.42).toFixed(3)+')');
+    grd.addColorStop(1,'rgba('+(col[0]|0)+','+(col[1]|0)+','+(col[2]|0)+',0)');
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    ctx.fillStyle=grd;
+    ctx.beginPath();
+    ctx.arc(g.cx,g.cy,reach,0,Math.PI*2);
+    ctx.fill();
+
+    // crisp limb glow ring
+    var ringA=0.5+breath*0.25;
+    ctx.lineWidth=Math.max(1.2, R*0.014);
+    ctx.strokeStyle='rgba('+(col[0]|0)+','+(col[1]|0)+','+(col[2]|0)+','+(0.45*ringA).toFixed(3)+')';
+    ctx.beginPath();
+    ctx.arc(g.cx,g.cy,R*1.004,0,Math.PI*2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // faint streaming corona rays
+  var rays=[];
+  (function seedRays(){
+    var n=26;
+    for(var i=0;i<n;i++){
+      rays.push({a:(i/n)*Math.PI*2 + Math.random()*0.12, len:0.18+Math.random()*0.55, w:0.006+Math.random()*0.018, ph:Math.random()*Math.PI*2, sp:0.0004+Math.random()*0.001});
+    }
+  })();
+  function drawRays(g,t,col){
+    if(reduce) return;
+    var R=g.R;
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    ctx.translate(g.cx,g.cy);
+    ctx.rotate(rot*0.5);
+    for(var i=0;i<rays.length;i++){
+      var ry=rays[i];
+      var fl=(Math.sin(t*ry.sp+ry.ph)*0.5+0.5);
+      var aa=0.05+fl*0.10;
+      var L=R*(1.0 + ry.len*(0.5+fl*0.5));
+      ctx.save();
+      ctx.rotate(ry.a);
+      var grd=ctx.createLinearGradient(R*0.95,0,L,0);
+      grd.addColorStop(0,'rgba('+(col[0]|0)+','+(col[1]|0)+','+(col[2]|0)+','+aa.toFixed(3)+')');
+      grd.addColorStop(1,'rgba('+(col[0]|0)+','+(col[1]|0)+','+(col[2]|0)+',0)');
+      ctx.fillStyle=grd;
+      var wpx=R*ry.w;
+      ctx.beginPath();
+      ctx.moveTo(R*0.95,-wpx*1.6);
+      ctx.lineTo(L,-wpx*0.2);
+      ctx.lineTo(L,wpx*0.2);
+      ctx.lineTo(R*0.95,wpx*1.6);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  // ---- draw -----------------------------------------------------------
+  function draw(t){
+    if(!W||!H) return;
     ctx.clearRect(0,0,W,H);
-    ctx.globalCompositeOperation = 'lighter';
-    drawCorona();
-    ctx.globalCompositeOperation = 'source-over';
 
-    var drift = animated ? now*0.06 : 1000;
-    var flick = animated ? (0.5 + 0.5*Math.sin(now*0.0011)) : 0.6;
-    renderGranulation(drift, flick);
+    // deep space backdrop
+    var bg=ctx.createRadialGradient(W*0.5,H*0.42,0,W*0.5,H*0.5,Math.max(W,H)*0.75);
+    bg.addColorStop(0,'rgba(14,11,46,0.55)');
+    bg.addColorStop(0.5,'rgba(6,4,24,0.6)');
+    bg.addColorStop(1,'rgba(5,3,20,0.0)');
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,W,H);
 
-    var rot = animated ? now*0.000018 : 0.2;
-    drawDisc(rot);
+    var g=geom();
+    var col=curHalo();
 
-    ctx.globalCompositeOperation = 'lighter';
-    if(animated) drawFlares(now);
-    else {
-      // one representative static flare
-      flares.length = 0;
-      spawnFlare(now);
-      flares[0].born = now - flares[0].life*0.22;
-      drawFlares(now);
-    }
-    ctx.globalCompositeOperation = 'source-over';
-  }
+    // outer atmosphere first (behind disk)
+    drawRays(g,t,col);
+    drawHalo(g,t,col);
 
-  var raf = 0;
-  var nextFlare = 0;
-  var start = 0;
-  function loop(ts){
-    if(!start){ start = ts; nextFlare = ts + 600 + rand()*1200; }
-    if(ts >= nextFlare && flares.length < 3){
-      spawnFlare(ts);
-      nextFlare = ts + 2600 + rand()*3200;
-    }
-    frame(ts, true);
-    raf = requestAnimationFrame(loop);
-  }
-
-  function init(){
-    resize();
-    if(reduce){
-      frame(performance.now ? performance.now() : Date.now(), false);
+    // disk(s) with cross-dissolve
+    if(fadeFrom && fadeT<1){
+      drawDisk(fadeFrom, 1, g, t);
+      drawDisk(current, fadeT, g, t);
     } else {
-      raf = requestAnimationFrame(loop);
+      drawDisk(current, 1, g, t);
     }
+
+    // if image not yet loaded, paint a believable placeholder disk
+    if(!loaded[current]){
+      var pg=ctx.createRadialGradient(g.cx-g.R*0.25,g.cy-g.R*0.25,g.R*0.1,g.cx,g.cy,g.R);
+      pg.addColorStop(0,'rgba('+col[0]+','+col[1]+','+col[2]+',0.95)');
+      pg.addColorStop(0.7,'rgba('+(col[0]*0.6|0)+','+(col[1]*0.6|0)+','+(col[2]*0.6|0)+',0.85)');
+      pg.addColorStop(1,'rgba(40,18,8,0.9)');
+      ctx.fillStyle=pg;
+      ctx.beginPath();ctx.arc(g.cx,g.cy,g.R,0,Math.PI*2);ctx.fill();
+    }
+
+    drawLimb(g,t);
+    drawProms(g,t,col);
+
+    // gentle bloom over whole disk (breathing)
+    var br = reduce ? 0.5 : (Math.sin(t*0.00031)*0.5+0.5);
+    ctx.save();
+    ctx.globalCompositeOperation='overlay';
+    var bl=ctx.createRadialGradient(g.cx,g.cy,0,g.cx,g.cy,g.R);
+    bl.addColorStop(0,'rgba(255,255,255,'+(0.05+br*0.06).toFixed(3)+')');
+    bl.addColorStop(0.6,'rgba(255,255,255,0.02)');
+    bl.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=bl;
+    ctx.beginPath();ctx.arc(g.cx,g.cy,g.R,0,Math.PI*2);ctx.fill();
+    ctx.restore();
   }
 
-  var rt = 0;
-  function onResize(){
-    clearTimeout(rt);
-    rt = setTimeout(function(){
-      resize();
-      if(reduce) frame(performance.now ? performance.now() : Date.now(), false);
-    }, 120);
-  }
-  window.addEventListener('resize', onResize);
+  // ---- animation loop -------------------------------------------------
+  var last=performance.now();
+  var raf=null;
+  function tick(now){
+    raf=requestAnimationFrame(tick);
+    var dt=Math.min(64, now-last); last=now;
+    if(!visible) return;
 
-  init();
+    if(!reduce && !(hovering && paused)){
+      rot += dt*0.0000085; // very slow rotation (~0.5 deg / s scaled down)
+    }
+    if(fadeFrom && fadeT<1){
+      fadeT += dt/620;
+      if(fadeT>=1){ fadeT=1; fadeFrom=null; }
+    }
+    draw(now);
+  }
+  function start(){ if(!raf){ last=performance.now(); raf=requestAnimationFrame(tick); } }
+  function stop(){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+
+  // ---- channel switching ----------------------------------------------
+  function setChannel(key){
+    if(key===current || !CHANNELS[key]) return;
+    fadeFrom=current;
+    fadeT=0;
+    current=key;
+    var c=CHANNELS[key];
+    wlVal.textContent=c.label;
+    wlSub.textContent=c.sub;
+    tempEl.textContent=c.temp;
+    chips.forEach(function(ch){
+      var on=ch.getAttribute('data-lsun-chip')===key;
+      ch.classList.toggle('is-active',on);
+      ch.setAttribute('aria-pressed', on?'true':'false');
+    });
+    // recolor accent-ish elements subtly toward channel
+    if(reduce){ draw(performance.now()); }
+  }
+
+  chips.forEach(function(ch){
+    ch.addEventListener('click',function(){
+      setChannel(ch.getAttribute('data-lsun-chip'));
+    });
+  });
+
+  // keyboard
+  root.setAttribute('tabindex','0');
+  root.addEventListener('keydown',function(e){
+    if(e.key==='1'){ setChannel('gold'); }
+    else if(e.key==='2'){ setChannel('teal'); }
+    else if(e.key==='ArrowRight'||e.key==='ArrowDown'){
+      e.preventDefault();
+      setChannel(current==='gold'?'teal':'gold');
+    } else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){
+      e.preventDefault();
+      setChannel(current==='gold'?'teal':'gold');
+    }
+  });
+
+  // ---- hover / reticle -------------------------------------------------
+  function inDisk(x,y){
+    var g=geom();
+    var dx=x-g.cx, dy=y-g.cy;
+    return (dx*dx+dy*dy) <= g.R*g.R;
+  }
+  stage.addEventListener('pointermove',function(e){
+    var r=stage.getBoundingClientRect();
+    mouseX=e.clientX-r.left; mouseY=e.clientY-r.top;
+    var on=inDisk(mouseX,mouseY);
+    hovering=on; paused=on;
+    if(on){
+      reticle.classList.add('is-on');
+      reticle.style.left=mouseX+'px';
+      reticle.style.top=mouseY+'px';
+      stage.classList.add('is-grab');
+    } else {
+      reticle.classList.remove('is-on');
+      stage.classList.remove('is-grab');
+    }
+  });
+  stage.addEventListener('pointerleave',function(){
+    hovering=false; paused=false;
+    reticle.classList.remove('is-on');
+    stage.classList.remove('is-grab');
+  });
+
+  // ---- live caption ticker --------------------------------------------
+  var capLines=[
+    'Active region rotating into view · quiescent corona',
+    'Coronal loops arching above the photosphere',
+    'Plasma confined along magnetic field lines',
+    'Limb prominence flickering at the solar edge',
+    'Differential rotation · equator leads the poles',
+    'Magnetic flux emerging · corona heating to millions K'
+  ];
+  var capI=0, capTimer=null;
+  function typeCap(text){
+    if(reduce){ capEl.textContent=text; return; }
+    capEl.innerHTML='';
+    var i=0;
+    var span=document.createElement('span'); capEl.appendChild(span);
+    var caret=document.createElement('span'); caret.className='lsun-caret'; caret.textContent='_';
+    capEl.appendChild(caret);
+    function step(){
+      if(!visible){ span.textContent=text; caret.remove(); return; }
+      span.textContent=text.slice(0,i);
+      i++;
+      if(i<=text.length){ capTimer=setTimeout(step, 20+Math.random()*22); }
+      else { setTimeout(function(){ if(caret.parentNode) caret.remove(); }, 1600); }
+    }
+    step();
+  }
+  function cycleCap(){
+    capI=(capI+1)%capLines.length;
+    typeCap(capLines[capI]);
+  }
+  typeCap(capLines[0]);
+  var capCycle=setInterval(function(){ if(visible) cycleCap(); }, 5200);
+
+  // live "frame" indicator blink
+  setInterval(function(){
+    if(!liveEl) return;
+    liveEl.style.opacity = liveEl.style.opacity==='0.35' ? '1' : '0.35';
+  }, 1300);
+
+  // ---- visibility / resize --------------------------------------------
+  var io=null;
+  if('IntersectionObserver' in window){
+    io=new IntersectionObserver(function(ents){
+      ents.forEach(function(en){
+        visible=en.isIntersecting && en.intersectionRatio>0.02;
+        if(visible) start(); else stop();
+      });
+    },{threshold:[0,0.02,0.2]});
+    io.observe(root);
+  } else { visible=true; start(); }
+
+  var ro=null;
+  if('ResizeObserver' in window){
+    ro=new ResizeObserver(function(){ resize(); });
+    ro.observe(stage);
+  }
+  window.addEventListener('resize',resize);
+
+  // init: build UI + first frame immediately (un-gated)
+  resize();
+  start();
+  // also redraw once images likely loaded
+  setTimeout(function(){ draw(performance.now()); }, 120);
+  setTimeout(function(){ draw(performance.now()); }, 600);
 })();
 </script>
 </body></html>

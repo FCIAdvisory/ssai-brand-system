@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deep-field explorer · SSAI</title>
+<title>Deep-Field Explorer · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -33,23 +33,350 @@ body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
 body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
 body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
-#kit-deep-field{position:relative;width:100%;aspect-ratio:16/10;min-height:340px;overflow:hidden;border-radius:14px;background:radial-gradient(120% 120% at 30% 20%,#0a0726 0%,#050314 60%,#03020d 100%);font-family:'Inter',system-ui,sans-serif;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;color:#f4f5ff}
-#kit-deep-field.kit-df-drag{cursor:grabbing}
-#kit-deep-field .kit-df-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);border:0}
-#kit-deep-field .kit-df-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#kit-deep-field .kit-df-frame{position:absolute;inset:0;pointer-events:none;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(166,171,230,.16),inset 0 0 120px 8px rgba(5,3,20,.85)}
-#kit-deep-field .kit-df-head{position:absolute;top:16px;left:18px;display:flex;flex-direction:column;gap:5px;pointer-events:none;z-index:2}
-#kit-deep-field .kit-df-lens{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.22em;color:#8a5cff}
-#kit-deep-field .kit-df-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:17px;letter-spacing:.05em;color:#f4f5ff;line-height:1}
-#kit-deep-field .kit-df-hint{position:absolute;left:18px;bottom:16px;font-size:11px;letter-spacing:.04em;color:#a6abe6;display:flex;align-items:center;gap:8px;pointer-events:none;z-index:2;transition:opacity .8s ease}
-#kit-deep-field .kit-df-hint::before{content:"";width:22px;height:1px;background:linear-gradient(90deg,transparent,rgba(166,171,230,.7))}
-#kit-deep-field .kit-df-hint.kit-df-fade{opacity:0}
-#kit-deep-field .kit-df-ui{position:absolute;right:16px;bottom:16px;display:flex;flex-direction:column;align-items:center;gap:6px;z-index:3}
-#kit-deep-field .kit-df-btn{width:34px;height:34px;border-radius:9px;border:1px solid rgba(166,171,230,.18);background:rgba(22,20,95,.42);color:#f4f5ff;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:19px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);transition:background .25s ease,border-color .25s ease,transform .12s ease}
-#kit-deep-field .kit-df-btn:hover{background:rgba(60,123,224,.32);border-color:rgba(60,123,224,.55)}
-#kit-deep-field .kit-df-btn:active{transform:scale(.93)}
-#kit-deep-field .kit-df-zoom{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:11px;letter-spacing:.06em;color:#a6abe6;padding:2px 0;min-width:34px;text-align:center}
-@media (prefers-reduced-motion:reduce){#kit-deep-field .kit-df-hint{display:none}}
+#kit-deep-field{
+  --df-bg:#050314;
+  --df-indigo:#16145f;
+  --df-text:#f4f5ff;
+  --df-muted:#a6abe6;
+  --df-hair:rgba(166,171,230,0.16);
+  --df-accent:var(--accent,#3cc8ff);
+  position:relative;
+  width:100%;
+  height:100%;
+  min-height:320px;
+  margin:0;
+  background:var(--df-bg);
+  color:var(--df-text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+  border-radius:inherit;
+}
+#kit-deep-field *{box-sizing:border-box;}
+
+#kit-deep-field .df-stage{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  cursor:grab;
+  background:radial-gradient(120% 120% at 50% 38%, #0a0726 0%, var(--df-bg) 70%);
+  touch-action:none;
+  user-select:none;
+}
+#kit-deep-field .df-stage.df-grabbing{cursor:grabbing;}
+
+#kit-deep-field .df-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* texture overlays */
+#kit-deep-field .df-grain{
+  position:absolute;inset:0;pointer-events:none;
+  opacity:.05;mix-blend-mode:screen;
+  background-image:radial-gradient(rgba(255,255,255,.9) .5px,transparent .6px);
+  background-size:3px 3px;
+}
+#kit-deep-field .df-vignette{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(130% 110% at 50% 50%, transparent 52%, rgba(5,3,20,.55) 86%, rgba(5,3,20,.92) 100%),
+    linear-gradient(180deg, rgba(5,3,20,.55) 0%, transparent 18%, transparent 70%, rgba(5,3,20,.78) 100%);
+}
+
+/* topbar */
+#kit-deep-field .df-topbar{
+  position:absolute;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:clamp(12px,2.4vw,22px);
+  pointer-events:none;
+  z-index:6;
+}
+#kit-deep-field .df-id{
+  display:flex;align-items:center;gap:9px;
+  padding:7px 12px;
+  border:1px solid var(--df-hair);
+  border-radius:2px;
+  background:rgba(8,6,28,.5);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+}
+#kit-deep-field .df-id-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--df-accent);
+  box-shadow:0 0 9px var(--df-accent);
+  animation:df-pulse 2.6s ease-in-out infinite;
+}
+@keyframes df-pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.7);}}
+#kit-deep-field .df-id-text{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:clamp(9px,1.15vw,12px);
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--df-text);
+  white-space:nowrap;
+}
+
+#kit-deep-field .df-readout{
+  display:flex;flex-direction:column;gap:4px;
+  padding:9px 13px;min-width:128px;
+  border:1px solid var(--df-hair);
+  border-radius:2px;
+  background:rgba(8,6,28,.5);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+}
+#kit-deep-field .df-ro-row{
+  display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+}
+#kit-deep-field .df-ro-k{
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--df-muted);font-weight:600;
+}
+#kit-deep-field .df-ro-v{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:clamp(11px,1.4vw,14px);
+  letter-spacing:.04em;
+  color:var(--df-accent);
+  font-variant-numeric:tabular-nums;
+}
+
+/* reticle */
+#kit-deep-field .df-reticle{
+  position:absolute;top:50%;left:50%;
+  width:128px;height:128px;
+  transform:translate(-50%,-50%);
+  pointer-events:none;z-index:4;
+  opacity:0;transition:opacity .45s ease;
+}
+#kit-deep-field .df-reticle.df-active{opacity:.55;}
+#kit-deep-field .df-ret-l{position:absolute;background:var(--df-accent);box-shadow:0 0 6px var(--df-accent);}
+#kit-deep-field .df-ret-t,#kit-deep-field .df-ret-b{left:50%;width:1px;height:18px;transform:translateX(-50%);}
+#kit-deep-field .df-ret-t{top:0;}
+#kit-deep-field .df-ret-b{bottom:0;}
+#kit-deep-field .df-ret-lf,#kit-deep-field .df-ret-rt{top:50%;height:1px;width:18px;transform:translateY(-50%);}
+#kit-deep-field .df-ret-lf{left:0;}
+#kit-deep-field .df-ret-rt{right:0;}
+#kit-deep-field .df-ret-c{
+  position:absolute;top:50%;left:50%;width:5px;height:5px;
+  border:1px solid var(--df-accent);border-radius:50%;
+  transform:translate(-50%,-50%);
+}
+
+/* pins */
+#kit-deep-field .df-pins{position:absolute;inset:0;z-index:5;}
+#kit-deep-field .df-pin{
+  position:absolute;
+  width:30px;height:30px;
+  margin:-15px 0 0 -15px;
+  cursor:pointer;
+  pointer-events:auto;
+  transition:opacity .3s ease;
+}
+#kit-deep-field .df-pin-ring{
+  position:absolute;inset:0;
+  border:1px solid var(--df-accent);
+  border-radius:50%;
+  opacity:.85;
+}
+#kit-deep-field .df-pin-core{
+  position:absolute;top:50%;left:50%;
+  width:5px;height:5px;margin:-2.5px 0 0 -2.5px;
+  border-radius:50%;
+  background:var(--df-accent);
+  box-shadow:0 0 8px var(--df-accent),0 0 16px var(--df-accent);
+}
+#kit-deep-field .df-pin-halo{
+  position:absolute;top:50%;left:50%;
+  width:30px;height:30px;margin:-15px 0 0 -15px;
+  border:1px solid var(--df-accent);border-radius:50%;
+  opacity:0;
+  animation:df-halo 3s ease-out infinite;
+}
+@keyframes df-halo{
+  0%{transform:scale(.5);opacity:.6;}
+  100%{transform:scale(2.1);opacity:0;}
+}
+#kit-deep-field .df-pin:nth-child(2) .df-pin-halo{animation-delay:.6s;}
+#kit-deep-field .df-pin:nth-child(3) .df-pin-halo{animation-delay:1.2s;}
+#kit-deep-field .df-pin:nth-child(4) .df-pin-halo{animation-delay:1.8s;}
+#kit-deep-field .df-pin:nth-child(5) .df-pin-halo{animation-delay:2.4s;}
+#kit-deep-field .df-pin.df-pin-on .df-pin-ring{
+  opacity:1;
+  box-shadow:0 0 0 3px rgba(60,200,255,.12),0 0 12px var(--df-accent);
+  transform:scale(1.18);
+  transition:transform .25s ease;
+}
+#kit-deep-field .df-pin-label{
+  position:absolute;left:50%;top:50%;
+  transform:translate(20px,-50%);
+  white-space:nowrap;
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--df-text);
+  text-shadow:0 1px 6px rgba(0,0,0,.9);
+  opacity:.0;transition:opacity .25s ease;
+  pointer-events:none;
+}
+#kit-deep-field .df-pin-label::before{
+  content:"";position:absolute;left:-16px;top:50%;
+  width:13px;height:1px;background:var(--df-accent);
+  box-shadow:0 0 5px var(--df-accent);
+  transform:translateY(-50%);
+}
+#kit-deep-field .df-pin:hover .df-pin-label,
+#kit-deep-field .df-pin.df-pin-on .df-pin-label{opacity:.92;}
+
+/* tooltip */
+#kit-deep-field .df-tooltip{
+  position:absolute;z-index:9;
+  max-width:248px;
+  padding:13px 15px 14px;
+  border:1px solid var(--df-hair);
+  border-left:2px solid var(--df-accent);
+  border-radius:3px;
+  background:linear-gradient(180deg, rgba(12,9,38,.92), rgba(7,5,26,.94));
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 18px 50px rgba(0,0,0,.6),0 0 0 1px rgba(60,200,255,.06);
+  opacity:0;transform:translateY(6px);
+  transition:opacity .22s ease,transform .22s ease;
+  pointer-events:none;
+}
+#kit-deep-field .df-tooltip.df-show{opacity:1;transform:translateY(0);}
+#kit-deep-field .df-tip-tag{
+  font-size:8.5px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--df-accent);font-weight:700;margin-bottom:6px;
+}
+#kit-deep-field .df-tip-title{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:14.5px;letter-spacing:.04em;text-transform:uppercase;
+  line-height:1.12;color:var(--df-text);margin-bottom:7px;
+}
+#kit-deep-field .df-tip-body{
+  font-size:11.5px;line-height:1.5;color:var(--df-muted);margin-bottom:9px;
+}
+#kit-deep-field .df-tip-meta{
+  display:flex;gap:14px;
+  padding-top:8px;border-top:1px solid var(--df-hair);
+}
+#kit-deep-field .df-tip-meta span{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:10px;letter-spacing:.05em;
+  color:var(--df-text);
+  font-variant-numeric:tabular-nums;
+}
+#kit-deep-field .df-tip-meta span b{color:var(--df-muted);font-weight:600;font-style:normal;letter-spacing:.18em;font-size:8px;display:block;text-transform:uppercase;margin-bottom:1px;}
+
+/* scalebar */
+#kit-deep-field .df-scalebar{
+  position:absolute;left:clamp(12px,2.4vw,22px);bottom:clamp(40px,6vw,54px);
+  z-index:6;pointer-events:none;
+  display:flex;flex-direction:column;gap:5px;
+}
+#kit-deep-field .df-scale-line{
+  position:relative;width:84px;height:1px;
+  background:var(--df-text);opacity:.75;
+}
+#kit-deep-field .df-scale-cap{position:absolute;top:-4px;width:1px;height:9px;background:var(--df-text);opacity:.75;}
+#kit-deep-field .df-scale-l{left:0;}
+#kit-deep-field .df-scale-r{right:0;}
+#kit-deep-field .df-scale-label{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--df-muted);
+  font-variant-numeric:tabular-nums;
+}
+
+/* controls */
+#kit-deep-field .df-controls{
+  position:absolute;right:clamp(12px,2.4vw,22px);bottom:clamp(40px,6vw,54px);
+  z-index:7;display:flex;flex-direction:column;gap:7px;
+}
+#kit-deep-field .df-btn{
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--df-hair);
+  border-radius:3px;
+  background:rgba(8,6,28,.55);
+  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+  color:var(--df-text);
+  font-size:18px;line-height:1;font-weight:400;
+  cursor:pointer;
+  transition:border-color .2s ease,background .2s ease,color .2s ease,transform .12s ease;
+}
+#kit-deep-field .df-btn-reset{font-size:16px;}
+#kit-deep-field .df-btn:hover{
+  border-color:var(--df-accent);
+  color:var(--df-accent);
+  background:rgba(16,12,44,.7);
+}
+#kit-deep-field .df-btn:active{transform:scale(.92);}
+
+/* hint */
+#kit-deep-field .df-hint{
+  position:absolute;left:50%;bottom:clamp(40px,6vw,54px);
+  transform:translateX(-50%);
+  z-index:6;pointer-events:none;
+  font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--df-muted);
+  white-space:nowrap;
+  opacity:.9;
+  transition:opacity .6s ease;
+}
+#kit-deep-field .df-hint.df-fade{opacity:0;}
+
+/* credit */
+#kit-deep-field .df-credit{
+  position:absolute;right:clamp(12px,2.4vw,22px);bottom:clamp(11px,1.8vw,16px);
+  z-index:6;pointer-events:none;
+  font-size:9px;letter-spacing:.1em;
+  color:var(--df-muted);
+  opacity:.7;
+}
+
+/* loader */
+#kit-deep-field .df-loader{
+  position:absolute;inset:0;z-index:12;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  background:radial-gradient(120% 120% at 50% 40%, #0a0726 0%, var(--df-bg) 75%);
+  transition:opacity .6s ease;
+}
+#kit-deep-field .df-loader.df-hide{opacity:0;pointer-events:none;}
+#kit-deep-field .df-loader-ring{
+  width:34px;height:34px;border-radius:50%;
+  border:1.5px solid var(--df-hair);
+  border-top-color:var(--df-accent);
+  animation:df-spin 1s linear infinite;
+}
+@keyframes df-spin{to{transform:rotate(360deg);}}
+#kit-deep-field .df-loader-text{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--df-muted);
+}
+
+@media (max-width:560px){
+  #kit-deep-field .df-readout{min-width:104px;padding:7px 10px;}
+  #kit-deep-field .df-hint{display:none;}
+  #kit-deep-field .df-tooltip{max-width:200px;}
+}
+@media (prefers-reduced-motion:reduce){
+  #kit-deep-field .df-id-dot,
+  #kit-deep-field .df-pin-halo,
+  #kit-deep-field .df-loader-ring{animation:none;}
+}
 
 body.mb-embed #kit-deep-field{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-deep-field{display:flex!important;flex-direction:column!important;gap:6px!important;}
@@ -63,28 +390,70 @@ body.mb-embed #kit-deep-field [class*='stage'],body.mb-embed #kit-deep-field [cl
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Deep-field explorer</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Deep-Field Explorer</div></div>
     </div>
-    
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"><img src="../assets/logo/esa-logo.png" alt="ESA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-deep-field">
-  <h2 class="kit-df-sr">Interactive deep-field explorer: drag to pan across hundreds of stars and faint galaxies rendered across parallax depth layers, scroll or use the buttons to zoom.</h2>
-  <canvas class="kit-df-canvas"></canvas>
-  <div class="kit-df-frame" aria-hidden="true"></div>
-  <div class="kit-df-head">
-    <span class="kit-df-lens">Universe</span>
-    <span class="kit-df-title">Deep-field explorer</span>
-  </div>
-  <div class="kit-df-hint" data-role="hint">Drag to pan</div>
-  <div class="kit-df-ui">
-    <button class="kit-df-btn" data-act="in" type="button" aria-label="Zoom in">+</button>
-    <div class="kit-df-zoom"><span data-role="zoom">1.0&times;</span></div>
-    <button class="kit-df-btn" data-act="out" type="button" aria-label="Zoom out">&minus;</button>
+  <div class="df-stage" data-df-stage>
+    <canvas class="df-canvas" data-df-canvas></canvas>
+
+    <div class="df-grain" aria-hidden="true"></div>
+    <div class="df-vignette" aria-hidden="true"></div>
+
+    <div class="df-pins" data-df-pins aria-hidden="false"></div>
+
+    <div class="df-tooltip" data-df-tip aria-hidden="true">
+      <div class="df-tip-tag" data-df-tip-tag></div>
+      <div class="df-tip-title" data-df-tip-title></div>
+      <div class="df-tip-body" data-df-tip-body></div>
+      <div class="df-tip-meta" data-df-tip-meta></div>
+    </div>
+
+    <div class="df-topbar">
+      <div class="df-id">
+        <span class="df-id-dot"></span>
+        <span class="df-id-text">JWST · NIRCam · FIELD&nbsp;SMACS&nbsp;0723</span>
+      </div>
+      <div class="df-readout" data-df-readout>
+        <div class="df-ro-row"><span class="df-ro-k">ZOOM</span><span class="df-ro-v" data-df-zoom>1.0×</span></div>
+        <div class="df-ro-row"><span class="df-ro-k">FIELD</span><span class="df-ro-v" data-df-fov>2.4′</span></div>
+        <div class="df-ro-row"><span class="df-ro-k">LOOK&nbsp;BACK</span><span class="df-ro-v" data-df-z>13.1&nbsp;Gyr</span></div>
+      </div>
+    </div>
+
+    <div class="df-reticle" data-df-reticle aria-hidden="true">
+      <span class="df-ret-l df-ret-t"></span>
+      <span class="df-ret-l df-ret-b"></span>
+      <span class="df-ret-l df-ret-lf"></span>
+      <span class="df-ret-l df-ret-rt"></span>
+      <span class="df-ret-c"></span>
+    </div>
+
+    <div class="df-scalebar" data-df-scale>
+      <div class="df-scale-line"><span class="df-scale-cap df-scale-l"></span><span class="df-scale-cap df-scale-r"></span></div>
+      <div class="df-scale-label" data-df-scale-label>1 arcmin</div>
+    </div>
+
+    <div class="df-controls">
+      <button class="df-btn" data-df-in type="button" aria-label="Zoom in">+</button>
+      <button class="df-btn" data-df-out type="button" aria-label="Zoom out">−</button>
+      <button class="df-btn df-btn-reset" data-df-reset type="button" aria-label="Reset view">⤺</button>
+    </div>
+
+    <div class="df-hint" data-df-hint>DRAG TO EXPLORE · SCROLL TO ZOOM · HOVER A MARKER</div>
+
+    <div class="df-credit">NASA, ESA, CSA, STScI — JWST · SMACS&nbsp;0723</div>
+
+    <div class="df-loader" data-df-loader>
+      <div class="df-loader-ring"></div>
+      <div class="df-loader-text">RESOLVING DEEP&nbsp;FIELD…</div>
+    </div>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag to pan and scroll-wheel or the +/− buttons to zoom; nearer layers parallax faster, and when left idle the field resumes a slow cosmic drift.</span>
-    <span class="mb-c-src">Concept · SSAI</span>
+    <span class="mb-c-int">Drag to pan and scroll, pinch, or use the +/- buttons to zoom deep into the real galaxies; hover or tap to reveal elegant annotation pins on lensed arcs, ancient galaxies and the foreground cluster, with a live scale/redshift readout.</span>
+    <span class="mb-c-src">Image · NASA, ESA, CSA, STScI — JWST (SMACS 0723)</span>
   </footer>
 </div>
 <script>
@@ -97,189 +466,533 @@ body.mb-embed #kit-deep-field [class*='stage'],body.mb-embed #kit-deep-field [cl
     var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
     if(q.get('embed')==='1') document.body.classList.add('mb-embed');
   }catch(e){}
+  /* safety: some modules forget to hide their loading overlay after the image resolves */
+  window.addEventListener('load',function(){ setTimeout(function(){
+    var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
+    for(var i=0;i<ov.length;i++){ var el=ov[i], p=getComputedStyle(el).position;
+      if(p==='absolute'||p==='fixed'){ el.style.transition='opacity .45s ease'; el.style.opacity='0'; el.style.pointerEvents='none';
+        (function(e){setTimeout(function(){e.style.display='none';},500);})(el); } }
+  },1700); });
 })();
 </script>
 <script>
 (function(){
   var root=document.getElementById('kit-deep-field');
   if(!root) return;
-  var canvas=root.querySelector('.kit-df-canvas');
+
+  var stage=root.querySelector('[data-df-stage]');
+  var canvas=root.querySelector('[data-df-canvas]');
   var ctx=canvas.getContext('2d');
-  var zoomLabel=root.querySelector('[data-role="zoom"]');
-  var hint=root.querySelector('[data-role="hint"]');
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pinsLayer=root.querySelector('[data-df-pins]');
+  var tip=root.querySelector('[data-df-tip]');
+  var tipTag=root.querySelector('[data-df-tip-tag]');
+  var tipTitle=root.querySelector('[data-df-tip-title]');
+  var tipBody=root.querySelector('[data-df-tip-body]');
+  var tipMeta=root.querySelector('[data-df-tip-meta]');
+  var zoomOut=root.querySelector('[data-df-zoom]');
+  var fovOut=root.querySelector('[data-df-fov]');
+  var zOut=root.querySelector('[data-df-z]');
+  var reticle=root.querySelector('[data-df-reticle]');
+  var scaleLine=root.querySelector('.df-scale-line');
+  var scaleLabel=root.querySelector('[data-df-scale-label]');
+  var hint=root.querySelector('[data-df-hint]');
+  var loader=root.querySelector('[data-df-loader]');
+  var btnIn=root.querySelector('[data-df-in]');
+  var btnOut=root.querySelector('[data-df-out]');
+  var btnReset=root.querySelector('[data-df-reset]');
 
-  var W=0,H=0,dpr=1;
-  function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var accent=(getComputedStyle(document.documentElement).getPropertyValue('--accent')||'').trim()||'#3cc8ff';
 
-  var LAYERS=[
-    {depth:0.18,n:170,sz:[0.5,1.1],br:[0.18,0.4],seed:11},
-    {depth:0.40,n:150,sz:[0.7,1.6],br:[0.3,0.62],seed:23},
-    {depth:0.70,n:95, sz:[1.0,2.3],br:[0.5,0.85],seed:37},
-    {depth:1.00,n:45, sz:[1.4,3.4],br:[0.7,1.0], seed:53}
-  ];
-  var TINTS=[[244,245,255],[210,222,255],[255,236,206],[255,214,196],[206,238,255]];
-  var GAL_COLORS=[[138,92,255],[60,123,224],[47,217,195],[242,180,60],[242,103,60]];
+  // ---- image ----
+  var img=new Image();
+  var imgReady=false;
+  var IW=2508, IH=2560; // known; refreshed onload
 
-  function build(layer){
-    var r=rng(layer.seed),stars=[],i,n=layer.n;
-    for(i=0;i<n;i++){
-      var t=TINTS[(r()*TINTS.length)|0];
-      stars.push({
-        x:r()*2-1, y:r()*2-1,
-        s:layer.sz[0]+r()*(layer.sz[1]-layer.sz[0]),
-        b:layer.br[0]+r()*(layer.br[1]-layer.br[0]),
-        c:t,
-        tw:r()*Math.PI*2, ts:0.4+r()*1.2,
-        diff:r()<0.13
-      });
+  // ---- view state (image-space center + scale) ----
+  // view.scale is the "cover" multiplier; 1 = whole field fits to cover stage.
+  var view={zoom:1, cx:0.5, cy:0.5};          // current rendered
+  var target={zoom:1, cx:0.5, cy:0.5};        // eased target
+  var MINZ=1, MAXZ=9;
+
+  // Notable real features in SMACS 0723, positioned in normalized image space (0..1).
+  // Coordinates chosen to sit over the corresponding real structures in the JWST frame.
+  var FEATURES=[
+    {
+      x:0.500, y:0.475, label:'BCG · Cluster Core',
+      tag:'FOREGROUND · z ≈ 0.39',
+      title:'The Lensing Cluster',
+      body:'Massive galaxy cluster SMACS 0723. Its combined gravity bends spacetime, magnifying everything behind it into a natural telescope.',
+      meta:[['MASS','~10¹⁵ M☉'],['DIST','≈4.6 Gly'],['LOOKBACK','4.6 Gyr']]
+    },
+    {
+      x:0.372, y:0.640, label:'Lensed Arc',
+      tag:'GRAVITATIONAL LENS',
+      title:'A Smeared Galaxy',
+      body:'A background galaxy stretched into a glowing arc — the same source can appear several times around the cluster as light takes different paths.',
+      meta:[['z','≈1.5'],['MAG','×3–10'],['LOOKBACK','9.3 Gyr']]
+    },
+    {
+      x:0.638, y:0.350, label:'Mirrored Pair',
+      tag:'MULTIPLE IMAGE',
+      title:'One Galaxy, Twice',
+      body:'Two images of a single distant galaxy on opposite sides of the lens — proof that the cluster is warping the light path itself.',
+      meta:[['z','≈1.9'],['SEP','~12″'],['LOOKBACK','10.2 Gyr']]
+    },
+    {
+      x:0.268, y:0.300, label:'Ancient Galaxy',
+      tag:'EARLY UNIVERSE',
+      title:'Among the Oldest Seen',
+      body:'A faint red speck whose light left when the universe was a fraction of its age — light that travelled over 13 billion years to this pixel.',
+      meta:[['z','≈8.5'],['AGE','~600 Myr'],['LOOKBACK','13.1 Gyr']]
+    },
+    {
+      x:0.740, y:0.700, label:'Diffraction Spike',
+      tag:'FOREGROUND STAR',
+      title:'A Webb Signature',
+      body:'Six-pointed spikes mark a bright star in our own galaxy — the optical fingerprint of Webb’s hexagonal mirror segments.',
+      meta:[['TYPE','MILKY-WAY ★'],['SPIKES','6'],['DIST','~kly']]
     }
-    return stars;
-  }
-  for(var L=0;L<LAYERS.length;L++) LAYERS[L].stars=build(LAYERS[L]);
+  ];
 
-  var galRng=rng(91), galaxies=[];
-  for(var g=0;g<6;g++){
-    var c=GAL_COLORS[g%GAL_COLORS.length];
-    galaxies.push({
-      x:galRng()*2-1, y:galRng()*2-1,
-      depth:0.30+galRng()*0.55,
-      r:60+galRng()*90,
-      ry:0.4+galRng()*0.45,
-      rot:galRng()*Math.PI,
-      c:c, a:0.16+galRng()*0.14
+  // ---- canvas sizing ----
+  var dpr=Math.max(1,Math.min(window.devicePixelRatio||1,2));
+  var SW=0, SH=0;
+  function resize(){
+    var r=stage.getBoundingClientRect();
+    SW=Math.max(1,r.width); SH=Math.max(1,r.height);
+    dpr=Math.max(1,Math.min(window.devicePixelRatio||1,2));
+    canvas.width=Math.round(SW*dpr);
+    canvas.height=Math.round(SH*dpr);
+    canvas.style.width=SW+'px';
+    canvas.style.height=SH+'px';
+    ctx.setTransform(dpr,0,0,dpr,1*0,0);
+    clampTarget();
+    draw();
+    layoutPins();
+  }
+
+  // map: cover the stage with the image at zoom=1, then magnify by zoom.
+  function coverScale(){
+    return Math.max(SW/IW, SH/IH);
+  }
+  // size of one image pixel on screen at current zoom
+  function pxScale(z){ return coverScale()*z; }
+
+  // visible half-extent in normalized image coords for a given zoom
+  function halfExtent(z){
+    var s=pxScale(z);
+    return { hx:(SW/s)/IW/2, hy:(SH/s)/IH/2 };
+  }
+  function clampCenter(c,z){
+    var h=halfExtent(z);
+    // if visible extent bigger than image (can't happen at z>=1 cover), clamp to .5
+    var lox=Math.min(h.hx,0.5), loy=Math.min(h.hy,0.5);
+    c.cx=Math.max(lox,Math.min(1-lox,c.cx));
+    c.cy=Math.max(loy,Math.min(1-loy,c.cy));
+  }
+  function clampTarget(){
+    target.zoom=Math.max(MINZ,Math.min(MAXZ,target.zoom));
+    clampCenter(target,target.zoom);
+  }
+
+  // screen <-> image-normalized
+  function imgToScreen(nx,ny){
+    var s=pxScale(view.zoom);
+    var ox=SW/2 - view.cx*IW*s;
+    var oy=SH/2 - view.cy*IH*s;
+    return { x:ox + nx*IW*s, y:oy + ny*IH*s };
+  }
+  function screenToImg(sx,sy){
+    var s=pxScale(view.zoom);
+    var ox=SW/2 - view.cx*IW*s;
+    var oy=SH/2 - view.cy*IH*s;
+    return { nx:(sx-ox)/(IW*s), ny:(sy-oy)/(IH*s) };
+  }
+
+  // ---- starfield fallback (drawn behind, also fills letterbox edges) ----
+  var stars=[];
+  function buildStars(){
+    stars=[];
+    var n=140;
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.3+0.2,a:Math.random()*0.5+0.2});
+    }
+  }
+  buildStars();
+
+  function draw(){
+    ctx.clearRect(0,0,SW,SH);
+    // deep space base
+    var g=ctx.createRadialGradient(SW*0.5,SH*0.4,0,SW*0.5,SH*0.4,Math.max(SW,SH)*0.75);
+    g.addColorStop(0,'#0a0726');
+    g.addColorStop(1,'#050314');
+    ctx.fillStyle=g;
+    ctx.fillRect(0,0,SW,SH);
+
+    if(imgReady){
+      var s=pxScale(view.zoom);
+      var dw=IW*s, dh=IH*s;
+      var dx=SW/2 - view.cx*IW*s;
+      var dy=SH/2 - view.cy*IH*s;
+      ctx.imageSmoothingEnabled=true;
+      ctx.imageSmoothingQuality='high';
+      ctx.drawImage(img,dx,dy,dw,dh);
+    } else {
+      // star placeholder
+      for(var i=0;i<stars.length;i++){
+        var st=stars[i];
+        ctx.globalAlpha=st.a;
+        ctx.fillStyle='#cfd4ff';
+        ctx.beginPath();
+        ctx.arc(st.x*SW,st.y*SH,st.r,0,Math.PI*2);
+        ctx.fill();
+      }
+      ctx.globalAlpha=1;
+    }
+  }
+
+  // ---- pins DOM ----
+  var pinEls=[];
+  function buildPins(){
+    pinsLayer.innerHTML='';
+    pinEls=[];
+    FEATURES.forEach(function(f,i){
+      var el=document.createElement('div');
+      el.className='df-pin';
+      el.setAttribute('role','button');
+      el.setAttribute('tabindex','0');
+      el.setAttribute('aria-label',f.title);
+      el.innerHTML='<span class="df-pin-halo"></span><span class="df-pin-ring"></span><span class="df-pin-core"></span><span class="df-pin-label">'+f.label+'</span>';
+      pinsLayer.appendChild(el);
+      pinEls.push(el);
+
+      function show(){ openTip(i); }
+      el.addEventListener('mouseenter',show);
+      el.addEventListener('focus',show);
+      el.addEventListener('mouseleave',function(){ if(activePin!==i) hideTip(); });
+      el.addEventListener('blur',function(){ if(activePin!==i) hideTip(); });
+      el.addEventListener('click',function(e){
+        e.stopPropagation();
+        pinClick(i);
+      });
+      el.addEventListener('keydown',function(e){
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pinClick(i); }
+      });
     });
   }
 
-  var cam={x:0,y:0,z:1,tz:1};
-  var driftA=galRng()*Math.PI*2;
-  var idle=0, dragging=false, hinted=false;
-  var lastX=0,lastY=0, pdMoved=0;
-
-  function resize(){
-    W=root.clientWidth; H=root.clientHeight;
-    dpr=Math.min(window.devicePixelRatio||1,2);
-    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-  }
-  resize();
-  window.addEventListener('resize',resize);
-
-  var SPAN=1.55;
-  function drawGalaxy(gx){
-    var par=0.3+gx.depth*0.7, sc=cam.z;
-    var cx=W*0.5 + (gx.x*W*SPAN - cam.x*par)*sc;
-    var cy=H*0.5 + (gx.y*H*SPAN - cam.y*par)*sc;
-    var R=gx.r*sc*(0.6+gx.depth*0.6);
-    if(cx< -R*2||cx>W+R*2||cy< -R*2||cy>H+R*2) return;
-    ctx.save();
-    ctx.translate(cx,cy); ctx.rotate(gx.rot); ctx.scale(1,gx.ry);
-    var grd=ctx.createRadialGradient(0,0,0,0,0,R);
-    var c=gx.c;
-    grd.addColorStop(0,'rgba('+c[0]+','+c[1]+','+c[2]+','+gx.a+')');
-    grd.addColorStop(0.45,'rgba('+c[0]+','+c[1]+','+c[2]+','+(gx.a*0.45).toFixed(3)+')');
-    grd.addColorStop(1,'rgba('+c[0]+','+c[1]+','+c[2]+',0)');
-    ctx.fillStyle=grd;
-    ctx.beginPath(); ctx.arc(0,0,R,0,Math.PI*2); ctx.fill();
-    var cg=ctx.createRadialGradient(0,0,0,0,0,R*0.32);
-    cg.addColorStop(0,'rgba(255,255,255,'+(gx.a*0.9).toFixed(3)+')');
-    cg.addColorStop(1,'rgba('+c[0]+','+c[1]+','+c[2]+',0)');
-    ctx.fillStyle=cg;
-    ctx.beginPath(); ctx.arc(0,0,R*0.32,0,Math.PI*2); ctx.fill();
-    ctx.restore();
-  }
-
-  function drawStars(layer,t){
-    var par=layer.depth, sc=cam.z, st=layer.stars, i, sz=cam.z;
-    for(i=0;i<st.length;i++){
-      var s=st[i];
-      var x=W*0.5 + (s.x*W*SPAN - cam.x*par)*sc;
-      var y=H*0.5 + (s.y*H*SPAN - cam.y*par)*sc;
-      if(x<-8||x>W+8||y<-8||y>H+8) continue;
-      var tw=reduce?1:(0.78+0.22*Math.sin(t*s.ts+s.tw));
-      var a=s.b*tw;
-      var rad=s.s*(0.7+sz*0.55);
-      var c=s.c;
-      if(s.diff){
-        var gg=ctx.createRadialGradient(x,y,0,x,y,rad*3.4);
-        gg.addColorStop(0,'rgba('+c[0]+','+c[1]+','+c[2]+','+(a*0.85).toFixed(3)+')');
-        gg.addColorStop(1,'rgba('+c[0]+','+c[1]+','+c[2]+',0)');
-        ctx.fillStyle=gg;
-        ctx.beginPath(); ctx.arc(x,y,rad*3.4,0,Math.PI*2); ctx.fill();
-      }
-      ctx.fillStyle='rgba('+c[0]+','+c[1]+','+c[2]+','+a.toFixed(3)+')';
-      ctx.beginPath(); ctx.arc(x,y,rad,0,Math.PI*2); ctx.fill();
+  function layoutPins(){
+    for(var i=0;i<FEATURES.length;i++){
+      var f=FEATURES[i];
+      var p=imgToScreen(f.x,f.y);
+      var el=pinEls[i];
+      var on = p.x>-40 && p.x<SW+40 && p.y>-40 && p.y<SH+40;
+      el.style.display = on ? 'block':'none';
+      // label flip near right edge
+      var lbl=el.querySelector('.df-pin-label');
+      if(p.x>SW-150){ lbl.style.transform='translate(calc(-100% - 20px),-50%)'; lbl.style.textAlign='right'; lbl.style.left='50%';
+        lbl.classList.add('df-lbl-left'); }
+      else { lbl.style.transform='translate(20px,-50%)'; lbl.style.textAlign='left'; }
+      el.style.left=p.x+'px';
+      el.style.top=p.y+'px';
     }
+    if(activePin>=0) positionTip();
   }
 
-  function frame(t){
-    cam.z+=(cam.tz-cam.z)*0.09;
-    if(!dragging){
-      idle++;
-      if(idle>90 && !reduce){
-        driftA+=0.0016;
-        cam.x+=Math.cos(driftA)*0.14;
-        cam.y+=Math.sin(driftA*0.6)*0.09;
-      }
-    }
-    ctx.clearRect(0,0,W,H);
-    var ts=t*0.001;
-    for(var g=0;g<galaxies.length;g++) drawGalaxy(galaxies[g]);
-    for(var L=0;L<LAYERS.length;L++) drawStars(LAYERS[L],ts);
-    if(zoomLabel) zoomLabel.firstChild ? zoomLabel.textContent=cam.z.toFixed(1)+'×' : 0;
+  // ---- tooltip ----
+  var activePin=-1;
+  function openTip(i){
+    var f=FEATURES[i];
+    tipTag.textContent=f.tag;
+    tipTitle.textContent=f.title;
+    tipBody.textContent=f.body;
+    tipMeta.innerHTML=f.meta.map(function(m){return '<span><b>'+m[0]+'</b>'+m[1]+'</span>';}).join('');
+    tip.dataset.cur=i;
+    tip.classList.add('df-show');
+    tip.setAttribute('aria-hidden','false');
+    positionTipFor(i);
+  }
+  function hideTip(){
+    tip.classList.remove('df-show');
+    tip.setAttribute('aria-hidden','true');
+    delete tip.dataset.cur;
+  }
+  function positionTip(){
+    if(tip.dataset.cur!=null) positionTipFor(+tip.dataset.cur);
+  }
+  function positionTipFor(i){
+    var f=FEATURES[i];
+    var p=imgToScreen(f.x,f.y);
+    var tw=tip.offsetWidth||230, th=tip.offsetHeight||140;
+    var left=p.x+22, top=p.y-th/2;
+    if(left+tw>SW-10) left=p.x-22-tw;
+    if(left<10) left=10;
+    if(top<10) top=10;
+    if(top+th>SH-10) top=SH-10-th;
+    tip.style.left=left+'px';
+    tip.style.top=top+'px';
   }
 
-  if(reduce){
-    requestAnimationFrame(function(t){frame(t);});
-  }else{
-    (function loop(t){frame(t);requestAnimationFrame(loop);})(0);
-  }
-
-  function fadeHint(){ if(!hinted){hinted=true; if(hint) hint.classList.add('kit-df-fade');} }
-
-  function setZoom(f,px,py){
-    var prev=cam.tz;
-    cam.tz=Math.max(0.6,Math.min(4.2,cam.tz*f));
-    idle=0;
-  }
-
-  root.addEventListener('pointerdown',function(e){
-    dragging=true; idle=0; pdMoved=0;
-    lastX=e.clientX; lastY=e.clientY;
-    root.classList.add('kit-df-drag');
-    if(root.setPointerCapture){try{root.setPointerCapture(e.pointerId);}catch(_){}}
-  });
-  root.addEventListener('pointermove',function(e){
-    if(!dragging) return;
-    var dx=e.clientX-lastX, dy=e.clientY-lastY;
-    lastX=e.clientX; lastY=e.clientY;
-    pdMoved+=Math.abs(dx)+Math.abs(dy);
-    cam.x-=dx/cam.z; cam.y-=dy/cam.z;
-    idle=0;
-    if(pdMoved>14) fadeHint();
-  });
-  function endDrag(e){
-    if(!dragging) return;
-    dragging=false; idle=0;
-    root.classList.remove('kit-df-drag');
-    if(root.releasePointerCapture&&e){try{root.releasePointerCapture(e.pointerId);}catch(_){}}
-  }
-  root.addEventListener('pointerup',endDrag);
-  root.addEventListener('pointercancel',endDrag);
-  root.addEventListener('pointerleave',function(e){ if(!root.hasPointerCapture||!root.hasPointerCapture(e.pointerId)) endDrag(e); });
-
-  root.addEventListener('wheel',function(e){
-    e.preventDefault();
-    setZoom(e.deltaY<0?1.12:0.89);
+  function pinClick(i){
+    // fly to the pin & pin the tooltip open
+    activePin=i;
+    pinEls.forEach(function(e,k){ e.classList.toggle('df-pin-on',k===i); });
+    var f=FEATURES[i];
+    target.cx=f.x; target.cy=f.y;
+    target.zoom=Math.max(target.zoom, 3.6);
+    clampTarget();
+    openTip(i);
     fadeHint();
+  }
+
+  // ---- readout ----
+  function updateReadout(){
+    zoomOut.textContent=view.zoom.toFixed(1)+'×';
+    // base field ~2.4 arcmin across the cover view; shrink with zoom
+    var arcmin=2.4/view.zoom;
+    if(arcmin>=1) fovOut.textContent=arcmin.toFixed(1)+'′';
+    else fovOut.textContent=Math.round(arcmin*60)+'″';
+    // playful "look back" hint scaling deeper with zoom (toward early universe)
+    var look=(4.6 + (view.zoom-1)/(MAXZ-1)*(13.4-4.6));
+    zOut.textContent=look.toFixed(1)+' Gyr';
+    // scale bar: choose a pretty arcsec value, render its pixel length
+    var s=pxScale(view.zoom);
+    var arcsecPerImgPx=(2.4*60)/IW; // arcsec per image pixel (approx field 2.4')
+    var arcsecPerScreenPx=arcsecPerImgPx/(s/1); // since 1 img px = s screen px
+    // target ~84px bar -> arcsec value
+    var raw=84*arcsecPerScreenPx;
+    var nice=niceArcsec(raw);
+    var px=nice.val/arcsecPerScreenPx;
+    px=Math.max(40,Math.min(120,px));
+    scaleLine.style.width=px+'px';
+    scaleLabel.textContent=nice.label;
+  }
+  function niceArcsec(v){
+    var steps=[1,2,5,10,15,30,60,120];
+    var pick=steps[0];
+    for(var i=0;i<steps.length;i++){ if(steps[i]<=v) pick=steps[i]; }
+    if(v<1) pick=v<0.5?0.2:0.5;
+    if(pick>=60) return {val:pick,label:(pick/60)+' arcmin'};
+    return {val:pick,label:pick+(pick<1?'″':' arcsec')};
+  }
+
+  // ---- animation loop ----
+  var running=false, visible=true;
+  function tick(){
+    if(!running) return;
+    var dz=target.zoom-view.zoom;
+    var dx=target.cx-view.cx;
+    var dy=target.cy-view.cy;
+    var k=reduce?1:0.14;
+    view.zoom+=dz*k;
+    view.cx+=dx*k;
+    view.cy+=dy*k;
+    var moving=Math.abs(dz)>0.0008||Math.abs(dx)>0.00008||Math.abs(dy)>0.00008;
+    if(!moving){ view.zoom=target.zoom; view.cx=target.cx; view.cy=target.cy; }
+    draw();
+    layoutPins();
+    updateReadout();
+    reticle.classList.toggle('df-active', view.zoom>1.05 && !dragging);
+    if(moving && !reduce){ requestAnimationFrame(tick); }
+    else { running=false; }
+  }
+  function kick(){
+    if(reduce){
+      view.zoom=target.zoom; view.cx=target.cx; view.cy=target.cy;
+      draw(); layoutPins(); updateReadout();
+      reticle.classList.toggle('df-active', view.zoom>1.05);
+      return;
+    }
+    if(!running && visible){ running=true; requestAnimationFrame(tick); }
+  }
+
+  // ---- zoom helpers (zoom toward a screen point) ----
+  function zoomAt(sx,sy,factor){
+    var before=screenToImg(sx,sy);
+    var nz=Math.max(MINZ,Math.min(MAXZ,target.zoom*factor));
+    // adjust center so the point under cursor stays put (use target geometry)
+    var prevZoom=target.zoom;
+    target.zoom=nz;
+    // recompute where 'before' would land, shift center to keep anchor
+    var sBefore=pxScale(prevZoom), sNow=pxScale(nz);
+    // anchor: we want screenToImg(sx,sy) to remain 'before' after change
+    // center = before - (screenOffsetFromCenter)/(IW*sNow)
+    var offx=(sx-SW/2)/(IW*sNow);
+    var offy=(sy-SH/2)/(IH*sNow);
+    target.cx=before.nx-offx;
+    target.cy=before.ny-offy;
+    clampTarget();
+    if(activePin>=0){ activePin=-1; pinEls.forEach(function(e){e.classList.remove('df-pin-on');}); }
+    fadeHint();
+    kick();
+  }
+  function zoomCenter(factor){
+    zoomAt(SW/2,SH/2,factor);
+  }
+
+  // ---- pointer / drag ----
+  var dragging=false, dragMoved=false;
+  var last={x:0,y:0};
+  var pointers={};
+
+  function getPos(e){
+    var r=stage.getBoundingClientRect();
+    return {x:e.clientX-r.left, y:e.clientY-r.top};
+  }
+
+  stage.addEventListener('pointerdown',function(e){
+    if(e.target.closest('.df-pin')||e.target.closest('.df-btn')) return;
+    pointers[e.pointerId]=getPos(e);
+    if(Object.keys(pointers).length===1){
+      dragging=true; dragMoved=false;
+      last=getPos(e);
+      stage.classList.add('df-grabbing');
+      try{stage.setPointerCapture(e.pointerId);}catch(_){}
+    }
+  });
+
+  stage.addEventListener('pointermove',function(e){
+    if(!(e.pointerId in pointers)) {
+      // hover-based reticle not needed
+      return;
+    }
+    pointers[e.pointerId]=getPos(e);
+    var ids=Object.keys(pointers);
+    if(ids.length>=2){
+      // pinch
+      pinchMove(ids);
+      return;
+    }
+    if(!dragging) return;
+    var p=getPos(e);
+    var dx=p.x-last.x, dy=p.y-last.y;
+    if(Math.abs(dx)+Math.abs(dy)>2) dragMoved=true;
+    last=p;
+    var s=pxScale(target.zoom);
+    target.cx-=dx/(IW*s);
+    target.cy-=dy/(IH*s);
+    clampTarget();
+    if(activePin>=0){ activePin=-1; pinEls.forEach(function(el){el.classList.remove('df-pin-on');}); }
+    fadeHint();
+    kick();
+  });
+
+  var pinchPrev=0;
+  function pinchMove(ids){
+    var a=pointers[ids[0]], b=pointers[ids[1]];
+    var d=Math.hypot(a.x-b.x,a.y-b.y);
+    var mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
+    if(pinchPrev>0 && d>0){
+      zoomAt(mx,my, d/pinchPrev);
+    }
+    pinchPrev=d;
+  }
+
+  function endPointer(e){
+    if(e.pointerId in pointers) delete pointers[e.pointerId];
+    if(Object.keys(pointers).length<2) pinchPrev=0;
+    if(Object.keys(pointers).length===0){
+      dragging=false;
+      stage.classList.remove('df-grabbing');
+    }
+  }
+  stage.addEventListener('pointerup',endPointer);
+  stage.addEventListener('pointercancel',endPointer);
+  stage.addEventListener('pointerleave',function(e){ if(e.pointerId in pointers) endPointer(e); });
+
+  // background click clears active pin
+  stage.addEventListener('click',function(e){
+    if(e.target.closest('.df-pin')) return;
+    if(dragMoved) return;
+    if(activePin>=0){
+      activePin=-1;
+      pinEls.forEach(function(el){el.classList.remove('df-pin-on');});
+      hideTip();
+    }
+  });
+
+  // wheel zoom
+  stage.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var p=getPos(e);
+    var factor=e.deltaY<0?1.16:1/1.16;
+    zoomAt(p.x,p.y,factor);
   },{passive:false});
 
-  root.querySelectorAll('.kit-df-btn').forEach(function(b){
-    b.addEventListener('click',function(){
-      setZoom(b.getAttribute('data-act')==='in'?1.22:0.82);
-      fadeHint();
-    });
+  // buttons
+  btnIn.addEventListener('click',function(){ zoomCenter(1.5); });
+  btnOut.addEventListener('click',function(){ zoomCenter(1/1.5); });
+  btnReset.addEventListener('click',function(){
+    target.zoom=1; target.cx=0.5; target.cy=0.5;
+    activePin=-1; pinEls.forEach(function(el){el.classList.remove('df-pin-on');});
+    hideTip(); kick();
   });
+
+  // hint fade
+  var hintFaded=false;
+  function fadeHint(){
+    if(hintFaded||!hint) return;
+    hintFaded=true; hint.classList.add('df-fade');
+  }
+
+  // ---- visibility / resize ----
+  var ro=null;
+  if('ResizeObserver' in window){
+    ro=new ResizeObserver(function(){ resize(); });
+    ro.observe(stage);
+  }
+  window.addEventListener('resize',resize);
+
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        visible=en.isIntersecting;
+        if(visible){ kick(); }
+      });
+    },{threshold:0.05});
+    io.observe(root);
+  }
+
+  // ---- boot ----
+  function start(){
+    resize();
+    buildPins();
+    // gentle establishing move on load (cinematic), unless reduced motion
+    if(!reduce){
+      view.zoom=1; view.cx=0.5; view.cy=0.5;
+      target.zoom=1.25; target.cx=0.5; target.cy=0.475;
+      clampTarget();
+      setTimeout(function(){ reticle.classList.add('df-active'); kick(); }, 220);
+    } else {
+      draw(); layoutPins(); updateReadout();
+    }
+    layoutPins();
+    updateReadout();
+    if(loader){ loader.classList.add('df-hide'); }
+  }
+
+  function onImg(){
+    if(img.naturalWidth){ IW=img.naturalWidth; IH=img.naturalHeight; }
+    imgReady=true;
+    start();
+    draw();
+    layoutPins();
+  }
+
+  img.onload=onImg;
+  img.onerror=function(){
+    // graceful fallback: keep starfield, still interactive
+    imgReady=false;
+    start();
+  };
+  img.src='../assets/images/webb-deep-field.jpg';
+  if(img.complete && img.naturalWidth){ onImg(); }
+
+  // first frame immediately (un-gated) even before image resolves
+  resize();
+  draw();
+  updateReadout();
 })();
 </script>
 </body></html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nebula viewer · SSAI</title>
+<title>Nebula Viewer — JWST · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -33,102 +33,80 @@ body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
 body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
 body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
-#kit-nebula-viewer{
-  width:100%;
-  position:relative;
-  color:#f4f5ff;
-  font-family:'Inter',system-ui,sans-serif;
+#kit-nebula-viewer{--nbv-space:#050314;--nbv-indigo:#16145f;--nbv-text:#f4f5ff;--nbv-muted:#a6abe6;--nbv-hair:rgba(166,171,230,0.16);--nbv-accent:#3cc8ff;position:relative;width:100%;height:100%;min-height:340px;color:var(--nbv-text);font-family:'Inter',system-ui,sans-serif;background:var(--nbv-space);overflow:hidden;border-radius:inherit;-webkit-font-smoothing:antialiased;}
+#kit-nebula-viewer *{box-sizing:border-box;}
+#kit-nebula-viewer .nbv-stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(120% 100% at 50% 20%,#0a0726 0%,#050314 70%);cursor:grab;touch-action:none;}
+#kit-nebula-viewer .nbv-stage.is-panning{cursor:grabbing;}
+#kit-nebula-viewer .nbv-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .9s ease;}
+#kit-nebula-viewer .nbv-canvas.is-ready{opacity:1;}
+#kit-nebula-viewer .nbv-grain{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:screen;background-image:radial-gradient(rgba(255,255,255,.6) 0.5px,transparent 0.6px);background-size:3px 3px;}
+#kit-nebula-viewer .nbv-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 110% at 50% 46%,transparent 38%,rgba(5,3,20,.34) 72%,rgba(5,3,20,.86) 100%);}
+
+#kit-nebula-viewer .nbv-topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:clamp(12px,2.4vw,22px);pointer-events:none;z-index:6;background:linear-gradient(180deg,rgba(5,3,20,.62) 0%,rgba(5,3,20,0) 100%);}
+#kit-nebula-viewer .nbv-brandblock{display:flex;flex-direction:column;gap:3px;min-width:0;}
+#kit-nebula-viewer .nbv-eyebrow{font-size:9px;letter-spacing:.28em;color:var(--nbv-muted);text-transform:uppercase;font-weight:600;opacity:.82;}
+#kit-nebula-viewer .nbv-title{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(17px,3.4vw,30px);line-height:1;letter-spacing:.01em;text-shadow:0 0 24px rgba(60,200,255,.28);transition:opacity .4s ease;}
+#kit-nebula-viewer .nbv-sub{font-size:10px;letter-spacing:.2em;color:var(--nbv-muted);text-transform:uppercase;font-weight:500;transition:opacity .4s ease;}
+#kit-nebula-viewer .nbv-title.is-swap,#kit-nebula-viewer .nbv-sub.is-swap{opacity:0;}
+
+#kit-nebula-viewer .nbv-tabs{display:flex;flex-direction:column;gap:6px;pointer-events:auto;align-items:flex-end;}
+#kit-nebula-viewer .nbv-tab{display:flex;align-items:center;gap:9px;padding:8px 13px;background:rgba(8,6,30,.5);border:1px solid var(--nbv-hair);border-radius:3px;color:var(--nbv-muted);cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:border-color .3s,color .3s,background .3s;white-space:nowrap;}
+#kit-nebula-viewer .nbv-tab:hover{border-color:rgba(166,171,230,.4);color:var(--nbv-text);}
+#kit-nebula-viewer .nbv-tab.is-active{border-color:var(--nbv-accent);color:var(--nbv-text);background:linear-gradient(180deg,rgba(60,200,255,.14),rgba(8,6,30,.5));box-shadow:0 0 22px -6px var(--nbv-accent);}
+#kit-nebula-viewer .nbv-tab-k{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:11px;color:var(--nbv-accent);letter-spacing:.05em;}
+#kit-nebula-viewer .nbv-tab.is-active .nbv-tab-k{text-shadow:0 0 12px var(--nbv-accent);}
+#kit-nebula-viewer .nbv-tab-n{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.06em;}
+
+#kit-nebula-viewer .nbv-hud{position:absolute;left:clamp(12px,2.4vw,22px);bottom:clamp(12px,2.4vw,22px);z-index:6;pointer-events:none;}
+#kit-nebula-viewer .nbv-readout{display:flex;flex-direction:column;gap:7px;padding:12px 14px;background:rgba(8,6,30,.46);border:1px solid var(--nbv-hair);border-radius:4px;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);min-width:148px;}
+#kit-nebula-viewer .nbv-rline{display:flex;justify-content:space-between;align-items:center;gap:18px;}
+#kit-nebula-viewer .nbv-rk{font-size:9px;letter-spacing:.22em;color:var(--nbv-muted);text-transform:uppercase;font-weight:600;}
+#kit-nebula-viewer .nbv-rv{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:13px;letter-spacing:.04em;color:var(--nbv-text);}
+#kit-nebula-viewer [data-nbv-zoom]{color:var(--nbv-accent);text-shadow:0 0 12px rgba(60,200,255,.45);}
+#kit-nebula-viewer .nbv-rbar{height:3px;border-radius:2px;background:var(--nbv-hair);overflow:hidden;}
+#kit-nebula-viewer .nbv-rbar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--nbv-accent),#9be7ff);box-shadow:0 0 10px var(--nbv-accent);transition:width .2s ease;}
+
+#kit-nebula-viewer .nbv-controls{position:absolute;right:clamp(12px,2.4vw,22px);bottom:clamp(12px,2.4vw,22px);z-index:6;display:flex;flex-direction:column;gap:7px;}
+#kit-nebula-viewer .nbv-ctl{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:rgba(8,6,30,.5);border:1px solid var(--nbv-hair);border-radius:4px;color:var(--nbv-text);font-size:18px;line-height:1;cursor:pointer;font-family:inherit;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);transition:border-color .25s,background .25s,color .25s,transform .12s;}
+#kit-nebula-viewer .nbv-ctl:hover{border-color:var(--nbv-accent);color:var(--nbv-accent);background:rgba(60,200,255,.1);}
+#kit-nebula-viewer .nbv-ctl:active{transform:scale(.92);}
+#kit-nebula-viewer .nbv-ctl-r{font-size:16px;}
+#kit-nebula-viewer .nbv-ctl-toggle.is-on{border-color:var(--nbv-accent);color:var(--nbv-accent);box-shadow:0 0 18px -6px var(--nbv-accent);}
+
+#kit-nebula-viewer .nbv-credit{position:absolute;left:50%;bottom:9px;transform:translateX(-50%);z-index:5;font-size:9px;letter-spacing:.2em;color:var(--nbv-muted);text-transform:uppercase;opacity:.66;pointer-events:none;white-space:nowrap;}
+
+#kit-nebula-viewer .nbv-pins{position:absolute;inset:0;z-index:4;pointer-events:none;}
+#kit-nebula-viewer .nbv-pin{position:absolute;width:0;height:0;pointer-events:none;transition:opacity .5s ease;}
+#kit-nebula-viewer .nbv-pins.is-hidden .nbv-pin{opacity:0;pointer-events:none;}
+#kit-nebula-viewer .nbv-pin-hit{position:absolute;left:-15px;top:-15px;width:30px;height:30px;border-radius:50%;cursor:pointer;pointer-events:auto;}
+#kit-nebula-viewer .nbv-pin-dot{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--nbv-accent);box-shadow:0 0 10px var(--nbv-accent),0 0 2px #fff inset;}
+#kit-nebula-viewer .nbv-pin-ring{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;border:1px solid var(--nbv-accent);opacity:.7;animation:nbvPulse 2.8s ease-out infinite;}
+#kit-nebula-viewer .nbv-pin-ring.r2{animation-delay:1.4s;}
+#kit-nebula-viewer .nbv-pin-tick{position:absolute;left:-0.5px;top:11px;width:1px;height:22px;background:linear-gradient(180deg,var(--nbv-accent),transparent);opacity:.6;}
+#kit-nebula-viewer .nbv-pin-id{position:absolute;left:7px;top:24px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:9px;letter-spacing:.1em;color:var(--nbv-accent);text-shadow:0 0 8px rgba(60,200,255,.5);white-space:nowrap;opacity:.85;}
+#kit-nebula-viewer .nbv-pin.is-active .nbv-pin-dot{background:#fff;box-shadow:0 0 16px var(--nbv-accent),0 0 4px #fff;}
+#kit-nebula-viewer .nbv-pin.is-active .nbv-pin-ring{opacity:1;border-color:#fff;}
+@keyframes nbvPulse{0%{transform:scale(.4);opacity:.85;}100%{transform:scale(1.7);opacity:0;}}
+
+#kit-nebula-viewer .nbv-tip{position:absolute;z-index:8;max-width:248px;padding:11px 13px;background:rgba(7,5,26,.9);border:1px solid var(--nbv-accent);border-radius:5px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 12px 40px -10px rgba(0,0,0,.7),0 0 26px -10px var(--nbv-accent);opacity:0;transform:translateY(4px);transition:opacity .22s ease,transform .22s ease;pointer-events:none;}
+#kit-nebula-viewer .nbv-tip.is-on{opacity:1;transform:translateY(0);}
+#kit-nebula-viewer .nbv-tip-label{display:block;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.07em;color:var(--nbv-accent);margin-bottom:4px;text-shadow:0 0 10px rgba(60,200,255,.4);}
+#kit-nebula-viewer .nbv-tip-text{display:block;font-size:11.5px;line-height:1.5;color:var(--nbv-text);}
+
+#kit-nebula-viewer .nbv-loading{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;gap:11px;background:radial-gradient(120% 100% at 50% 40%,#0a0726,#050314);color:var(--nbv-muted);font-size:10px;letter-spacing:.26em;text-transform:uppercase;font-weight:600;transition:opacity .6s ease;}
+#kit-nebula-viewer .nbv-loading.is-done{opacity:0;pointer-events:none;}
+#kit-nebula-viewer .nbv-spin{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--nbv-hair);border-top-color:var(--nbv-accent);animation:nbvSpin 0.9s linear infinite;}
+@keyframes nbvSpin{to{transform:rotate(360deg);}}
+
+@media (max-width:560px){
+  #kit-nebula-viewer .nbv-tab-n{display:none;}
+  #kit-nebula-viewer .nbv-tab{padding:8px 11px;}
+  #kit-nebula-viewer .nbv-sub{display:none;}
+  #kit-nebula-viewer .nbv-readout{min-width:120px;padding:10px 11px;}
 }
-#kit-nebula-viewer .kfig-stage{
-  position:relative;
-  width:100%;
-  min-height:260px;
-  border-radius:16px;
-  overflow:hidden;
-  background:radial-gradient(120% 140% at 50% 30%, #0a0828 0%, #050314 60%, #050314 100%);
-  border:1px solid rgba(166,171,230,0.16);
-  cursor:crosshair;
-  isolation:isolate;
-}
-#kit-nebula-viewer .kfig-canvas{
-  display:block;
-  width:100%;
-  height:auto;
-}
-#kit-nebula-viewer .kfig-label{
-  position:absolute;
-  top:0;left:0;
-  transform:translate(-100px,-100px);
-  pointer-events:none;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:7px 12px 7px 11px;
-  margin:14px 0 0 16px;
-  border-radius:999px;
-  background:rgba(8,6,28,0.62);
-  border:1px solid rgba(166,171,230,0.28);
-  -webkit-backdrop-filter:blur(8px);
-  backdrop-filter:blur(8px);
-  opacity:0;
-  transition:opacity .35s ease;
-  white-space:nowrap;
-  z-index:3;
-}
-#kit-nebula-viewer .kfig-stage:hover .kfig-label{ opacity:1; }
-#kit-nebula-viewer .kfig-label-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:#8a5cff;
-  box-shadow:0 0 10px 1px rgba(138,92,255,0.85);
-  animation:kit-nebula-viewer-pulse 2.6s ease-in-out infinite;
-}
-#kit-nebula-viewer .kfig-label-text{
-  font-size:12px;
-  letter-spacing:0.04em;
-  color:#f4f5ff;
-  font-weight:500;
-}
-#kit-nebula-viewer .kfig-meta{
-  position:absolute;
-  left:18px;bottom:16px;
-  display:flex;
-  align-items:baseline;
-  gap:12px;
-  z-index:2;
-  pointer-events:none;
-}
-#kit-nebula-viewer .kfig-tag{
-  font-family:'Chakra Petch',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  font-size:11px;
-  letter-spacing:0.22em;
-  color:#a6abe6;
-  text-transform:uppercase;
-}
-#kit-nebula-viewer .kfig-cap{
-  font-family:'Chakra Petch',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  font-size:15px;
-  letter-spacing:0.05em;
-  color:#f4f5ff;
-  text-transform:uppercase;
-}
-#kit-nebula-viewer .kfig-meta::before{
-  content:"";
-  position:absolute;
-  left:-18px;right:-18px;bottom:-16px;
-  height:96px;
-  background:linear-gradient(to top, rgba(5,3,20,0.7), rgba(5,3,20,0));
-  z-index:-1;
-}
-@keyframes kit-nebula-viewer-pulse{
-  0%,100%{ transform:scale(1); opacity:.9; }
-  50%{ transform:scale(1.45); opacity:.5; }
-}
-@media (prefers-reduced-motion: reduce){
-  #kit-nebula-viewer .kfig-label-dot{ animation:none; }
+@media (prefers-reduced-motion:reduce){
+  #kit-nebula-viewer .nbv-pin-ring{animation:none;opacity:.5;}
+  #kit-nebula-viewer .nbv-canvas{transition:opacity .3s ease;}
 }
 
 body.mb-embed #kit-nebula-viewer{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -143,26 +121,63 @@ body.mb-embed #kit-nebula-viewer [class*='stage'],body.mb-embed #kit-nebula-view
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Nebula viewer</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Nebula Viewer — JWST</div></div>
     </div>
-    
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"><img src="../assets/logo/esa-logo.png" alt="ESA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-nebula-viewer">
-  <div class="kfig-stage">
-    <canvas class="kfig-canvas" aria-hidden="true"></canvas>
-    <div class="kfig-label" role="status">
-      <span class="kfig-label-dot"></span>
-      <span class="kfig-label-text">Star-forming region</span>
+  <div class="nbv-stage" data-nbv-stage>
+    <canvas class="nbv-canvas" data-nbv-canvas></canvas>
+    <div class="nbv-grain" aria-hidden="true"></div>
+    <div class="nbv-vignette" aria-hidden="true"></div>
+
+    <div class="nbv-pins" data-nbv-pins></div>
+
+    <div class="nbv-tip" data-nbv-tip aria-hidden="true">
+      <span class="nbv-tip-label" data-nbv-tip-label></span>
+      <span class="nbv-tip-text" data-nbv-tip-text></span>
     </div>
-    <div class="kfig-meta">
-      <span class="kfig-tag">UNIVERSE</span>
-      <span class="kfig-cap">Nebula viewer</span>
+
+    <div class="nbv-topbar">
+      <div class="nbv-brandblock">
+        <span class="nbv-eyebrow">SSAI · DEEP FIELD OBSERVATORY</span>
+        <span class="nbv-title" data-nbv-title>COSMIC CLIFFS</span>
+        <span class="nbv-sub" data-nbv-sub>CARINA NEBULA · NGC 3324</span>
+      </div>
+      <div class="nbv-tabs" data-nbv-tabs role="tablist" aria-label="Select nebula">
+        <button class="nbv-tab is-active" data-nbv-tab="0" role="tab" aria-selected="true">
+          <span class="nbv-tab-k">01</span><span class="nbv-tab-n">COSMIC CLIFFS</span>
+        </button>
+        <button class="nbv-tab" data-nbv-tab="1" role="tab" aria-selected="false">
+          <span class="nbv-tab-k">02</span><span class="nbv-tab-n">PILLARS OF CREATION</span>
+        </button>
+      </div>
     </div>
+
+    <div class="nbv-hud">
+      <div class="nbv-readout">
+        <div class="nbv-rline"><span class="nbv-rk">ZOOM</span><span class="nbv-rv" data-nbv-zoom>1.00×</span></div>
+        <div class="nbv-rbar"><i data-nbv-zoombar></i></div>
+        <div class="nbv-rline"><span class="nbv-rk">INSTR</span><span class="nbv-rv">NIRCam</span></div>
+        <div class="nbv-rline"><span class="nbv-rk">PINS</span><span class="nbv-rv" data-nbv-pincount>4</span></div>
+      </div>
+    </div>
+
+    <div class="nbv-controls">
+      <button class="nbv-ctl" data-nbv-zin aria-label="Zoom in">+</button>
+      <button class="nbv-ctl" data-nbv-zout aria-label="Zoom out">−</button>
+      <button class="nbv-ctl nbv-ctl-r" data-nbv-reset aria-label="Reset view">⟲</button>
+      <button class="nbv-ctl nbv-ctl-toggle is-on" data-nbv-pintoggle aria-label="Toggle annotations">◉</button>
+    </div>
+
+    <div class="nbv-credit">NASA, ESA, CSA, STScI — JWST</div>
+
+    <div class="nbv-loading" data-nbv-loading><span class="nbv-spin"></span>RESOLVING DEEP FIELD…</div>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Moving the pointer over the canvas reveals a floating &quot;Star-forming region&quot; label that tracks the cursor; the nebula otherwise drifts, breathes, and twinkles on its own. Honors prefers-reduced-motion by rendering a single static frame.</span>
-    <span class="mb-c-src">Concept · SSAI</span>
+    <span class="mb-c-int">Drag to pan and scroll/pinch or the +/- controls to zoom into the real nebula; click the named tabs to crossfade between Cosmic Cliffs and Pillars of Creation; hover or tap the glowing pins to reveal one-line facts about each star-forming feature.</span>
+    <span class="mb-c-src">Image · NASA, ESA, CSA, STScI — JWST</span>
   </footer>
 </div>
 <script>
@@ -175,154 +190,484 @@ body.mb-embed #kit-nebula-viewer [class*='stage'],body.mb-embed #kit-nebula-view
     var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
     if(q.get('embed')==='1') document.body.classList.add('mb-embed');
   }catch(e){}
+  /* safety: some modules forget to hide their loading overlay after the image resolves */
+  window.addEventListener('load',function(){ setTimeout(function(){
+    var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
+    for(var i=0;i<ov.length;i++){ var el=ov[i], p=getComputedStyle(el).position;
+      if(p==='absolute'||p==='fixed'){ el.style.transition='opacity .45s ease'; el.style.opacity='0'; el.style.pointerEvents='none';
+        (function(e){setTimeout(function(){e.style.display='none';},500);})(el); } }
+  },1700); });
 })();
 </script>
 <script>
 (function(){
   var root=document.getElementById('kit-nebula-viewer');
-  if(!root) return;
+  if(!root)return;
 
-  var canvas=root.querySelector('.kfig-canvas');
-  var label=root.querySelector('.kfig-label');
-  if(!canvas) return;
+  var accent=(getComputedStyle(document.documentElement).getPropertyValue('--accent')||'').trim()||'#3cc8ff';
+  root.style.setProperty('--nbv-accent',accent);
+
+  var stage=root.querySelector('[data-nbv-stage]');
+  var canvas=root.querySelector('[data-nbv-canvas]');
   var ctx=canvas.getContext('2d');
+  var pinsLayer=root.querySelector('[data-nbv-pins]');
+  var tip=root.querySelector('[data-nbv-tip]');
+  var tipLabel=root.querySelector('[data-nbv-tip-label]');
+  var tipText=root.querySelector('[data-nbv-tip-text]');
+  var titleEl=root.querySelector('[data-nbv-title]');
+  var subEl=root.querySelector('[data-nbv-sub]');
+  var zoomEl=root.querySelector('[data-nbv-zoom]');
+  var zoomBar=root.querySelector('[data-nbv-zoombar]');
+  var pinCountEl=root.querySelector('[data-nbv-pincount]');
+  var loadingEl=root.querySelector('[data-nbv-loading]');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var W=0,H=0,dpr=1;
-  var rafId=null,t0=0;
-
-  var seed=0x9e3779b9;
-  function rnd(){ seed^=seed<<13; seed^=seed>>>17; seed^=seed<<5; return ((seed>>>0)/4294967296); }
-
-  var palette=[
-    [138,92,255],
-    [47,217,195],
-    [242,103,60],
-    [60,123,224]
+  // Feature coords are normalized (0..1) over the source image.
+  var DATA=[
+    {
+      src:'../assets/images/cosmic-cliffs-carina.jpg',
+      title:'COSMIC CLIFFS',
+      sub:'CARINA NEBULA · NGC 3324',
+      home:{cx:0.5,cy:0.55,zoom:1.0},
+      pins:[
+        {id:'C1',x:0.30,y:0.74,label:'Gaseous Cliffs',text:'A wall of gas and dust ~7 light-years tall, eroded by ultraviolet light from massive young stars above.'},
+        {id:'C2',x:0.46,y:0.40,label:'Ionization Front',text:'The glowing boundary where stellar radiation strips electrons from hydrogen, sculpting the nebula’s edge.'},
+        {id:'C3',x:0.66,y:0.66,label:'Protostellar Jets',text:'Faint streamers mark jets blasted from infant stars still buried within the dense cliff material.'},
+        {id:'C4',x:0.80,y:0.30,label:'Embedded Stars',text:'JWST’s infrared sight pierces the dust to reveal hundreds of newborn stars hidden inside.'}
+      ]
+    },
+    {
+      src:'../assets/images/pillars-of-creation-jwst.jpg',
+      title:'PILLARS OF CREATION',
+      sub:'EAGLE NEBULA · M16',
+      home:{cx:0.5,cy:0.5,zoom:1.0},
+      pins:[
+        {id:'P1',x:0.40,y:0.32,label:'Star-Forming Pillar',text:'Towering columns of cool molecular hydrogen and dust, dense enough to collapse into new stars.'},
+        {id:'P2',x:0.52,y:0.20,label:'Protostars',text:'The crimson knots at the pillar tips are protostars only a few hundred thousand years old.'},
+        {id:'P3',x:0.30,y:0.62,label:'Evaporating Globules',text:'EGGs — dense pockets where radiation evaporates surrounding gas, exposing forming stars.'},
+        {id:'P4',x:0.62,y:0.74,label:'Lava-Like Edges',text:'Wavy glowing rims are ejecta from stars still forming, heated and shocked by stellar winds.'}
+      ]
+    }
   ];
-  var clouds=[];
-  var stars=[];
 
-  function buildScene(){
-    clouds.length=0; stars.length=0;
-    seed=0x9e3779b9;
-    var nClouds=14;
-    for(var i=0;i<nClouds;i++){
-      var pick=palette[Math.floor(rnd()*palette.length)];
-      clouds.push({
-        x:0.12+rnd()*0.76,
-        y:0.12+rnd()*0.76,
-        r:0.16+rnd()*0.30,
-        col:pick,
-        a:0.10+rnd()*0.14,
-        dx:(rnd()-0.5)*0.018,
-        dy:(rnd()-0.5)*0.018,
-        ph:rnd()*Math.PI*2,
-        sp:0.10+rnd()*0.18,
-        amp:0.03+rnd()*0.05
-      });
-    }
-    var nStars=160;
-    for(var s=0;s<nStars;s++){
-      var br=rnd();
-      stars.push({
-        x:rnd(),
-        y:rnd(),
-        r:0.4+br*br*1.6,
-        base:0.25+rnd()*0.55,
-        tw:0.4+rnd()*1.6,
-        ph:rnd()*Math.PI*2,
-        tint:rnd()<0.16?(rnd()<0.5?[242,180,60]:[47,217,195]):[244,245,255]
-      });
-    }
-  }
+  var images=[null,null];
+  var loadState=[0,0]; // 0 idle,1 loading,2 ok,3 err
+  var current=0, next=-1;
+  var view={cx:0.5,cy:0.55,zoom:1.0};        // displayed
+  var viewTarget={cx:0.5,cy:0.55,zoom:1.0};   // eased toward
+  var crossfade=0; // 0..1 progress when switching
+  var fadingFrom=-1;
+  var MINZ=1.0, MAXZ=5.0;
+  var dpr=Math.max(1,Math.min(window.devicePixelRatio||1,2));
+  var W=0,H=0;
+  var t0=performance.now();
+  var visible=true, running=false, rafId=0;
+  var activePin=-1;
+  var pinsOn=true;
 
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function clamp(v,a,b){return v<a?a:(v>b?b:v);}
+
+  /* ---------- sizing ---------- */
   function resize(){
-    var w=root.clientWidth||640;
-    var h=Math.max(260,Math.round(w*0.5625));
-    dpr=Math.min(window.devicePixelRatio||1,2);
-    W=w; H=h;
-    canvas.style.height=h+'px';
-    canvas.width=Math.round(w*dpr);
-    canvas.height=Math.round(h*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    if(reduce){ draw(0); }
+    var r=stage.getBoundingClientRect();
+    W=Math.max(1,r.width); H=Math.max(1,r.height);
+    dpr=Math.max(1,Math.min(window.devicePixelRatio||1,2));
+    canvas.width=Math.round(W*dpr);
+    canvas.height=Math.round(H*dpr);
+    canvas.style.width=W+'px';
+    canvas.style.height=H+'px';
+    clampView(viewTarget);
+    layoutPins();
   }
 
-  function drawCloud(c,time){
-    var breathe=1+Math.sin(time*c.sp+c.ph)*c.amp;
-    var px=(c.x + Math.sin(time*0.05+c.ph)*c.dx*4)*W;
-    var py=(c.y + Math.cos(time*0.045+c.ph)*c.dy*4)*H;
-    var rad=c.r*Math.min(W,H)*1.15*breathe;
-    var g=ctx.createRadialGradient(px,py,rad*0.04,px,py,rad);
-    var col=c.col;
-    var a=c.a*(0.85+0.15*Math.sin(time*c.sp+c.ph));
-    g.addColorStop(0,'rgba('+col[0]+','+col[1]+','+col[2]+','+a+')');
-    g.addColorStop(0.45,'rgba('+col[0]+','+col[1]+','+col[2]+','+(a*0.45)+')');
-    g.addColorStop(1,'rgba('+col[0]+','+col[1]+','+col[2]+',0)');
-    ctx.fillStyle=g;
-    ctx.beginPath();
-    ctx.arc(px,py,rad,0,Math.PI*2);
-    ctx.fill();
+  /* ---------- image loading ---------- */
+  function loadImage(idx,cb){
+    if(loadState[idx]===2){cb&&cb(true);return;}
+    if(loadState[idx]===1){return;}
+    loadState[idx]=1;
+    var img=new Image();
+    img.onload=function(){images[idx]=img;loadState[idx]=2;cb&&cb(true);};
+    img.onerror=function(){loadState[idx]=3;cb&&cb(false);};
+    img.src=DATA[idx].src;
+    if(img.complete&&img.naturalWidth){images[idx]=img;loadState[idx]=2;cb&&cb(true);}
   }
 
-  function draw(time){
-    ctx.clearRect(0,0,W,H);
-    var bg=ctx.createRadialGradient(W*0.5,H*0.45,0,W*0.5,H*0.45,Math.max(W,H)*0.75);
-    bg.addColorStop(0,'rgba(22,20,95,0.28)');
-    bg.addColorStop(1,'rgba(5,3,20,0)');
-    ctx.fillStyle=bg;
-    ctx.fillRect(0,0,W,H);
+  /* ---------- cover-fit mapping ----------
+     For an image of natural size iw x ih shown "cover" into WxH at zoom z,
+     centered on normalized point (cx,cy):
+     baseScale = max(W/iw, H/ih) ; scale = baseScale * z
+     drawn image size = iw*scale x ih*scale
+     We position so that (cx*iw, cy*ih) maps to canvas center.            */
+  function coverMetrics(img,z,cx,cy){
+    var iw=img.naturalWidth, ih=img.naturalHeight;
+    var base=Math.max(W/iw,H/ih);
+    var scale=base*z;
+    var dw=iw*scale, dh=ih*scale;
+    // top-left so that focus point lands at center
+    var ox=W/2 - cx*dw;
+    var oy=H/2 - cy*dh;
+    return {iw:iw,ih:ih,scale:scale,dw:dw,dh:dh,ox:ox,oy:oy};
+  }
 
-    ctx.globalCompositeOperation='lighter';
-    for(var i=0;i<clouds.length;i++){ drawCloud(clouds[i],time); }
-    ctx.globalCompositeOperation='source-over';
+  // clamp focus so image always covers the viewport (no empty bars)
+  function clampView(v){
+    v.zoom=clamp(v.zoom,MINZ,MAXZ);
+    var img=images[current];
+    if(!img)return;
+    var m=coverMetrics(img,v.zoom,0.5,0.5);
+    // allowable center range so edges stay covered
+    // half-viewport in image-normalized units:
+    var halfX=(W/2)/m.dw;
+    var halfY=(H/2)/m.dh;
+    var minCx=halfX, maxCx=1-halfX;
+    var minCy=halfY, maxCy=1-halfY;
+    v.cx = minCx>maxCx ? 0.5 : clamp(v.cx,minCx,maxCx);
+    v.cy = minCy>maxCy ? 0.5 : clamp(v.cy,minCy,maxCy);
+  }
 
-    for(var s=0;s<stars.length;s++){
-      var st=stars[s];
-      var tw=reduce?st.base:(st.base*(0.5+0.5*Math.abs(Math.sin(time*st.tw+st.ph))));
-      var sx=st.x*W, sy=st.y*H;
-      var t=st.tint;
-      ctx.fillStyle='rgba('+t[0]+','+t[1]+','+t[2]+','+tw+')';
-      ctx.beginPath();
-      ctx.arc(sx,sy,st.r,0,Math.PI*2);
-      ctx.fill();
-      if(st.r>1.3 && tw>0.5){
-        ctx.fillStyle='rgba('+t[0]+','+t[1]+','+t[2]+','+(tw*0.12)+')';
-        ctx.beginPath();
-        ctx.arc(sx,sy,st.r*3,0,Math.PI*2);
-        ctx.fill();
-      }
+  /* ---------- render ---------- */
+  function drawImageCover(img,z,cx,cy,alpha,drift){
+    if(!img)return;
+    var m=coverMetrics(img,z,cx,cy);
+    // cinematic drift (sub-pixel parallax) only when not heavily zoomed/dragging-less
+    var dx=0,dy=0;
+    if(drift&&!reduce){
+      var tt=(performance.now()-t0)/1000;
+      var amp=Math.min(8, m.dw*0.004);
+      dx=Math.sin(tt*0.13)*amp;
+      dy=Math.cos(tt*0.10)*amp*0.7;
+    }
+    ctx.globalAlpha=alpha;
+    ctx.drawImage(img, m.ox*dpr+dx*dpr, m.oy*dpr+dy*dpr, m.dw*dpr, m.dh*dpr);
+    ctx.globalAlpha=1;
+  }
+
+  function render(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    // base black
+    ctx.fillStyle='#050314';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    if(crossfade>0 && fadingFrom>=0 && images[fadingFrom]){
+      drawImageCover(images[fadingFrom], view.zoom, view.cx, view.cy, 1-crossfade, true);
+    }
+    var aNow = crossfade>0 ? crossfade : 1;
+    drawImageCover(images[current], view.zoom, view.cx, view.cy, aNow, true);
+
+    // subtle accent scan glow at top (very faint, premium not gimmicky)
+  }
+
+  /* ---------- pins ---------- */
+  function buildPins(){
+    pinsLayer.innerHTML='';
+    var d=DATA[current];
+    d.pins.forEach(function(p,i){
+      var el=document.createElement('div');
+      el.className='nbv-pin';
+      el.setAttribute('data-i',i);
+      el.innerHTML=''+
+        '<div class="nbv-pin-tick"></div>'+
+        '<div class="nbv-pin-ring"></div>'+
+        '<div class="nbv-pin-ring r2"></div>'+
+        '<div class="nbv-pin-dot"></div>'+
+        '<div class="nbv-pin-id">'+p.id+'  '+p.label.toUpperCase()+'</div>'+
+        '<div class="nbv-pin-hit"></div>';
+      var hit=el.querySelector('.nbv-pin-hit');
+      function show(){activePin=i;el.classList.add('is-active');showTip(p);}
+      function hide(){if(activePin===i){activePin=-1;el.classList.remove('is-active');hideTip();}}
+      hit.addEventListener('mouseenter',show);
+      hit.addEventListener('mouseleave',hide);
+      hit.addEventListener('click',function(e){e.stopPropagation();
+        if(activePin===i){hide();}else{
+          // clear others
+          Array.prototype.forEach.call(pinsLayer.children,function(c){c.classList.remove('is-active');});
+          show();
+        }
+      });
+      pinsLayer.appendChild(el);
+    });
+    pinCountEl.textContent=d.pins.length;
+    layoutPins();
+  }
+
+  function layoutPins(){
+    var img=images[current];
+    if(!img)return;
+    var m=coverMetrics(img,view.zoom,view.cx,view.cy);
+    var d=DATA[current];
+    var kids=pinsLayer.children;
+    for(var i=0;i<d.pins.length;i++){
+      var p=d.pins[i];
+      var px=m.ox + p.x*m.dw;
+      var py=m.oy + p.y*m.dh;
+      var el=kids[i];
+      if(!el)continue;
+      el.style.left=px+'px';
+      el.style.top=py+'px';
+      var on = px>-40&&px<W+40&&py>-40&&py<H+40;
+      el.style.opacity = on ? '' : '0';
+      el.style.pointerEvents = on ? '' : 'none';
     }
   }
 
-  function loop(now){
-    if(!t0)t0=now;
-    var time=(now-t0)/1000;
-    draw(time);
-    rafId=requestAnimationFrame(loop);
+  function showTip(p){
+    tipLabel.textContent=p.label;
+    tipText.textContent=p.text;
+    tip.setAttribute('aria-hidden','false');
+    tip.classList.add('is-on');
+    positionTip(p);
+  }
+  function hideTip(){tip.classList.remove('is-on');tip.setAttribute('aria-hidden','true');}
+  function positionTip(p){
+    var img=images[current];if(!img)return;
+    var m=coverMetrics(img,view.zoom,view.cx,view.cy);
+    var px=m.ox+p.x*m.dw, py=m.oy+p.y*m.dh;
+    // measure
+    var tw=tip.offsetWidth||240, th=tip.offsetHeight||70;
+    var tx=px+18, ty=py+14;
+    if(tx+tw>W-10) tx=px-tw-18;
+    if(tx<10) tx=10;
+    if(ty+th>H-10) ty=py-th-14;
+    if(ty<10) ty=10;
+    tip.style.left=tx+'px';
+    tip.style.top=ty+'px';
   }
 
-  function onMove(e){
-    if(!label)return;
-    var rect=canvas.getBoundingClientRect();
-    var x=e.clientX-rect.left, y=e.clientY-rect.top;
-    label.style.transform='translate('+(x)+'px,'+(y)+'px)';
+  /* ---------- zoom/pan ---------- */
+  function setZoom(z,anchorClientX,anchorClientY){
+    var old=viewTarget.zoom;
+    z=clamp(z,MINZ,MAXZ);
+    if(z===old)return;
+    var img=images[current];
+    if(img && anchorClientX!=null){
+      // keep the image point under the cursor stable
+      var r=stage.getBoundingClientRect();
+      var sx=anchorClientX-r.left, sy=anchorClientY-r.top;
+      var m=coverMetrics(img,old,viewTarget.cx,viewTarget.cy);
+      var imgX=(sx-m.ox)/m.dw; // normalized image coord under cursor
+      var imgY=(sy-m.oy)/m.dh;
+      viewTarget.zoom=z;
+      var m2=coverMetrics(img,z,0.5,0.5);
+      // we want imgX,imgY to remain at sx,sy:
+      // sx = ox2 + imgX*dw2  ; ox2 = W/2 - cx*dw2  -> cx = (W/2 - (sx - imgX*dw2))/dw2
+      viewTarget.cx=(W/2-(sx-imgX*m2.dw))/m2.dw;
+      viewTarget.cy=(H/2-(sy-imgY*m2.dh))/m2.dh;
+    }else{
+      viewTarget.zoom=z;
+    }
+    clampView(viewTarget);
+    ensureRunning();
   }
-  root.addEventListener('pointermove',onMove);
 
-  buildScene();
-  resize();
+  function panBy(dxPx,dyPx){
+    var img=images[current];if(!img)return;
+    var m=coverMetrics(img,viewTarget.zoom,viewTarget.cx,viewTarget.cy);
+    viewTarget.cx -= dxPx/m.dw;
+    viewTarget.cy -= dyPx/m.dh;
+    clampView(viewTarget);
+    // snap view a bit closer during active drag for responsiveness
+    ensureRunning();
+  }
 
-  if(reduce){ draw(0); }
-  else{ rafId=requestAnimationFrame(loop); }
+  /* ---------- switching nebula ---------- */
+  function switchTo(idx){
+    if(idx===current||loadState[idx]===1)return;
+    loadImage(idx,function(ok){
+      if(!ok)return;
+      fadingFrom=current;
+      var fromHome=DATA[current].home, toHome=DATA[idx].home;
+      current=idx;
+      crossfade=0.0001;
+      // reset to new home view
+      view.cx=toHome.cx;view.cy=toHome.cy;view.zoom=toHome.zoom;
+      viewTarget.cx=toHome.cx;viewTarget.cy=toHome.cy;viewTarget.zoom=toHome.zoom;
+      clampView(view);clampView(viewTarget);
+      hideTip();activePin=-1;
+      buildPins();
+      // title swap
+      titleEl.classList.add('is-swap');subEl.classList.add('is-swap');
+      setTimeout(function(){
+        titleEl.textContent=DATA[idx].title;
+        subEl.textContent=DATA[idx].sub;
+        titleEl.classList.remove('is-swap');subEl.classList.remove('is-swap');
+      },200);
+      // tabs
+      Array.prototype.forEach.call(root.querySelectorAll('[data-nbv-tab]'),function(b){
+        var on=+b.getAttribute('data-nbv-tab')===idx;
+        b.classList.toggle('is-active',on);
+        b.setAttribute('aria-selected',on?'true':'false');
+      });
+      ensureRunning();
+    });
+  }
 
-  var rt=null;
-  window.addEventListener('resize',function(){
-    clearTimeout(rt);
-    rt=setTimeout(function(){ resize(); },120);
+  /* ---------- HUD ---------- */
+  function updateHud(){
+    zoomEl.textContent=view.zoom.toFixed(2)+'×';
+    var pct=(view.zoom-MINZ)/(MAXZ-MINZ)*100;
+    zoomBar.style.width=pct.toFixed(1)+'%';
+  }
+
+  /* ---------- loop ---------- */
+  function tick(){
+    rafId=0;
+    var moving=false;
+    // ease view toward target
+    var e=0.18;
+    var ncx=lerp(view.cx,viewTarget.cx,e);
+    var ncy=lerp(view.cy,viewTarget.cy,e);
+    var nz=lerp(view.zoom,viewTarget.zoom,e);
+    if(Math.abs(ncx-viewTarget.cx)>0.0002||Math.abs(ncy-viewTarget.cy)>0.0002||Math.abs(nz-viewTarget.zoom)>0.0005){moving=true;}
+    view.cx=ncx;view.cy=ncy;view.zoom=nz;
+
+    if(crossfade>0){
+      crossfade+=reduce?0.08:0.035;
+      moving=true;
+      if(crossfade>=1){crossfade=0;fadingFrom=-1;}
+    }
+
+    render();
+    layoutPins();
+    if(activePin>=0){positionTip(DATA[current].pins[activePin]);}
+    updateHud();
+
+    // keep animating for drift unless reduced motion & idle
+    var keep = visible && (moving || crossfade>0 || !reduce);
+    if(keep){rafId=requestAnimationFrame(tick);running=true;}
+    else{running=false;}
+  }
+  function ensureRunning(){if(!running&&visible){running=true;rafId=requestAnimationFrame(tick);}}
+
+  /* ---------- pointer interaction ---------- */
+  var dragging=false, lastX=0, lastY=0, moved=0;
+  var pointers={};
+  var pinchDist=0;
+
+  stage.addEventListener('pointerdown',function(e){
+    if(e.target.closest('.nbv-pin-hit')||e.target.closest('button')) return;
+    stage.setPointerCapture&&stage.setPointerCapture(e.pointerId);
+    pointers[e.pointerId]={x:e.clientX,y:e.clientY};
+    if(Object.keys(pointers).length===1){
+      dragging=true;moved=0;lastX=e.clientX;lastY=e.clientY;
+      stage.classList.add('is-panning');
+    }else if(Object.keys(pointers).length===2){
+      var ps=Object.values(pointers);
+      pinchDist=Math.hypot(ps[0].x-ps[1].x,ps[0].y-ps[1].y);
+    }
   });
+  stage.addEventListener('pointermove',function(e){
+    if(!pointers[e.pointerId])return;
+    pointers[e.pointerId]={x:e.clientX,y:e.clientY};
+    var keys=Object.keys(pointers);
+    if(keys.length>=2){
+      var ps=Object.values(pointers);
+      var d=Math.hypot(ps[0].x-ps[1].x,ps[0].y-ps[1].y);
+      if(pinchDist>0){
+        var cxm=(ps[0].x+ps[1].x)/2, cym=(ps[0].y+ps[1].y)/2;
+        setZoom(viewTarget.zoom*(d/pinchDist),cxm,cym);
+      }
+      pinchDist=d;
+      return;
+    }
+    if(dragging){
+      var dx=e.clientX-lastX, dy=e.clientY-lastY;
+      lastX=e.clientX;lastY=e.clientY;
+      moved+=Math.abs(dx)+Math.abs(dy);
+      // direct (snappy) pan: move both view and target to avoid lag feel
+      var img=images[current];
+      if(img){
+        var m=coverMetrics(img,view.zoom,view.cx,view.cy);
+        view.cx-=dx/m.dw; view.cy-=dy/m.dh;
+        viewTarget.cx=view.cx; viewTarget.cy=view.cy;
+        clampView(view); viewTarget.cx=view.cx; viewTarget.cy=view.cy;
+      }
+      ensureRunning();
+    }
+  });
+  function endPointer(e){
+    if(pointers[e.pointerId])delete pointers[e.pointerId];
+    if(Object.keys(pointers).length<2)pinchDist=0;
+    if(Object.keys(pointers).length===0){dragging=false;stage.classList.remove('is-panning');}
+  }
+  stage.addEventListener('pointerup',endPointer);
+  stage.addEventListener('pointercancel',endPointer);
+  stage.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse')endPointer(e);});
+
+  stage.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var factor=Math.pow(1.0015,-e.deltaY);
+    setZoom(viewTarget.zoom*factor,e.clientX,e.clientY);
+  },{passive:false});
+
+  // click empty area dismisses tip
+  stage.addEventListener('click',function(e){
+    if(moved>6)return;
+    if(e.target.closest('.nbv-pin-hit'))return;
+    if(activePin>=0){
+      Array.prototype.forEach.call(pinsLayer.children,function(c){c.classList.remove('is-active');});
+      activePin=-1;hideTip();
+    }
+  });
+
+  /* ---------- controls ---------- */
+  root.querySelector('[data-nbv-zin]').addEventListener('click',function(){var r=stage.getBoundingClientRect();setZoom(viewTarget.zoom*1.4,r.left+r.width/2,r.top+r.height/2);});
+  root.querySelector('[data-nbv-zout]').addEventListener('click',function(){var r=stage.getBoundingClientRect();setZoom(viewTarget.zoom/1.4,r.left+r.width/2,r.top+r.height/2);});
+  root.querySelector('[data-nbv-reset]').addEventListener('click',function(){
+    var h=DATA[current].home;
+    viewTarget.cx=h.cx;viewTarget.cy=h.cy;viewTarget.zoom=h.zoom;
+    clampView(viewTarget);ensureRunning();
+  });
+  var pinToggleBtn=root.querySelector('[data-nbv-pintoggle]');
+  pinToggleBtn.addEventListener('click',function(){
+    pinsOn=!pinsOn;
+    pinsLayer.classList.toggle('is-hidden',!pinsOn);
+    pinToggleBtn.classList.toggle('is-on',pinsOn);
+    if(!pinsOn){activePin=-1;hideTip();Array.prototype.forEach.call(pinsLayer.children,function(c){c.classList.remove('is-active');});}
+  });
+  Array.prototype.forEach.call(root.querySelectorAll('[data-nbv-tab]'),function(b){
+    b.addEventListener('click',function(){switchTo(+b.getAttribute('data-nbv-tab'));});
+  });
+
+  /* ---------- visibility / resize ---------- */
+  var io=('IntersectionObserver'in window)?new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      visible=en.isIntersecting;
+      if(visible)ensureRunning();
+    });
+  },{threshold:0.01}):null;
+  if(io)io.observe(root);
+
+  var ro=('ResizeObserver'in window)?new ResizeObserver(function(){resize();ensureRunning();}):null;
+  if(ro)ro.observe(stage);
+  window.addEventListener('resize',function(){resize();ensureRunning();});
+
+  /* ---------- init ---------- */
+  function boot(){
+    resize();
+    var h=DATA[0].home;
+    view.cx=h.cx;view.cy=h.cy;view.zoom=h.zoom;
+    viewTarget.cx=h.cx;viewTarget.cy=h.cy;viewTarget.zoom=h.zoom;
+    titleEl.textContent=DATA[0].title;
+    subEl.textContent=DATA[0].sub;
+    loadImage(0,function(ok){
+      if(ok){
+        clampView(view);clampView(viewTarget);
+        buildPins();
+        canvas.classList.add('is-ready');
+        loadingEl.classList.add('is-done');
+        render();layoutPins();updateHud();
+        ensureRunning();
+        // warm second image
+        setTimeout(function(){loadImage(1);},600);
+      }else{
+        loadingEl.textContent='DEEP FIELD UNAVAILABLE';
+      }
+    });
+    // draw an immediate first frame (UI un-gated even before image)
+    render();updateHud();
+  }
+  boot();
 })();
 </script>
 </body></html>

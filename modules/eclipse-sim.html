@@ -141,6 +141,13 @@ body.mb-embed #kit-eclipse-sim [class*='stage'],body.mb-embed #kit-eclipse-sim [
     var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
     if(q.get('embed')==='1') document.body.classList.add('mb-embed');
   }catch(e){}
+  /* safety: some modules forget to hide their loading overlay after the image resolves */
+  window.addEventListener('load',function(){ setTimeout(function(){
+    var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
+    for(var i=0;i<ov.length;i++){ var el=ov[i], p=getComputedStyle(el).position;
+      if(p==='absolute'||p==='fixed'){ el.style.transition='opacity .45s ease'; el.style.opacity='0'; el.style.pointerEvents='none';
+        (function(e){setTimeout(function(){e.style.display='none';},500);})(el); } }
+  },1700); });
 })();
 </script>
 <script>
