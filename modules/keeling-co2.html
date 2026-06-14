@@ -34,9 +34,10 @@ body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;
 body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 /* ----- controls hide/show (immersive toggle) ----- */
-.mb-immersive-btn{position:fixed;right:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:7px;font:600 9.5px/1 'Inter',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--neb);background:rgba(8,6,26,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--hair);border-radius:999px;padding:9px 14px;cursor:pointer;transition:color .2s,border-color .2s,background .2s,opacity .35s;user-select:none;-webkit-user-select:none;}
+.mb-immersive-btn{position:fixed;right:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;justify-content:center;gap:0;width:36px;height:36px;padding:0;color:var(--neb);background:rgba(8,6,26,.6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--hair);border-radius:50%;cursor:pointer;transition:color .2s,border-color .2s,background .2s,opacity .35s;user-select:none;-webkit-user-select:none;}
 .mb-immersive-btn:hover{color:var(--star);border-color:rgba(var(--accent-rgb),.55);background:rgba(12,10,34,.85);}
-.mb-immersive-btn svg{width:13px;height:13px;display:block;flex:0 0 auto;}
+.mb-immersive-btn svg{width:15px;height:15px;display:block;flex:0 0 auto;}
+.mb-immersive-btn .mb-it-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
 body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-immersive [class*='chip'],body.mb-immersive [class*='slider'],body.mb-immersive [class*='knob'],body.mb-immersive [class*='toolbar'],body.mb-immersive [class*='picker'],body.mb-immersive [class*='legend'],body.mb-immersive [class*='readout'],body.mb-immersive [class*='tabs'],body.mb-immersive [class*='switch'],body.mb-immersive [class*='-rail'],body.mb-immersive [class*='-side'],body.mb-immersive [class*='-deck'],body.mb-immersive [class*='-menu'],body.mb-immersive [class*='-opts'],body.mb-immersive [class*='-prov'],body.mb-immersive [class*='-ui'],body.mb-immersive [class*='-ctrl'],body.mb-immersive [data-controls],body.mb-immersive .mb-controls{opacity:0!important;pointer-events:none!important;transition:opacity .4s ease!important;}
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
@@ -136,7 +137,7 @@ body.mb-embed #kit-keeling-co2 [class*='stage'],body.mb-embed #kit-keeling-co2 [
   try{
     var ib=document.querySelector('.mb-immersive-btn');
     if(ib){ var lab=ib.querySelector('.mb-it-label');
-      var setImm=function(on){ document.body.classList.toggle('mb-immersive',on); ib.setAttribute('aria-pressed',on?'true':'false'); if(lab) lab.textContent=on?'Show controls':'Hide controls'; [60,460].forEach(function(t){setTimeout(function(){try{window.dispatchEvent(new Event('resize'));}catch(e){}},t);}); };
+      var setImm=function(on){ document.body.classList.toggle('mb-immersive',on); ib.setAttribute('aria-pressed',on?'true':'false'); ib.title=(on?'Show controls (H)':'Hide controls (H)'); if(lab) lab.textContent=on?'Show controls':'Hide controls'; [60,460].forEach(function(t){setTimeout(function(){try{window.dispatchEvent(new Event('resize'));}catch(e){}},t);}); };
       ib.addEventListener('click',function(){ setImm(!document.body.classList.contains('mb-immersive')); });
       window.addEventListener('keydown',function(e){ var tn=(e.target&&e.target.tagName||''); if((e.key==='h'||e.key==='H')&&!/INPUT|TEXTAREA|SELECT/.test(tn)){ setImm(!document.body.classList.contains('mb-immersive')); } });
     }
