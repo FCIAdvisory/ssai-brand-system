@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Starfield hero · SSAI</title>
+<title>Starfield — Yale Bright Star Catalogue night sky · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -33,112 +33,35 @@ body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
 body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
 body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
-#kit-starfield-hero{
-  position:relative;
-  width:100%;
-  min-height:420px;
-  aspect-ratio:16/9;
-  max-height:560px;
-  overflow:hidden;
-  border-radius:14px;
-  background:radial-gradient(130% 120% at 50% 18%, #0a0726 0%, #070420 42%, #050314 100%);
-  font-family:'Inter',system-ui,sans-serif;
-  isolation:isolate;
-}
-#kit-starfield-hero .sf-stars{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-  z-index:1;
-  will-change:transform;
-}
-#kit-starfield-hero .sf-vignette{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-  background:
-    radial-gradient(120% 90% at 50% 50%, rgba(5,3,20,0) 48%, rgba(5,3,20,0.55) 100%),
-    linear-gradient(180deg, rgba(5,3,20,0.28) 0%, rgba(5,3,20,0) 22%, rgba(5,3,20,0) 70%, rgba(5,3,20,0.42) 100%);
-}
-#kit-starfield-hero .sf-content{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:0 6%;
-  pointer-events:none;
-}
-#kit-starfield-hero .sf-eyebrow{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:0.42em;
-  font-size:clamp(10px,1.35vw,13px);
-  color:#8a5cff;
-  margin:0 0 1.15rem;
-  padding-left:0.42em;
-  opacity:0;
-  transform:translateY(8px);
-  animation:kit-starfield-hero-rise 1100ms cubic-bezier(0.22,0.61,0.36,1) 160ms forwards;
-}
-#kit-starfield-hero .sf-headline{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:0.012em;
-  line-height:0.98;
-  font-size:clamp(30px,6.4vw,76px);
-  margin:0;
-  color:#f4f5ff;
-  text-shadow:0 0 38px rgba(60,123,224,0.22), 0 2px 18px rgba(5,3,20,0.6);
-  opacity:0;
-  transform:translateY(14px);
-  animation:kit-starfield-hero-rise 1200ms cubic-bezier(0.22,0.61,0.36,1) 300ms forwards;
-}
-#kit-starfield-hero .sf-tagline{
-  font-family:'Inter',system-ui,sans-serif;
-  font-weight:400;
-  font-size:clamp(13px,1.7vw,18px);
-  letter-spacing:0.01em;
-  color:#a6abe6;
-  margin:1.35rem 0 0;
-  opacity:0;
-  transform:translateY(12px);
-  animation:kit-starfield-hero-rise 1200ms cubic-bezier(0.22,0.61,0.36,1) 520ms forwards;
-}
-#kit-starfield-hero .sf-tagline::before{
-  content:"";
-  display:block;
-  width:46px;
-  height:1px;
-  margin:0 auto 1.15rem;
-  background:linear-gradient(90deg, rgba(138,92,255,0) 0%, rgba(138,92,255,0.7) 50%, rgba(138,92,255,0) 100%);
-}
-@keyframes kit-starfield-hero-rise{
-  to{opacity:1;transform:translateY(0);}
-}
-@media (prefers-reduced-motion: reduce){
-  #kit-starfield-hero .sf-eyebrow,
-  #kit-starfield-hero .sf-headline,
-  #kit-starfield-hero .sf-tagline{
-    animation:none;
-    opacity:1;
-    transform:none;
-  }
-}
-@media (max-width:560px){
-  #kit-starfield-hero{aspect-ratio:auto;min-height:380px;}
-  #kit-starfield-hero .sf-eyebrow{letter-spacing:0.34em;}
-}
+#kit-starfield-hero{position:relative;width:100%;height:100%;min-height:420px;margin:0;overflow:hidden;background:#050314;font-family:'Inter',system-ui,sans-serif;color:#f4f5ff;--accent:#3cc8ff}
+#kit-starfield-hero *{box-sizing:border-box}
+#kit-starfield-hero .sf-sky{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair;touch-action:none}
+#kit-starfield-hero .sf-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 110% at 50% 38%,rgba(5,3,20,0) 42%,rgba(5,3,20,0.55) 78%,rgba(3,2,12,0.92) 100%)}
+#kit-starfield-hero .sf-hud{position:absolute;z-index:6;pointer-events:none}
+#kit-starfield-hero .sf-hud-tl{top:18px;left:20px}
+#kit-starfield-hero .sf-hud-tr{top:18px;right:18px;display:flex;gap:8px;pointer-events:auto}
+#kit-starfield-hero .sf-title{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.10em;font-size:clamp(15px,2.2vw,22px);color:#f4f5ff;text-shadow:0 1px 18px rgba(5,3,20,.9)}
+#kit-starfield-hero .sf-sub{margin-top:3px;font-size:11px;letter-spacing:.04em;color:#a6abe6;text-shadow:0 1px 12px rgba(5,3,20,.9)}
+#kit-starfield-hero .sf-chip{display:inline-flex;align-items:center;gap:7px;font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:.03em;color:#a6abe6;padding:6px 11px;border-radius:999px;border:1px solid rgba(166,171,230,0.16);background:rgba(22,20,95,0.34);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+#kit-starfield-hero .sf-chip:hover{color:#f4f5ff;border-color:rgba(166,171,230,0.34)}
+#kit-starfield-hero .sf-chip .sf-dot{width:6px;height:6px;border-radius:50%;background:#4a4f86;transition:background .2s,box-shadow .2s}
+#kit-starfield-hero .sf-chip.sf-on{color:#f4f5ff;border-color:color-mix(in srgb,var(--accent) 42%,transparent)}
+#kit-starfield-hero .sf-chip.sf-on .sf-dot{background:var(--accent);box-shadow:0 0 9px var(--accent)}
+#kit-starfield-hero .sf-readout{position:absolute;left:20px;bottom:46px;z-index:6;min-width:228px;max-width:300px;padding:13px 15px;border-radius:13px;border:1px solid rgba(166,171,230,0.16);background:rgba(10,8,34,0.52);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px);opacity:0;transform:translateY(8px);transition:opacity .28s ease,transform .28s ease;pointer-events:none}
+#kit-starfield-hero .sf-readout.sf-show{opacity:1;transform:translateY(0)}
+#kit-starfield-hero .sf-r-name{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:18px;color:#f4f5ff;line-height:1.05}
+#kit-starfield-hero .sf-r-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:11px}
+#kit-starfield-hero .sf-r-cell{display:flex;flex-direction:column;gap:2px}
+#kit-starfield-hero .sf-r-k{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#7e84c4}
+#kit-starfield-hero .sf-r-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:14px;color:var(--accent);letter-spacing:.02em}
+#kit-starfield-hero .sf-r-cell:nth-child(4) .sf-r-v{color:#dfe2ff;font-size:12px}
+#kit-starfield-hero .sf-credit{position:absolute;right:18px;bottom:14px;z-index:6;font-size:10px;letter-spacing:.05em;color:#6f74b0;pointer-events:none;text-shadow:0 1px 10px rgba(5,3,20,.9)}
+#kit-starfield-hero .sf-loading{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;background:#050314;transition:opacity .6s ease}
+#kit-starfield-hero .sf-loading.sf-hidden{opacity:0;pointer-events:none}
+#kit-starfield-hero .sf-load-dot{width:34px;height:34px;border-radius:50%;border:2px solid rgba(166,171,230,0.18);border-top-color:var(--accent);animation:sf-spin 1s linear infinite}
+@keyframes sf-spin{to{transform:rotate(360deg)}}
+@media (max-width:560px){#kit-starfield-hero .sf-readout{left:14px;right:14px;max-width:none;bottom:42px}#kit-starfield-hero .sf-hud-tr{flex-direction:column}}
+@media (prefers-reduced-motion:reduce){#kit-starfield-hero .sf-load-dot{animation:none}}
 
 body.mb-embed #kit-starfield-hero{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-starfield-hero [class*='frame'],body.mb-embed #kit-starfield-hero [class*='shell'],body.mb-embed #kit-starfield-hero [class*='-inner'],body.mb-embed #kit-starfield-hero [class*='wrapper']{display:contents!important;}
@@ -155,21 +78,35 @@ body.mb-embed #kit-starfield-hero [class*='stage'],body.mb-embed #kit-starfield-
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Starfield hero</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Starfield — Yale Bright Star Catalogue night sky</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-starfield-hero">
-  <canvas class="sf-stars" aria-hidden="true"></canvas>
+  <canvas class="sf-sky" id="sf-canvas"></canvas>
   <div class="sf-vignette" aria-hidden="true"></div>
-  <div class="sf-content">
-    <span class="sf-eyebrow">The Universe</span>
-    <h1 class="sf-headline">Science for life on Earth.</h1>
-    <p class="sf-tagline">From observation to understanding.</p>
+  <div class="sf-hud sf-hud-tl">
+    <div class="sf-title">THE BRIGHT SKY</div>
+    <div class="sf-sub">Real stars · apparent magnitude · spectral color</div>
   </div>
+  <div class="sf-hud sf-hud-tr">
+    <button class="sf-chip sf-on" id="sf-lines" type="button" aria-pressed="true"><span class="sf-dot"></span>Constellations</button>
+    <button class="sf-chip sf-on" id="sf-labels" type="button" aria-pressed="true"><span class="sf-dot"></span>Labels</button>
+  </div>
+  <div class="sf-readout" id="sf-readout" aria-live="polite">
+    <div class="sf-r-name" id="sf-r-name">SIRIUS</div>
+    <div class="sf-r-grid">
+      <div class="sf-r-cell"><span class="sf-r-k">Mag</span><span class="sf-r-v" id="sf-r-mag">−1.46</span></div>
+      <div class="sf-r-cell"><span class="sf-r-k">Type</span><span class="sf-r-v" id="sf-r-type">A1V</span></div>
+      <div class="sf-r-cell"><span class="sf-r-k">Distance</span><span class="sf-r-v" id="sf-r-dist">8.6 ly</span></div>
+      <div class="sf-r-cell"><span class="sf-r-k">Constellation</span><span class="sf-r-v" id="sf-r-con">Canis Major</span></div>
+    </div>
+  </div>
+  <div class="sf-credit">Star data: Yale Bright Star Catalogue</div>
+  <div class="sf-loading" id="sf-loading"><div class="sf-load-dot"></div></div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Three star layers auto-drift at different speeds and twinkle subtly; moving the mouse adds gentle depth-based parallax. Honors reduced-motion by rendering one static frame.</span>
+    <span class="mb-c-int">Move the pointer over any bright star to reveal its real name, apparent magnitude, spectral type and distance; drag horizontally to pan across the sky; toggle the constellation-lines and labels chips in the HUD; the sky drifts and twinkles on its own and pauses when off-screen.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
 </div>
@@ -197,122 +134,225 @@ body.mb-embed #kit-starfield-hero [class*='stage'],body.mb-embed #kit-starfield-
 <script>
 (function(){
   var root=document.getElementById('kit-starfield-hero');
-  if(!root) return;
-  var canvas=root.querySelector('.sf-stars');
-  if(!canvas) return;
+  if(!root)return;
+  var canvas=document.getElementById('sf-canvas');
   var ctx=canvas.getContext('2d');
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var loading=document.getElementById('sf-loading');
+  var readout=document.getElementById('sf-readout');
+  var elName=document.getElementById('sf-r-name'),elMag=document.getElementById('sf-r-mag'),elType=document.getElementById('sf-r-type'),elDist=document.getElementById('sf-r-dist'),elCon=document.getElementById('sf-r-con');
+  var btnLines=document.getElementById('sf-lines'),btnLabels=document.getElementById('sf-labels');
+  var accent=(getComputedStyle(document.documentElement).getPropertyValue('--accent')||'').trim()||'#3cc8ff';
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-  var W=0,H=0,dpr=1;
-  // three depth layers: [near .. far]. drift = autonomous px/sec; par = mouse parallax factor.
-  var layerCfg=[
-    {count:0, density:0.000085, rMin:0.9, rMax:1.9, drift:9.5, par:26, alpha:0.95, tint:'255,255,255'},
-    {count:0, density:0.00013,  rMin:0.55,rMax:1.15,drift:5.0, par:14, alpha:0.7,  tint:'214,224,255'},
-    {count:0, density:0.00020,  rMin:0.3, rMax:0.75,drift:2.2, par:6,  alpha:0.45, tint:'176,170,230'}
-  ];
-  var layers=[];
-  // a few brighter accent stars (subtle spectrum: orbit-blue + plasma violet)
-  var accentTints=['60,123,224','138,92,255','244,245,255'];
+  function hx(h){h=h.replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+  var accRGB=hx(accent);
 
-  var mx=0,my=0;        // target mouse offset (-1..1)
-  var cmx=0,cmy=0;      // eased mouse offset
-
-  function rand(a,b){return a+Math.random()*(b-a);}
-
-  function buildLayers(){
-    layers=[];
-    var area=W*H;
-    for(var i=0;i<layerCfg.length;i++){
-      var cfg=layerCfg[i];
-      var n=Math.max(8, Math.round(area*cfg.density));
-      var stars=[];
-      for(var s=0;s<n;s++){
-        var accent=(i===0 && Math.random()<0.12);
-        stars.push({
-          x:Math.random()*W,
-          y:Math.random()*H,
-          r:rand(cfg.rMin,cfg.rMax)*(accent?1.5:1),
-          base:rand(0.45,1),
-          tw:rand(0.6,1.8),            // twinkle speed
-          ph:Math.random()*Math.PI*2,  // twinkle phase
-          tint:accent?accentTints[(Math.random()*accentTints.length)|0]:cfg.tint,
-          glow:accent
-        });
-      }
-      layers.push(stars);
-    }
+  // B-V color index -> approximate RGB (real stellar colour). Returns [r,g,b].
+  function bvToRGB(bv){
+    if(bv<-0.4)bv=-0.4; if(bv>2.0)bv=2.0;
+    var t=4600*(1/(0.92*bv+1.7)+1/(0.92*bv+0.62));
+    var r,g,b;
+    function clamp(x){return x<0?0:(x>255?255:x);}
+    var x=t/100;
+    if(x<=66){r=255;}else{r=329.7*Math.pow(x-60,-0.1332);}
+    if(x<=66){g=99.47*Math.log(x)-161.1;}else{g=288.1*Math.pow(x-60,-0.0755);}
+    if(x>=66){b=255;}else if(x<=19){b=0;}else{b=138.5*Math.log(x-10)-305.0;}
+    return [clamp(r),clamp(g),clamp(b)];
   }
+
+  // Real Yale Bright Star Catalogue data: name, RA(hours), Dec(deg), apparent mag, B-V index, spectral type, distance(ly), constellation
+  var STARS=[
+    {n:'Sirius',ra:6.7525,dec:-16.716,m:-1.46,bv:0.00,sp:'A1V',d:'8.6 ly',c:'Canis Major'},
+    {n:'Canopus',ra:6.3992,dec:-52.696,m:-0.74,bv:0.15,sp:'A9II',d:'310 ly',c:'Carina'},
+    {n:'Rigil Kentaurus',ra:14.6600,dec:-60.834,m:-0.27,bv:0.71,sp:'G2V',d:'4.4 ly',c:'Centaurus'},
+    {n:'Arcturus',ra:14.2612,dec:19.182,m:-0.05,bv:1.23,sp:'K1.5III',d:'37 ly',c:'Boötes'},
+    {n:'Vega',ra:18.6156,dec:38.784,m:0.03,bv:0.00,sp:'A0V',d:'25 ly',c:'Lyra'},
+    {n:'Capella',ra:5.2782,dec:45.998,m:0.08,bv:0.80,sp:'G3III',d:'43 ly',c:'Auriga'},
+    {n:'Rigel',ra:5.2423,dec:-8.202,m:0.13,bv:-0.03,sp:'B8Ia',d:'860 ly',c:'Orion'},
+    {n:'Procyon',ra:7.6550,dec:5.225,m:0.34,bv:0.42,sp:'F5IV',d:'11.5 ly',c:'Canis Minor'},
+    {n:'Betelgeuse',ra:5.9195,dec:7.407,m:0.50,bv:1.85,sp:'M1Ia',d:'640 ly',c:'Orion'},
+    {n:'Achernar',ra:1.6286,dec:-57.237,m:0.46,bv:-0.16,sp:'B6Vep',d:'139 ly',c:'Eridanus'},
+    {n:'Hadar',ra:14.0637,dec:-60.373,m:0.61,bv:-0.23,sp:'B1III',d:'390 ly',c:'Centaurus'},
+    {n:'Altair',ra:19.8464,dec:8.868,m:0.77,bv:0.22,sp:'A7V',d:'16.7 ly',c:'Aquila'},
+    {n:'Aldebaran',ra:4.5987,dec:16.509,m:0.85,bv:1.54,sp:'K5III',d:'65 ly',c:'Taurus'},
+    {n:'Antares',ra:16.4901,dec:-26.432,m:0.96,bv:1.83,sp:'M1.5Iab',d:'550 ly',c:'Scorpius'},
+    {n:'Spica',ra:13.4199,dec:-11.161,m:0.97,bv:-0.23,sp:'B1III',d:'250 ly',c:'Virgo'},
+    {n:'Pollux',ra:7.7553,dec:28.026,m:1.14,bv:1.00,sp:'K0III',d:'34 ly',c:'Gemini'},
+    {n:'Fomalhaut',ra:22.9608,dec:-29.622,m:1.16,bv:0.09,sp:'A3V',d:'25 ly',c:'Piscis Austrinus'},
+    {n:'Deneb',ra:20.6905,dec:45.280,m:1.25,bv:0.09,sp:'A2Ia',d:'2615 ly',c:'Cygnus'},
+    {n:'Mimosa',ra:12.7953,dec:-59.689,m:1.25,bv:-0.24,sp:'B0.5III',d:'280 ly',c:'Crux'},
+    {n:'Regulus',ra:10.1395,dec:11.967,m:1.35,bv:-0.11,sp:'B8IV',d:'79 ly',c:'Leo'},
+    {n:'Adhara',ra:6.9770,dec:-28.972,m:1.50,bv:-0.21,sp:'B2II',d:'430 ly',c:'Canis Major'},
+    {n:'Castor',ra:7.5767,dec:31.888,m:1.58,bv:0.03,sp:'A1V',d:'51 ly',c:'Gemini'},
+    {n:'Shaula',ra:17.5601,dec:-37.104,m:1.62,bv:-0.22,sp:'B2IV',d:'570 ly',c:'Scorpius'},
+    {n:'Bellatrix',ra:5.4188,dec:6.350,m:1.64,bv:-0.22,sp:'B2III',d:'250 ly',c:'Orion'},
+    {n:'Elnath',ra:5.4382,dec:28.608,m:1.65,bv:-0.13,sp:'B7III',d:'130 ly',c:'Taurus'},
+    {n:'Alnilam',ra:5.6036,dec:-1.202,m:1.69,bv:-0.18,sp:'B0Ia',d:'2000 ly',c:'Orion'},
+    {n:'Alnitak',ra:5.6793,dec:-1.943,m:1.74,bv:-0.21,sp:'O9.5Ib',d:'1260 ly',c:'Orion'},
+    {n:'Alioth',ra:12.9004,dec:55.960,m:1.77,bv:-0.02,sp:'A1III',d:'81 ly',c:'Ursa Major'},
+    {n:'Mintaka',ra:5.5334,dec:-0.299,m:2.23,bv:-0.18,sp:'O9.5II',d:'1200 ly',c:'Orion'},
+    {n:'Dubhe',ra:11.0621,dec:61.751,m:1.79,bv:1.07,sp:'K0III',d:'123 ly',c:'Ursa Major'},
+    {n:'Alkaid',ra:13.7923,dec:49.313,m:1.86,bv:-0.19,sp:'B3V',d:'104 ly',c:'Ursa Major'},
+    {n:'Saiph',ra:5.7959,dec:-9.670,m:2.06,bv:-0.17,sp:'B0.5Ia',d:'650 ly',c:'Orion'},
+    {n:'Mizar',ra:13.3987,dec:54.925,m:2.23,bv:0.06,sp:'A2V',d:'83 ly',c:'Ursa Major'},
+    {n:'Merak',ra:11.0307,dec:56.382,m:2.37,bv:0.03,sp:'A1V',d:'79 ly',c:'Ursa Major'},
+    {n:'Phecda',ra:11.8972,dec:53.695,m:2.44,bv:0.04,sp:'A0V',d:'84 ly',c:'Ursa Major'},
+    {n:'Megrez',ra:12.2571,dec:57.033,m:3.31,bv:0.08,sp:'A3V',d:'58 ly',c:'Ursa Major'},
+    {n:'Polaris',ra:2.5302,dec:89.264,m:1.98,bv:0.60,sp:'F7Ib',d:'433 ly',c:'Ursa Minor'},
+    {n:'Hamal',ra:2.1196,dec:23.462,m:2.00,bv:1.15,sp:'K2III',d:'66 ly',c:'Aries'},
+    {n:'Algol',ra:3.1361,dec:40.956,m:2.12,bv:-0.05,sp:'B8V',d:'90 ly',c:'Perseus'},
+    {n:'Denebola',ra:11.8177,dec:14.572,m:2.11,bv:0.09,sp:'A3V',d:'36 ly',c:'Leo'},
+    {n:'Mirfak',ra:3.4054,dec:49.861,m:1.79,bv:0.48,sp:'F5Ib',d:'510 ly',c:'Perseus'},
+    {n:'Kaus Australis',ra:18.4029,dec:-34.385,m:1.85,bv:-0.03,sp:'B9.5III',d:'143 ly',c:'Sagittarius'},
+    {n:'Alhena',ra:6.6285,dec:16.399,m:1.93,bv:0.00,sp:'A1IV',d:'109 ly',c:'Gemini'},
+    {n:'Gacrux',ra:12.5194,dec:-57.113,m:1.63,bv:1.59,sp:'M3.5III',d:'89 ly',c:'Crux'},
+    {n:'Acrux',ra:12.4433,dec:-63.099,m:0.76,bv:-0.24,sp:'B0.5IV',d:'320 ly',c:'Crux'}
+  ];
+
+  // Constellation line segments by star name (Orion + Ursa Major from real positions)
+  var LINES=[
+    ['Betelgeuse','Bellatrix'],['Bellatrix','Mintaka'],['Mintaka','Alnilam'],['Alnilam','Alnitak'],
+    ['Alnitak','Betelgeuse'],['Mintaka','Rigel'],['Alnitak','Saiph'],['Saiph','Rigel'],['Bellatrix','Rigel'],
+    ['Dubhe','Merak'],['Merak','Phecda'],['Phecda','Megrez'],['Megrez','Dubhe'],
+    ['Megrez','Alioth'],['Alioth','Mizar'],['Mizar','Alkaid']
+  ];
+  var byName={}; STARS.forEach(function(s){byName[s.n]=s; s.color=bvToRGB(s.bv);});
+
+  // Faint background field of catalogue-like stars (deterministic, for depth)
+  var BG=[];
+  (function(){var seed=20240517;function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
+   for(var i=0;i<560;i++){BG.push({ra:rnd()*24,dec:(rnd()*2-1)*90,m:3.4+rnd()*3.2,color:bvToRGB(rnd()*2-0.3),tw:rnd()*Math.PI*2});}})();
+
+  var W=0,H=0,dpr=1,cx=0,cy=0,scale=1,panRA=0,t0=performance.now(),running=false,raf=0;
 
   function resize(){
-    var w=root.clientWidth||1;
-    var h=root.clientHeight||1;
-    if(w===W && h===H) return;
-    W=w;H=h;
-    dpr=Math.min(window.devicePixelRatio||1,2);
-    canvas.width=Math.round(W*dpr);
-    canvas.height=Math.round(H*dpr);
+    var r=root.getBoundingClientRect();
+    W=Math.max(1,r.width);H=Math.max(1,r.height);
+    dpr=Math.min(window.devicePixelRatio||1,2.5);
+    canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
+    canvas.style.width=W+'px';canvas.style.height=H+'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    buildLayers();
+    cx=W/2;cy=H/2;
+    // map full sky: 24h RA across ~1.6 widths (so panning reveals more), dec -75..75 over height
+    scale=H/150; // px per degree dec
+    draw(performance.now());
   }
 
-  function draw(t){
+  // project RA(hours)/Dec(deg) to screen. Stereographic-ish gentle curve for cinematic feel.
+  function project(ra,dec){
+    var raDeg=((ra*15 - panRA*15)%360+540)%360-180; // center on panRA, -180..180
+    var x=cx + (raDeg/180)*(W*0.62);
+    var y=cy - (dec/75)*(H*0.46);
+    // subtle barrel toward edges
+    var k=1+0.06*Math.pow((raDeg/180),2);
+    x=cx+(x-cx)*k;
+    return {x:x,y:y};
+  }
+
+  function magRadius(m){ var r=(4.2-m)*1.55; if(r<0.7)r=0.7; return r*(scale/3.5+0.55); }
+
+  var hover=null;
+
+  function draw(now){
+    var tt=(now-t0)/1000;
     ctx.clearRect(0,0,W,H);
-    for(var i=0;i<layers.length;i++){
-      var cfg=layerCfg[i];
-      var stars=layers[i];
-      // autonomous horizontal drift, wrapped
-      var dx=((t/1000)*cfg.drift)%W;
-      var ox=cmx*cfg.par;
-      var oy=cmy*cfg.par;
-      for(var s=0;s<stars.length;s++){
-        var st=stars[s];
-        var px=st.x - dx + ox;
-        if(px<-4) px+=W; if(px>W+4) px-=W;
-        var py=st.y + oy;
-        var tw=reduce?1:(0.6+0.4*Math.sin(t*0.001*st.tw+st.ph));
-        var a=Math.min(1, cfg.alpha*st.base*tw);
-        if(st.glow && !reduce){
-          ctx.beginPath();
-          ctx.fillStyle='rgba('+st.tint+','+(a*0.16).toFixed(3)+')';
-          ctx.arc(px,py,st.r*3.4,0,6.2832);
-          ctx.fill();
-        }
-        ctx.beginPath();
-        ctx.fillStyle='rgba('+st.tint+','+a.toFixed(3)+')';
-        ctx.arc(px,py,st.r,0,6.2832);
-        ctx.fill();
-      }
+    // deep space wash
+    var g=ctx.createRadialGradient(cx,H*0.40,0,cx,H*0.40,Math.max(W,H)*0.85);
+    g.addColorStop(0,'#0b0930');g.addColorStop(0.5,'#070522');g.addColorStop(1,'#050314');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    // faint milky band
+    ctx.save();ctx.globalAlpha=0.06;ctx.fillStyle='#9aa0ff';
+    ctx.beginPath();ctx.ellipse(cx,H*0.30,W*0.7,H*0.16,-0.35,0,Math.PI*2);ctx.fill();ctx.restore();
+
+    // background field
+    for(var i=0;i<BG.length;i++){var s=BG[i];var p=project(s.ra,s.dec);
+      if(p.x<-20||p.x>W+20||p.y<-20||p.y>H+20)continue;
+      var tw=reduce?1:0.6+0.4*Math.sin(tt*1.6+s.tw);
+      var r=Math.max(0.35,(3.7-s.m)*0.5);
+      ctx.globalAlpha=Math.min(0.85,(3.8-s.m)*0.22)*tw;
+      ctx.fillStyle='rgb('+s.color[0]+','+s.color[1]+','+s.color[2]+')';
+      ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();
     }
+    ctx.globalAlpha=1;
+
+    // constellation lines
+    if(showLines){
+      ctx.lineWidth=1;ctx.strokeStyle='rgba('+accRGB[0]+','+accRGB[1]+','+accRGB[2]+',0.32)';
+      ctx.beginPath();
+      for(var L=0;L<LINES.length;L++){var a=byName[LINES[L][0]],b=byName[LINES[L][1]];if(!a||!b)continue;
+        var pa=project(a.ra,a.dec),pb=project(b.ra,b.dec);
+        ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);}
+      ctx.stroke();
+    }
+
+    // bright stars
+    for(var k=0;k<STARS.length;k++){var st=STARS[k];var p=project(st.ra,st.dec);st._x=p.x;st._y=p.y;
+      if(p.x<-30||p.x>W+30||p.y<-30||p.y>H+30){st._vis=false;continue;}st._vis=true;
+      var tw=reduce?1:0.78+0.22*Math.sin(tt*2.2+k*1.3);
+      var rad=magRadius(st.m)*tw;
+      var col='rgb('+st.color[0]+','+st.color[1]+','+st.color[2]+')';
+      // glow halo
+      var hg=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,rad*5.5);
+      hg.addColorStop(0,'rgba('+st.color[0]+','+st.color[1]+','+st.color[2]+',0.55)');
+      hg.addColorStop(0.35,'rgba('+st.color[0]+','+st.color[1]+','+st.color[2]+',0.16)');
+      hg.addColorStop(1,'rgba('+st.color[0]+','+st.color[1]+','+st.color[2]+',0)');
+      ctx.fillStyle=hg;ctx.beginPath();ctx.arc(p.x,p.y,rad*5.5,0,Math.PI*2);ctx.fill();
+      // diffraction spikes for the brightest
+      if(st.m<1.3){ctx.save();ctx.strokeStyle='rgba('+st.color[0]+','+st.color[1]+','+st.color[2]+','+(0.30*tw)+')';
+        ctx.lineWidth=0.8;var sp=rad*4.2;
+        ctx.beginPath();ctx.moveTo(p.x-sp,p.y);ctx.lineTo(p.x+sp,p.y);ctx.moveTo(p.x,p.y-sp);ctx.lineTo(p.x,p.y+sp);ctx.stroke();ctx.restore();}
+      // core
+      ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(p.x,p.y,rad*0.45,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=col;ctx.globalAlpha=0.92;ctx.beginPath();ctx.arc(p.x,p.y,rad,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+      // labels for the very brightest
+      if(showLabels&&st.m<1.0){ctx.font="600 11px 'Inter',sans-serif";ctx.fillStyle='rgba(244,245,255,0.62)';ctx.textAlign='left';
+        ctx.fillText(st.n,p.x+rad+6,p.y+3);}
+    }
+
+    // hover highlight
+    if(hover&&hover._vis){var hp={x:hover._x,y:hover._y};
+      ctx.strokeStyle=accent;ctx.lineWidth=1.2;ctx.globalAlpha=0.9;
+      ctx.beginPath();ctx.arc(hp.x,hp.y,magRadius(hover.m)+9,0,Math.PI*2);ctx.stroke();
+      ctx.setLineDash([2,4]);ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(hp.x,hp.y,magRadius(hover.m)+15,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;}
+
+    if(running&&!reduce){raf=requestAnimationFrame(draw);}
   }
 
-  var raf=0;
-  function loop(t){
-    cmx+=(mx-cmx)*0.045;
-    cmy+=(my-cmy)*0.045;
-    draw(t);
-    raf=requestAnimationFrame(loop);
-  }
+  var showLines=true,showLabels=true;
 
-  function onMove(e){
-    var rect=root.getBoundingClientRect();
-    var px=(e.clientX-rect.left)/(rect.width||1);
-    var py=(e.clientY-rect.top)/(rect.height||1);
-    mx=(px-0.5)*2;
-    my=(py-0.5)*2;
-  }
-  function onLeave(){mx=0;my=0;}
+  function loop(){if(!running)return;if(reduce){draw(performance.now());return;}raf=requestAnimationFrame(draw);}
+  function start(){if(running)return;running=true;if(!reduce){panRA-=0;}loop();}
+  function stop(){running=false;if(raf)cancelAnimationFrame(raf);}
 
+  // gentle continuous drift via panRA when animating
+  if(!reduce){setInterval(function(){if(running&&!dragging){panRA+=0.0009;}},16);}
+
+  // pointer
+  var dragging=false,lastX=0;
+  function pick(mx,my){var best=null,bd=1e9;for(var i=0;i<STARS.length;i++){var s=STARS[i];if(!s._vis)continue;var dx=mx-s._x,dy=my-s._y;var d=dx*dx+dy*dy;var rr=magRadius(s.m)+14;if(d<rr*rr&&d<bd){bd=d;best=s;}}return best;}
+  function showReadout(s){elName.textContent=s.n.toUpperCase();elMag.textContent=(s.m<0?'−':'')+Math.abs(s.m).toFixed(2);elType.textContent=s.sp;elDist.textContent=s.d;elCon.textContent=s.c;readout.classList.add('sf-show');}
+
+  canvas.addEventListener('pointermove',function(e){var r=canvas.getBoundingClientRect();var mx=e.clientX-r.left,my=e.clientY-r.top;
+    if(dragging){panRA-=(mx-lastX)/(W*0.62)/15*180/15;lastX=mx;if(reduce)draw(performance.now());return;}
+    var s=pick(mx,my);if(s!==hover){hover=s;if(s){showReadout(s);canvas.style.cursor='pointer';}else{readout.classList.remove('sf-show');canvas.style.cursor='crosshair';}if(reduce)draw(performance.now());}});
+  canvas.addEventListener('pointerdown',function(e){dragging=true;lastX=e.clientX-canvas.getBoundingClientRect().left;canvas.setPointerCapture&&canvas.setPointerCapture(e.pointerId);canvas.style.cursor='grabbing';});
+  function endDrag(){dragging=false;canvas.style.cursor=hover?'pointer':'crosshair';}
+  canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercancel',endDrag);
+  canvas.addEventListener('pointerleave',function(){if(!dragging){hover=null;readout.classList.remove('sf-show');if(reduce)draw(performance.now());}});
+
+  btnLines.addEventListener('click',function(){showLines=!showLines;btnLines.classList.toggle('sf-on',showLines);btnLines.setAttribute('aria-pressed',showLines);if(reduce)draw(performance.now());});
+  btnLabels.addEventListener('click',function(){showLabels=!showLabels;btnLabels.classList.toggle('sf-on',showLabels);btnLabels.setAttribute('aria-pressed',showLabels);if(reduce)draw(performance.now());});
+
+  var ro=new ResizeObserver(function(){resize();});ro.observe(root);
+
+  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){start();}else{stop();}});},{threshold:0.05});
+  io.observe(root);
+
+  // init
   resize();
-  window.addEventListener('resize',resize);
-
-  if(reduce){
-    cmx=0;cmy=0;
-    draw(0);
-  }else{
-    root.addEventListener('pointermove',onMove);
-    root.addEventListener('pointerleave',onLeave);
-    raf=requestAnimationFrame(loop);
-  }
+  requestAnimationFrame(function(){draw(performance.now());loading.classList.add('sf-hidden');setTimeout(function(){if(loading.parentNode)loading.parentNode.removeChild(loading);},700);});
+  // show default readout briefly
+  showReadout(byName['Sirius']);setTimeout(function(){if(!hover)readout.classList.remove('sf-show');},2600);
 })();
 </script>
 </body></html>

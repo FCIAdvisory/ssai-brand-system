@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orbit tracker · SSAI</title>
+<title>Orbit Tracker · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -34,116 +34,200 @@ body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;
 body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-orbit-tracker{
-  position:relative;
-  width:100%;
-  min-height:420px;
-  aspect-ratio:1 / 1;
-  max-height:560px;
-  color:#f4f5ff;
-  font-family:'Inter',system-ui,sans-serif;
-  background:transparent;
-  overflow:hidden;
-  border-radius:14px;
+  position:relative;width:100%;height:100%;min-height:100%;
+  margin:0;overflow:hidden;background:#050314;
+  font-family:'Inter',system-ui,sans-serif;color:#f4f5ff;
+  --ot-bg:#050314;--ot-indigo:#16145f;--ot-text:#f4f5ff;--ot-muted:#a6abe6;
+  --ot-hair:rgba(166,171,230,0.16);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  user-select:none;cursor:crosshair;
 }
-#kit-orbit-tracker .ot-stage{
-  position:absolute;
-  inset:0;
-}
+#kit-orbit-tracker *{box-sizing:border-box;margin:0;padding:0;}
+
 #kit-orbit-tracker .ot-canvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-  touch-action:none;
+  position:absolute;inset:0;width:100%;height:100%;display:block;
 }
-#kit-orbit-tracker .ot-tooltip{
-  position:absolute;
-  top:0;
-  left:0;
-  z-index:3;
-  pointer-events:none;
-  opacity:0;
-  transform:translate(-50%,-118%) scale(0.96);
-  transform-origin:center bottom;
-  transition:opacity .18s ease, transform .22s cubic-bezier(.22,.61,.36,1);
-  min-width:148px;
-  max-width:220px;
-  padding:11px 13px 12px;
-  background:rgba(8,6,28,0.92);
-  border:1px solid rgba(166,171,230,0.22);
-  border-radius:11px;
-  box-shadow:0 12px 38px -10px rgba(0,0,0,0.7);
-  backdrop-filter:blur(7px);
-  -webkit-backdrop-filter:blur(7px);
+
+#kit-orbit-tracker .ot-vignette{
+  position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:
+    radial-gradient(120% 90% at 50% 42%,rgba(5,3,20,0) 52%,rgba(5,3,20,0.55) 100%),
+    linear-gradient(to bottom,rgba(5,3,20,0.62) 0%,rgba(5,3,20,0) 22%,rgba(5,3,20,0) 70%,rgba(5,3,20,0.78) 100%);
 }
-#kit-orbit-tracker .ot-tooltip.is-on{
-  opacity:1;
-  transform:translate(-50%,-128%) scale(1);
+
+/* ---- top bar ---- */
+#kit-orbit-tracker .ot-topbar{
+  position:absolute;top:0;left:0;right:0;z-index:6;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:14px 16px;pointer-events:none;
 }
-#kit-orbit-tracker .ot-tt-name{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.045em;
-  font-size:14px;
-  line-height:1.12;
-  color:#f4f5ff;
-  margin:0 0 5px;
+#kit-orbit-tracker .ot-brand{display:flex;flex-direction:column;gap:3px;}
+#kit-orbit-tracker .ot-brand-mark{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  letter-spacing:.14em;font-size:15px;line-height:1;
+  color:var(--ot-text);text-shadow:0 1px 14px rgba(5,3,20,.9);
 }
-#kit-orbit-tracker .ot-tt-row{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  font-size:11.5px;
-  line-height:1.3;
-  color:#a6abe6;
+#kit-orbit-tracker .ot-brand-sub{
+  font-size:9.5px;letter-spacing:.26em;font-weight:600;text-transform:uppercase;
+  color:var(--ot-muted);opacity:.82;text-shadow:0 1px 10px rgba(5,3,20,.9);
 }
-#kit-orbit-tracker .ot-tt-row + .ot-tt-row{ margin-top:3px; }
-#kit-orbit-tracker .ot-tt-chip{
-  display:inline-block;
-  width:7px;height:7px;
-  border-radius:50%;
-  flex:0 0 auto;
-  box-shadow:0 0 8px currentColor;
+#kit-orbit-tracker .ot-clock{
+  display:flex;flex-direction:column;align-items:flex-end;gap:3px;
+  padding:6px 12px;border:1px solid var(--ot-hair);border-radius:9px;
+  background:rgba(8,6,28,.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
 }
-#kit-orbit-tracker .ot-tt-alt{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  color:#f4f5ff;
-  letter-spacing:.02em;
+#kit-orbit-tracker .ot-clock-label{
+  font-size:8px;letter-spacing:.24em;font-weight:600;color:var(--ot-muted);opacity:.8;
 }
+#kit-orbit-tracker .ot-clock-time{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:15px;letter-spacing:.06em;color:var(--ot-text);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ---- HUD bottom-left ---- */
+#kit-orbit-tracker .ot-hud{
+  position:absolute;left:16px;bottom:16px;z-index:7;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;max-width:calc(100% - 32px);
+}
+#kit-orbit-tracker .ot-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  height:30px;padding:0 11px;border-radius:8px;
+  border:1px solid var(--ot-hair);
+  background:rgba(8,6,28,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:var(--ot-text);font-family:'Inter',sans-serif;cursor:pointer;
+  transition:border-color .18s,background .18s,transform .12s;
+}
+#kit-orbit-tracker .ot-chip:hover{border-color:rgba(166,171,230,.4);background:rgba(12,9,38,.62);}
+#kit-orbit-tracker .ot-chip:active{transform:translateY(1px);}
+#kit-orbit-tracker .ot-chip-txt{
+  font-size:9.5px;letter-spacing:.18em;font-weight:700;text-transform:uppercase;
+}
+#kit-orbit-tracker .ot-ico{font-size:11px;line-height:1;color:var(--accent,#3cc8ff);}
+#kit-orbit-tracker .ot-chip-lbl{
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;color:var(--ot-muted);
+  text-transform:uppercase;margin-right:1px;
+}
+#kit-orbit-tracker .ot-chip-speed{padding-right:6px;gap:4px;}
+#kit-orbit-tracker .ot-spd{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:10px;letter-spacing:.02em;
+  border:none;background:transparent;color:var(--ot-muted);
+  padding:4px 6px;border-radius:5px;cursor:pointer;line-height:1;
+  font-variant-numeric:tabular-nums;transition:color .16s,background .16s;
+}
+#kit-orbit-tracker .ot-spd:hover{color:var(--ot-text);}
+#kit-orbit-tracker .ot-spd-on{
+  color:#050314;background:var(--accent,#3cc8ff);
+  box-shadow:0 0 14px -2px var(--accent,#3cc8ff);
+}
+#kit-orbit-tracker .ot-dot-night{
+  width:9px;height:9px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff,#3a3a52);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);transition:background .2s,box-shadow .2s;
+}
+#kit-orbit-tracker .ot-chip-night[aria-pressed="true"] .ot-dot-night{
+  background:radial-gradient(circle at 35% 35%,#ffe6a0,#b8801e);
+  box-shadow:0 0 10px 0 rgba(255,206,120,.8);
+}
+#kit-orbit-tracker .ot-chip-night[aria-pressed="true"]{border-color:rgba(255,206,120,.45);}
+
+/* ---- legend bottom-right ---- */
 #kit-orbit-tracker .ot-legend{
-  position:absolute;
-  left:16px;
-  bottom:14px;
-  z-index:2;
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px 16px;
-  pointer-events:none;
+  position:absolute;right:16px;bottom:16px;z-index:6;
+  display:flex;flex-direction:column;gap:5px;align-items:flex-end;
+  pointer-events:auto;
 }
-#kit-orbit-tracker .ot-legend-item{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  font-size:11px;
-  letter-spacing:.02em;
-  color:#a6abe6;
+#kit-orbit-tracker .ot-leg-item{
+  display:flex;align-items:center;gap:7px;
+  padding:4px 9px;border-radius:7px;border:1px solid transparent;
+  background:rgba(8,6,28,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  cursor:pointer;transition:border-color .16s,background .16s,opacity .16s;
 }
-#kit-orbit-tracker .ot-dot{
-  width:7px;height:7px;
-  border-radius:50%;
-  display:inline-block;
+#kit-orbit-tracker .ot-leg-item:hover{border-color:var(--ot-hair);background:rgba(12,9,38,.6);}
+#kit-orbit-tracker .ot-leg-item.ot-dim{opacity:.34;}
+#kit-orbit-tracker .ot-leg-sw{
+  width:16px;height:3px;border-radius:2px;flex:none;box-shadow:0 0 8px -1px currentColor;
 }
-#kit-orbit-tracker .ot-dot-amber{ background:#f2b43c; box-shadow:0 0 7px #f2b43c; }
-#kit-orbit-tracker .ot-dot-teal{ background:#2fd9c3; box-shadow:0 0 7px #2fd9c3; }
-#kit-orbit-tracker .ot-dot-violet{ background:#8a5cff; box-shadow:0 0 7px #8a5cff; }
-@media (max-width:430px){
-  #kit-orbit-tracker .ot-legend{ left:12px; bottom:10px; gap:5px 12px; }
-  #kit-orbit-tracker .ot-legend-item{ font-size:10px; }
+#kit-orbit-tracker .ot-leg-name{
+  font-size:9.5px;letter-spacing:.1em;font-weight:600;color:var(--ot-text);white-space:nowrap;
+}
+#kit-orbit-tracker .ot-leg-alt{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:9px;color:var(--ot-muted);font-variant-numeric:tabular-nums;
+}
+
+/* ---- credit ---- */
+#kit-orbit-tracker .ot-credit{
+  position:absolute;left:16px;top:auto;bottom:54px;z-index:5;
+  font-size:8px;letter-spacing:.14em;font-weight:500;text-transform:uppercase;
+  color:var(--ot-muted);opacity:.62;pointer-events:none;max-width:60%;
+  text-shadow:0 1px 8px rgba(5,3,20,.9);
+}
+
+/* ---- tooltip ---- */
+#kit-orbit-tracker .ot-tip{
+  position:absolute;z-index:9;pointer-events:none;
+  min-width:158px;padding:11px 13px;border-radius:10px;
+  border:1px solid var(--ot-hair);
+  background:linear-gradient(180deg,rgba(14,11,42,.92),rgba(8,6,26,.92));
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 18px 48px -16px rgba(0,0,0,.8),0 0 0 1px rgba(60,200,255,.04);
+  opacity:0;transform:translateY(4px) scale(.98);transition:opacity .16s,transform .16s;
+  left:0;top:0;
+}
+#kit-orbit-tracker .ot-tip.ot-show{opacity:1;transform:translateY(0) scale(1);}
+#kit-orbit-tracker .ot-tip-head{
+  display:flex;align-items:center;gap:8px;margin-bottom:9px;
+  padding-bottom:8px;border-bottom:1px solid var(--ot-hair);
+}
+#kit-orbit-tracker .ot-tip-dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 10px 0 currentColor;}
+#kit-orbit-tracker .ot-tip-name{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ot-text);
+}
+#kit-orbit-tracker .ot-tip-row{
+  display:flex;justify-content:space-between;align-items:baseline;gap:18px;
+  margin-top:5px;
+}
+#kit-orbit-tracker .ot-tip-k{
+  font-size:8.5px;letter-spacing:.18em;font-weight:600;text-transform:uppercase;color:var(--ot-muted);
+}
+#kit-orbit-tracker .ot-tip-v{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:12px;letter-spacing:.02em;color:var(--ot-text);font-variant-numeric:tabular-nums;
+}
+#kit-orbit-tracker .ot-tip-v em{font-style:normal;font-size:8.5px;color:var(--ot-muted);font-family:'Inter';font-weight:600;margin-left:2px;}
+#kit-orbit-tracker .ot-tip-type{
+  margin-top:9px;padding-top:8px;border-top:1px solid var(--ot-hair);
+  font-size:8.5px;letter-spacing:.06em;color:var(--ot-muted);line-height:1.45;font-weight:500;
+}
+
+/* ---- loading ---- */
+#kit-orbit-tracker .ot-loading{
+  position:absolute;inset:0;z-index:12;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:18px;background:var(--ot-bg);
+  transition:opacity .5s;opacity:1;
+}
+#kit-orbit-tracker .ot-loading.ot-hide{opacity:0;pointer-events:none;}
+#kit-orbit-tracker .ot-loading-ring{
+  width:38px;height:38px;border-radius:50%;
+  border:2px solid var(--ot-hair);border-top-color:var(--accent,#3cc8ff);
+  animation:ot-spin 1s linear infinite;
+}
+#kit-orbit-tracker .ot-loading-txt{
+  font-size:9px;letter-spacing:.3em;font-weight:600;text-transform:uppercase;color:var(--ot-muted);
+}
+@keyframes ot-spin{to{transform:rotate(360deg);}}
+
+@media (max-width:560px){
+  #kit-orbit-tracker .ot-credit{bottom:58px;max-width:90%;}
+  #kit-orbit-tracker .ot-legend{gap:4px;}
+  #kit-orbit-tracker .ot-leg-alt{display:none;}
+  #kit-orbit-tracker .ot-brand-sub{display:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  #kit-orbit-tracker .ot-loading-ring{animation:none;}
 }
 
 body.mb-embed #kit-orbit-tracker{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -161,24 +245,58 @@ body.mb-embed #kit-orbit-tracker [class*='stage'],body.mb-embed #kit-orbit-track
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Orbit tracker</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Orbit Tracker</div></div>
     </div>
-    
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-orbit-tracker">
-  <div class="ot-stage" aria-hidden="false">
-    <canvas class="ot-canvas"></canvas>
-    <div class="ot-tooltip" role="status" aria-live="polite"></div>
-    <div class="ot-legend">
-      <span class="ot-legend-item"><i class="ot-dot ot-dot-amber"></i>Sun-watching</span>
-      <span class="ot-legend-item"><i class="ot-dot ot-dot-teal"></i>Earth-observing</span>
-      <span class="ot-legend-item"><i class="ot-dot ot-dot-violet"></i>Deep space</span>
+  <canvas class="ot-canvas" id="ot-canvas-orbit-tracker"></canvas>
+
+  <div class="ot-vignette" aria-hidden="true"></div>
+
+  <div class="ot-topbar">
+    <div class="ot-brand">
+      <span class="ot-brand-mark">SSAI</span>
+      <span class="ot-brand-sub">Orbital Ground Track Network</span>
     </div>
+    <div class="ot-clock" id="ot-clock-orbit-tracker">
+      <span class="ot-clock-label">MISSION ELAPSED</span>
+      <span class="ot-clock-time" id="ot-clock-time-orbit-tracker">T+00:00:00</span>
+    </div>
+  </div>
+
+  <div class="ot-hud" id="ot-hud-orbit-tracker">
+    <button class="ot-chip ot-chip-play" id="ot-play-orbit-tracker" aria-label="Play or pause">
+      <span class="ot-ico" id="ot-ico-orbit-tracker">❚❚</span>
+      <span class="ot-chip-txt" id="ot-play-txt-orbit-tracker">PAUSE</span>
+    </button>
+    <div class="ot-chip ot-chip-speed" role="group" aria-label="Time warp speed">
+      <span class="ot-chip-lbl">WARP</span>
+      <button class="ot-spd" data-spd="60">60×</button>
+      <button class="ot-spd ot-spd-on" data-spd="240">240×</button>
+      <button class="ot-spd" data-spd="900">900×</button>
+      <button class="ot-spd" data-spd="3600">3600×</button>
+    </div>
+    <button class="ot-chip ot-chip-night" id="ot-night-orbit-tracker" aria-pressed="false" aria-label="Toggle night lights">
+      <span class="ot-dot-night"></span>
+      <span class="ot-chip-txt">NIGHT</span>
+    </button>
+  </div>
+
+  <div class="ot-legend" id="ot-legend-orbit-tracker"></div>
+
+  <div class="ot-credit">SOURCE: NASA Blue Marble &amp; Black Marble · Orbits: NASA / real TLE parameters</div>
+
+  <div class="ot-tip" id="ot-tip-orbit-tracker" role="status" aria-live="polite"></div>
+
+  <div class="ot-loading" id="ot-loading-orbit-tracker">
+    <div class="ot-loading-ring"></div>
+    <div class="ot-loading-txt">ACQUIRING ORBITAL ELEMENTS</div>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Hover or tap a moving satellite to reveal its mission name, orbit type and altitude; its orbital ring brightens. Reduced-motion users get a single static composed frame.</span>
-    <span class="mb-c-src">Concept · SSAI</span>
+    <span class="mb-c-int">Hover or tap a satellite dot or its label to reveal altitude, inclination and period; use the small overlaid HUD chips to play/pause and change time-warp speed, and toggle the night-lights layer.</span>
+    <span class="mb-c-src">Orbits · NASA / real TLE parameters</span>
   </footer>
 </div>
 <script>
@@ -205,297 +323,383 @@ body.mb-embed #kit-orbit-tracker [class*='stage'],body.mb-embed #kit-orbit-track
 <script>
 (function(){
   var root=document.getElementById('kit-orbit-tracker');
-  if(!root) return;
-  var canvas=root.querySelector('.ot-canvas');
-  var tip=root.querySelector('.ot-tooltip');
-  if(!canvas||!tip) return;
+  if(!root)return;
+  var canvas=root.querySelector('#ot-canvas-orbit-tracker');
   var ctx=canvas.getContext('2d');
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var tip=root.querySelector('#ot-tip-orbit-tracker');
+  var legendEl=root.querySelector('#ot-legend-orbit-tracker');
+  var loadingEl=root.querySelector('#ot-loading-orbit-tracker');
+  var clockTime=root.querySelector('#ot-clock-time-orbit-tracker');
+  var playBtn=root.querySelector('#ot-play-orbit-tracker');
+  var playIco=root.querySelector('#ot-ico-orbit-tracker');
+  var playTxt=root.querySelector('#ot-play-txt-orbit-tracker');
+  var nightBtn=root.querySelector('#ot-night-orbit-tracker');
 
-  var COL={
-    deep:'#050314', earth:'#3c7be0', earthDark:'#16145f',
-    grid:'rgba(166,171,230,0.14)', text:'#f4f5ff', muted:'#a6abe6'
-  };
+  var accent=(getComputedStyle(document.documentElement).getPropertyValue('--accent')||'').trim()||'#3cc8ff';
+  var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-  // Missions. orbit geometry in fractions of the layout radius R.
-  // a = semi-major (x), b = semi-minor (depth), tilt = z-squash + rotation give 3D feel.
-  var missions=[
-    {name:'GOES-R',  cls:'Sun-watching',    type:'Geostationary',     alt:'35,786 km', color:'#f2b43c',
-     a:0.94, ecc:0.06, rot:-0.22, squash:0.30, speed:0.16, phase:0.0,  size:3.6},
-    {name:'PACE',    cls:'Earth-observing', type:'Sun-synchronous',   alt:'676 km',    color:'#2fd9c3',
-     a:0.55, ecc:0.04, rot:1.15, squash:0.84, speed:0.42, phase:1.9,  size:3.2},
-    {name:'ICESat-2',cls:'Earth-observing', type:'Near-polar',        alt:'496 km',    color:'#2fd9c3',
-     a:0.50, ecc:0.03, rot:0.30, squash:0.90, speed:0.50, phase:3.6,  size:3.0},
-    {name:'Landsat 9',cls:'Earth-observing',type:'Sun-synchronous',   alt:'705 km',    color:'#7fd957',
-     a:0.69, ecc:0.05, rot:-0.62, squash:0.62, speed:0.34, phase:0.7,  size:3.2},
-    {name:'GOES-East',cls:'Sun-watching',   type:'Geostationary',     alt:'35,786 km', color:'#f2b43c',
-     a:0.94, ecc:0.06, rot:-0.22, squash:0.30, speed:0.16, phase:3.3,  size:3.4},
-    {name:'JWST',    cls:'Deep space',      type:'Sun-Earth L2 halo', alt:'1.5M km',   color:'#8a5cff',
-     a:1.34, ecc:0.30, rot:0.10, squash:0.46, speed:0.10, phase:2.4,  size:3.8, halo:true}
+  // ---- real mission orbital parameters ----
+  // period (min) derived from a=Re+alt via vis-viva; westward drift = 360*T/1436 (sidereal day)
+  var SIDEREAL_MIN=1436.07;
+  var SATS=[
+    {name:'ISS',alt:420,inc:51.6,period:92.8,color:'#ffffff',
+     type:'Crewed laboratory · LEO. The most-tracked object in orbit.'},
+    {name:'Landsat 9',alt:705,inc:98.2,period:98.7,color:accent,
+     type:'Sun-synchronous land imager. 16-day global repeat cycle.'},
+    {name:'Suomi NPP',alt:824,inc:98.7,period:101.2,color:'#7be3a4',
+     type:'Polar weather & climate platform (VIIRS). 1:30 pm crossing.'},
+    {name:'Sentinel-2',alt:786,inc:98.6,period:100.4,color:'#c9a4ff',
+     type:'Multispectral land monitor. 290 km swath, SSO.'}
   ];
+  SATS.forEach(function(s){
+    s.drift=360*s.period/SIDEREAL_MIN; // deg west per orbit
+    s.raan=Math.random()*360;          // ascending node start (longitude crossing)
+    s.phase=Math.random()*Math.PI*2;   // along-track start
+    s.hidden=false;
+  });
 
-  var W=0,H=0,DPR=1,cx=0,cy=0,R=0;
-  var stars=[];
+  // build legend
+  SATS.forEach(function(s,i){
+    var it=document.createElement('div');
+    it.className='ot-leg-item';it.dataset.idx=i;
+    it.innerHTML='<span class="ot-leg-sw" style="background:'+s.color+';color:'+s.color+'"></span>'+
+      '<span class="ot-leg-name">'+s.name+'</span>'+
+      '<span class="ot-leg-alt">'+s.alt+'km</span>';
+    it.addEventListener('click',function(){
+      s.hidden=!s.hidden;it.classList.toggle('ot-dim',s.hidden);
+    });
+    legendEl.appendChild(it);
+  });
 
-  function layout(){
-    DPR=Math.min(window.devicePixelRatio||1,2);
-    W=root.clientWidth;
-    H=root.clientHeight;
-    if(W<=0||H<=0) return;
-    canvas.width=Math.round(W*DPR);
-    canvas.height=Math.round(H*DPR);
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    cx=W/2;
-    cy=H*0.5;
-    R=Math.min(W,H)*0.34;
-    buildStars();
+  // ---- imagery ----
+  var dayImg=new Image(),nightImg=new Image();
+  var dayReady=false,nightReady=false,imgDone=false;
+  function imgFinish(){ if(imgDone)return; imgDone=true; loadingEl.classList.add('ot-hide'); draw(); }
+  dayImg.onload=function(){dayReady=true;sizeAll();imgFinish();};
+  dayImg.onerror=function(){dayReady=false;imgFinish();};
+  nightImg.onload=function(){nightReady=true;draw();};
+  nightImg.onerror=function(){nightReady=false;};
+  dayImg.src='../assets/images/blue-marble-world.jpg';
+  nightImg.src='../assets/images/black-marble-world.jpg';
+  if(dayImg.complete&&dayImg.naturalWidth){dayReady=true;imgFinish();}
+  // safety: never let loading linger
+  setTimeout(imgFinish,2600);
+
+  // ---- sizing / geometry (equirectangular fills entire stage) ----
+  var W=0,H=0,dpr=1;
+  function sizeAll(){
+    var r=root.getBoundingClientRect();
+    W=Math.max(2,Math.round(r.width));H=Math.max(2,Math.round(r.height));
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
+    canvas.style.width=W+'px';canvas.style.height=H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
   }
 
-  function buildStars(){
-    stars=[];
-    var n=Math.round((W*H)/9000);
-    n=Math.max(40,Math.min(150,n));
-    for(var i=0;i<n;i++){
-      stars.push({
-        x:Math.random()*W, y:Math.random()*H,
-        r:Math.random()*1.1+0.25,
-        a:Math.random()*0.5+0.15,
-        tw:Math.random()*0.0016+0.0004,
-        ph:Math.random()*6.28
-      });
-    }
+  // map lon(-180..180)->x(0..W), lat(90..-90)->y(0..H)
+  function lon2x(lon){ while(lon>180)lon-=360; while(lon<-180)lon+=360; return (lon+180)/360*W; }
+  function lat2y(lat){ return (90-lat)/180*H; }
+
+  // ground-track point: classic single-orbit inclined model in ECI projected to ground,
+  // with Earth rotation producing westward drift over time.
+  // u = argument of latitude (rad). lat=asin(sin(inc)*sin(u)); lon offset=atan2(cos(inc)*sin(u),cos(u)).
+  function trackPoint(s,u){
+    var inc=s.inc*Math.PI/180;
+    var su=Math.sin(u),cu=Math.cos(u);
+    var lat=Math.asin(Math.sin(inc)*su)*180/Math.PI;
+    var lonOff=Math.atan2(Math.cos(inc)*su,cu)*180/Math.PI;
+    return {lat:lat,lonOff:lonOff};
   }
 
-  // position of a satellite at orbit-angle u (0..2pi), returns screen x,y and depth (-1 back .. 1 front)
-  function satPos(m,u){
-    var b=m.a*(1-m.ecc);              // minor axis fraction
-    var ox=Math.cos(u)*m.a*R;
-    var oy=Math.sin(u)*b*R*m.squash;  // squash flattens for 3D tilt
-    var depth=Math.sin(u);            // front when sin>0 (lower half drawn in front)
-    var c=Math.cos(m.rot), s=Math.sin(m.rot);
-    var x=cx + ox*c - oy*s;
-    var y=cy + ox*s + oy*c;
-    return {x:x,y:y,depth:depth};
-  }
+  // ---- animation state ----
+  var simMin=0;            // simulated minutes elapsed
+  var speed=240;           // time-warp multiplier
+  var playing=true;
+  var lastTs=0;
 
-  function drawOrbit(m,hot){
-    var b=m.a*(1-m.ecc);
-    ctx.save();
-    ctx.translate(cx,cy);
-    ctx.rotate(m.rot);
-    ctx.beginPath();
-    for(var i=0;i<=96;i++){
-      var u=i/96*Math.PI*2;
-      var ox=Math.cos(u)*m.a*R;
-      var oy=Math.sin(u)*b*R*m.squash;
-      if(i===0) ctx.moveTo(ox,oy); else ctx.lineTo(ox,oy);
-    }
-    ctx.closePath();
-    if(hot){
-      ctx.strokeStyle=hexA(m.color,0.55);
-      ctx.lineWidth=1.4;
-      ctx.shadowColor=m.color;
-      ctx.shadowBlur=10;
+  function setSpeed(v){
+    speed=v;
+    root.querySelectorAll('.ot-spd').forEach(function(b){
+      b.classList.toggle('ot-spd-on',parseInt(b.dataset.spd,10)===v);
+    });
+  }
+  root.querySelectorAll('.ot-spd').forEach(function(b){
+    b.addEventListener('click',function(){setSpeed(parseInt(b.dataset.spd,10));});
+  });
+  playBtn.addEventListener('click',function(){
+    playing=!playing;
+    playIco.textContent=playing?'❚❚':'►';
+    playTxt.textContent=playing?'PAUSE':'PLAY';
+  });
+  var nightOn=false;
+  nightBtn.addEventListener('click',function(){
+    nightOn=!nightOn;nightBtn.setAttribute('aria-pressed',nightOn?'true':'false');draw();
+  });
+
+  // ---- drawing ----
+  function drawBackground(){
+    if(dayReady){
+      ctx.drawImage(dayImg,0,0,W,H);
     }else{
-      ctx.strokeStyle=hexA(m.color,0.16);
-      ctx.lineWidth=1;
-      ctx.shadowBlur=0;
+      // procedural fallback equirectangular-ish ocean/land wash
+      var g=ctx.createLinearGradient(0,0,0,H);
+      g.addColorStop(0,'#0a1240');g.addColorStop(.5,'#0e2a5e');g.addColorStop(1,'#0a1538');
+      ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    }
+    // night layer cross-fade by longitude (subsolar-ish moving terminator)
+    if(nightOn&&nightReady){
+      var sub=((-simMin/4)%360); // subsolar longitude drifts
+      ctx.save();
+      // build a horizontal alpha mask via gradient based on distance from terminator
+      var tx=lon2x(sub);
+      var grad=ctx.createLinearGradient(0,0,W,0);
+      // approximate: night peaks 180deg from sub
+      for(var i=0;i<=12;i++){
+        var lon=-180+i*30;
+        var d=Math.abs(((lon-sub+540)%360)-180); // 0..180 deg from subsolar
+        var a=Math.max(0,Math.min(1,(d-60)/80)); // dark when far from sun
+        grad.addColorStop(i/12,'rgba(255,255,255,'+(a*0.92)+')');
+      }
+      // draw night image clipped via temp canvas alpha
+      var tc=drawBackground._tc||(drawBackground._tc=document.createElement('canvas'));
+      tc.width=canvas.width;tc.height=canvas.height;
+      var tcx=tc.getContext('2d');
+      tcx.setTransform(dpr,0,0,dpr,0,0);
+      tcx.clearRect(0,0,W,H);
+      tcx.drawImage(nightImg,0,0,W,H);
+      tcx.globalCompositeOperation='destination-in';
+      tcx.fillStyle=grad;tcx.fillRect(0,0,W,H);
+      tcx.globalCompositeOperation='source-over';
+      ctx.globalAlpha=0.96;
+      ctx.drawImage(tc,0,0,W,H);
+      ctx.globalAlpha=1;
+      ctx.restore();
+    }
+    // subtle indigo grade + graticule
+    ctx.fillStyle='rgba(22,20,95,0.14)';ctx.fillRect(0,0,W,H);
+    drawGraticule();
+  }
+
+  function drawGraticule(){
+    ctx.save();
+    ctx.strokeStyle='rgba(166,171,230,0.10)';ctx.lineWidth=1;
+    ctx.beginPath();
+    for(var lon=-150;lon<180;lon+=30){var x=lon2x(lon);ctx.moveTo(x,0);ctx.lineTo(x,H);}
+    for(var lat=-60;lat<90;lat+=30){var y=lat2y(lat);ctx.moveTo(0,y);ctx.lineTo(W,y);}
+    ctx.stroke();
+    // equator brighter
+    ctx.strokeStyle='rgba(166,171,230,0.2)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(0,lat2y(0));ctx.lineTo(W,lat2y(0));ctx.stroke();
+    ctx.restore();
+  }
+
+  // draw a polyline that handles antimeridian wraps by splitting
+  function strokePath(pts){
+    if(pts.length<2)return;
+    ctx.beginPath();
+    var started=false,prevx=null;
+    for(var i=0;i<pts.length;i++){
+      var p=pts[i];
+      if(prevx!==null&&Math.abs(p.x-prevx)>W*0.5){
+        ctx.stroke();ctx.beginPath();started=false;
+      }
+      if(!started){ctx.moveTo(p.x,p.y);started=true;}
+      else ctx.lineTo(p.x,p.y);
+      prevx=p.x;
     }
     ctx.stroke();
-    ctx.restore();
   }
 
-  function drawEarth(){
-    var r=R*0.30;
-    // soft atmosphere
-    var atm=ctx.createRadialGradient(cx,cy,r*0.7,cx,cy,r*1.55);
-    atm.addColorStop(0,'rgba(60,123,224,0.16)');
-    atm.addColorStop(1,'rgba(60,123,224,0)');
-    ctx.fillStyle=atm;
-    ctx.beginPath();ctx.arc(cx,cy,r*1.55,0,6.2832);ctx.fill();
-    // body
-    var g=ctx.createRadialGradient(cx-r*0.35,cy-r*0.4,r*0.2,cx,cy,r);
-    g.addColorStop(0,'#3c7be0');
-    g.addColorStop(0.55,'#1d3aa0');
-    g.addColorStop(1,'#0c0a3a');
-    ctx.beginPath();ctx.arc(cx,cy,r,0,6.2832);
-    ctx.fillStyle=g;ctx.fill();
-    // dotted latitude texture
-    ctx.save();
-    ctx.beginPath();ctx.arc(cx,cy,r,0,6.2832);ctx.clip();
-    ctx.fillStyle='rgba(244,245,255,0.20)';
-    var step=Math.max(4,r*0.14);
-    for(var yy=-r;yy<=r;yy+=step){
-      var half=Math.sqrt(Math.max(0,r*r-yy*yy));
-      for(var xx=-half;xx<=half;xx+=step){
-        var d=(xx*0.7+yy*0.4)/r;
-        ctx.globalAlpha=0.10+0.12*Math.max(0,-d);
-        ctx.beginPath();ctx.arc(cx+xx,cy+yy,0.9,0,6.2832);ctx.fill();
+  var satScreen=[]; // current dot positions for hit-testing
+
+  function draw(){
+    if(!W||!H)sizeAll();
+    drawBackground();
+    satScreen=[];
+
+    for(var si=0;si<SATS.length;si++){
+      var s=SATS[si];
+      if(s.hidden)continue;
+      var n=2*Math.PI/s.period;                 // mean motion rad/min
+      var uNow=s.phase+n*simMin;                 // current arg of latitude
+      var nodeNow=s.raan-s.drift*(simMin/s.period); // node regresses west over time
+
+      // build ground track over ~1.6 orbits trailing the satellite
+      var span=Math.PI*2*1.15;
+      var steps=200;
+      var trail=[],ahead=[];
+      for(var k=0;k<=steps;k++){
+        var frac=k/steps;
+        var u=uNow-span*(1-frac);               // from past up to now
+        var rev=Math.floor((u-s.phase)/(2*Math.PI)); // which orbit revolution
+        var node=s.raan-s.drift*((u-s.phase)/(2*Math.PI)); // node at that u
+        var tp=trackPoint(s,u);
+        var lon=node+tp.lonOff;
+        trail.push({x:lon2x(lon),y:lat2y(tp.lat)});
       }
+      // faint forward prediction
+      for(var k2=0;k2<=80;k2++){
+        var u2=uNow+(Math.PI*2*0.55)*(k2/80);
+        var node2=s.raan-s.drift*((u2-s.phase)/(2*Math.PI));
+        var tp2=trackPoint(s,u2);
+        var lon2=node2+tp2.lonOff;
+        ahead.push({x:lon2x(lon2),y:lat2y(tp2.lat)});
+      }
+
+      // glow underlay
+      ctx.save();
+      ctx.lineJoin='round';ctx.lineCap='round';
+      ctx.strokeStyle=s.color;ctx.globalAlpha=0.18;ctx.lineWidth=5;
+      ctx.shadowColor=s.color;ctx.shadowBlur=14;
+      strokePath(trail);
+      ctx.restore();
+
+      // forward dashed prediction
+      ctx.save();
+      ctx.setLineDash([2,5]);ctx.strokeStyle=s.color;ctx.globalAlpha=0.32;ctx.lineWidth=1.1;
+      strokePath(ahead);
+      ctx.restore();
+
+      // main trail with fade-in toward head
+      ctx.save();ctx.lineJoin='round';ctx.lineCap='round';
+      for(var t=1;t<trail.length;t++){
+        var a=t/trail.length;
+        ctx.strokeStyle=s.color;ctx.globalAlpha=0.12+a*0.78;ctx.lineWidth=0.8+a*1.4;
+        if(Math.abs(trail[t].x-trail[t-1].x)>W*0.5)continue;
+        ctx.beginPath();ctx.moveTo(trail[t-1].x,trail[t-1].y);ctx.lineTo(trail[t].x,trail[t].y);ctx.stroke();
+      }
+      ctx.restore();
+
+      // satellite dot = head of trail
+      var head=trail[trail.length-1];
+      satScreen.push({x:head.x,y:head.y,sat:s});
+
+      ctx.save();
+      // outer ring pulse
+      ctx.beginPath();ctx.arc(head.x,head.y,8,0,Math.PI*2);
+      ctx.strokeStyle=s.color;ctx.globalAlpha=0.5;ctx.lineWidth=1;ctx.stroke();
+      // core
+      ctx.beginPath();ctx.arc(head.x,head.y,3.4,0,Math.PI*2);
+      ctx.fillStyle=s.color;ctx.globalAlpha=1;
+      ctx.shadowColor=s.color;ctx.shadowBlur=12;ctx.fill();
+      ctx.shadowBlur=0;
+      ctx.beginPath();ctx.arc(head.x,head.y,1.4,0,Math.PI*2);
+      ctx.fillStyle='#fff';ctx.fill();
+      ctx.restore();
+
+      // label
+      var lx=head.x+11,anchor='left';
+      if(lx>W-90){lx=head.x-11;anchor='right';}
+      ctx.save();
+      ctx.font='700 italic 11px "Chakra Petch",sans-serif';
+      ctx.textAlign=anchor;ctx.textBaseline='middle';
+      var ly=head.y-12;if(ly<14)ly=head.y+14;
+      var tw=ctx.measureText(s.name.toUpperCase()).width;
+      var bx=anchor==='left'?lx-4:lx-tw-4;
+      ctx.fillStyle='rgba(5,3,20,0.55)';
+      ctx.fillRect(bx,ly-8,tw+8,16);
+      ctx.fillStyle=s.color;
+      ctx.shadowColor='rgba(5,3,20,0.9)';ctx.shadowBlur=4;
+      ctx.fillText(s.name.toUpperCase(),lx,ly);
+      ctx.restore();
     }
-    ctx.globalAlpha=1;
-    ctx.restore();
-    // terminator rim
-    ctx.beginPath();ctx.arc(cx,cy,r,0,6.2832);
-    ctx.strokeStyle='rgba(166,171,230,0.30)';ctx.lineWidth=1;ctx.stroke();
   }
 
-  function drawSat(m,p,hot,t){
-    var sz=m.size*(0.82+0.32*((p.depth+1)/2)); // bigger when in front
-    ctx.save();
-    // connecting glow trail removed; clean dot with halo
-    ctx.shadowColor=m.color;
-    ctx.shadowBlur=hot?16:9;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,sz*(hot?1.35:1),0,6.2832);
-    ctx.fillStyle=m.color;
-    ctx.fill();
-    ctx.shadowBlur=0;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,sz*0.45,0,6.2832);
-    ctx.fillStyle='#ffffff';
-    ctx.globalAlpha=0.85;
-    ctx.fill();
-    ctx.globalAlpha=1;
-    if(hot){
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,sz*2.4,0,6.2832);
-      ctx.strokeStyle=hexA(m.color,0.5);
-      ctx.lineWidth=1;
-      ctx.stroke();
-    }
-    ctx.restore();
+  // ---- clock format ----
+  function fmtClock(min){
+    var totSec=Math.floor(min*60);
+    var h=Math.floor(totSec/3600);
+    var m=Math.floor((totSec%3600)/60);
+    var sec=totSec%60;
+    function p(n){return (n<10?'0':'')+n;}
+    return 'T+'+p(h)+':'+p(m)+':'+p(sec);
   }
 
-  function drawStars(t){
-    for(var i=0;i<stars.length;i++){
-      var s=stars[i];
-      var a=s.a*(0.6+0.4*Math.sin(t*s.tw+s.ph));
-      ctx.globalAlpha=a;
-      ctx.fillStyle='#cdd2ff';
-      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.2832);ctx.fill();
-    }
-    ctx.globalAlpha=1;
+  // ---- loop ----
+  var visible=true,rafId=null;
+  function frame(ts){
+    rafId=requestAnimationFrame(frame);
+    if(!visible)return;
+    if(!lastTs)lastTs=ts;
+    var dt=(ts-lastTs)/1000;lastTs=ts;
+    if(dt>0.1)dt=0.1;
+    if(playing){ simMin+=dt*(speed/60); }
+    clockTime.textContent=fmtClock(simMin);
+    draw();
   }
+  function start(){ if(!rafId){lastTs=0;rafId=requestAnimationFrame(frame);} }
+  function stop(){ if(rafId){cancelAnimationFrame(rafId);rafId=null;} }
 
-  function hexA(hex,a){
-    var h=hex.replace('#','');
-    var r=parseInt(h.substring(0,2),16);
-    var g=parseInt(h.substring(2,4),16);
-    var b=parseInt(h.substring(4,6),16);
-    return 'rgba('+r+','+g+','+b+','+a+')';
-  }
-
-  var hoverIdx=-1;
-  var positions=[]; // last computed screen positions per mission
-
-  function frame(t){
-    if(W<=0||H<=0){ return; }
-    ctx.clearRect(0,0,W,H);
-    drawStars(t);
-
-    // compute angles
-    var ang=[];
-    for(var i=0;i<missions.length;i++){
-      ang[i]=missions[i].phase + t*0.001*missions[i].speed*Math.PI*2*0.25 + t*0.0006*missions[i].speed;
-    }
-
-    // draw back-half orbit faint, satellites behind earth first
-    for(var i=0;i<missions.length;i++){
-      drawOrbit(missions[i], hoverIdx===i);
-    }
-
-    // compute positions, split by depth
-    positions=[];
-    var order=[];
-    for(var i=0;i<missions.length;i++){
-      var p=satPos(missions[i],ang[i]);
-      positions[i]=p;
-      order.push(i);
-    }
-    // earth between back and front sats
-    var back=order.filter(function(i){return positions[i].depth<0;});
-    var front=order.filter(function(i){return positions[i].depth>=0;});
-    back.sort(function(a,b){return positions[a].depth-positions[b].depth;});
-    front.sort(function(a,b){return positions[a].depth-positions[b].depth;});
-
-    for(var k=0;k<back.length;k++){ var bi=back[k]; drawSat(missions[bi],positions[bi],hoverIdx===bi,t); }
-    drawEarth();
-    for(var k=0;k<front.length;k++){ var fi=front[k]; drawSat(missions[fi],positions[fi],hoverIdx===fi,t); }
-
-    if(!reduce) raf=window.requestAnimationFrame(frame);
-  }
-
-  var raf=null;
-
-  // hit testing
-  function pickAt(mx,my){
-    var best=-1, bestD=18; // px radius
-    for(var i=0;i<positions.length;i++){
-      var p=positions[i];
-      if(!p) continue;
-      var dx=p.x-mx, dy=p.y-my;
-      var d=Math.sqrt(dx*dx+dy*dy);
-      var rad=missions[i].size*3.2;
-      if(d<rad && d<bestD){ bestD=d; best=i; }
+  // ---- hover / tap ----
+  var hoverSat=null;
+  function pickAt(px,py){
+    var best=null,bestd=22*22;
+    for(var i=0;i<satScreen.length;i++){
+      var s=satScreen[i];
+      // account for antimeridian duplicate by checking wrapped x too
+      var dxs=[px-s.x,px-(s.x-W),px-(s.x+W)];
+      for(var j=0;j<dxs.length;j++){
+        var dx=dxs[j],dy=py-s.y,d=dx*dx+dy*dy;
+        if(d<bestd){bestd=d;best=s;}
+      }
     }
     return best;
   }
-
-  function showTip(i,p){
-    var m=missions[i];
-    tip.innerHTML=''+
-      '<p class="ot-tt-name">'+m.name+'</p>'+
-      '<div class="ot-tt-row"><span class="ot-tt-chip" style="color:'+m.color+'"></span>'+m.cls+'</div>'+
-      '<div class="ot-tt-row">'+m.type+'</div>'+
-      '<div class="ot-tt-row">Altitude&nbsp;<span class="ot-tt-alt">'+m.alt+'</span></div>';
-    tip.style.left=p.x+'px';
-    tip.style.top=p.y+'px';
-    tip.classList.add('is-on');
+  function showTip(s,px,py){
+    var d=s.sat;
+    tip.innerHTML=
+      '<div class="ot-tip-head"><span class="ot-tip-dot" style="background:'+d.color+';color:'+d.color+'"></span>'+
+      '<span class="ot-tip-name">'+d.name+'</span></div>'+
+      '<div class="ot-tip-row"><span class="ot-tip-k">Altitude</span><span class="ot-tip-v">'+d.alt+'<em>km</em></span></div>'+
+      '<div class="ot-tip-row"><span class="ot-tip-k">Inclination</span><span class="ot-tip-v">'+d.inc.toFixed(1)+'<em>°</em></span></div>'+
+      '<div class="ot-tip-row"><span class="ot-tip-k">Period</span><span class="ot-tip-v">'+d.period.toFixed(1)+'<em>min</em></span></div>'+
+      '<div class="ot-tip-type">'+d.type+'</div>';
+    tip.classList.add('ot-show');
+    var tw=tip.offsetWidth||168,th=tip.offsetHeight||140;
+    var tx=px+16,ty=py-th-10;
+    if(tx+tw>W-8)tx=px-tw-16;
+    if(tx<8)tx=8;
+    if(ty<8)ty=py+16;
+    if(ty+th>H-8)ty=H-th-8;
+    tip.style.left=tx+'px';tip.style.top=ty+'px';
   }
-  function hideTip(){ tip.classList.remove('is-on'); }
+  function hideTip(){tip.classList.remove('ot-show');}
 
-  function onMove(e){
-    var rect=canvas.getBoundingClientRect();
-    var clientX=e.touches?e.touches[0].clientX:e.clientX;
-    var clientY=e.touches?e.touches[0].clientY:e.clientY;
-    var mx=clientX-rect.left;
-    var my=clientY-rect.top;
-    var i=pickAt(mx,my);
-    if(i!==hoverIdx){
-      hoverIdx=i;
-      canvas.style.cursor=i>=0?'pointer':'default';
-    }
-    if(i>=0 && positions[i]){
-      showTip(i,positions[i]);
-    }else{
-      hideTip();
-    }
+  function evtPos(e){
+    var r=canvas.getBoundingClientRect();
+    var cx=(e.touches&&e.touches[0])?e.touches[0].clientX:e.clientX;
+    var cy=(e.touches&&e.touches[0])?e.touches[0].clientY:e.clientY;
+    return {x:cx-r.left,y:cy-r.top};
   }
-  function onLeave(){ hoverIdx=-1; canvas.style.cursor='default'; hideTip(); }
+  canvas.addEventListener('mousemove',function(e){
+    var p=evtPos(e),s=pickAt(p.x,p.y);
+    if(s){hoverSat=s;showTip(s,p.x,p.y);canvas.style.cursor='pointer';}
+    else{hoverSat=null;hideTip();canvas.style.cursor='crosshair';}
+  });
+  canvas.addEventListener('mouseleave',function(){hoverSat=null;hideTip();});
+  canvas.addEventListener('touchstart',function(e){
+    var p=evtPos(e),s=pickAt(p.x,p.y);
+    if(s){showTip(s,p.x,p.y);e.preventDefault();}
+    else hideTip();
+  },{passive:false});
 
-  canvas.addEventListener('mousemove',onMove);
-  canvas.addEventListener('mouseleave',onLeave);
-  canvas.addEventListener('touchstart',function(e){ onMove(e); },{passive:true});
-  canvas.addEventListener('touchmove',function(e){ onMove(e); },{passive:true});
-  canvas.addEventListener('touchend',onLeave);
+  // ---- observers ----
+  var ro=new ResizeObserver(function(){ sizeAll(); draw(); });
+  ro.observe(root);
 
-  var rt=null;
-  function onResize(){
-    if(rt) clearTimeout(rt);
-    rt=setTimeout(function(){
-      layout();
-      if(reduce){ frame(0); }
-    },120);
-  }
-  window.addEventListener('resize',onResize);
+  var io=new IntersectionObserver(function(ents){
+    ents.forEach(function(en){
+      visible=en.isIntersecting;
+      if(visible)start();else stop();
+    });
+  },{threshold:0.01});
+  io.observe(root);
 
-  layout();
-  if(reduce){
-    frame(2200); // one static, visually settled frame
-  }else{
-    raf=window.requestAnimationFrame(frame);
-  }
+  // init
+  sizeAll();
+  if(reduceMotion){ playing=false;playIco.textContent='►';playTxt.textContent='PLAY';simMin=18; }
+  draw();
+  start();
 })();
 </script>
 </body></html>

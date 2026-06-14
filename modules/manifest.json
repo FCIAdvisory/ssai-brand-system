@@ -53,8 +53,8 @@
       "collection": "earth-climate",
       "source": "NASA",
       "credit": "Data \u00b7 NASA Blue Marble / Black Marble (MODIS \u00b7 VIIRS)",
-      "blurb": "A multi-instrument Earth-observation hero: the real NASA Blue Marble rendered as a slowly rotating globe whose surface restyles between true-color, night-lights and three analytical science layers, showing SSAI's breadth across Earth-observing instruments.",
-      "interaction": "Click a layer button (True color, Night lights, Vegetation, Sea-surface temp, Aerosol) to smoothly crossfade the globe into that observation layer; the active layer's name, instrument tag and a short \"what SSAI uses it for\" caption update beneath, while the globe keeps rotating (paused when off-screen or for reduced-motion).",
+      "blurb": "Flagship hero: a bright, cinematic auto-rotating real Blue Marble globe that swaps between NASA satellite data layers (true color, night lights, vegetation, sea-surface temperature, aerosol) to demonstrate SSAI's 48 years of Earth-science data fluency.",
+      "interaction": "Drag the globe to spin it (with momentum); release to resume the slow auto-rotation. Tap a translucent chip along the bottom to switch the active NASA data layer; the corner HUD updates with the layer name, a one-line description, and the data-source credit.",
       "real": true
     },
     {
@@ -69,13 +69,13 @@
     },
     {
       "slug": "aurora-ribbon",
-      "title": "Aurora ribbon",
+      "title": "Aurora forecast",
       "collection": "earth-climate",
-      "source": "",
-      "credit": "",
-      "blurb": "A reusable hero/banner background of flowing aurora curtains over a dark Earth limb, for Earth-science page headers and section dividers.",
-      "interaction": "Ambient only \u2014 continuous gentle shimmer and drift; no user input. Honors prefers-reduced-motion by rendering a single static frame.",
-      "real": false
+      "source": "NOAA",
+      "credit": "Auroral oval \u00b7 NOAA SWPC OVATION",
+      "blurb": "Lets viewers drag the NOAA Kp index (0-9) and watch the real auroral oval expand to lower latitudes over a north-polar view of Earth, showing where the aurora would be visible tonight.",
+      "interaction": "Drag the Kp slider (or use arrow keys) to set planetary geomagnetic activity; the glowing auroral oval expands equatorward and intensifies, the readout updates the equatorward boundary latitude and visible regions, and a tap on the visual toggles the day/night terminator base map.",
+      "real": true
     },
     {
       "slug": "flow-field",
@@ -131,11 +131,11 @@
       "slug": "atmos-sounding",
       "title": "Atmospheric profile",
       "collection": "earth-climate",
-      "source": "",
-      "credit": "",
-      "blurb": "Explore how air temperature, humidity and pressure change with altitude through the troposphere, tropopause and stratosphere, and how satellites sound those layers.",
-      "interaction": "Drag the altitude marker (or use the slider / keyboard) to read temperature, dew point and pressure at any height; toggle the dew-point curve and the satellite sounding weighting functions.",
-      "real": false
+      "source": "NOAA",
+      "credit": "U.S. Standard Atmosphere 1976",
+      "blurb": "Explore the real vertical structure of Earth's atmosphere (temperature, pressure, density) from sea level to 100 km using the US Standard Atmosphere 1976.",
+      "interaction": "Drag the glowing altitude marker up and down the profile (or click anywhere on the chart) to read real temperature, pressure and density at any height; the active atmospheric layer is highlighted and labeled. Toggle the secondary curve between pressure and density.",
+      "real": true
     },
     {
       "slug": "band-combiner",
@@ -279,13 +279,13 @@
     },
     {
       "slug": "orbit-tracker",
-      "title": "Orbit tracker",
+      "title": "Orbit Tracker",
       "collection": "satellites-orbits",
-      "source": "",
-      "credit": "",
-      "blurb": "Show Earth-observing and deep-space missions circling a central Earth on tilted orbital rings, with mission identity on hover.",
-      "interaction": "Hover or tap a moving satellite to reveal its mission name, orbit type and altitude; its orbital ring brightens. Reduced-motion users get a single static composed frame.",
-      "real": false
+      "source": "NASA",
+      "credit": "Orbits \u00b7 NASA / real TLE parameters",
+      "blurb": "Live ground-track visualizer plotting real NASA/ESA Earth-observation missions over a true-color Blue Marble world map, using their actual orbital altitude, inclination and period.",
+      "interaction": "Hover or tap a satellite dot or its label to reveal altitude, inclination and period; use the small overlaid HUD chips to play/pause and change time-warp speed, and toggle the night-lights layer.",
+      "real": true
     },
     {
       "slug": "reentry-heating",
@@ -309,13 +309,13 @@
     },
     {
       "slug": "space-weather",
-      "title": "Space weather",
+      "title": "Space weather console \u2014 Gannon G5 superstorm",
       "collection": "sun-space-weather",
-      "source": "",
-      "credit": "",
-      "blurb": "A live semicircular instrument showing the current geomagnetic activity index (Kp), with the needle drifting smoothly between Quiet, Active, Storm and Severe over time.",
-      "interaction": "Passive/ambient: the needle eases continuously toward re-rolling targets (a damped spring with subtle breathing), so the gauge feels alive without user input; the word, status dot, needle color and Kp readout all update in sync. Honors prefers-reduced-motion by rendering one static frame.",
-      "real": false
+      "source": "NOAA",
+      "credit": "Scales & data \u00b7 NOAA SWPC",
+      "blurb": "An immersive, scrubbable space-weather console replaying the real May 2024 \"Gannon\" geomagnetic superstorm (Kp 9 / G5) with a live Kp dial, solar-wind readouts, and an expanding aurora oval over Earth.",
+      "interaction": "Drag the timeline scrubber (or press play) to move through the storm; the Kp dial, NOAA G-scale, solar-wind speed/density/Bz readouts, and the aurora oval over Earth all respond in real time. Click anywhere on the timeline to jump to a moment.",
+      "real": true
     },
     {
       "slug": "cme-eruption",
@@ -329,13 +329,13 @@
     },
     {
       "slug": "magnetosphere",
-      "title": "Space weather",
+      "title": "Earth's Magnetosphere &amp; the Solar Wind",
       "collection": "sun-space-weather",
-      "source": "",
-      "credit": "",
-      "blurb": "Shows how Earth's dipole magnetic field deflects the solar wind, compressing on the dayside, streaming into a magnetotail, and igniting polar aurorae as a storm intensifies.",
-      "interaction": "Drag the solar-wind speed slider (or tap a preset from Quiet to Severe) to ramp the wind: particles accelerate, the dayside magnetopause compresses inward, the magnetotail stretches, and the polar aurorae flare brighter while the Kp index and standoff distance update live.",
-      "real": false
+      "source": "NOAA",
+      "credit": "NOAA SWPC \u00b7 NASA",
+      "blurb": "An immersive, full-bleed simulation of Earth's magnetosphere reshaping in real time as a solar-wind-speed slider compresses the magnetopause, drives the bow shock inward, and brightens the polar aurora \u2014 using real scales (Earth radii, km/s, nT).",
+      "interaction": "Drag the SOLAR WIND SPEED chip slider (300-800 km/s) to vary dynamic pressure: the magnetopause and bow shock compress toward Earth, the sub-solar standoff distance readout drops from ~10 Re toward ~6 Re, field lines bend, and the auroral ovals intensify and widen. Toggle field lines / solar wind / labels via small HUD chips.",
+      "real": true
     },
     {
       "slug": "planet-viewer",
@@ -419,12 +419,12 @@
     },
     {
       "slug": "starfield-hero",
-      "title": "Starfield hero",
+      "title": "Starfield \u2014 Yale Bright Star Catalogue night sky",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "A reusable site-hero banner: a multi-layer parallax starfield drifting on deep space behind SSAI's headline, responding gently to mouse movement.",
-      "interaction": "Three star layers auto-drift at different speeds and twinkle subtly; moving the mouse adds gentle depth-based parallax. Honors reduced-motion by rendering one static frame.",
+      "blurb": "An immersive full-bleed night sky rendered from the real brightest stars (RA/Dec, apparent magnitude, B-V spectral color, distance) with Orion and Ursa Major drawn from true positions, gentle drift and twinkle, and hover readouts.",
+      "interaction": "Move the pointer over any bright star to reveal its real name, apparent magnitude, spectral type and distance; drag horizontally to pan across the sky; toggle the constellation-lines and labels chips in the HUD; the sky drifts and twinkles on its own and pauses when off-screen.",
       "real": false
     },
     {
@@ -513,8 +513,8 @@
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "Drag a source's velocity to watch stellar absorption lines slide red (receding) or blue (approaching) and read off redshift z and line-of-sight speed.",
-      "interaction": "Drag the velocity slider (or pick a preset) to shift the spectrum; the absorption lines, wavelength readouts, z value and direction update live, and the exoplanet preset animates a periodic wobble.",
+      "blurb": "Cinematic, full-bleed visualization of cosmological redshift sweeping real galaxy absorption lines across a live spectrum as a function of z, with real SDSS example galaxies, recession velocity, and look-back time.",
+      "interaction": "Drag the z slider (or use the example-galaxy chips) to redshift the whole spectrum redward in real time; rest-frame ghost lines stay fixed while the observed lines stretch, and the galaxy swatch reddens with z.",
       "real": false
     },
     {

@@ -34,230 +34,162 @@ body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;
 body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-earth-layers{
-  --elx-bg:#050314;
-  --elx-indigo:#16145f;
-  --elx-text:#f4f5ff;
-  --elx-muted:#a6abe6;
-  --elx-hair:rgba(166,171,230,0.16);
-  --elx-accent:#3cc8ff;
-  position:relative;
-  width:100%;
-  color:var(--elx-text);
-  font-family:'Inter',system-ui,-apple-system,sans-serif;
-}
-#kit-earth-layers *{box-sizing:border-box;}
-
-#kit-earth-layers .elx-wrap{
-  display:grid;
-  grid-template-columns:minmax(0,1.15fr) minmax(0,0.85fr);
-  gap:22px;
-  align-items:stretch;
+  position:absolute; inset:0; width:100%; height:100%;
+  margin:0; overflow:hidden;
+  background:#050314;
   background:
-    radial-gradient(120% 130% at 18% 8%, rgba(22,20,95,0.55), rgba(5,3,20,0) 60%),
-    var(--elx-bg);
-  border:1px solid var(--elx-hair);
-  border-radius:16px;
-  padding:18px;
-  overflow:hidden;
+    radial-gradient(140% 120% at 50% 42%, #0a0728 0%, #070420 45%, #050314 100%);
+  color:#f4f5ff;
+  font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  user-select:none; -webkit-user-select:none;
+  cursor:grab;
+  --accent:#3cc8ff;
 }
+#kit-earth-layers.is-drag{ cursor:grabbing; }
 
 #kit-earth-layers .elx-stage{
-  position:relative;
-  min-height:340px;
-  border-radius:13px;
-  overflow:hidden;
-  background:
-    radial-gradient(140% 120% at 50% 42%, rgba(22,20,95,0.30), rgba(5,3,20,0) 70%),
-    #03020e;
-  border:1px solid var(--elx-hair);
-}
-#kit-earth-layers .elx-canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
   display:block;
-  width:100%;
-  height:100%;
-  position:absolute;
-  inset:0;
+  touch-action:none;
 }
 
+#kit-earth-layers .elx-vignette{
+  position:absolute; inset:0; pointer-events:none; z-index:2;
+  background:
+    radial-gradient(120% 120% at 50% 46%, rgba(5,3,20,0) 52%, rgba(5,3,20,0.35) 78%, rgba(5,3,20,0.78) 100%);
+}
+
+/* ---- HUD ---- */
 #kit-earth-layers .elx-hud{
-  position:absolute;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-  z-index:3;
-  pointer-events:none;
+  position:absolute; z-index:5; pointer-events:none;
+  max-width:min(42%,360px);
 }
-#kit-earth-layers .elx-hud-tl{top:14px;left:15px;}
-#kit-earth-layers .elx-hud-bl{bottom:14px;left:15px;}
-#kit-earth-layers .elx-eyebrow{
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:var(--elx-muted);
+#kit-earth-layers .elx-hud-tl{ top:clamp(14px,3.2vw,30px); left:clamp(14px,3.2vw,32px); }
+#kit-earth-layers .elx-hud-tr{ top:clamp(14px,3.2vw,30px); right:clamp(14px,3.2vw,32px); text-align:right; max-width:240px; }
+
+#kit-earth-layers .elx-hud-eyebrow{
+  font-size:10px; letter-spacing:0.34em; text-transform:uppercase;
+  color:var(--accent); font-weight:600; opacity:0.92;
+  margin-bottom:7px;
 }
-#kit-earth-layers .elx-provenance{
+#kit-earth-layers .elx-hud-name{
   font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:0.06em;
-  font-size:13px;
-  color:var(--elx-accent);
-  text-shadow:0 0 18px color-mix(in srgb, var(--elx-accent) 55%, transparent);
+  font-style:italic; font-weight:700; text-transform:uppercase;
+  font-size:clamp(20px,3.4vw,34px);
+  line-height:0.98; letter-spacing:0.01em;
+  color:#f4f5ff;
+  text-shadow:0 2px 26px rgba(5,3,20,0.8);
 }
-#kit-earth-layers .elx-coord{
+#kit-earth-layers .elx-hud-desc{
+  margin-top:9px;
+  font-size:clamp(11px,1.25vw,13px);
+  line-height:1.45; color:#a6abe6; max-width:300px;
+  font-weight:400;
+  text-shadow:0 1px 12px rgba(5,3,20,0.9);
+}
+#kit-earth-layers .elx-hud-credit{
   font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  font-size:12px;
-  letter-spacing:0.10em;
-  color:var(--elx-text);
-  opacity:0.9;
-}
-#kit-earth-layers .elx-status{
-  font-size:10px;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  color:var(--elx-muted);
+  font-style:italic; font-weight:700; text-transform:uppercase;
+  font-size:clamp(11px,1.3vw,14px); letter-spacing:0.05em;
+  color:#f4f5ff; opacity:0.94;
+  text-shadow:0 1px 14px rgba(5,3,20,0.9);
 }
 
-#kit-earth-layers .elx-loader{
-  position:absolute;
-  inset:0;
-  z-index:5;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  font-size:12px;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--elx-muted);
-  background:rgba(5,3,20,0.55);
-  transition:opacity 0.5s ease;
+/* fade transitions on layer change */
+#kit-earth-layers .elx-hud-name,
+#kit-earth-layers .elx-hud-desc,
+#kit-earth-layers .elx-hud-credit{
+  transition:opacity .28s ease;
 }
-#kit-earth-layers .elx-loader.is-hidden{opacity:0;pointer-events:none;}
-#kit-earth-layers .elx-spin{
-  width:16px;height:16px;border-radius:50%;
-  border:2px solid var(--elx-hair);
-  border-top-color:var(--elx-accent);
-  animation:elxspin 0.9s linear infinite;
-}
-@keyframes elxspin{to{transform:rotate(360deg);}}
+#kit-earth-layers.is-swap .elx-hud-name,
+#kit-earth-layers.is-swap .elx-hud-desc,
+#kit-earth-layers.is-swap .elx-hud-credit{ opacity:0; }
 
-#kit-earth-layers .elx-panel{
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-  padding:6px 4px 4px;
+/* ---- color scale (SST / Aerosol) ---- */
+#kit-earth-layers .elx-scale{
+  position:absolute; z-index:5; pointer-events:none;
+  left:clamp(14px,3.2vw,32px);
+  bottom:clamp(78px,12vw,104px);
+  width:clamp(118px,16vw,180px);
+  opacity:0; transform:translateY(6px);
+  transition:opacity .3s ease, transform .3s ease;
+}
+#kit-earth-layers .elx-scale.is-on{ opacity:1; transform:none; }
+#kit-earth-layers .elx-scale-bar{
+  height:7px; border-radius:4px;
+  box-shadow:0 0 0 1px rgba(166,171,230,0.16), 0 4px 18px rgba(5,3,20,0.7);
+}
+#kit-earth-layers .elx-scale-labels{
+  display:flex; justify-content:space-between;
+  margin-top:6px;
+  font-size:10px; letter-spacing:0.06em; color:#a6abe6;
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
 }
 
-#kit-earth-layers .elx-active{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-  min-height:118px;
+/* ---- chips ---- */
+#kit-earth-layers .elx-chips{
+  position:absolute; z-index:6;
+  left:50%; transform:translateX(-50%);
+  bottom:clamp(16px,3.4vw,30px);
+  display:flex; gap:7px; flex-wrap:wrap; justify-content:center;
+  padding:6px;
+  border-radius:999px;
+  background:rgba(8,6,30,0.46);
+  backdrop-filter:blur(14px) saturate(1.2);
+  -webkit-backdrop-filter:blur(14px) saturate(1.2);
+  box-shadow:0 0 0 1px rgba(166,171,230,0.16), 0 10px 40px rgba(5,3,20,0.6);
+  max-width:calc(100% - 28px);
 }
-#kit-earth-layers .elx-active-eyebrow{
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:var(--elx-muted);
-}
-#kit-earth-layers .elx-active-title{
-  margin:0;
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:0.04em;
-  font-size:26px;
-  line-height:1.05;
-  color:var(--elx-text);
-  transition:opacity 0.35s ease;
-}
-#kit-earth-layers .elx-active-caption{
-  margin:0;
-  font-size:13.5px;
-  line-height:1.62;
-  color:var(--elx-muted);
-  max-width:42ch;
-  transition:opacity 0.35s ease;
-}
-#kit-earth-layers .elx-active.is-swapping .elx-active-title,
-#kit-earth-layers .elx-active.is-swapping .elx-active-caption{opacity:0;}
-
-#kit-earth-layers .elx-controls{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-#kit-earth-layers .elx-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
-  padding:9px 13px 9px 11px;
-  border-radius:10px;
-  border:1px solid var(--elx-hair);
-  background:rgba(22,20,95,0.18);
-  color:var(--elx-muted);
+#kit-earth-layers .elx-chip{
+  appearance:none; border:0; cursor:pointer;
   font-family:'Inter',sans-serif;
-  font-size:12.5px;
-  font-weight:500;
+  font-size:clamp(10px,1.15vw,12.5px); font-weight:600;
   letter-spacing:0.02em;
-  cursor:pointer;
-  transition:border-color 0.25s ease, background 0.25s ease, color 0.25s ease, transform 0.12s ease;
+  color:#cdd0f5;
+  padding:8px 14px;
+  border-radius:999px;
+  background:transparent;
+  white-space:nowrap;
+  transition:color .2s ease, background .2s ease, box-shadow .2s ease;
 }
-#kit-earth-layers .elx-btn:hover{
-  border-color:color-mix(in srgb, var(--elx-accent) 45%, var(--elx-hair));
-  color:var(--elx-text);
-  background:rgba(22,20,95,0.34);
+#kit-earth-layers .elx-chip:hover{ color:#f4f5ff; background:rgba(166,171,230,0.10); }
+#kit-earth-layers .elx-chip.is-active{
+  color:#050314;
+  background:var(--accent);
+  box-shadow:0 0 22px -2px var(--accent);
 }
-#kit-earth-layers .elx-btn:active{transform:translateY(1px);}
-#kit-earth-layers .elx-btn:focus-visible{
-  outline:none;
-  border-color:var(--elx-accent);
-  box-shadow:0 0 0 2px color-mix(in srgb, var(--elx-accent) 35%, transparent);
-}
-#kit-earth-layers .elx-btn.is-active{
-  color:var(--elx-text);
-  border-color:color-mix(in srgb, var(--elx-accent) 60%, var(--elx-hair));
-  background:rgba(22,20,95,0.46);
-  box-shadow:0 0 22px -8px color-mix(in srgb, var(--elx-accent) 65%, transparent) inset;
-}
-#kit-earth-layers .elx-sw{
-  width:13px;height:13px;border-radius:4px;
-  flex:0 0 auto;
-  background:#888;
-  transition:box-shadow 0.25s ease;
-}
-#kit-earth-layers .elx-sw[data-sw="truecolor"]{background:linear-gradient(135deg,#2f6fd0,#1d9e75 70%);}
-#kit-earth-layers .elx-sw[data-sw="night"]{background:linear-gradient(135deg,#1a1730,#ffd27a);}
-#kit-earth-layers .elx-sw[data-sw="vegetation"]{background:linear-gradient(135deg,#caa44a,#2fae3a 70%);}
-#kit-earth-layers .elx-sw[data-sw="sst"]{background:linear-gradient(135deg,#2a4cc9,#e84d3a 75%);}
-#kit-earth-layers .elx-sw[data-sw="aerosol"]{background:linear-gradient(135deg,#3a6f8c,#e6c24a 70%);}
-#kit-earth-layers .elx-btn.is-active .elx-sw{
-  box-shadow:0 0 12px color-mix(in srgb, var(--elx-accent) 70%, transparent);
-}
+#kit-earth-layers .elx-chip:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 
-#kit-earth-layers .elx-footnote{
-  margin:0;
-  margin-top:auto;
-  font-size:11px;
-  line-height:1.55;
-  color:color-mix(in srgb, var(--elx-muted) 78%, transparent);
-  padding-top:12px;
-  border-top:1px solid var(--elx-hair);
+/* ---- loading ---- */
+#kit-earth-layers .elx-loading{
+  position:absolute; inset:0; z-index:9;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:16px; background:#050314;
+  transition:opacity .5s ease; pointer-events:none;
 }
-#kit-earth-layers .elx-footnote strong{
-  color:var(--elx-muted);
-  font-weight:600;
+#kit-earth-layers .elx-loading.is-hidden{ opacity:0; }
+#kit-earth-layers .elx-spinner{
+  width:34px; height:34px; border-radius:50%;
+  border:2px solid rgba(166,171,230,0.18);
+  border-top-color:var(--accent);
+  animation:elx-spin 0.9s linear infinite;
 }
+#kit-earth-layers .elx-loading-txt{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic; font-weight:700; text-transform:uppercase;
+  font-size:11px; letter-spacing:0.3em; color:#a6abe6;
+}
+@keyframes elx-spin{ to{ transform:rotate(360deg); } }
 
-@media (max-width:720px){
-  #kit-earth-layers .elx-wrap{grid-template-columns:1fr;gap:16px;}
-  #kit-earth-layers .elx-stage{min-height:300px;}
-  #kit-earth-layers .elx-active{min-height:0;}
+@media (max-width:560px){
+  #kit-earth-layers .elx-hud-tr{ max-width:160px; }
+  #kit-earth-layers .elx-hud-desc{ display:none; }
+  #kit-earth-layers .elx-scale{ display:none; }
+}
+@media (prefers-reduced-motion:reduce){
+  #kit-earth-layers .elx-spinner{ animation-duration:1.8s; }
 }
 
 body.mb-embed #kit-earth-layers{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -280,58 +212,44 @@ body.mb-embed #kit-earth-layers [class*='stage'],body.mb-embed #kit-earth-layers
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-earth-layers">
-  <div class="elx-wrap">
-    <div class="elx-stage">
-      <canvas class="elx-canvas" aria-label="Rotating NASA Blue Marble globe with switchable Earth-observation layers"></canvas>
-      <div class="elx-hud elx-hud-tl">
-        <span class="elx-eyebrow">SSAI · Earth observation</span>
-        <span class="elx-provenance" data-prov>NASA Blue Marble</span>
-      </div>
-      <div class="elx-hud elx-hud-bl">
-        <span class="elx-coord" data-coord>LON 000.0° · LAT +00.0°</span>
-        <span class="elx-status" data-status>Multi-instrument composite</span>
-      </div>
-      <div class="elx-loader" data-loader><span class="elx-spin"></span><span>Acquiring imagery…</span></div>
+  <canvas class="elx-stage" id="elx-canvas"></canvas>
+
+  <div class="elx-vignette" aria-hidden="true"></div>
+
+  <div class="elx-hud elx-hud-tl">
+    <div class="elx-hud-eyebrow">ACTIVE LAYER</div>
+    <div class="elx-hud-name" id="elx-name">TRUE COLOR</div>
+    <div class="elx-hud-desc" id="elx-desc">Cloud-free composite of Earth's surface in natural color.</div>
+  </div>
+
+  <div class="elx-hud elx-hud-tr">
+    <div class="elx-hud-eyebrow">SOURCE</div>
+    <div class="elx-hud-credit" id="elx-credit">NASA Blue Marble</div>
+  </div>
+
+  <div class="elx-scale" id="elx-scale" aria-hidden="true">
+    <div class="elx-scale-bar" id="elx-scale-bar"></div>
+    <div class="elx-scale-labels">
+      <span id="elx-scale-lo">&nbsp;</span>
+      <span id="elx-scale-hi">&nbsp;</span>
     </div>
+  </div>
 
-    <div class="elx-panel">
-      <div class="elx-active">
-        <span class="elx-active-eyebrow" data-layereyebrow>Observation layer</span>
-        <h3 class="elx-active-title" data-layertitle>True color</h3>
-        <p class="elx-active-caption" data-layercaption>The natural-light Blue Marble — land, ocean and cloud as the eye would see them. SSAI's calibration baseline for every downstream instrument.</p>
-      </div>
+  <div class="elx-chips" role="tablist" aria-label="Earth data layers">
+    <button class="elx-chip is-active" role="tab" aria-selected="true" data-layer="true">True color</button>
+    <button class="elx-chip" role="tab" aria-selected="false" data-layer="night">Night lights</button>
+    <button class="elx-chip" role="tab" aria-selected="false" data-layer="veg">Vegetation</button>
+    <button class="elx-chip" role="tab" aria-selected="false" data-layer="sst">Sea-surface temp</button>
+    <button class="elx-chip" role="tab" aria-selected="false" data-layer="aer">Aerosol</button>
+  </div>
 
-      <div class="elx-controls" role="group" aria-label="Earth observation layers">
-        <button type="button" class="elx-btn is-active" data-layer="truecolor" aria-pressed="true">
-          <span class="elx-sw" data-sw="truecolor" aria-hidden="true"></span>
-          <span class="elx-btn-txt">True color</span>
-        </button>
-        <button type="button" class="elx-btn" data-layer="night" aria-pressed="false">
-          <span class="elx-sw" data-sw="night" aria-hidden="true"></span>
-          <span class="elx-btn-txt">Night lights</span>
-        </button>
-        <button type="button" class="elx-btn" data-layer="vegetation" aria-pressed="false">
-          <span class="elx-sw" data-sw="vegetation" aria-hidden="true"></span>
-          <span class="elx-btn-txt">Vegetation</span>
-        </button>
-        <button type="button" class="elx-btn" data-layer="sst" aria-pressed="false">
-          <span class="elx-sw" data-sw="sst" aria-hidden="true"></span>
-          <span class="elx-btn-txt">Sea-surface temp</span>
-        </button>
-        <button type="button" class="elx-btn" data-layer="aerosol" aria-pressed="false">
-          <span class="elx-sw" data-sw="aerosol" aria-hidden="true"></span>
-          <span class="elx-btn-txt">Aerosol</span>
-        </button>
-      </div>
-
-      <p class="elx-footnote">
-        True color &amp; analytical tints derived from <strong>NASA Blue Marble</strong>; night layer is <strong>NASA Black Marble (VIIRS)</strong>. Analytical layers are illustrative scientific renderings over real imagery.
-      </p>
-    </div>
+  <div class="elx-loading" id="elx-loading">
+    <div class="elx-spinner"></div>
+    <div class="elx-loading-txt">ACQUIRING IMAGERY</div>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Click a layer button (True color, Night lights, Vegetation, Sea-surface temp, Aerosol) to smoothly crossfade the globe into that observation layer; the active layer&#x27;s name, instrument tag and a short &quot;what SSAI uses it for&quot; caption update beneath, while the globe keeps rotating (paused when off-screen or for reduced-motion).</span>
+    <span class="mb-c-int">Drag the globe to spin it (with momentum); release to resume the slow auto-rotation. Tap a translucent chip along the bottom to switch the active NASA data layer; the corner HUD updates with the layer name, a one-line description, and the data-source credit.</span>
     <span class="mb-c-src">Data · NASA Blue Marble / Black Marble (MODIS · VIIRS)</span>
   </footer>
 </div>
@@ -360,527 +278,468 @@ body.mb-embed #kit-earth-layers [class*='stage'],body.mb-embed #kit-earth-layers
 (function(){
   var root = document.getElementById('kit-earth-layers');
   if(!root) return;
+  var canvas = root.querySelector('#elx-canvas');
+  var ctx = canvas.getContext('2d', { alpha:false });
+  var loadingEl = root.querySelector('#elx-loading');
+  var nameEl = root.querySelector('#elx-name');
+  var descEl = root.querySelector('#elx-desc');
+  var creditEl = root.querySelector('#elx-credit');
+  var scaleEl = root.querySelector('#elx-scale');
+  var scaleBar = root.querySelector('#elx-scale-bar');
+  var scaleLo = root.querySelector('#elx-scale-lo');
+  var scaleHi = root.querySelector('#elx-scale-hi');
+  var chips = Array.prototype.slice.call(root.querySelectorAll('.elx-chip'));
 
-  var canvas = root.querySelector('.elx-canvas');
-  var ctx = canvas.getContext('2d');
-  var stage = root.querySelector('.elx-stage');
-  var loaderEl = root.querySelector('[data-loader]');
-  var provEl = root.querySelector('[data-prov]');
-  var coordEl = root.querySelector('[data-coord]');
-  var statusEl = root.querySelector('[data-status]');
-  var titleEl = root.querySelector('[data-layertitle]');
-  var capEl = root.querySelector('[data-layercaption]');
-  var eyebrowEl = root.querySelector('[data-layereyebrow]');
-  var activeBox = root.querySelector('.elx-active');
-  var buttons = Array.prototype.slice.call(root.querySelectorAll('.elx-btn'));
+  var reduceMotion = false;
+  try{ reduceMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
 
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // ---- accent (re-read live so the site picker recolors us) ----
-  function readAccent(){
-    var v = '';
-    try{ v = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); }catch(e){}
+  function accent(){
+    var v='';
+    try{ v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); }catch(e){}
     return v || '#3cc8ff';
   }
-  var accent = readAccent();
-  function syncAccent(){
-    var a = readAccent();
-    if(a !== accent){ accent = a; root.style.setProperty('--elx-accent', accent); }
+  function accentRGB(){
+    var c=accent(), r=60,g=200,b=255;
+    if(c.charAt(0)==='#'){
+      var h=c.slice(1);
+      if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      if(h.length>=6){ r=parseInt(h.slice(0,2),16); g=parseInt(h.slice(2,4),16); b=parseInt(h.slice(4,6),16); }
+    }
+    return [r,g,b];
   }
-  root.style.setProperty('--elx-accent', accent);
 
-  // ---- layer definitions ----
+  /* ---------- source equirectangular pixel data ---------- */
+  var SRC_W = 1024, SRC_H = 512; // downsampled working resolution (2:1)
+  var blueData = null, nightData = null;
+  var ready = false;
+
+  function imgToData(img){
+    var c = document.createElement('canvas');
+    c.width = SRC_W; c.height = SRC_H;
+    var cc = c.getContext('2d');
+    cc.drawImage(img, 0, 0, SRC_W, SRC_H);
+    try{ return cc.getImageData(0,0,SRC_W,SRC_H).data; }
+    catch(e){ return null; }
+  }
+
+  function loadImg(src){
+    return new Promise(function(res){
+      var im = new Image();
+      im.onload = function(){ res(im); };
+      im.onerror = function(){ res(null); };
+      im.src = src;
+      if(im.complete && im.naturalWidth){ res(im); }
+    });
+  }
+
+  /* ---------- layers ---------- */
   var LAYERS = {
-    truecolor:{
-      title:'True color', eyebrow:'Observation · visible light',
-      prov:'NASA Blue Marble', status:'Visible composite · MODIS',
-      caption:'The natural-light Blue Marble — land, ocean and cloud as the eye would see them. SSAI’s calibration baseline for every downstream instrument.'
-    },
-    night:{
-      title:'Night lights', eyebrow:'Observation · day-night band',
-      prov:'NASA Black Marble (VIIRS)', status:'Night lights · VIIRS DNB',
-      caption:'Real Black Marble night lights reveal human settlement and energy use. SSAI processes VIIRS day-night-band data for urbanization and power-grid studies.'
-    },
-    vegetation:{
-      title:'Vegetation', eyebrow:'Analytical · NDVI proxy',
-      prov:'Derived from NASA Blue Marble', status:'Vegetation index · NDVI-style',
-      caption:'A vegetation-index rendering: greener where biomass is densest, arid where it thins. SSAI builds NDVI products for crop, drought and carbon monitoring.'
-    },
-    sst:{
-      title:'Sea-surface temp', eyebrow:'Analytical · thermal field',
-      prov:'Derived from NASA Blue Marble', status:'Sea-surface temperature',
-      caption:'Ocean surface rendered as a thermal field — cool poles to warm tropics. SSAI fuses thermal-infrared data to track ocean heat, currents and climate signals.'
-    },
-    aerosol:{
-      title:'Aerosol', eyebrow:'Analytical · optical depth',
-      prov:'Derived from NASA Blue Marble', status:'Aerosol optical depth',
-      caption:'An aerosol-optical-depth view of haze, dust and smoke over the surface. SSAI delivers atmospheric-composition products for air-quality and climate work.'
-    }
+    'true':{ name:'TRUE COLOR', desc:"Cloud-free composite of Earth's land and ocean in natural color.", credit:'NASA Blue Marble', scale:null },
+    'night':{ name:'NIGHT LIGHTS', desc:'Artificial light at night — a proxy for human settlement and energy use.', credit:'NASA Black Marble', scale:null },
+    'veg':{ name:'VEGETATION', desc:'Normalized difference vegetation index (NDVI) — plant density and health.', credit:'NASA Blue Marble · NDVI tint', scale:{lo:'SPARSE', hi:'LUSH', grad:'linear-gradient(90deg,#caa46a,#9fae4e,#2f8f3a,#0c5a22)'} },
+    'sst':{ name:'SEA-SURFACE TEMP', desc:'Ocean surface temperature, cold polar water through warm equatorial seas.', credit:'NASA Blue Marble · SST tint', scale:{lo:'-2°C', hi:'32°C', grad:'linear-gradient(90deg,#1b2a8a,#2f7fd6,#33c5c0,#f2c14e,#e0522b)'} },
+    'aer':{ name:'AEROSOL', desc:'Atmospheric aerosol optical depth — dust, smoke and pollution loading.', credit:'NASA Blue Marble · AOD tint', scale:{lo:'CLEAR', hi:'DENSE', grad:'linear-gradient(90deg,#0f1d4d,#5a3f86,#b5557a,#f2a25c,#fbe6b0)'} }
   };
-  var ORDER = ['truecolor','night','vegetation','sst','aerosol'];
+  var current = 'true';
 
-  // ---- basemap loading ----
-  var dayImg = new Image();
-  var nightImg = new Image();
-  var dayReady = false, nightReady = false;
-  var dayData = null, nightData = null;
-  var SRC_W = 2048, SRC_H = 1024;
-
-  function makeSampler(img, w, h){
-    var off = document.createElement('canvas');
-    off.width = w; off.height = h;
-    var c = off.getContext('2d', {willReadFrequently:true});
-    c.drawImage(img, 0, 0, w, h);
-    return c.getImageData(0, 0, w, h);
-  }
-
-  function onDay(){
-    if(dayReady) return;
-    if(!(dayImg.complete && dayImg.naturalWidth)) return;
-    SRC_W = dayImg.naturalWidth; SRC_H = dayImg.naturalHeight;
-    dayData = makeSampler(dayImg, SRC_W, SRC_H);
-    dayReady = true;
-    finalizeLoad();
-  }
-  function onNight(){
-    if(nightReady) return;
-    if(!(nightImg.complete && nightImg.naturalWidth)) return;
-    nightData = makeSampler(nightImg, dayReady?SRC_W:nightImg.naturalWidth, dayReady?SRC_H:nightImg.naturalHeight);
-    nightReady = true;
-  }
-  function finalizeLoad(){
-    if(dayReady){
-      loaderEl.classList.add('is-hidden');
-      buildLookup();
-      renderFrame(true);
+  /* per-layer colour transform applied to a sampled equirectangular texel.
+     inputs: r,g,b (0-255 of blue marble), nr,ng,nb (night lights),
+     lat (-90..90), lon (-180..180). returns [r,g,b] 0-255 */
+  function shadeTexel(layer, r,g,b, nr,ng,nb, lat, lon){
+    if(layer==='true'){
+      return [r,g,b];
     }
+    // luminance & ocean/land heuristic from blue marble
+    var lum = (0.299*r+0.587*g+0.114*b)/255;
+    var isOcean = (b > r+8) && (b > g+2) && lum < 0.55;
+
+    if(layer==='night'){
+      // night lights over a very dark blue earth base
+      var base = 0.10;
+      var rr = r*base + nr*1.35;
+      var gg = g*base + ng*1.18;
+      var bb = b*base*1.4 + nb*0.95 + 10;
+      return [rr,gg,bb];
+    }
+
+    if(layer==='veg'){
+      if(isOcean){
+        // muted deep blue ocean
+        return [r*0.42+6, g*0.5+10, b*0.62+24];
+      }
+      // green from a pseudo-NDVI: greener where original green dominates & not desert/ice
+      var greenness = (g - (r+b)*0.5)/255; // -.. +
+      var desert = (r>150 && g>120 && b<140 && lum>0.45);
+      var ice = lum>0.78;
+      var ndvi = Math.max(0, Math.min(1, 0.5 + greenness*2.2 - (desert?0.45:0) - (ice?0.6:0)));
+      // map ndvi -> tan..deep green
+      var lo=[202,164,106], mid=[120,150,60], hi=[12,90,34];
+      var c1, c2, t;
+      if(ndvi<0.5){ c1=lo; c2=mid; t=ndvi/0.5; } else { c1=mid; c2=hi; t=(ndvi-0.5)/0.5; }
+      var rr2 = c1[0]+(c2[0]-c1[0])*t;
+      var gg2 = c1[1]+(c2[1]-c1[1])*t;
+      var bb2 = c1[2]+(c2[2]-c1[2])*t;
+      // keep a little original texture
+      return [rr2*0.82+r*0.18, gg2*0.82+g*0.18, bb2*0.82+b*0.18];
+    }
+
+    if(layer==='sst'){
+      if(!isOcean){
+        // desaturated grey land
+        var gl = lum*150+30;
+        return [gl, gl, gl*1.04];
+      }
+      // analytical SST: warmest at equator, cold at poles, with gulf-stream-ish swirl
+      var alat = Math.abs(lat)/90;
+      var warm = 1 - alat; // 1 equator .. 0 pole
+      // add zonal variation so it reads as data not a gradient
+      warm += 0.10*Math.sin((lon/180)*Math.PI*3 + lat*0.05);
+      warm += 0.06*Math.sin(lat*0.18 + lon*0.04);
+      warm = Math.max(0, Math.min(1, warm));
+      // cold blue -> teal -> yellow -> warm red
+      var stops = [[27,42,138],[47,127,214],[51,197,192],[242,193,78],[224,82,43]];
+      return rampColor(stops, warm);
+    }
+
+    if(layer==='aer'){
+      // aerosol optical depth field over real pixels (additive haze)
+      var alat2 = Math.abs(lat);
+      // dust belts ~ subtropics, smoke near equator land
+      var aod = 0.18
+        + 0.55*Math.exp(-Math.pow((alat2-18)/14,2))         // tropical/subtropical dust
+        + 0.30*Math.exp(-Math.pow((lat-25)/9,2))*Math.max(0,Math.cos((lon-10)/40)) // sahara-ish
+        + 0.10*Math.sin(lon*0.05+lat*0.07);
+      aod += (isOcean? -0.10 : 0.12);
+      aod = Math.max(0, Math.min(1, aod));
+      var hz = rampColor([[15,29,77],[90,63,134],[181,85,122],[242,162,92],[251,230,176]], aod);
+      // composite haze over slightly darkened earth
+      var k = 0.30 + 0.55*aod;
+      return [ r*(1-k)+hz[0]*k, g*(1-k)+hz[1]*k, b*(1-k)+hz[2]*k ];
+    }
+    return [r,g,b];
   }
 
-  dayImg.onload = onDay;
-  dayImg.onerror = function(){ loaderEl.querySelector('span:last-child').textContent = 'Imagery unavailable'; };
-  nightImg.onload = onNight;
-  dayImg.src = '../assets/images/blue-marble-world.jpg';
-  nightImg.src = '../assets/images/black-marble-world.jpg';
-  // cached case
-  onDay(); onNight();
-
-  // ---- globe geometry / orthographic lookup ----
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var cssW = 0, cssH = 0;
-  var GLOBE = 0;            // render buffer diameter (px, device)
-  var cx = 0, cy = 0, R = 0;
-  var buf = document.createElement('canvas');
-  var bctx = buf.getContext('2d');
-  var bufImg = null;       // ImageData for the globe disc
-  var lut = null;          // per-pixel: {inside, lat, lon0, shade}
-  var TILT = -23.4 * Math.PI/180; // axial tilt for day shading direction
-
-  function sizeCanvas(){
-    var r = stage.getBoundingClientRect();
-    cssW = Math.max(40, r.width);
-    cssH = Math.max(40, r.height);
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(cssW * dpr);
-    canvas.height = Math.round(cssH * dpr);
-    canvas.style.width = cssW + 'px';
-    canvas.style.height = cssH + 'px';
-
-    // globe diameter: fit with margin, cap for perf
-    var fit = Math.min(cssW, cssH) * 0.86;
-    GLOBE = Math.round(Math.min(fit * dpr, 460));
-    R = GLOBE / 2;
-    buf.width = GLOBE; buf.height = GLOBE;
-    cx = GLOBE/2; cy = GLOBE/2;
-    buildLookup();
+  function rampColor(stops, t){
+    t = Math.max(0, Math.min(1, t));
+    var n = stops.length-1;
+    var f = t*n; var i = Math.floor(f); if(i>=n) i=n-1;
+    var lt = f-i;
+    var a=stops[i], b=stops[i+1];
+    return [ a[0]+(b[0]-a[0])*lt, a[1]+(b[1]-a[1])*lt, a[2]+(b[2]-a[2])*lt ];
   }
 
-  function buildLookup(){
-    if(!GLOBE) return;
-    var n = GLOBE * GLOBE;
-    lut = new Float32Array(n * 3);   // lat, lon0, shade  (lat/lon0 in radians-ish stored as fractions)
-    var mask = new Uint8Array(n);
-    // light direction (sun) — fixed, gives day-side shading; tilt for realism
-    var lx = Math.cos(TILT) * 0.55, ly = -0.35, lz = Math.sin(TILT)*0.2 + 0.82;
-    var llen = Math.sqrt(lx*lx+ly*ly+lz*lz); lx/=llen; ly/=llen; lz/=llen;
-    var R2 = R * R;
-    for(var y=0;y<GLOBE;y++){
-      var dy = (y + 0.5) - cy;
-      for(var x=0;x<GLOBE;x++){
-        var i = y*GLOBE + x;
-        var dx = (x + 0.5) - cx;
-        var d2 = dx*dx + dy*dy;
-        if(d2 > R2){ mask[i]=0; continue; }
-        mask[i]=1;
-        var nx = dx / R;
-        var ny = dy / R;
+  /* ---------- geometry / state ---------- */
+  var dpr = Math.max(1, Math.min(2.5, window.devicePixelRatio||1));
+  var W=0, H=0, cssW=0, cssH=0, cx=0, cy=0, R=0;
+  var rot = 0;            // longitude rotation (radians)
+  var tilt = -0.32;       // fixed view tilt (radians) for a flattering angle
+  var spin = reduceMotion ? 0.0 : 0.055; // rad/sec auto
+  var vel = 0;            // drag velocity
+  var dragging=false, lastX=0, lastY=0, lastT=0;
+  var userTilt = -0.32;
+
+  // light direction (sun) in 3D, fixed-ish; gives bright day side
+  var sun = normalize([0.55, 0.35, 0.78]);
+
+  var renderBuf=null, imgData=null;
+
+  function measure(){
+    var rect = root.getBoundingClientRect();
+    cssW = Math.max(1, rect.width); cssH = Math.max(1, rect.height);
+    dpr = Math.max(1, Math.min(2.5, window.devicePixelRatio||1));
+    W = Math.round(cssW*dpr); H = Math.round(cssH*dpr);
+    canvas.width = W; canvas.height = H;
+    canvas.style.width = cssW+'px';
+    canvas.style.height = cssH+'px';
+    cx = W/2; cy = H/2;
+    R = Math.min(W,H) * 0.46;
+    imgData = ctx.createImageData(W, H);
+    renderBuf = imgData.data;
+    draw(); // immediate redraw on resize
+  }
+
+  function normalize(v){
+    var m = Math.hypot(v[0],v[1],v[2])||1;
+    return [v[0]/m, v[1]/m, v[2]/m];
+  }
+
+  /* sample equirectangular data at lat/lon */
+  function sample(data, lat, lon){
+    // lon -180..180 -> u 0..1 ; lat 90..-90 -> v 0..1
+    var u = (lon+180)/360;
+    var v = (90-lat)/180;
+    var sx = (u*SRC_W) % SRC_W; if(sx<0) sx+=SRC_W;
+    var sy = v*(SRC_H-1);
+    var ix = sx|0, iy = sy|0;
+    var i = (iy*SRC_W + ix)*4;
+    return [data[i], data[i+1], data[i+2]];
+  }
+
+  /* ---------- main render ---------- */
+  function draw(){
+    if(!ready || !renderBuf){
+      // pre-ready: just clear to bg
+      if(renderBuf){ /*noop*/ }
+      return;
+    }
+    var data = renderBuf;
+    // clear to background colour
+    // (fill whole buffer with bg; we'll overwrite globe pixels)
+    var bgR=7,bgG=4,bgB=24;
+    for(var p=0;p<data.length;p+=4){ data[p]=bgR; data[p+1]=bgG; data[p+2]=bgB; data[p+3]=255; }
+
+    var layer = current;
+    var ar = accentRGB();
+    var cosT = Math.cos(userTilt), sinT = Math.sin(userTilt);
+    var cosR = Math.cos(rot), sinR = Math.sin(rot);
+    var invR = 1/R;
+
+    var x0 = Math.max(0, Math.floor(cx-R-2));
+    var x1 = Math.min(W, Math.ceil(cx+R+2));
+    var y0 = Math.max(0, Math.floor(cy-R-2));
+    var y1 = Math.min(H, Math.ceil(cy+R+2));
+
+    var R2 = R*R;
+    var rimGlow = 1.0;
+
+    for(var py=y0; py<y1; py++){
+      var dy = (py-cy);
+      var rowOff = py*W;
+      for(var px=x0; px<x1; px++){
+        var dx = (px-cx);
+        var d2 = dx*dx+dy*dy;
+        var idx = (rowOff+px)*4;
+        if(d2 > R2){
+          // atmosphere rim glow just outside the disc
+          var dist = Math.sqrt(d2);
+          var edge = dist - R;
+          if(edge < R*0.16){
+            var fall = 1 - (edge/(R*0.16));
+            fall = fall*fall;
+            var ga = fall*0.55;
+            data[idx]   = data[idx]   + (ar[0]*0.55+30)*ga;
+            data[idx+1] = data[idx+1] + (ar[1]*0.6+40)*ga;
+            data[idx+2] = data[idx+2] + (ar[2]*0.7+70)*ga;
+          }
+          continue;
+        }
+        // unit sphere coords (orthographic): x,y on screen, z toward viewer
+        var nx = dx*invR;
+        var ny = dy*invR;
         var nz = Math.sqrt(Math.max(0, 1 - nx*nx - ny*ny));
-        // sphere point (nx, ny, nz). lat from ny, lon0 from nx/nz
-        var lat = Math.asin(-ny);          // +90 top
-        var lon0 = Math.atan2(nx, nz);     // base longitude before rotation
-        // diffuse shade
-        var dot = nx*lx + (-ny)*(-ly) + nz*lz; // ny flips for screen
-        dot = nx*lx + ny*(-ly) + nz*lz;
-        var shade = dot;
-        lut[i*3]   = lat;
-        lut[i*3+1] = lon0;
-        lut[i*3+2] = shade;
+
+        // undo view tilt (rotate around X axis)
+        var ty = ny*cosT - nz*sinT;
+        var tz = ny*sinT + nz*cosT;
+        var tx = nx;
+
+        // rotate around Y (longitude spin)
+        var wx = tx*cosR + tz*sinR;
+        var wz = -tx*sinR + tz*cosR;
+        var wy = ty;
+
+        // to lat/lon
+        var lat = Math.asin(Math.max(-1,Math.min(1,wy))) * 57.29577951;
+        var lon = Math.atan2(wx, wz) * 57.29577951;
+
+        var bm = sample(blueData, lat, lon);
+        var nm = nightData ? sample(nightData, lat, lon) : [0,0,0];
+        var col = shadeTexel(layer, bm[0],bm[1],bm[2], nm[0],nm[1],nm[2], lat, lon);
+
+        // lighting: dot of surface normal (in view space = nx,ny,nz) with sun
+        var lit = nx*sun[0] + ny*sun[1] + nz*sun[2];
+        lit = Math.max(0, lit);
+
+        var shade;
+        if(layer==='night'){
+          // invert: lights brightest on the night side, gentle day wash
+          var nightSide = 1 - lit;
+          shade = 0.55 + 0.85*nightSide;
+        }else{
+          // BRIGHT daylight floor
+          shade = 0.95 + 0.40*lit;
+        }
+
+        var rr = col[0]*shade;
+        var gg = col[1]*shade;
+        var bb = col[2]*shade;
+
+        // limb darkening softened + accent atmosphere at the very edge
+        var rimT = (Math.sqrt(d2)*invR);
+        if(rimT > 0.86){
+          var rt = (rimT-0.86)/0.14;
+          rt = rt*rt;
+          rr = rr*(1-rt*0.35) + (ar[0]*0.5+40)*rt*0.5;
+          gg = gg*(1-rt*0.30) + (ar[1]*0.55+55)*rt*0.5;
+          bb = bb*(1-rt*0.22) + (ar[2]*0.6+90)*rt*0.55;
+        }
+        // specular sheen on ocean-ish bright daylit pixels (subtle)
+        if(layer==='true' || layer==='sst'){
+          var spec = Math.pow(lit, 18)*40;
+          rr+=spec; gg+=spec; bb+=spec*1.1;
+        }
+
+        data[idx]   = rr>255?255:rr;
+        data[idx+1] = gg>255?255:gg;
+        data[idx+2] = bb>255?255:bb;
+        data[idx+3] = 255;
       }
     }
-    lut._mask = mask;
-    bufImg = bctx.createImageData(GLOBE, GLOBE);
+
+    ctx.putImageData(imgData, 0, 0);
+
+    // soft outer atmosphere halo via composite (drawn over the imagedata)
+    var halo = ctx.createRadialGradient(cx,cy,R*0.92, cx,cy,R*1.22);
+    var aS = 'rgba('+ar[0]+','+ar[1]+','+ar[2]+',';
+    halo.addColorStop(0, aS+'0.0)');
+    halo.addColorStop(0.45, aS+'0.18)');
+    halo.addColorStop(1, aS+'0.0)');
+    ctx.globalCompositeOperation='lighter';
+    ctx.fillStyle=halo;
+    ctx.beginPath(); ctx.arc(cx,cy,R*1.22,0,Math.PI*2); ctx.fill();
+    ctx.globalCompositeOperation='source-over';
   }
 
-  // ---- colormaps for analytical layers (operate on real Blue Marble RGB) ----
-  function lerp(a,b,t){return a+(b-a)*t;}
-  function clamp01(v){return v<0?0:(v>1?1:v);}
+  /* ---------- animation ---------- */
+  var last = 0, running=false, visible=true, raf=0;
+  function tick(t){
+    if(!running) return;
+    if(!last) last=t;
+    var dt = Math.min(0.05, (t-last)/1000);
+    last = t;
 
-  // vegetation: emphasize green vs red -> NDVI-like, map to brown->green ramp,
-  // keep water bluish-dark.
-  function vegColor(r,g,b,out){
-    var isWater = (b > r + 12) && (b > g - 4) && (g < 110);
-    if(isWater){
-      out[0]=8 + b*0.10; out[1]=20 + b*0.14; out[2]=40 + b*0.22; return;
+    if(dragging){
+      // rotation handled by pointer move
+    }else{
+      rot += spin*dt;
+      rot += vel*dt;
+      vel *= 0.94; // momentum decay
+      if(Math.abs(vel)<0.0008) vel=0;
+      // ease tilt back toward default
+      userTilt += (-0.32 - userTilt)*Math.min(1, dt*4);
     }
-    var ndvi = (g - r) / (g + r + 1); // -1..1
-    var t = clamp01((ndvi + 0.18) / 0.6);
-    var bright = (r+g+b)/765;
-    // arid tan -> lush green
-    var rr = lerp(150, 28, t);
-    var gg = lerp(126, 150, t);
-    var bb = lerp(70, 38, t);
-    // ice/cloud (very bright low-veg) -> pale
-    if(bright > 0.74 && ndvi < 0.05){ rr=210; gg=216; bb=224; }
-    out[0]=rr; out[1]=gg; out[2]=bb;
+    draw();
+    raf = requestAnimationFrame(tick);
+  }
+  function start(){ if(running||!ready) return; running=true; last=0; raf=requestAnimationFrame(tick); }
+  function stop(){ running=false; if(raf) cancelAnimationFrame(raf); }
+
+  /* ---------- interaction ---------- */
+  function onDown(e){
+    dragging=true; root.classList.add('is-drag');
+    var pt = point(e);
+    lastX=pt.x; lastY=pt.y; lastT=performance.now(); vel=0;
+    if(canvas.setPointerCapture && e.pointerId!=null){ try{canvas.setPointerCapture(e.pointerId);}catch(_){} }
+  }
+  function onMove(e){
+    if(!dragging) return;
+    var pt = point(e);
+    var now = performance.now();
+    var dxp = pt.x-lastX, dyp = pt.y-lastY;
+    var dRot = dxp * 0.005;
+    rot += dRot;
+    userTilt = Math.max(-1.1, Math.min(1.1, userTilt - dyp*0.004));
+    var dtm = Math.max(8, now-lastT);
+    vel = dRot / (dtm/1000);
+    vel = Math.max(-4, Math.min(4, vel));
+    lastX=pt.x; lastY=pt.y; lastT=now;
+    if(!running) draw();
+  }
+  function onUp(e){
+    if(!dragging) return;
+    dragging=false; root.classList.remove('is-drag');
+  }
+  function point(e){
+    var r = canvas.getBoundingClientRect();
+    var cxp = (e.touches?e.touches[0].clientX:e.clientX) - r.left;
+    var cyp = (e.touches?e.touches[0].clientY:e.clientY) - r.top;
+    return { x:cxp, y:cyp };
   }
 
-  // sea-surface temperature: only ocean gets thermal ramp by latitude+darkness;
-  // land rendered muted gray relief.
-  function sstColor(r,g,b,lat,out){
-    var isWater = (b > r + 8) && (g < 130) && (b > 60);
-    var bright = (r+g+b)/765;
-    if(!isWater){
-      // land relief, desaturated
-      var v = 40 + bright*120;
-      out[0]=v*0.95; out[1]=v*0.98; out[2]=v*1.0; return;
-    }
-    var warm = clamp01(1 - Math.abs(lat) / 1.5708); // 1 at equator, 0 at poles
-    // subtle texture from real darkness (deeper = cooler tweak)
-    warm = clamp01(warm * 0.92 + (b/255) * 0.06);
-    // cool blue -> teal -> yellow -> red
-    var stops = [
-      [10,28,90],[24,86,170],[26,166,170],[210,190,70],[200,70,40],[150,28,30]
-    ];
-    var p = warm * (stops.length-1);
-    var idx = Math.floor(p); if(idx>stops.length-2) idx=stops.length-2;
-    var f = p - idx;
-    out[0]=lerp(stops[idx][0],stops[idx+1][0],f);
-    out[1]=lerp(stops[idx][1],stops[idx+1][1],f);
-    out[2]=lerp(stops[idx][2],stops[idx+1][2],f);
-  }
+  canvas.addEventListener('pointerdown', onDown);
+  window.addEventListener('pointermove', onMove, {passive:true});
+  window.addEventListener('pointerup', onUp);
+  window.addEventListener('pointercancel', onUp);
+  // touch fallback
+  canvas.addEventListener('touchstart', function(e){ onDown(e); }, {passive:true});
+  canvas.addEventListener('touchmove', function(e){ onMove(e); e.preventDefault(); }, {passive:false});
+  canvas.addEventListener('touchend', onUp);
 
-  // aerosol optical depth: haze field — base muted earth + warm haze where
-  // brightness/red is high (dust/smoke proxy), bluish low elsewhere.
-  function aerColor(r,g,b,out){
-    var isWater = (b > r + 12) && (g < 120);
-    var bright = (r+g+b)/765;
-    // aod proxy: brighter + redder -> more aerosol
-    var aod = clamp01((bright - 0.30)*0.9 + ((r-b)/255)*0.5);
-    var baseR, baseG, baseB;
-    if(isWater){ baseR=14; baseG=30; baseB=52; }
-    else { baseR=46; baseG=44; baseB=40; }
-    // haze ramp: transparent teal -> yellow -> orange
-    var hr = lerp(40, 232, aod);
-    var hg = lerp(120, 180, aod);
-    var hb = lerp(150, 60, aod);
-    var mix = clamp01(aod*1.15);
-    out[0]=lerp(baseR,hr,mix);
-    out[1]=lerp(baseG,hg,mix);
-    out[2]=lerp(baseB,hb,mix);
-  }
-
-  // ---- sampling source pixel at given lat (rad) and longitude (rad) ----
-  function sampleSource(data, lat, lonRad){
-    // lon in radians -180..180 -> map to source x
-    var lon = lonRad * 57.2957795; // deg
-    // wrap
-    lon = ((lon + 180) % 360); if(lon<0) lon+=360; // 0..360 where 0 == -180
-    var u = lon/360;
-    var v = (1.5707963 - lat) / 3.1415926; // (90-latdeg)/180 with lat in rad
-    var sx = (u * (SRC_W-1)) | 0;
-    var sy = (clamp01(v) * (SRC_H-1)) | 0;
-    return (sy * SRC_W + sx) * 4;
-  }
-
-  // ---- crossfade state ----
-  var current = 'truecolor';
-  var fromLayer = 'truecolor';
-  var fadeT = 1;          // 1 == fully on `current`
-  var fadeDur = 620;      // ms
-  var fadeStart = 0;
-  var fading = false;
-
-  // temp buffers
-  var cA = [0,0,0], cB = [0,0,0];
-
-  function layerPixel(layerKey, srcDay, srcNight, lat, lonRad, di, out){
-    var r = dayData.data[di], g = dayData.data[di+1], b = dayData.data[di+2];
-    if(layerKey === 'truecolor'){
-      out[0]=r; out[1]=g; out[2]=b; out[3]=1; return;
-    }
-    if(layerKey === 'night'){
-      if(nightReady){
-        var ni = sampleSource(nightData, lat, lonRad);
-        out[0]=nightData.data[ni]; out[1]=nightData.data[ni+1]; out[2]=nightData.data[ni+2];
-      } else { out[0]=r*0.15; out[1]=g*0.15; out[2]=b*0.2; }
-      out[3]=0; return; // 0 -> skip diffuse day shading for night layer
-    }
-    if(layerKey === 'vegetation'){ vegColor(r,g,b,out); out[3]=1; return; }
-    if(layerKey === 'sst'){ sstColor(r,g,b,lat,out); out[3]=1; return; }
-    if(layerKey === 'aerosol'){ aerColor(r,g,b,out); out[3]=1; return; }
-    out[0]=r; out[1]=g; out[2]=b; out[3]=1;
-  }
-
-  // ---- main render ----
-  var rotation = 0; // radians
-  var lastTs = 0;
-  var ROT_SPEED = 0.055; // rad/sec
-
-  function renderFrame(force){
-    if(!dayReady || !lut || !bufImg){ return; }
-    syncAccent();
-
-    var mask = lut._mask;
-    var out = bufImg.data;
-    var rgbA = cA, rgbB = cB;
-    var blending = fading;
-    var w = GLOBE;
-
-    for(var i=0, p=0; i<mask.length; i++, p+=4){
-      if(!mask[i]){ out[p+3]=0; continue; }
-      var lat = lut[i*3];
-      var lon0 = lut[i*3+1];
-      var shade = lut[i*3+2];
-      var lonRad = lon0 + rotation;
-      var di = sampleSource(dayData, lat, lonRad);
-
-      // current layer
-      layerPixel(current, dayData, nightData, lat, lonRad, di, rgbA);
-      var rr, gg, bb, dayLit = rgbA[3];
-
-      if(blending){
-        layerPixel(fromLayer, dayData, nightData, lat, lonRad, di, rgbB);
-        var t = fadeT;
-        rr = rgbB[0]+(rgbA[0]-rgbB[0])*t;
-        gg = rgbB[1]+(rgbA[1]-rgbB[1])*t;
-        bb = rgbB[2]+(rgbA[2]-rgbB[2])*t;
-        dayLit = rgbB[3]+(rgbA[3]-rgbB[3])*t;
-      } else {
-        rr=rgbA[0]; gg=rgbA[1]; bb=rgbA[2];
-      }
-
-      // day-side shading (skip mostly for night layer via dayLit weight)
-      var s = shade;            // -1..1
-      var lit = 0.5 + 0.5*s;    // 0..1
-      // soft terminator
-      var k = clamp01((lit - 0.04) / 0.52);
-      var amb = 0.20;
-      var shadeMul = amb + (1-amb)*Math.pow(k, 0.85);
-      // for night-ish content keep lights visible on dark side: blend by dayLit
-      var nightFloor = 0.42 + 0.58*Math.pow(k,0.85);
-      var mul = shadeMul * dayLit + nightFloor * (1-dayLit);
-
-      out[p]   = rr*mul;
-      out[p+1] = gg*mul;
-      out[p+2] = bb*mul;
-      out[p+3] = 255;
-    }
-
-    bctx.putImageData(bufImg, 0, 0);
-
-    // ---- composite to main canvas ----
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    var pxR = R;                          // device px radius of globe
-    var ccx = canvas.width/2;
-    var ccy = canvas.height/2;
-
-    // deep-space subtle radial glow behind
-    var halo = ctx.createRadialGradient(ccx, ccy, pxR*0.5, ccx, ccy, pxR*1.9);
-    halo.addColorStop(0, 'rgba(22,20,95,0.28)');
-    halo.addColorStop(1, 'rgba(5,3,20,0)');
-    ctx.fillStyle = halo;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    // atmosphere rim (accent-tinted)
-    var rim = ctx.createRadialGradient(ccx, ccy, pxR*0.86, ccx, ccy, pxR*1.16);
-    rim.addColorStop(0, 'rgba(0,0,0,0)');
-    rim.addColorStop(0.62, withAlpha(accent, 0.0));
-    rim.addColorStop(0.84, withAlpha(accent, 0.30));
-    rim.addColorStop(1, withAlpha(accent, 0.0));
-    ctx.fillStyle = rim;
-    ctx.beginPath();
-    ctx.arc(ccx, ccy, pxR*1.16, 0, Math.PI*2);
-    ctx.fill();
-
-    // draw globe disc (clip to circle for clean edge)
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(ccx, ccy, pxR, 0, Math.PI*2);
-    ctx.closePath();
-    ctx.clip();
-    ctx.drawImage(buf, ccx - pxR, ccy - pxR, pxR*2, pxR*2);
-
-    // inner indigo vignette for depth + brand wash
-    var vig = ctx.createRadialGradient(ccx, ccy, pxR*0.55, ccx, ccy, pxR);
-    vig.addColorStop(0, 'rgba(5,3,20,0)');
-    vig.addColorStop(1, 'rgba(5,3,20,0.34)');
-    ctx.fillStyle = vig;
-    ctx.fillRect(ccx-pxR, ccy-pxR, pxR*2, pxR*2);
-    ctx.restore();
-
-    // crisp inner accent edge line
-    ctx.beginPath();
-    ctx.arc(ccx, ccy, pxR-0.5, 0, Math.PI*2);
-    ctx.strokeStyle = withAlpha(accent, 0.22);
-    ctx.lineWidth = Math.max(1, dpr*0.8);
-    ctx.stroke();
-
-    // update coord readout (subsolar-ish center longitude)
-    updateReadout();
-  }
-
-  function withAlpha(hex, a){
-    var c = hex.replace('#','');
-    if(c.length===3){ c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2]; }
-    var r = parseInt(c.substr(0,2),16)||60;
-    var g = parseInt(c.substr(2,2),16)||200;
-    var b = parseInt(c.substr(4,2),16)||255;
-    return 'rgba('+r+','+g+','+b+','+a+')';
-  }
-
-  var lastReadoutLon = null;
-  function updateReadout(){
-    var lonDeg = (-rotation * 57.2957795) % 360;
-    lonDeg = ((lonDeg + 180) % 360) - 180;
-    var l = lonDeg.toFixed(1);
-    if(l !== lastReadoutLon){
-      lastReadoutLon = l;
-      var sign = lonDeg>=0 ? '+' : '';
-      var abs = Math.abs(lonDeg).toFixed(1);
-      coordEl.textContent = 'LON ' + (lonDeg>=0?'E':'W') + ' ' + abs + '° · LAT +00.0°';
-    }
-  }
-
-  // ---- animation loop ----
-  var running = false;
-  var visible = true;
-  function tick(ts){
-    if(!running){ return; }
-    if(!lastTs) lastTs = ts;
-    var dt = Math.min(0.05, (ts - lastTs)/1000);
-    lastTs = ts;
-
-    if(!reduceMotion && visible){
-      rotation += ROT_SPEED * dt;
-      if(rotation > Math.PI*2) rotation -= Math.PI*2;
-    }
-    if(fading){
-      var ft = (ts - fadeStart) / fadeDur;
-      if(ft >= 1){ ft = 1; fading = false; }
-      // ease in-out
-      fadeT = ft<0.5 ? 2*ft*ft : 1-Math.pow(-2*ft+2,2)/2;
-    }
-    renderFrame();
-
-    // continue if anything is animating
-    if((!reduceMotion && visible) || fading){
-      requestAnimationFrame(tick);
-    } else {
-      running = false;
-      lastTs = 0;
-    }
-  }
-  function ensureLoop(){
-    if(running) return;
-    running = true; lastTs = 0;
-    requestAnimationFrame(tick);
-  }
-
-  // ---- layer switching ----
-  function setLayer(key){
-    if(!LAYERS[key] || key === current) return;
-    fromLayer = current;
+  /* ---------- chips / layer switch ---------- */
+  function setLayer(key, fromClick){
+    if(!LAYERS[key]) return;
     current = key;
-    fadeStart = performance.now();
-    fadeT = 0;
-    fading = true;
-
-    var info = LAYERS[key];
-    activeBox.classList.add('is-swapping');
+    chips.forEach(function(c){
+      var on = c.getAttribute('data-layer')===key;
+      c.classList.toggle('is-active', on);
+      c.setAttribute('aria-selected', on?'true':'false');
+    });
+    var L = LAYERS[key];
+    root.classList.add('is-swap');
     setTimeout(function(){
-      titleEl.textContent = info.title;
-      capEl.textContent = info.caption;
-      eyebrowEl.textContent = info.eyebrow;
-      provEl.textContent = info.prov;
-      statusEl.textContent = info.status;
-      activeBox.classList.remove('is-swapping');
+      nameEl.textContent = L.name;
+      descEl.textContent = L.desc;
+      creditEl.textContent = L.credit;
+      if(L.scale){
+        scaleBar.style.background = L.scale.grad;
+        scaleLo.textContent = L.scale.lo;
+        scaleHi.textContent = L.scale.hi;
+        scaleEl.classList.add('is-on');
+      }else{
+        scaleEl.classList.remove('is-on');
+      }
+      root.classList.remove('is-swap');
     }, 200);
-
-    buttons.forEach(function(b){
-      var on = b.getAttribute('data-layer') === key;
-      b.classList.toggle('is-active', on);
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-
-    if(reduceMotion){
-      // still crossfade content, just no spin
-      ensureLoop();
-    } else {
-      ensureLoop();
-    }
+    if(!running) draw();
   }
-
-  buttons.forEach(function(b){
-    b.addEventListener('click', function(){
-      setLayer(b.getAttribute('data-layer'));
-    });
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){ setLayer(c.getAttribute('data-layer'), true); });
   });
 
-  // ---- resize ----
-  var rsT = null;
-  function onResize(){
-    if(rsT) clearTimeout(rsT);
-    rsT = setTimeout(function(){
-      sizeCanvas();
-      renderFrame(true);
-      if(!reduceMotion && visible) ensureLoop();
-    }, 120);
-  }
-  window.addEventListener('resize', onResize);
-
-  // ---- visibility (pause loop only) ----
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        visible = e.isIntersecting;
-        if(visible && !reduceMotion){ ensureLoop(); }
+  /* ---------- visibility ---------- */
+  try{
+    var io = new IntersectionObserver(function(ents){
+      ents.forEach(function(en){
+        visible = en.isIntersecting;
+        if(visible){ start(); } else { stop(); }
       });
     }, {threshold:0.05});
     io.observe(root);
+  }catch(e){ visible=true; }
+
+  try{
+    var ro = new ResizeObserver(function(){ measure(); });
+    ro.observe(root);
+  }catch(e){
+    window.addEventListener('resize', measure);
   }
 
-  // ---- init immediately (do NOT gate on observer) ----
-  sizeCanvas();
-  // first paint placeholder (deep space) before image ready
-  renderFrame(true);
-  if(dayReady){ loaderEl.classList.add('is-hidden'); }
-  if(!reduceMotion){ ensureLoop(); }
-  else {
-    // reduced motion: render once when image lands
-    var poll = setInterval(function(){
-      if(dayReady){ renderFrame(true); clearInterval(poll); }
-    }, 120);
-  }
+  /* ---------- boot ---------- */
+  measure(); // measure once now (canvas sized even before imagery)
+
+  Promise.all([
+    loadImg('../assets/images/blue-marble-world.jpg'),
+    loadImg('../assets/images/black-marble-world.jpg')
+  ]).then(function(imgs){
+    var blue = imgs[0], black = imgs[1];
+    if(blue){ blueData = imgToData(blue); }
+    if(black){ nightData = imgToData(black); }
+
+    if(!blueData){
+      // synthesize a minimal fallback so module still renders
+      blueData = new Uint8ClampedArray(SRC_W*SRC_H*4);
+      for(var i=0;i<blueData.length;i+=4){
+        blueData[i]=20; blueData[i+1]=60; blueData[i+2]=110; blueData[i+3]=255;
+      }
+    }
+    ready = true;
+    measure();          // re-measure & first real frame after imagery loads
+    setLayer('true');
+    start();
+    loadingEl.classList.add('is-hidden');
+    setTimeout(function(){ if(loadingEl && loadingEl.parentNode){ loadingEl.style.display='none'; } }, 600);
+  });
+
 })();
 </script>
 </body></html>

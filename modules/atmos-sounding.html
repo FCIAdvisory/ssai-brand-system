@@ -33,52 +33,52 @@ body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
 body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
 body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
-#kit-atmos-sounding{--as-acc:#3cc8ff;--as-acc-rgb:60,200,255;--as-temp:#ff8a5c;--as-temp-rgb:255,138,92;--as-dew:#5dd6b0;--as-dew-rgb:93,214,176;position:relative;width:100%;box-sizing:border-box;padding:20px;border:1px solid rgba(166,171,230,.16);border-radius:18px;background:radial-gradient(120% 140% at 78% -10%,rgba(22,20,95,.55),rgba(5,3,20,0) 60%),#050314;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased;}
-#kit-atmos-sounding *{box-sizing:border-box;}
-#kit-atmos-sounding .as-head{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
-#kit-atmos-sounding .as-title{min-width:240px;flex:1 1 280px;}
-#kit-atmos-sounding .as-kicker{display:inline-block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--as-acc);font-weight:600;margin-bottom:7px;opacity:.9;}
-#kit-atmos-sounding h3{margin:0;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(20px,2.6vw,28px);line-height:1.02;color:#f4f5ff;}
-#kit-atmos-sounding .as-sub{margin:6px 0 0;font-size:12.5px;line-height:1.5;color:#a6abe6;max-width:46ch;}
-#kit-atmos-sounding .as-readout{display:grid;grid-template-columns:repeat(2,minmax(96px,1fr));gap:8px 14px;align-content:start;padding:12px 14px;border:1px solid rgba(166,171,230,.16);border-radius:12px;background:rgba(22,20,95,.28);min-width:210px;}
-#kit-atmos-sounding .as-ro-item{display:flex;flex-direction:column;gap:1px;}
-#kit-atmos-sounding .as-ro-lbl{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#a6abe6;}
-#kit-atmos-sounding .as-ro-val{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:18px;line-height:1.05;color:#f4f5ff;letter-spacing:.01em;}
-#kit-atmos-sounding .as-ro-val i{font-style:normal;font-family:'Inter',sans-serif;font-weight:500;font-size:10.5px;color:#a6abe6;margin-left:3px;}
-#kit-atmos-sounding .as-c-temp{color:var(--as-temp);}
-#kit-atmos-sounding .as-c-dew{color:var(--as-dew);}
-#kit-atmos-sounding .as-ro-layer{font-size:13px;color:var(--as-acc);}
-#kit-atmos-sounding .as-stage{position:relative;width:100%;aspect-ratio:16/9;min-height:340px;display:flex;}
-#kit-atmos-sounding .as-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;border-radius:12px;}
-#kit-atmos-sounding .as-vslider{position:absolute;appearance:none;-webkit-appearance:none;background:transparent;margin:0;padding:0;cursor:ns-resize;z-index:3;width:18px;writing-mode:vertical-lr;direction:rtl;}
-#kit-atmos-sounding .as-vslider:focus-visible{outline:2px solid var(--as-acc);outline-offset:3px;border-radius:10px;}
-#kit-atmos-sounding .as-vslider::-webkit-slider-runnable-track{background:transparent;width:2px;}
-#kit-atmos-sounding .as-vslider::-moz-range-track{background:transparent;width:2px;}
-#kit-atmos-sounding .as-vslider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--as-acc);border:2px solid #050314;box-shadow:0 0 0 4px rgba(var(--as-acc-rgb),.22);}
-#kit-atmos-sounding .as-vslider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--as-acc);border:2px solid #050314;box-shadow:0 0 0 4px rgba(var(--as-acc-rgb),.22);}
-#kit-atmos-sounding .as-controls{display:flex;flex-wrap:wrap;gap:14px 22px;justify-content:space-between;align-items:center;margin-top:14px;}
-#kit-atmos-sounding .as-toggles,#kit-atmos-sounding .as-presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
-#kit-atmos-sounding .as-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;letter-spacing:.02em;color:#a6abe6;background:rgba(22,20,95,.32);border:1px solid rgba(166,171,230,.16);border-radius:9px;padding:7px 11px;cursor:pointer;transition:color .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;}
-#kit-atmos-sounding .as-btn:hover{color:#f4f5ff;border-color:rgba(166,171,230,.34);}
-#kit-atmos-sounding .as-btn.as-on{color:#f4f5ff;border-color:rgba(var(--as-acc-rgb),.55);background:rgba(var(--as-acc-rgb),.12);box-shadow:0 0 14px rgba(var(--as-acc-rgb),.14) inset;}
-#kit-atmos-sounding .as-btn:focus-visible{outline:2px solid var(--as-acc);outline-offset:2px;}
-#kit-atmos-sounding .as-swatch{width:18px;height:3px;border-radius:2px;background:#a6abe6;flex:none;}
-#kit-atmos-sounding .as-sw-dew{background:var(--as-dew);}
-#kit-atmos-sounding .as-sw-sound{height:9px;width:13px;border-radius:2px;background:rgba(var(--as-acc-rgb),.5);}
-#kit-atmos-sounding .as-sw-band{height:9px;width:13px;border-radius:2px;background:rgba(166,171,230,.28);}
-#kit-atmos-sounding .as-presets-lbl{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#a6abe6;margin-right:2px;}
-#kit-atmos-sounding .as-chip{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;color:#a6abe6;background:transparent;border:1px solid rgba(166,171,230,.16);border-radius:20px;padding:6px 13px;cursor:pointer;transition:color .2s ease,border-color .2s ease,background .2s ease;}
-#kit-atmos-sounding .as-chip:hover{color:#f4f5ff;border-color:rgba(166,171,230,.34);}
-#kit-atmos-sounding .as-chip.as-on{color:#050314;background:var(--as-acc);border-color:var(--as-acc);font-weight:600;}
-#kit-atmos-sounding .as-chip:focus-visible{outline:2px solid var(--as-acc);outline-offset:2px;}
-#kit-atmos-sounding .as-foot{margin:13px 0 0;font-size:11.5px;line-height:1.55;color:#a6abe6;max-width:78ch;}
-@media (max-width:560px){
-#kit-atmos-sounding .as-readout{grid-template-columns:repeat(3,1fr);width:100%;}
-#kit-atmos-sounding .as-stage{aspect-ratio:auto;min-height:380px;}
-#kit-atmos-sounding .as-controls{flex-direction:column;align-items:flex-start;}
+#kit-atmos-sounding{position:absolute;inset:0;width:100%;height:100%;margin:0;overflow:hidden;background:#050314;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;user-select:none;cursor:crosshair;contain:layout paint size}
+#kit-atmos-sounding *{box-sizing:border-box}
+#kit-atmos-sounding .as-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+
+#kit-atmos-sounding .as-title{position:absolute;top:clamp(14px,3.2vw,30px);left:clamp(16px,3.5vw,38px);z-index:4;pointer-events:none}
+#kit-atmos-sounding .as-title-kicker{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.34em;font-size:clamp(9px,1vw,11px);color:var(--as-accent,#3cc8ff);margin-bottom:.45em;opacity:.92}
+#kit-atmos-sounding .as-title-main{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:clamp(20px,3.4vw,40px);line-height:.98;color:#f4f5ff;text-shadow:0 2px 30px rgba(5,3,20,.85)}
+
+#kit-atmos-sounding .as-toggle{position:absolute;top:clamp(14px,3.2vw,30px);right:clamp(16px,3.5vw,38px);z-index:5;display:flex;gap:6px;background:rgba(22,20,95,.34);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(166,171,230,.16);border-radius:999px;padding:4px}
+#kit-atmos-sounding .as-chip{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:clamp(9px,1vw,11px);color:#a6abe6;background:transparent;border:0;border-radius:999px;padding:6px 13px;cursor:pointer;transition:color .2s,background .2s;line-height:1}
+#kit-atmos-sounding .as-chip:hover{color:#f4f5ff}
+#kit-atmos-sounding .as-chip-on{color:#050314;background:var(--as-accent,#3cc8ff);box-shadow:0 0 18px -4px var(--as-accent,#3cc8ff)}
+#kit-atmos-sounding .as-chip-on:hover{color:#050314}
+
+#kit-atmos-sounding .as-readout{position:absolute;left:clamp(16px,3.5vw,38px);bottom:clamp(40px,7vw,58px);z-index:4;min-width:min(248px,62vw);background:rgba(9,7,34,.52);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(166,171,230,.18);border-radius:14px;padding:clamp(13px,1.8vw,18px) clamp(15px,2vw,20px);pointer-events:none;box-shadow:0 18px 60px -22px rgba(0,0,0,.8)}
+#kit-atmos-sounding .as-ro-layer{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:clamp(10px,1.05vw,12px);color:var(--as-accent,#3cc8ff)}
+#kit-atmos-sounding .as-ro-alt{display:flex;align-items:baseline;gap:.32em;margin:.18em 0 .7em}
+#kit-atmos-sounding .as-ro-num{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:clamp(34px,5.4vw,54px);line-height:.9;color:#f4f5ff;letter-spacing:.01em}
+#kit-atmos-sounding .as-ro-unit{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(13px,1.5vw,17px);color:#a6abe6;letter-spacing:.08em}
+#kit-atmos-sounding .as-ro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.3vw,15px);padding-top:clamp(9px,1.3vw,13px);border-top:1px solid rgba(166,171,230,.16)}
+#kit-atmos-sounding .as-ro-lab{font-size:clamp(8px,.85vw,9.5px);text-transform:uppercase;letter-spacing:.13em;color:#a6abe6;margin-bottom:.4em;white-space:nowrap}
+#kit-atmos-sounding .as-ro-val{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:clamp(15px,1.9vw,21px);color:#f4f5ff;line-height:1;white-space:nowrap}
+#kit-atmos-sounding .as-ro-su{font-size:.56em;color:#a6abe6;margin-left:.22em;letter-spacing:.04em;font-style:italic}
+#kit-atmos-sounding .as-ro-hint{display:flex;align-items:center;gap:7px;margin-top:clamp(9px,1.3vw,13px);font-size:clamp(8.5px,.9vw,10px);text-transform:uppercase;letter-spacing:.14em;color:rgba(166,171,230,.62)}
+#kit-atmos-sounding .as-ro-grip{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--as-accent,#3cc8ff);position:relative;flex:none;opacity:.85}
+#kit-atmos-sounding .as-ro-grip::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--as-accent,#3cc8ff)}
+
+#kit-atmos-sounding .as-legend{position:absolute;right:clamp(16px,3.5vw,38px);bottom:clamp(40px,7vw,58px);z-index:4;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none}
+#kit-atmos-sounding .as-leg-item{display:flex;align-items:center;gap:8px;font-size:clamp(9.5px,1vw,11.5px);color:#a6abe6;text-transform:uppercase;letter-spacing:.1em;text-shadow:0 1px 14px rgba(5,3,20,.9)}
+#kit-atmos-sounding .as-leg-swatch{width:22px;height:3px;border-radius:2px;flex:none}
+#kit-atmos-sounding .as-leg-temp{background:#ff7a59;box-shadow:0 0 10px -1px #ff7a59}
+#kit-atmos-sounding .as-leg-sec{background:var(--as-accent,#3cc8ff);box-shadow:0 0 10px -1px var(--as-accent,#3cc8ff)}
+
+#kit-atmos-sounding .as-credit{position:absolute;left:0;right:0;bottom:clamp(12px,2vw,18px);z-index:4;text-align:center;font-size:clamp(8.5px,.92vw,10.5px);letter-spacing:.18em;text-transform:uppercase;color:rgba(166,171,230,.5);pointer-events:none;padding:0 12px}
+
+#kit-atmos-sounding .as-loading{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:#050314;transition:opacity .5s}
+#kit-atmos-sounding .as-loading.as-hidden{opacity:0;pointer-events:none}
+#kit-atmos-sounding .as-spin{width:34px;height:34px;border-radius:50%;border:2px solid rgba(166,171,230,.18);border-top-color:var(--as-accent,#3cc8ff);animation:as-spin-atmos-sounding .85s linear infinite}
+@keyframes as-spin-atmos-sounding{to{transform:rotate(360deg)}}
+
+@media (max-width:540px){
+  #kit-atmos-sounding .as-legend{display:none}
+  #kit-atmos-sounding .as-readout{min-width:0;left:clamp(12px,3vw,16px);right:clamp(12px,3vw,16px)}
 }
 @media (prefers-reduced-motion:reduce){
-#kit-atmos-sounding *{transition:none!important;}
+  #kit-atmos-sounding .as-spin{animation:none}
 }
 
 body.mb-embed #kit-atmos-sounding{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -98,70 +98,55 @@ body.mb-embed #kit-atmos-sounding [class*='stage'],body.mb-embed #kit-atmos-soun
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
       <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Atmospheric profile</div></div>
     </div>
-    
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/noaa-logo.png" alt="NOAA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-atmos-sounding">
-  <div class="as-head">
-    <div class="as-title">
-      <span class="as-kicker">Earth &amp; climate</span>
-      <h3>Atmospheric profile</h3>
-      <p class="as-sub">Temperature, humidity &amp; pressure from the surface to the stratosphere — and how satellites read them from orbit.</p>
-    </div>
-    <div class="as-readout" role="status" aria-live="polite">
-      <div class="as-ro-item">
-        <span class="as-ro-lbl">Altitude</span>
-        <span class="as-ro-val" id="as-ro-alt">0.0<i>km</i></span>
-      </div>
-      <div class="as-ro-item">
-        <span class="as-ro-lbl">Temperature</span>
-        <span class="as-ro-val as-c-temp" id="as-ro-temp">15.0<i>&deg;C</i></span>
-      </div>
-      <div class="as-ro-item">
-        <span class="as-ro-lbl">Dew point</span>
-        <span class="as-ro-val as-c-dew" id="as-ro-dew">9.0<i>&deg;C</i></span>
-      </div>
-      <div class="as-ro-item">
-        <span class="as-ro-lbl">Pressure</span>
-        <span class="as-ro-val" id="as-ro-pres">1013<i>hPa</i></span>
-      </div>
-      <div class="as-ro-item">
-        <span class="as-ro-lbl">Layer</span>
-        <span class="as-ro-val as-ro-layer" id="as-ro-layer">Troposphere</span>
-      </div>
-    </div>
+  <canvas class="as-canvas" id="as-canvas-atmos-sounding"></canvas>
+
+  <div class="as-title">
+    <div class="as-title-kicker">Vertical Sounding</div>
+    <div class="as-title-main">Atmospheric Profile</div>
   </div>
 
-  <div class="as-stage">
-    <canvas class="as-canvas" id="as-canvas"></canvas>
-    <input class="as-vslider" id="as-slider" type="range" min="0" max="30" step="0.1" value="0"
-           aria-label="Altitude in kilometres" orient="vertical" />
+  <div class="as-toggle" id="as-toggle-atmos-sounding" role="group" aria-label="Secondary curve">
+    <button class="as-chip as-chip-on" data-mode="pressure" type="button">Pressure</button>
+    <button class="as-chip" data-mode="density" type="button">Density</button>
   </div>
 
-  <div class="as-controls">
-    <div class="as-toggles">
-      <button class="as-btn as-on" id="as-tg-dew" type="button" aria-pressed="true">
-        <span class="as-swatch as-sw-dew"></span>Dew point
-      </button>
-      <button class="as-btn" id="as-tg-sound" type="button" aria-pressed="false">
-        <span class="as-swatch as-sw-sound"></span>Satellite sounding
-      </button>
-      <button class="as-btn" id="as-tg-bands" type="button" aria-pressed="true">
-        <span class="as-swatch as-sw-band"></span>Layer bands
-      </button>
+  <div class="as-readout" id="as-readout-atmos-sounding" aria-live="polite">
+    <div class="as-ro-layer" id="as-ro-layer-atmos-sounding">Troposphere</div>
+    <div class="as-ro-alt">
+      <span class="as-ro-num" id="as-ro-alt-atmos-sounding">0.0</span><span class="as-ro-unit">km</span>
     </div>
-    <div class="as-presets">
-      <span class="as-presets-lbl">Air mass</span>
-      <button class="as-chip as-on" id="as-pr-std" type="button">Standard</button>
-      <button class="as-chip" id="as-pr-trop" type="button">Tropical</button>
-      <button class="as-chip" id="as-pr-polar" type="button">Polar</button>
+    <div class="as-ro-grid">
+      <div class="as-ro-cell">
+        <div class="as-ro-lab">Temperature</div>
+        <div class="as-ro-val"><span id="as-ro-t-atmos-sounding">15.0</span><span class="as-ro-su">&deg;C</span></div>
+      </div>
+      <div class="as-ro-cell">
+        <div class="as-ro-lab">Pressure</div>
+        <div class="as-ro-val"><span id="as-ro-p-atmos-sounding">1013</span><span class="as-ro-su">hPa</span></div>
+      </div>
+      <div class="as-ro-cell">
+        <div class="as-ro-lab">Density</div>
+        <div class="as-ro-val"><span id="as-ro-d-atmos-sounding">1.225</span><span class="as-ro-su">kg/m&sup3;</span></div>
+      </div>
     </div>
+    <div class="as-ro-hint"><span class="as-ro-grip"></span>Drag marker or click profile</div>
   </div>
 
-  <p class="as-foot" id="as-foot">A nadir-sounding radiometer measures emission from many layers at once. Each channel peaks at a different height — the curves on the right are the weighting functions that turn raw radiances into a vertical temperature profile.</p>
+  <div class="as-legend">
+    <span class="as-leg-item"><span class="as-leg-swatch as-leg-temp"></span>Temperature</span>
+    <span class="as-leg-item"><span class="as-leg-swatch as-leg-sec" id="as-leg-sec-atmos-sounding"></span><span id="as-leg-sec-label-atmos-sounding">Pressure</span></span>
+  </div>
+
+  <div class="as-credit">U.S. Standard Atmosphere 1976 &middot; NOAA / NASA / USAF</div>
+
+  <div class="as-loading" id="as-loading-atmos-sounding"><div class="as-spin"></div></div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag the altitude marker (or use the slider / keyboard) to read temperature, dew point and pressure at any height; toggle the dew-point curve and the satellite sounding weighting functions.</span>
-    <span class="mb-c-src">Concept · SSAI</span>
+    <span class="mb-c-int">Drag the glowing altitude marker up and down the profile (or click anywhere on the chart) to read real temperature, pressure and density at any height; the active atmospheric layer is highlighted and labeled. Toggle the secondary curve between pressure and density.</span>
+    <span class="mb-c-src">U.S. Standard Atmosphere 1976</span>
   </footer>
 </div>
 <script>
@@ -187,376 +172,395 @@ body.mb-embed #kit-atmos-sounding [class*='stage'],body.mb-embed #kit-atmos-soun
 </script>
 <script>
 (function(){
-  var root=document.getElementById('kit-atmos-sounding');
-  if(!root) return;
-  var canvas=root.querySelector('#as-canvas');
+  var ROOT=document.getElementById('kit-atmos-sounding');
+  if(!ROOT)return;
+  var SLUG='atmos-sounding';
+  var canvas=document.getElementById('as-canvas-'+SLUG);
   var ctx=canvas.getContext('2d');
-  var slider=root.querySelector('#as-slider');
+  var loading=document.getElementById('as-loading-'+SLUG);
+  var elLayer=document.getElementById('as-ro-layer-'+SLUG);
+  var elAlt=document.getElementById('as-ro-alt-'+SLUG);
+  var elT=document.getElementById('as-ro-t-'+SLUG);
+  var elP=document.getElementById('as-ro-p-'+SLUG);
+  var elD=document.getElementById('as-ro-d-'+SLUG);
+  var legSecLabel=document.getElementById('as-leg-sec-label-'+SLUG);
+  var toggle=document.getElementById('as-toggle-'+SLUG);
+
+  var accent=(getComputedStyle(document.documentElement).getPropertyValue('--accent')||'').trim()||'#3cc8ff';
+  ROOT.style.setProperty('--as-accent',accent);
+  function hexToRgb(h){h=h.replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];var n=parseInt(h,16);return {r:(n>>16)&255,g:(n>>8)&255,b:n&255};}
+  var acc=hexToRgb(accent);
+  function accA(a){return 'rgba('+acc.r+','+acc.g+','+acc.b+','+a+')';}
+  var TEMP_C='#ff7a59';
+  function tempA(a){return 'rgba(255,122,89,'+a+')';}
+
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-  var HMAX=30;
-  var show={dew:true,sound:false,bands:true};
-  var alt=0;
-  var targetAlt=0;
-
-  var profiles={
-    std:{tSurf:15,lapse:6.5,tTrop:-56.5,dewDep:6,dewDepTop:32,pSurf:1013},
-    trop:{tSurf:28,lapse:6.0,tTrop:-78,dewDep:3,dewDepTop:34,pSurf:1009},
-    polar:{tSurf:-14,lapse:5.2,tTrop:-52,dewDep:4,dewDepTop:26,pSurf:1016}
-  };
-  var prof=profiles.std;
-
-  function tempAt(h,p){
-    if(h<=11) return p.tSurf - p.lapse*h;
-    var tTropTop=p.tSurf - p.lapse*11;
-    if(h<=20) return tTropTop;
-    if(h<=32) return tTropTop + 1.0*(h-20);
-    return tTropTop + 12 + 2.8*(h-32);
-  }
-  function dewAt(h,p){
-    var t=tempAt(h,p);
-    var frac=Math.min(h/12,1);
-    var dep=p.dewDep + (p.dewDepTop-p.dewDep)*Math.pow(frac,0.75);
-    return t-dep;
-  }
-  function presAt(h,p){
-    var g=9.80665,M=0.0289644,R=8.31447;
-    var scale=p.pSurf/1013.25;
-    var Pb,Tb,Lb,hb;
-    if(h<=11){Pb=1013.25;Tb=288.15;Lb=-0.0065;hb=0;}
-    else if(h<=20){Pb=226.32;Tb=216.65;Lb=0;hb=11;}
-    else {Pb=54.749;Tb=216.65;Lb=0.001;hb=20;}
-    var hm=h*1000,hbm=hb*1000,P;
-    if(Lb===0){P=Pb*Math.exp(-g*M*(hm-hbm)/(R*Tb));}
-    else {P=Pb*Math.pow(Tb/(Tb+Lb*(hm-hbm)),g*M/(R*Lb));}
-    return P*scale;
-  }
-  function layerName(h){
-    if(h<11) return 'Troposphere';
-    if(h<20) return 'Tropopause';
-    return 'Stratosphere';
-  }
-
-  var soundCh=[
-    {h:2,w:3.4},{h:6,w:3.0},{h:11,w:2.6},{h:16,w:2.4},{h:22,w:2.6},{h:27,w:3.0}
+  /* ---- US Standard Atmosphere 1976 (geopotential base layers, 0..86 km) ---- */
+  var g0=9.80665,M=0.0289644,Rstar=8.31432;
+  var L=[
+    {h:0,    T:288.15, lr:-6.5, P:101325.0},
+    {h:11000,T:216.65, lr:0.0,  P:22632.06},
+    {h:20000,T:216.65, lr:1.0,  P:5474.889},
+    {h:32000,T:228.65, lr:2.8,  P:868.0187},
+    {h:47000,T:270.65, lr:0.0,  P:110.9063},
+    {h:51000,T:270.65, lr:-2.8, P:66.93887},
+    {h:71000,T:214.65, lr:-2.0, P:3.956420}
   ];
-
-  var accent='#3cc8ff', accentRGB='60,200,255';
-  function readAccent(){
-    var cs=getComputedStyle(document.documentElement);
-    var a=cs.getPropertyValue('--accent').trim();
-    if(a){accent=a;}
-    var r=cs.getPropertyValue('--accent-rgb').trim();
-    accentRGB=r||hexToRgb(accent)||'60,200,255';
-    root.style.setProperty('--as-acc',accent);
-    root.style.setProperty('--as-acc-rgb',accentRGB);
-  }
-  function hexToRgb(h){
-    h=(h||'').replace('#','');
-    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    if(h.length<6) return null;
-    var n=parseInt(h,16);
-    return ((n>>16)&255)+','+((n>>8)&255)+'&'.replace('&','')+(n&255);
-  }
-  function rgb(h){
-    h=(h||'').replace('#','');
-    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    var n=parseInt(h,16);
-    return [(n>>16)&255,(n>>8)&255,n&255];
+  function atmos(hkm){
+    var h=hkm*1000; if(h>86000)h=86000; if(h<0)h=0;
+    var i=L.length-1;
+    for(var k=L.length-1;k>=0;k--){ if(h>=L[k].h){i=k;break;} }
+    var b=L[i], lrK=b.lr/1000.0, Tb=b.T, dh=h-b.h;
+    var T=Tb+b.lr*( (h-b.h)/1000 );
+    var P;
+    if(Math.abs(b.lr)<1e-9){ P=b.P*Math.exp(-g0*M*dh/(Rstar*Tb)); }
+    else { P=b.P*Math.pow(T/Tb, -g0*M/(Rstar*lrK)); }
+    var rho=P*M/(Rstar*T);
+    return {T:T, Tc:T-273.15, P:P, hPa:P/100, rho:rho};
   }
 
+  /* layers for shading + labels (display altitude in km) */
+  var LAYERS=[
+    {name:'Troposphere', a:0,  b:11, fill:0.030},
+    {name:'Tropopause',  a:11, b:20, fill:0.060},
+    {name:'Stratosphere',a:20, b:47, fill:0.030},
+    {name:'Stratopause', a:47, b:51, fill:0.060},
+    {name:'Mesosphere',  a:51, b:86, fill:0.030},
+    {name:'Lower Thermosphere', a:86, b:100, fill:0.018}
+  ];
+  function layerName(hkm){
+    for(var i=0;i<LAYERS.length;i++){ if(hkm>=LAYERS[i].a && hkm<LAYERS[i].b) return LAYERS[i]; }
+    return LAYERS[LAYERS.length-1];
+  }
+
+  var ALT_MIN=0, ALT_MAX=100;
+  var KEY=[ {h:0,l:'Sea level'},{h:11,l:'Tropopause'},{h:50,l:'Stratopause'},{h:85,l:'Mesopause'} ];
+
+  /* secondary curve mode */
+  var mode='pressure';
+  toggle.addEventListener('click',function(e){
+    var btn=e.target.closest('.as-chip'); if(!btn)return;
+    mode=btn.getAttribute('data-mode');
+    Array.prototype.forEach.call(toggle.querySelectorAll('.as-chip'),function(c){ c.classList.toggle('as-chip-on', c===btn); });
+    legSecLabel.textContent = (mode==='pressure'?'Pressure':'Density');
+    draw();
+  });
+
+  /* sampling for curves */
+  var SAMPLES=260;
+  var samp=[]; (function(){ for(var i=0;i<=SAMPLES;i++){ var h=ALT_MIN+(ALT_MAX-ALT_MIN)*i/SAMPLES; samp.push({h:h,d:atmos(h)}); } })();
+  var Tmin=-100, Tmax=30;
+  var logPmin=Math.log10(atmos(100).P), logPmax=Math.log10(atmos(0).P);
+  var logDmin=Math.log10(atmos(100).rho), logDmax=Math.log10(atmos(0).rho);
+
+  /* geometry (recomputed on resize) */
   var W=0,H=0,dpr=1;
-  var pad={l:54,r:170,t:18,b:34};
+  var plot={x:0,y:0,w:0,h:0};
+  function layout(){
+    var pad={top:0,bottom:0,left:0,right:0};
+    pad.top = Math.max(96, H*0.16);
+    pad.bottom = Math.max(96, H*0.16);
+    pad.left = Math.max(46, W*0.085);
+    pad.right = Math.max(40, W*0.075);
+    plot.x=pad.left; plot.y=pad.top; plot.w=W-pad.left-pad.right; plot.h=H-pad.top-pad.bottom;
+  }
+  function altToY(h){ return plot.y + plot.h*(1-(h-ALT_MIN)/(ALT_MAX-ALT_MIN)); }
+  function yToAlt(y){ var f=1-(y-plot.y)/plot.h; return Math.max(ALT_MIN,Math.min(ALT_MAX, ALT_MIN+f*(ALT_MAX-ALT_MIN))); }
+  function tempToX(tc){ var f=(tc-Tmin)/(Tmax-Tmin); return plot.x + plot.w*Math.max(0,Math.min(1,f)); }
+  function secToX(d){
+    var v,mn,mx;
+    if(mode==='pressure'){ v=Math.log10(d.P); mn=logPmin; mx=logPmax; }
+    else { v=Math.log10(d.rho); mn=logDmin; mx=logDmax; }
+    var f=(v-mn)/(mx-mn); return plot.x + plot.w*Math.max(0,Math.min(1,f));
+  }
+
+  var curAlt=0;
+
   function resize(){
-    var rect=canvas.getBoundingClientRect();
-    dpr=Math.max(1,Math.min(window.devicePixelRatio||1,2.5));
-    W=Math.max(40,rect.width); H=Math.max(40,rect.height);
+    var r=ROOT.getBoundingClientRect();
+    W=Math.max(1,Math.round(r.width)); H=Math.max(1,Math.round(r.height));
+    dpr=Math.min(window.devicePixelRatio||1,2);
     canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    pad.r = W<520 ? 92 : 170;
-    pad.l = W<520 ? 44 : 54;
-    positionSlider();
-  }
-  function plot(){
-    return {x0:pad.l,x1:W-pad.r,y0:pad.t,y1:H-pad.b};
-  }
-  function tMin(){return Math.min(prof.tTrop,-85)-2;}
-  function tRange(){var lo=Math.min(prof.tSurf,prof.tTrop,-90)-3;var hi=Math.max(prof.tSurf,40);return [lo,hi];}
-  function xT(t){var p=plot();var r=tRange();return p.x0+(t-r[0])/(r[1]-r[0])*(p.x1-p.x0);}
-  function yH(h){var p=plot();return p.y1-(h/HMAX)*(p.y1-p.y0);}
-
-  function positionSlider(){
-    var p=plot();
-    slider.style.left=(p.x1-7)+'px';
-    slider.style.top=p.y0+'px';
-    slider.style.height=(p.y1-p.y0)+'px';
+    layout(); draw();
   }
 
-  function bands(){
-    return [
-      {a:0,b:11,name:'Troposphere',note:'weather, clouds, lapse rate'},
-      {a:11,b:20,name:'Tropopause',note:'near-isothermal cap'},
-      {a:20,b:30,name:'Stratosphere',note:'warms — ozone absorbs UV'}
-    ];
+  function roundHPa(v){ if(v>=100)return Math.round(v).toString(); if(v>=10)return v.toFixed(1); if(v>=1)return v.toFixed(2); if(v>=0.01)return v.toFixed(3); return v.toExponential(2); }
+  function roundRho(v){ if(v>=0.1)return v.toFixed(3); if(v>=0.001)return v.toFixed(4); return v.toExponential(2); }
+
+  function updateReadout(){
+    var d=atmos(curAlt), ly=layerName(curAlt);
+    elLayer.textContent=ly.name;
+    elAlt.textContent=curAlt.toFixed(1);
+    elT.textContent=(d.Tc>=0?'+':'')+d.Tc.toFixed(1);
+    elP.textContent=roundHPa(d.hPa);
+    elD.textContent=roundRho(d.rho);
   }
 
   function draw(){
-    var p=plot(), argb=rgb(accent);
-    var A=accent, Argb=argb.join(',');
+    if(W===0||H===0)return;
     ctx.clearRect(0,0,W,H);
+    /* background vertical gradient: deep space top -> atmosphere base */
+    var bg=ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#040312');
+    bg.addColorStop(0.55,'#070522');
+    bg.addColorStop(0.82,'#0c0936');
+    bg.addColorStop(1,'#161454');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
-    if(show.bands){
-      var bs=bands();
-      for(var i=0;i<bs.length;i++){
-        var b=bs[i];
-        var yt=yH(b.b), yb=yH(b.a);
-        ctx.fillStyle=i===1?'rgba(166,171,230,0.075)':(i===2?'rgba('+Argb+',0.06)':'rgba(22,20,95,0.30)');
-        ctx.fillRect(p.x0,yt,p.x1-p.x0,yb-yt);
-        ctx.strokeStyle='rgba(166,171,230,0.14)';
-        ctx.lineWidth=1;
-        ctx.beginPath();ctx.moveTo(p.x0,yt+0.5);ctx.lineTo(p.x1,yt+0.5);ctx.stroke();
-        ctx.save();
-        ctx.fillStyle='rgba(244,245,255,0.78)';
-        ctx.font='italic 700 11px "Chakra Petch","Inter",sans-serif';
-        ctx.textAlign='left';ctx.textBaseline='top';
-        ctx.fillText(b.name.toUpperCase(),p.x0+8,yt+6);
-        if(W>=440){
-          ctx.fillStyle='rgba(166,171,230,0.65)';
-          ctx.font='400 9.5px "Inter",sans-serif';
-          ctx.fillText(b.note,p.x0+8,yt+20);
-        }
-        ctx.restore();
-      }
-    }
+    /* faint star field in upper region */
+    drawStars();
 
-    ctx.strokeStyle='rgba(166,171,230,0.10)';ctx.lineWidth=1;
-    ctx.fillStyle='rgba(166,171,230,0.55)';
-    ctx.font='400 9.5px "Inter",sans-serif';
-    ctx.textAlign='center';ctx.textBaseline='top';
-    var tk=[-80,-60,-40,-20,0,20,40];
-    for(var k=0;k<tk.length;k++){
-      var tv=tk[k];var x=xT(tv);
-      if(x<p.x0-1||x>p.x1+1) continue;
-      ctx.beginPath();ctx.moveTo(x,p.y0);ctx.lineTo(x,p.y1);
-      ctx.strokeStyle='rgba(166,171,230,0.07)';ctx.stroke();
-      ctx.fillStyle='rgba(166,171,230,0.55)';
-      ctx.fillText((tv>0?'+':'')+tv,x,p.y1+6);
-    }
+    /* layer bands */
     ctx.save();
-    ctx.fillStyle='rgba(166,171,230,0.7)';
-    ctx.font='600 9px "Inter",sans-serif';
+    ctx.beginPath(); ctx.rect(plot.x-0.5,plot.y-0.5,plot.w+1,plot.h+1); ctx.clip();
+    for(var i=0;i<LAYERS.length;i++){
+      var lyr=LAYERS[i];
+      var y0=altToY(Math.min(lyr.b,ALT_MAX)), y1=altToY(lyr.a);
+      ctx.fillStyle=accA(lyr.fill);
+      ctx.fillRect(plot.x,y0,plot.w,y1-y0);
+    }
+    ctx.restore();
+
+    /* grid + altitude axis ticks */
+    drawGrid();
+
+    /* layer boundary lines + labels (right side) */
+    drawLayerLabels();
+
+    /* curves */
+    drawSecondaryCurve();
+    drawTempCurve();
+
+    /* marker */
+    drawMarker();
+  }
+
+  var STAR=[];
+  (function(){ for(var i=0;i<90;i++){ STAR.push({x:Math.random(),y:Math.random()*0.62,r:Math.random()*0.9+0.25,a:Math.random()*0.5+0.18}); } })();
+  function drawStars(){
+    ctx.save();
+    for(var i=0;i<STAR.length;i++){ var s=STAR[i]; ctx.globalAlpha=s.a; ctx.fillStyle='#f4f5ff'; ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,6.2832); ctx.fill(); }
+    ctx.restore();
+  }
+
+  function drawGrid(){
+    ctx.save();
+    ctx.font="500 11px Inter, sans-serif";
+    ctx.textBaseline='middle';
+    var ticks=[0,10,20,30,40,50,60,70,80,90,100];
+    for(var i=0;i<ticks.length;i++){
+      var h=ticks[i], y=altToY(h);
+      ctx.strokeStyle='rgba(166,171,230,0.09)';
+      ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(plot.x,y); ctx.lineTo(plot.x+plot.w,y); ctx.stroke();
+      ctx.fillStyle='rgba(166,171,230,0.66)';
+      ctx.textAlign='right';
+      ctx.fillText(h.toString(), plot.x-10, y);
+    }
+    /* axis title (altitude) */
+    ctx.save();
+    ctx.translate(Math.max(14,plot.x*0.32), plot.y+plot.h/2);
+    ctx.rotate(-Math.PI/2);
     ctx.textAlign='center';
-    ctx.fillText('TEMPERATURE  (°C)',(p.x0+p.x1)/2,p.y1+18);
+    ctx.font="italic 700 11px 'Chakra Petch', sans-serif";
+    ctx.fillStyle='rgba(166,171,230,0.7)';
+    ctx.fillText('ALTITUDE  (KM)',0,0);
     ctx.restore();
 
-    ctx.textAlign='right';ctx.textBaseline='middle';
-    ctx.font='400 9.5px "Inter",sans-serif';
-    for(var hh=0;hh<=HMAX;hh+=5){
-      var y=yH(hh);
-      ctx.fillStyle='rgba(166,171,230,0.55)';
-      ctx.fillText(hh+'',p.x0-8,y);
+    /* bottom temperature axis */
+    var tT=[-100,-75,-50,-25,0,25];
+    ctx.font="500 10.5px Inter, sans-serif";
+    ctx.textBaseline='top'; ctx.textAlign='center';
+    for(var j=0;j<tT.length;j++){
+      var tx=tempToX(tT[j]);
+      ctx.strokeStyle='rgba(166,171,230,0.06)';
+      ctx.beginPath(); ctx.moveTo(tx,plot.y); ctx.lineTo(tx,plot.y+plot.h); ctx.stroke();
+      ctx.fillStyle=tempA(0.8);
+      ctx.fillText((tT[j]>0?'+':'')+tT[j], tx, plot.y+plot.h+9);
     }
+    ctx.font="italic 700 10px 'Chakra Petch', sans-serif";
+    ctx.fillStyle=tempA(0.85);
+    ctx.fillText('TEMPERATURE  (°C)', plot.x+plot.w/2, plot.y+plot.h+24);
+
+    /* top secondary axis labels */
+    ctx.textBaseline='bottom';
+    var secTicks = mode==='pressure'
+      ? [{v:1000,l:'1000 hPa'},{v:100,l:'100'},{v:10,l:'10'},{v:1,l:'1'},{v:0.1,l:'0.1'},{v:0.01,l:'0.01 hPa'}]
+      : [{v:1,l:'1 kg/m³'},{v:0.1,l:'0.1'},{v:0.01,l:'0.01'},{v:0.001,l:'1e-3'},{v:0.0001,l:'1e-4'},{v:0.00001,l:'1e-5'}];
+    ctx.font="500 10px Inter, sans-serif"; ctx.textAlign='center';
+    for(var s=0;s<secTicks.length;s++){
+      var st=secTicks[s];
+      var sx = mode==='pressure'
+        ? plot.x+plot.w*((Math.log10(st.v*100)-logPmin)/(logPmax-logPmin))
+        : plot.x+plot.w*((Math.log10(st.v)-logDmin)/(logDmax-logDmin));
+      if(sx<plot.x-2||sx>plot.x+plot.w+2)continue;
+      ctx.fillStyle=accA(0.72);
+      ctx.fillText(st.l, sx, plot.y-7);
+    }
+    ctx.font="italic 700 10px 'Chakra Petch', sans-serif";
+    ctx.fillStyle=accA(0.85);
+    ctx.textBaseline='bottom';
+    ctx.fillText((mode==='pressure'?'PRESSURE  (LOG)':'DENSITY  (LOG)'), plot.x+plot.w/2, plot.y-22);
+    ctx.restore();
+  }
+
+  function drawLayerLabels(){
     ctx.save();
-    ctx.translate(14,(p.y0+p.y1)/2);ctx.rotate(-Math.PI/2);
-    ctx.fillStyle='rgba(166,171,230,0.7)';ctx.font='600 9px "Inter",sans-serif';
-    ctx.textAlign='center';ctx.fillText('ALTITUDE  (KM)',0,0);
+    var bounds=[11,20,47,51,86];
+    for(var i=0;i<bounds.length;i++){
+      var y=altToY(bounds[i]);
+      ctx.strokeStyle='rgba(166,171,230,0.16)';
+      ctx.setLineDash([2,5]); ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(plot.x,y); ctx.lineTo(plot.x+plot.w,y); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    ctx.textAlign='right'; ctx.textBaseline='middle';
+    ctx.font="italic 700 11px 'Chakra Petch', sans-serif";
+    for(var k=0;k<LAYERS.length;k++){
+      var lyr=LAYERS[k];
+      var topB=Math.min(lyr.b,ALT_MAX);
+      var midY=(altToY(topB)+altToY(lyr.a))/2;
+      var active = curAlt>=lyr.a && curAlt<lyr.b;
+      ctx.fillStyle = active ? accent : 'rgba(166,171,230,0.5)';
+      ctx.globalAlpha = active?1:0.85;
+      ctx.fillText(lyr.name.toUpperCase(), plot.x+plot.w-10, midY);
+      ctx.globalAlpha=1;
+    }
+    /* key altitude callouts (small dots on temp curve) */
     ctx.restore();
+  }
 
-    if(show.sound){
-      ctx.save();
-      for(var c=0;c<soundCh.length;c++){
-        var ch=soundCh[c];
-        ctx.beginPath();
-        var first=true;
-        for(var s=0;s<=60;s++){
-          var hv=s/60*HMAX;
-          var z=(hv-ch.h)/ch.w;
-          var wgt=Math.exp(-0.5*z*z);
-          var xw=p.x1 - 6 - wgt*(W<520?70:128);
-          var yw=yH(hv);
-          if(first){ctx.moveTo(xw,yw);first=false;}else{ctx.lineTo(xw,yw);}
-        }
-        ctx.strokeStyle='rgba('+Argb+',0.55)';
-        ctx.lineWidth=1.4;
-        ctx.stroke();
-        var pk=yH(ch.h);
-        ctx.fillStyle='rgba('+Argb+',0.9)';
-        ctx.beginPath();ctx.arc(p.x1-6-(W<520?70:128),pk,2.4,0,6.2832);ctx.fill();
-      }
-      ctx.fillStyle='rgba('+Argb+',0.85)';
-      ctx.font='italic 700 9.5px "Chakra Petch","Inter",sans-serif';
-      ctx.textAlign='right';ctx.textBaseline='top';
-      ctx.fillText('SOUNDING CHANNELS',p.x1-4,p.y0+2);
-      ctx.fillStyle='rgba(166,171,230,0.6)';
-      ctx.font='400 9px "Inter",sans-serif';
-      if(W>=440) ctx.fillText('weighting functions → T(z)',p.x1-4,p.y0+16);
-      ctx.restore();
+  function drawSecondaryCurve(){
+    ctx.save();
+    ctx.beginPath();
+    for(var i=0;i<samp.length;i++){
+      var p=samp[i], x=secToX(p.d), y=altToY(p.h);
+      if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
     }
+    /* glow */
+    ctx.lineJoin='round'; ctx.lineCap='round';
+    ctx.shadowColor=accA(0.55); ctx.shadowBlur=14;
+    ctx.strokeStyle=accA(0.95); ctx.lineWidth=2.2; ctx.stroke();
+    ctx.shadowBlur=0;
+    /* subtle fill toward left axis */
+    ctx.lineTo(plot.x, altToY(samp[samp.length-1].h));
+    ctx.lineTo(plot.x, altToY(samp[0].h));
+    ctx.closePath();
+    var fg=ctx.createLinearGradient(plot.x,0,plot.x+plot.w,0);
+    fg.addColorStop(0,accA(0.10)); fg.addColorStop(1,accA(0.0));
+    ctx.fillStyle=fg; ctx.fill();
+    ctx.restore();
+  }
 
-    drawCurve(function(h){return dewAt(h,prof);}, show.dew?'rgba(93,214,176,0.95)':null,1.8,[]);
-    drawCurve(function(h){return tempAt(h,prof);}, 'rgba(255,138,92,0.98)',2.4,[]);
-
-    if(show.dew){
-      labelCurve('Dew point',dewAt(0,prof),'rgba(93,214,176,0.95)',10);
+  function drawTempCurve(){
+    ctx.save();
+    ctx.beginPath();
+    for(var i=0;i<samp.length;i++){
+      var p=samp[i], x=tempToX(p.d.Tc), y=altToY(p.h);
+      if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
     }
-    labelCurve('Temperature',tempAt(0,prof),'rgba(255,138,92,0.98)',-6);
+    ctx.lineJoin='round'; ctx.lineCap='round';
+    ctx.shadowColor=tempA(0.55); ctx.shadowBlur=16;
+    ctx.strokeStyle=TEMP_C; ctx.lineWidth=2.8; ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.restore();
+  }
 
-    var my=yH(alt);
-    var mt=tempAt(alt,prof), md=dewAt(alt,prof);
-    var mx=xT(mt);
-    ctx.strokeStyle='rgba('+Argb+',0.85)';
-    ctx.lineWidth=1.2;
-    ctx.setLineDash([4,4]);
-    ctx.beginPath();ctx.moveTo(p.x0,my);ctx.lineTo(p.x1,my);ctx.stroke();
+  function drawMarker(){
+    var d=atmos(curAlt);
+    var y=altToY(curAlt);
+    var tx=tempToX(d.Tc), sx=secToX(d);
+    ctx.save();
+    /* horizontal sweep line */
+    ctx.strokeStyle=accA(0.55);
+    ctx.lineWidth=1; ctx.setLineDash([1,4]);
+    ctx.beginPath(); ctx.moveTo(plot.x,y); ctx.lineTo(plot.x+plot.w,y); ctx.stroke();
     ctx.setLineDash([]);
 
-    if(show.dew){
-      var dx=xT(md);
-      ctx.fillStyle='rgba(93,214,176,0.95)';
-      ctx.beginPath();ctx.arc(dx,my,3.6,0,6.2832);ctx.fill();
-      ctx.strokeStyle='#050314';ctx.lineWidth=1.4;ctx.stroke();
-    }
-    var pulse=reduce?0:(0.5+0.5*Math.sin(Date.now()/520));
-    ctx.beginPath();ctx.arc(mx,my,8+pulse*3,0,6.2832);
-    ctx.fillStyle='rgba('+Argb+','+(0.10+pulse*0.10)+')';ctx.fill();
-    ctx.beginPath();ctx.arc(mx,my,5,0,6.2832);
-    ctx.fillStyle=accent;ctx.fill();
-    ctx.strokeStyle='#050314';ctx.lineWidth=1.6;ctx.stroke();
+    /* node on secondary curve */
+    nodeDot(sx,y,accent,accA(0.6));
+    /* node on temp curve */
+    nodeDot(tx,y,TEMP_C,tempA(0.6));
 
-    ctx.save();
-    var tag=mt.toFixed(1)+'°C';
-    ctx.font='italic 700 11px "Chakra Petch","Inter",sans-serif';
-    var tw=ctx.measureText(tag).width+14;
-    var tagx=Math.min(mx+12,p.x1-tw-2);
-    var tagy=Math.max(p.y0+2,Math.min(my-10,p.y1-22));
-    ctx.fillStyle='rgba(5,3,20,0.85)';
-    roundRect(tagx,tagy,tw,18,5);ctx.fill();
-    ctx.strokeStyle='rgba('+Argb+',0.5)';ctx.lineWidth=1;
-    roundRect(tagx,tagy,tw,18,5);ctx.stroke();
-    ctx.fillStyle=accent;ctx.textAlign='left';ctx.textBaseline='middle';
-    ctx.fillText(tag,tagx+7,tagy+10);
+    /* draggable handle on left axis */
+    var hx=plot.x;
+    ctx.shadowColor=accA(0.8); ctx.shadowBlur=16;
+    ctx.fillStyle=accent;
+    ctx.beginPath(); ctx.moveTo(hx-13,y); ctx.lineTo(hx-2,y-6.5); ctx.lineTo(hx-2,y+6.5); ctx.closePath(); ctx.fill();
+    ctx.shadowBlur=0;
     ctx.restore();
   }
-
-  function drawCurve(fn,color,lw,dash){
-    if(!color) return;
-    var p=plot();
-    ctx.save();
-    ctx.beginPath();
-    var first=true;
-    for(var s=0;s<=120;s++){
-      var h=s/120*HMAX;
-      var x=xT(fn(h)),y=yH(h);
-      if(first){ctx.moveTo(x,y);first=false;}else{ctx.lineTo(x,y);}
-    }
-    ctx.strokeStyle=color;ctx.lineWidth=lw;
-    ctx.lineJoin='round';ctx.lineCap='round';
-    if(dash&&dash.length)ctx.setLineDash(dash);
-    ctx.shadowColor=color;ctx.shadowBlur=reduce?0:6;
-    ctx.stroke();
-    ctx.restore();
-  }
-  function labelCurve(txt,t0,color,dy){
-    var p=plot();var x=xT(t0),y=yH(0);
-    ctx.save();
-    ctx.fillStyle=color;
-    ctx.font='italic 700 9.5px "Chakra Petch","Inter",sans-serif';
-    ctx.textAlign='center';ctx.textBaseline='bottom';
-    ctx.fillText(txt.toUpperCase(),Math.max(p.x0+24,Math.min(x,p.x1-24)),y+dy);
-    ctx.restore();
-  }
-  function roundRect(x,y,w,h,r){
-    ctx.beginPath();
-    ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
-    ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);
-    ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+  function nodeDot(x,y,c,glow){
+    ctx.shadowColor=glow; ctx.shadowBlur=14;
+    ctx.fillStyle=c; ctx.beginPath(); ctx.arc(x,y,5.2,0,6.2832); ctx.fill();
+    ctx.shadowBlur=0;
+    ctx.fillStyle='#050314'; ctx.beginPath(); ctx.arc(x,y,2.1,0,6.2832); ctx.fill();
+    ctx.strokeStyle=c; ctx.lineWidth=1.4; ctx.beginPath(); ctx.arc(x,y,5.2,0,6.2832); ctx.stroke();
   }
 
-  function updateReadout(){
-    var t=tempAt(alt,prof),d=dewAt(alt,prof),pr=presAt(alt,prof);
-    root.querySelector('#as-ro-alt').innerHTML=alt.toFixed(1)+'<i>km</i>';
-    root.querySelector('#as-ro-temp').innerHTML=t.toFixed(1)+'<i>°C</i>';
-    root.querySelector('#as-ro-dew').innerHTML=d.toFixed(1)+'<i>°C</i>';
-    root.querySelector('#as-ro-pres').innerHTML=Math.round(pr)+'<i>hPa</i>';
-    root.querySelector('#as-ro-layer').textContent=layerName(alt);
-  }
-
-  function setAlt(a,instant){
-    targetAlt=Math.max(0,Math.min(HMAX,a));
-    if(instant||reduce){alt=targetAlt;}
-    slider.value=targetAlt;
-    updateReadout();
-  }
-
-  function pointerToAlt(clientY){
-    var rect=canvas.getBoundingClientRect();
-    var y=clientY-rect.top;
-    var p=plot();
-    var frac=(p.y1-y)/(p.y1-p.y0);
-    return frac*HMAX;
-  }
-
+  /* ---- interaction ---- */
   var dragging=false;
-  canvas.addEventListener('pointerdown',function(e){
-    dragging=true;canvas.setPointerCapture(e.pointerId);
-    setAlt(pointerToAlt(e.clientY));e.preventDefault();
-  });
-  canvas.addEventListener('pointermove',function(e){
-    if(!dragging) return;
-    setAlt(pointerToAlt(e.clientY));
-  });
-  canvas.addEventListener('pointerup',function(){dragging=false;});
-  canvas.addEventListener('pointercancel',function(){dragging=false;});
-
-  slider.addEventListener('input',function(){setAlt(parseFloat(slider.value));});
-
-  function toggle(btn,key){
-    btn.addEventListener('click',function(){
-      show[key]=!show[key];
-      btn.classList.toggle('as-on',show[key]);
-      btn.setAttribute('aria-pressed',show[key]?'true':'false');
-      if(reduce) draw();
-    });
+  function pointAlt(e){
+    var r=canvas.getBoundingClientRect();
+    var cy=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
+    return yToAlt(cy);
   }
-  toggle(root.querySelector('#as-tg-dew'),'dew');
-  toggle(root.querySelector('#as-tg-sound'),'sound');
-  toggle(root.querySelector('#as-tg-bands'),'bands');
-
-  var prChips={std:root.querySelector('#as-pr-std'),trop:root.querySelector('#as-pr-trop'),polar:root.querySelector('#as-pr-polar')};
-  Object.keys(prChips).forEach(function(key){
-    prChips[key].addEventListener('click',function(){
-      prof=profiles[key];
-      Object.keys(prChips).forEach(function(k){prChips[k].classList.toggle('as-on',k===key);});
-      updateReadout();
-      if(reduce) draw();
-    });
-  });
-
-  var ro=new ResizeObserver(function(){resize();if(reduce)draw();});
-  ro.observe(canvas);
-  window.addEventListener('resize',function(){resize();if(reduce)draw();});
-
-  var lastAcc=0;
-  function frame(ts){
-    if(ts-lastAcc>400){readAccent();lastAcc=ts;}
-    if(!reduce){
-      alt+=(targetAlt-alt)*0.18;
-      if(Math.abs(targetAlt-alt)<0.005) alt=targetAlt;
+  function setAlt(h,animate){
+    h=Math.max(ALT_MIN,Math.min(ALT_MAX,h));
+    if(animate&&!reduce){ animateTo(h); }
+    else { curAlt=h; updateReadout(); draw(); }
+  }
+  var animRAF=null;
+  function animateTo(target){
+    if(animRAF)cancelAnimationFrame(animRAF);
+    var start=curAlt, t0=performance.now(), dur=320;
+    function step(now){
+      var k=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-k,3);
+      curAlt=start+(target-start)*e; updateReadout(); draw();
+      if(k<1)animRAF=requestAnimationFrame(step);
     }
-    draw();
-    requestAnimationFrame(frame);
+    animRAF=requestAnimationFrame(step);
   }
+  function onDown(e){ dragging=true; ROOT.style.cursor='grabbing'; setAlt(pointAlt(e),false); e.preventDefault(); }
+  function onMove(e){ if(!dragging)return; setAlt(pointAlt(e),false); e.preventDefault(); }
+  function onUp(){ dragging=false; ROOT.style.cursor='crosshair'; }
 
-  readAccent();
-  resize();
-  setAlt(0,true);
-  if(reduce){
-    draw();
-    setInterval(readAccent,500);
-    var rd=root.querySelector('#as-tg-dew');
-  }else{
-    requestAnimationFrame(frame);
+  canvas.addEventListener('mousedown',onDown);
+  window.addEventListener('mousemove',onMove);
+  window.addEventListener('mouseup',onUp);
+  canvas.addEventListener('touchstart',onDown,{passive:false});
+  canvas.addEventListener('touchmove',onMove,{passive:false});
+  window.addEventListener('touchend',onUp);
+  canvas.addEventListener('keydown',function(e){
+    if(e.key==='ArrowUp'){ setAlt(curAlt+1,false); e.preventDefault(); }
+    else if(e.key==='ArrowDown'){ setAlt(curAlt-1,false); e.preventDefault(); }
+  });
+  canvas.setAttribute('tabindex','0');
+  canvas.setAttribute('role','slider');
+  canvas.setAttribute('aria-label','Altitude marker, 0 to 100 kilometers');
+
+  /* ---- resize + visibility ---- */
+  var ro=new ResizeObserver(function(){ resize(); });
+  ro.observe(ROOT);
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(en){ ROOT._vis=en.isIntersecting; });
+  },{threshold:0.01});
+  io.observe(ROOT);
+
+  function start(){
+    updateReadout();
+    resize();
+    loading.classList.add('as-hidden');
+    /* gentle intro animation: rise from 0 to a settle point then back */
+    if(!reduce){
+      setTimeout(function(){ animateTo(0); },10);
+    }
   }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(function(){ resize(); }); }
+  start();
 })();
 </script>
 </body></html>
