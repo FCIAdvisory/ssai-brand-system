@@ -319,7 +319,7 @@
     },
     {
       "slug": "space-weather",
-      "title": "Space Weather Console",
+      "title": "Space Weather",
       "collection": "sun-space-weather",
       "source": "NOAA",
       "credit": "Scales & data \u00b7 NOAA SWPC",
@@ -459,32 +459,32 @@
     },
     {
       "slug": "galaxy-gen",
-      "title": "Spiral Galaxy Generator",
+      "title": "Anatomy of a Spiral Galaxy",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "Reveals the architecture of a spiral galaxy as a living, procedurally-generated system \u2014 a golden core bulge, sweeping logarithmic arms seeded with thousands of blue young stars, glowing pink HII star-forming regions and a faint dust lane, all turning under realistic differential rotation. Shows how arm count, winding and stellar density shape galactic structure.",
-      "interaction": "Three overlaid sliders adjust the number of spiral arms, the winding tightness of the arms, and the star density. The galaxy rotates continuously and differentially (inner stars faster than outer) at rest. HUD chips report arms, total star count and rotation rate. Changing any control re-seeds and re-flows the structure live.",
+      "blurb": "An interactive, scientifically grounded model of spiral-galaxy structure for SSAI's Instrument Library. It renders a face-on disk galaxy from its real components \u2014 a bright central bulge of old stars, a thin stellar disk, logarithmic spiral arms traced by blue young O/B stars and pink HII star-forming regions, a dark dust lane, and a diffuse halo \u2014 all set in differential rotation (inner stars orbit faster than outer ones, the physical origin of how arms wind). Viewers adjust the arm pitch angle (loose vs. tightly wound, the property astronomers use to classify Sa\u2013Sc spirals) and isolate any single component to read a one-line description of what it is. It replaces the previous \"generator\" toy with a quiet, museum-grade explanation of galaxy anatomy.",
+      "interaction": "Loads with the galaxy already drawn and slowly rotating with correct differential motion (the synchronous first frame is a fully formed galaxy, never a black void). A single slider sets the spiral arm pitch angle from ~10 deg (tightly wound, Sa-type) to ~30 deg (loose, open, Sc-type); dragging it re-shapes the logarithmic arms live. A small row of pills lets the viewer highlight one component at a time \u2014 Bulge, Disk, Arms, HII regions, or Halo \u2014 which dims the rest, draws a soft emphasis, and reveals a one-line scientific caption for that structure; \"All\" restores the full luminous view. Corner chips quietly report the current pitch angle and morphological type. Resizing the frame re-derives all dimensions so the galaxy always fills the canvas edge to edge.",
       "real": false
     },
     {
       "slug": "hyperspace-warp",
-      "title": "Hyperspace Warp",
+      "title": "Relativistic Sky",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "Shows the geometry of approaching light speed \u2014 how stars stretch into streaks, crowd toward the forward direction through relativistic aberration, and Doppler-shift blue ahead and red behind as velocity climbs toward c.",
-      "interaction": "Drag the SPEED slider to set beta (v/c) from 0 to 0.999 and watch the starfield stretch, concentrate forward, and Doppler-tint; leave it alone and it breathes gently on its own.",
+      "blurb": "A grounded demonstration of how the sky would actually look from a ship moving near the speed of light. As you raise the velocity (\u03b2 = v/c), the real special-relativity optics take hold: stars crowd toward your direction of travel (relativistic aberration), the field ahead blue-shifts while the field behind red-shifts (relativistic Doppler), and the forward cone brightens through relativistic beaming (the \"headlight\" effect). Useful for teaching SR optics with correct numbers \u2014 Lorentz factor, aberration angle, and Doppler factor are all reported live.",
+      "interaction": "One control: a velocity slider for \u03b2 = v/c, from 0 to 0.99. Drag it up and the dense starfield migrates forward, tints blue ahead and red behind, and the forward hemisphere brightens \u2014 exactly per the aberration and Doppler equations. Three quiet corner chips report \u03b2, the Lorentz factor \u03b3, and the forward aberration half-angle. The view holds a gentle continuous drift so the sky feels alive even when you leave the slider untouched.",
       "real": false
     },
     {
       "slug": "pulsar",
-      "title": "Pulsar",
+      "title": "Pulsar \u2014 a cosmic lighthouse",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "An interactive rotating neutron star whose tilted magnetic beams sweep past the viewer, dropping perfectly regular blips onto a live pulse-timing strip.",
-      "interaction": "Drag the spin-rate slider (1-700 Hz) to speed up rotation and the pulse train; toggle the magnetic-axis tilt and beam visibility to see how line-of-sight geometry creates the pulses.",
+      "blurb": "A grounded model of a rotating neutron star whose two opposed magnetic-axis radio beams sweep across space. The spin axis and the magnetic axis are offset, so as the star rotates the beams trace cones on the sky; each time a beam crosses Earth's line of sight, the observer records a sharp pulse. A live folded pulse profile builds up exactly as a radio astronomer would record it, spiking once per beam pass. Choose among real pulsars \u2014 the Crab (33 ms, young, strong field), Vela (89 ms), and a recycled millisecond pulsar (1.4 ms, ancient, weak field) \u2014 to see how spin period and magnetic field together define a neutron star's life stage.",
+      "interaction": "Drag the spin-period slider to set how fast the neutron star rotates \u2014 the beams sweep faster and the folded profile ticks at the new rate. Tap a named preset (Crab, Vela, Millisecond) to jump to a real pulsar with its true period, surface magnetic field, and age class shown in the quiet corner chips. The folded pulse profile at the foot of the frame fills in over successive rotations and flashes its spike each time a beam crosses the Earth marker's line of sight.",
       "real": false
     },
     {
@@ -539,12 +539,12 @@
     },
     {
       "slug": "nbody-gravity",
-      "title": "N-Body Gravity Sandbox",
+      "title": "Orbital Mechanics",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "An interactive gravitational sandbox where a pre-seeded planetary system orbits a bright central star with glowing colour-coded motion-trail ribbons. Visitors click-drag to fling new bodies into the field with velocity and watch gravity sculpt new orbits in real time, illustrating the n-body simulation work at the heart of NASA mission planning, celestial mechanics, and trajectory design.",
-      "interaction": "Alive on load: a luminous star anchors several orbiting bodies (including a tight binary pair) that paint elegant fading ribbons across a faint starfield. Click and drag anywhere to aim and release to fling a new body with the drag velocity. Controls (top-left): Add seeds a random orbiter, Clear resets to the pristine seed system, and a Gravity strength slider warps every orbit instantly. HUD chips read live body count and total system energy.",
+      "blurb": "A grounded gravitational instrument that opens with a star and three planets already tracing accurate Keplerian ellipses with luminous trails. Tuning a single planet's orbital velocity lets the observer watch the same conservation laws that govern real systems reshape an orbit \u2014 circular, to ellipse, to unbound escape \u2014 while a quiet readout reports the live total mechanical energy of the system.",
+      "interaction": "The system runs in graceful motion on load. Use the VELOCITY slider to scale the highlighted planet's speed: below ~1.0 the orbit tightens into an ellipse with the star at one focus; near 1.0 it is circular; above ~1.41x the planet exceeds escape velocity and the trail opens into an unbound hyperbola. The SPEED slider sets the time step for observation. Click empty space to release an additional body on a tangential orbit and watch it settle into the gravitational field. The \"Reset system\" chip restores the original three-planet configuration. Corner chips report the number of bodies and the system's total energy (negative = bound).",
       "real": false
     },
     {
@@ -559,12 +559,12 @@
     },
     {
       "slug": "lenses-switch",
-      "title": "Three lenses",
+      "title": "The SSAI Lens \u2014 Sun \u00b7 Earth \u00b7 Universe",
       "collection": "mission-tools",
       "source": "",
       "credit": "",
-      "blurb": "A hero domain-switcher embodying SSAI's three science arenas \u2014 pick The Sun, The Earth, or The Universe to crossfade a generative visualization and re-theme the module's accent.",
-      "interaction": "Click one of the three lenses; the central canvas crossfades between a flaring sun, a rotating dot-globe, and a twinkling starfield while the accent color eases from amber to teal to violet.",
+      "blurb": "A brand-identity centrepiece for SSAI's Instrument Library that frames the company's three scientific domains \u2014 Heliophysics, Earth Science, and Astrophysics \u2014 as three real NASA images you switch between with elegant cinematic cross-fades. Each lens presents the genuine imagery full-bleed with slow, restrained motion, the domain name, and a single line describing the science SSAI advances there.",
+      "interaction": "Three quiet segmented tabs (Sun / Earth / Universe) cross-fade between full-bleed real NASA images. The active lens drifts and slowly zooms (a gentle Ken Burns parallax); the domain title and descriptor line settle into place on each switch. A small corner chip names the active science domain. Tabs respond to click, keyboard (arrow keys / Enter), and there is no clutter \u2014 the imagery leads.",
       "real": false
     },
     {

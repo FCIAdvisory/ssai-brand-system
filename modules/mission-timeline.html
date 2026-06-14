@@ -414,7 +414,7 @@ body.mb-embed #kit-mission-timeline [class*='stage'],body.mb-embed #kit-mission-
       ctx.textAlign='center';
       ctx.fillStyle='rgba(196,206,240,0.42)';
       ctx.font='600 '+Math.max(10,Math.min(W*0.011,13))+'px Inter,system-ui,sans-serif';
-      ctx.fillText(e.label.replace(/(.{0,26})\s/,'$1​'), cx, yTop);
+      ctx.fillText(e.label, cx, yTop);
       ctx.fillStyle='rgba(150,165,210,0.30)';
       ctx.font='500 '+Math.max(9,Math.min(W*0.009,11))+'px Inter,system-ui,sans-serif';
       ctx.fillText(e.sub, cx, yTop+16);

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hyperspace Warp · SSAI</title>
+<title>Relativistic Sky · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,27 +41,22 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-hyperspace-warp{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;color:#eef1ff;border-radius:inherit;user-select:none;-webkit-user-select:none}
-#kit-hyperspace-warp .hw-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#kit-hyperspace-warp .hw-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 50%,rgba(5,3,20,0) 38%,rgba(5,3,20,0.35) 74%,rgba(3,2,12,0.82) 100%)}
-#kit-hyperspace-warp .hw-hud{position:absolute;top:18px;display:flex;flex-direction:column;gap:9px;pointer-events:none;z-index:3}
-#kit-hyperspace-warp .hw-hud-tl{left:20px;align-items:flex-start}
-#kit-hyperspace-warp .hw-hud-tr{right:20px;align-items:flex-end}
-#kit-hyperspace-warp .hw-chip{display:flex;align-items:baseline;gap:8px;padding:7px 13px;border-radius:11px;background:rgba(10,8,32,0.46);border:1px solid rgba(150,160,230,0.16);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);box-shadow:0 2px 18px rgba(0,0,0,0.32)}
-#kit-hyperspace-warp .hw-chip-k{font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:rgba(196,202,238,0.62)}
-#kit-hyperspace-warp .hw-chip-v{font-size:18px;font-weight:600;letter-spacing:0.01em;color:#f3f5ff;font-variant-numeric:tabular-nums;line-height:1}
-#kit-hyperspace-warp .hw-chip-u{font-size:10.5px;font-weight:400;letter-spacing:0.05em;color:rgba(170,178,222,0.5)}
-#kit-hyperspace-warp .hw-chip-blue{border-color:rgba(120,170,255,0.34)}
-#kit-hyperspace-warp .hw-chip-blue .hw-chip-v{color:#bcd6ff}
-#kit-hyperspace-warp .hw-controls{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:16px;padding:12px 20px;border-radius:16px;background:rgba(9,7,28,0.5);border:1px solid rgba(150,160,230,0.16);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 6px 30px rgba(0,0,0,0.4);z-index:4;width:min(440px,72%);transition:opacity .5s ease}
-#kit-hyperspace-warp .hw-ctl-label{font-size:11px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:rgba(198,204,240,0.66);flex-shrink:0}
-#kit-hyperspace-warp .hw-ctl-val{font-size:13px;font-weight:600;letter-spacing:0.02em;color:#dfe6ff;font-variant-numeric:tabular-nums;flex-shrink:0;min-width:52px;text-align:right}
-#kit-hyperspace-warp .hw-slider{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:4px;background:linear-gradient(90deg,rgba(120,170,255,0.85) 0%,rgba(120,170,255,0.85) var(--hw-fill,25%),rgba(150,160,230,0.18) var(--hw-fill,25%),rgba(150,160,230,0.18) 100%);outline:none;cursor:pointer;margin:0}
-#kit-hyperspace-warp .hw-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,#cfe0ff 60%,#9fc0ff);border:none;box-shadow:0 0 0 4px rgba(120,170,255,0.18),0 0 14px rgba(120,170,255,0.7);cursor:pointer;transition:box-shadow .2s}
-#kit-hyperspace-warp .hw-slider::-webkit-slider-thumb:hover{box-shadow:0 0 0 6px rgba(120,170,255,0.24),0 0 18px rgba(120,170,255,0.9)}
-#kit-hyperspace-warp .hw-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,#cfe0ff 60%,#9fc0ff);border:none;box-shadow:0 0 0 4px rgba(120,170,255,0.18),0 0 14px rgba(120,170,255,0.7);cursor:pointer}
-#kit-hyperspace-warp .hw-slider::-moz-range-track{height:4px;border-radius:4px;background:transparent}
-@media (max-width:560px){#kit-hyperspace-warp .hw-controls{width:84%;gap:11px;padding:10px 15px}#kit-hyperspace-warp .hw-chip-v{font-size:16px}#kit-hyperspace-warp .hw-hud-tl{left:14px}#kit-hyperspace-warp .hw-hud-tr{right:14px}}
+#kit-hyperspace-warp{position:relative;width:100%;height:100%;background:#050314;overflow:hidden;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e8eaf2;-webkit-font-smoothing:antialiased}
+#kit-hyperspace-warp canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-hyperspace-warp .hyperspace-warp-controls{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;align-items:center;gap:16px;padding:12px 20px;border-radius:999px;background:rgba(8,8,20,0.46);border:1px solid rgba(255,255,255,0.09);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:4;max-width:88%;box-sizing:border-box}
+#kit-hyperspace-warp .hyperspace-warp-ctl-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(232,234,242,0.62);white-space:nowrap;font-weight:500}
+#kit-hyperspace-warp .hyperspace-warp-ctl-val{font-size:12px;letter-spacing:0.04em;color:#e8eaf2;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:54px;text-align:right;font-weight:500}
+#kit-hyperspace-warp .hyperspace-warp-slider{-webkit-appearance:none;appearance:none;width:240px;max-width:46vw;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0.5),rgba(255,255,255,0.14));outline:none;cursor:pointer}
+#kit-hyperspace-warp .hyperspace-warp-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:15px;height:15px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,0.25);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent,#7fb0ff) 26%,transparent),0 1px 5px rgba(0,0,0,0.4);cursor:pointer;transition:box-shadow .18s ease}
+#kit-hyperspace-warp .hyperspace-warp-slider::-webkit-slider-thumb:hover{box-shadow:0 0 0 7px color-mix(in srgb,var(--accent,#7fb0ff) 32%,transparent),0 1px 6px rgba(0,0,0,0.45)}
+#kit-hyperspace-warp .hyperspace-warp-slider::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,0.25);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent,#7fb0ff) 26%,transparent);cursor:pointer}
+#kit-hyperspace-warp .hyperspace-warp-slider::-moz-range-track{height:2px;border-radius:2px;background:rgba(255,255,255,0.22)}
+#kit-hyperspace-warp .hyperspace-warp-chips{position:absolute;top:18px;left:20px;display:flex;flex-direction:column;gap:8px;z-index:4;pointer-events:none}
+#kit-hyperspace-warp .hyperspace-warp-chip{display:flex;align-items:baseline;gap:10px;padding:7px 13px;border-radius:9px;background:rgba(8,8,20,0.4);border:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#kit-hyperspace-warp .hyperspace-warp-chip-k{font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:rgba(232,234,242,0.5);font-weight:500;min-width:64px}
+#kit-hyperspace-warp .hyperspace-warp-chip-v{font-size:14px;letter-spacing:0.02em;color:#fff;font-variant-numeric:tabular-nums;font-weight:500}
+#kit-hyperspace-warp .hyperspace-warp-cap{position:absolute;right:20px;bottom:22px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,234,242,0.34);z-index:4;pointer-events:none;font-weight:500}
+@media (max-width:560px){#kit-hyperspace-warp .hyperspace-warp-cap{display:none}#kit-hyperspace-warp .hyperspace-warp-chip-k{min-width:0}#kit-hyperspace-warp .hyperspace-warp-controls{gap:11px;padding:10px 15px}}
 
 body.mb-embed #kit-hyperspace-warp{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-hyperspace-warp [class*='frame'],body.mb-embed #kit-hyperspace-warp [class*='shell'],body.mb-embed #kit-hyperspace-warp [class*='-inner'],body.mb-embed #kit-hyperspace-warp [class*='wrapper']{display:contents!important;}
@@ -78,28 +73,26 @@ body.mb-embed #kit-hyperspace-warp [class*='stage'],body.mb-embed #kit-hyperspac
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Hyperspace Warp</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Relativistic Sky</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-hyperspace-warp">
-  <canvas class="hw-canvas" aria-hidden="true"></canvas>
-  <div class="hw-vignette" aria-hidden="true"></div>
-  <div class="hw-hud hw-hud-tl" aria-hidden="true">
-    <div class="hw-chip"><span class="hw-chip-k">&beta;</span><span class="hw-chip-v" data-hw="beta">0.250</span><span class="hw-chip-u">v/c</span></div>
-    <div class="hw-chip"><span class="hw-chip-k">&gamma;</span><span class="hw-chip-v" data-hw="gamma">1.033</span><span class="hw-chip-u">Lorentz</span></div>
+  <canvas id="hyperspace-warp-canvas" aria-label="A starfield showing relativistic aberration and Doppler shift at adjustable velocity"></canvas>
+  <div class="hyperspace-warp-controls">
+    <label class="hyperspace-warp-ctl-label" for="hyperspace-warp-beta">velocity&nbsp;&beta;&nbsp;=&nbsp;v/c</label>
+    <input id="hyperspace-warp-beta" class="hyperspace-warp-slider" type="range" min="0" max="0.99" step="0.001" value="0.5" aria-label="Velocity beta as a fraction of the speed of light" />
+    <span class="hyperspace-warp-ctl-val" id="hyperspace-warp-beta-val">0.500&nbsp;c</span>
   </div>
-  <div class="hw-hud hw-hud-tr" aria-hidden="true">
-    <div class="hw-chip hw-chip-blue"><span class="hw-chip-k">forward blueshift</span><span class="hw-chip-v" data-hw="blue">15</span><span class="hw-chip-u">%</span></div>
+  <div class="hyperspace-warp-chips" aria-hidden="true">
+    <div class="hyperspace-warp-chip"><span class="hyperspace-warp-chip-k">&beta;</span><span class="hyperspace-warp-chip-v" id="hyperspace-warp-chip-beta">0.500</span></div>
+    <div class="hyperspace-warp-chip"><span class="hyperspace-warp-chip-k">&gamma; &middot; Lorentz</span><span class="hyperspace-warp-chip-v" id="hyperspace-warp-chip-gamma">1.155</span></div>
+    <div class="hyperspace-warp-chip"><span class="hyperspace-warp-chip-k">aberration</span><span class="hyperspace-warp-chip-v" id="hyperspace-warp-chip-aber">60.0&deg;</span></div>
   </div>
-  <div class="hw-controls">
-    <span class="hw-ctl-label">Speed</span>
-    <input class="hw-slider" type="range" min="0" max="999" value="250" step="1" aria-label="Speed as a fraction of the speed of light" />
-    <span class="hw-ctl-val" data-hw="betalabel">0.250&#8201;c</span>
-  </div>
+  <div class="hyperspace-warp-cap" aria-hidden="true">relativistic aberration &amp; Doppler shift</div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag the SPEED slider to set beta (v/c) from 0 to 0.999 and watch the starfield stretch, concentrate forward, and Doppler-tint; leave it alone and it breathes gently on its own.</span>
+    <span class="mb-c-int">One control: a velocity slider for β = v/c, from 0 to 0.99. Drag it up and the dense starfield migrates forward, tints blue ahead and red behind, and the forward hemisphere brightens — exactly per the aberration and Doppler equations. Three quiet corner chips report β, the Lorentz factor γ, and the forward aberration half-angle. The view holds a gentle continuous drift so the sky feels alive even when you leave the slider untouched.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -151,255 +144,286 @@ body.mb-embed #kit-hyperspace-warp [class*='stage'],body.mb-embed #kit-hyperspac
 <script>
 (function(){
   var root=document.getElementById('kit-hyperspace-warp');
-  if(!root||root.dataset.hwInit)return;root.dataset.hwInit='1';
-  var canvas=root.querySelector('.hw-canvas');
+  if(!root)return;
+  var canvas=root.querySelector('#hyperspace-warp-canvas');
   var ctx=canvas.getContext('2d',{alpha:false});
-  var slider=root.querySelector('.hw-slider');
-  var elBeta=root.querySelector('[data-hw="beta"]');
-  var elGamma=root.querySelector('[data-hw="gamma"]');
-  var elBlue=root.querySelector('[data-hw="blue"]');
-  var elBetaLabel=root.querySelector('[data-hw="betalabel"]');
+  var slider=root.querySelector('#hyperspace-warp-beta');
+  var sliderVal=root.querySelector('#hyperspace-warp-beta-val');
+  var chipBeta=root.querySelector('#hyperspace-warp-chip-beta');
+  var chipGamma=root.querySelector('#hyperspace-warp-chip-gamma');
+  var chipAber=root.querySelector('#hyperspace-warp-chip-aber');
 
-  var accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#7aa8ff';
+  var DPR=Math.max(1,Math.min(2.5,window.devicePixelRatio||1));
+  var W=1,H=1;
+  var beta=parseFloat(slider.value)||0.5;
+  var betaSmooth=beta;
 
-  function hexToRgb(h){
-    h=(h||'').trim();
-    var m=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h);
-    if(m)return[parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)];
-    var s=/^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec(h);
-    if(s)return[parseInt(s[1]+s[1],16),parseInt(s[2]+s[2],16),parseInt(s[3]+s[3],16)];
-    var rg=/rgba?\(([^)]+)\)/i.exec(h);
-    if(rg){var p=rg[1].split(',');return[+p[0]||0,+p[1]||0,+p[2]||0];}
-    return[122,168,255];
+  var accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#7fb0ff';
+
+  // Optional faint NASA deep-field backdrop (graceful procedural fallback).
+  var bgImg=new Image();var bgReady=false;
+  bgImg.onload=function(){bgReady=true;};
+  bgImg.onerror=function(){bgReady=false;};
+  try{bgImg.src='../assets/images/webb-deep-field.jpg';}catch(e){}
+
+  // Star catalogue: directions on the unit sphere + intrinsic colour temperature.
+  // Direction (0,0,1) = forward (direction of motion / centre of view).
+  function rnd(){return Math.random();}
+  // Stellar colour as a function of a "temperature" parameter t in [0,1]
+  // 0 = cool red dwarf, 1 = hot blue O/B star. Returns base rgb (rest frame).
+  function tempColor(t){
+    // piecewise blackbody-ish ramp (rest-frame appearance)
+    var stops=[
+      [255,180,107], // ~3500K cool orange
+      [255,214,170], // ~4500K
+      [255,244,234], // ~6000K sunlike warm-white
+      [248,247,255], // ~7500K white
+      [202,216,255], // ~10000K blue-white
+      [170,196,255]  // ~20000K blue
+    ];
+    var x=t*(stops.length-1);
+    var i=Math.floor(x);if(i>=stops.length-1)i=stops.length-2;
+    var f=x-i;var a=stops[i],b=stops[i+1];
+    return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f];
   }
-  var accRGB=hexToRgb(accent);
 
-  var W=0,H=0,DPR=1,CX=0,CY=0,maxR=1;
-
-  var STAR_TARGET=580;
+  var STAR_N=720;
   var stars=[];
-  function rand(a,b){return a+Math.random()*(b-a);}
-  function makeStar(){
-    return{
-      x:rand(-1,1),
-      y:rand(-1,1),
-      z:rand(0.06,1),
-      seed:Math.random(),
-      baseSize:rand(0.55,1.7),
-      tw:rand(0,Math.PI*2),
-      twSpd:rand(0.6,2.0),
-      hue:rand(0,1)
-    };
+  function buildStars(){
+    stars.length=0;
+    for(var i=0;i<STAR_N;i++){
+      // uniform on sphere
+      var u=rnd()*2-1; // cos polar from a random axis
+      var phi=rnd()*Math.PI*2;
+      var s=Math.sqrt(1-u*u);
+      var x=s*Math.cos(phi), y=s*Math.sin(phi), z=u;
+      // magnitude distribution: many faint, few bright (rest-frame brightness)
+      var m=rnd();var bright=Math.pow(m,2.6); // skew toward faint
+      bright=0.10+bright*0.9;
+      var t=rnd();
+      var col=tempColor(t);
+      stars.push({x:x,y:y,z:z, b:bright, r:col[0],g:col[1],bl:col[2], tw:rnd()*Math.PI*2});
+    }
   }
-  function seedStars(){stars.length=0;for(var i=0;i<STAR_TARGET;i++)stars.push(makeStar());}
-  seedStars();
+  buildStars();
 
   function resize(){
-    var r=root.getBoundingClientRect();
-    var cw=Math.max(1,Math.round(r.width));
-    var ch=Math.max(1,Math.round(r.height));
-    DPR=Math.min(window.devicePixelRatio||1,2.5);
-    canvas.width=Math.round(cw*DPR);
-    canvas.height=Math.round(ch*DPR);
-    canvas.style.width=cw+'px';canvas.style.height=ch+'px';
+    var cw=canvas.clientWidth||root.clientWidth||640;
+    var ch=canvas.clientHeight||root.clientHeight||420;
+    DPR=Math.max(1,Math.min(2.5,window.devicePixelRatio||1));
+    var nw=Math.max(1,Math.round(cw*DPR)), nh=Math.max(1,Math.round(ch*DPR));
+    if(canvas.width!==nw||canvas.height!==nh){canvas.width=nw;canvas.height=nh;}
+    W=cw;H=ch;
     ctx.setTransform(DPR,0,0,DPR,0,0);
-    W=cw;H=ch;CX=W*0.5;CY=H*0.5;
-    maxR=Math.sqrt(CX*CX+CY*CY);
   }
 
-  var ro=new ResizeObserver(function(){resize();});
-  ro.observe(root);
-  window.addEventListener('resize',resize);
-  resize();
-
-  var beta=0.25;
-  var userBeta=null;
-  var lastInteract=-1e9;
-  var breatheActive=true;
-
-  function readSlider(){
-    var v=+slider.value/1000;
-    if(v>0.999)v=0.999;
-    return v;
+  // Doppler: map a frequency-shift factor D (>1 blue, <1 red) onto an rgb tint.
+  // Shift the perceived colour toward blue (D>1) or red (D<1), magnitude from |ln D|.
+  function dopplerShift(r,g,b,D){
+    var s=Math.log(D); // >0 blue, <0 red
+    var k=Math.max(-1,Math.min(1,s*0.62));
+    var rr=r,gg=g,bb=b;
+    if(k>0){ // blueshift: lift blue, ease red
+      rr=r+(120-r)*k*0.85*(r/255*0.4+0.6);
+      gg=g+(150-g)*k*0.30;
+      bb=b+(255-b)*k*0.95;
+    }else{ // redshift: lift red, ease blue
+      var kr=-k;
+      rr=r+(255-r)*kr*0.80;
+      gg=g+(70-g)*kr*0.45;
+      bb=b+(40-b)*kr*0.92;
+    }
+    return [Math.max(0,Math.min(255,rr)),Math.max(0,Math.min(255,gg)),Math.max(0,Math.min(255,bb))];
   }
-  function setSliderFill(b){
-    slider.style.setProperty('--hw-fill',(b*100).toFixed(1)+'%');
-  }
-  slider.addEventListener('input',function(){
-    userBeta=readSlider();
-    lastInteract=performance.now();
-    breatheActive=false;
-    setSliderFill(userBeta);
-  });
-
-  setSliderFill(beta);
-
-  var bgGrad=null,bgKey='';
-  function ensureBg(){
-    var k=W+'x'+H;
-    if(k===bgKey&&bgGrad)return;
-    bgKey=k;
-    bgGrad=ctx.createRadialGradient(CX,CY,0,CX,CY,maxR);
-    bgGrad.addColorStop(0,'#0a0726');
-    bgGrad.addColorStop(0.45,'#070420');
-    bgGrad.addColorStop(1,'#040210');
-  }
-
-  function clamp(v,a,b){return v<a?a:v>b?b:v;}
-  function lerp(a,b,t){return a+(b-a)*t;}
 
   var t0=performance.now();
-  var driftZ=0;
+  function draw(now){
+    resize();
+    if(now===undefined)now=performance.now();
+    var time=(now-t0)/1000;
 
-  function frame(now){
-    var dt=Math.min(0.05,(now-(frame._last||now))/1000);
-    frame._last=now;
-    var t=(now-t0)/1000;
+    // ease the displayed beta toward target for smooth migration
+    betaSmooth+=(beta-betaSmooth)*0.10;
+    var bDisp=betaSmooth;
+    var bSafe=Math.min(0.9995,bDisp);
+    var gamma=1/Math.sqrt(1-bSafe*bSafe);
 
-    if(breatheActive){
-      beta=0.25+0.14*Math.sin(t*0.22)+0.05*Math.sin(t*0.071+1.3);
-      beta=clamp(beta,0.02,0.999);
-      slider.value=Math.round(beta*1000);
-      setSliderFill(beta);
-    }else{
-      beta+=(userBeta-beta)*Math.min(1,dt*7);
-      if(now-lastInteract>9000){breatheActive=true;}
+    // --- background base ---
+    var cx=W*0.5, cy=H*0.5;
+    var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*0.75);
+    // forward "headlight" brightening grows with beta
+    var fwd=Math.pow(bDisp,1.4);
+    bg.addColorStop(0,'#0a0824');
+    bg.addColorStop(0.55,'#070518');
+    bg.addColorStop(1,'#040210');
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,W,H);
+
+    // faint NASA deep field, very low opacity, cover-fit, anchored centre
+    if(bgReady){
+      ctx.save();
+      ctx.globalAlpha=0.10;
+      var iw=bgImg.width, ih=bgImg.height;
+      var scale=Math.max(W/iw,H/ih);
+      var dw=iw*scale, dh=ih*scale;
+      ctx.globalCompositeOperation='lighter';
+      ctx.drawImage(bgImg,cx-dw/2,cy-dh/2,dw,dh);
+      ctx.restore();
     }
 
-    var gamma=1/Math.sqrt(Math.max(1e-6,1-beta*beta));
-    var bluePct=Math.round((Math.sqrt((1+beta)/(1-beta))-1)*100);
+    // forward beaming glow toward centre (the headlight effect)
+    if(fwd>0.001){
+      var gl=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*(0.55-0.18*fwd));
+      var ac=hexToRgb(accent)||{r:127,g:176,b:255};
+      gl.addColorStop(0,'rgba('+ac.r+','+ac.g+','+ac.b+','+(0.16*fwd).toFixed(3)+')');
+      gl.addColorStop(0.5,'rgba('+ac.r+','+ac.g+','+ac.b+','+(0.05*fwd).toFixed(3)+')');
+      gl.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=gl;
+      ctx.fillRect(0,0,W,H);
+    }
 
-    elBeta.textContent=beta.toFixed(3);
-    elGamma.textContent=gamma.toFixed(gamma<10?3:1);
-    elBlue.textContent=bluePct;
-    elBetaLabel.textContent=beta.toFixed(3)+' c';
+    // projection scale: map polar angle theta' (0..pi) to screen radius.
+    // gnomonic-style for forward hemisphere, compressed wrap for the rear ring.
+    var Rmax=Math.min(W,H)*0.52;
+    var fov=1.18; // forward field scale
 
-    var travel=(0.10+beta*beta*1.7)*dt;
-    driftZ+=travel*0.4;
-
-    ensureBg();
-
-    ctx.globalCompositeOperation='source-over';
-    ctx.fillStyle=bgGrad;
-    ctx.fillRect(0,0,W,H);
-
-    var nebA=0.05+0.04*Math.sin(t*0.15);
-    var ng=ctx.createRadialGradient(CX+Math.cos(t*0.05)*W*0.12,CY+Math.sin(t*0.07)*H*0.1,0,CX,CY,maxR*0.85);
-    ng.addColorStop(0,'rgba('+accRGB[0]+','+accRGB[1]+','+accRGB[2]+','+(nebA*1.1).toFixed(3)+')');
-    ng.addColorStop(0.5,'rgba('+Math.round(accRGB[0]*0.5)+','+Math.round(accRGB[1]*0.4)+',120,'+(nebA*0.5).toFixed(3)+')');
-    ng.addColorStop(1,'rgba(5,3,20,0)');
-    ctx.fillStyle=ng;
-    ctx.fillRect(0,0,W,H);
-
-    var fov=Math.min(W,H)*0.62;
-
-    var aber=beta;
-    var streakK=beta*beta;
+    // gentle continuous drift (slow roll of the sky)
+    var roll=time*0.018;
+    var cr=Math.cos(roll), sr=Math.sin(roll);
 
     ctx.globalCompositeOperation='lighter';
-
     for(var i=0;i<stars.length;i++){
-      var s=stars[i];
-      s.z-=travel*(0.35+s.z*0.5);
-      if(s.z<=0.02){
-        s.x=rand(-1,1);s.y=rand(-1,1);s.z=rand(0.85,1.05);
-        s.seed=Math.random();s.baseSize=rand(0.55,1.7);
-        s.tw=rand(0,Math.PI*2);s.twSpd=rand(0.6,2.0);s.hue=rand(0,1);
-      }
+      var st=stars[i];
+      // apply slow roll about the forward (z) axis so the field is alive
+      var x=st.x*cr-st.y*sr;
+      var y=st.x*sr+st.y*cr;
+      var z=st.z;
 
-      var ang=Math.atan2(s.y,s.x);
-      var rad=Math.sqrt(s.x*s.x+s.y*s.y);
-      var radA=Math.pow(rad,1+aber*1.35);
-      var px=Math.cos(ang)*radA;
-      var py=Math.sin(ang)*radA;
+      // intrinsic polar angle from forward direction
+      var cz=Math.max(-1,Math.min(1,z));
+      var theta=Math.acos(cz);
+      // relativistic aberration: cos th' = (cos th + b)/(1 + b cos th)
+      var cth=(cz+bDisp)/(1+bDisp*cz);
+      cth=Math.max(-1,Math.min(1,cth));
+      var thp=Math.acos(cth);
 
-      var invz=1/s.z;
-      var sx=CX+px*fov*invz;
-      var sy=CY+py*fov*invz;
+      // azimuth preserved
+      var az=Math.atan2(y,x);
 
-      var dx=sx-CX,dy=sy-CY;
-      var dist=Math.sqrt(dx*dx+dy*dy)||0.0001;
-      var distN=dist/maxR;
-
-      var depthFade=clamp((1.05-s.z)*1.3,0,1);
-      var twk=0.7+0.3*Math.sin(s.tw+t*s.twSpd);
-      var bright=depthFade*twk*invz*0.55;
-      bright=clamp(bright,0,1);
-
-      var size=s.baseSize*invz*(0.7+depthFade*0.6);
-      size=clamp(size,0.35,3.4);
-
-      var dirx=dx/dist,diry=dy/dist;
-      var streakLen=streakK*invz*Math.pow(distN,0.65)*Math.min(W,H)*0.9;
-      streakLen=clamp(streakLen,0,maxR*1.25);
-
-      var fwd=clamp(1-distN,0,1);
-      var dop=fwd*beta;
-      var r,g,b;
-      var warm=s.hue;
-      if(dop>0.001){
-        var blu=clamp(dop*2.0,0,1);
-        r=lerp(lerp(255,205,warm*0.4),150,blu);
-        g=lerp(lerp(230,225,warm*0.3),200,blu*0.6);
-        b=lerp(lerp(210,180,warm),255,blu);
+      // radius on screen from aberrated polar angle
+      var rr;
+      if(thp<=Math.PI*0.5){
+        rr=Math.tan(thp*0.5)*Rmax*fov; // forward hemisphere -> inner disc
       }else{
-        var redAmt=clamp((distN-0.55)*1.6,0,1)*beta;
-        r=lerp(255,255,1);
-        g=lerp(238,150,redAmt);
-        b=lerp(225,120,redAmt);
+        // rear hemisphere wraps to an outer ring (still visible, dimmer)
+        var k=(thp-Math.PI*0.5)/(Math.PI*0.5); // 0..1
+        rr=Rmax*(0.82+0.55*k);
       }
+      var px=cx+Math.cos(az)*rr;
+      var py=cy+Math.sin(az)*rr;
 
-      if(streakLen>1.2){
-        var ex=sx,ey=sy;
-        var bx=sx-dirx*streakLen,by=sy-diry*streakLen;
-        var lg=ctx.createLinearGradient(bx,by,ex,ey);
-        var aHead=bright*(0.45+0.5*streakK);
-        lg.addColorStop(0,'rgba('+(r|0)+','+(g|0)+','+(b|0)+',0)');
-        lg.addColorStop(0.65,'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+(aHead*0.4).toFixed(3)+')');
-        lg.addColorStop(1,'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+aHead.toFixed(3)+')');
-        ctx.strokeStyle=lg;
-        ctx.lineWidth=clamp(size*0.85,0.5,2.6);
-        ctx.lineCap='round';
-        ctx.beginPath();
-        ctx.moveTo(bx,by);
-        ctx.lineTo(ex,ey);
-        ctx.stroke();
+      // cull far off-screen
+      if(px<-30||px>W+30||py<-30||py>H+30)continue;
+
+      // relativistic Doppler factor using observed angle:
+      // D = 1 / ( gamma (1 - b cos th') )
+      var D=1/(gamma*(1-bDisp*cth));
+
+      // relativistic beaming: observed intensity ~ D^4 (bolometric, point sources ~3-4)
+      var beam=Math.pow(D,3.2);
+      var bright=st.b*beam;
+      bright=Math.min(2.4,bright);
+
+      // colour: rest colour shifted by Doppler
+      var col=dopplerShift(st.r,st.g,st.bl,D);
+
+      // twinkle
+      var tw=0.86+0.14*Math.sin(time*1.6+st.tw);
+      var alpha=Math.max(0,Math.min(1,bright*tw));
+      if(alpha<0.012)continue;
+
+      // size scales mildly with brightness; forward stars a touch sharper
+      var size=0.55+Math.min(2.4,Math.sqrt(bright)*1.05);
+
+      var cR=Math.round(col[0]),cG=Math.round(col[1]),cB=Math.round(col[2]);
+      // soft halo for the brighter stars
+      if(bright>0.55){
+        var hr=size*3.4;
+        var hg=ctx.createRadialGradient(px,py,0,px,py,hr);
+        hg.addColorStop(0,'rgba('+cR+','+cG+','+cB+','+(alpha*0.42).toFixed(3)+')');
+        hg.addColorStop(1,'rgba('+cR+','+cG+','+cB+',0)');
+        ctx.fillStyle=hg;
+        ctx.beginPath();ctx.arc(px,py,hr,0,6.2832);ctx.fill();
       }
+      ctx.fillStyle='rgba('+cR+','+cG+','+cB+','+alpha.toFixed(3)+')';
+      ctx.beginPath();ctx.arc(px,py,size,0,6.2832);ctx.fill();
+    }
+    ctx.globalCompositeOperation='source-over';
 
-      var glowA=bright*(1-0.55*streakK);
-      if(glowA>0.01){
-        var gr=size*2.6;
-        var rg2=ctx.createRadialGradient(sx,sy,0,sx,sy,gr);
-        rg2.addColorStop(0,'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+clamp(glowA,0,1).toFixed(3)+')');
-        rg2.addColorStop(0.4,'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+(glowA*0.35).toFixed(3)+')');
-        rg2.addColorStop(1,'rgba('+(r|0)+','+(g|0)+','+(b|0)+',0)');
-        ctx.fillStyle=rg2;
-        ctx.beginPath();
-        ctx.arc(sx,sy,gr,0,Math.PI*2);
-        ctx.fill();
-
-        ctx.fillStyle='rgba('+Math.min(255,r+30|0)+','+Math.min(255,g+30|0)+','+Math.min(255,b+30|0)+','+clamp(glowA*1.1,0,1).toFixed(3)+')';
-        ctx.beginPath();
-        ctx.arc(sx,sy,Math.max(0.4,size*0.5),0,Math.PI*2);
-        ctx.fill();
-      }
+    // a faint forward focal point (direction of motion marker, very quiet)
+    if(fwd>0.05){
+      ctx.save();
+      ctx.globalAlpha=0.30*fwd;
+      var fg=ctx.createRadialGradient(cx,cy,0,cx,cy,7);
+      fg.addColorStop(0,'rgba(255,255,255,0.9)');
+      fg.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=fg;
+      ctx.beginPath();ctx.arc(cx,cy,7,0,6.2832);ctx.fill();
+      ctx.restore();
     }
 
-    var coreA=0.10+streakK*0.5;
-    var cr=Math.min(W,H)*(0.04+streakK*0.16);
-    var cg=ctx.createRadialGradient(CX,CY,0,CX,CY,cr);
-    cg.addColorStop(0,'rgba(220,232,255,'+clamp(coreA,0,0.7).toFixed(3)+')');
-    cg.addColorStop(0.4,'rgba('+accRGB[0]+','+accRGB[1]+','+accRGB[2]+','+(coreA*0.5).toFixed(3)+')');
-    cg.addColorStop(1,'rgba(5,3,20,0)');
-    ctx.fillStyle=cg;
-    ctx.beginPath();
-    ctx.arc(CX,CY,cr,0,Math.PI*2);
-    ctx.fill();
+    // subtle vignette to seat the field
+    var vg=ctx.createRadialGradient(cx,cy,Math.min(W,H)*0.34,cx,cy,Math.max(W,H)*0.72);
+    vg.addColorStop(0,'rgba(0,0,0,0)');
+    vg.addColorStop(1,'rgba(2,1,8,0.55)');
+    ctx.fillStyle=vg;
+    ctx.fillRect(0,0,W,H);
 
-    ctx.globalCompositeOperation='source-over';
-    requestAnimationFrame(frame);
+    updateReadouts(bDisp,gamma);
+    raf=requestAnimationFrame(draw);
   }
-  requestAnimationFrame(frame);
+
+  function updateReadouts(b,gamma){
+    // forward aberration half-angle: where the rest-frame 90deg star is now seen.
+    // cos th' for theta=90 (cz=0): cth = b ; th' = acos(b)
+    var aber=Math.acos(Math.min(1,b))*180/Math.PI;
+    chipBeta.textContent=b.toFixed(3);
+    chipGamma.textContent=gamma.toFixed(3);
+    chipAber.textContent=aber.toFixed(1)+'°';
+  }
+
+  function hexToRgb(h){
+    if(!h)return null;h=h.trim();
+    var m=h.replace('#','');
+    if(m.length===3)m=m[0]+m[0]+m[1]+m[1]+m[2]+m[2];
+    if(m.length!==6)return null;
+    var n=parseInt(m,16);
+    return {r:(n>>16)&255,g:(n>>8)&255,b:n&255};
+  }
+
+  function onInput(){
+    beta=parseFloat(slider.value);
+    if(isNaN(beta))beta=0;
+    sliderVal.textContent=beta.toFixed(3)+' c';
+    // immediate synchronous readout of target gamma/aberration on the chips
+    var bs=Math.min(0.9995,beta);
+    sliderVal.textContent=beta.toFixed(3)+' c';
+  }
+  slider.addEventListener('input',onInput);
+  onInput();
+
+  var raf=null;
+  // FIRST FRAME drawn synchronously on init
+  resize();
+  draw(performance.now());
+
+  // self-healing sizing
+  var ro=null;
+  if(window.ResizeObserver){
+    ro=new ResizeObserver(function(){resize();});
+    ro.observe(root);
+  }
+  window.addEventListener('resize',resize);
 })();
 </script>
 </body></html>

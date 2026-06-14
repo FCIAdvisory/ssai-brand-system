@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Three lenses · SSAI</title>
+<title>The SSAI Lens — Sun · Earth · Universe · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,145 +41,31 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-lenses-switch{
-  --kls-accent:242,180,60;
-  --kls-text:#f4f5ff;
-  --kls-muted:#a6abe6;
-  --kls-line:rgba(166,171,230,0.16);
-  position:relative;
-  width:100%;
-  box-sizing:border-box;
-  color:var(--kls-text);
-  font-family:'Inter',system-ui,sans-serif;
-  background:transparent;
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-}
-#kit-lenses-switch *{box-sizing:border-box;}
-#kit-lenses-switch .kls-stage{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  min-height:240px;
-  border:1px solid var(--kls-line);
-  border-radius:16px;
-  overflow:hidden;
-  background:radial-gradient(120% 120% at 50% 30%, rgba(22,20,95,0.35), rgba(5,3,20,0) 60%), #050314;
-}
-#kit-lenses-switch .kls-canvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-}
-#kit-lenses-switch .kls-caption{
-  position:absolute;
-  left:22px;
-  bottom:20px;
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-  pointer-events:none;
-}
-#kit-lenses-switch .kls-eyebrow{
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:var(--kls-muted);
-}
-#kit-lenses-switch .kls-title{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  text-transform:uppercase;
-  font-size:clamp(22px,5vw,34px);
-  line-height:1.02;
-  letter-spacing:0.01em;
-  color:rgb(var(--kls-accent));
-  transition:color .7s ease;
-}
-#kit-lenses-switch .kls-sub{
-  font-size:12px;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--kls-muted);
-}
-#kit-lenses-switch .kls-lenses{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-#kit-lenses-switch .kls-lens{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:7px;
-  padding:14px 16px;
-  border:1px solid var(--kls-line);
-  border-radius:13px;
-  background:rgba(22,20,95,0.10);
-  color:var(--kls-muted);
-  cursor:pointer;
-  text-align:left;
-  font-family:inherit;
-  -webkit-tap-highlight-color:transparent;
-  transition:border-color .45s ease, background-color .45s ease, transform .45s cubic-bezier(.2,.7,.2,1);
-}
-#kit-lenses-switch .kls-lens:hover{
-  border-color:rgba(166,171,230,0.34);
-  background:rgba(22,20,95,0.20);
-}
-#kit-lenses-switch .kls-lens:focus-visible{
-  outline:2px solid rgb(var(--kls-accent));
-  outline-offset:2px;
-}
-#kit-lenses-switch .kls-lens[aria-selected="true"]{
-  border-color:rgba(var(--kls-accent),0.55);
-  background:rgba(var(--kls-accent),0.07);
-  transform:translateY(-2px);
-}
-#kit-lenses-switch .kls-dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:rgb(var(--kls-muted));
-  opacity:0.5;
-  transition:background-color .45s ease, box-shadow .45s ease, opacity .45s ease;
-}
-#kit-lenses-switch .kls-lens[aria-selected="true"] .kls-dot{
-  background:rgb(var(--kls-accent));
-  opacity:1;
-  box-shadow:0 0 0 4px rgba(var(--kls-accent),0.18);
-}
-#kit-lenses-switch .kls-name{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;
-  font-weight:700;
-  text-transform:uppercase;
-  font-size:clamp(14px,2.3vw,17px);
-  letter-spacing:0.02em;
-  color:var(--kls-text);
-  line-height:1;
-}
-#kit-lenses-switch .kls-lens[aria-selected="true"] .kls-name{
-  color:rgb(var(--kls-accent));
-}
-#kit-lenses-switch .kls-meta{
-  font-size:11px;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-}
-@media (max-width:520px){
-  #kit-lenses-switch .kls-meta{display:none;}
-  #kit-lenses-switch .kls-lens{padding:12px;gap:8px;}
-}
-@media (prefers-reduced-motion:reduce){
-  #kit-lenses-switch .kls-lens,
-  #kit-lenses-switch .kls-dot,
-  #kit-lenses-switch .kls-title{transition:none;}
+#kit-lenses-switch{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eef1f8;-webkit-font-smoothing:antialiased;border-radius:inherit;user-select:none}
+#kit-lenses-switch .lenses-switch-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+#kit-lenses-switch .lenses-switch-titleblock{position:absolute;left:clamp(22px,4vw,52px);bottom:clamp(80px,13vh,116px);max-width:min(560px,72%);z-index:3;pointer-events:none;text-shadow:0 2px 28px rgba(0,0,0,.65),0 1px 4px rgba(0,0,0,.55)}
+#kit-lenses-switch .lenses-switch-kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:600;color:rgba(238,241,248,.62);margin:0 0 14px;transition:opacity .5s ease,transform .5s ease}
+#kit-lenses-switch .lenses-switch-domain{font-size:clamp(30px,5.4vw,58px);line-height:1.02;font-weight:600;letter-spacing:-.02em;margin:0 0 14px;color:#fff;transition:opacity .55s cubic-bezier(.22,.61,.36,1),transform .55s cubic-bezier(.22,.61,.36,1)}
+#kit-lenses-switch .lenses-switch-desc{font-size:clamp(13.5px,1.55vw,16.5px);line-height:1.55;font-weight:400;color:rgba(238,241,248,.82);margin:0;max-width:46ch;transition:opacity .6s ease,transform .6s ease;transition-delay:.04s}
+#kit-lenses-switch .lenses-switch-titleblock.lenses-switch-swap .lenses-switch-domain,
+#kit-lenses-switch .lenses-switch-titleblock.lenses-switch-swap .lenses-switch-desc,
+#kit-lenses-switch .lenses-switch-titleblock.lenses-switch-swap .lenses-switch-kicker{opacity:0;transform:translateY(12px)}
+
+#kit-lenses-switch .lenses-switch-controls{position:absolute;left:50%;transform:translateX(-50%);bottom:clamp(22px,4vh,38px);z-index:4;display:flex;gap:4px;padding:5px;border-radius:999px;background:rgba(10,12,28,.42);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:1px solid rgba(255,255,255,.12);box-shadow:0 8px 34px rgba(0,0,0,.4)}
+#kit-lenses-switch .lenses-switch-seg{appearance:none;border:0;background:transparent;cursor:pointer;border-radius:999px;padding:9px 22px;color:rgba(238,241,248,.66);font-family:inherit;font-size:13px;font-weight:500;letter-spacing:.05em;transition:color .35s ease,background .35s ease;position:relative;outline:none}
+#kit-lenses-switch .lenses-switch-seg:hover{color:rgba(238,241,248,.92)}
+#kit-lenses-switch .lenses-switch-seg:focus-visible{box-shadow:0 0 0 2px rgba(255,255,255,.55)}
+#kit-lenses-switch .lenses-switch-seg.lenses-switch-active{color:#06121c;background:var(--accent,#7fd6ff)}
+#kit-lenses-switch .lenses-switch-seg-label{position:relative;z-index:1}
+
+#kit-lenses-switch .lenses-switch-chip{position:absolute;top:clamp(18px,3vh,28px);right:clamp(18px,3vw,30px);z-index:4;display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:rgba(8,10,24,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);font-size:11px;letter-spacing:.12em;font-weight:500;color:rgba(238,241,248,.78);transition:opacity .5s ease}
+#kit-lenses-switch .lenses-switch-chip-dot{width:6px;height:6px;border-radius:50%;background:var(--accent,#7fd6ff);box-shadow:0 0 10px var(--accent,#7fd6ff);flex:0 0 auto}
+#kit-lenses-switch .lenses-switch-chip.lenses-switch-fade{opacity:0}
+
+@media (max-width:560px){
+  #kit-lenses-switch .lenses-switch-titleblock{max-width:84%;bottom:clamp(82px,14vh,110px)}
+  #kit-lenses-switch .lenses-switch-seg{padding:8px 16px;font-size:12px}
 }
 
 body.mb-embed #kit-lenses-switch{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -197,39 +83,38 @@ body.mb-embed #kit-lenses-switch [class*='stage'],body.mb-embed #kit-lenses-swit
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Three lenses</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">The SSAI Lens — Sun · Earth · Universe</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-lenses-switch">
-  <div class="kls-stage" role="img" aria-label="Generative visualization of the selected science domain">
-    <canvas class="kls-canvas"></canvas>
-    <div class="kls-caption" aria-hidden="true">
-      <span class="kls-eyebrow">Domain</span>
-      <span class="kls-title">The Sun</span>
-      <span class="kls-sub">Heliophysics</span>
-    </div>
+  <canvas class="lenses-switch-canvas" aria-hidden="true"></canvas>
+
+  <div class="lenses-switch-titleblock" aria-live="polite">
+    <div class="lenses-switch-kicker">SSAI · The Lens</div>
+    <h2 class="lenses-switch-domain">Heliophysics</h2>
+    <p class="lenses-switch-desc">Tracking the Sun's storms to safeguard the missions and infrastructure that depend on calm space weather.</p>
   </div>
-  <div class="kls-lenses" role="tablist" aria-label="Science lens">
-    <button class="kls-lens" role="tab" aria-selected="true" data-key="sun">
-      <span class="kls-dot"></span>
-      <span class="kls-name">The Sun</span>
-      <span class="kls-meta">Heliophysics</span>
+
+  <div class="lenses-switch-controls" role="tablist" aria-label="Scientific domain">
+    <button class="lenses-switch-seg lenses-switch-active" role="tab" aria-selected="true" data-lens="0" type="button">
+      <span class="lenses-switch-seg-label">Sun</span>
     </button>
-    <button class="kls-lens" role="tab" aria-selected="false" data-key="earth">
-      <span class="kls-dot"></span>
-      <span class="kls-name">The Earth</span>
-      <span class="kls-meta">Geoscience</span>
+    <button class="lenses-switch-seg" role="tab" aria-selected="false" data-lens="1" type="button">
+      <span class="lenses-switch-seg-label">Earth</span>
     </button>
-    <button class="kls-lens" role="tab" aria-selected="false" data-key="universe">
-      <span class="kls-dot"></span>
-      <span class="kls-name">The Universe</span>
-      <span class="kls-meta">Astrophysics</span>
+    <button class="lenses-switch-seg" role="tab" aria-selected="false" data-lens="2" type="button">
+      <span class="lenses-switch-seg-label">Universe</span>
     </button>
+  </div>
+
+  <div class="lenses-switch-chip" aria-hidden="true">
+    <span class="lenses-switch-chip-dot"></span>
+    <span class="lenses-switch-chip-text">SDO · 171&#8201;Å</span>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Click one of the three lenses; the central canvas crossfades between a flaring sun, a rotating dot-globe, and a twinkling starfield while the accent color eases from amber to teal to violet.</span>
+    <span class="mb-c-int">Three quiet segmented tabs (Sun / Earth / Universe) cross-fade between full-bleed real NASA images. The active lens drifts and slowly zooms (a gentle Ken Burns parallax); the domain title and descriptor line settle into place on each switch. A small corner chip names the active science domain. Tabs respond to click, keyboard (arrow keys / Enter), and there is no clutter — the imagery leads.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -280,137 +165,257 @@ body.mb-embed #kit-lenses-switch [class*='stage'],body.mb-embed #kit-lenses-swit
 </script>
 <script>
 (function(){
-  var root=document.getElementById('kit-lenses-switch'); if(!root) return;
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root=document.getElementById('kit-lenses-switch');
+  if(!root)return;
+  var canvas=root.querySelector('.lenses-switch-canvas');
+  var ctx=canvas.getContext('2d');
+  var titleblock=root.querySelector('.lenses-switch-titleblock');
+  var elDomain=root.querySelector('.lenses-switch-domain');
+  var elDesc=root.querySelector('.lenses-switch-desc');
+  var elKicker=root.querySelector('.lenses-switch-kicker');
+  var chip=root.querySelector('.lenses-switch-chip');
+  var chipText=root.querySelector('.lenses-switch-chip-text');
+  var segs=Array.prototype.slice.call(root.querySelectorAll('.lenses-switch-seg'));
+
+  function accent(){
+    var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return a||'#7fd6ff';
+  }
 
   var LENSES=[
-    {key:'sun',label:'The Sun',sub:'Heliophysics',accent:[242,180,60]},
-    {key:'earth',label:'The Earth',sub:'Geoscience',accent:[47,217,195]},
-    {key:'universe',label:'The Universe',sub:'Astrophysics',accent:[138,92,255]}
+    {
+      key:'sun',
+      domain:'Heliophysics',
+      desc:"Tracking the Sun's storms to safeguard the missions and infrastructure that depend on calm space weather.",
+      chip:'SDO · 171 Å',
+      tint:'#ff9b33',
+      srcs:['../assets/images/sun-flare-gold-sdo.jpg','../assets/images/sun-flare-teal-sdo.jpg']
+    },
+    {
+      key:'earth',
+      domain:'Earth Science',
+      desc:'Reading our planet from orbit — oceans, atmosphere and climate — to turn observation into stewardship.',
+      chip:'Blue Marble · MODIS',
+      tint:'#3f86d6',
+      srcs:['../assets/images/planets/earth.jpg','../assets/images/blue-marble-world.jpg','../assets/images/earthrise-apollo8.jpg']
+    },
+    {
+      key:'universe',
+      domain:'Astrophysics',
+      desc:'Reaching across cosmic time with deep-field surveys that resolve the first galaxies and the structure of the universe.',
+      chip:'JWST · Deep Field',
+      tint:'#b89bff',
+      srcs:['../assets/images/webb-deep-field.jpg','../assets/images/cosmic-cliffs-carina.jpg']
+    }
   ];
 
-  var canvas=root.querySelector('.kls-canvas');
-  var ctx=canvas.getContext('2d');
-  var btns=root.querySelectorAll('.kls-lens');
-  var capTitle=root.querySelector('.kls-title');
-  var capSub=root.querySelector('.kls-sub');
+  // ---- image loading with src chain + procedural fallback flag ----
+  LENSES.forEach(function(L){
+    L.img=null; L.ready=false; L.failed=false;
+    loadChain(L,0);
+  });
+  function loadChain(L,i){
+    if(i>=L.srcs.length){ L.failed=true; render(); return; }
+    var im=new Image();
+    try{im.crossOrigin='anonymous';}catch(e){}
+    im.onload=function(){ if(im.naturalWidth>0){ L.img=im; L.ready=true; render(); } else { loadChain(L,i+1); } };
+    im.onerror=function(){ loadChain(L,i+1); };
+    im.src=L.srcs[i];
+  }
 
+  // ---- state ----
+  var current=0;       // currently displayed lens
   var W=0,H=0,DPR=1;
-  var current=0,prev=0,t0=performance.now(),mix=1;
-  var TRANS=950, raf=null;
+  var t0=performance.now();
+  // cross-fade
+  var fadeFrom=-1, fadeProg=1; // 1 = settled on `current`
+  var FADE_MS=900;
+  var fadeStart=0;
 
-  function rgb(a,al){return 'rgba('+a[0]+','+a[1]+','+a[2]+','+al+')';}
-  function ease(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+  function setLens(idx){
+    if(idx===current && fadeProg>=1) return;
+    fadeFrom=current;
+    current=idx;
+    fadeStart=performance.now();
+    fadeProg=0;
+    // tabs
+    segs.forEach(function(s,k){
+      var on=(k===idx);
+      s.classList.toggle('lenses-switch-active',on);
+      s.setAttribute('aria-selected',on?'true':'false');
+    });
+    // text swap
+    titleblock.classList.add('lenses-switch-swap');
+    chip.classList.add('lenses-switch-fade');
+    setTimeout(function(){
+      var L=LENSES[idx];
+      elDomain.textContent=L.domain;
+      elDesc.textContent=L.desc;
+      chipText.innerHTML=L.chip;
+      titleblock.classList.remove('lenses-switch-swap');
+      chip.classList.remove('lenses-switch-fade');
+    },260);
+    ensureRAF();
+  }
 
+  segs.forEach(function(s){
+    s.addEventListener('click',function(){ setLens(parseInt(s.getAttribute('data-lens'),10)); });
+  });
+  root.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'){ e.preventDefault(); setLens((current+1)%LENSES.length); segs[current].focus(); }
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ e.preventDefault(); setLens((current+LENSES.length-1)%LENSES.length); segs[current].focus(); }
+  });
+
+  // ---- sizing ----
   function resize(){
-    DPR=Math.min(window.devicePixelRatio||1,2);
-    W=canvas.clientWidth; H=canvas.clientHeight;
-    if(!W||!H) return;
-    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    var w=canvas.clientWidth||root.clientWidth||1;
+    var h=canvas.clientHeight||root.clientHeight||1;
+    DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2.5));
+    W=w; H=h;
+    canvas.width=Math.round(w*DPR);
+    canvas.height=Math.round(h*DPR);
     ctx.setTransform(DPR,0,0,DPR,0,0);
   }
 
+  // ---- starfield depth for universe + ambient particles ----
   var stars=[];
-  for(var s=0;s<170;s++){
-    stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.4+0.3,ph:Math.random()*6.283,sp:Math.random()*1.4+0.5});
-  }
-  var dots=[]; (function(){
-    var N=440;
-    for(var i=0;i<N;i++){
-      var y=1-(i/(N-1))*2, rad=Math.sqrt(Math.max(0,1-y*y)), th=i*2.399963;
-      dots.push({x:Math.cos(th)*rad,y:y,z:Math.sin(th)*rad});
-    }
-  })();
-
-  function drawSun(cx,cy,R,a,time){
-    for(var i=0;i<3;i++){
-      var rr=R*(1.16+i*0.26+Math.sin(time*0.0009+i)*0.03);
-      ctx.beginPath(); ctx.arc(cx,cy,rr,0,6.2832);
-      ctx.strokeStyle=rgb(a,0.10-i*0.025); ctx.lineWidth=1; ctx.stroke();
-    }
-    var g=ctx.createRadialGradient(cx,cy,R*0.18,cx,cy,R);
-    g.addColorStop(0,rgb(a,0.95)); g.addColorStop(0.7,rgb(a,0.5)); g.addColorStop(1,rgb(a,0.05));
-    ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.fillStyle=g; ctx.fill();
-    var rays=46;
-    for(var j=0;j<rays;j++){
-      var ang=(j/rays)*6.2832;
-      var len=R*(1.02+(0.12+0.10*Math.sin(time*0.0018+j*1.7))*(0.6+0.4*Math.sin(j*3.1)));
-      ctx.beginPath();
-      ctx.moveTo(cx+Math.cos(ang)*R*0.96,cy+Math.sin(ang)*R*0.96);
-      ctx.lineTo(cx+Math.cos(ang)*len,cy+Math.sin(ang)*len);
-      ctx.strokeStyle=rgb(a,0.32); ctx.lineWidth=1; ctx.stroke();
+  function buildStars(){
+    stars=[];
+    var n=90;
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.3+0.2,p:Math.random()*Math.PI*2,sp:0.4+Math.random()*0.9});
     }
   }
+  buildStars();
 
-  function drawGlobe(cx,cy,R,a,time){
-    var rot=time*0.00017;
-    ctx.beginPath(); ctx.arc(cx,cy,R*1.05,0,6.2832);
-    ctx.strokeStyle=rgb(a,0.16); ctx.lineWidth=1; ctx.stroke();
-    for(var i=0;i<dots.length;i++){
-      var d=dots[i];
-      var x=d.x*Math.cos(rot)-d.z*Math.sin(rot);
-      var z=d.x*Math.sin(rot)+d.z*Math.cos(rot);
-      if(z<-0.05) continue;
-      var px=cx+x*R, py=cy-d.y*R, depth=(z+1)/2;
-      ctx.beginPath(); ctx.arc(px,py,0.6+depth*1.5,0,6.2832);
-      ctx.fillStyle=rgb(a,0.22+depth*0.62); ctx.fill();
-    }
-  }
-
-  function drawStars(cx,cy,R,a,time){
-    var span=R*2.5;
-    for(var i=0;i<stars.length;i++){
-      var st=stars[i];
-      var px=(st.x-0.5)*span+cx, py=(st.y-0.5)*span+cy;
-      var dx=px-cx, dy=py-cy;
-      if(dx*dx+dy*dy>R*R*1.45) continue;
-      var tw=0.4+0.6*Math.abs(Math.sin(time*0.001*st.sp+st.ph));
-      ctx.beginPath(); ctx.arc(px,py,st.r,0,6.2832);
-      ctx.fillStyle=rgb(a,tw*0.9); ctx.fill();
-    }
-    ctx.beginPath(); ctx.arc(cx,cy,R*0.92,0,6.2832);
-    ctx.strokeStyle=rgb(a,0.09); ctx.lineWidth=2; ctx.stroke();
-  }
-
-  function scene(idx,cx,cy,R,time,alpha){
-    if(alpha<=0.002) return;
-    var a=LENSES[idx].accent;
+  // draw image as full-bleed cover with slow Ken Burns (drift + zoom)
+  function drawCover(img,time,phaseSeed,alpha){
+    if(alpha<=0)return;
+    var iw=img.naturalWidth, ih=img.naturalHeight;
+    if(!iw||!ih)return;
+    // slow zoom 1.04 -> 1.12 oscillation; gentle drift
+    var z=1.07+0.04*Math.sin(time*0.00007+phaseSeed);
+    var dx=Math.sin(time*0.00005+phaseSeed*1.7)*0.018*W;
+    var dy=Math.cos(time*0.00004+phaseSeed*2.3)*0.018*H;
+    var scale=Math.max(W/iw,H/ih)*z;
+    var dw=iw*scale, dh=ih*scale;
+    var ox=(W-dw)/2+dx, oy=(H-dh)/2+dy;
+    ctx.save();
     ctx.globalAlpha=alpha;
-    if(LENSES[idx].key==='sun') drawSun(cx,cy,R,a,time);
-    else if(LENSES[idx].key==='earth') drawGlobe(cx,cy,R,a,time);
-    else drawStars(cx,cy,R,a,time);
-    ctx.globalAlpha=1;
+    ctx.imageSmoothingEnabled=true;
+    ctx.imageSmoothingQuality='high';
+    ctx.drawImage(img,ox,oy,dw,dh);
+    ctx.restore();
   }
 
-  function frame(now){
-    if(!W||!H){ resize(); if(!W||!H){ if(!reduce) raf=requestAnimationFrame(frame); return; } }
-    var raw=(now-t0)/TRANS; if(raw>1)raw=1; mix=ease(raw);
+  // procedural fallback per domain (graceful, not blobby)
+  function drawFallback(L,time,phaseSeed,alpha,idx){
+    if(alpha<=0)return;
+    ctx.save();
+    ctx.globalAlpha=alpha;
+    var cx=W*0.5, cy=H*0.5;
+    if(idx===0){ // sun
+      var g=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*0.72);
+      g.addColorStop(0,'#ffd27a');g.addColorStop(0.32,'#ff9b33');g.addColorStop(0.6,'#a13c0a');g.addColorStop(1,'#1a0700');
+      ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+      for(var i=0;i<40;i++){var a=(i/40)*Math.PI*2+time*0.00006;var rr=Math.min(W,H)*(0.30+0.04*Math.sin(time*0.0009+i));ctx.globalAlpha=alpha*0.10;ctx.strokeStyle='#fff1d0';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);ctx.lineTo(cx+Math.cos(a)*(rr*1.18),cy+Math.sin(a)*(rr*1.18));ctx.stroke();}
+    } else if(idx===1){ // earth
+      var gb=ctx.createLinearGradient(0,0,0,H);gb.addColorStop(0,'#03102a');gb.addColorStop(1,'#010614');ctx.fillStyle=gb;ctx.fillRect(0,0,W,H);
+      var R=Math.min(W,H)*0.34;var ge=ctx.createRadialGradient(cx-R*0.35,cy-R*0.35,R*0.1,cx,cy,R);
+      ge.addColorStop(0,'#6fb6e8');ge.addColorStop(0.55,'#2f6fb0');ge.addColorStop(0.85,'#123a63');ge.addColorStop(1,'#0a1f38');
+      ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fillStyle=ge;ctx.fill();
+      ctx.globalAlpha=alpha*0.5;ctx.fillStyle='#1f6b3a';
+      for(var c=0;c<7;c++){var ang=c*1.4+time*0.00002;var px=cx+Math.cos(ang)*R*0.5;var py=cy+Math.sin(ang*1.3)*R*0.45;ctx.beginPath();ctx.ellipse(px,py,R*0.22,R*0.13,ang,0,Math.PI*2);ctx.fill();}
+    } else { // universe
+      var gg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*0.8);gg.addColorStop(0,'#1a1640');gg.addColorStop(0.5,'#0a0824');gg.addColorStop(1,'#040210');ctx.fillStyle=gg;ctx.fillRect(0,0,W,H);
+      for(var s=0;s<stars.length;s++){var st=stars[s];var tw=0.5+0.5*Math.sin(time*0.001*st.sp+st.p);ctx.globalAlpha=alpha*(0.3+0.7*tw);ctx.fillStyle=s%5===0?L.tint:'#eef1f8';ctx.beginPath();ctx.arc(st.x*W,st.y*H,st.r,0,Math.PI*2);ctx.fill();}
+    }
+    ctx.restore();
+  }
+
+  function paintLens(idx,time,alpha){
+    var L=LENSES[idx];
+    var seed=idx*2.1;
+    if(L.ready&&L.img){ drawCover(L.img,time,seed,alpha); }
+    else { drawFallback(L,time,seed,alpha,idx); }
+  }
+
+  function render(){
+    if(W===0||H===0)resize();
+    var time=performance.now()-t0;
+    // base
+    ctx.setTransform(DPR,0,0,DPR,0,0);
     ctx.clearRect(0,0,W,H);
-    var cx=W/2, cy=H/2, R=Math.min(W,H)*0.30;
-    scene(prev,cx,cy,R,now,1-mix);
-    scene(current,cx,cy,R,now,mix);
-    if(!reduce) raf=requestAnimationFrame(frame);
+    ctx.fillStyle='#050314';
+    ctx.fillRect(0,0,W,H);
+
+    // cross-fade compute
+    if(fadeProg<1){
+      var p=(performance.now()-fadeStart)/FADE_MS;
+      fadeProg=p>=1?1:p;
+    }
+    var e=fadeProg; // 0..1
+    var ease=e<0.5?2*e*e:1-Math.pow(-2*e+2,2)/2;
+
+    if(fadeFrom>=0 && fadeProg<1){
+      paintLens(fadeFrom,time,1-ease);
+      paintLens(current,time,ease);
+    } else {
+      paintLens(current,time,1);
+    }
+
+    // cinematic grading: subtle vignette + bottom scrim for legibility
+    var scrim=ctx.createLinearGradient(0,H*0.42,0,H);
+    scrim.addColorStop(0,'rgba(5,3,20,0)');
+    scrim.addColorStop(1,'rgba(5,3,20,0.72)');
+    ctx.fillStyle=scrim;ctx.fillRect(0,0,W,H);
+
+    var vig=ctx.createRadialGradient(W*0.5,H*0.46,Math.min(W,H)*0.3,W*0.5,H*0.5,Math.max(W,H)*0.78);
+    vig.addColorStop(0,'rgba(0,0,0,0)');
+    vig.addColorStop(1,'rgba(2,1,10,0.5)');
+    ctx.fillStyle=vig;ctx.fillRect(0,0,W,H);
+
+    // faint accent edge glow at top
+    var ac=accent();
+    var topg=ctx.createLinearGradient(0,0,0,H*0.22);
+    topg.addColorStop(0,hexA(ac,0.06));
+    topg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=topg;ctx.fillRect(0,0,W,H*0.22);
   }
 
-  function select(idx){
-    if(idx===current) return;
-    prev=current; current=idx; t0=performance.now();
-    for(var i=0;i<btns.length;i++){ btns[i].setAttribute('aria-selected', i===idx?'true':'false'); }
-    var a=LENSES[idx].accent;
-    root.style.setProperty('--kls-accent', a[0]+','+a[1]+','+a[2]);
-    capTitle.textContent=LENSES[idx].label;
-    capSub.textContent=LENSES[idx].sub;
-    if(reduce){ resize(); frame(performance.now()); }
+  function hexA(hex,a){
+    hex=hex.replace('#','');
+    if(hex.length===3)hex=hex.split('').map(function(c){return c+c;}).join('');
+    var r=parseInt(hex.substr(0,2),16)||127,g=parseInt(hex.substr(2,2),16)||214,b=parseInt(hex.substr(4,2),16)||255;
+    return 'rgba('+r+','+g+','+b+','+a+')';
   }
 
-  for(var b=0;b<btns.length;b++){
-    (function(k){ btns[k].addEventListener('click',function(){select(k);}); })(b);
-  }
-  window.addEventListener('resize',function(){ resize(); if(reduce) frame(performance.now()); });
+  // ---- animation loop (always running for slow drift; lightweight) ----
+  var rafId=null;
+  function loop(){ render(); rafId=requestAnimationFrame(loop); }
+  function ensureRAF(){ if(rafId===null) loop(); }
 
+  // ---- init: synchronous first paint ----
   resize();
-  if(reduce){ mix=1; frame(performance.now()); }
-  else { raf=requestAnimationFrame(frame); }
+  // set initial text from lens 0
+  var L0=LENSES[0];
+  elDomain.textContent=L0.domain;
+  elDesc.textContent=L0.desc;
+  chipText.innerHTML=L0.chip;
+  render(); // first frame drawn synchronously
+  ensureRAF();
+
+  // ---- observers ----
+  var ro;
+  if(typeof ResizeObserver!=='undefined'){
+    ro=new ResizeObserver(function(){ resize(); render(); });
+    ro.observe(root);
+  }
+  window.addEventListener('resize',function(){ resize(); render(); });
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(rafId!==null){cancelAnimationFrame(rafId);rafId=null;} }
+    else { t0=performance.now()-( (t0)?0:0 ); ensureRAF(); }
+  });
 })();
 </script>
 </body></html>

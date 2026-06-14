@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spiral Galaxy Generator · SSAI</title>
+<title>Anatomy of a Spiral Galaxy · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,24 +41,26 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-galaxy-gen{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;border-radius:inherit}
+#kit-galaxy-gen{position:relative;width:100%;height:100%;background:#050314;overflow:hidden;font-family:'Inter',system-ui,sans-serif;color:#e8eaf2;-webkit-font-smoothing:antialiased}
 #kit-galaxy-gen canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#kit-galaxy-gen .galaxy-gen-controls{position:absolute;left:18px;bottom:18px;z-index:6;display:flex;flex-direction:column;gap:11px;padding:15px 17px 16px;background:rgba(8,6,26,.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,.08);border-radius:15px;box-shadow:0 14px 44px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)}
-#kit-galaxy-gen .galaxy-gen-ctl{display:grid;grid-template-columns:62px 132px 42px;align-items:center;gap:11px}
-#kit-galaxy-gen .galaxy-gen-ctl-label{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(226,224,245,.62)}
-#kit-galaxy-gen .galaxy-gen-ctl-val{font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--accent,#e8b15a);text-align:right;font-variant-numeric:tabular-nums;text-shadow:0 0 10px rgba(232,177,90,.4)}
-#kit-galaxy-gen input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:linear-gradient(90deg,rgba(232,177,90,.55),rgba(255,255,255,.1));outline:none;cursor:pointer;margin:0}
-#kit-galaxy-gen input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--accent,#e8b15a) 65%);border:none;box-shadow:0 0 0 4px rgba(232,177,90,.16),0 2px 8px rgba(0,0,0,.55);transition:transform .15s ease}
-#kit-galaxy-gen input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.18)}
-#kit-galaxy-gen input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--accent,#e8b15a) 65%);border:none;box-shadow:0 0 0 4px rgba(232,177,90,.16),0 2px 8px rgba(0,0,0,.55)}
-#kit-galaxy-gen input[type=range]::-moz-range-track{height:3px;border-radius:3px;background:linear-gradient(90deg,rgba(232,177,90,.55),rgba(255,255,255,.1))}
-#kit-galaxy-gen .galaxy-gen-hud{position:absolute;z-index:6;display:flex;flex-direction:column;gap:2px;padding:8px 13px;background:rgba(8,6,26,.4);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);border:1px solid rgba(255,255,255,.07);border-radius:11px;pointer-events:none;box-shadow:0 8px 26px rgba(0,0,0,.4)}
-#kit-galaxy-gen .galaxy-gen-hud-tl{top:18px;left:18px}
-#kit-galaxy-gen .galaxy-gen-hud-tr{top:18px;right:18px;align-items:flex-end}
-#kit-galaxy-gen .galaxy-gen-hud-br{bottom:18px;right:18px;align-items:flex-end}
-#kit-galaxy-gen .galaxy-gen-hud-k{font-size:9px;font-weight:600;letter-spacing:.2em;color:rgba(226,224,245,.5)}
-#kit-galaxy-gen .galaxy-gen-hud-v{font-size:16px;font-weight:600;letter-spacing:.01em;color:#f4f1ff;font-variant-numeric:tabular-nums;text-shadow:0 0 14px rgba(232,177,90,.35)}
-@media(max-width:560px){#kit-galaxy-gen .galaxy-gen-ctl{grid-template-columns:54px 96px 38px;gap:8px}#kit-galaxy-gen .galaxy-gen-controls{left:12px;bottom:12px;padding:12px 13px}#kit-galaxy-gen .galaxy-gen-hud{padding:6px 10px}#kit-galaxy-gen .galaxy-gen-hud-v{font-size:14px}}
+#kit-galaxy-gen .galaxy-gen-controls{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:14px;padding:20px 24px 22px;background:linear-gradient(to top,rgba(5,3,20,.78) 0%,rgba(5,3,20,.45) 55%,rgba(5,3,20,0) 100%);z-index:3;pointer-events:none}
+#kit-galaxy-gen .galaxy-gen-pitchrow{display:flex;align-items:center;gap:16px;max-width:420px;pointer-events:auto}
+#kit-galaxy-gen .galaxy-gen-lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(232,234,242,.6);white-space:nowrap;font-weight:500}
+#kit-galaxy-gen input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:2px;background:rgba(232,234,242,.22);border-radius:2px;outline:none;cursor:pointer}
+#kit-galaxy-gen input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent,#d8b87a);border:none;box-shadow:0 0 0 4px rgba(216,184,122,.18);cursor:pointer;transition:box-shadow .2s}
+#kit-galaxy-gen input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 6px rgba(216,184,122,.26)}
+#kit-galaxy-gen input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent,#d8b87a);border:none;box-shadow:0 0 0 4px rgba(216,184,122,.18);cursor:pointer}
+#kit-galaxy-gen .galaxy-gen-comps{display:flex;flex-wrap:wrap;gap:7px;pointer-events:auto}
+#kit-galaxy-gen .galaxy-gen-pill{font-family:inherit;font-size:11.5px;letter-spacing:.04em;color:rgba(232,234,242,.62);background:rgba(232,234,242,.04);border:.5px solid rgba(232,234,242,.16);border-radius:999px;padding:5px 13px;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+#kit-galaxy-gen .galaxy-gen-pill:hover{color:rgba(232,234,242,.92);border-color:rgba(232,234,242,.34)}
+#kit-galaxy-gen .galaxy-gen-pill.galaxy-gen-on{color:#050314;background:var(--accent,#d8b87a);border-color:var(--accent,#d8b87a);font-weight:500}
+#kit-galaxy-gen .galaxy-gen-caption{position:absolute;left:24px;bottom:118px;max-width:340px;font-size:12.5px;line-height:1.55;color:rgba(232,234,242,.74);z-index:3;opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s;pointer-events:none;text-shadow:0 1px 8px rgba(5,3,20,.9)}
+#kit-galaxy-gen .galaxy-gen-caption.galaxy-gen-show{opacity:1;transform:translateY(0)}
+#kit-galaxy-gen .galaxy-gen-caption b{color:var(--accent,#d8b87a);font-weight:500;display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+#kit-galaxy-gen .galaxy-gen-chips{position:absolute;top:18px;right:20px;display:flex;gap:8px;z-index:3;pointer-events:none}
+#kit-galaxy-gen .galaxy-gen-chip{display:flex;align-items:baseline;gap:6px;font-size:12px;font-variant-numeric:tabular-nums;color:rgba(232,234,242,.82);background:rgba(5,3,20,.42);border:.5px solid rgba(232,234,242,.12);border-radius:6px;padding:5px 10px;backdrop-filter:blur(3px)}
+#kit-galaxy-gen .galaxy-gen-chiplbl{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(232,234,242,.42)}
+@media (max-width:560px){#kit-galaxy-gen .galaxy-gen-caption{bottom:128px;max-width:62%}#kit-galaxy-gen .galaxy-gen-lbl{display:none}}
 
 body.mb-embed #kit-galaxy-gen{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-galaxy-gen [class*='frame'],body.mb-embed #kit-galaxy-gen [class*='shell'],body.mb-embed #kit-galaxy-gen [class*='-inner'],body.mb-embed #kit-galaxy-gen [class*='wrapper']{display:contents!important;}
@@ -75,41 +77,34 @@ body.mb-embed #kit-galaxy-gen [class*='stage'],body.mb-embed #kit-galaxy-gen [cl
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Spiral Galaxy Generator</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Anatomy of a Spiral Galaxy</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-galaxy-gen">
   <canvas id="galaxy-gen-canvas"></canvas>
-  <div class="galaxy-gen-controls">
-    <label class="galaxy-gen-ctl">
-      <span class="galaxy-gen-ctl-label">Arms</span>
-      <input id="galaxy-gen-arms" type="range" min="2" max="6" step="1" value="4">
-      <span class="galaxy-gen-ctl-val" id="galaxy-gen-arms-val">4</span>
-    </label>
-    <label class="galaxy-gen-ctl">
-      <span class="galaxy-gen-ctl-label">Winding</span>
-      <input id="galaxy-gen-wind" type="range" min="12" max="42" step="1" value="26">
-      <span class="galaxy-gen-ctl-val" id="galaxy-gen-wind-val">0.45</span>
-    </label>
-    <label class="galaxy-gen-ctl">
-      <span class="galaxy-gen-ctl-label">Density</span>
-      <input id="galaxy-gen-dens" type="range" min="30" max="100" step="1" value="65">
-      <span class="galaxy-gen-ctl-val" id="galaxy-gen-dens-val">65%</span>
-    </label>
+  <div class="galaxy-gen-controls" id="galaxy-gen-controls">
+    <div class="galaxy-gen-pitchrow">
+      <label class="galaxy-gen-lbl" for="galaxy-gen-pitch">Arm pitch angle</label>
+      <input type="range" id="galaxy-gen-pitch" min="10" max="30" step="0.5" value="18" aria-label="Spiral arm pitch angle in degrees">
+    </div>
+    <div class="galaxy-gen-comps" id="galaxy-gen-comps" role="group" aria-label="Highlight a galaxy component">
+      <button class="galaxy-gen-pill galaxy-gen-on" data-comp="all">All</button>
+      <button class="galaxy-gen-pill" data-comp="bulge">Bulge</button>
+      <button class="galaxy-gen-pill" data-comp="disk">Disk</button>
+      <button class="galaxy-gen-pill" data-comp="arms">Arms</button>
+      <button class="galaxy-gen-pill" data-comp="hii">HII regions</button>
+      <button class="galaxy-gen-pill" data-comp="halo">Halo</button>
+    </div>
   </div>
-  <div class="galaxy-gen-hud galaxy-gen-hud-tl">
-    <span class="galaxy-gen-hud-k">ARMS</span><span class="galaxy-gen-hud-v" id="galaxy-gen-hud-arms">4</span>
-  </div>
-  <div class="galaxy-gen-hud galaxy-gen-hud-tr">
-    <span class="galaxy-gen-hud-k">STARS</span><span class="galaxy-gen-hud-v" id="galaxy-gen-hud-stars">0</span>
-  </div>
-  <div class="galaxy-gen-hud galaxy-gen-hud-br">
-    <span class="galaxy-gen-hud-k">ROTATION</span><span class="galaxy-gen-hud-v" id="galaxy-gen-hud-rot">0.0°/s</span>
+  <div class="galaxy-gen-caption" id="galaxy-gen-caption" aria-live="polite"></div>
+  <div class="galaxy-gen-chips" id="galaxy-gen-chips">
+    <span class="galaxy-gen-chip"><span class="galaxy-gen-chiplbl">pitch</span><span id="galaxy-gen-chip-pitch">18.0&deg;</span></span>
+    <span class="galaxy-gen-chip"><span class="galaxy-gen-chiplbl">type</span><span id="galaxy-gen-chip-type">Sb</span></span>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Three overlaid sliders adjust the number of spiral arms, the winding tightness of the arms, and the star density. The galaxy rotates continuously and differentially (inner stars faster than outer) at rest. HUD chips report arms, total star count and rotation rate. Changing any control re-seeds and re-flows the structure live.</span>
+    <span class="mb-c-int">Loads with the galaxy already drawn and slowly rotating with correct differential motion (the synchronous first frame is a fully formed galaxy, never a black void). A single slider sets the spiral arm pitch angle from ~10 deg (tightly wound, Sa-type) to ~30 deg (loose, open, Sc-type); dragging it re-shapes the logarithmic arms live. A small row of pills lets the viewer highlight one component at a time — Bulge, Disk, Arms, HII regions, or Halo — which dims the rest, draws a soft emphasis, and reveals a one-line scientific caption for that structure; &quot;All&quot; restores the full luminous view. Corner chips quietly report the current pitch angle and morphological type. Resizing the frame re-derives all dimensions so the galaxy always fills the canvas edge to edge.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -164,372 +159,337 @@ body.mb-embed #kit-galaxy-gen [class*='stage'],body.mb-embed #kit-galaxy-gen [cl
   if(!root)return;
   var canvas=root.querySelector('#galaxy-gen-canvas');
   var ctx=canvas.getContext('2d');
+  var pitchEl=root.querySelector('#galaxy-gen-pitch');
+  var compsEl=root.querySelector('#galaxy-gen-comps');
+  var capEl=root.querySelector('#galaxy-gen-caption');
+  var chipPitch=root.querySelector('#galaxy-gen-chip-pitch');
+  var chipType=root.querySelector('#galaxy-gen-chip-type');
 
-  var armsEl=root.querySelector('#galaxy-gen-arms');
-  var windEl=root.querySelector('#galaxy-gen-wind');
-  var densEl=root.querySelector('#galaxy-gen-dens');
-  var armsVal=root.querySelector('#galaxy-gen-arms-val');
-  var windVal=root.querySelector('#galaxy-gen-wind-val');
-  var densVal=root.querySelector('#galaxy-gen-dens-val');
-  var hudArms=root.querySelector('#galaxy-gen-hud-arms');
-  var hudStars=root.querySelector('#galaxy-gen-hud-stars');
-  var hudRot=root.querySelector('#galaxy-gen-hud-rot');
+  var accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d8b87a';
+  function hex2rgb(h){h=h.replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c;}).join('');var n=parseInt(h,16);return [(n>>16)&255,(n>>8)&255,n&255];}
+  var aRGB=hex2rgb(accent.charAt(0)==='#'?accent:'#d8b87a');
 
-  function accent(){
-    var c=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    return c||'#e8b15a';
-  }
-  function hexToRgb(h){
-    h=(h||'').replace('#','');
-    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    var n=parseInt(h,16);
-    if(isNaN(n))return{r:232,g:177,b:90};
-    return{r:(n>>16)&255,g:(n>>8)&255,b:n&255};
-  }
+  var DPR=1,W=0,H=0,cx=0,cy=0,Rgal=0;
+  var pitch=parseFloat(pitchEl.value);   // degrees
+  var highlight='all';
+  var t0=performance.now();
 
-  // ---- background nebula/deep-field sprite (real NASA asset, graceful fallback) ----
-  var bgImg=new Image(), bgReady=false;
-  bgImg.onload=function(){bgReady=true;};
-  bgImg.onerror=function(){bgReady=false;};
-  try{bgImg.src='../assets/posters/deep-field.jpg';}catch(e){}
+  // ---- procedural star populations (built once in normalized galaxy space) ----
+  // normalized radius r in [0,1] of galaxy radius; angle theta0 = reference angle
+  var ARMS=2;            // grand-design two-arm spiral
+  var diskStars=[];      // {r,th,br,sz,col} general disk field
+  var armStars=[];       // young blue stars near arms {r,arm,off,br,sz}
+  var hiiRegions=[];     // pink star-forming knots {r,arm,off,br,sz,ph}
+  var haloStars=[];      // diffuse spheroidal halo {r,th,br}
+  var bulgeStars=[];     // dense central old population {r,th,br}
 
-  // ---- seeded RNG ----
-  function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function rnd(a,b){return a+Math.random()*(b-a);}
+  function gauss(){var u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
 
-  // ---- galaxy model ----
-  var arms=4, windDeg=26, densPct=65;
-  var rotation=0;          // global rotation phase
-  var stars=[];            // disk stars
-  var hii=[];              // HII regions
-  var coreStars=[];        // bulge stars
-  var dust=[];             // dust lane clumps
-  var bgStars=[];          // far field
-  var maxR=1;              // normalized model radius (set per build to ~1)
-  var rotRateDeg=0;
-
-  function gaussian(rnd){
-    var u=0,v=0;
-    while(u===0)u=rnd();
-    while(v===0)v=rnd();
-    return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
-  }
-
-  function build(){
-    var rnd=mulberry(0x51A1*arms+windDeg*977+densPct*131+1);
-    stars=[];hii=[];coreStars=[];dust=[];
-    maxR=1;
-    var windB=windDeg/100; // tightness of logarithmic spiral
-
-    // total star count scales with density
-    var diskCount=Math.round((900+ (densPct/100)*2600));
-    var armSpread=0.16 - (windDeg/100)*0.07; // tighter winding -> thinner arms
-
-    for(var i=0;i<diskCount;i++){
-      // radial distribution: more stars mid-disk, exponential-ish falloff
-      var t=Math.pow(rnd(),0.62);
-      var r=0.16+t*0.92;            // 0.16..1.08
-      if(r>maxR)maxR=r;
-      // assign to an arm
-      var arm=Math.floor(rnd()*arms);
-      var baseAng=arm*(2*Math.PI/arms);
-      // logarithmic spiral angle
-      var spiralAng=baseAng + Math.log(r/0.16)/windB;
-      // scatter perpendicular to arm (gaussian) -> arms thin near core
-      var scatter=gaussian(rnd)*armSpread*(0.55+r*0.7);
-      var ang=spiralAng+scatter;
-      // small fraction are inter-arm field stars (diffuse)
-      var field=rnd()<0.16;
-      if(field){ang=rnd()*Math.PI*2;}
-      var x=Math.cos(ang)*r, y=Math.sin(ang)*r;
-
-      // color: blue young stars cluster in arms, warm/golden toward core & field
-      var armProx=Math.exp(-Math.abs(scatter)/(armSpread*0.9));
-      var blue=(!field)&&(rnd()<0.45+0.4*armProx)&&r>0.3;
-      var col;
-      if(blue){
-        col=[150+rnd()*60,185+rnd()*55,255];      // young blue-white
-      }else if(r<0.4){
-        col=[255,205+rnd()*40,150+rnd()*60];      // warm inner
-      }else{
-        var w=rnd();
-        if(w<0.5)col=[255,240+rnd()*15,225+rnd()*25];   // white
-        else col=[255,225+rnd()*25,180+rnd()*40];        // warm
-      }
-      var sz=0.45+Math.pow(rnd(),3)*2.6;
-      if(blue)sz*=1.15;
-      var bright=0.35+rnd()*0.65;
-      stars.push({r:r,a:ang,x:x,y:y,c:col,s:sz,b:bright,arm:!field});
-
-      // HII regions: bright pink/magenta knots along arms in young-star zones
-      if(blue && rnd()<0.05 && r>0.34){
-        hii.push({r:r,a:ang,x:x,y:y,sz:0.014+rnd()*0.03,b:0.5+rnd()*0.5});
-      }
+  function buildPopulations(){
+    diskStars=[];armStars=[];hiiRegions=[];haloStars=[];bulgeStars=[];
+    var i;
+    // disk field: exponential surface brightness -> more stars inward
+    for(i=0;i<2600;i++){
+      var r=Math.pow(Math.random(),0.62)*1.0;   // concentrate inward
+      if(r<0.07)continue;
+      diskStars.push({r:r,th:Math.random()*Math.PI*2,br:rnd(0.18,0.6)*(1-0.35*r),sz:rnd(0.5,1.2),warm:Math.random()<0.5*r});
     }
-
-    // dust lane clumps tracing inside the arms (slightly trailing)
-    var dustCount=Math.round(180+ (densPct/100)*220);
-    for(var d=0;d<dustCount;d++){
-      var dt=Math.pow(rnd(),0.7);
-      var dr=0.22+dt*0.85;
-      var darm=Math.floor(rnd()*arms);
-      var dbase=darm*(2*Math.PI/arms);
-      var dang=dbase+Math.log(dr/0.16)/windB - 0.18 + gaussian(rnd)*0.05;
-      dust.push({r:dr,a:dang,sz:0.02+rnd()*0.05,o:0.05+rnd()*0.14});
+    // young blue stars hugging the two arms
+    for(i=0;i<1500;i++){
+      var rr=Math.pow(Math.random(),0.5);
+      if(rr<0.13)continue;
+      armStars.push({r:rr,arm:Math.floor(Math.random()*ARMS),off:gauss()*0.045,br:rnd(0.45,1.0),sz:rnd(0.6,1.5)});
     }
-
-    // core bulge stars (dense golden cloud, gaussian radius)
-    var coreCount=Math.round(520+ (densPct/100)*420);
-    for(var c=0;c<coreCount;c++){
-      var cr=Math.abs(gaussian(rnd))*0.12;
-      if(cr>0.32)cr=0.32*rnd();
-      var ca=rnd()*Math.PI*2;
-      coreStars.push({r:cr,a:ca,s:0.4+Math.pow(rnd(),2)*1.8,b:0.4+rnd()*0.6,
-        c:[255,225-rnd()*30,170-rnd()*50]});
+    // HII / star-forming regions — fewer, pink, clumped on arms, mostly mid/outer disk
+    for(i=0;i<110;i++){
+      var rh=rnd(0.18,0.95);
+      hiiRegions.push({r:rh,arm:Math.floor(Math.random()*ARMS),off:gauss()*0.03,br:rnd(0.5,1.0),sz:rnd(2.2,5.0),ph:Math.random()*Math.PI*2});
     }
-
-    rebuildBg();
-    updateHud();
-  }
-
-  function rebuildBg(){
-    var rnd=mulberry(99173);
-    bgStars=[];
-    for(var i=0;i<260;i++){
-      bgStars.push({x:rnd(),y:rnd(),s:rnd()*1.3+0.2,b:0.15+rnd()*0.5,tw:rnd()*Math.PI*2,sp:0.4+rnd()*1.2});
+    // diffuse spheroidal halo — sparse old/globular field
+    for(i=0;i<420;i++){
+      var rad=Math.pow(Math.random(),0.4)*1.25;
+      var costh=rnd(-1,1),sinth=Math.sqrt(1-costh*costh)*(Math.random()<0.5?-1:1);
+      haloStars.push({x:rad*sinth*Math.cos(Math.random()*Math.PI*2),y:rad*costh*0.85,br:rnd(0.1,0.4)});
+    }
+    // central bulge — dense, smooth, old reddish population
+    for(i=0;i<900;i++){
+      var rb=Math.pow(Math.random(),1.7)*0.22;
+      bulgeStars.push({r:rb,th:Math.random()*Math.PI*2,br:rnd(0.3,0.85)});
     }
   }
+  buildPopulations();
 
-  function updateHud(){
-    var total=stars.length+coreStars.length+hii.length;
-    hudArms.textContent=String(arms);
-    hudStars.textContent=total.toLocaleString();
-    hudRot.textContent=rotRateDeg.toFixed(1)+'°/s';
-    armsVal.textContent=String(arms);
-    windVal.textContent=(windDeg/100*1.7).toFixed(2);
-    densVal.textContent=densPct+'%';
+  // logarithmic spiral: theta = (1/tan(pitch)) * ln(r/r0)
+  // returns angular offset to add to an arm's base angle for given normalized r
+  function spiralPhase(r){
+    var p=pitch*Math.PI/180;
+    var b=1/Math.tan(p);
+    return b*Math.log(Math.max(r,0.04)/0.04);
   }
 
-  // ---- DPR / size ----
-  var W=0,H=0,dpr=1;
+  // differential rotation: angular speed falls with radius (flat rotation curve -> Omega ~ 1/r)
+  function omega(r){
+    // soft core then ~1/r; scaled small for elegance
+    return 0.18/(0.18+r);
+  }
+
+  function morphType(p){
+    if(p<14)return 'Sa';
+    if(p<17)return 'Sab';
+    if(p<21)return 'Sb';
+    if(p<25)return 'Sbc';
+    return 'Sc';
+  }
+
+  var CAPTIONS={
+    bulge:['Central bulge','A dense, roughly spherical core of old, red stars surrounding the galactic nucleus — the galaxy’s oldest population.'],
+    disk:['Stellar disk','A thin, rotating sheet of stars and gas, only hundreds of light-years thick but tens of thousands across, where most stars reside.'],
+    arms:['Spiral arms','Density waves compress gas as it orbits, igniting hot, blue, short-lived O and B stars that trace the arms in brilliant light.'],
+    hii:['H II regions','Glowing clouds of hydrogen ionised by newborn stars — the pink nurseries marking active star formation along the arms.'],
+    halo:['Stellar halo','A faint, extended spheroid of ancient stars and globular clusters enveloping the disk, embedded in dark-matter mass.']
+  };
+
+  function setCaption(){
+    if(highlight==='all'){capEl.classList.remove('galaxy-gen-show');return;}
+    var c=CAPTIONS[highlight];
+    if(!c){capEl.classList.remove('galaxy-gen-show');return;}
+    capEl.innerHTML='<b>'+c[0]+'</b>'+c[1];
+    capEl.classList.add('galaxy-gen-show');
+  }
+
   function resize(){
-    var cw=canvas.clientWidth||root.clientWidth||800;
-    var ch=canvas.clientHeight||root.clientHeight||500;
-    dpr=Math.min(window.devicePixelRatio||1,2);
-    var nw=Math.max(2,Math.round(cw*dpr));
-    var nh=Math.max(2,Math.round(ch*dpr));
-    if(nw!==canvas.width||nh!==canvas.height){canvas.width=nw;canvas.height=nh;}
-    W=cw;H=ch;
+    var cw=canvas.clientWidth||root.clientWidth||640;
+    var ch=canvas.clientHeight||root.clientHeight||420;
+    DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2));
+    canvas.width=Math.round(cw*DPR);
+    canvas.height=Math.round(ch*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    W=cw;H=ch;cx=cw*0.5;cy=ch*0.5;
+    Rgal=Math.min(cw,ch)*0.46;
   }
 
-  // ---- draw ----
-  var last=performance.now();
-  var twPhase=0;
+  function alpha(comp){
+    if(highlight==='all')return 1;
+    return highlight===comp?1:0.10;
+  }
 
   function draw(now){
-    var dt=Math.min(0.05,(now-last)/1000);last=now;
-    twPhase+=dt;
-    resize();
-    var cw=W, ch=H;
-    if(cw<2||ch<2){requestAnimationFrame(draw);return;}
+    var time=(now-t0)/1000;
+    if(!W||!H)resize();
+    // base deep-space wash with subtle central vignette glow
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#050314';
+    ctx.fillRect(0,0,W,H);
 
-    ctx.setTransform(dpr,0,0,dpr,0,0);
+    // faint sky field (very subtle background stars)
+    // drawn deterministically-ish via halo array reuse handled below
 
-    // base deep-space gradient
-    var bg=ctx.createRadialGradient(cw*0.5,ch*0.5,0,cw*0.5,ch*0.5,Math.max(cw,ch)*0.75);
-    bg.addColorStop(0,'#0a0726');
-    bg.addColorStop(0.45,'#070420');
-    bg.addColorStop(1,'#040210');
-    ctx.fillStyle=bg;
-    ctx.fillRect(0,0,cw,ch);
+    var ar=aRGB[0],ag=aRGB[1],ab=aRGB[2];
 
-    // NASA deep-field backdrop (subtle, very low opacity, cover-fit)
-    if(bgReady && bgImg.naturalWidth){
-      var iw=bgImg.naturalWidth, ih=bgImg.naturalHeight;
-      var scale=Math.max(cw/iw,ch/ih)*1.08;
-      var dw=iw*scale, dh=ih*scale;
+    // ---------- HALO (drawn first, behind) ----------
+    var aHalo=alpha('halo');
+    if(aHalo>0.02){
       ctx.save();
-      ctx.globalAlpha=0.22;
       ctx.globalCompositeOperation='lighter';
-      ctx.drawImage(bgImg,(cw-dw)/2,(ch-dh)/2,dw,dh);
+      var hg=ctx.createRadialGradient(cx,cy,Rgal*0.2,cx,cy,Rgal*1.35);
+      hg.addColorStop(0,'rgba(120,128,180,'+(0.10*aHalo)+')');
+      hg.addColorStop(0.6,'rgba(90,98,150,'+(0.045*aHalo)+')');
+      hg.addColorStop(1,'rgba(40,44,80,0)');
+      ctx.fillStyle=hg;
+      ctx.beginPath();ctx.arc(cx,cy,Rgal*1.35,0,Math.PI*2);ctx.fill();
+      for(var i=0;i<haloStars.length;i++){
+        var h=haloStars[i];
+        var x=cx+h.x*Rgal, y=cy+h.y*Rgal;
+        ctx.globalAlpha=h.br*aHalo;
+        ctx.fillStyle='rgba(200,205,235,1)';
+        ctx.beginPath();ctx.arc(x,y,0.8,0,Math.PI*2);ctx.fill();
+      }
       ctx.restore();
     }
 
-    // far background stars (twinkle)
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    for(var i=0;i<bgStars.length;i++){
-      var b=bgStars[i];
-      var tw=0.55+0.45*Math.sin(twPhase*b.sp+b.tw);
-      ctx.globalAlpha=b.b*tw*0.7;
-      ctx.fillStyle='#cfd8ff';
-      ctx.beginPath();ctx.arc(b.x*cw,b.y*ch,b.s,0,7);ctx.fill();
-    }
-    ctx.restore();
-
-    var acc=accent();
-    var ac=hexToRgb(acc);
-
-    var cx=cw*0.5, cy=ch*0.5;
-    // scale model radius (maxR ~1.08) to fill frame nicely
-    var R=Math.min(cw,ch)*0.5/ (maxR) *0.94;
-
-    // gentle 3D tilt (slight perspective so it reads as a disk, not flat)
-    var tilt=0.62; // y-axis squash
-    var viewRot=-0.32; // static viewing rotation of the whole disk
-
-    function project(r,a){
-      var ang=a+viewRot;
-      var px=Math.cos(ang)*r*R;
-      var py=Math.sin(ang)*r*R*tilt;
-      return [cx+px, cy+py];
+    // ---------- DISK glow (diffuse luminous body) ----------
+    var aDisk=alpha('disk');
+    if(aDisk>0.02){
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      var dg=ctx.createRadialGradient(cx,cy,Rgal*0.04,cx,cy,Rgal*1.02);
+      dg.addColorStop(0,'rgba('+ar+','+ag+','+ab+','+(0.30*aDisk)+')');
+      dg.addColorStop(0.22,'rgba(210,180,130,'+(0.16*aDisk)+')');
+      dg.addColorStop(0.55,'rgba(120,140,200,'+(0.08*aDisk)+')');
+      dg.addColorStop(1,'rgba(60,70,130,0)');
+      ctx.fillStyle=dg;
+      ctx.beginPath();ctx.arc(cx,cy,Rgal*1.02,0,Math.PI*2);ctx.fill();
+      ctx.restore();
     }
 
-    // ---------- outer halo glow ----------
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    var halo=ctx.createRadialGradient(cx,cy,0,cx,cy,R*1.15);
-    halo.addColorStop(0,'rgba('+ac.r+','+ac.g+','+ac.b+',0.14)');
-    halo.addColorStop(0.35,'rgba('+Math.round(ac.r*0.7)+','+Math.round(ac.g*0.7)+',120,0.07)');
-    halo.addColorStop(0.7,'rgba(70,90,180,0.05)');
-    halo.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=halo;
-    ctx.beginPath();ctx.ellipse(cx,cy,R*1.15,R*1.15*tilt+R*0.18,0,0,7);ctx.fill();
-    ctx.restore();
-
-    // global rotation advances
-    rotation+=dt*0.05;
-
-    // differential rotation: inner faster. omega(r) ~ 1/(0.35+r)
-    function omega(r){return 1/(0.36+r*1.05);}
-    rotRateDeg=(omega(0.55)*0.05*180/Math.PI); // representative mid-disk rate
-
-    // ---------- dust lanes (drawn under arm stars, dark + multiply-like via destination) ----------
-    ctx.save();
-    for(var dd=0;dd<dust.length;dd++){
-      var du=dust[dd];
-      var da=du.a+rotation*omega(du.r);
-      var p=project(du.r,da);
-      var g=ctx.createRadialGradient(p[0],p[1],0,p[0],p[1],du.sz*R);
-      g.addColorStop(0,'rgba(20,8,24,'+du.o+')');
-      g.addColorStop(1,'rgba(10,4,14,0)');
-      ctx.fillStyle=g;
-      ctx.beginPath();ctx.arc(p[0],p[1],du.sz*R,0,7);ctx.fill();
-    }
-    ctx.restore();
-
-    // ---------- disk stars ----------
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    for(var s=0;s<stars.length;s++){
-      var st=stars[s];
-      var a=st.a+rotation*omega(st.r);
-      var p2=project(st.r,a);
-      var col=st.c;
-      var fade=1.0;
-      // fade stars near very edge for soft boundary
-      if(st.r>0.85)fade=Math.max(0,1-(st.r-0.85)/0.28);
-      var alpha=st.b*0.9*fade;
-      if(alpha<=0)continue;
-      var sz=st.s;
-      // brighter arm stars get a soft glow
-      if(st.arm && st.s>1.6){
-        var gg=ctx.createRadialGradient(p2[0],p2[1],0,p2[0],p2[1],sz*3);
-        gg.addColorStop(0,'rgba('+col[0]+','+col[1]+','+col[2]+','+(alpha*0.5)+')');
-        gg.addColorStop(1,'rgba('+col[0]+','+col[1]+','+col[2]+',0)');
-        ctx.fillStyle=gg;
-        ctx.beginPath();ctx.arc(p2[0],p2[1],sz*3,0,7);ctx.fill();
+    // ---------- DISK star field (with differential rotation) ----------
+    if(aDisk>0.02){
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      for(var d=0;d<diskStars.length;d++){
+        var s=diskStars[d];
+        var th=s.th + time*omega(s.r)*0.6;
+        var rr=s.r*Rgal;
+        var x2=cx+Math.cos(th)*rr, y2=cy+Math.sin(th)*rr;
+        ctx.globalAlpha=s.br*aDisk;
+        ctx.fillStyle=s.warm?'rgba(255,224,180,1)':'rgba(206,216,255,1)';
+        ctx.beginPath();ctx.arc(x2,y2,s.sz,0,Math.PI*2);ctx.fill();
       }
-      ctx.globalAlpha=alpha;
-      ctx.fillStyle='rgb('+col[0]+','+col[1]+','+col[2]+')';
-      ctx.beginPath();ctx.arc(p2[0],p2[1],sz,0,7);ctx.fill();
+      ctx.restore();
     }
-    ctx.globalAlpha=1;
-    ctx.restore();
 
-    // ---------- HII regions (glowing pink star-forming knots) ----------
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    for(var h=0;h<hii.length;h++){
-      var hr=hii[h];
-      var ha=hr.a+rotation*omega(hr.r);
-      var p3=project(hr.r,ha);
-      var pulse=0.7+0.3*Math.sin(twPhase*1.6+h);
-      var rad=hr.sz*R*(1+pulse*0.12);
-      var g2=ctx.createRadialGradient(p3[0],p3[1],0,p3[0],p3[1],rad);
-      var hb=hr.b*pulse;
-      g2.addColorStop(0,'rgba(255,180,225,'+(0.55*hb)+')');
-      g2.addColorStop(0.4,'rgba(255,120,190,'+(0.32*hb)+')');
-      g2.addColorStop(1,'rgba(180,60,150,0)');
-      ctx.fillStyle=g2;
-      ctx.beginPath();ctx.arc(p3[0],p3[1],rad,0,7);ctx.fill();
-      // bright core
-      ctx.fillStyle='rgba(255,225,245,'+(0.7*hb)+')';
-      ctx.beginPath();ctx.arc(p3[0],p3[1],rad*0.16,0,7);ctx.fill();
+    // ---------- DUST LANE (subtractive dark arcs along arms) ----------
+    if(highlight==='all'||highlight==='disk'||highlight==='arms'){
+      var aDust=(highlight==='all')?1:(highlight==='arms'?0.7:0.7);
+      ctx.save();
+      ctx.globalCompositeOperation='source-over';
+      ctx.lineCap='round';
+      for(var arm=0;arm<ARMS;arm++){
+        var base=arm*(Math.PI*2/ARMS)+time*0.05;
+        ctx.beginPath();
+        var started=false;
+        for(var rr2=0.16;rr2<=1.0;rr2+=0.012){
+          var ph=base+spiralPhase(rr2)+0.10; // slight offset = trailing dust edge
+          var rad2=rr2*Rgal;
+          var px=cx+Math.cos(ph)*rad2, py=cy+Math.sin(ph)*rad2;
+          if(!started){ctx.moveTo(px,py);started=true;}else ctx.lineTo(px,py);
+        }
+        ctx.strokeStyle='rgba(10,6,24,'+(0.55*aDust)+')';
+        ctx.lineWidth=Math.max(2,Rgal*0.022);
+        ctx.stroke();
+      }
+      ctx.restore();
     }
-    ctx.restore();
 
-    // ---------- core bulge ----------
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    // bulge glow halo
-    var bulgeR=R*0.42;
-    var bg2=ctx.createRadialGradient(cx,cy,0,cx,cy,bulgeR);
-    bg2.addColorStop(0,'rgba(255,244,220,0.95)');
-    bg2.addColorStop(0.18,'rgba(255,'+(210)+','+(140)+',0.7)');
-    bg2.addColorStop(0.45,'rgba('+ac.r+','+ac.g+','+ac.b+',0.32)');
-    bg2.addColorStop(1,'rgba('+ac.r+','+ac.g+','+ac.b+',0)');
-    ctx.fillStyle=bg2;
-    ctx.beginPath();ctx.ellipse(cx,cy,bulgeR,bulgeR*tilt+bulgeR*0.12,0,0,7);ctx.fill();
-
-    // core stars
-    for(var c2=0;c2<coreStars.length;c2++){
-      var co=coreStars[c2];
-      var caa=co.a+rotation*omega(co.r);
-      var p4=project(co.r,caa);
-      ctx.globalAlpha=co.b*0.85;
-      ctx.fillStyle='rgb('+co.c[0]+','+co.c[1]+','+co.c[2]+')';
-      ctx.beginPath();ctx.arc(p4[0],p4[1],co.s,0,7);ctx.fill();
+    // ---------- SPIRAL ARMS (young blue stars) ----------
+    var aArms=alpha('arms');
+    if(aArms>0.02){
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      for(var aS=0;aS<armStars.length;aS++){
+        var as=armStars[aS];
+        var rr3=as.r;
+        var rad3=(rr3)*Rgal;
+        var base2=as.arm*(Math.PI*2/ARMS)+time*0.05;
+        var ph2=base2+spiralPhase(rr3)+as.off*(6/Math.max(rr3,0.2));
+        var x3=cx+Math.cos(ph2)*rad3, y3=cy+Math.sin(ph2)*rad3;
+        ctx.globalAlpha=as.br*aArms*(0.5+0.5*rr3);
+        ctx.fillStyle='rgba(150,195,255,1)';
+        ctx.beginPath();ctx.arc(x3,y3,as.sz,0,Math.PI*2);ctx.fill();
+      }
+      // soft blue glow ridge along arms
+      ctx.globalAlpha=1;
+      for(var arm2=0;arm2<ARMS;arm2++){
+        var b2=arm2*(Math.PI*2/ARMS)+time*0.05;
+        ctx.beginPath();var st=false;
+        for(var r4=0.14;r4<=0.98;r4+=0.02){
+          var p4=b2+spiralPhase(r4);
+          var rd4=r4*Rgal;
+          var X=cx+Math.cos(p4)*rd4,Y=cy+Math.sin(p4)*rd4;
+          if(!st){ctx.moveTo(X,Y);st=true;}else ctx.lineTo(X,Y);
+        }
+        ctx.strokeStyle='rgba(120,170,255,'+(0.10*aArms)+')';
+        ctx.lineWidth=Math.max(3,Rgal*0.05);ctx.lineCap='round';ctx.stroke();
+      }
+      ctx.restore();
     }
-    ctx.globalAlpha=1;
 
-    // bright nucleus
-    var nuc=ctx.createRadialGradient(cx,cy,0,cx,cy,R*0.1);
-    nuc.addColorStop(0,'rgba(255,255,250,1)');
-    nuc.addColorStop(0.4,'rgba(255,238,200,0.9)');
-    nuc.addColorStop(1,'rgba(255,210,150,0)');
-    ctx.fillStyle=nuc;
-    ctx.beginPath();ctx.arc(cx,cy,R*0.1,0,7);ctx.fill();
-    ctx.restore();
+    // ---------- HII REGIONS (pink star-forming knots) ----------
+    var aHii=alpha('hii');
+    if(aHii>0.02){
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      for(var k=0;k<hiiRegions.length;k++){
+        var hr=hiiRegions[k];
+        var rad5=hr.r*Rgal;
+        var base3=hr.arm*(Math.PI*2/ARMS)+time*0.05;
+        var ph3=base3+spiralPhase(hr.r)+hr.off*(6/Math.max(hr.r,0.2));
+        var x5=cx+Math.cos(ph3)*rad5, y5=cy+Math.sin(ph3)*rad5;
+        var tw=0.7+0.3*Math.sin(time*1.6+hr.ph);
+        var sz=hr.sz*(Rgal/300+0.7);
+        var g=ctx.createRadialGradient(x5,y5,0,x5,y5,sz*2.4);
+        g.addColorStop(0,'rgba(255,150,205,'+(0.95*hr.br*aHii*tw)+')');
+        g.addColorStop(0.4,'rgba(245,110,180,'+(0.5*hr.br*aHii*tw)+')');
+        g.addColorStop(1,'rgba(220,90,160,0)');
+        ctx.fillStyle=g;
+        ctx.beginPath();ctx.arc(x5,y5,sz*2.4,0,Math.PI*2);ctx.fill();
+        ctx.globalAlpha=hr.br*aHii*tw;
+        ctx.fillStyle='rgba(255,235,245,1)';
+        ctx.beginPath();ctx.arc(x5,y5,Math.max(0.8,sz*0.35),0,Math.PI*2);ctx.fill();
+        ctx.globalAlpha=1;
+      }
+      ctx.restore();
+    }
 
-    // subtle vignette to seat the galaxy in deep space
-    var vig=ctx.createRadialGradient(cx,cy,Math.min(cw,ch)*0.3,cx,cy,Math.max(cw,ch)*0.72);
-    vig.addColorStop(0,'rgba(0,0,0,0)');
-    vig.addColorStop(1,'rgba(2,1,8,0.55)');
-    ctx.fillStyle=vig;
-    ctx.fillRect(0,0,cw,ch);
+    // ---------- BULGE + NUCLEUS (drawn near-last, bright core) ----------
+    var aBul=alpha('bulge');
+    if(aBul>0.02){
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      // smooth bulge glow
+      var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Rgal*0.34);
+      bg.addColorStop(0,'rgba(255,244,222,'+(0.95*aBul)+')');
+      bg.addColorStop(0.18,'rgba(255,'+Math.min(255,210+ag*0.1)+',170,'+(0.7*aBul)+')');
+      bg.addColorStop(0.5,'rgba(240,190,130,'+(0.28*aBul)+')');
+      bg.addColorStop(1,'rgba(210,150,90,0)');
+      ctx.fillStyle=bg;
+      ctx.beginPath();ctx.arc(cx,cy,Rgal*0.34,0,Math.PI*2);ctx.fill();
+      // bulge stars
+      for(var bgi=0;bgi<bulgeStars.length;bgi++){
+        var bs=bulgeStars[bgi];
+        var bth=bs.th+time*omega(bs.r)*0.6;
+        var brad=bs.r*Rgal;
+        var bx=cx+Math.cos(bth)*brad, by=cy+Math.sin(bth)*brad;
+        ctx.globalAlpha=bs.br*aBul;
+        ctx.fillStyle='rgba(255,228,186,1)';
+        ctx.beginPath();ctx.arc(bx,by,0.9,0,Math.PI*2);ctx.fill();
+      }
+      // bright nucleus
+      ctx.globalAlpha=1;
+      var ng=ctx.createRadialGradient(cx,cy,0,cx,cy,Rgal*0.07);
+      ng.addColorStop(0,'rgba(255,252,242,'+(1*aBul)+')');
+      ng.addColorStop(1,'rgba(255,230,180,0)');
+      ctx.fillStyle=ng;
+      ctx.beginPath();ctx.arc(cx,cy,Rgal*0.07,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    }
 
-    rotRateDeg=Math.abs(rotRateDeg);
-    hudRot.textContent=rotRateDeg.toFixed(1)+'°/s';
-
-    requestAnimationFrame(draw);
+    raf=requestAnimationFrame(draw);
   }
 
-  // ---- controls ----
-  armsEl.addEventListener('input',function(){arms=parseInt(armsEl.value,10);build();});
-  windEl.addEventListener('input',function(){windDeg=parseInt(windEl.value,10);build();});
-  densEl.addEventListener('input',function(){densPct=parseInt(densEl.value,10);build();});
+  var raf=null;
+  function start(){ if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(draw); }
 
-  // ---- observers ----
-  if(window.ResizeObserver){
-    var ro=new ResizeObserver(function(){resize();});
-    ro.observe(root);
-  }
-  window.addEventListener('resize',resize);
+  // controls
+  pitchEl.addEventListener('input',function(){
+    pitch=parseFloat(pitchEl.value);
+    chipPitch.textContent=pitch.toFixed(1)+'°';
+    chipType.textContent=morphType(pitch);
+  });
+  compsEl.addEventListener('click',function(e){
+    var btn=e.target.closest('.galaxy-gen-pill');
+    if(!btn)return;
+    highlight=btn.getAttribute('data-comp');
+    var pills=compsEl.querySelectorAll('.galaxy-gen-pill');
+    for(var i=0;i<pills.length;i++)pills[i].classList.toggle('galaxy-gen-on',pills[i]===btn);
+    setCaption();
+  });
 
-  // init: build + first frame immediately
+  // init chips
+  chipPitch.textContent=pitch.toFixed(1)+'°';
+  chipType.textContent=morphType(pitch);
+
+  // size + SYNCHRONOUS first frame
   resize();
-  build();
-  requestAnimationFrame(draw);
+  draw(performance.now());   // immediate first paint (not waiting on rAF)
+  start();                   // then begin ongoing animation
+
+  // self-healing sizing
+  var ro=new ResizeObserver(function(){resize();});
+  ro.observe(root);
+  window.addEventListener('resize',resize);
 })();
 </script>
 </body></html>

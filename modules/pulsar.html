@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pulsar · SSAI</title>
+<title>Pulsar — a cosmic lighthouse · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,36 +41,25 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-pulsar{--kp-bg:#050314;--kp-indigo:#16145f;--kp-ink:#f4f5ff;--kp-mute:#a6abe6;--kp-line:rgba(166,171,230,0.16);--kp-acc:#3cc8ff;--kp-acc-rgb:60,200,255;position:relative;width:100%;box-sizing:border-box;color:var(--kp-ink);font-family:'Inter',system-ui,sans-serif;background:radial-gradient(120% 90% at 50% 8%,rgba(22,20,95,0.55),rgba(5,3,20,0) 60%),var(--kp-bg);border:1px solid var(--kp-line);border-radius:18px;padding:18px;overflow:hidden;-webkit-tap-highlight-color:transparent}
-#kit-pulsar *{box-sizing:border-box}
-#kit-pulsar .kit-pulsar-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-#kit-pulsar .kit-pulsar-stage{position:relative;width:100%;aspect-ratio:16/9;min-height:300px;border-radius:14px;overflow:hidden;background:radial-gradient(140% 120% at 50% 46%,rgba(22,20,95,0.30),rgba(5,3,20,0) 70%)}
-#kit-pulsar .kit-pulsar-sky{position:absolute;inset:0;width:100%;height:100%;display:block}
-#kit-pulsar .kit-pulsar-readouts{position:absolute;left:14px;top:14px;display:grid;gap:7px;pointer-events:none}
-#kit-pulsar .kit-pulsar-stat{display:flex;align-items:baseline;gap:6px;background:rgba(5,3,20,0.42);border:1px solid var(--kp-line);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border-radius:9px;padding:5px 9px}
-#kit-pulsar .kit-pulsar-stat-l{font-size:9.5px;letter-spacing:.10em;text-transform:uppercase;color:var(--kp-mute);min-width:96px}
-#kit-pulsar .kit-pulsar-stat-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:17px;line-height:1;color:var(--kp-acc);font-variant-numeric:tabular-nums;min-width:40px;text-align:right}
-#kit-pulsar .kit-pulsar-stat-u{font-size:10px;color:var(--kp-mute)}
-#kit-pulsar .kit-pulsar-strip-wrap{margin-top:14px;border:1px solid var(--kp-line);border-radius:12px;background:rgba(5,3,20,0.40);padding:9px 11px 11px}
-#kit-pulsar .kit-pulsar-strip-tag{display:block;font-size:9.5px;letter-spacing:.10em;text-transform:uppercase;color:var(--kp-mute);margin-bottom:7px}
-#kit-pulsar .kit-pulsar-strip{display:block;width:100%;height:88px}
-#kit-pulsar .kit-pulsar-controls{margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
-#kit-pulsar .kit-pulsar-ctrl{display:flex;align-items:center;gap:10px}
-#kit-pulsar .kit-pulsar-ctrl-slider{flex:1 1 220px;min-width:200px}
-#kit-pulsar .kit-pulsar-ctrl label{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--kp-mute);white-space:nowrap}
-#kit-pulsar .kit-pulsar-out{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:13px;color:var(--kp-ink);font-variant-numeric:tabular-nums;min-width:54px;text-align:right}
-#kit-pulsar .kit-pulsar-range{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--kp-acc) 0%,var(--kp-acc) var(--kp-fill,12%),rgba(166,171,230,0.18) var(--kp-fill,12%),rgba(166,171,230,0.18) 100%);outline:none;cursor:pointer}
-#kit-pulsar .kit-pulsar-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--kp-ink);border:2px solid var(--kp-acc);box-shadow:0 0 10px rgba(var(--kp-acc-rgb),0.65);cursor:pointer;transition:transform .12s ease}
-#kit-pulsar .kit-pulsar-range::-webkit-slider-thumb:hover{transform:scale(1.18)}
-#kit-pulsar .kit-pulsar-range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--kp-ink);border:2px solid var(--kp-acc);box-shadow:0 0 10px rgba(var(--kp-acc-rgb),0.65);cursor:pointer}
-#kit-pulsar .kit-pulsar-range:focus-visible{box-shadow:0 0 0 3px rgba(var(--kp-acc-rgb),0.30)}
-#kit-pulsar .kit-pulsar-btn{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--kp-ink);background:rgba(var(--kp-acc-rgb),0.14);border:1px solid rgba(var(--kp-acc-rgb),0.45);border-radius:9px;padding:8px 14px;cursor:pointer;transition:background .15s ease,transform .12s ease,border-color .15s ease;white-space:nowrap}
-#kit-pulsar .kit-pulsar-btn:hover{background:rgba(var(--kp-acc-rgb),0.24);border-color:rgba(var(--kp-acc-rgb),0.7)}
-#kit-pulsar .kit-pulsar-btn:active{transform:scale(.96)}
-#kit-pulsar .kit-pulsar-btn[aria-pressed="false"]{color:var(--kp-mute);background:rgba(166,171,230,0.07);border-color:var(--kp-line)}
-#kit-pulsar .kit-pulsar-btn-ghost{background:rgba(166,171,230,0.07);border-color:var(--kp-line);color:var(--kp-mute)}
-#kit-pulsar .kit-pulsar-btn-ghost:hover{color:var(--kp-ink);background:rgba(var(--kp-acc-rgb),0.14);border-color:rgba(var(--kp-acc-rgb),0.45)}
-@media (max-width:560px){#kit-pulsar .kit-pulsar-readouts{display:none}#kit-pulsar .kit-pulsar-ctrl-slider{flex:1 1 100%}}
+#kit-pulsar{position:relative;width:100%;height:100%;background:#050314;overflow:hidden;font-family:"Inter",system-ui,-apple-system,sans-serif;color:#eef0fb;-webkit-font-smoothing:antialiased}
+#kit-pulsar canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-pulsar .pulsar-controls{position:absolute;left:0;right:0;bottom:18px;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 22px;z-index:3;pointer-events:none}
+#kit-pulsar .pulsar-presets{display:flex;gap:8px;pointer-events:auto}
+#kit-pulsar .pulsar-preset{appearance:none;cursor:pointer;font-family:inherit;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#9aa0c4;background:rgba(12,10,32,.55);border:1px solid rgba(150,160,220,.18);border-radius:999px;padding:6px 14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:color .25s ease,border-color .25s ease,background .25s ease}
+#kit-pulsar .pulsar-preset:hover{color:#dfe3f7;border-color:rgba(150,160,220,.4)}
+#kit-pulsar .pulsar-preset.is-active{color:#050314;background:var(--accent,#c9b27a);border-color:var(--accent,#c9b27a)}
+#kit-pulsar .pulsar-slider{display:flex;align-items:center;gap:12px;pointer-events:auto;background:rgba(12,10,32,.5);border:1px solid rgba(150,160,220,.16);border-radius:999px;padding:8px 18px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);min-width:min(340px,72%)}
+#kit-pulsar .pulsar-slider label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#9aa0c4;white-space:nowrap}
+#kit-pulsar input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent,#c9b27a),rgba(150,160,220,.22));outline:none;cursor:pointer}
+#kit-pulsar input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#f4f1e6;border:2px solid var(--accent,#c9b27a);box-shadow:0 0 10px rgba(201,178,122,.55);cursor:pointer}
+#kit-pulsar input[type=range]::-moz-range-thumb{width:14px;height:14px;border:2px solid var(--accent,#c9b27a);border-radius:50%;background:#f4f1e6;box-shadow:0 0 10px rgba(201,178,122,.55);cursor:pointer}
+#kit-pulsar .pulsar-chips{position:absolute;top:16px;left:18px;display:flex;flex-direction:column;gap:6px;z-index:3;pointer-events:none}
+#kit-pulsar .pulsar-chip{display:flex;align-items:baseline;gap:8px;font-variant-numeric:tabular-nums}
+#kit-pulsar .pulsar-chip-k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7e84a8;min-width:88px}
+#kit-pulsar .pulsar-chip-v{font-size:13px;font-weight:500;color:#e8eafc}
+#kit-pulsar .pulsar-fold{position:absolute;right:18px;top:16px;width:min(280px,42%);z-index:2;pointer-events:none}
+#kit-pulsar .pulsar-fold-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7e84a8}
+@media (max-width:560px){#kit-pulsar .pulsar-fold{display:none}#kit-pulsar .pulsar-chip-k{min-width:70px}}
 
 body.mb-embed #kit-pulsar{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-pulsar [class*='frame'],body.mb-embed #kit-pulsar [class*='shell'],body.mb-embed #kit-pulsar [class*='-inner'],body.mb-embed #kit-pulsar [class*='wrapper']{display:contents!important;}
@@ -87,54 +76,35 @@ body.mb-embed #kit-pulsar [class*='stage'],body.mb-embed #kit-pulsar [class*='sc
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Pulsar</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Pulsar — a cosmic lighthouse</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-pulsar">
-  <h2 class="kit-pulsar-sr">Interactive neutron star: two radiation beams sweep around a tilted magnetic axis as the star rotates, producing a regular train of pulses shown on a scrolling timing strip controlled by a spin-rate slider.</h2>
-  <div class="kit-pulsar-stage">
-    <canvas class="kit-pulsar-sky" aria-hidden="true"></canvas>
-    <div class="kit-pulsar-readouts">
-      <div class="kit-pulsar-stat">
-        <span class="kit-pulsar-stat-l">Spin frequency</span>
-        <span class="kit-pulsar-stat-v" data-r="freq">30</span><span class="kit-pulsar-stat-u">Hz</span>
-      </div>
-      <div class="kit-pulsar-stat">
-        <span class="kit-pulsar-stat-l">Pulse period</span>
-        <span class="kit-pulsar-stat-v" data-r="period">33.3</span><span class="kit-pulsar-stat-u">ms</span>
-      </div>
-      <div class="kit-pulsar-stat">
-        <span class="kit-pulsar-stat-l">Surface velocity</span>
-        <span class="kit-pulsar-stat-v" data-r="surf">2.3</span><span class="kit-pulsar-stat-u">% c</span>
-      </div>
-      <div class="kit-pulsar-stat">
-        <span class="kit-pulsar-stat-l">Pulses logged</span>
-        <span class="kit-pulsar-stat-v" data-r="count">0</span><span class="kit-pulsar-stat-u"></span>
-      </div>
+  <canvas id="pulsar-canvas"></canvas>
+  <div class="pulsar-controls" id="pulsar-controls">
+    <div class="pulsar-presets" id="pulsar-presets">
+      <button type="button" class="pulsar-preset is-active" data-period="33">Crab</button>
+      <button type="button" class="pulsar-preset" data-period="89">Vela</button>
+      <button type="button" class="pulsar-preset" data-period="1.4">Millisecond</button>
+    </div>
+    <div class="pulsar-slider">
+      <label for="pulsar-period">Spin period</label>
+      <input type="range" id="pulsar-period" min="0.5" max="300" step="0.1" value="33" aria-label="Spin period in milliseconds">
     </div>
   </div>
-  <div class="kit-pulsar-strip-wrap">
-    <span class="kit-pulsar-strip-tag">Pulse-timing strip · arrival of each beam at the line of sight</span>
-    <canvas class="kit-pulsar-strip" aria-hidden="true"></canvas>
+  <div class="pulsar-chips" id="pulsar-chips">
+    <div class="pulsar-chip"><span class="pulsar-chip-k">Period</span><span class="pulsar-chip-v" id="pulsar-c-period">33 ms</span></div>
+    <div class="pulsar-chip"><span class="pulsar-chip-k">Rotation</span><span class="pulsar-chip-v" id="pulsar-c-freq">30.0 Hz</span></div>
+    <div class="pulsar-chip"><span class="pulsar-chip-k">Surface field</span><span class="pulsar-chip-v" id="pulsar-c-field">3.8 × 10¹² G</span></div>
+    <div class="pulsar-chip"><span class="pulsar-chip-k">Age class</span><span class="pulsar-chip-v" id="pulsar-c-age">young</span></div>
   </div>
-  <div class="kit-pulsar-controls">
-    <div class="kit-pulsar-ctrl kit-pulsar-ctrl-slider">
-      <label for="kit-pulsar-freq">Spin rate</label>
-      <input id="kit-pulsar-freq" class="kit-pulsar-range" type="range" min="1" max="700" step="1" value="30" aria-label="Spin rate in hertz">
-      <output class="kit-pulsar-out" data-r="freqout">30 Hz</output>
-    </div>
-    <div class="kit-pulsar-ctrl kit-pulsar-ctrl-slider">
-      <label for="kit-pulsar-tilt">Magnetic tilt</label>
-      <input id="kit-pulsar-tilt" class="kit-pulsar-range" type="range" min="5" max="85" step="1" value="35" aria-label="Magnetic axis tilt in degrees">
-      <output class="kit-pulsar-out" data-r="tiltout">35°</output>
-    </div>
-    <button class="kit-pulsar-btn" data-r="beamtoggle" type="button" aria-pressed="true">Beams on</button>
-    <button class="kit-pulsar-btn kit-pulsar-btn-ghost" data-r="preset" type="button">Crab pulsar</button>
+  <div class="pulsar-fold" id="pulsar-fold">
+    <span class="pulsar-fold-label">Folded pulse profile</span>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag the spin-rate slider (1-700 Hz) to speed up rotation and the pulse train; toggle the magnetic-axis tilt and beam visibility to see how line-of-sight geometry creates the pulses.</span>
+    <span class="mb-c-int">Drag the spin-period slider to set how fast the neutron star rotates — the beams sweep faster and the folded profile ticks at the new rate. Tap a named preset (Crab, Vela, Millisecond) to jump to a real pulsar with its true period, surface magnetic field, and age class shown in the quiet corner chips. The folded pulse profile at the foot of the frame fills in over successive rotations and flashes its spike each time a beam crosses the Earth marker&#x27;s line of sight.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -185,184 +155,478 @@ body.mb-embed #kit-pulsar [class*='stage'],body.mb-embed #kit-pulsar [class*='sc
 </script>
 <script>
 (function(){
-var root=document.getElementById('kit-pulsar');if(!root)return;
-var sky=root.querySelector('.kit-pulsar-sky');
-var strip=root.querySelector('.kit-pulsar-strip');
-var sctx=sky.getContext('2d');
-var pctx=strip.getContext('2d');
-var freqIn=root.querySelector('#kit-pulsar-freq');
-var tiltIn=root.querySelector('#kit-pulsar-tilt');
-var beamBtn=root.querySelector('[data-r="beamtoggle"]');
-var presetBtn=root.querySelector('[data-r="preset"]');
-var rEl={freq:root.querySelector('[data-r="freq"]'),period:root.querySelector('[data-r="period"]'),surf:root.querySelector('[data-r="surf"]'),count:root.querySelector('[data-r="count"]'),freqout:root.querySelector('[data-r="freqout"]'),tiltout:root.querySelector('[data-r="tiltout"]')};
-var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root=document.getElementById('kit-pulsar');
+  if(!root)return;
+  var canvas=root.querySelector('#pulsar-canvas');
+  var ctx=canvas.getContext('2d');
+  var slider=root.querySelector('#pulsar-period');
+  var presets=root.querySelectorAll('.pulsar-preset');
+  var cPeriod=root.querySelector('#pulsar-c-period');
+  var cFreq=root.querySelector('#pulsar-c-freq');
+  var cField=root.querySelector('#pulsar-c-field');
+  var cAge=root.querySelector('#pulsar-c-age');
 
-var accent='#3cc8ff',accentRGB='60,200,255';
-function readAccent(){var cs=getComputedStyle(document.documentElement);var a=cs.getPropertyValue('--accent').trim();if(a)accent=a;var r=cs.getPropertyValue('--accent-rgb').trim();if(r){accentRGB=r;}else{accentRGB=hexToRGB(accent)||accentRGB;}root.style.setProperty('--kp-acc',accent);root.style.setProperty('--kp-acc-rgb',accentRGB);}
-function hexToRGB(h){h=h.replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];if(h.length<6)return null;var n=parseInt(h,16);return (n>>16&255)+','+(n>>8&255)+','+(n&255);}
-function aRGBA(al){return 'rgba('+accentRGB+','+al+')';}
-
-var freq=30,tilt=35*Math.PI/180,beamsOn=true;
-var spinPhase=0;
-var pulses=[];
-var pulseCount=0;
-var lastBlinkSide=0;
-var stars=[];
-var DPR=Math.max(1,Math.min(2.5,window.devicePixelRatio||1));
-var SW=0,SH=0,STW=0,STH=0;
-var STRIP_SPEED=170;
-var STRIP_WINDOW=4.2;
-
-function sizeCanvas(cv,ctx){var r=cv.getBoundingClientRect();var w=Math.max(1,r.width),h=Math.max(1,r.height);cv.width=Math.round(w*DPR);cv.height=Math.round(h*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);return [w,h];}
-function resize(){var a=sizeCanvas(sky,sctx);SW=a[0];SH=a[1];var b=sizeCanvas(strip,pctx);STW=b[0];STH=b[1];buildStars();}
-function buildStars(){stars=[];var n=Math.round(SW*SH/5200);for(var i=0;i<n;i++){stars.push({x:Math.random()*SW,y:Math.random()*SH,r:Math.random()*1.1+0.25,t:Math.random()*Math.PI*2,s:0.6+Math.random()*1.8,b:0.25+Math.random()*0.6});}}
-
-function setFill(inp){var min=+inp.min,max=+inp.max,v=+inp.value;inp.style.setProperty('--kp-fill',((v-min)/(max-min)*100)+'%');}
-
-function updateReadouts(){
-  rEl.freq.textContent=Math.round(freq);
-  var periodMs=1000/freq;
-  rEl.period.textContent=periodMs>=10?periodMs.toFixed(1):periodMs.toFixed(2);
-  var R=12000;var v=2*Math.PI*R*freq;var pct=v/299792.458*100;
-  rEl.surf.textContent=pct>=10?pct.toFixed(0):pct.toFixed(1);
-  rEl.count.textContent=pulseCount;
-  rEl.freqout.textContent=Math.round(freq)+' Hz';
-  rEl.tiltout.textContent=Math.round(tilt*180/Math.PI)+'°';
-}
-
-freqIn.addEventListener('input',function(){freq=+freqIn.value;setFill(freqIn);updateReadouts();if(reduced)renderStatic();});
-tiltIn.addEventListener('input',function(){tilt=(+tiltIn.value)*Math.PI/180;setFill(tiltIn);updateReadouts();if(reduced)renderStatic();});
-beamBtn.addEventListener('click',function(){beamsOn=!beamsOn;beamBtn.setAttribute('aria-pressed',beamsOn?'true':'false');beamBtn.textContent=beamsOn?'Beams on':'Beams off';if(reduced)renderStatic();});
-presetBtn.addEventListener('click',function(){freq=30;tilt=55*Math.PI/180;freqIn.value=30;tiltIn.value=55;setFill(freqIn);setFill(tiltIn);updateReadouts();if(reduced)renderStatic();});
-
-function drawCore(cx,cy,baseR,t){
-  var pul=1+0.05*Math.sin(t*5*Math.min(1,freq/40));
-  var R=baseR*pul;
-  var halo=sctx.createRadialGradient(cx,cy,R*0.4,cx,cy,R*4.2);
-  halo.addColorStop(0,aRGBA(0.34));halo.addColorStop(0.4,aRGBA(0.10));halo.addColorStop(1,'rgba(5,3,20,0)');
-  sctx.fillStyle=halo;sctx.beginPath();sctx.arc(cx,cy,R*4.2,0,Math.PI*2);sctx.fill();
-  var g=sctx.createRadialGradient(cx-R*0.3,cy-R*0.3,R*0.1,cx,cy,R);
-  g.addColorStop(0,'#ffffff');g.addColorStop(0.45,'#dfeeff');g.addColorStop(0.78,aRGBA(0.92));g.addColorStop(1,aRGBA(0.30));
-  sctx.fillStyle=g;sctx.beginPath();sctx.arc(cx,cy,R,0,Math.PI*2);sctx.fill();
-  sctx.save();sctx.globalCompositeOperation='lighter';sctx.strokeStyle=aRGBA(0.5);sctx.lineWidth=1;
-  for(var i=0;i<5;i++){var yy=cy-R+ (R*2)*(i+0.5)/5;var hw=Math.sqrt(Math.max(0,R*R-(yy-cy)*(yy-cy)));sctx.globalAlpha=0.28;sctx.beginPath();sctx.moveTo(cx-hw,yy);sctx.bezierCurveTo(cx-hw*0.3,yy-3,cx+hw*0.3,yy+3,cx+hw,yy);sctx.stroke();}
-  sctx.restore();sctx.globalAlpha=1;
-}
-
-function drawDipoleField(cx,cy,R,ang){
-  sctx.save();sctx.translate(cx,cy);sctx.rotate(ang);sctx.globalCompositeOperation='lighter';
-  var loops=[1.9,2.7,3.7];
-  for(var l=0;l<loops.length;l++){var k=loops[l]*R;sctx.strokeStyle=aRGBA(0.16-l*0.03);sctx.lineWidth=1;
-    sctx.beginPath();sctx.moveTo(0,-R*0.9);sctx.bezierCurveTo(k,-R*0.9,k,R*0.9,0,R*0.9);sctx.stroke();
-    sctx.beginPath();sctx.moveTo(0,-R*0.9);sctx.bezierCurveTo(-k,-R*0.9,-k,R*0.9,0,R*0.9);sctx.stroke();}
-  sctx.restore();
-}
-
-function drawBeam(cx,cy,R,ang,dir,proj){
-  var len=Math.max(SW,SH)*1.25;
-  sctx.save();sctx.translate(cx,cy);sctx.rotate(ang);
-  var halfW=0.16;
-  var tipX=Math.cos(0)*len*dir,tipY=0;
-  var coneFront=proj;
-  var alpha=(0.18+0.82*Math.max(0,coneFront))*(beamsOn?1:0);
-  sctx.globalCompositeOperation='lighter';
-  var grad=sctx.createLinearGradient(R*dir*0.7,0,len*dir,0);
-  grad.addColorStop(0,aRGBA(0.55*alpha));grad.addColorStop(0.5,aRGBA(0.16*alpha));grad.addColorStop(1,'rgba(5,3,20,0)');
-  sctx.fillStyle=grad;sctx.beginPath();sctx.moveTo(R*0.7*dir,0);
-  sctx.lineTo(len*dir,Math.tan(halfW)*len);sctx.lineTo(len*dir,-Math.tan(halfW)*len);sctx.closePath();sctx.fill();
-  sctx.strokeStyle=aRGBA(0.5*alpha);sctx.lineWidth=1.4;
-  sctx.beginPath();sctx.moveTo(R*0.7*dir,0);sctx.lineTo(len*dir,Math.tan(halfW)*len);sctx.moveTo(R*0.7*dir,0);sctx.lineTo(len*dir,-Math.tan(halfW)*len);sctx.stroke();
-  var core=sctx.createLinearGradient(R*0.7*dir,0,len*0.6*dir,0);
-  core.addColorStop(0,'rgba(255,255,255,'+(0.7*alpha)+')');core.addColorStop(1,'rgba(5,3,20,0)');
-  sctx.strokeStyle=core;sctx.lineWidth=2.2;sctx.beginPath();sctx.moveTo(R*0.6*dir,0);sctx.lineTo(len*0.6*dir,0);sctx.stroke();
-  sctx.restore();
-}
-
-function renderScene(t,dt){
-  sctx.clearRect(0,0,SW,SH);
-  for(var i=0;i<stars.length;i++){var s=stars[i];var tw=s.b*(0.6+0.4*Math.sin(t*s.s+s.t));sctx.globalAlpha=tw;sctx.fillStyle=i%9===0?aRGBA(0.9):'#f4f5ff';sctx.beginPath();sctx.arc(s.x,s.y,s.r,0,Math.PI*2);sctx.fill();}
-  sctx.globalAlpha=1;
-  var cx=SW*0.5,cy=SH*0.5,R=Math.min(SW,SH)*0.085;
-  var spinAng=-0.32;
-  var beamAng=tilt;
-  var p1=Math.cos(spinPhase);
-  var p2=Math.cos(spinPhase+Math.PI);
-  var aTop=spinAng-beamAng*p1;
-  var aBot=spinAng+Math.PI+beamAng*p1;
-  var proj1=Math.sin(spinPhase)*Math.sin(beamAng);
-  var faceTop=Math.max(0,(Math.sin(spinPhase)+0.0));
-  var faceBot=Math.max(0,(-Math.sin(spinPhase)));
-  drawDipoleField(cx,cy,R,spinAng-beamAng*p1);
-  if(beamsOn){drawBeam(cx,cy,R,aTop,1,faceTop);drawBeam(cx,cy,R,aTop,-1,faceBot);}
-  drawCore(cx,cy,R,t);
-  sctx.save();sctx.translate(cx,cy);sctx.rotate(spinAng);sctx.globalAlpha=0.4;sctx.strokeStyle='rgba(166,171,230,0.5)';sctx.setLineDash([4,5]);sctx.lineWidth=1;sctx.beginPath();sctx.moveTo(0,-R*3.4);sctx.lineTo(0,R*3.4);sctx.stroke();sctx.restore();sctx.globalAlpha=1;sctx.setLineDash([]);
-}
-
-function pushPulse(side){pulseCount++;pulses.push({age:0,side:side});}
-
-function renderStrip(t,dt){
-  pctx.clearRect(0,0,STW,STH);
-  var midY=STH*0.52;
-  pctx.strokeStyle='rgba(166,171,230,0.20)';pctx.lineWidth=1;pctx.beginPath();pctx.moveTo(0,midY);pctx.lineTo(STW,midY);pctx.stroke();
-  pctx.strokeStyle='rgba(166,171,230,0.07)';pctx.lineWidth=1;
-  for(var gx=STW;gx>0;gx-=STW/8){pctx.beginPath();pctx.moveTo(gx,8);pctx.lineTo(gx,STH-8);pctx.stroke();}
-  for(var i=pulses.length-1;i>=0;i--){
-    var pl=pulses[i];pl.age+=dt;
-    var x=STW-12-pl.age*STRIP_SPEED;
-    if(x<-30){pulses.splice(i,1);continue;}
-    var freshGlow=Math.max(0,1-pl.age*3.5);
-    var h=STH*0.40;
-    var grad=pctx.createLinearGradient(x,midY-h,x,midY+h);
-    grad.addColorStop(0,'rgba(5,3,20,0)');grad.addColorStop(0.5,aRGBA(0.95));grad.addColorStop(1,'rgba(5,3,20,0)');
-    pctx.save();pctx.globalCompositeOperation='lighter';
-    pctx.strokeStyle=aRGBA(0.85);pctx.lineWidth=2+freshGlow*2.5;pctx.shadowColor=aRGBA(0.9);pctx.shadowBlur=6+freshGlow*16;
-    pctx.beginPath();pctx.moveTo(x,midY-h);pctx.lineTo(x,midY+h);pctx.stroke();
-    pctx.shadowBlur=0;
-    pctx.fillStyle='rgba(255,255,255,'+(0.5+0.5*freshGlow)+')';pctx.beginPath();pctx.arc(x,midY-h,2+freshGlow*2,0,Math.PI*2);pctx.fill();
-    pctx.restore();
+  function accent(){
+    var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return a||'#c9b27a';
   }
-  var lead=STW-12;
-  pctx.fillStyle=aRGBA(0.8);pctx.beginPath();pctx.moveTo(lead+5,midY-STH*0.42);pctx.lineTo(lead+5,midY+STH*0.42);pctx.lineWidth=1;pctx.strokeStyle=aRGBA(0.5);pctx.stroke();
-}
 
-function renderStatic(){
-  if(SW===0)resize();
-  sctx.clearRect(0,0,SW,SH);
-  for(var i=0;i<stars.length;i++){var s=stars[i];sctx.globalAlpha=s.b;sctx.fillStyle=i%9===0?aRGBA(0.9):'#f4f5ff';sctx.beginPath();sctx.arc(s.x,s.y,s.r,0,Math.PI*2);sctx.fill();}
-  sctx.globalAlpha=1;
-  spinPhase=Math.PI*0.5;
-  renderScene(0,0);
-  pctx.clearRect(0,0,STW,STH);
-  var midY=STH*0.52;
-  pctx.strokeStyle='rgba(166,171,230,0.20)';pctx.lineWidth=1;pctx.beginPath();pctx.moveTo(0,midY);pctx.lineTo(STW,midY);pctx.stroke();
-  var period=1/freq;var n=Math.floor(STRIP_WINDOW/period);if(n>400)n=400;
-  for(var k=0;k<=n;k++){var x=STW-12-k*period*STRIP_SPEED;if(x<0)break;var h=STH*0.40;pctx.save();pctx.globalCompositeOperation='lighter';pctx.strokeStyle=aRGBA(0.8);pctx.lineWidth=2;pctx.shadowColor=aRGBA(0.8);pctx.shadowBlur=6;pctx.beginPath();pctx.moveTo(x,midY-h);pctx.lineTo(x,midY+h);pctx.stroke();pctx.restore();}
-}
+  var DEG=Math.PI/180;
+  var inclination=22*DEG;      // viewing tilt of spin axis (toward viewer/right)
+  var obliquity=32*DEG;        // angle between spin axis and magnetic axis
+  var beamWidth=11*DEG;        // angular half-width of the beam (rho)
+  var losPhase=0.0;            // azimuth where beam best aligns with our line of sight
 
-var raf=null,prev=0,running=false;
-function loop(ts){
-  if(!running)return;
-  if(!prev)prev=ts;var dt=Math.min(0.05,(ts-prev)/1000);prev=ts;
-  var prevPhase=spinPhase;
-  spinPhase+=2*Math.PI*freq*dt;
-  var crossings=Math.floor((spinPhase)/(Math.PI))-Math.floor((prevPhase)/(Math.PI));
-  if(crossings>0){if(crossings>4)crossings=4;for(var c=0;c<crossings;c++){pushPulse(0);}updateReadouts();}
-  if(spinPhase>1e7)spinPhase=spinPhase%(Math.PI*2);
-  renderScene(ts/1000,dt);
-  renderStrip(ts/1000,dt);
+  var W=0,H=0,DPR=1,t0=performance.now(),lastT=t0;
+  var spinPhase=0;             // 0..1 within one rotation
+  var periodMs=33;
+  // folded profile accumulator
+  var BINS=240;
+  var fold=new Float32Array(BINS);
+  var foldModel=new Float32Array(BINS);  // analytic expectation per bin (for crisp shape)
+  var pulseFlash=0;            // 0..1 transient glow when a beam crosses LoS
+
+  // real pulsar reference data for field + age classification
+  var refs=[
+    {p:1.4,  field:'3 × 10⁸ G',     age:'recycled · ancient'},
+    {p:33,   field:'3.8 × 10¹² G',  age:'young'},
+    {p:89,   field:'3.4 × 10¹² G',  age:'young'}
+  ];
+
+  // --- 3D vector helpers (right-handed: x right, y up, z toward viewer) ---
+  function rotAround(axis,v,ang){
+    // Rodrigues rotation of v about unit axis by ang
+    var c=Math.cos(ang),s=Math.sin(ang);
+    var dot=axis[0]*v[0]+axis[1]*v[1]+axis[2]*v[2];
+    var cx=axis[1]*v[2]-axis[2]*v[1];
+    var cy=axis[2]*v[0]-axis[0]*v[2];
+    var cz=axis[0]*v[1]-axis[1]*v[0];
+    return [
+      v[0]*c+cx*s+axis[0]*dot*(1-c),
+      v[1]*c+cy*s+axis[1]*dot*(1-c),
+      v[2]*c+cz*s+axis[2]*dot*(1-c)
+    ];
+  }
+  function norm(v){var m=Math.hypot(v[0],v[1],v[2])||1;return [v[0]/m,v[1]/m,v[2]/m];}
+
+  // spin axis: tilted in the screen plane (slightly toward +x, mostly +y)
+  function spinAxis(){return norm([Math.sin(inclination),Math.cos(inclination),0]);}
+  // a reference vector perpendicular to spin axis to seed magnetic axis
+  function magAxis(phase){
+    var S=spinAxis();
+    // pick perp seed
+    var seed=Math.abs(S[1])<0.99?[0,1,0]:[1,0,0];
+    var perp=norm([
+      seed[1]*S[2]-seed[2]*S[1],
+      seed[2]*S[0]-seed[0]*S[2],
+      seed[0]*S[1]-seed[1]*S[0]
+    ]);
+    // magnetic axis = spin axis tilted by obliquity toward perp, then spun about S
+    var tilted=norm([
+      S[0]*Math.cos(obliquity)+perp[0]*Math.sin(obliquity),
+      S[1]*Math.cos(obliquity)+perp[1]*Math.sin(obliquity),
+      S[2]*Math.cos(obliquity)+perp[2]*Math.sin(obliquity)
+    ]);
+    return norm(rotAround(S,tilted,phase*2*Math.PI));
+  }
+  // observer line of sight: pointing out toward viewer, slightly above
+  function losDir(){return norm([0.12,0.30,0.95]);}
+
+  // beam intensity given magnetic axis (two opposed beams) vs line of sight
+  function beamIntensity(M){
+    var O=losDir();
+    var d1=M[0]*O[0]+M[1]*O[1]+M[2]*O[2];
+    var d2=-d1;
+    var a1=Math.acos(Math.max(-1,Math.min(1,d1)));
+    var a2=Math.acos(Math.max(-1,Math.min(1,d2)));
+    var s=beamWidth;
+    var g1=Math.exp(-(a1*a1)/(2*s*s));
+    var g2=Math.exp(-(a2*a2)/(2*s*s));
+    return Math.max(g1,g2);
+  }
+
+  // precompute the analytic folded model over one rotation
+  function buildModel(){
+    var mx=0;
+    for(var i=0;i<BINS;i++){
+      var ph=i/BINS;
+      var I=beamIntensity(magAxis(ph));
+      foldModel[i]=I;
+      if(I>mx)mx=I;
+    }
+    if(mx>0)for(var j=0;j<BINS;j++)foldModel[j]/=mx;
+  }
+
+  function resize(){
+    DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2));
+    W=canvas.clientWidth||root.clientWidth;
+    H=canvas.clientHeight||root.clientHeight;
+    canvas.width=Math.round(W*DPR);
+    canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+
+  // starfield (static, generated once relative to size)
+  var stars=null,starSeed=12345;
+  function rnd(){starSeed=(starSeed*1103515245+12345)&0x7fffffff;return starSeed/0x7fffffff;}
+  function buildStars(){
+    stars=[];
+    var n=Math.round((W*H)/9000);
+    starSeed=12345;
+    for(var i=0;i<n;i++){
+      stars.push({x:rnd(),y:rnd(),r:rnd()*1.1+0.2,a:rnd()*0.5+0.15,tw:rnd()*Math.PI*2});
+    }
+  }
+
+  function project(v,cx,cy,scale){
+    // simple orthographic-ish projection with mild perspective via z
+    var persp=1+v[2]*0.12;
+    return [cx+v[0]*scale*persp, cy-v[1]*scale*persp, v[2]];
+  }
+
+  function drawCone(cx,cy,scale,axis,sign,acc,now){
+    // draw the swept beam as a translucent cone of rays around the axis
+    var O=axis.map(function(c){return c*sign;});
+    var S=spinAxis();
+    // build two perpendicular vectors spanning the cone opening
+    var seed=Math.abs(O[1])<0.99?[0,1,0]:[1,0,0];
+    var u=norm([
+      seed[1]*O[2]-seed[2]*O[1],
+      seed[2]*O[0]-seed[0]*O[2],
+      seed[0]*O[1]-seed[1]*O[0]
+    ]);
+    var w=norm([
+      O[1]*u[2]-O[2]*u[1],
+      O[2]*u[0]-O[0]*u[2],
+      O[0]*u[1]-O[1]*u[0]
+    ]);
+    var len=scale*4.4;
+    var open=beamWidth*1.05;
+    var ringR=Math.tan(open)*len;
+    var apex=project([O[0]*scale*0.32,O[1]*scale*0.32,O[2]*scale*0.32],cx,cy,1);
+    // glow strength rises near line-of-sight crossing
+    var O2=losDir();
+    var align=O[0]*O2[0]+O[1]*O2[1]+O[2]*O2[2];
+    var ang=Math.acos(Math.max(-1,Math.min(1,align)));
+    var hot=Math.exp(-(ang*ang)/(2*(beamWidth*1.6)*(beamWidth*1.6)));
+    var depth=(O[2]+1)/2; // 0 back .. 1 front
+    var baseA=0.04+depth*0.07+hot*0.16;
+    // far/tip end center
+    var tip=[O[0]*len,O[1]*len,O[2]*len];
+    var segs=26;
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    for(var k=0;k<segs;k++){
+      var th=(k/segs)*Math.PI*2;
+      var rim=[
+        tip[0]+(u[0]*Math.cos(th)+w[0]*Math.sin(th))*ringR,
+        tip[1]+(u[1]*Math.cos(th)+w[1]*Math.sin(th))*ringR,
+        tip[2]+(u[2]*Math.cos(th)+w[2]*Math.sin(th))*ringR
+      ];
+      var pr=project(rim,cx,cy,1);
+      var grad=ctx.createLinearGradient(apex[0],apex[1],pr[0],pr[1]);
+      grad.addColorStop(0,'rgba('+acc.r+','+acc.g+','+acc.b+','+(baseA*1.4)+')');
+      grad.addColorStop(1,'rgba('+acc.r+','+acc.g+','+acc.b+',0)');
+      ctx.strokeStyle=grad;
+      ctx.lineWidth=1.1;
+      ctx.beginPath();
+      ctx.moveTo(apex[0],apex[1]);
+      ctx.lineTo(pr[0],pr[1]);
+      ctx.stroke();
+    }
+    // bright central spine of the beam
+    var tp=project(tip,cx,cy,1);
+    var spine=ctx.createLinearGradient(apex[0],apex[1],tp[0],tp[1]);
+    spine.addColorStop(0,'rgba('+acc.r+','+acc.g+','+acc.b+','+(0.55+hot*0.4)+')');
+    spine.addColorStop(0.5,'rgba('+acc.r+','+acc.g+','+acc.b+','+(0.16+hot*0.3)+')');
+    spine.addColorStop(1,'rgba('+acc.r+','+acc.g+','+acc.b+',0)');
+    ctx.strokeStyle=spine;
+    ctx.lineWidth=2.0+hot*2.2;
+    ctx.beginPath();
+    ctx.moveTo(apex[0],apex[1]);
+    ctx.lineTo(tp[0],tp[1]);
+    ctx.stroke();
+    ctx.restore();
+    return {tip:tp,hot:hot,depth:depth};
+  }
+
+  function drawAxis(cx,cy,scale,axis,color,dash){
+    var a=project([axis[0]*scale*0.9,axis[1]*scale*0.9,axis[2]*scale*0.9],cx,cy,1);
+    var b=project([-axis[0]*scale*0.9,-axis[1]*scale*0.9,-axis[2]*scale*0.9],cx,cy,1);
+    ctx.save();
+    ctx.setLineDash(dash||[]);
+    ctx.strokeStyle=color;
+    ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();
+    ctx.restore();
+  }
+
+  function draw(now){
+    if(!W||!H){resize();}
+    if(!stars)buildStars();
+    var acc=hexRGB(accent());
+    var cx=W*0.5, cy=H*0.46;
+    var scale=Math.min(W,H)*0.20;
+
+    // background
+    ctx.clearRect(0,0,W,H);
+    var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*0.75);
+    bg.addColorStop(0,'#0a0820');
+    bg.addColorStop(0.5,'#070518');
+    bg.addColorStop(1,'#040210');
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,W,H);
+
+    // stars
+    ctx.save();
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      var tw=0.6+0.4*Math.sin(now*0.0012+s.tw);
+      ctx.globalAlpha=s.a*tw;
+      ctx.fillStyle='#cdd2f0';
+      ctx.beginPath();
+      ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    var M=magAxis(spinPhase);
+    var S=spinAxis();
+
+    // spin axis (faint) and magnetic axis (accent dashed)
+    drawAxis(cx,cy,scale,S,'rgba(170,178,220,0.30)',[]);
+    drawAxis(cx,cy,scale,M,'rgba('+acc.r+','+acc.g+','+acc.b+',0.45)',[4,4]);
+
+    // beams (draw back-facing first for depth)
+    var bk=drawCone(cx,cy,scale,M,M[2]<=0?1:-1,acc,now);
+    var fr=drawCone(cx,cy,scale,M,M[2]<=0?-1:1,acc,now);
+
+    // neutron star core
+    var glow=ctx.createRadialGradient(cx,cy,0,cx,cy,scale*1.5);
+    glow.addColorStop(0,'rgba('+acc.r+','+acc.g+','+acc.b+',0.55)');
+    glow.addColorStop(0.25,'rgba('+acc.r+','+acc.g+','+acc.b+',0.16)');
+    glow.addColorStop(1,'rgba('+acc.r+','+acc.g+','+acc.b+',0)');
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    ctx.fillStyle=glow;
+    ctx.fillRect(cx-scale*1.6,cy-scale*1.6,scale*3.2,scale*3.2);
+    ctx.restore();
+
+    var rStar=scale*0.30;
+    var core=ctx.createRadialGradient(cx-rStar*0.3,cy-rStar*0.3,0,cx,cy,rStar);
+    core.addColorStop(0,'#ffffff');
+    core.addColorStop(0.5,'#eef2ff');
+    core.addColorStop(0.85,'rgba('+acc.r+','+acc.g+','+acc.b+',0.95)');
+    core.addColorStop(1,'rgba('+acc.r+','+acc.g+','+acc.b+',0.6)');
+    ctx.fillStyle=core;
+    ctx.beginPath();ctx.arc(cx,cy,rStar,0,Math.PI*2);ctx.fill();
+
+    // observer / Earth marker along the line of sight
+    var O=losDir();
+    var ep=project([O[0]*scale*2.9,O[1]*scale*2.9,O[2]*scale*2.9],cx,cy,1);
+    drawEarth(ep[0],ep[1],Math.max(6,scale*0.10),now,acc,pulseFlash);
+    // sight line to observer
+    ctx.save();
+    ctx.setLineDash([2,5]);
+    ctx.strokeStyle='rgba(150,160,210,0.22)';
+    ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(ep[0],ep[1]);ctx.stroke();
+    ctx.restore();
+
+    // folded pulse profile (top-right)
+    drawFold(acc,now);
+
+    // small tick label near observer
+    ctx.save();
+    ctx.font='10px Inter,system-ui,sans-serif';
+    ctx.fillStyle='rgba(170,178,215,0.7)';
+    ctx.textAlign='center';
+    ctx.fillText('observer',ep[0],ep[1]+Math.max(6,scale*0.10)+14);
+    ctx.restore();
+  }
+
+  function drawEarth(x,y,r,now,acc,flash){
+    ctx.save();
+    if(flash>0.01){
+      ctx.globalCompositeOperation='lighter';
+      var fg=ctx.createRadialGradient(x,y,0,x,y,r*4);
+      fg.addColorStop(0,'rgba('+acc.r+','+acc.g+','+acc.b+','+(0.5*flash)+')');
+      fg.addColorStop(1,'rgba('+acc.r+','+acc.g+','+acc.b+',0)');
+      ctx.fillStyle=fg;
+      ctx.fillRect(x-r*4,y-r*4,r*8,r*8);
+      ctx.globalCompositeOperation='source-over';
+    }
+    var g=ctx.createRadialGradient(x-r*0.3,y-r*0.3,0,x,y,r);
+    g.addColorStop(0,'#6fa8e6');
+    g.addColorStop(0.6,'#2f6bb0');
+    g.addColorStop(1,'#143a6a');
+    ctx.fillStyle=g;
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='rgba(190,205,235,0.5)';
+    ctx.lineWidth=0.8;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawFold(acc,now){
+    var pad=18;
+    var fw=Math.min(280,W*0.42);
+    if(W<560)return;
+    var fx=W-pad-fw, fy=34, fh=Math.min(96,H*0.20);
+    // panel
+    ctx.save();
+    ctx.fillStyle='rgba(10,8,26,0.45)';
+    ctx.strokeStyle='rgba(150,160,220,0.14)';
+    ctx.lineWidth=1;
+    roundRect(fx,fy,fw,fh,6);
+    ctx.fill();ctx.stroke();
+    // baseline
+    var bx=fx+10, bw=fw-20, by=fy+fh-14, bh=fh-26;
+    ctx.strokeStyle='rgba(150,160,210,0.18)';
+    ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx+bw,by);ctx.stroke();
+    // accumulated folded profile
+    var mx=0.0001;
+    for(var i=0;i<BINS;i++)if(fold[i]>mx)mx=fold[i];
+    ctx.beginPath();
+    for(var j=0;j<BINS;j++){
+      var px=bx+(j/(BINS-1))*bw;
+      var val=fold[j]/mx;
+      var py=by-val*bh;
+      if(j===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+    }
+    var lg=ctx.createLinearGradient(bx,by-bh,bx,by);
+    lg.addColorStop(0,'rgba('+acc.r+','+acc.g+','+acc.b+',0.95)');
+    lg.addColorStop(1,'rgba('+acc.r+','+acc.g+','+acc.b+',0.35)');
+    ctx.strokeStyle=lg;
+    ctx.lineWidth=1.4;
+    ctx.stroke();
+    // fill under curve
+    ctx.lineTo(bx+bw,by);ctx.lineTo(bx,by);ctx.closePath();
+    ctx.fillStyle='rgba('+acc.r+','+acc.g+','+acc.b+',0.10)';
+    ctx.fill();
+    // live phase cursor
+    var cph=spinPhase;
+    var cxp=bx+cph*bw;
+    ctx.strokeStyle='rgba(220,226,250,0.55)';
+    ctx.setLineDash([2,3]);
+    ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(cxp,fy+10);ctx.lineTo(cxp,by);ctx.stroke();
+    ctx.setLineDash([]);
+    // phase-axis ticks
+    ctx.fillStyle='rgba(150,160,205,0.5)';
+    ctx.font='9px Inter,system-ui,sans-serif';
+    ctx.textAlign='left';
+    ctx.fillText('phase 0',bx,by+11);
+    ctx.textAlign='right';
+    ctx.fillText('1',bx+bw,by+11);
+    ctx.restore();
+  }
+
+  function roundRect(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+  }
+
+  function hexRGB(hex){
+    hex=hex.replace('#','');
+    if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    var n=parseInt(hex,16);
+    return {r:(n>>16)&255,g:(n>>8)&255,b:n&255};
+  }
+
+  // map slider/preset period to surface field + age class (interpolated from refs)
+  function classify(p){
+    var field,age;
+    if(p<=8){field='~3 × 10⁸ G';age='recycled · ancient';}
+    else if(p<=140){
+      field=(p<60)?'3.8 × 10¹² G':'3.4 × 10¹² G';
+      age='young';
+    } else {
+      field='1 – 2 × 10¹² G';age='middle-aged';
+    }
+    // closest named reference for the field figure when near a preset
+    for(var i=0;i<refs.length;i++){
+      if(Math.abs(refs[i].p-p)<0.05){field=refs[i].field;age=refs[i].age;}
+    }
+    return {field:field,age:age};
+  }
+
+  function updateReadouts(){
+    var p=periodMs;
+    var pTxt = p<10 ? p.toFixed(2)+' ms' : (p<100 ? p.toFixed(1)+' ms' : Math.round(p)+' ms');
+    cPeriod.textContent=pTxt;
+    var f=1000/p;
+    cFreq.textContent=(f>=100?Math.round(f):f.toFixed(1))+' Hz';
+    var cl=classify(p);
+    cField.innerHTML=cl.field;
+    cAge.textContent=cl.age;
+  }
+
+  function setPeriod(p,fromPreset){
+    periodMs=p;
+    slider.value=p;
+    updateReadouts();
+    // mark preset active state
+    presets.forEach(function(b){
+      b.classList.toggle('is-active',Math.abs(parseFloat(b.dataset.period)-p)<0.05);
+    });
+    draw(performance.now());
+  }
+
+  // animation
+  var raf=null;
+  function loop(now){
+    var dt=(now-lastT)/1000;lastT=now;
+    if(dt>0.1)dt=0.1;
+    // visually we cap the apparent rotation rate so very fast pulsars don't strobe;
+    // the folded profile still ticks at the true period.
+    var visPeriod=Math.max(periodMs/1000,0.9); // seconds per visible rotation (slowed for the eye)
+    var prevPhase=spinPhase;
+    spinPhase=(spinPhase+dt/visPeriod)%1;
+    // accumulate folded profile from analytic model, weighted by time in bin
+    var steps=8;
+    for(var k=0;k<steps;k++){
+      var ph=(prevPhase+ (spinPhase-prevPhase<0? (spinPhase+1-prevPhase):(spinPhase-prevPhase)) * (k/steps))%1;
+      var bin=Math.floor(ph*BINS)%BINS;
+      fold[bin]=fold[bin]*0.997+foldModel[bin]*0.06;
+    }
+    // detect line-of-sight crossing for the flash
+    var curI=foldModel[Math.floor(spinPhase*BINS)%BINS];
+    var prevI=foldModel[Math.floor(prevPhase*BINS)%BINS];
+    if(curI>0.6 && curI>=prevI){pulseFlash=Math.max(pulseFlash,curI);}
+    pulseFlash*=Math.pow(0.06,dt); // decay
+    draw(now);
+    raf=requestAnimationFrame(loop);
+  }
+
+  // events
+  slider.addEventListener('input',function(){
+    setPeriod(parseFloat(slider.value),false);
+  });
+  presets.forEach(function(b){
+    b.addEventListener('click',function(){
+      setPeriod(parseFloat(b.dataset.period),true);
+    });
+  });
+
+  var ro=new ResizeObserver(function(){resize();buildStars();draw(performance.now());});
+  ro.observe(root);
+  window.addEventListener('resize',function(){resize();buildStars();draw(performance.now());});
+
+  // init — first frame synchronously
+  resize();
+  buildStars();
+  buildModel();
+  setPeriod(33,true);
+  draw(performance.now());
+  lastT=performance.now();
   raf=requestAnimationFrame(loop);
-}
-function start(){if(running)return;if(reduced){renderStatic();return;}running=true;prev=0;raf=requestAnimationFrame(loop);}
-function stop(){running=false;if(raf)cancelAnimationFrame(raf);raf=null;}
-
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){readAccent();resize();start();}else{stop();}});},{threshold:0.01});
-io.observe(root);
-
-var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){resize();if(reduced)renderStatic();},120);});
-setInterval(readAccent,800);
-
-setFill(freqIn);setFill(tiltIn);readAccent();resize();updateReadouts();
-if(reduced){renderStatic();}else{start();}
 })();
 </script>
 </body></html>
