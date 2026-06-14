@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Earth&#x27;s Magnetosphere &amp;amp; the Solar Wind · SSAI</title>
+<title>Earth&#x27;s Magnetosphere · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,58 +41,23 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-magnetosphere{position:relative;width:100%;height:100%;min-height:420px;overflow:hidden;background:#050314;font-family:'Inter',system-ui,sans-serif;color:#f4f5ff;border-radius:inherit;isolation:isolate;}
-#kit-magnetosphere *{box-sizing:border-box;}
-#kit-magnetosphere .mg-stage{position:absolute;inset:0;width:100%;height:100%;display:block;}
-
-#kit-magnetosphere .mg-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#050314;z-index:40;transition:opacity .6s ease;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#a6abe6;}
-#kit-magnetosphere .mg-loading.mg-hide{opacity:0;pointer-events:none;}
-#kit-magnetosphere .mg-load-ring{width:38px;height:38px;border-radius:50%;border:2px solid rgba(166,171,230,0.18);border-top-color:var(--mg-accent,#3cc8ff);animation:mg-spin 1s linear infinite;}
-@keyframes mg-spin{to{transform:rotate(360deg);}}
-
-#kit-magnetosphere .mg-title{position:absolute;top:clamp(14px,3.2vw,30px);left:clamp(16px,3.4vw,34px);z-index:20;pointer-events:none;text-shadow:0 2px 18px rgba(2,2,12,0.85);}
-#kit-magnetosphere .mg-eyebrow{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--mg-accent,#3cc8ff);margin-bottom:7px;font-weight:600;}
-#kit-magnetosphere .mg-h1{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(26px,5.6vw,52px);line-height:.92;letter-spacing:.01em;color:#f4f5ff;}
-#kit-magnetosphere .mg-sub{margin-top:8px;font-size:clamp(11px,1.5vw,14px);color:#a6abe6;max-width:30ch;letter-spacing:.01em;}
-
-#kit-magnetosphere .mg-readouts{position:absolute;top:clamp(14px,3.2vw,30px);right:clamp(14px,3.2vw,30px);z-index:20;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none;}
-#kit-magnetosphere .mg-stat{min-width:150px;padding:9px 13px 10px;border-radius:10px;background:rgba(22,20,95,0.30);border:1px solid rgba(166,171,230,0.16);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);text-align:right;}
-#kit-magnetosphere .mg-stat-val{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:21px;line-height:1;color:#f4f5ff;letter-spacing:.01em;font-variant-numeric:tabular-nums;}
-#kit-magnetosphere .mg-stat-lbl{margin-top:4px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a6abe6;}
-#kit-magnetosphere .mg-stat-lbl sub{font-size:8px;}
-#kit-magnetosphere .mg-stat-val sub{font-size:13px;}
-
-#kit-magnetosphere .mg-hud{position:absolute;left:50%;bottom:clamp(16px,3.2vw,30px);transform:translateX(-50%);z-index:25;display:flex;flex-direction:column;align-items:center;gap:11px;width:min(560px,calc(100% - 32px));}
-#kit-magnetosphere .mg-slider-chip{width:100%;padding:12px 18px 11px;border-radius:14px;background:rgba(10,8,42,0.46);border:1px solid rgba(166,171,230,0.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 40px rgba(2,2,12,0.5);}
-#kit-magnetosphere .mg-slider-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
-#kit-magnetosphere .mg-slider-lbl{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#a6abe6;font-weight:600;}
-#kit-magnetosphere .mg-slider-read{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:16px;color:#f4f5ff;letter-spacing:.02em;font-variant-numeric:tabular-nums;}
-#kit-magnetosphere .mg-slider-read #mg-speed{color:var(--mg-accent,#3cc8ff);}
-
-#kit-magnetosphere input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--mg-accent,#3cc8ff) 0%,var(--mg-accent,#3cc8ff) var(--mg-fill,20%),rgba(166,171,230,0.22) var(--mg-fill,20%),rgba(166,171,230,0.22) 100%);outline:none;cursor:pointer;margin:0;}
-#kit-magnetosphere input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:17px;height:17px;border-radius:50%;background:#f4f5ff;border:3px solid var(--mg-accent,#3cc8ff);box-shadow:0 0 12px rgba(60,200,255,0.65);cursor:pointer;}
-#kit-magnetosphere input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:#f4f5ff;border:3px solid var(--mg-accent,#3cc8ff);box-shadow:0 0 12px rgba(60,200,255,0.65);cursor:pointer;}
-#kit-magnetosphere .mg-slider-scale{display:flex;justify-content:space-between;margin-top:6px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(166,171,230,0.6);}
-
-#kit-magnetosphere .mg-toggles{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
-#kit-magnetosphere .mg-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:rgba(10,8,42,0.42);border:1px solid rgba(166,171,230,0.18);color:#a6abe6;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.04em;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:color .2s,border-color .2s,background .2s;}
-#kit-magnetosphere .mg-chip i{font-size:14px;}
-#kit-magnetosphere .mg-chip:hover{color:#f4f5ff;border-color:rgba(166,171,230,0.4);}
-#kit-magnetosphere .mg-chip.mg-on{color:#f4f5ff;border-color:var(--mg-accent,#3cc8ff);background:rgba(60,200,255,0.10);}
-#kit-magnetosphere .mg-chip.mg-on i{color:var(--mg-accent,#3cc8ff);}
-
-#kit-magnetosphere .mg-credit{position:absolute;left:clamp(16px,3.4vw,34px);bottom:clamp(10px,2vw,16px);z-index:18;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(166,171,230,0.55);pointer-events:none;}
-
-@media (max-width:560px){
-  #kit-magnetosphere .mg-readouts{gap:6px;}
-  #kit-magnetosphere .mg-stat{min-width:120px;padding:7px 10px 8px;}
-  #kit-magnetosphere .mg-stat-val{font-size:17px;}
-  #kit-magnetosphere .mg-credit{display:none;}
-  #kit-magnetosphere .mg-sub{display:none;}
-}
-@media (prefers-reduced-motion:reduce){
-  #kit-magnetosphere .mg-load-ring{animation:none;}
-}
+#kit-magnetosphere{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;color:#eaf2ff;border-radius:inherit;-webkit-font-smoothing:antialiased}
+#kit-magnetosphere canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-magnetosphere .kit-magnetosphere-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 110% at 78% 50%,rgba(5,3,20,0) 38%,rgba(4,2,16,0.55) 100%);z-index:2}
+#kit-magnetosphere .kit-magnetosphere-hud{position:absolute;top:18px;z-index:5;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+#kit-magnetosphere .kit-magnetosphere-hud-tl{left:18px;align-items:flex-start}
+#kit-magnetosphere .kit-magnetosphere-hud-tr{right:18px;align-items:flex-end}
+#kit-magnetosphere .kit-magnetosphere-chip{display:flex;flex-direction:column;gap:2px;padding:8px 13px;border-radius:11px;background:rgba(10,14,34,0.42);border:1px solid rgba(150,180,255,0.14);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px);box-shadow:0 6px 26px rgba(0,0,0,0.32)}
+#kit-magnetosphere .kit-magnetosphere-hud-tr .kit-magnetosphere-chip{align-items:flex-end}
+#kit-magnetosphere .kit-magnetosphere-chip-label{font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(190,208,242,0.62);font-weight:500}
+#kit-magnetosphere .kit-magnetosphere-chip-val{font-size:16px;font-weight:600;letter-spacing:0.01em;color:#f3f7ff;font-variant-numeric:tabular-nums;text-shadow:0 0 16px rgba(120,170,255,0.28)}
+#kit-magnetosphere .kit-magnetosphere-controls{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:6;width:min(80%,360px);padding:14px 20px 12px;border-radius:15px;background:rgba(9,12,30,0.46);border:1px solid rgba(150,180,255,0.14);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);box-shadow:0 10px 38px rgba(0,0,0,0.4)}
+#kit-magnetosphere .kit-magnetosphere-ctl-label{display:block;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(196,214,248,0.74);font-weight:500;margin-bottom:10px;text-align:center}
+#kit-magnetosphere .kit-magnetosphere-ctl-scale{display:flex;justify-content:space-between;margin-top:7px;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(170,190,230,0.42)}
+#kit-magnetosphere input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:linear-gradient(90deg,rgba(120,160,255,0.5),var(--accent,#5ea0ff));outline:none;cursor:pointer}
+#kit-magnetosphere input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,var(--accent,#5ea0ff) 72%);border:1px solid rgba(255,255,255,0.85);box-shadow:0 0 16px rgba(120,170,255,0.7),0 2px 6px rgba(0,0,0,0.4);cursor:pointer}
+#kit-magnetosphere input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,var(--accent,#5ea0ff) 72%);border:1px solid rgba(255,255,255,0.85);box-shadow:0 0 16px rgba(120,170,255,0.7);cursor:pointer}
+#kit-magnetosphere input[type=range]::-moz-range-track{height:4px;border-radius:4px;background:transparent}
 
 body.mb-embed #kit-magnetosphere{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-magnetosphere [class*='frame'],body.mb-embed #kit-magnetosphere [class*='shell'],body.mb-embed #kit-magnetosphere [class*='-inner'],body.mb-embed #kit-magnetosphere [class*='wrapper']{display:contents!important;}
@@ -109,63 +74,29 @@ body.mb-embed #kit-magnetosphere [class*='stage'],body.mb-embed #kit-magnetosphe
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Earth&#x27;s Magnetosphere &amp;amp; the Solar Wind</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Earth&#x27;s Magnetosphere</div></div>
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/noaa-logo.png" alt="NOAA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-magnetosphere">
-  <canvas class="mg-stage" id="mg-stage"></canvas>
-
-  <div class="mg-loading" id="mg-loading">
-    <div class="mg-load-ring"></div>
-    <span>Initialising magnetosphere</span>
+  <canvas id="kit-magnetosphere-canvas"></canvas>
+  <div class="kit-magnetosphere-vignette"></div>
+  <div class="kit-magnetosphere-hud kit-magnetosphere-hud-tl">
+    <div class="kit-magnetosphere-chip"><span class="kit-magnetosphere-chip-label">Solar wind speed</span><span class="kit-magnetosphere-chip-val" id="kit-magnetosphere-vsw">420 km/s</span></div>
+    <div class="kit-magnetosphere-chip"><span class="kit-magnetosphere-chip-label">Bz</span><span class="kit-magnetosphere-chip-val" id="kit-magnetosphere-bz">−2.1 nT</span></div>
   </div>
-
-  <div class="mg-title" id="mg-title" aria-hidden="true">
-    <div class="mg-eyebrow">Geospace Dynamics</div>
-    <div class="mg-h1">Magnetosphere</div>
-    <div class="mg-sub">Earth's magnetic shield against the solar wind</div>
+  <div class="kit-magnetosphere-hud kit-magnetosphere-hud-tr">
+    <div class="kit-magnetosphere-chip"><span class="kit-magnetosphere-chip-label">Kp index</span><span class="kit-magnetosphere-chip-val" id="kit-magnetosphere-kp">3</span></div>
+    <div class="kit-magnetosphere-chip"><span class="kit-magnetosphere-chip-label">Standoff</span><span class="kit-magnetosphere-chip-val" id="kit-magnetosphere-standoff">10.4 Rᴇ</span></div>
   </div>
-
-  <div class="mg-readouts" id="mg-readouts" aria-hidden="true">
-    <div class="mg-stat">
-      <div class="mg-stat-val" id="mg-standoff">10.0</div>
-      <div class="mg-stat-lbl">Magnetopause standoff (R<sub>E</sub>)</div>
-    </div>
-    <div class="mg-stat">
-      <div class="mg-stat-val" id="mg-pdyn">1.9</div>
-      <div class="mg-stat-lbl">Dynamic pressure (nPa)</div>
-    </div>
-    <div class="mg-stat">
-      <div class="mg-stat-val" id="mg-bz">&minus;3</div>
-      <div class="mg-stat-lbl">IMF B<sub>z</sub> coupling (nT)</div>
-    </div>
-    <div class="mg-stat">
-      <div class="mg-stat-val" id="mg-kp">Kp 3</div>
-      <div class="mg-stat-lbl">Estimated activity</div>
-    </div>
+  <div class="kit-magnetosphere-controls">
+    <label class="kit-magnetosphere-ctl-label" for="kit-magnetosphere-pressure">Solar-wind pressure</label>
+    <input type="range" id="kit-magnetosphere-pressure" min="0" max="100" value="28" step="1" aria-label="Solar-wind dynamic pressure">
+    <div class="kit-magnetosphere-ctl-scale"><span>Quiet</span><span>Storm</span></div>
   </div>
-
-  <div class="mg-hud" id="mg-hud">
-    <div class="mg-slider-chip">
-      <div class="mg-slider-top">
-        <span class="mg-slider-lbl">Solar wind speed</span>
-        <span class="mg-slider-read"><span id="mg-speed">400</span> km/s</span>
-      </div>
-      <input type="range" id="mg-speed-range" min="300" max="800" step="5" value="400" aria-label="Solar wind speed in kilometres per second" />
-      <div class="mg-slider-scale"><span>300</span><span>quiet</span><span>storm</span><span>800</span></div>
-    </div>
-    <div class="mg-toggles">
-      <button class="mg-chip mg-on" id="mg-t-field" aria-pressed="true"><i class="ti ti-wave-sine" aria-hidden="true"></i><span>Field lines</span></button>
-      <button class="mg-chip mg-on" id="mg-t-wind" aria-pressed="true"><i class="ti ti-wind" aria-hidden="true"></i><span>Solar wind</span></button>
-      <button class="mg-chip mg-on" id="mg-t-labels" aria-pressed="true"><i class="ti ti-tag" aria-hidden="true"></i><span>Labels</span></button>
-    </div>
-  </div>
-
-  <div class="mg-credit" id="mg-credit">SOURCE&nbsp;&middot;&nbsp;NOAA SWPC / NASA &middot; Blue &amp; Black Marble imagery</div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag the SOLAR WIND SPEED chip slider (300-800 km/s) to vary dynamic pressure: the magnetopause and bow shock compress toward Earth, the sub-solar standoff distance readout drops from ~10 Re toward ~6 Re, field lines bend, and the auroral ovals intensify and widen. Toggle field lines / solar wind / labels via small HUD chips.</span>
+    <span class="mb-c-int">Continuous animation runs on load: solar-wind particles stream from the sunward edge and deflect around the magnetopause, field lines shimmer, the magnetotail flutters, and auroral ovals pulse. One slider sets solar-wind dynamic pressure; raising it compresses the dayside, pushes the standoff distance inward, speeds the wind, and intensifies the aurora and bow-shock glow. HUD chips report solar-wind speed, Bz, Kp index, and magnetopause standoff distance.</span>
     <span class="mb-c-src">NOAA SWPC · NASA</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -218,489 +149,466 @@ body.mb-embed #kit-magnetosphere [class*='stage'],body.mb-embed #kit-magnetosphe
 (function(){
   var root=document.getElementById('kit-magnetosphere');
   if(!root)return;
-  var stage=root.querySelector('#mg-stage');
-  var ctx=stage.getContext('2d');
-  var loading=root.querySelector('#mg-loading');
+  var canvas=document.getElementById('kit-magnetosphere-canvas');
+  var ctx=canvas.getContext('2d');
+  var slider=document.getElementById('kit-magnetosphere-pressure');
+  var elV=document.getElementById('kit-magnetosphere-vsw');
+  var elBz=document.getElementById('kit-magnetosphere-bz');
+  var elKp=document.getElementById('kit-magnetosphere-kp');
+  var elSo=document.getElementById('kit-magnetosphere-standoff');
 
-  var accent=(function(){
-    try{var c=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();return c||'#3cc8ff';}catch(e){return '#3cc8ff';}
-  })();
-  root.style.setProperty('--mg-accent',accent);
+  var accent='#5ea0ff';
+  function readAccent(){
+    var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    if(a)accent=a;
+  }
+  readAccent();
 
   function hexToRgb(h){
-    h=h.replace('#','');
-    if(h.length===3)h=h.split('').map(function(x){return x+x;}).join('');
+    h=(h||'').replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
     var n=parseInt(h,16);
-    if(isNaN(n))return {r:60,g:200,b:255};
-    return {r:(n>>16)&255,g:(n>>8)&255,b:n&255};
+    if(isNaN(n))return{r:94,g:160,b:255};
+    return{r:(n>>16)&255,g:(n>>8)&255,b:n&255};
   }
-  var ac=hexToRgb(accent);
   function rgba(c,a){return 'rgba('+c.r+','+c.g+','+c.b+','+a+')';}
-  var auroraCol={r:90,g:240,b:170};
+  function mix(a,b,t){return{r:a.r+(b.r-a.r)*t,g:a.g+(b.g-a.g)*t,b:a.b+(b.b-a.b)*t};}
 
-  var reduced=false;
-  try{reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  // Earth sprite
+  var earthImg=new Image();
+  var earthReady=false;
+  earthImg.onload=function(){earthReady=true;};
+  try{earthImg.src='../assets/images/planets/earth.jpg';}catch(e){}
 
-  var W=0,H=0,dpr=1;
+  var W=0,H=0,DPR=1;
   function resize(){
-    var r=root.getBoundingClientRect();
-    W=Math.max(1,r.width);H=Math.max(1,r.height);
-    dpr=Math.min(window.devicePixelRatio||1,2);
-    stage.width=Math.round(W*dpr);stage.height=Math.round(H*dpr);
-    stage.style.width=W+'px';stage.style.height=H+'px';
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    buildStars();
+    DPR=Math.max(1,Math.min(2.5,window.devicePixelRatio||1));
+    var cw=canvas.clientWidth||root.clientWidth||800;
+    var ch=canvas.clientHeight||root.clientHeight||500;
+    W=cw;H=ch;
+    canvas.width=Math.round(cw*DPR);
+    canvas.height=Math.round(ch*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
   }
 
+  // pressure 0..1 (smoothed)
+  var targetP=parseFloat(slider.value)/100;
+  var pressure=targetP;
+  slider.addEventListener('input',function(){targetP=parseFloat(slider.value)/100;});
+
+  // particles
+  var particles=[];
+  function seedParticles(n){
+    particles.length=0;
+    for(var i=0;i<n;i++)particles.push(newParticle(true));
+  }
+  function newParticle(spread){
+    return{
+      x:0,y:0,
+      px:0,py:0,
+      vx:0,vy:0,
+      speed:0.5+Math.random()*0.6,
+      lane:Math.random(),
+      life:spread?Math.random():0,
+      glow:0.4+Math.random()*0.6,
+      reset:true
+    };
+  }
+
+  // background stars
   var stars=[];
-  function buildStars(){
-    stars=[];
-    var n=Math.round((W*H)/9000);
-    n=Math.max(60,Math.min(260,n));
+  function seedStars(){
+    stars.length=0;
+    var n=120;
     for(var i=0;i<n;i++){
-      stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+0.2,tw:Math.random()*Math.PI*2,sp:0.4+Math.random()*1.2});
+      stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.3+0.2,tw:Math.random()*6.28,sp:0.4+Math.random()*1.4});
     }
   }
+  seedStars();
 
-  var imgDay=new Image(),imgNight=new Image();
-  var dayReady=false,nightReady=false;
-  function onDay(){dayReady=true;}
-  function onNight(){nightReady=true;}
-  imgDay.onload=onDay;imgDay.onerror=function(){dayReady=false;};
-  imgNight.onload=onNight;imgNight.onerror=function(){nightReady=false;};
-  imgDay.src='../assets/images/blue-marble-world.jpg';
-  imgNight.src='../assets/images/black-marble-world.jpg';
-  if(imgDay.complete&&imgDay.naturalWidth){dayReady=true;}
-  if(imgNight.complete&&imgNight.naturalWidth){nightReady=true;}
+  var t0=performance.now();
+  var lastN=0;
 
-  var earthCanvas=document.createElement('canvas');
-  var earthCtx=earthCanvas.getContext('2d');
-  var earthRendered=false,lastEarthR=-1;
+  function draw(now){
+    var w=canvas.clientWidth||W, h=canvas.clientHeight||H;
+    if(w<2||h<2){requestAnimationFrame(draw);return;}
+    if(Math.abs(w-W)>0.5||Math.abs(h-H)>0.5){resize();}
+    readAccent();
+    var acc=hexToRgb(accent);
+    var hot={r:255,g:138,b:96};      // bow shock warm
+    var aur={r:120,g:255,b:190};     // aurora green
 
-  function renderEarth(R){
-    var size=Math.max(2,Math.round(R*2));
-    earthCanvas.width=size;earthCanvas.height=size;
-    var ec=earthCtx;
-    ec.clearRect(0,0,size,size);
-    ec.save();
-    ec.beginPath();ec.arc(R,R,R,0,Math.PI*2);ec.clip();
-    if(dayReady){
-      ec.drawImage(imgDay,0,0,size,size);
-    }else{
-      var g=ec.createRadialGradient(R*0.7,R*0.7,R*0.1,R,R,R);
-      g.addColorStop(0,'#2a6fb0');g.addColorStop(0.6,'#143c66');g.addColorStop(1,'#0a2038');
-      ec.fillStyle=g;ec.fillRect(0,0,size,size);
-    }
-    if(nightReady){
-      ec.save();
-      ec.globalCompositeOperation='lighter';
-      ec.globalAlpha=0.55;
-      var grdMask=ec.createLinearGradient(R*0.35,0,size,0);
-      ec.drawImage(imgNight,0,0,size,size);
-      ec.restore();
-    }
-    var nightShade=ec.createLinearGradient(R*0.15,0,size,0);
-    nightShade.addColorStop(0,'rgba(2,2,14,0)');
-    nightShade.addColorStop(0.42,'rgba(2,2,14,0)');
-    nightShade.addColorStop(0.62,'rgba(2,2,16,0.5)');
-    nightShade.addColorStop(1,'rgba(1,1,10,0.92)');
-    ec.fillStyle=nightShade;ec.fillRect(0,0,size,size);
-    var term=ec.createRadialGradient(R*0.6,R*0.55,R*0.2,R,R,R*1.05);
-    term.addColorStop(0,'rgba(255,255,255,0.05)');
-    term.addColorStop(0.7,'rgba(0,0,0,0)');
-    term.addColorStop(1,'rgba(0,0,0,0.35)');
-    ec.fillStyle=term;ec.fillRect(0,0,size,size);
-    ec.restore();
-    earthRendered=true;lastEarthR=R;
-  }
+    // smooth pressure
+    pressure+=(targetP-pressure)*0.06;
+    var P=pressure;
 
-  var windParticles=[];
-  function seedWind(){
-    windParticles=[];
-    var n=reduced?0:90;
-    for(var i=0;i<n;i++){
-      windParticles.push({p:Math.random(),y:Math.random(),life:Math.random(),sp:0.5+Math.random()*0.8});
-    }
-  }
+    var time=(now-t0)/1000;
 
-  var speed=400;
-  var range=root.querySelector('#mg-speed-range');
-  var speedOut=root.querySelector('#mg-speed');
-  var elStandoff=root.querySelector('#mg-standoff');
-  var elPdyn=root.querySelector('#mg-pdyn');
-  var elBz=root.querySelector('#mg-bz');
-  var elKp=root.querySelector('#mg-kp');
+    // Geometry: Earth on the right-ish, sun to the right (off-screen)
+    var minDim=Math.min(w,h);
+    var earthR=Math.max(34,minDim*0.10);
+    var ex=w*0.66;
+    var ey=h*0.52;
 
-  var showField=true,showWind=true,showLabels=true;
+    // standoff distance scales inward with pressure
+    var standoffRe=11.5-P*4.6; // Re
+    var standoffPx=earthR*(1.55+ (1-P)*1.35); // dayside magnetopause distance in px
+    var noseX=ex+standoffPx; // sunward nose
 
-  function computePhysics(v){
-    var n=6.5;
-    var pdyn=1.6726e-6*n*v*v;
-    var standoff=11.9*Math.pow(pdyn,-1/6);
-    var bz=-(2+ (v-300)/500*8);
-    var coupling=(v/400)*(Math.abs(bz)/3);
-    var kp=Math.max(1,Math.min(9,Math.round(1+coupling*2.2)));
-    return {pdyn:pdyn,standoff:standoff,bz:bz,kp:kp,coupling:Math.min(1.4,coupling)};
-  }
+    // density of particles relative to area
+    var wantN=Math.round(Math.max(70,Math.min(260,(w*h)/4200)));
+    if(Math.abs(wantN-lastN)>8){seedParticles(wantN);lastN=wantN;}
+    if(particles.length===0)seedParticles(wantN);
 
-  function updateReadouts(){
-    var ph=computePhysics(speed);
-    speedOut.textContent=speed;
-    elStandoff.textContent=ph.standoff.toFixed(1);
-    elPdyn.textContent=ph.pdyn.toFixed(1);
-    elBz.innerHTML='&minus;'+Math.abs(ph.bz).toFixed(0);
-    elKp.textContent='Kp '+ph.kp;
-    var pct=(speed-300)/500*100;
-    range.style.setProperty('--mg-fill',pct.toFixed(1)+'%');
-  }
+    // ---------- BACKGROUND ----------
+    var bg=ctx.createLinearGradient(0,0,w,0);
+    bg.addColorStop(0,'#04020f');
+    bg.addColorStop(0.55,'#070420');
+    bg.addColorStop(1,'#0a0626');
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,w,h);
 
-  range.addEventListener('input',function(){
-    speed=parseFloat(range.value);
-    updateReadouts();
-  });
+    // distant sun glow from right
+    var sunG=ctx.createRadialGradient(w*1.08,h*0.5,0,w*1.08,h*0.5,w*0.9);
+    sunG.addColorStop(0,rgba(mix(hot,{r:255,g:230,b:200},0.4),0.16+P*0.10));
+    sunG.addColorStop(0.4,rgba(hot,0.05+P*0.04));
+    sunG.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=sunG;
+    ctx.fillRect(0,0,w,h);
 
-  function bindToggle(id,setter){
-    var btn=root.querySelector(id);
-    btn.addEventListener('click',function(){
-      var on=!btn.classList.contains('mg-on');
-      btn.classList.toggle('mg-on',on);
-      btn.setAttribute('aria-pressed',on?'true':'false');
-      setter(on);
-    });
-  }
-  bindToggle('#mg-t-field',function(v){showField=v;});
-  bindToggle('#mg-t-wind',function(v){showWind=v;});
-  bindToggle('#mg-t-labels',function(v){showLabels=v;});
-
-  var tphys={standoff:10,coupling:0.4};
-
-  var t=0;
-
-  function draw(dt){
-    t+=dt;
-    var ph=computePhysics(speed);
-    tphys.standoff+=(ph.standoff-tphys.standoff)*Math.min(1,dt*4);
-    tphys.coupling+=(ph.coupling-tphys.coupling)*Math.min(1,dt*4);
-
-    ctx.clearRect(0,0,W,H);
-    var bg=ctx.createRadialGradient(W*0.62,H*0.5,0,W*0.62,H*0.5,Math.max(W,H)*0.9);
-    bg.addColorStop(0,'#0a0828');
-    bg.addColorStop(0.5,'#070518');
-    bg.addColorStop(1,'#040210');
-    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-
-    for(var i=0;i<stars.length;i++){
-      var s=stars[i];
-      var tw=reduced?0.7:(0.45+0.55*Math.abs(Math.sin(t*s.sp+s.tw)));
-      ctx.globalAlpha=tw*0.8;
-      ctx.fillStyle='#f4f5ff';
-      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    // stars
+    for(var s=0;s<stars.length;s++){
+      var st=stars[s];
+      var a=0.35+0.45*Math.sin(time*st.sp+st.tw);
+      ctx.globalAlpha=Math.max(0.08,a)*0.8;
+      ctx.fillStyle='#cfe0ff';
+      ctx.beginPath();
+      ctx.arc(st.x*w,st.y*h,st.r,0,6.283);
+      ctx.fill();
     }
     ctx.globalAlpha=1;
 
-    var cx=W*0.62;
-    var cy=H*0.52;
-    var Re=Math.min(W,H)*0.052;
-    Re=Math.max(7,Re);
-    var earthR=Re;
-
-    var standoffPx=tphys.standoff*Re;
-    var maxDay=W*0.42;
-    if(standoffPx>maxDay){var sc=maxDay/standoffPx;standoffPx*=sc;Re*=sc;earthR=Re;}
-
-    var bowPx=standoffPx*1.32;
-    var sunX=cx+standoffPx;
-
-    drawSunGlow(cx,cy,standoffPx);
-
-    if(showWind&&!reduced)drawWind(cx,cy,standoffPx,bowPx,dt);
-
-    drawShell(cx,cy,bowPx,standoffPx,'bow');
-    drawShell(cx,cy,standoffPx*1.0,standoffPx,'mpause');
-
-    drawCusps(cx,cy,Re,standoffPx,tphys.coupling);
-
-    if(showField)drawFieldLines(cx,cy,Re,standoffPx);
-
-    if(earthR!==lastEarthR||!earthRendered){renderEarth(earthR);}
-    drawEarth(cx,cy,earthR);
-
-    drawAurora(cx,cy,earthR,tphys.coupling);
-
-    if(showLabels)drawLabels(cx,cy,standoffPx,bowPx,Re,sunX);
-  }
-
-  function drawSunGlow(cx,cy,standoffPx){
-    var gx=cx+standoffPx*2.4;
-    if(gx>W+200)gx=W+120;
-    var g=ctx.createRadialGradient(W+30,cy,0,W+30,cy,W*0.75);
-    g.addColorStop(0,rgba(ac,0.18));
-    g.addColorStop(0.4,rgba(ac,0.05));
-    g.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  }
-
-  function shellPoint(cx,cy,sub,flare,th){
-    var x=cx+sub*Math.cos(th);
-    var spread=flare;
-    var y=cy+sub*spread*Math.sin(th);
-    return {x:x,y:y};
-  }
-
-  function drawShell(cx,cy,frontDist,scaleRef,kind){
-    ctx.save();
-    var n=80;
-    var pts=[];
-    for(var i=0;i<=n;i++){
-      var u=i/n;
-      var ang=-Math.PI*0.92+u*Math.PI*1.84;
-      var L=frontDist;
-      var open=1.9;
-      var r=L*(2/(1+Math.cos(Math.max(-2.4,Math.min(2.4,ang)))*0.62));
-      var ca=Math.cos(ang),sa=Math.sin(ang);
-      var x=cx+r*ca;
-      var y=cy+r*sa*0.95;
-      pts.push({x:x,y:y});
-    }
-    ctx.beginPath();
-    ctx.moveTo(pts[0].x,pts[0].y);
-    for(var j=1;j<pts.length;j++)ctx.lineTo(pts[j].x,pts[j].y);
-
-    if(kind==='bow'){
-      ctx.strokeStyle=rgba({r:255,g:180,b:120},0.5);
-      ctx.lineWidth=1.4;
-      ctx.shadowColor=rgba({r:255,g:160,b:90},0.7);
-      ctx.shadowBlur=14;
-      ctx.stroke();
-      ctx.shadowBlur=0;
-      var bg=ctx.createLinearGradient(cx+frontDist,cy,cx-frontDist*2,cy);
-      bg.addColorStop(0,'rgba(255,150,80,0.10)');
-      bg.addColorStop(1,'rgba(255,120,60,0.0)');
-      ctx.lineWidth=8;ctx.strokeStyle=bg;ctx.stroke();
-    }else{
-      ctx.strokeStyle=rgba(ac,0.85);
-      ctx.lineWidth=1.6;
-      ctx.shadowColor=rgba(ac,0.9);
-      ctx.shadowBlur=16;
-      ctx.stroke();
-      ctx.shadowBlur=0;
-      ctx.lineWidth=2.4;ctx.strokeStyle=rgba(ac,0.18);ctx.stroke();
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(pts[0].x,pts[0].y);
-      for(var k=1;k<pts.length;k++)ctx.lineTo(pts[k].x,pts[k].y);
-      ctx.closePath();
-      var fill=ctx.createRadialGradient(cx,cy,frontDist*0.2,cx,cy,frontDist*1.6);
-      fill.addColorStop(0,rgba(ac,0.05));
-      fill.addColorStop(1,rgba(ac,0.0));
-      ctx.fillStyle=fill;ctx.fill();
-      ctx.restore();
-    }
-    ctx.restore();
-  }
-
-  function drawFieldLines(cx,cy,Re,standoffPx){
-    ctx.save();
-    var dayShells=[1.6,2.4,3.4];
-    for(var d=0;d<dayShells.length;d++){
-      var Lr=dayShells[d]*Re;
-      Lr=Math.min(Lr,standoffPx*0.92);
-      drawDipoleLoop(cx,cy,Re,Lr,standoffPx,1);
-      drawDipoleLoop(cx,cy,Re,Lr,standoffPx,-1);
-    }
-    var openL=[2.0,3.0,4.2];
-    for(var o=0;o<openL.length;o++){
-      drawTailLine(cx,cy,Re,openL[o]*Re,standoffPx,1);
-      drawTailLine(cx,cy,Re,openL[o]*Re,standoffPx,-1);
-    }
-    ctx.restore();
-  }
-
-  function drawDipoleLoop(cx,cy,Re,L,standoffPx,sign){
-    ctx.beginPath();
-    var first=true;
-    for(var a=0;a<=Math.PI;a+=Math.PI/46){
-      var lat=a;
-      var r=L*Math.sin(lat)*Math.sin(lat);
-      if(r<Re*0.96)continue;
-      var theta=lat-Math.PI/2;
-      var x=cx+r*Math.sin(lat-Math.PI/2+Math.PI/2)*0;
-      var px=r*Math.sin(lat);
-      var py=-r*Math.cos(lat)*sign;
-      var comp=1-0.18*Math.max(0,px/standoffPx);
-      var X=cx+px*comp;
-      var Y=cy+py;
-      if(first){ctx.moveTo(X,Y);first=false;}else ctx.lineTo(X,Y);
-    }
-    ctx.strokeStyle=rgba(ac,0.28);
-    ctx.lineWidth=1;
-    ctx.stroke();
-  }
-
-  function drawTailLine(cx,cy,Re,startR,standoffPx,sign){
-    ctx.beginPath();
-    var tailLen=standoffPx*2.6;
-    var y0=cy-sign*startR*0.55;
-    var lat=Math.asin(Math.min(1,Math.sqrt(Re/startR)));
-    var footY=cy-sign*Re*Math.cos(lat);
-    var footX=cx+Re*Math.sin(lat)*Math.sign(-1)*0+ (cx-Re*0.2);
-    footX=cx- Re*0.1;
-    ctx.moveTo(cx- Re*0.0, cy - sign*Re*0.95);
-    var startX=cx;
-    var py0=-sign*startR*0.5;
-    ctx.moveTo(cx, cy+py0*0.4);
-    var pts=24;
-    for(var i=0;i<=pts;i++){
-      var u=i/pts;
-      var X=cx - u*tailLen;
-      var flare=startR*0.5 + u*startR*0.9;
-      var Y=cy - sign*flare;
-      if(i===0){ctx.moveTo(X,Y);}else ctx.lineTo(X,Y);
-    }
-    ctx.strokeStyle=rgba(ac,0.22);
-    ctx.lineWidth=1;
-    ctx.stroke();
-  }
-
-  function drawCusps(cx,cy,Re,standoffPx,coupling){
-  }
-
-  function drawEarth(cx,cy,R){
-    ctx.save();
-    if(earthRendered){
-      ctx.drawImage(earthCanvas,cx-R,cy-R,R*2,R*2);
-    }else{
-      ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
-      ctx.fillStyle='#143c66';ctx.fill();
-    }
-    var atm=ctx.createRadialGradient(cx,cy,R*0.92,cx,cy,R*1.28);
-    atm.addColorStop(0,'rgba(80,150,255,0)');
-    atm.addColorStop(0.6,rgba(ac,0.22));
-    atm.addColorStop(1,'rgba(80,150,255,0)');
-    ctx.beginPath();ctx.arc(cx,cy,R*1.28,0,Math.PI*2);
-    ctx.fillStyle=atm;ctx.fill();
-    var rim=ctx.createRadialGradient(cx+R*0.45,cy,R*0.2,cx,cy,R);
-    rim.addColorStop(0,'rgba(255,255,255,0)');
-    rim.addColorStop(0.85,'rgba(255,255,255,0)');
-    rim.addColorStop(1,rgba(ac,0.3));
-    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
-    ctx.fillStyle=rim;ctx.fill();
-    ctx.restore();
-  }
-
-  function drawAurora(cx,cy,R,coupling){
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    var intensity=0.35+coupling*0.75;
-    var width=R*(0.30+coupling*0.22);
-    var poles=[-1,1];
-    for(var p=0;p<poles.length;p++){
-      var sgn=poles[p];
-      var py=cy+sgn*R*0.80;
-      var pulse=reduced?1:(0.82+0.18*Math.sin(t*2.2+p));
-      var g=ctx.createRadialGradient(cx-R*0.12,py,R*0.04,cx-R*0.12,py,width);
-      g.addColorStop(0,'rgba('+auroraCol.r+','+auroraCol.g+','+auroraCol.b+','+(0.55*intensity*pulse)+')');
-      g.addColorStop(0.5,rgba(ac,0.22*intensity*pulse));
-      g.addColorStop(1,'rgba(120,90,255,0)');
-      ctx.beginPath();
-      ctx.ellipse(cx-R*0.1,py,width*1.3,width*0.6,0,0,Math.PI*2);
-      ctx.fillStyle=g;ctx.fill();
-    }
-    ctx.restore();
-  }
-
-  function drawLabels(cx,cy,standoffPx,bowPx,Re,sunX){
-    ctx.save();
-    ctx.font="600 10px 'Inter',sans-serif";
-    ctx.textBaseline='middle';
-    var dim='rgba(166,171,230,0.78)';
-
-    label(cx+bowPx+6,cy-bowPx*0.05,'BOW SHOCK','rgba(255,180,120,0.92)','left');
-    label(cx+standoffPx+6,cy+standoffPx*0.30,'MAGNETOPAUSE',rgba(ac,0.95),'left');
-    if(cx-standoffPx*1.8>40)label(cx-standoffPx*1.7,cy-standoffPx*0.7,'MAGNETOTAIL',dim,'left');
-    label(cx-Re*1.4,cy-Re*1.9,'POLAR CUSP / AURORA','rgba('+auroraCol.r+','+auroraCol.g+','+auroraCol.b+',0.95)','right');
-
-    ctx.font="italic 700 10px 'Chakra Petch','Inter',sans-serif";
-    ctx.fillStyle='rgba(166,171,230,0.85)';
-    ctx.textAlign='center';
-    var arrowY=cy+Math.min(H*0.36,standoffPx*1.4);
-    if(sunX<W-10){
-      ctx.fillText('SOLAR WIND →',Math.min(W-60,sunX-10),arrowY);
-    }
-    ctx.restore();
-  }
-  function label(x,y,txt,col,align){
-    ctx.textAlign=align;
-    ctx.fillStyle='rgba(2,2,12,0.55)';
-    ctx.fillText(txt,x+0.6,y+0.6);
-    ctx.fillStyle=col;
-    ctx.fillText(txt,x,y);
-  }
-
-  function drawWind(cx,cy,standoffPx,bowPx,dt){
-    ctx.save();
-    var v=(speed-300)/500;
-    var spd=(0.18+v*0.5);
-    for(var i=0;i<windParticles.length;i++){
-      var w=windParticles[i];
-      w.p-=spd*dt*(0.6+w.sp);
-      if(w.p<0){w.p=1;w.y=Math.random();}
-      var startX=W+40;
-      var x=startX - w.p*(W*1.15);
-      var yBase=H*0.1+w.y*H*0.8;
-      var dx=x-cx;
-      var dy=yBase-cy;
-      var dist=Math.sqrt(dx*dx+dy*dy);
-      var bowFront=cx+standoffPx*1.32;
-      var deflect=0;
-      if(x<bowFront+20){
-        var prox=Math.max(0,1-(dist/(bowPx*1.4)));
-        deflect=prox*Math.sign(dy||1)*standoffPx*0.5;
+    // ---------- SOLAR WIND PARTICLES ----------
+    var windSpeedPx=(1.2+P*2.6)*(minDim/600);
+    ctx.lineCap='round';
+    for(var i=0;i<particles.length;i++){
+      var p=particles[i];
+      if(p.reset){
+        p.x=w+20+Math.random()*40;
+        var laneY=p.lane*h;
+        p.y=laneY;
+        p.vx=-(windSpeedPx*(0.85+p.speed*0.5));
+        p.vy=(laneY-ey)*0.0006*Math.abs(p.vx);
+        p.px=p.x;p.py=p.y;
+        p.reset=false;
+        p.life=0;
       }
-      var y=yBase+deflect;
-      var len=8+v*16;
-      var a=0.12+v*0.4;
-      var col= x>bowFront ? rgba({r:255,g:200,b:150},a) : rgba(ac,a*0.9);
-      ctx.strokeStyle=col;
-      ctx.lineWidth=1.1;
+      p.px=p.x;p.py=p.y;
+
+      // deflection around magnetopause (parabola-ish shield)
+      var dx=p.x-ex;
+      var dy=p.y-ey;
+      var dist=Math.sqrt(dx*dx+dy*dy);
+      // shield radius as function of angle from sun direction
+      var ang=Math.atan2(dy,dx); // 0 = toward sun (right)
+      var shieldR=standoffPx*(2/(1+Math.cos(Math.max(-2.6,Math.min(2.6,ang)))*0.78));
+      shieldR=Math.min(shieldR, standoffPx*3.4);
+      if(p.x<ex+standoffPx*1.4){ // only deflect on dayside-ish
+        var pen=shieldR-dist;
+        if(pen>0){
+          var nx=dx/(dist||1), ny=dy/(dist||1);
+          var force=pen*0.10*(1+P*0.6);
+          p.vx+=nx*force;
+          p.vy+=ny*force;
+          // tangential slide to flow around
+          p.vx+= -ny*0.018*Math.abs(p.vx)*(dy>0?1:-1)*0.0;
+          p.glow=Math.min(1,p.glow+0.04);
+        }
+      }
+      // continue tailward drift, slight pull along tail
+      p.vy+=(0)+ (Math.sin(time*1.5+p.lane*9)*0.02);
+      p.x+=p.vx;
+      p.y+=p.vy;
+      // damp
+      p.vx*=0.99;p.vy*=0.985;
+      p.life+=0.01;
+
+      if(p.x< -40 || p.y< -60 || p.y>h+60){p.reset=true;}
+
+      var nearShock=Math.abs(dist-shieldR)<standoffPx*0.5 && p.x>ex;
+      var col=nearShock?mix(acc,hot,0.5):acc;
+      var ga=0.5*p.glow;
+      ctx.strokeStyle=rgba(col,Math.min(0.85,ga));
+      ctx.lineWidth=1.1+p.glow*0.9;
       ctx.beginPath();
-      ctx.moveTo(x,y);
-      ctx.lineTo(x+len,y-deflect*0.04);
+      ctx.moveTo(p.px,p.py);
+      ctx.lineTo(p.x,p.y);
+      ctx.stroke();
+      // head
+      ctx.fillStyle=rgba(mix(col,{r:255,g:255,b:255},0.3),Math.min(0.9,ga+0.15));
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,0.9+p.glow*0.7,0,6.283);
+      ctx.fill();
+    }
+
+    // ---------- BOW SHOCK ----------
+    ctx.save();
+    var bowOff=standoffPx*0.42;
+    function shieldPath(scale,off){
+      ctx.beginPath();
+      var first=true;
+      for(var aa=-2.55;aa<=2.55;aa+=0.06){
+        var rr=standoffPx*scale*(2/(1+Math.cos(aa)*0.78))+off;
+        rr=Math.min(rr,standoffPx*scale*3.6);
+        var xx=ex+Math.cos(aa)*rr;
+        var yy=ey+Math.sin(aa)*rr;
+        if(first){ctx.moveTo(xx,yy);first=false;}else ctx.lineTo(xx,yy);
+      }
+    }
+    // bow shock glow band
+    var bsGrad=ctx.createRadialGradient(noseX,ey,standoffPx*0.4,noseX,ey,standoffPx*2.0);
+    bsGrad.addColorStop(0,rgba(hot,0.0));
+    bsGrad.addColorStop(0.5,rgba(hot,0.05+P*0.08));
+    bsGrad.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=bsGrad;
+    ctx.beginPath();
+    ctx.arc(noseX,ey,standoffPx*2.0,0,6.283);
+    ctx.fill();
+
+    ctx.lineWidth=2.0;
+    ctx.strokeStyle=rgba(hot,0.32+P*0.30);
+    ctx.shadowColor=rgba(hot,0.6);
+    ctx.shadowBlur=18+P*16;
+    shieldPath(1.0,bowOff);
+    ctx.stroke();
+    ctx.shadowBlur=0;
+
+    // magnetopause (inner shield)
+    ctx.lineWidth=1.6;
+    var mpCol=mix(acc,{r:200,g:230,b:255},0.3);
+    ctx.strokeStyle=rgba(mpCol,0.45+P*0.25);
+    ctx.shadowColor=rgba(acc,0.55);
+    ctx.shadowBlur=14;
+    shieldPath(1.0,0);
+    ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.restore();
+
+    // ---------- MAGNETOTAIL ----------
+    ctx.save();
+    var tailLen=ex+ w*0.1; // extends to left edge
+    var tailFlare=earthR*(1.7+(1-P)*0.6);
+    var flutter=Math.sin(time*1.1)*earthR*0.12;
+    function tailLine(sign){
+      ctx.beginPath();
+      ctx.moveTo(ex, ey+sign*earthR*0.7);
+      var steps=24;
+      for(var k=1;k<=steps;k++){
+        var tt=k/steps;
+        var xx=ex-(ex+w*0.06)*tt;
+        var spread=tailFlare*(0.4+tt*0.9);
+        var wob=Math.sin(time*0.9 - tt*4 + sign)*earthR*0.18*tt;
+        var yy=ey+sign*spread+ wob + flutter*tt;
+        ctx.lineTo(xx,yy);
+      }
       ctx.stroke();
     }
+    var tailGrad=ctx.createLinearGradient(ex,ey,0,ey);
+    tailGrad.addColorStop(0,rgba(acc,0.5));
+    tailGrad.addColorStop(0.6,rgba(acc,0.18));
+    tailGrad.addColorStop(1,rgba(acc,0));
+    ctx.strokeStyle=tailGrad;
+    ctx.lineWidth=1.4;
+    ctx.shadowColor=rgba(acc,0.4);
+    ctx.shadowBlur=10;
+    for(var lns=0;lns<4;lns++){
+      tailFlareTmp=tailFlare*(0.5+lns*0.3);
+      var save=tailFlare; tailFlare=tailFlareTmp;
+      tailLine(1); tailLine(-1);
+      tailFlare=save;
+    }
+    // plasma sheet glow in tail center
+    var psh=ctx.createLinearGradient(ex,ey,0,ey);
+    psh.addColorStop(0,rgba(acc,0.25));
+    psh.addColorStop(1,rgba(acc,0));
+    ctx.shadowBlur=0;
+    ctx.fillStyle=psh;
+    ctx.beginPath();
+    ctx.moveTo(ex,ey-earthR*0.35);
+    ctx.lineTo(0,ey-earthR*0.9+flutter);
+    ctx.lineTo(0,ey+earthR*0.9+flutter);
+    ctx.lineTo(ex,ey+earthR*0.35);
+    ctx.closePath();
+    ctx.globalAlpha=0.5;
+    ctx.fill();
+    ctx.globalAlpha=1;
     ctx.restore();
+
+    // ---------- DIPOLE FIELD LINES ----------
+    ctx.save();
+    var nLines=7;
+    for(var fl=0;fl<nLines;fl++){
+      var Lshell=(fl+1)/nLines; // 0..1
+      var reach=earthR*(1.3+Lshell*((standoffPx/earthR)*0.92));
+      var phase=time*0.5+fl;
+      var pulse=0.55+0.45*Math.sin(phase);
+      var lg=rgba(mix(acc,{r:210,g:235,b:255},0.25),0.10+0.16*pulse*(0.6+Lshell*0.6));
+      ctx.strokeStyle=lg;
+      ctx.lineWidth=0.9+Lshell*0.6;
+      ctx.shadowColor=rgba(acc,0.3);
+      ctx.shadowBlur=6;
+      // dayside closed loops (right) compressed
+      drawDipoleLoop(ctx,ex,ey,earthR,reach,1,Lshell,P,true);
+      // nightside loops (left) stretched
+      drawDipoleLoop(ctx,ex,ey,earthR,reach*(1.25+0.6*Lshell),-1,Lshell,P,false);
+    }
+    ctx.restore();
+
+    // ---------- EARTH ----------
+    drawEarth(ctx,ex,ey,earthR,acc,aur,P,time);
+
+    // ---------- VHUD numbers ----------
+    updateHUD(P,standoffRe);
+
+    requestAnimationFrame(draw);
   }
 
-  var visible=true;
-  try{
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){visible=e.isIntersecting;});},{threshold:0.01});
-    io.observe(root);
-  }catch(e){}
+  function drawDipoleLoop(c,ex,ey,R,reach,sideX,Lshell,P,dayside){
+    // loop from north pole region out to apex and back to south
+    var compress=dayside?(1-P*0.32):(1+P*0.18);
+    var apexX=ex+sideX*reach*compress;
+    var apexY=ey;
+    var poleY=R*0.72;
+    c.beginPath();
+    c.moveTo(ex+sideX*R*0.18, ey-poleY);
+    c.bezierCurveTo(
+      ex+sideX*reach*0.5*compress, ey-reach*0.55,
+      apexX, apexY-reach*0.12,
+      apexX, apexY
+    );
+    c.bezierCurveTo(
+      apexX, apexY+reach*0.12,
+      ex+sideX*reach*0.5*compress, ey+reach*0.55,
+      ex+sideX*R*0.18, ey+poleY
+    );
+    c.stroke();
+  }
 
+  function drawEarth(c,ex,ey,R,acc,aur,P,time){
+    c.save();
+    // outer atmosphere glow
+    var atm=c.createRadialGradient(ex,ey,R*0.7,ex,ey,R*1.7);
+    atm.addColorStop(0,rgba(acc,0.0));
+    atm.addColorStop(0.55,rgba({r:120,g:180,b:255},0.18));
+    atm.addColorStop(1,'rgba(0,0,0,0)');
+    c.fillStyle=atm;
+    c.beginPath();c.arc(ex,ey,R*1.7,0,6.283);c.fill();
+
+    // clip circle
+    c.save();
+    c.beginPath();c.arc(ex,ey,R,0,6.283);c.closePath();c.clip();
+    if(earthReady){
+      // draw image scaled with slow rotation pan
+      var pan=((time*4)% (R*2));
+      var iw=R*2.2, ih=R*2.2;
+      c.drawImage(earthImg, ex-R*1.1, ey-R*1.1, iw, ih);
+    }else{
+      // procedural earth fallback
+      var og=c.createRadialGradient(ex-R*0.3,ey-R*0.3,R*0.1,ex,ey,R);
+      og.addColorStop(0,'#3a7bd5');
+      og.addColorStop(0.5,'#1d4e8f');
+      og.addColorStop(1,'#0a2547');
+      c.fillStyle=og;c.fillRect(ex-R,ey-R,R*2,R*2);
+      // faux landmass
+      c.fillStyle='rgba(60,120,90,0.55)';
+      for(var m=0;m<6;m++){
+        var mx=ex+Math.cos(m*1.7+time*0.05)*R*0.5;
+        var my=ey+Math.sin(m*2.3)*R*0.5;
+        c.beginPath();c.ellipse(mx,my,R*0.28,R*0.18,m,0,6.283);c.fill();
+      }
+    }
+    // day/night terminator: sun on right -> dark on left
+    var term=c.createLinearGradient(ex-R,ey,ex+R,ey);
+    term.addColorStop(0,'rgba(2,4,14,0.92)');
+    term.addColorStop(0.45,'rgba(2,4,14,0.45)');
+    term.addColorStop(0.62,'rgba(2,4,14,0.0)');
+    c.fillStyle=term;c.fillRect(ex-R,ey-R,R*2,R*2);
+
+    // ---------- AURORAL OVALS ----------
+    var aIntensity=0.25+P*0.85;
+    var poles=[-1,1];
+    for(var pp=0;pp<2;pp++){
+      var sy=poles[pp];
+      var py=ey+sy*R*0.78;
+      var pulse=0.7+0.3*Math.sin(time*2.4+pp);
+      var ag=c.createRadialGradient(ex,py,R*0.02,ex,py,R*0.6);
+      var aC=mix(aur,{r:160,g:120,b:255},P*0.4);
+      ag.addColorStop(0,rgba(aC,Math.min(0.95,aIntensity*pulse)));
+      ag.addColorStop(0.5,rgba(aC,aIntensity*0.4*pulse));
+      ag.addColorStop(1,'rgba(0,0,0,0)');
+      c.fillStyle=ag;
+      c.beginPath();
+      c.ellipse(ex,py,R*0.55,R*0.28,0,0,6.283);
+      c.fill();
+    }
+    c.restore(); // unclip
+
+    // crisp aurora ring arcs above limb at poles
+    var aInt2=0.2+P*0.8;
+    for(var q=0;q<2;q++){
+      var sy2=q===0?-1:1;
+      var ringY=ey+sy2*R*0.74;
+      var rp=0.6+0.4*Math.sin(time*3+q*2);
+      c.strokeStyle=rgba(mix(aur,{r:150,g:130,b:255},P*0.5),aInt2*rp);
+      c.lineWidth=1.6+P*1.6;
+      c.shadowColor=rgba(aur,0.7);
+      c.shadowBlur=12+P*14;
+      c.beginPath();
+      c.ellipse(ex,ringY,R*0.5,R*0.16,0,0.15,Math.PI-0.15);
+      c.stroke();
+      c.shadowBlur=0;
+    }
+
+    // limb highlight (sunlit edge)
+    c.save();
+    c.beginPath();c.arc(ex,ey,R,0,6.283);c.clip();
+    var lh=c.createRadialGradient(ex+R*0.55,ey-R*0.1,R*0.1,ex+R*0.55,ey-R*0.1,R*1.1);
+    lh.addColorStop(0,'rgba(180,215,255,0.25)');
+    lh.addColorStop(0.6,'rgba(180,215,255,0)');
+    c.fillStyle=lh;c.fillRect(ex-R,ey-R,R*2,R*2);
+    c.restore();
+
+    // rim light
+    c.strokeStyle='rgba(150,195,255,0.35)';
+    c.lineWidth=1.4;
+    c.shadowColor=rgba(acc,0.5);c.shadowBlur=16;
+    c.beginPath();c.arc(ex,ey,R,0,6.283);c.stroke();
+    c.shadowBlur=0;
+    c.restore();
+  }
+
+  function updateHUD(P,standoffRe){
+    var vsw=Math.round(350+P*520);
+    var bz=-(1+P*22); // southward IMF strengthens with storm
+    var kp=Math.max(0,Math.min(9,Math.round(P*8.4)));
+    elV.textContent=vsw+' km/s';
+    elBz.textContent=(bz<=0?'−':'+')+Math.abs(bz).toFixed(1)+' nT';
+    elKp.textContent=String(kp);
+    elSo.textContent=standoffRe.toFixed(1)+' Rᴇ';
+  }
+
+  // observers
   var ro;
-  try{ro=new ResizeObserver(function(){resize();});ro.observe(root);}catch(e){window.addEventListener('resize',resize);}
-
-  var last=performance.now();
-  var started=false;
-  function loop(now){
-    var dt=Math.min(0.05,(now-last)/1000);last=now;
-    if(visible){draw(reduced?0.0001:dt);}
-    requestAnimationFrame(loop);
+  if(window.ResizeObserver){
+    ro=new ResizeObserver(function(){resize();});
+    ro.observe(root);
   }
+  window.addEventListener('resize',resize);
 
-  function start(){
-    if(started)return;started=true;
-    resize();seedWind();updateReadouts();
-    setTimeout(function(){loading.classList.add('mg-hide');},220);
-    requestAnimationFrame(function(n){last=n;loop(n);});
-  }
-
-  if(imgDay.complete){onDay();}
-  function maybeReady(){ if((dayReady||imgDay.complete)){} }
-  imgDay.addEventListener('load',function(){dayReady=true;earthRendered=false;});
-  imgNight.addEventListener('load',function(){nightReady=true;earthRendered=false;});
-
-  start();
+  resize();
+  seedParticles(120);
+  // draw first frame immediately
+  draw(performance.now());
 })();
 </script>
 </body></html>

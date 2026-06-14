@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Galaxy generator · SSAI</title>
+<title>Spiral Galaxy Generator · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,29 +41,24 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-galaxy-gen{position:relative;width:100%;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;border-radius:14px;overflow:hidden;background:radial-gradient(120% 120% at 50% 35%,#0a0726 0%,#050314 60%,#040210 100%);border:1px solid rgba(166,171,230,0.16)}
-#kit-galaxy-gen *{box-sizing:border-box}
-#kit-galaxy-gen .gg-stage{position:relative;width:100%;aspect-ratio:16/10;min-height:300px;cursor:grab;touch-action:none}
-#kit-galaxy-gen .gg-stage:active{cursor:grabbing}
-#kit-galaxy-gen .gg-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#kit-galaxy-gen .gg-canvas.gg-grab{cursor:grabbing}
-#kit-galaxy-gen .gg-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 100% at 50% 50%,transparent 55%,rgba(4,2,16,0.55) 100%)}
-#kit-galaxy-gen .gg-title{position:absolute;top:14px;left:18px;pointer-events:none;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;letter-spacing:.06em;font-size:13px;color:#f4f5ff;text-shadow:0 0 14px rgba(0,0,0,.6)}
-#kit-galaxy-gen .gg-hint{position:absolute;bottom:12px;right:16px;pointer-events:none;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a6abe6;opacity:.7}
-#kit-galaxy-gen .gg-panel{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:16px;align-items:end;padding:14px 18px 16px;background:linear-gradient(180deg,rgba(22,20,95,0) 0%,rgba(22,20,95,0.28) 100%);border-top:1px solid rgba(166,171,230,0.16)}
-#kit-galaxy-gen .gg-ctrl{display:flex;flex-direction:column;gap:7px;min-width:0}
-#kit-galaxy-gen .gg-ctrl label{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:#a6abe6;display:flex;justify-content:space-between;gap:8px;white-space:nowrap}
-#kit-galaxy-gen .gg-ctrl label span{color:var(--gg-accent,#3cc8ff);font-style:normal}
-#kit-galaxy-gen input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:rgba(166,171,230,0.22);outline:none;cursor:pointer}
-#kit-galaxy-gen input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gg-accent,#3cc8ff);border:2px solid #050314;box-shadow:0 0 10px var(--gg-glow,rgba(60,200,255,.7));transition:transform .12s ease}
+#kit-galaxy-gen{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;border-radius:inherit}
+#kit-galaxy-gen canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-galaxy-gen .galaxy-gen-controls{position:absolute;left:18px;bottom:18px;z-index:6;display:flex;flex-direction:column;gap:11px;padding:15px 17px 16px;background:rgba(8,6,26,.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,.08);border-radius:15px;box-shadow:0 14px 44px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+#kit-galaxy-gen .galaxy-gen-ctl{display:grid;grid-template-columns:62px 132px 42px;align-items:center;gap:11px}
+#kit-galaxy-gen .galaxy-gen-ctl-label{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(226,224,245,.62)}
+#kit-galaxy-gen .galaxy-gen-ctl-val{font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--accent,#e8b15a);text-align:right;font-variant-numeric:tabular-nums;text-shadow:0 0 10px rgba(232,177,90,.4)}
+#kit-galaxy-gen input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:linear-gradient(90deg,rgba(232,177,90,.55),rgba(255,255,255,.1));outline:none;cursor:pointer;margin:0}
+#kit-galaxy-gen input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--accent,#e8b15a) 65%);border:none;box-shadow:0 0 0 4px rgba(232,177,90,.16),0 2px 8px rgba(0,0,0,.55);transition:transform .15s ease}
 #kit-galaxy-gen input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.18)}
-#kit-galaxy-gen input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--gg-accent,#3cc8ff);border:2px solid #050314;box-shadow:0 0 10px var(--gg-glow,rgba(60,200,255,.7));cursor:pointer}
-#kit-galaxy-gen input[type=range]::-moz-range-track{height:3px;border-radius:3px;background:rgba(166,171,230,0.22)}
-#kit-galaxy-gen .gg-regen{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:11px;letter-spacing:.08em;color:#f4f5ff;background:rgba(22,20,95,0.55);border:1px solid var(--gg-accent,#3cc8ff);border-radius:9px;padding:9px 15px;cursor:pointer;white-space:nowrap;transition:background .18s ease,box-shadow .18s ease,transform .12s ease}
-#kit-galaxy-gen .gg-regen:hover{background:rgba(22,20,95,0.9);box-shadow:0 0 16px var(--gg-glow,rgba(60,200,255,.45))}
-#kit-galaxy-gen .gg-regen:active{transform:scale(.97)}
-@media (max-width:560px){#kit-galaxy-gen .gg-panel{grid-template-columns:1fr 1fr;gap:14px 16px}#kit-galaxy-gen .gg-regen{grid-column:1/-1}}
-@media (prefers-reduced-motion:reduce){#kit-galaxy-gen .gg-hint::after{content:' · static'}}
+#kit-galaxy-gen input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--accent,#e8b15a) 65%);border:none;box-shadow:0 0 0 4px rgba(232,177,90,.16),0 2px 8px rgba(0,0,0,.55)}
+#kit-galaxy-gen input[type=range]::-moz-range-track{height:3px;border-radius:3px;background:linear-gradient(90deg,rgba(232,177,90,.55),rgba(255,255,255,.1))}
+#kit-galaxy-gen .galaxy-gen-hud{position:absolute;z-index:6;display:flex;flex-direction:column;gap:2px;padding:8px 13px;background:rgba(8,6,26,.4);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);border:1px solid rgba(255,255,255,.07);border-radius:11px;pointer-events:none;box-shadow:0 8px 26px rgba(0,0,0,.4)}
+#kit-galaxy-gen .galaxy-gen-hud-tl{top:18px;left:18px}
+#kit-galaxy-gen .galaxy-gen-hud-tr{top:18px;right:18px;align-items:flex-end}
+#kit-galaxy-gen .galaxy-gen-hud-br{bottom:18px;right:18px;align-items:flex-end}
+#kit-galaxy-gen .galaxy-gen-hud-k{font-size:9px;font-weight:600;letter-spacing:.2em;color:rgba(226,224,245,.5)}
+#kit-galaxy-gen .galaxy-gen-hud-v{font-size:16px;font-weight:600;letter-spacing:.01em;color:#f4f1ff;font-variant-numeric:tabular-nums;text-shadow:0 0 14px rgba(232,177,90,.35)}
+@media(max-width:560px){#kit-galaxy-gen .galaxy-gen-ctl{grid-template-columns:54px 96px 38px;gap:8px}#kit-galaxy-gen .galaxy-gen-controls{left:12px;bottom:12px;padding:12px 13px}#kit-galaxy-gen .galaxy-gen-hud{padding:6px 10px}#kit-galaxy-gen .galaxy-gen-hud-v{font-size:14px}}
 
 body.mb-embed #kit-galaxy-gen{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-galaxy-gen [class*='frame'],body.mb-embed #kit-galaxy-gen [class*='shell'],body.mb-embed #kit-galaxy-gen [class*='-inner'],body.mb-embed #kit-galaxy-gen [class*='wrapper']{display:contents!important;}
@@ -80,35 +75,41 @@ body.mb-embed #kit-galaxy-gen [class*='stage'],body.mb-embed #kit-galaxy-gen [cl
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Galaxy generator</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Spiral Galaxy Generator</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-galaxy-gen">
-  <div class="gg-stage">
-    <canvas class="gg-canvas" aria-label="Procedurally generated rotating spiral galaxy"></canvas>
-    <div class="gg-vignette" aria-hidden="true"></div>
-    <div class="gg-title">SPIRAL GALAXY GENERATOR</div>
-    <div class="gg-hint">Drag to reorient</div>
+  <canvas id="galaxy-gen-canvas"></canvas>
+  <div class="galaxy-gen-controls">
+    <label class="galaxy-gen-ctl">
+      <span class="galaxy-gen-ctl-label">Arms</span>
+      <input id="galaxy-gen-arms" type="range" min="2" max="6" step="1" value="4">
+      <span class="galaxy-gen-ctl-val" id="galaxy-gen-arms-val">4</span>
+    </label>
+    <label class="galaxy-gen-ctl">
+      <span class="galaxy-gen-ctl-label">Winding</span>
+      <input id="galaxy-gen-wind" type="range" min="12" max="42" step="1" value="26">
+      <span class="galaxy-gen-ctl-val" id="galaxy-gen-wind-val">0.45</span>
+    </label>
+    <label class="galaxy-gen-ctl">
+      <span class="galaxy-gen-ctl-label">Density</span>
+      <input id="galaxy-gen-dens" type="range" min="30" max="100" step="1" value="65">
+      <span class="galaxy-gen-ctl-val" id="galaxy-gen-dens-val">65%</span>
+    </label>
   </div>
-  <div class="gg-panel">
-    <div class="gg-ctrl">
-      <label>ARMS <span data-gg-out="arms">4</span></label>
-      <input type="range" min="1" max="7" step="1" value="4" data-gg="arms" aria-label="Number of spiral arms">
-    </div>
-    <div class="gg-ctrl">
-      <label>ARM TIGHTNESS <span data-gg-out="tight">36%</span></label>
-      <input type="range" min="0.02" max="0.85" step="0.01" value="0.36" data-gg="tight" aria-label="Spiral arm tightness">
-    </div>
-    <div class="gg-ctrl">
-      <label>SPIN <span data-gg-out="spin">0.50×</span></label>
-      <input type="range" min="0" max="1.6" step="0.01" value="0.5" data-gg="spin" aria-label="Galactic spin speed">
-    </div>
-    <button class="gg-regen" data-gg="regen" type="button">REGENERATE</button>
+  <div class="galaxy-gen-hud galaxy-gen-hud-tl">
+    <span class="galaxy-gen-hud-k">ARMS</span><span class="galaxy-gen-hud-v" id="galaxy-gen-hud-arms">4</span>
+  </div>
+  <div class="galaxy-gen-hud galaxy-gen-hud-tr">
+    <span class="galaxy-gen-hud-k">STARS</span><span class="galaxy-gen-hud-v" id="galaxy-gen-hud-stars">0</span>
+  </div>
+  <div class="galaxy-gen-hud galaxy-gen-hud-br">
+    <span class="galaxy-gen-hud-k">ROTATION</span><span class="galaxy-gen-hud-v" id="galaxy-gen-hud-rot">0.0°/s</span>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag the disk to reorient its inclination and roll; adjust the Arms, Arm tightness and Spin sliders to reshape and rewind it live; click Regenerate for a fresh galaxy.</span>
+    <span class="mb-c-int">Three overlaid sliders adjust the number of spiral arms, the winding tightness of the arms, and the star density. The galaxy rotates continuously and differentially (inner stars faster than outer) at rest. HUD chips report arms, total star count and rotation rate. Changing any control re-seeds and re-flows the structure live.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -159,208 +160,376 @@ body.mb-embed #kit-galaxy-gen [class*='stage'],body.mb-embed #kit-galaxy-gen [cl
 </script>
 <script>
 (function(){
-  var root=document.getElementById('kit-galaxy-gen'); if(!root) return;
-  var canvas=root.querySelector('.gg-canvas');
-  var ctx=canvas.getContext('2d',{alpha:true});
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root=document.getElementById('kit-galaxy-gen');
+  if(!root)return;
+  var canvas=root.querySelector('#galaxy-gen-canvas');
+  var ctx=canvas.getContext('2d');
 
-  function accentRGB(){
-    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim();
-    if(v){var a=v.split(',').map(function(n){return parseInt(n,10);}); if(a.length===3&&a.every(function(x){return !isNaN(x);})) return a;}
-    var hex=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#3cc8ff';
-    hex=hex.replace('#',''); if(hex.length===3) hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-    var r=parseInt(hex.substr(0,2),16),g=parseInt(hex.substr(2,2),16),b=parseInt(hex.substr(4,2),16);
-    if(isNaN(r)||isNaN(g)||isNaN(b)) return [60,200,255];
-    return [r,g,b];
-  }
-  function syncCSSAccent(ac){
-    root.style.setProperty('--gg-accent','rgb('+ac[0]+','+ac[1]+','+ac[2]+')');
-    root.style.setProperty('--gg-glow','rgba('+ac[0]+','+ac[1]+','+ac[2]+',0.6)');
-  }
+  var armsEl=root.querySelector('#galaxy-gen-arms');
+  var windEl=root.querySelector('#galaxy-gen-wind');
+  var densEl=root.querySelector('#galaxy-gen-dens');
+  var armsVal=root.querySelector('#galaxy-gen-arms-val');
+  var windVal=root.querySelector('#galaxy-gen-wind-val');
+  var densVal=root.querySelector('#galaxy-gen-dens-val');
+  var hudArms=root.querySelector('#galaxy-gen-hud-arms');
+  var hudStars=root.querySelector('#galaxy-gen-hud-stars');
+  var hudRot=root.querySelector('#galaxy-gen-hud-rot');
 
-  var DPR=Math.min(window.devicePixelRatio||1,2);
-  var W=0,H=0,CX=0,CY=0,scale=1;
-  function resize(){
-    var r=canvas.getBoundingClientRect();
-    W=Math.max(2,r.width); H=Math.max(2,r.height);
-    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    CX=W/2; CY=H/2; scale=Math.min(W,H)*0.46;
+  function accent(){
+    var c=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return c||'#e8b15a';
+  }
+  function hexToRgb(h){
+    h=(h||'').replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16);
+    if(isNaN(n))return{r:232,g:177,b:90};
+    return{r:(n>>16)&255,g:(n>>8)&255,b:n&255};
   }
 
-  var P={arms:4, tightness:0.36, spin:0.5};
-  var stars=[], dust=[], halo=[];
-  var rngSeed=20240517;
-  function srand(){ rngSeed=(rngSeed*1664525+1013904223)&0x7fffffff; return rngSeed/0x7fffffff; }
-  function gauss(){ var u=0,v=0; while(u===0)u=srand(); while(v===0)v=srand(); return Math.sqrt(-2*Math.log(u))*Math.cos(6.2831853*v); }
-  function omega(r){ var v=1-Math.exp(-r/0.16); return v/Math.max(r,0.05); }
+  // ---- background nebula/deep-field sprite (real NASA asset, graceful fallback) ----
+  var bgImg=new Image(), bgReady=false;
+  bgImg.onload=function(){bgReady=true;};
+  bgImg.onerror=function(){bgReady=false;};
+  try{bgImg.src='../assets/posters/deep-field.jpg';}catch(e){}
 
-  function starColor(r, inArm){
-    var R,G,B;
-    if(r<0.13){ R=255; G=210-(40*srand())|0; B=150-(50*srand())|0; }
-    else if(inArm){
-      var h=srand();
-      if(h<0.18){ R=170+(40*srand())|0; G=200+(30*srand())|0; B=255; }
-      else if(h<0.5){ R=235; G=240; B=255; }
-      else { R=255; G=240-(20*srand())|0; B=210-(30*srand())|0; }
-    } else { R=255; G=225-(30*srand())|0; B=185-(40*srand())|0; }
-    return [R,G,B];
+  // ---- seeded RNG ----
+  function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+  // ---- galaxy model ----
+  var arms=4, windDeg=26, densPct=65;
+  var rotation=0;          // global rotation phase
+  var stars=[];            // disk stars
+  var hii=[];              // HII regions
+  var coreStars=[];        // bulge stars
+  var dust=[];             // dust lane clumps
+  var bgStars=[];          // far field
+  var maxR=1;              // normalized model radius (set per build to ~1)
+  var rotRateDeg=0;
+
+  function gaussian(rnd){
+    var u=0,v=0;
+    while(u===0)u=rnd();
+    while(v===0)v=rnd();
+    return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
   }
 
   function build(){
-    var saved=rngSeed; rngSeed=buildSeed; rngSeed=(rngSeed||1)&0x7fffffff;
-    stars=[]; dust=[]; halo=[];
-    var pitch=0.06+P.tightness*0.9;
-    var b=1/Math.tan(Math.max(0.05,pitch));
-    var armCount=P.arms, armGap=6.2831853/armCount;
-    var N=Math.round((W*H)/360); N=Math.max(2600,Math.min(N,7000));
-    var i,j,k,h;
-    for(i=0;i<N;i++){
-      var u=srand(), r=Math.pow(u,0.62);
-      var inArm=srand()<(0.78-0.25*r), ang;
-      if(inArm){
-        var arm=Math.floor(srand()*armCount);
-        var theta=Math.log(Math.max(r,0.04)/0.04)/b;
-        ang=theta+arm*armGap+gauss()*(0.10+0.16*r);
-      } else { ang=srand()*6.2831853; }
-      r+=gauss()*0.012;
-      if(r<0.01||r>1.05){ i--; continue; }
-      var col=starColor(r,inArm);
-      var mag=(inArm?1.0:0.6)*(0.5+0.6*(1-r))+srand()*0.5;
-      var sz=(inArm?(srand()<0.04?1.7:0.9):0.7)*(0.7+0.5*(1-r));
-      stars.push({r:r,a:ang,R:col[0],G:col[1],B:col[2],m:Math.min(mag,1.6),s:sz,tw:srand()*6.28,ts:0.4+srand()*1.2});
-    }
-    var Nb=Math.round(N*0.16);
-    for(j=0;j<Nb;j++){
-      var rb=Math.abs(gauss())*0.06; if(rb>0.2){ j--; continue; }
-      stars.push({r:rb,a:srand()*6.2831853,R:255,G:(215-30*srand())|0,B:(160-40*srand())|0,m:0.7+srand()*0.7,s:0.7+srand()*0.7,tw:srand()*6.28,ts:0.5+srand()});
-    }
-    var Nd=Math.round(N*0.5);
-    for(k=0;k<Nd;k++){
-      var rd=Math.pow(srand(),0.7); if(rd<0.08||rd>0.98){ k--; continue; }
-      var armd=Math.floor(srand()*armCount);
-      var thetad=Math.log(Math.max(rd,0.04)/0.04)/b;
-      var angd=thetad+armd*armGap-0.16+gauss()*(0.05+0.07*rd);
-      dust.push({r:rd,a:angd,s:1.2+srand()*2.4*rd,o:0.06+0.12*srand()});
-    }
-    var Nh=Math.round(N*0.22);
-    for(h=0;h<Nh;h++){
-      var rh=Math.abs(gauss())*0.5+srand()*0.2; if(rh>1.3){ h--; continue; }
-      halo.push({r:rh,a:srand()*6.2831853,o:0.02+0.05*srand(),s:0.5+srand()*0.6});
-    }
-    rngSeed=saved;
-  }
-  var buildSeed=20240517;
+    var rnd=mulberry(0x51A1*arms+windDeg*977+densPct*131+1);
+    stars=[];hii=[];coreStars=[];dust=[];
+    maxR=1;
+    var windB=windDeg/100; // tightness of logarithmic spiral
 
-  var tilt=0.62, yaw=0.0;
-  var dragging=false, lx=0, ly=0, vTilt=0, vYaw=0;
-  function project(r,a,t){
-    var ang=a+omega(r)*t;
-    var x=r*Math.cos(ang), y=r*Math.sin(ang);
-    var yt=y*Math.cos(tilt);
-    var ca=Math.cos(yaw), sa=Math.sin(yaw);
-    return [CX+(x*ca-yt*sa)*scale, CY+(x*sa+yt*ca)*scale];
+    // total star count scales with density
+    var diskCount=Math.round((900+ (densPct/100)*2600));
+    var armSpread=0.16 - (windDeg/100)*0.07; // tighter winding -> thinner arms
+
+    for(var i=0;i<diskCount;i++){
+      // radial distribution: more stars mid-disk, exponential-ish falloff
+      var t=Math.pow(rnd(),0.62);
+      var r=0.16+t*0.92;            // 0.16..1.08
+      if(r>maxR)maxR=r;
+      // assign to an arm
+      var arm=Math.floor(rnd()*arms);
+      var baseAng=arm*(2*Math.PI/arms);
+      // logarithmic spiral angle
+      var spiralAng=baseAng + Math.log(r/0.16)/windB;
+      // scatter perpendicular to arm (gaussian) -> arms thin near core
+      var scatter=gaussian(rnd)*armSpread*(0.55+r*0.7);
+      var ang=spiralAng+scatter;
+      // small fraction are inter-arm field stars (diffuse)
+      var field=rnd()<0.16;
+      if(field){ang=rnd()*Math.PI*2;}
+      var x=Math.cos(ang)*r, y=Math.sin(ang)*r;
+
+      // color: blue young stars cluster in arms, warm/golden toward core & field
+      var armProx=Math.exp(-Math.abs(scatter)/(armSpread*0.9));
+      var blue=(!field)&&(rnd()<0.45+0.4*armProx)&&r>0.3;
+      var col;
+      if(blue){
+        col=[150+rnd()*60,185+rnd()*55,255];      // young blue-white
+      }else if(r<0.4){
+        col=[255,205+rnd()*40,150+rnd()*60];      // warm inner
+      }else{
+        var w=rnd();
+        if(w<0.5)col=[255,240+rnd()*15,225+rnd()*25];   // white
+        else col=[255,225+rnd()*25,180+rnd()*40];        // warm
+      }
+      var sz=0.45+Math.pow(rnd(),3)*2.6;
+      if(blue)sz*=1.15;
+      var bright=0.35+rnd()*0.65;
+      stars.push({r:r,a:ang,x:x,y:y,c:col,s:sz,b:bright,arm:!field});
+
+      // HII regions: bright pink/magenta knots along arms in young-star zones
+      if(blue && rnd()<0.05 && r>0.34){
+        hii.push({r:r,a:ang,x:x,y:y,sz:0.014+rnd()*0.03,b:0.5+rnd()*0.5});
+      }
+    }
+
+    // dust lane clumps tracing inside the arms (slightly trailing)
+    var dustCount=Math.round(180+ (densPct/100)*220);
+    for(var d=0;d<dustCount;d++){
+      var dt=Math.pow(rnd(),0.7);
+      var dr=0.22+dt*0.85;
+      var darm=Math.floor(rnd()*arms);
+      var dbase=darm*(2*Math.PI/arms);
+      var dang=dbase+Math.log(dr/0.16)/windB - 0.18 + gaussian(rnd)*0.05;
+      dust.push({r:dr,a:dang,sz:0.02+rnd()*0.05,o:0.05+rnd()*0.14});
+    }
+
+    // core bulge stars (dense golden cloud, gaussian radius)
+    var coreCount=Math.round(520+ (densPct/100)*420);
+    for(var c=0;c<coreCount;c++){
+      var cr=Math.abs(gaussian(rnd))*0.12;
+      if(cr>0.32)cr=0.32*rnd();
+      var ca=rnd()*Math.PI*2;
+      coreStars.push({r:cr,a:ca,s:0.4+Math.pow(rnd(),2)*1.8,b:0.4+rnd()*0.6,
+        c:[255,225-rnd()*30,170-rnd()*50]});
+    }
+
+    rebuildBg();
+    updateHud();
   }
 
-  var simT=0, last=performance.now(), running=false, rafId=0;
+  function rebuildBg(){
+    var rnd=mulberry(99173);
+    bgStars=[];
+    for(var i=0;i<260;i++){
+      bgStars.push({x:rnd(),y:rnd(),s:rnd()*1.3+0.2,b:0.15+rnd()*0.5,tw:rnd()*Math.PI*2,sp:0.4+rnd()*1.2});
+    }
+  }
+
+  function updateHud(){
+    var total=stars.length+coreStars.length+hii.length;
+    hudArms.textContent=String(arms);
+    hudStars.textContent=total.toLocaleString();
+    hudRot.textContent=rotRateDeg.toFixed(1)+'°/s';
+    armsVal.textContent=String(arms);
+    windVal.textContent=(windDeg/100*1.7).toFixed(2);
+    densVal.textContent=densPct+'%';
+  }
+
+  // ---- DPR / size ----
+  var W=0,H=0,dpr=1;
+  function resize(){
+    var cw=canvas.clientWidth||root.clientWidth||800;
+    var ch=canvas.clientHeight||root.clientHeight||500;
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    var nw=Math.max(2,Math.round(cw*dpr));
+    var nh=Math.max(2,Math.round(ch*dpr));
+    if(nw!==canvas.width||nh!==canvas.height){canvas.width=nw;canvas.height=nh;}
+    W=cw;H=ch;
+  }
+
+  // ---- draw ----
+  var last=performance.now();
+  var twPhase=0;
+
   function draw(now){
-    if(!running) return;
-    var dt=Math.min(0.05,(now-last)/1000); last=now;
-    if(!reduce) simT+=dt*P.spin*0.35;
-    tilt+=vTilt; yaw+=vYaw; vTilt*=0.9; vYaw*=0.9;
-    tilt=Math.max(0.0,Math.min(1.35,tilt));
+    var dt=Math.min(0.05,(now-last)/1000);last=now;
+    twPhase+=dt;
+    resize();
+    var cw=W, ch=H;
+    if(cw<2||ch<2){requestAnimationFrame(draw);return;}
 
-    var ac=accentRGB(); syncCSSAccent(ac);
-    ctx.clearRect(0,0,W,H);
-    ctx.globalCompositeOperation='lighter';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
 
+    // base deep-space gradient
+    var bg=ctx.createRadialGradient(cw*0.5,ch*0.5,0,cw*0.5,ch*0.5,Math.max(cw,ch)*0.75);
+    bg.addColorStop(0,'#0a0726');
+    bg.addColorStop(0.45,'#070420');
+    bg.addColorStop(1,'#040210');
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,cw,ch);
+
+    // NASA deep-field backdrop (subtle, very low opacity, cover-fit)
+    if(bgReady && bgImg.naturalWidth){
+      var iw=bgImg.naturalWidth, ih=bgImg.naturalHeight;
+      var scale=Math.max(cw/iw,ch/ih)*1.08;
+      var dw=iw*scale, dh=ih*scale;
+      ctx.save();
+      ctx.globalAlpha=0.22;
+      ctx.globalCompositeOperation='lighter';
+      ctx.drawImage(bgImg,(cw-dw)/2,(ch-dh)/2,dw,dh);
+      ctx.restore();
+    }
+
+    // far background stars (twinkle)
     ctx.save();
-    ctx.translate(CX,CY); ctx.rotate(yaw); ctx.scale(1,Math.cos(tilt)); ctx.translate(-CX,-CY);
-    var gr=ctx.createRadialGradient(CX,CY,0,CX,CY,scale*0.55);
-    gr.addColorStop(0,'rgba(255,238,200,0.55)');
-    gr.addColorStop(0.18,'rgba('+ac[0]+','+ac[1]+','+ac[2]+',0.16)');
-    gr.addColorStop(0.5,'rgba('+Math.round(ac[0]*0.5+40)+','+Math.round(ac[1]*0.5+30)+','+Math.round(ac[2]*0.5+70)+',0.06)');
-    gr.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=gr; ctx.fillRect(0,0,W,H);
+    ctx.globalCompositeOperation='lighter';
+    for(var i=0;i<bgStars.length;i++){
+      var b=bgStars[i];
+      var tw=0.55+0.45*Math.sin(twPhase*b.sp+b.tw);
+      ctx.globalAlpha=b.b*tw*0.7;
+      ctx.fillStyle='#cfd8ff';
+      ctx.beginPath();ctx.arc(b.x*cw,b.y*ch,b.s,0,7);ctx.fill();
+    }
     ctx.restore();
 
-    var ph,pp;
-    for(var hi=0;hi<halo.length;hi++){
-      ph=halo[hi]; pp=project(ph.r,ph.a,simT*0.2);
-      ctx.fillStyle='rgba('+ac[0]+','+ac[1]+','+ac[2]+','+ph.o+')';
-      ctx.fillRect(pp[0],pp[1],ph.s,ph.s);
+    var acc=accent();
+    var ac=hexToRgb(acc);
+
+    var cx=cw*0.5, cy=ch*0.5;
+    // scale model radius (maxR ~1.08) to fill frame nicely
+    var R=Math.min(cw,ch)*0.5/ (maxR) *0.94;
+
+    // gentle 3D tilt (slight perspective so it reads as a disk, not flat)
+    var tilt=0.62; // y-axis squash
+    var viewRot=-0.32; // static viewing rotation of the whole disk
+
+    function project(r,a){
+      var ang=a+viewRot;
+      var px=Math.cos(ang)*r*R;
+      var py=Math.sin(ang)*r*R*tilt;
+      return [cx+px, cy+py];
     }
 
-    var time=now*0.001;
-    for(var i=0;i<stars.length;i++){
-      var s=stars[i], p=project(s.r,s.a,simT), px=p[0], py=p[1];
-      if(px<-4||px>W+4||py<-4||py>H+4) continue;
-      var tw=reduce?1:(0.78+0.22*Math.sin(time*s.ts+s.tw));
-      ctx.fillStyle='rgba('+s.R+','+s.G+','+s.B+','+Math.min(1,s.m*tw)+')';
-      ctx.fillRect(px-s.s*0.5,py-s.s*0.5,s.s,s.s);
-    }
-
-    ctx.globalCompositeOperation='source-over';
-    for(var d=0;d<dust.length;d++){
-      var du=dust[d], pd=project(du.r,du.a,simT);
-      ctx.fillStyle='rgba(8,4,18,'+du.o+')';
-      ctx.beginPath(); ctx.arc(pd[0],pd[1],du.s,0,6.2831853); ctx.fill();
-    }
-
+    // ---------- outer halo glow ----------
+    ctx.save();
     ctx.globalCompositeOperation='lighter';
-    var cp=project(0,0,0);
-    var cg=ctx.createRadialGradient(cp[0],cp[1],0,cp[0],cp[1],scale*0.09);
-    cg.addColorStop(0,'rgba(255,250,235,0.95)');
-    cg.addColorStop(0.4,'rgba(255,225,180,0.5)');
-    cg.addColorStop(1,'rgba(255,200,150,0)');
-    ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cp[0],cp[1],scale*0.09,0,6.2831853); ctx.fill();
-    ctx.globalCompositeOperation='source-over';
+    var halo=ctx.createRadialGradient(cx,cy,0,cx,cy,R*1.15);
+    halo.addColorStop(0,'rgba('+ac.r+','+ac.g+','+ac.b+',0.14)');
+    halo.addColorStop(0.35,'rgba('+Math.round(ac.r*0.7)+','+Math.round(ac.g*0.7)+',120,0.07)');
+    halo.addColorStop(0.7,'rgba(70,90,180,0.05)');
+    halo.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=halo;
+    ctx.beginPath();ctx.ellipse(cx,cy,R*1.15,R*1.15*tilt+R*0.18,0,0,7);ctx.fill();
+    ctx.restore();
 
-    if(reduce){ running=false; return; }
-    rafId=requestAnimationFrame(draw);
+    // global rotation advances
+    rotation+=dt*0.05;
+
+    // differential rotation: inner faster. omega(r) ~ 1/(0.35+r)
+    function omega(r){return 1/(0.36+r*1.05);}
+    rotRateDeg=(omega(0.55)*0.05*180/Math.PI); // representative mid-disk rate
+
+    // ---------- dust lanes (drawn under arm stars, dark + multiply-like via destination) ----------
+    ctx.save();
+    for(var dd=0;dd<dust.length;dd++){
+      var du=dust[dd];
+      var da=du.a+rotation*omega(du.r);
+      var p=project(du.r,da);
+      var g=ctx.createRadialGradient(p[0],p[1],0,p[0],p[1],du.sz*R);
+      g.addColorStop(0,'rgba(20,8,24,'+du.o+')');
+      g.addColorStop(1,'rgba(10,4,14,0)');
+      ctx.fillStyle=g;
+      ctx.beginPath();ctx.arc(p[0],p[1],du.sz*R,0,7);ctx.fill();
+    }
+    ctx.restore();
+
+    // ---------- disk stars ----------
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    for(var s=0;s<stars.length;s++){
+      var st=stars[s];
+      var a=st.a+rotation*omega(st.r);
+      var p2=project(st.r,a);
+      var col=st.c;
+      var fade=1.0;
+      // fade stars near very edge for soft boundary
+      if(st.r>0.85)fade=Math.max(0,1-(st.r-0.85)/0.28);
+      var alpha=st.b*0.9*fade;
+      if(alpha<=0)continue;
+      var sz=st.s;
+      // brighter arm stars get a soft glow
+      if(st.arm && st.s>1.6){
+        var gg=ctx.createRadialGradient(p2[0],p2[1],0,p2[0],p2[1],sz*3);
+        gg.addColorStop(0,'rgba('+col[0]+','+col[1]+','+col[2]+','+(alpha*0.5)+')');
+        gg.addColorStop(1,'rgba('+col[0]+','+col[1]+','+col[2]+',0)');
+        ctx.fillStyle=gg;
+        ctx.beginPath();ctx.arc(p2[0],p2[1],sz*3,0,7);ctx.fill();
+      }
+      ctx.globalAlpha=alpha;
+      ctx.fillStyle='rgb('+col[0]+','+col[1]+','+col[2]+')';
+      ctx.beginPath();ctx.arc(p2[0],p2[1],sz,0,7);ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    ctx.restore();
+
+    // ---------- HII regions (glowing pink star-forming knots) ----------
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    for(var h=0;h<hii.length;h++){
+      var hr=hii[h];
+      var ha=hr.a+rotation*omega(hr.r);
+      var p3=project(hr.r,ha);
+      var pulse=0.7+0.3*Math.sin(twPhase*1.6+h);
+      var rad=hr.sz*R*(1+pulse*0.12);
+      var g2=ctx.createRadialGradient(p3[0],p3[1],0,p3[0],p3[1],rad);
+      var hb=hr.b*pulse;
+      g2.addColorStop(0,'rgba(255,180,225,'+(0.55*hb)+')');
+      g2.addColorStop(0.4,'rgba(255,120,190,'+(0.32*hb)+')');
+      g2.addColorStop(1,'rgba(180,60,150,0)');
+      ctx.fillStyle=g2;
+      ctx.beginPath();ctx.arc(p3[0],p3[1],rad,0,7);ctx.fill();
+      // bright core
+      ctx.fillStyle='rgba(255,225,245,'+(0.7*hb)+')';
+      ctx.beginPath();ctx.arc(p3[0],p3[1],rad*0.16,0,7);ctx.fill();
+    }
+    ctx.restore();
+
+    // ---------- core bulge ----------
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    // bulge glow halo
+    var bulgeR=R*0.42;
+    var bg2=ctx.createRadialGradient(cx,cy,0,cx,cy,bulgeR);
+    bg2.addColorStop(0,'rgba(255,244,220,0.95)');
+    bg2.addColorStop(0.18,'rgba(255,'+(210)+','+(140)+',0.7)');
+    bg2.addColorStop(0.45,'rgba('+ac.r+','+ac.g+','+ac.b+',0.32)');
+    bg2.addColorStop(1,'rgba('+ac.r+','+ac.g+','+ac.b+',0)');
+    ctx.fillStyle=bg2;
+    ctx.beginPath();ctx.ellipse(cx,cy,bulgeR,bulgeR*tilt+bulgeR*0.12,0,0,7);ctx.fill();
+
+    // core stars
+    for(var c2=0;c2<coreStars.length;c2++){
+      var co=coreStars[c2];
+      var caa=co.a+rotation*omega(co.r);
+      var p4=project(co.r,caa);
+      ctx.globalAlpha=co.b*0.85;
+      ctx.fillStyle='rgb('+co.c[0]+','+co.c[1]+','+co.c[2]+')';
+      ctx.beginPath();ctx.arc(p4[0],p4[1],co.s,0,7);ctx.fill();
+    }
+    ctx.globalAlpha=1;
+
+    // bright nucleus
+    var nuc=ctx.createRadialGradient(cx,cy,0,cx,cy,R*0.1);
+    nuc.addColorStop(0,'rgba(255,255,250,1)');
+    nuc.addColorStop(0.4,'rgba(255,238,200,0.9)');
+    nuc.addColorStop(1,'rgba(255,210,150,0)');
+    ctx.fillStyle=nuc;
+    ctx.beginPath();ctx.arc(cx,cy,R*0.1,0,7);ctx.fill();
+    ctx.restore();
+
+    // subtle vignette to seat the galaxy in deep space
+    var vig=ctx.createRadialGradient(cx,cy,Math.min(cw,ch)*0.3,cx,cy,Math.max(cw,ch)*0.72);
+    vig.addColorStop(0,'rgba(0,0,0,0)');
+    vig.addColorStop(1,'rgba(2,1,8,0.55)');
+    ctx.fillStyle=vig;
+    ctx.fillRect(0,0,cw,ch);
+
+    rotRateDeg=Math.abs(rotRateDeg);
+    hudRot.textContent=rotRateDeg.toFixed(1)+'°/s';
+
+    requestAnimationFrame(draw);
   }
-  function start(){ if(running) return; running=true; last=performance.now(); rafId=requestAnimationFrame(draw); }
-  function stop(){ running=false; if(rafId) cancelAnimationFrame(rafId); rafId=0; }
-  function renderOnce(){ var pr=reduce; running=true; draw(performance.now()); running=false; }
 
-  function bindSlider(name,cb){
-    var el=root.querySelector('[data-gg="'+name+'"]');
-    var out=root.querySelector('[data-gg-out="'+name+'"]');
-    if(!el) return;
-    function upd(){ cb(parseFloat(el.value),out); if(reduce) renderOnce(); }
-    el.addEventListener('input',upd); upd();
+  // ---- controls ----
+  armsEl.addEventListener('input',function(){arms=parseInt(armsEl.value,10);build();});
+  windEl.addEventListener('input',function(){windDeg=parseInt(windEl.value,10);build();});
+  densEl.addEventListener('input',function(){densPct=parseInt(densEl.value,10);build();});
+
+  // ---- observers ----
+  if(window.ResizeObserver){
+    var ro=new ResizeObserver(function(){resize();});
+    ro.observe(root);
   }
-  bindSlider('arms',function(v,out){ P.arms=Math.round(v); if(out)out.textContent=P.arms; build(); });
-  bindSlider('tight',function(v,out){ P.tightness=v; if(out)out.textContent=Math.round(v*100)+'%'; build(); });
-  bindSlider('spin',function(v,out){ P.spin=v; if(out)out.textContent=v.toFixed(2)+'×'; });
+  window.addEventListener('resize',resize);
 
-  var regen=root.querySelector('[data-gg="regen"]');
-  if(regen) regen.addEventListener('click',function(){ buildSeed=(Date.now()&0x7fffffff)||1; build(); if(reduce)renderOnce(); });
-
-  function down(e){ dragging=true; var pt=e.touches?e.touches[0]:e; lx=pt.clientX; ly=pt.clientY; canvas.classList.add('gg-grab'); if(e.touches&&e.cancelable)e.preventDefault(); }
-  function move(e){ if(!dragging)return; var pt=e.touches?e.touches[0]:e; var dx=pt.clientX-lx, dy=pt.clientY-ly; lx=pt.clientX; ly=pt.clientY;
-    yaw+=dx*0.006; tilt=Math.max(0,Math.min(1.35,tilt+dy*0.006)); vTilt=dy*0.0006; vYaw=dx*0.0006;
-    if(reduce) renderOnce(); if(e.touches&&e.cancelable)e.preventDefault(); }
-  function up(){ dragging=false; canvas.classList.remove('gg-grab'); }
-  canvas.addEventListener('mousedown',down);
-  window.addEventListener('mousemove',move);
-  window.addEventListener('mouseup',up);
-  canvas.addEventListener('touchstart',down,{passive:false});
-  canvas.addEventListener('touchmove',move,{passive:false});
-  window.addEventListener('touchend',up);
-
-  var rt;
-  window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(function(){ resize(); build(); if(reduce)renderOnce(); else if(running){} },120); });
-
-  resize(); build();
-  var io=new IntersectionObserver(function(ents){
-    ents.forEach(function(en){
-      if(en.isIntersecting){ if(reduce) renderOnce(); else start(); }
-      else stop();
-    });
-  },{threshold:0.01});
-  io.observe(root);
-  if(reduce) renderOnce();
+  // init: build + first frame immediately
+  resize();
+  build();
+  requestAnimationFrame(draw);
 })();
 </script>
 </body></html>

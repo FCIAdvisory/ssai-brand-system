@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gravitational Waves · SSAI</title>
+<title>Gravitational Waves — The Chirp · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,32 +41,21 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-gravity-waves{--gw-bg:#050314;--gw-text:#f4f5ff;--gw-muted:#a6abe6;--gw-line:rgba(166,171,230,0.16);width:100%;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif;color:var(--gw-text);background:radial-gradient(120% 120% at 50% 0%,#0a0826 0%,#050314 70%);border:1px solid var(--gw-line);border-radius:16px;padding:14px;overflow:hidden}
-#kit-gravity-waves *{box-sizing:border-box}
-#kit-gravity-waves .gw-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-#kit-gravity-waves .gw-stage{position:relative;width:100%;aspect-ratio:16/9;min-height:240px;border-radius:12px;overflow:hidden;background:#050314}
-#kit-gravity-waves .gw-scene{position:absolute;inset:0;width:100%;height:100%;display:block}
-#kit-gravity-waves .gw-hud{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:6px;pointer-events:none}
-#kit-gravity-waves .gw-stat{display:flex;align-items:baseline;gap:8px;background:rgba(5,3,20,0.42);border:1px solid var(--gw-line);border-radius:8px;padding:4px 9px;backdrop-filter:blur(3px)}
-#kit-gravity-waves .gw-k{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gw-muted)}
-#kit-gravity-waves .gw-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:14px;letter-spacing:0.04em;color:var(--accent,#3cc8ff)}
-#kit-gravity-waves .gw-v i{font-style:normal;font-weight:400;font-size:10px;color:var(--gw-muted)}
-#kit-gravity-waves .gw-v b{font-weight:700}
-#kit-gravity-waves .gw-wavewrap{position:relative;width:100%;height:104px;margin-top:10px;border:1px solid var(--gw-line);border-radius:12px;background:linear-gradient(180deg,rgba(22,20,95,0.18),rgba(5,3,20,0.0));overflow:hidden}
-#kit-gravity-waves .gw-wave{position:absolute;inset:0;width:100%;height:100%;display:block}
-#kit-gravity-waves .gw-wavelabel{position:absolute;top:7px;left:11px;font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--gw-muted);z-index:2;pointer-events:none}
-#kit-gravity-waves .gw-controls{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:12px}
-#kit-gravity-waves .gw-massrow{display:flex;align-items:center;gap:10px;flex:1;min-width:220px}
-#kit-gravity-waves .gw-lab{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gw-muted);white-space:nowrap}
-#kit-gravity-waves .gw-mass{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--accent,#3cc8ff),rgba(166,171,230,0.25));outline:none;cursor:pointer}
-#kit-gravity-waves .gw-mass::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gw-text);border:2px solid var(--accent,#3cc8ff);box-shadow:0 0 8px rgba(60,200,255,0.6);cursor:pointer}
-#kit-gravity-waves .gw-mass::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--gw-text);border:2px solid var(--accent,#3cc8ff);cursor:pointer}
-#kit-gravity-waves .gw-massout{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:14px;color:var(--gw-text);white-space:nowrap;min-width:62px}
-#kit-gravity-waves .gw-massout b{color:var(--accent,#3cc8ff)}
-#kit-gravity-waves .gw-replay{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gw-text);background:rgba(22,20,95,0.55);border:1px solid var(--accent,#3cc8ff);border-radius:9px;padding:8px 16px;cursor:pointer;transition:transform .15s ease,background .2s ease,box-shadow .2s ease}
-#kit-gravity-waves .gw-replay:hover{background:rgba(22,20,95,0.85);box-shadow:0 0 14px rgba(60,200,255,0.35)}
-#kit-gravity-waves .gw-replay:active{transform:scale(0.96)}
-@media (max-width:520px){#kit-gravity-waves .gw-hud{transform:scale(0.88);transform-origin:top left}}
+#kit-gravity-waves{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e9e6f5}
+#kit-gravity-waves #gravity-waves-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-gravity-waves .gravity-waves-controls{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:5}
+#kit-gravity-waves .gravity-waves-controls button{appearance:none;cursor:pointer;font-family:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#cfc8ec;background:rgba(12,8,30,.42);border:1px solid rgba(180,168,255,.28);border-radius:999px;padding:8px 18px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:all .35s ease}
+#kit-gravity-waves .gravity-waves-controls button:hover{border-color:var(--accent,#8f7bff);color:#fff;background:rgba(30,20,60,.55)}
+#kit-gravity-waves .gravity-waves-controls button[aria-pressed="false"]{opacity:.45}
+#kit-gravity-waves .gravity-waves-hud{position:absolute;top:16px;z-index:4;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+#kit-gravity-waves .gravity-waves-hud-tl{left:16px;align-items:flex-start}
+#kit-gravity-waves .gravity-waves-hud-tr{right:16px;align-items:flex-end}
+#kit-gravity-waves .gravity-waves-chip{display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:10px;background:rgba(10,7,26,.4);border:1px solid rgba(143,123,255,.18);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+#kit-gravity-waves .gravity-waves-hud-tr .gravity-waves-chip{align-items:flex-end}
+#kit-gravity-waves .gravity-waves-k{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#8b82b8}
+#kit-gravity-waves .gravity-waves-v{font-size:15px;font-weight:600;letter-spacing:.02em;color:#f1eeff;font-variant-numeric:tabular-nums}
+#kit-gravity-waves .gravity-waves-phase{position:absolute;left:50%;top:50px;transform:translateX(-50%);z-index:3;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:rgba(220,212,255,.55);pointer-events:none;transition:color .4s ease;text-indent:.42em}
+@media(max-width:560px){#kit-gravity-waves .gravity-waves-v{font-size:13px}#kit-gravity-waves .gravity-waves-chip{padding:6px 9px}}
 
 body.mb-embed #kit-gravity-waves{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-gravity-waves [class*='frame'],body.mb-embed #kit-gravity-waves [class*='shell'],body.mb-embed #kit-gravity-waves [class*='-inner'],body.mb-embed #kit-gravity-waves [class*='wrapper']{display:contents!important;}
@@ -83,35 +72,27 @@ body.mb-embed #kit-gravity-waves [class*='stage'],body.mb-embed #kit-gravity-wav
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Gravitational Waves</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Gravitational Waves — The Chirp</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-gravity-waves">
-  <h2 class="gw-sr">Animation of two black holes spiraling inward and merging, warping a spacetime grid and emitting gravitational-wave ripples, with a live chirp strain waveform.</h2>
-  <div class="gw-stage">
-    <canvas class="gw-scene" aria-hidden="true"></canvas>
-    <div class="gw-hud">
-      <div class="gw-stat"><span class="gw-k">Phase</span><span class="gw-v gw-phase-val">INSPIRAL</span></div>
-      <div class="gw-stat"><span class="gw-k">Strain freq</span><span class="gw-v"><b class="gw-freq-val">0</b> <i>Hz</i></span></div>
-      <div class="gw-stat"><span class="gw-k">Separation</span><span class="gw-v"><b class="gw-sep-val">0</b> <i>%</i></span></div>
-    </div>
+  <canvas id="gravity-waves-canvas"></canvas>
+  <div class="gravity-waves-controls">
+    <button id="gravity-waves-grid-toggle" type="button" aria-pressed="true">Spacetime grid</button>
   </div>
-  <div class="gw-wavewrap">
-    <span class="gw-wavelabel">Strain h(t) &mdash; the chirp</span>
-    <canvas class="gw-wave" aria-hidden="true"></canvas>
+  <div class="gravity-waves-hud gravity-waves-hud-tl">
+    <div class="gravity-waves-chip"><span class="gravity-waves-k">Component masses</span><span class="gravity-waves-v" id="gravity-waves-mass">36 + 29 M☉</span></div>
+    <div class="gravity-waves-chip"><span class="gravity-waves-k">GW frequency</span><span class="gravity-waves-v" id="gravity-waves-freq">35 Hz</span></div>
   </div>
-  <div class="gw-controls">
-    <div class="gw-massrow">
-      <label class="gw-lab" for="kit-gw-mass">Total mass</label>
-      <input class="gw-mass" id="kit-gw-mass" type="range" min="0.4" max="2.2" step="0.1" value="1.2" />
-      <span class="gw-massout"><b class="gw-mass-out">74</b> M&#8857;</span>
-    </div>
-    <button class="gw-replay" type="button">Replay inspiral</button>
+  <div class="gravity-waves-hud gravity-waves-hud-tr">
+    <div class="gravity-waves-chip"><span class="gravity-waves-k">Separation</span><span class="gravity-waves-v" id="gravity-waves-sep">350 km</span></div>
+    <div class="gravity-waves-chip"><span class="gravity-waves-k">Peak strain</span><span class="gravity-waves-v" id="gravity-waves-strain">1.0e-21</span></div>
   </div>
+  <div class="gravity-waves-phase" id="gravity-waves-phase">INSPIRAL</div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag the total-mass slider to retune the system, and hit Replay to restart the inspiral from the top.</span>
+    <span class="mb-c-int">Fully autonomous, alive on load. A continuous loop cycles inspiral -&gt; merger -&gt; bright flash -&gt; ringdown -&gt; reset. The single overlaid control toggles the spacetime warp grid on/off. HUD chips in the corners track component masses, gravitational-wave frequency, orbital separation, and peak strain. The strain waveform draws across the lower band in lockstep with the orbit.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -162,268 +143,511 @@ body.mb-embed #kit-gravity-waves [class*='stage'],body.mb-embed #kit-gravity-wav
 </script>
 <script>
 (function(){
-  var root=document.getElementById('kit-gravity-waves'); if(!root) return;
-  var sceneCanvas=root.querySelector('.gw-scene');
-  var waveCanvas=root.querySelector('.gw-wave');
-  var sx=sceneCanvas.getContext('2d');
-  var wx=waveCanvas.getContext('2d');
-  var replayBtn=root.querySelector('.gw-replay');
-  var massSlider=root.querySelector('.gw-mass');
-  var massOut=root.querySelector('.gw-mass-out');
-  var phaseLabel=root.querySelector('.gw-phase-val');
-  var freqLabel=root.querySelector('.gw-freq-val');
-  var sepLabel=root.querySelector('.gw-sep-val');
+  var root=document.getElementById('kit-gravity-waves');
+  if(!root)return;
+  var canvas=root.querySelector('#gravity-waves-canvas');
+  var ctx=canvas.getContext('2d');
+  var elMass=root.querySelector('#gravity-waves-mass');
+  var elFreq=root.querySelector('#gravity-waves-freq');
+  var elSep=root.querySelector('#gravity-waves-sep');
+  var elStrain=root.querySelector('#gravity-waves-strain');
+  var elPhase=root.querySelector('#gravity-waves-phase');
+  var btnGrid=root.querySelector('#gravity-waves-grid-toggle');
 
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var accent='#8f7bff';
+  function readAccent(){
+    var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    if(a)accent=a;
+  }
+  readAccent();
 
-  function accent(){var v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();return v||'#3cc8ff';}
-  function accentRGB(fb){
-    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim();
-    if(v) return v;
-    var m=accent().replace('#','');
-    if(m.length===3) m=m[0]+m[0]+m[1]+m[1]+m[2]+m[2];
-    var n=parseInt(m,16);
-    if(isNaN(n)) return fb||'60,200,255';
-    return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);
+  function hexToRgb(h){
+    h=h.replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16);
+    if(isNaN(n))return[143,123,255];
+    return[(n>>16)&255,(n>>8)&255,n&255];
   }
 
-  var DPR=Math.max(1,Math.min(2,window.devicePixelRatio||1));
-  var SW=0,SH=0,WW=0,WH=0;
-  function sizeCanvas(cv,ctx){
-    var r=cv.getBoundingClientRect();
-    var w=Math.max(1,Math.round(r.width)), h=Math.max(1,Math.round(r.height));
-    cv.width=Math.round(w*DPR); cv.height=Math.round(h*DPR);
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    return {w:w,h:h};
-  }
+  var showGrid=true;
+  btnGrid.addEventListener('click',function(){
+    showGrid=!showGrid;
+    btnGrid.setAttribute('aria-pressed',showGrid?'true':'false');
+  });
+
+  var dpr=1,W=0,H=0;
   function resize(){
-    DPR=Math.max(1,Math.min(2,window.devicePixelRatio||1));
-    var a=sizeCanvas(sceneCanvas,sx); SW=a.w; SH=a.h;
-    var b=sizeCanvas(waveCanvas,wx); WW=b.w; WH=b.h;
-    buildStars();
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    var w=canvas.clientWidth||root.clientWidth||800;
+    var h=canvas.clientHeight||root.clientHeight||500;
+    W=w;H=h;
+    var pw=Math.max(1,Math.round(w*dpr));
+    var ph=Math.max(1,Math.round(h*dpr));
+    if(canvas.width!==pw||canvas.height!==ph){canvas.width=pw;canvas.height=ph;}
   }
+  var ro=new ResizeObserver(function(){resize();});
+  ro.observe(root);
+  window.addEventListener('resize',resize);
 
+  // background starfield
   var stars=[];
   function buildStars(){
     stars=[];
-    var n=Math.max(40,Math.min(160,Math.round((SW*SH)/9000)));
-    for(var i=0;i<n;i++) stars.push({x:Math.random()*SW,y:Math.random()*SH,r:Math.random()*1.1+0.2,tw:Math.random()*6.28,sp:0.6+Math.random()*1.6});
+    var n=180;
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.3+0.2,tw:Math.random()*6.28,sp:Math.random()*1.5+0.4});
+    }
+  }
+  buildStars();
+
+  // ripple wavefronts emitted during inspiral
+  var ripples=[];
+
+  // chirp strain history buffer (normalized samples)
+  var strainBuf=[];
+  var BUFN=520;
+  for(var b=0;b<BUFN;b++)strainBuf.push(0);
+
+  // loop timing (seconds)
+  var T_INSPIRAL=9.0;
+  var T_MERGER=0.55;
+  var T_RING=2.6;
+  var T_HOLD=1.2;
+  var T_TOTAL=T_INSPIRAL+T_MERGER+T_RING+T_HOLD;
+
+  var t0=performance.now();
+  var lastEmit=0;
+  var lastMs=performance.now();
+
+  // images (graceful fallback) — used as subtle sprite glow for compact objects
+  var imgs={};
+  function loadImg(key,src){
+    var im=new Image();
+    im.onload=function(){imgs[key]={img:im,ok:true};};
+    im.onerror=function(){imgs[key]={img:null,ok:false};};
+    im.src=src;
+    imgs[key]={img:im,ok:false};
+  }
+  loadImg('bh','../assets/black-hole.png');
+  loadImg('neb','../assets/nebula.png');
+
+  function ease(x){return x<0?0:x>1?1:x;}
+
+  function fmtStrain(v){
+    if(v<=0)return '0';
+    var e=Math.floor(Math.log10(v));
+    var m=v/Math.pow(10,e);
+    return m.toFixed(1)+'e'+e;
   }
 
-  var T_INSP=7.0,T_MERGE=0.45,T_RING=3.2,T_PAD=1.0;
-  var TOTAL=T_INSP+T_MERGE+T_RING+T_PAD;
-  var t=0,orbitalPhase=0,massFactor=1.2;
-  var wave=[],WAVE_N=520,ripples=[],phaseName='inspiral',mergerFlash=0;
+  function draw(now){
+    resize();
+    readAccent();
+    var dt=(now-lastMs)/1000; if(dt>0.05)dt=0.05; lastMs=now;
+    var rgb=hexToRgb(accent);
+    var ac='rgb('+rgb[0]+','+rgb[1]+','+rgb[2]+')';
 
-  function reset(){ t=0;orbitalPhase=0;wave=[];ripples=[];for(var i=0;i<WAVE_N;i++)wave.push(0); }
-  reset();
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var cx=W*0.5, cy=H*0.46;
 
-  function tau(){ return Math.max(0.0001,(T_INSP-t)); }
-  function inspiralFreq(){ return (0.55*Math.pow(tau()/T_INSP,-0.375))/(0.7+0.6*massFactor); }
-  function inspiralSep(){ return Math.pow(tau()/T_INSP,0.25); }
+    // ---- phase computation ----
+    var tt=((now-t0)/1000)%T_TOTAL;
+    var phase, p; // p in 0..1 within phase
+    if(tt<T_INSPIRAL){phase='inspiral';p=tt/T_INSPIRAL;}
+    else if(tt<T_INSPIRAL+T_MERGER){phase='merger';p=(tt-T_INSPIRAL)/T_MERGER;}
+    else if(tt<T_INSPIRAL+T_MERGER+T_RING){phase='ringdown';p=(tt-T_INSPIRAL-T_MERGER)/T_RING;}
+    else{phase='hold';p=(tt-T_INSPIRAL-T_MERGER-T_RING)/T_HOLD;}
 
-  function pushWave(h){ wave.push(h); if(wave.length>WAVE_N) wave.shift(); }
-
-  function step(dt){
-    if(t<T_INSP){
-      phaseName='inspiral';
-      var f=inspiralFreq();
-      orbitalPhase+=2*Math.PI*f*dt;
-      var amp=Math.min(1,0.18*Math.pow(f,1.4));
-      pushWave(amp*Math.sin(orbitalPhase*2));
-      var emitRate=0.5+f*1.2;
-      if(Math.random()<emitRate*dt*6) ripples.push({age:0,strength:amp});
-      mergerFlash=0;
-    } else if(t<T_INSP+T_MERGE){
-      phaseName='merger';
-      var k=(t-T_INSP)/T_MERGE;
-      mergerFlash=Math.sin(Math.min(1,k)*Math.PI);
-      orbitalPhase+=2*Math.PI*4.0*dt;
-      pushWave((1-k)*(0.9*Math.sin(orbitalPhase*2+k*30)));
-      if(k<0.5) ripples.push({age:0,strength:1});
-    } else if(t<T_INSP+T_MERGE+T_RING){
-      phaseName='ringdown';
-      var rt=(t-(T_INSP+T_MERGE));
-      var ringF=3.6/(0.7+0.6*massFactor);
-      pushWave(Math.exp(-rt*1.7)*0.85*Math.sin(2*Math.PI*ringF*rt));
-      mergerFlash*=0.9;
-    } else {
-      phaseName='settled';
-      pushWave(0);
-      mergerFlash*=0.85;
+    // reset ripples & buffer at start of loop
+    if(tt<0.05 && lastTt>T_TOTAL*0.8){
+      ripples=[];
+      for(var rb=0;rb<BUFN;rb++)strainBuf[rb]=0;
     }
-    for(var i=ripples.length-1;i>=0;i--){ ripples[i].age+=dt; if(ripples[i].age>2.4) ripples.splice(i,1); }
-  }
+    lastTt=tt;
 
-  function currentFreq(){
-    if(phaseName==='inspiral'||phaseName==='merger') return inspiralFreq();
-    if(phaseName==='ringdown') return 3.6/(0.7+0.6*massFactor);
-    return 0;
-  }
-
-  function drawScene(time){
-    var rgb=accentRGB('60,200,255');
-    sx.clearRect(0,0,SW,SH);
-    var cx=SW*0.5,cy=SH*0.5,R=Math.min(SW,SH)*0.30;
-
-    for(var s=0;s<stars.length;s++){
-      var st=stars[s];
-      var tw=reduce?0.7:(0.45+0.55*(0.5+0.5*Math.sin(time*0.001*st.sp+st.tw)));
-      sx.globalAlpha=tw*0.7; sx.fillStyle='#cfd2ff';
-      sx.beginPath(); sx.arc(st.x,st.y,st.r,0,6.2832); sx.fill();
-    }
-    sx.globalAlpha=1;
-
-    var sep=(phaseName==='inspiral')?inspiralSep():(phaseName==='merger'?0.08*(1-mergerFlash):0.0);
-    var orbR=R*sep;
-    var bx1=cx+Math.cos(orbitalPhase)*orbR,by1=cy+Math.sin(orbitalPhase)*orbR*0.62;
-    var bx2=cx-Math.cos(orbitalPhase)*orbR,by2=cy-Math.sin(orbitalPhase)*orbR*0.62;
-    var merged=(phaseName==='ringdown'||phaseName==='settled');
-    var wellM=0.9+0.6*massFactor;
-    var wells= merged?[{x:cx,y:cy,m:1.9*wellM}]:[{x:bx1,y:by1,m:wellM},{x:bx2,y:by2,m:wellM}];
-
-    var grid=Math.max(16,Math.round(Math.min(SW,SH)/16));
-    var cols=Math.ceil(SW/grid)+1,rows=Math.ceil(SH/grid)+1;
-    function warp(px,py){
-      var dx=0,dy=0,w,r;
-      for(w=0;w<wells.length;w++){
-        var ddx=px-wells[w].x,ddy=py-wells[w].y,d2=ddx*ddx+ddy*ddy,d=Math.sqrt(d2)+1;
-        var pull=(wells[w].m*1400)/(d2+2600); dx-=ddx/d*pull; dy-=ddy/d*pull;
-      }
-      for(r=0;r<ripples.length;r++){
-        var rp=ripples[r],rad=rp.age*Math.min(SW,SH)*0.34;
-        var rdx=px-cx,rdy=py-cy,rd=Math.sqrt(rdx*rdx+rdy*rdy)+1;
-        var band=Math.exp(-Math.pow((rd-rad)/26,2)),fade=Math.max(0,1-rp.age/2.4);
-        var amp=10*rp.strength*band*fade; dx+=rdx/rd*amp; dy+=rdy/rd*amp;
-      }
-      return [px+dx,py+dy];
+    // orbital quantities (visual, with physical flavour)
+    var scaleR=Math.min(W,H);
+    var sepMax=scaleR*0.30;
+    var sepMin=scaleR*0.045;
+    var sep; // current visual separation
+    var orbFreq; // orbital angular speed multiplier
+    if(phase==='inspiral'){
+      // separation shrinks; use a power law so it accelerates near merger
+      var pe=Math.pow(p,1.0);
+      sep=sepMax*Math.pow(1-pe,0.55)+sepMin*pe;
+      orbFreq=1.0+ Math.pow(p,1.6)*9.0;
+    }else if(phase==='merger'){
+      sep=sepMin*(1-p);
+      orbFreq=10.0+p*4;
+    }else{
+      sep=0;
+      orbFreq=0;
     }
 
-    sx.lineWidth=1; sx.strokeStyle='rgba('+rgb+',0.16)';
-    var i,j,p,q;
-    for(j=0;j<rows;j++){ sx.beginPath(); for(i=0;i<cols;i++){ p=warp(i*grid,j*grid); if(i===0)sx.moveTo(p[0],p[1]);else sx.lineTo(p[0],p[1]); } sx.stroke(); }
-    for(i=0;i<cols;i++){ sx.beginPath(); for(j=0;j<rows;j++){ q=warp(i*grid,j*grid); if(j===0)sx.moveTo(q[0],q[1]);else sx.lineTo(q[0],q[1]); } sx.stroke(); }
-
-    for(var rr=0;rr<ripples.length;rr++){
-      var rip=ripples[rr],radd=rip.age*Math.min(SW,SH)*0.34;
-      sx.globalAlpha=Math.max(0,1-rip.age/2.4)*0.5*rip.strength;
-      sx.strokeStyle='rgba('+rgb+',1)'; sx.lineWidth=1.4;
-      sx.beginPath(); sx.ellipse(cx,cy,radd,radd*0.78,0,0,6.2832); sx.stroke();
-    }
-    sx.globalAlpha=1;
-
-    if(mergerFlash>0.001){
-      var fr=R*(0.6+mergerFlash*0.9);
-      var g=sx.createRadialGradient(cx,cy,0,cx,cy,fr);
-      g.addColorStop(0,'rgba(255,255,255,'+(0.85*mergerFlash)+')');
-      g.addColorStop(0.25,'rgba('+rgb+','+(0.7*mergerFlash)+')');
-      g.addColorStop(1,'rgba('+rgb+',0)');
-      sx.fillStyle=g; sx.beginPath(); sx.arc(cx,cy,fr,0,6.2832); sx.fill();
+    // accumulate orbital phase angle (continuous)
+    if(phase==='inspiral'||phase==='merger'){
+      orbAngle+=dt*orbFreq*2.4;
     }
 
-    function drawBH(x,y,rad){
-      var gg=sx.createRadialGradient(x,y,rad*0.6,x,y,rad*3.2);
-      gg.addColorStop(0,'rgba('+rgb+',0.55)'); gg.addColorStop(0.5,'rgba('+rgb+',0.12)'); gg.addColorStop(1,'rgba('+rgb+',0)');
-      sx.fillStyle=gg; sx.beginPath(); sx.arc(x,y,rad*3.2,0,6.2832); sx.fill();
-      sx.fillStyle='#050314'; sx.beginPath(); sx.arc(x,y,rad,0,6.2832); sx.fill();
-      sx.strokeStyle='rgba('+rgb+',0.9)'; sx.lineWidth=1.6; sx.beginPath(); sx.arc(x,y,rad*1.08,0,6.2832); sx.stroke();
+    // masses (fixed scenario, GW150914-like)
+    var m1=36, m2=29;
+
+    // ---- BACKGROUND ----
+    var g=ctx.createRadialGradient(cx,cy,0,cx,cy,scaleR*0.95);
+    g.addColorStop(0,'#0c0830');
+    g.addColorStop(0.45,'#080421');
+    g.addColorStop(1,'#040210');
+    ctx.fillStyle=g;
+    ctx.fillRect(0,0,W,H);
+
+    // faint nebula sprite if available
+    var neb=imgs.neb;
+    if(neb&&neb.ok&&neb.img){
+      ctx.save();
+      ctx.globalAlpha=0.14;
+      ctx.globalCompositeOperation='screen';
+      var nw=W*1.3,nh=nw*(neb.img.height/neb.img.width||0.6);
+      ctx.drawImage(neb.img,cx-nw/2,cy-nh/2,nw,nh);
+      ctx.restore();
     }
 
-    var bhR=Math.max(5,R*0.12*(0.7+0.6*massFactor));
-    if(merged){
-      var grow=(phaseName==='ringdown')?Math.min(1,(t-(T_INSP+T_MERGE))/0.4):1;
-      drawBH(cx,cy,bhR*1.45*(0.6+0.4*grow));
-    } else {
-      if(!reduce){
-        for(var tb=1;tb<=5;tb++){
-          var pa=orbitalPhase-tb*0.12;
-          var tx1=cx+Math.cos(pa)*orbR,ty1=cy+Math.sin(pa)*orbR*0.62;
-          var tx2=cx-Math.cos(pa)*orbR,ty2=cy-Math.sin(pa)*orbR*0.62;
-          sx.globalAlpha=(1-tb/6)*0.25; sx.fillStyle='rgba('+rgb+',0.5)';
-          sx.beginPath(); sx.arc(tx1,ty1,bhR*0.6,0,6.2832); sx.fill();
-          sx.beginPath(); sx.arc(tx2,ty2,bhR*0.6,0,6.2832); sx.fill();
+    // starfield
+    ctx.save();
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      s.tw+=dt*s.sp;
+      var a=0.25+0.55*(0.5+0.5*Math.sin(s.tw));
+      ctx.globalAlpha=a*0.7;
+      ctx.fillStyle='#cdd3ff';
+      ctx.beginPath();
+      ctx.arc(s.x*W,s.y*H,s.r,0,6.2832);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // ---- WARPED SPACETIME GRID ----
+    // body positions
+    var ax=cx+Math.cos(orbAngle)*sep*(m2/(m1+m2))*2;
+    var ay=cy+Math.sin(orbAngle)*sep*(m2/(m1+m2))*2*0.62;
+    var bx=cx-Math.cos(orbAngle)*sep*(m1/(m1+m2))*2;
+    var by=cy-Math.sin(orbAngle)*sep*(m1/(m1+m2))*2*0.62;
+    // simplify: place symmetric about center for clean visuals
+    ax=cx+Math.cos(orbAngle)*sep;
+    ay=cy+Math.sin(orbAngle)*sep*0.6;
+    bx=cx-Math.cos(orbAngle)*sep;
+    by=cy-Math.sin(orbAngle)*sep*0.6;
+
+    var wells=[{x:ax,y:ay,m:m1,r:sep},{x:bx,y:by,m:m2,r:sep}];
+    var merged=(phase==='merger'||phase==='ringdown'||phase==='hold');
+
+    var flashAmt=0;
+    if(phase==='merger'){flashAmt=Math.sin(p*Math.PI);}
+    else if(phase==='ringdown'){flashAmt=Math.exp(-p*6)*0.9;}
+
+    if(showGrid){
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      var spacing=Math.max(34,scaleR*0.055);
+      var ox=cx%spacing, oy=cy%spacing;
+      // ringdown ringing distortion
+      var ringDistort=0;
+      if(phase==='ringdown')ringDistort=Math.exp(-p*4)*0.8;
+      function warpPt(x,y){
+        var dx2=0,dy2=0;
+        for(var w=0;w<wells.length;w++){
+          if(merged && w>0)break;
+          var wx=merged?cx:wells[w].x;
+          var wy=merged?cy:wells[w].y;
+          var mm=merged?(m1+m2):wells[w].m;
+          var ddx=x-wx, ddy=y-wy;
+          var d=Math.sqrt(ddx*ddx+ddy*ddy)+1;
+          var pull=(mm*scaleR*0.85)/(d*1.0);
+          if(pull>d*0.92)pull=d*0.92;
+          dx2-=ddx/d*pull;
+          dy2-=ddy/d*pull;
         }
-        sx.globalAlpha=1;
+        // outgoing ripple displacement (quadrupole)
+        var rd=0;
+        for(var rp=0;rp<ripples.length;rp++){
+          var R=ripples[rp];
+          var ddx3=x-cx, ddy3=y-cy;
+          var dist=Math.sqrt(ddx3*ddx3+ddy3*ddy3);
+          var band=Math.abs(dist-R.rad);
+          if(band<R.width){
+            var falloff=(1-band/R.width);
+            var ang=Math.atan2(ddy3,ddx3);
+            var quad=Math.cos(2*(ang-R.phase));
+            rd+=falloff*R.amp*quad*14;
+          }
+        }
+        return [x+dx2*0.55, y+dy2*0.55+rd];
       }
-      drawBH(bx1,by1,bhR); drawBH(bx2,by2,bhR);
+      var gr=Math.round(40+flashAmt*120);
+      ctx.lineWidth=1;
+      // horizontal lines
+      for(var gy=-spacing;gy<H+spacing;gy+=spacing){
+        ctx.beginPath();
+        var first=true;
+        for(var gx=-spacing;gx<W+spacing;gx+=spacing*0.5){
+          var pt=warpPt(gx+ox,gy+oy);
+          if(first){ctx.moveTo(pt[0],pt[1]);first=false;}else ctx.lineTo(pt[0],pt[1]);
+        }
+        ctx.strokeStyle='rgba('+Math.round(rgb[0]*0.5+60)+','+Math.round(rgb[1]*0.5+60)+','+Math.round(rgb[2]*0.5+90)+','+(0.12+flashAmt*0.18)+')';
+        ctx.stroke();
+      }
+      // vertical lines
+      for(var gx2=-spacing;gx2<W+spacing;gx2+=spacing){
+        ctx.beginPath();
+        var first2=true;
+        for(var gy2=-spacing;gy2<H+spacing;gy2+=spacing*0.5){
+          var pt2=warpPt(gx2+ox,gy2+oy);
+          if(first2){ctx.moveTo(pt2[0],pt2[1]);first2=false;}else ctx.lineTo(pt2[0],pt2[1]);
+        }
+        ctx.strokeStyle='rgba('+Math.round(rgb[0]*0.5+60)+','+Math.round(rgb[1]*0.5+60)+','+Math.round(rgb[2]*0.5+90)+','+(0.12+flashAmt*0.18)+')';
+        ctx.stroke();
+      }
+      ctx.restore();
     }
-  }
 
-  function drawWave(){
-    var rgb=accentRGB('60,200,255');
-    wx.clearRect(0,0,WW,WH);
-    var mid=WH*0.5;
-    wx.strokeStyle='rgba(166,171,230,0.16)'; wx.lineWidth=1;
-    wx.beginPath(); wx.moveTo(0,mid); wx.lineTo(WW,mid); wx.stroke();
-    wx.strokeStyle='rgba(166,171,230,0.08)';
-    for(var gxk=1;gxk<6;gxk++){ var gxp=WW*gxk/6; wx.beginPath(); wx.moveTo(gxp,0); wx.lineTo(gxp,WH); wx.stroke(); }
-    var n=wave.length; if(n<2) return;
-    var amp=WH*0.42; wx.lineJoin='round';
-    wx.lineWidth=3.2; wx.strokeStyle='rgba('+rgb+',0.18)';
-    wx.beginPath();
-    for(var i=0;i<n;i++){ var x=(i/(n-1))*WW,y=mid-wave[i]*amp; if(i===0)wx.moveTo(x,y);else wx.lineTo(x,y); }
-    wx.stroke();
-    wx.lineWidth=1.6; wx.strokeStyle='rgba('+rgb+',0.95)';
-    wx.beginPath();
-    for(var k=0;k<n;k++){ var x2=(k/(n-1))*WW,y2=mid-wave[k]*amp; if(k===0)wx.moveTo(x2,y2);else wx.lineTo(x2,y2); }
-    wx.stroke();
-    var ly=mid-wave[n-1]*amp;
-    wx.fillStyle='#ffffff'; wx.beginPath(); wx.arc(WW-1,ly,2.4,0,6.2832); wx.fill();
-  }
-
-  function updateReadout(){
-    phaseLabel.textContent=(phaseName==='settled'?'ringdown':phaseName).toUpperCase();
-    freqLabel.textContent=(currentFreq()*60).toFixed(0);
-    sepLabel.textContent=((phaseName==='inspiral'?inspiralSep():0)*100).toFixed(0);
-  }
-
-  var raf=null,last=0,running=false;
-  function frame(now){
-    if(!running) return;
-    if(!last) last=now;
-    var dt=Math.min(0.05,(now-last)/1000); last=now;
-    if(!reduce){
-      t+=dt; step(dt);
-      if(t>=TOTAL){ reset(); }
+    // ---- emit ripples during inspiral/merger ----
+    var emitRate=phase==='merger'?0.04:(0.30-0.22*p);
+    if((phase==='inspiral'||phase==='merger') && (now-lastEmit)/1000>Math.max(0.06,emitRate)){
+      lastEmit=now;
+      var amp=0.2+Math.pow(p,1.3)*0.9+(phase==='merger'?1.2:0);
+      ripples.push({rad:sep*0.8+10,amp:amp,phase:orbAngle,width:scaleR*0.12,born:now});
     }
-    drawScene(now); drawWave(); updateReadout();
-    raf=requestAnimationFrame(frame);
+    // burst at merger
+    if(phase==='merger'&&p>0.45&&p<0.55){
+      // nothing extra; flash handled
+    }
+    // advance ripples
+    var speed=scaleR*0.55;
+    for(var rp2=ripples.length-1;rp2>=0;rp2--){
+      var Rr=ripples[rp2];
+      Rr.rad+=dt*speed;
+      Rr.amp*=Math.pow(0.5,dt*0.7);
+      if(Rr.rad>scaleR*1.4||Rr.amp<0.02)ripples.splice(rp2,1);
+    }
+
+    // ---- draw ripple rings (luminous concentric, quadrupole-modulated) ----
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    for(var rp3=0;rp3<ripples.length;rp3++){
+      var Rg=ripples[rp3];
+      var alpha=Math.min(0.5,Rg.amp*0.42);
+      if(alpha<0.01)continue;
+      ctx.beginPath();
+      var seg=80;
+      for(var sgi=0;sgi<=seg;sgi++){
+        var ang=sgi/seg*6.2832;
+        var quad=1+0.32*Math.cos(2*(ang-Rg.phase));
+        var rr=Rg.rad*quad;
+        var px=cx+Math.cos(ang)*rr;
+        var py=cy+Math.sin(ang)*rr*0.78;
+        if(sgi===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+      }
+      ctx.closePath();
+      ctx.lineWidth=1.6;
+      ctx.strokeStyle='rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+alpha+')';
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // ---- compact objects ----
+    function drawBody(x,y,radius,tint){
+      // accretion glow
+      var rg=ctx.createRadialGradient(x,y,0,x,y,radius*4.5);
+      rg.addColorStop(0,'rgba('+tint[0]+','+tint[1]+','+tint[2]+',0.55)');
+      rg.addColorStop(0.3,'rgba('+tint[0]+','+tint[1]+','+tint[2]+',0.18)');
+      rg.addColorStop(1,'rgba('+tint[0]+','+tint[1]+','+tint[2]+',0)');
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      ctx.fillStyle=rg;
+      ctx.beginPath();ctx.arc(x,y,radius*4.5,0,6.2832);ctx.fill();
+      ctx.restore();
+      // event horizon (dark core with rim)
+      var core=ctx.createRadialGradient(x,y,radius*0.2,x,y,radius);
+      core.addColorStop(0,'#000005');
+      core.addColorStop(0.7,'#05030f');
+      core.addColorStop(1,'rgba('+tint[0]+','+tint[1]+','+tint[2]+',0.9)');
+      ctx.fillStyle=core;
+      ctx.beginPath();ctx.arc(x,y,radius,0,6.2832);ctx.fill();
+    }
+
+    var baseR=Math.max(7,scaleR*0.022);
+    var r1=baseR*1.0, r2=baseR*0.88;
+    var tintA=[rgb[0],rgb[1],rgb[2]];
+    var tintB=[Math.min(255,rgb[0]+40),Math.min(255,rgb[1]+10),255];
+
+    if(!merged){
+      // motion-blur trails
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      for(var tr=1;tr<=6;tr++){
+        var ta=orbAngle-tr*0.16*(0.5+orbFreq*0.04);
+        var trA=ax, trB=ay;
+        var txA=cx+Math.cos(ta)*sep, tyA=cy+Math.sin(ta)*sep*0.6;
+        var txB=cx-Math.cos(ta)*sep, tyB=cy-Math.sin(ta)*sep*0.6;
+        var fa=(1-tr/7)*0.18;
+        ctx.fillStyle='rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+fa+')';
+        ctx.beginPath();ctx.arc(txA,tyA,r1*0.7,0,6.2832);ctx.fill();
+        ctx.fillStyle='rgba('+tintB[0]+','+tintB[1]+','+tintB[2]+','+fa+')';
+        ctx.beginPath();ctx.arc(txB,tyB,r2*0.7,0,6.2832);ctx.fill();
+      }
+      ctx.restore();
+      drawBody(ax,ay,r1,tintA);
+      drawBody(bx,by,r2,tintB);
+    }
+
+    // ---- merger flash ----
+    if(flashAmt>0.001){
+      var fr=scaleR*(0.1+flashAmt*0.65);
+      var fg=ctx.createRadialGradient(cx,cy,0,cx,cy,fr);
+      fg.addColorStop(0,'rgba(255,255,255,'+Math.min(1,flashAmt*1.1)+')');
+      fg.addColorStop(0.18,'rgba('+Math.min(255,rgb[0]+90)+','+Math.min(255,rgb[1]+70)+',255,'+flashAmt*0.8+')');
+      fg.addColorStop(0.5,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+flashAmt*0.3+')');
+      fg.addColorStop(1,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0)');
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      ctx.fillStyle=fg;
+      ctx.beginPath();ctx.arc(cx,cy,fr,0,6.2832);ctx.fill();
+      ctx.restore();
+    }
+
+    // ---- final merged remnant (ringdown / hold) ----
+    if(merged){
+      var remR=baseR*1.35;
+      var wob=0;
+      if(phase==='ringdown')wob=Math.exp(-p*5)*Math.sin(p*38)*remR*0.22;
+      // glow
+      var pulse=phase==='ringdown'?(0.5+0.5*Math.exp(-p*5)*Math.cos(p*30)):0.45;
+      var gg=ctx.createRadialGradient(cx,cy,0,cx,cy,remR*5);
+      gg.addColorStop(0,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+(0.4+pulse*0.3)+')');
+      gg.addColorStop(0.35,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0.12)');
+      gg.addColorStop(1,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0)');
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      ctx.fillStyle=gg;
+      ctx.beginPath();ctx.arc(cx,cy,remR*5,0,6.2832);ctx.fill();
+      ctx.restore();
+      // remnant core (ellipse wobble)
+      ctx.save();
+      ctx.translate(cx,cy);
+      var core2=ctx.createRadialGradient(0,0,remR*0.2,0,0,remR);
+      core2.addColorStop(0,'#000007');
+      core2.addColorStop(0.72,'#06030f');
+      core2.addColorStop(1,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0.95)');
+      ctx.fillStyle=core2;
+      ctx.beginPath();
+      ctx.ellipse(0,0,remR+wob,remR-wob,0,0,6.2832);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // ---- STRAIN / CHIRP WAVEFORM ----
+    // compute instantaneous strain sample for this frame
+    var gwFreqHz; // displayed
+    var sampleVal;
+    if(phase==='inspiral'){
+      gwFreqHz=35+Math.pow(p,2.4)*215; // 35 -> ~250
+      var ampS=0.12+Math.pow(p,1.5)*0.85;
+      sampleVal=Math.sin(orbAngle*2)*ampS;
+    }else if(phase==='merger'){
+      gwFreqHz=250+p*60;
+      sampleVal=Math.sin(orbAngle*2)*(1.0);
+    }else if(phase==='ringdown'){
+      gwFreqHz=Math.max(0,250*Math.exp(-p*3));
+      sampleVal=Math.exp(-p*5)*Math.sin(p*60)*0.9;
+    }else{
+      gwFreqHz=0;sampleVal=0;
+    }
+    // push sample
+    strainBuf.push(sampleVal);
+    if(strainBuf.length>BUFN)strainBuf.shift();
+
+    // waveform band
+    var bandH=Math.max(56,H*0.16);
+    var bandY=H-bandH-10;
+    var bandTop=bandY;
+    var midY=bandY+bandH*0.5;
+    // subtle band backing
+    ctx.save();
+    var bg2=ctx.createLinearGradient(0,bandTop,0,bandTop+bandH);
+    bg2.addColorStop(0,'rgba(8,5,22,0)');
+    bg2.addColorStop(0.5,'rgba(8,5,22,0.35)');
+    bg2.addColorStop(1,'rgba(4,2,14,0.55)');
+    ctx.fillStyle=bg2;
+    ctx.fillRect(0,bandTop,W,bandH+10);
+    // zero line
+    ctx.strokeStyle='rgba(143,123,255,0.10)';
+    ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(0,midY);ctx.lineTo(W,midY);ctx.stroke();
+    ctx.restore();
+
+    // draw waveform with glow
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    var amp2=bandH*0.42;
+    function plotWave(lw,alpha){
+      ctx.beginPath();
+      for(var wi=0;wi<strainBuf.length;wi++){
+        var wx2=wi/(strainBuf.length-1)*W;
+        var wy2=midY-strainBuf[wi]*amp2;
+        if(wi===0)ctx.moveTo(wx2,wy2);else ctx.lineTo(wx2,wy2);
+      }
+      ctx.lineWidth=lw;
+      ctx.strokeStyle='rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+alpha+')';
+      ctx.lineJoin='round';
+      ctx.stroke();
+    }
+    plotWave(6,0.10);
+    plotWave(2.4,0.85);
+    // bright leading dot
+    var leadY=midY-strainBuf[strainBuf.length-1]*amp2;
+    var lg=ctx.createRadialGradient(W-3,leadY,0,W-3,leadY,10);
+    lg.addColorStop(0,'rgba(255,255,255,0.95)');
+    lg.addColorStop(1,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0)');
+    ctx.fillStyle=lg;
+    ctx.beginPath();ctx.arc(W-3,leadY,10,0,6.2832);ctx.fill();
+    ctx.restore();
+
+    // ---- vignette ----
+    var vg=ctx.createRadialGradient(cx,cy,scaleR*0.4,cx,cy,scaleR*0.95);
+    vg.addColorStop(0,'rgba(0,0,0,0)');
+    vg.addColorStop(1,'rgba(2,1,8,0.55)');
+    ctx.fillStyle=vg;
+    ctx.fillRect(0,0,W,H);
+
+    // ---- HUD update ----
+    var sepKm; var strainPk;
+    if(phase==='inspiral'){
+      sepKm=Math.round(350-(350-12)*Math.pow(p,1.0));
+      strainPk=(0.12+Math.pow(p,1.5)*0.88)*1.0e-21;
+    }else if(phase==='merger'){
+      sepKm=Math.max(0,Math.round(12*(1-p)));
+      strainPk=1.0e-21;
+    }else if(phase==='ringdown'){
+      sepKm=0;strainPk=Math.exp(-p*3)*1.0e-21;
+    }else{sepKm=0;strainPk=0;}
+
+    if(now-lastHud>80){
+      lastHud=now;
+      elFreq.textContent=Math.round(gwFreqHz)+' Hz';
+      elSep.textContent=(merged&&phase!=='merger')?'— km':sepKm+' km';
+      elStrain.textContent=fmtStrain(strainPk);
+      if(phase==='hold')elMass.textContent='62 M☉';
+      else elMass.textContent='36 + 29 M☉';
+      var pl=phase==='inspiral'?'INSPIRAL':phase==='merger'?'MERGER':phase==='ringdown'?'RINGDOWN':'REMNANT';
+      elPhase.textContent=pl;
+      elPhase.style.color=phase==='merger'?'rgba(255,255,255,0.85)':'rgba(220,212,255,0.5)';
+    }
+
+    raf=requestAnimationFrame(draw);
   }
-  function start(){ if(running) return; running=true; last=0; raf=requestAnimationFrame(frame); }
-  function stop(){ running=false; if(raf){ cancelAnimationFrame(raf); raf=null; } }
 
-  function staticFrame(){
-    reset();
-    var steps=Math.round(T_INSP*0.55/0.016);
-    for(var s=0;s<steps;s++){ t+=0.016; step(0.016); }
-    drawScene(0); drawWave(); updateReadout();
-  }
-
-  replayBtn.addEventListener('click',function(){ reset(); last=0; if(reduce) staticFrame(); });
-  massSlider.addEventListener('input',function(){
-    massFactor=parseFloat(massSlider.value);
-    massOut.textContent=(20+massFactor*45).toFixed(0);
-    if(reduce) staticFrame();
-  });
-  massFactor=parseFloat(massSlider.value);
-  massOut.textContent=(20+massFactor*45).toFixed(0);
-
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ if(reduce) staticFrame(); else start(); }
-      else stop();
-    });
-  },{threshold:0.05});
-
+  var orbAngle=0, lastTt=0, lastHud=0, raf=0;
   resize();
-  if(reduce) staticFrame();
-  io.observe(root);
-
-  var rt=null;
-  window.addEventListener('resize',function(){
-    if(rt) clearTimeout(rt);
-    rt=setTimeout(function(){ resize(); if(reduce) staticFrame(); },120);
-  });
+  raf=requestAnimationFrame(draw);
 })();
 </script>
 </body></html>

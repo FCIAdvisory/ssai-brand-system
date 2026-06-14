@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Two Tides A Day · SSAI</title>
+<title>Two Tides a Day · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,29 +41,21 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-tides{position:relative;width:100%;min-height:420px;aspect-ratio:16/10;border-radius:16px;overflow:hidden;background:radial-gradient(120% 140% at 30% 20%,#0a0730 0%,#050314 60%,#03020c 100%);color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-user-select:none;user-select:none;border:1px solid rgba(166,171,230,0.16)}
-#kit-tides .kt-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
-#kit-tides .kt-canvas:active{cursor:grabbing}
-#kit-tides .kt-head{position:absolute;left:18px;top:14px;z-index:3;pointer-events:none;max-width:60%}
-#kit-tides .kt-title{margin:0;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(15px,2.4vw,22px);letter-spacing:.04em;color:#f4f5ff;line-height:1.05}
-#kit-tides .kt-sub{margin:6px 0 0;font-size:clamp(11px,1.3vw,13px);color:#a6abe6;line-height:1.4;max-width:34ch}
-#kit-tides .kt-readwrap{position:absolute;left:18px;bottom:16px;z-index:3;pointer-events:none}
-#kit-tides .kt-tideval{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(16px,2.6vw,26px);letter-spacing:.03em;color:#a6abe6;line-height:1}
-#kit-tides .kt-numrow{margin-top:4px;font-size:11px;color:#a6abe6;letter-spacing:.02em}
-#kit-tides .kt-num{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;color:#f4f5ff}
-#kit-tides .kt-controls{position:absolute;right:16px;bottom:14px;z-index:3;display:flex;align-items:center;gap:14px}
-#kit-tides .kt-play{appearance:none;cursor:pointer;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:12px;color:#f4f5ff;background:rgba(22,20,95,0.55);border:1px solid rgba(166,171,230,0.28);border-radius:10px;padding:7px 16px;transition:background .2s ease,border-color .2s ease}
-#kit-tides .kt-play:hover{background:rgba(22,20,95,0.85);border-color:var(--accent,#3cc8ff)}
-#kit-tides .kt-spdwrap{display:flex;align-items:center;gap:8px}
-#kit-tides .kt-spdlab{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#a6abe6}
-#kit-tides .kt-speed{-webkit-appearance:none;appearance:none;width:96px;height:4px;border-radius:3px;background:rgba(166,171,230,0.22);outline:none;cursor:pointer}
-#kit-tides .kt-speed::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent,#3cc8ff);border:2px solid #050314;cursor:pointer}
-#kit-tides .kt-speed::-moz-range-thumb{width:15px;height:15px;border:2px solid #050314;border-radius:50%;background:var(--accent,#3cc8ff);cursor:pointer}
-#kit-tides .kt-hint{position:absolute;right:16px;top:14px;z-index:3;pointer-events:none;font-size:11px;color:#a6abe6;letter-spacing:.02em;display:flex;align-items:center;gap:6px;opacity:.9}
-#kit-tides .kt-dot{width:7px;height:7px;border-radius:50%;background:var(--accent,#3cc8ff);box-shadow:0 0 10px var(--accent,#3cc8ff)}
-#kit-tides .kt-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-@media (max-width:520px){#kit-tides .kt-hint{display:none}#kit-tides .kt-sub{display:none}}
-@media (prefers-reduced-motion: reduce){#kit-tides .kt-dot{box-shadow:none}}
+#kit-tides{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8ecf6}
+#kit-tides canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-tides .tides-controls{position:absolute;left:50%;bottom:5.2%;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 20px 11px;border-radius:15px;background:rgba(8,10,26,.5);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);border:1px solid rgba(255,255,255,.09);box-shadow:0 10px 40px rgba(0,0,0,.45);min-width:236px}
+#kit-tides .tides-ctl-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(225,231,246,.62);font-weight:600}
+#kit-tides .tides-slider{-webkit-appearance:none;appearance:none;width:208px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent,#7cc4ff),rgba(255,255,255,.16));outline:none;cursor:pointer}
+#kit-tides .tides-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:17px;height:17px;border-radius:50%;background:#fbfdff;border:2px solid var(--accent,#7cc4ff);box-shadow:0 0 13px var(--accent,#7cc4ff),0 2px 6px rgba(0,0,0,.5);cursor:pointer}
+#kit-tides .tides-slider::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:#fbfdff;border:2px solid var(--accent,#7cc4ff);box-shadow:0 0 13px var(--accent,#7cc4ff);cursor:pointer}
+#kit-tides .tides-ctl-ends{display:flex;justify-content:space-between;width:208px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(225,231,246,.4);font-weight:500}
+#kit-tides .tides-hud{position:absolute;z-index:5;display:flex;flex-direction:column;gap:3px;padding:9px 13px;border-radius:12px;background:rgba(8,10,26,.4);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px);border:1px solid rgba(255,255,255,.08);pointer-events:none}
+#kit-tides .tides-hud-tl{top:5.5%;left:4%}
+#kit-tides .tides-hud-tr{top:5.5%;right:4%;align-items:flex-end;text-align:right}
+#kit-tides .tides-hud-bl{bottom:6.5%;left:4%}
+#kit-tides .tides-hud-k{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(225,231,246,.5);font-weight:600}
+#kit-tides .tides-hud-v{font-size:15px;font-weight:600;letter-spacing:.01em;color:#fbfdff;font-variant-numeric:tabular-nums;text-shadow:0 0 14px rgba(124,196,255,.35)}
+@media (max-width:600px){#kit-tides .tides-hud-v{font-size:13px}#kit-tides .tides-slider,#kit-tides .tides-ctl-ends{width:170px}#kit-tides .tides-slider{width:170px}}
 
 body.mb-embed #kit-tides{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-tides [class*='frame'],body.mb-embed #kit-tides [class*='shell'],body.mb-embed #kit-tides [class*='-inner'],body.mb-embed #kit-tides [class*='wrapper']{display:contents!important;}
@@ -80,32 +72,32 @@ body.mb-embed #kit-tides [class*='stage'],body.mb-embed #kit-tides [class*='scen
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Two Tides A Day</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Two Tides a Day</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-tides">
-  <span class="kt-sr">Interactive model of Earth's tides: the Moon orbits Earth and raises two ocean bulges, one facing the Moon and one on the far side. A coastal gauge shows two high tides per orbit. Drag the Moon to control it.</span>
-  <canvas class="kt-canvas" aria-hidden="true"></canvas>
-  <div class="kt-head">
-    <h3 class="kt-title">Two Tides A Day</h3>
-    <p class="kt-sub">The Moon's gravity stretches Earth's oceans into two bulges. A coastline sweeps through both every orbit.</p>
+  <canvas id="tides-canvas"></canvas>
+  <div class="tides-controls">
+    <label class="tides-ctl-label" for="tides-align">Sun-Moon alignment</label>
+    <input id="tides-align" class="tides-slider" type="range" min="0" max="100" value="14" aria-label="Sun-Moon alignment" />
+    <div class="tides-ctl-ends"><span>Spring</span><span>Neap</span></div>
   </div>
-  <div class="kt-hint"><span class="kt-dot"></span>Drag the Moon</div>
-  <div class="kt-readwrap">
-    <div class="kt-tideval">MID TIDE</div>
-    <div class="kt-numrow">Coastal level&nbsp;<span class="kt-num">+0.00</span></div>
+  <div class="tides-hud tides-hud-tl">
+    <span class="tides-hud-k">Lunar position</span>
+    <span class="tides-hud-v" id="tides-lunar">—</span>
   </div>
-  <div class="kt-controls">
-    <div class="kt-spdwrap">
-      <span class="kt-spdlab">Speed</span>
-      <input class="kt-speed" type="range" min="0.05" max="0.9" step="0.01" value="0.30" aria-label="Orbit speed">
-    </div>
-    <button class="kt-play" type="button" aria-pressed="true">Pause</button>
+  <div class="tides-hud tides-hud-tr">
+    <span class="tides-hud-k">Tide at marker</span>
+    <span class="tides-hud-v" id="tides-height">—</span>
+  </div>
+  <div class="tides-hud tides-hud-bl">
+    <span class="tides-hud-k">State</span>
+    <span class="tides-hud-v" id="tides-state">—</span>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag the Moon around its orbit (or let it auto-orbit and tune the Speed slider / Pause); the two tidal bulges track the Moon and the coastal tide gauge rises and falls twice per orbit.</span>
+    <span class="mb-c-int">Alive on load: the Moon orbits Earth, Earth rotates, and the two ocean bulges track the Moon while a surface marker traces a two-peak daily tide curve. A single slider sweeps the Moon-Sun alignment from spring (aligned) to neap (90 degrees), reshaping the bulges in real time. HUD chips report lunar angle, marker tide height, and spring/neap state.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -156,258 +148,316 @@ body.mb-embed #kit-tides [class*='stage'],body.mb-embed #kit-tides [class*='scen
 </script>
 <script>
 (function(){
-  var root=document.getElementById('kit-tides'); if(!root) return;
-  var canvas=root.querySelector('.kt-canvas');
-  if(!canvas) return;
+  var root=document.getElementById('kit-tides');if(!root)return;
+  var canvas=root.querySelector('#tides-canvas');if(!canvas)return;
   var ctx=canvas.getContext('2d');
-  var prm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var slider=root.querySelector('#tides-align');
+  var elLunar=root.querySelector('#tides-lunar');
+  var elHeight=root.querySelector('#tides-height');
+  var elState=root.querySelector('#tides-state');
 
-  function accent(){
-    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    return v||'#3cc8ff';
-  }
-  function accentRGB(){
-    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim();
-    if(v) return v;
-    var hex=accent().replace('#','');
-    if(hex.length===3) hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-    var n=parseInt(hex,16);
-    if(isNaN(n)) return '60,200,255';
-    return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);
-  }
+  function accent(){var c=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();return c||'#7cc4ff';}
 
-  var W=0,H=0,DPR=1,cx=0,cy=0,scale=1,stageW=0;
+  // assets
+  var earthImg=new Image(),earthReady=false;
+  earthImg.onload=function(){earthReady=true;};
+  earthImg.src='../assets/images/planets/earth.jpg';
+  var moonImg=new Image(),moonReady=false;
+  moonImg.onload=function(){moonReady=true;};
+  moonImg.src='../assets/images/planets/moon.jpg';
+
+  // starfield (procedural, fixed seed)
+  var stars=[];(function(){var s=99173;function r(){s=(s*1664525+1013904223)>>>0;return s/4294967296;}for(var i=0;i<240;i++){stars.push({x:r(),y:r(),r:r()*1.3+.2,p:r()*6.28,sp:r()*1.6+.3});}})();
+
+  var dpr=1,W=0,H=0;
   function resize(){
-    var r=canvas.getBoundingClientRect();
-    W=Math.max(1,r.width); H=Math.max(1,r.height);
-    DPR=Math.min(window.devicePixelRatio||1,2);
-    canvas.width=Math.round(W*DPR);
-    canvas.height=Math.round(H*DPR);
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    stageW=W*0.70;
-    cx=stageW*0.52; cy=H*0.5;
-    scale=Math.min(stageW,H);
-    makeStars();
+    var cw=canvas.clientWidth||root.clientWidth||800;
+    var ch=canvas.clientHeight||root.clientHeight||500;
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    var nw=Math.max(2,Math.round(cw*dpr)),nh=Math.max(2,Math.round(ch*dpr));
+    if(nw!==canvas.width||nh!==canvas.height){canvas.width=nw;canvas.height=nh;}
+    W=cw;H=ch;
   }
 
-  var moonAngle=-0.7;
-  var orbitR=0.40;
-  var dragging=false;
-  var autoSpeed=0.30;
-  var lastT=0;
-  var cityLocalAngle=0;
+  // tide curve history for the marker location
+  var hist=[];var HISTN=190;
+  for(var i=0;i<HISTN;i++)hist.push(0.5);
 
-  function moonPos(){
-    var R=scale*orbitR;
-    return { x:cx+Math.cos(moonAngle)*R, y:cy+Math.sin(moonAngle)*R };
-  }
-  function pointer(e){
-    var r=canvas.getBoundingClientRect();
-    var t=e.touches&&e.touches[0]?e.touches[0]:e;
-    return {x:t.clientX-r.left, y:t.clientY-r.top};
-  }
-  function near(p){
-    var m=moonPos();
-    return Math.hypot(p.x-m.x,p.y-m.y) < Math.max(40, scale*0.11);
-  }
-  function setFromPointer(p){ moonAngle=Math.atan2(p.y-cy,p.x-cx); }
+  var t0=performance.now();
 
-  canvas.addEventListener('mousedown',function(e){ var p=pointer(e); if(near(p)){ dragging=true; setFromPointer(p); kick(); e.preventDefault(); }});
-  window.addEventListener('mousemove',function(e){ if(dragging){ setFromPointer(pointer(e)); kick(); }});
-  window.addEventListener('mouseup',function(){ dragging=false; });
-  canvas.addEventListener('touchstart',function(e){ var p=pointer(e); if(near(p)){ dragging=true; setFromPointer(p); kick(); e.preventDefault(); }},{passive:false});
-  canvas.addEventListener('touchmove',function(e){ if(dragging){ setFromPointer(pointer(e)); kick(); e.preventDefault(); }},{passive:false});
-  window.addEventListener('touchend',function(){ dragging=false; });
-
-  var playing=!prm;
-  var btn=root.querySelector('.kt-play');
-  function kick(){ if(visible && (!playing || prm)){ once(); } }
-  if(btn){
-    btn.textContent=playing?'Pause':'Play';
-    btn.addEventListener('click',function(){
-      playing=!playing;
-      btn.textContent=playing?'Pause':'Play';
-      btn.setAttribute('aria-pressed', playing?'true':'false');
-      if(playing && visible){ lastT=0; loop(); } else if(visible){ once(); }
-    });
-  }
-  var slider=root.querySelector('.kt-speed');
-  if(slider){
-    autoSpeed=parseFloat(slider.value);
-    slider.addEventListener('input',function(){ autoSpeed=parseFloat(slider.value); if(prm&&visible) once(); });
+  function tideHeightAt(localAng,beta,k){
+    // two-bulge field: cos(2*theta) gives peaks toward & away from moon.
+    // localAng = angle of surface point measured from moon direction.
+    // beta scales lunar contribution (1 spring..reduced neap shape).
+    // moon component
+    var moon=Math.cos(2*localAng);
+    // sun component, offset by alignment angle phi; weaker (0.46 of moon)
+    var sun=0.46*Math.cos(2*(localAng-k));
+    return moon+sun; // range roughly [-1.46,1.46]
   }
 
-  function tidalHeight(localAngle){ return Math.cos(2*localAngle); }
+  function draw(now){
+    resize();
+    if(W<=0||H<=0){raf=requestAnimationFrame(draw);return;}
+    var ac=accent();
+    var T=(now-t0)/1000;
 
-  var stars=[];
-  function makeStars(){
-    stars=[];
-    var n=Math.round(W*H/9000); if(n<40)n=40; if(n>140)n=140;
-    for(var i=0;i<n;i++){
-      stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.3,tw:Math.random()*6.283});
-    }
-  }
+    // alignment param: 0 spring .. 1 neap
+    var av=(slider?parseFloat(slider.value):14)/100;
+    var phi=av*(Math.PI/2); // sun-moon separation angle 0..90deg
 
-  var gaugeHistory=[];
-  var GH=90;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.save();ctx.scale(dpr,dpr);
 
-  function fmt(v,d){ return v.toFixed(d); }
+    // ---- background gradient ----
+    var bg=ctx.createRadialGradient(W*0.5,H*0.46,0,W*0.5,H*0.46,Math.max(W,H)*0.85);
+    bg.addColorStop(0,'#0a0a26');bg.addColorStop(0.5,'#070518');bg.addColorStop(1,'#040210');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
 
-  function draw(t){
-    var ac=accent(), arr=accentRGB();
-    ctx.clearRect(0,0,W,H);
-
-    for(var i=0;i<stars.length;i++){
-      var s=stars[i];
-      ctx.globalAlpha=0.3+0.55*Math.abs(Math.sin(s.tw+t*0.0011));
-      ctx.fillStyle='#f4f5ff';
-      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.283); ctx.fill();
-    }
+    // ---- stars ----
+    for(var si=0;si<stars.length;si++){var s=stars[si];var tw=0.45+0.55*Math.abs(Math.sin(T*s.sp+s.p));
+      ctx.globalAlpha=tw*0.85;ctx.fillStyle='#cdd9f5';
+      ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,6.283);ctx.fill();}
     ctx.globalAlpha=1;
 
-    var R=scale*orbitR;
-    ctx.beginPath(); ctx.arc(cx,cy,R,0,6.283);
-    ctx.strokeStyle='rgba(166,171,230,0.16)'; ctx.lineWidth=1; ctx.stroke();
+    // ---- layout ----
+    var cx=W*0.42,cy=H*0.5;
+    var R=Math.min(W,H)*0.20; // earth radius
+    var orbit=Math.min(W,H)*0.40; // moon orbit radius
 
-    var earthR=scale*0.135;
-    var oceanBase=earthR*1.12;
-    var bulge=earthR*0.20;
+    // moon angle (orbits slowly CCW). 0 = to the right.
+    var moonAng=T*0.16;
+    var mx=cx+Math.cos(moonAng)*orbit;
+    var my=cy-Math.sin(moonAng)*orbit*0.62; // slight perspective squash
 
-    var m=moonPos();
-    var dirToMoon=Math.atan2(m.y-cy,m.x-cx);
+    // sun direction = moon direction rotated by phi (toward upper area)
+    var sunAng=moonAng+phi;
 
-    ctx.beginPath();
-    ctx.moveTo(cx+Math.cos(dirToMoon)*oceanBase,cy+Math.sin(dirToMoon)*oceanBase);
-    ctx.lineTo(cx-Math.cos(dirToMoon)*oceanBase,cy-Math.sin(dirToMoon)*oceanBase);
-    ctx.strokeStyle='rgba('+arr+',0.18)';
-    ctx.lineWidth=1; ctx.setLineDash([4,5]); ctx.stroke(); ctx.setLineDash([]);
+    // ---- Sun pull indicator (off-frame light + arrow band) ----
+    var sgx=cx+Math.cos(sunAng)*(Math.max(W,H)*0.85);
+    var sgy=cy-Math.sin(sunAng)*(Math.max(W,H)*0.85)*0.62;
+    var sunGlow=ctx.createRadialGradient(sgx,sgy,0,sgx,sgy,Math.max(W,H)*0.7);
+    sunGlow.addColorStop(0,'rgba(255,224,170,0.22)');
+    sunGlow.addColorStop(0.4,'rgba(255,210,150,0.05)');
+    sunGlow.addColorStop(1,'rgba(255,210,150,0)');
+    ctx.fillStyle=sunGlow;ctx.fillRect(0,0,W,H);
 
-    ctx.beginPath();
-    var N=140;
-    for(var k=0;k<=N;k++){
-      var ang=k/N*6.283;
-      var rr=oceanBase+bulge*tidalHeight(ang-dirToMoon);
-      var px=cx+Math.cos(ang)*rr, py=cy+Math.sin(ang)*rr;
-      if(k===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+    // ---- orbit ring ----
+    ctx.save();ctx.translate(cx,cy);ctx.scale(1,0.62);
+    ctx.beginPath();ctx.arc(0,0,orbit,0,6.283);
+    ctx.strokeStyle='rgba(170,195,240,0.12)';ctx.lineWidth=1;ctx.setLineDash([4,7]);ctx.stroke();
+    ctx.setLineDash([]);ctx.restore();
+
+    // ---- OCEAN BULGE LAYER (exaggerated, glowing) ----
+    // build the deformed ocean outline by sampling tide field around the globe.
+    var N=120;var oceanBase=R*1.16;var bulgeAmp=R*0.42;
+    var pts=[];
+    var markerHeight=0;var markerScreen=null;
+    // marker fixed latitude band, rotates with earth
+    var earthRot=T*0.5; // earth spin (faster than moon -> bulges sweep past marker)
+    var markerSurfAng=earthRot; // marker longitude angle (world frame), at equator
+    for(var i2=0;i2<=N;i2++){
+      var a=i2/N*6.283; // angle around globe (world frame, CCW from +x)
+      var local=a-moonAng; // relative to moon direction
+      var h=tideHeightAt(local,1,phi); // raw tide value
+      // normalize to 0..1 for visuals/curve later via separate calc
+      var rr=oceanBase+ (h/1.46)*bulgeAmp;
+      var px=cx+Math.cos(a)*rr;
+      var py=cy-Math.sin(a)*rr;
+      pts.push([px,py]);
     }
+    // ocean fill gradient
+    var og=ctx.createRadialGradient(cx,cy,R*0.7,cx,cy,oceanBase+bulgeAmp);
+    og.addColorStop(0,'rgba(60,130,210,0.0)');
+    og.addColorStop(0.62,'rgba(70,150,230,0.10)');
+    og.addColorStop(0.86,'rgba('+hexA(ac,1)+',0.34)');
+    og.addColorStop(1,'rgba('+hexA(ac,1)+',0.02)');
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0],pts[0][1]);
+    for(var pi=1;pi<pts.length;pi++)ctx.lineTo(pts[pi][0],pts[pi][1]);
     ctx.closePath();
-    ctx.fillStyle='rgba('+arr+',0.20)';
-    ctx.fill();
-    ctx.strokeStyle='rgba('+arr+',0.9)';
-    ctx.lineWidth=1.6; ctx.stroke();
-
-    ctx.beginPath(); ctx.arc(cx,cy,earthR,0,6.283);
-    ctx.fillStyle='#16145f'; ctx.fill();
-    ctx.strokeStyle='rgba(166,171,230,0.32)'; ctx.lineWidth=1; ctx.stroke();
+    ctx.save();
+    ctx.shadowColor=ac;ctx.shadowBlur=34;
+    ctx.fillStyle=og;ctx.fill();
+    ctx.restore();
+    // glowing ocean rim
     ctx.beginPath();
-    ctx.arc(cx-earthR*0.28,cy-earthR*0.28,earthR*0.55,0,6.283);
-    ctx.fillStyle='rgba(244,245,255,0.05)'; ctx.fill();
+    ctx.moveTo(pts[0][0],pts[0][1]);
+    for(var pj=1;pj<pts.length;pj++)ctx.lineTo(pts[pj][0],pts[pj][1]);
+    ctx.closePath();
+    ctx.strokeStyle='rgba('+hexA(ac,1)+',0.55)';ctx.lineWidth=1.6;
+    ctx.save();ctx.shadowColor=ac;ctx.shadowBlur=18;ctx.stroke();ctx.restore();
 
-    if(!dragging){ cityLocalAngle+=autoSpeed*((t-(draw._lt||t))/1000); }
-    draw._lt=t;
-    var cityAng=cityLocalAngle;
-    var crr=oceanBase+bulge*tidalHeight(cityAng-dirToMoon);
-    var sx=cx+Math.cos(cityAng)*earthR, sy=cy+Math.sin(cityAng)*earthR;
-    var ox=cx+Math.cos(cityAng)*crr, oy=cy+Math.sin(cityAng)*crr;
-    ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(ox,oy);
-    ctx.strokeStyle='rgba(244,245,255,0.5)'; ctx.lineWidth=2; ctx.stroke();
-    ctx.beginPath(); ctx.arc(sx,sy,4,0,6.283);
-    ctx.fillStyle='#f4f5ff'; ctx.fill();
-
-    var mr=Math.max(8, scale*0.030);
-    ctx.beginPath(); ctx.arc(m.x,m.y,mr+(dragging?6:0),0,6.283);
-    ctx.fillStyle='rgba('+arr+','+(dragging?0.22:0.12)+')'; ctx.fill();
-    ctx.beginPath(); ctx.arc(m.x,m.y,mr,0,6.283);
-    ctx.fillStyle='#cdd2ff'; ctx.fill();
-    ctx.strokeStyle=ac; ctx.lineWidth=1.5; ctx.stroke();
-    ctx.beginPath(); ctx.arc(m.x-mr*0.3,m.y-mr*0.2,mr*0.28,0,6.283);
-    ctx.fillStyle='rgba(80,80,120,0.35)'; ctx.fill();
-
-    var tide=tidalHeight(cityAng-dirToMoon);
-    drawGauge(tide, ac, arr);
-
-    var readout=root.querySelector('.kt-tideval');
-    if(readout){
-      var label = tide>0.6?'HIGH TIDE': tide<-0.6?'LOW TIDE':'MID TIDE';
-      readout.textContent=label;
-      readout.style.color = tide>0.6? ac : '#a6abe6';
+    // animated shimmer band on ocean (rotates with earth)
+    for(var sh=0;sh<3;sh++){
+      var sa=earthRot*1.0+sh*2.094+T*0.2;
+      var slocal=sa-moonAng;
+      var shh=tideHeightAt(slocal,1,phi);
+      var srr=oceanBase+(shh/1.46)*bulgeAmp;
+      var spx=cx+Math.cos(sa)*srr,spy=cy-Math.sin(sa)*srr;
+      ctx.globalAlpha=0.5;
+      ctx.fillStyle='rgba(220,240,255,0.9)';
+      ctx.beginPath();ctx.arc(spx,spy,1.7,0,6.283);ctx.fill();
+      ctx.globalAlpha=1;
     }
-    var num=root.querySelector('.kt-num');
-    if(num){ num.textContent=(tide>=0?'+':'')+fmt(tide,2); }
-  }
 
-  function drawGauge(tide, ac, arr){
-    var gw=W*0.26, gx=W-gw-W*0.02, gy=H*0.10, gh=H*0.80;
-    ctx.fillStyle='rgba(22,20,95,0.35)';
-    rr(gx,gy,gw,gh,8); ctx.fill();
-    ctx.strokeStyle='rgba(166,171,230,0.16)'; ctx.lineWidth=1; rr(gx,gy,gw,gh,8); ctx.stroke();
-
-    var pad=14, ix=gx+pad, iw=gw-pad*2, iy=gy+34, ih=gh-pad-44;
-    for(var j=0;j<=4;j++){
-      var ly=iy+ih*j/4;
-      ctx.beginPath(); ctx.moveTo(ix,ly); ctx.lineTo(ix+iw,ly);
-      ctx.strokeStyle='rgba(166,171,230,0.12)'; ctx.lineWidth=1; ctx.stroke();
-    }
-    var midY=iy+ih/2;
-    var level=midY - tide*(ih/2)*0.9;
-    ctx.fillStyle='rgba('+arr+',0.18)';
-    ctx.fillRect(ix, level, iw, (iy+ih)-level);
-    ctx.beginPath(); ctx.moveTo(ix,level); ctx.lineTo(ix+iw,level);
-    ctx.strokeStyle=ac; ctx.lineWidth=2; ctx.stroke();
-
-    gaugeHistory.push(tide); if(gaugeHistory.length>GH) gaugeHistory.shift();
-    ctx.beginPath();
-    for(var p=0;p<gaugeHistory.length;p++){
-      var hx=ix+iw*p/(GH-1);
-      var hy=midY-gaugeHistory[p]*(ih/2)*0.9;
-      if(p===0) ctx.moveTo(hx,hy); else ctx.lineTo(hx,hy);
-    }
-    ctx.strokeStyle='rgba('+arr+',0.55)'; ctx.lineWidth=1.5; ctx.stroke();
-
-    ctx.fillStyle='#a6abe6'; ctx.font='italic 700 11px "Chakra Petch", sans-serif';
-    ctx.textAlign='left'; ctx.fillText('TIDE GAUGE', ix, gy+20);
-    ctx.textAlign='right';
-    ctx.fillStyle='rgba(166,171,230,0.7)'; ctx.font='10px Inter, sans-serif';
-    ctx.fillText('HIGH', ix+iw, iy+10);
-    ctx.fillText('LOW', ix+iw, iy+ih-2);
-    ctx.textAlign='left';
-  }
-  function rr(x,y,w,h,r){
-    ctx.beginPath();
-    ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r);
-    ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r);
-    ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
-  }
-
-  var raf=null, visible=false;
-  function loop(){
-    if(!visible||!playing||prm){ return; }
-    raf=requestAnimationFrame(function(ts){
-      if(!lastT) lastT=ts;
-      var dt=(ts-lastT)/1000; lastT=ts;
-      if(dt>0.1) dt=0.1;
-      if(!dragging){ moonAngle+=autoSpeed*dt; }
-      draw(ts);
-      loop();
-    });
-  }
-  function once(){ draw(performance.now()); }
-
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(en){
-      visible=en.isIntersecting;
-      if(visible){
-        resize();
-        if(playing && !prm){ lastT=0; loop(); } else { once(); }
-      } else {
-        if(raf) cancelAnimationFrame(raf); raf=null;
+    // ---- EARTH ----
+    ctx.save();
+    ctx.beginPath();ctx.arc(cx,cy,R,0,6.283);ctx.closePath();ctx.clip();
+    if(earthReady){
+      // rotate earth texture by spin: pan the image horizontally
+      var iw=earthImg.width,ih=earthImg.height;
+      var pan=((earthRot/6.283)%1+1)%1;
+      var srcW=ih; // square crop
+      var sx=(pan*iw)%iw;
+      // draw possibly wrapping
+      var dscale=(2*R)/srcW;
+      // draw two copies for wrap
+      for(var w=-1;w<=1;w++){
+        var sxx=sx+w*iw;
+        ctx.drawImage(earthImg,0,0,iw,ih, cx-R - (sx*dscale) + w*iw*dscale, cy-R, iw*dscale, 2*R);
       }
-    });
-  },{threshold:0.04});
-  io.observe(root);
+    }else{
+      var eg=ctx.createRadialGradient(cx-R*0.3,cy-R*0.3,R*0.1,cx,cy,R);
+      eg.addColorStop(0,'#2e6fb0');eg.addColorStop(0.5,'#1d4a82');eg.addColorStop(1,'#0c2748');
+      ctx.fillStyle=eg;ctx.fillRect(cx-R,cy-R,2*R,2*R);
+      // procedural land blobs
+      ctx.fillStyle='rgba(60,120,80,0.55)';
+      var seed=12345;function rr2(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}
+      for(var lb=0;lb<7;lb++){var la=rr2()*6.283+earthRot,lr=R*(0.3+rr2()*0.5);
+        ctx.beginPath();ctx.arc(cx+Math.cos(la)*lr*0.6,cy+Math.sin(la)*lr*0.4,R*(0.12+rr2()*0.16),0,6.283);ctx.fill();}
+    }
+    ctx.restore();
+    // earth day/night terminator shading (sun side lit)
+    var tg=ctx.createLinearGradient(cx-Math.cos(sunAng)*R,cy+Math.sin(sunAng)*R,cx+Math.cos(sunAng)*R,cy-Math.sin(sunAng)*R);
+    tg.addColorStop(0,'rgba(2,2,14,0.72)');tg.addColorStop(0.46,'rgba(2,2,14,0.32)');tg.addColorStop(0.62,'rgba(255,238,200,0.05)');tg.addColorStop(1,'rgba(255,238,200,0.12)');
+    ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,6.283);ctx.clip();
+    ctx.fillStyle=tg;ctx.fillRect(cx-R,cy-R,2*R,2*R);
+    // atmosphere inner glow
+    var ig=ctx.createRadialGradient(cx,cy,R*0.82,cx,cy,R);
+    ig.addColorStop(0,'rgba(120,180,255,0)');ig.addColorStop(1,'rgba(150,200,255,0.4)');
+    ctx.fillStyle=ig;ctx.fillRect(cx-R,cy-R,2*R,2*R);
+    ctx.restore();
+    // earth edge
+    ctx.beginPath();ctx.arc(cx,cy,R,0,6.283);ctx.strokeStyle='rgba(150,200,255,0.35)';ctx.lineWidth=1;ctx.stroke();
 
-  window.addEventListener('resize',function(){ resize(); if(!playing||!visible||prm) once(); });
-  resize(); once();
+    // ---- SURFACE MARKER ----
+    // marker sits on equator, rotates with earth
+    var msurfR=oceanBase+ (tideHeightAt(markerSurfAng-moonAng,1,phi)/1.46)*bulgeAmp;
+    var mkx=cx+Math.cos(markerSurfAng)*msurfR;
+    var mky=cy-Math.sin(markerSurfAng)*msurfR;
+    // height normalized 0..1 for HUD + curve
+    var rawH=tideHeightAt(markerSurfAng-moonAng,1,phi);
+    var normH=(rawH+1.46)/(2*1.46);
+    markerHeight=normH;
+    // push into history
+    hist.push(normH);if(hist.length>HISTN)hist.shift();
+    // marker dot
+    ctx.save();
+    ctx.shadowColor='#fff';ctx.shadowBlur=12;
+    ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(mkx,mky,4.2,0,6.283);ctx.fill();
+    ctx.restore();
+    ctx.strokeStyle='rgba(255,255,255,0.7)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(mkx,mky,7.5,0,6.283);ctx.stroke();
+    // tether to earth surface point
+    var espx=cx+Math.cos(markerSurfAng)*R,espy=cy-Math.sin(markerSurfAng)*R;
+    ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(espx,espy);ctx.lineTo(mkx,mky);ctx.stroke();ctx.setLineDash([]);
+
+    // ---- MOON ----
+    var moonR=R*0.32;
+    // moon glow
+    var mg=ctx.createRadialGradient(mx,my,0,mx,my,moonR*2.4);
+    mg.addColorStop(0,'rgba(220,225,240,0.35)');mg.addColorStop(1,'rgba(220,225,240,0)');
+    ctx.fillStyle=mg;ctx.beginPath();ctx.arc(mx,my,moonR*2.4,0,6.283);ctx.fill();
+    ctx.save();ctx.beginPath();ctx.arc(mx,my,moonR,0,6.283);ctx.clip();
+    if(moonReady){ctx.drawImage(moonImg,mx-moonR,my-moonR,moonR*2,moonR*2);}
+    else{var mgg=ctx.createRadialGradient(mx-moonR*0.3,my-moonR*0.3,moonR*0.1,mx,my,moonR);
+      mgg.addColorStop(0,'#d8dae2');mgg.addColorStop(1,'#888c98');ctx.fillStyle=mgg;ctx.fillRect(mx-moonR,my-moonR,2*moonR,2*moonR);}
+    // moon shading toward sun
+    var mtg=ctx.createLinearGradient(mx-Math.cos(sunAng)*moonR,my+Math.sin(sunAng)*moonR,mx+Math.cos(sunAng)*moonR,my-Math.sin(sunAng)*moonR);
+    mtg.addColorStop(0,'rgba(0,0,8,0.6)');mtg.addColorStop(0.5,'rgba(0,0,8,0.15)');mtg.addColorStop(1,'rgba(255,250,235,0.06)');
+    ctx.fillStyle=mtg;ctx.fillRect(mx-moonR,my-moonR,2*moonR,2*moonR);
+    ctx.restore();
+    ctx.beginPath();ctx.arc(mx,my,moonR,0,6.283);ctx.strokeStyle='rgba(220,225,240,0.4)';ctx.lineWidth=1;ctx.stroke();
+
+    // gravity pull line moon->earth
+    ctx.strokeStyle='rgba('+hexA(ac,1)+',0.28)';ctx.lineWidth=1;ctx.setLineDash([3,5]);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(mx,my);ctx.stroke();ctx.setLineDash([]);
+
+    // ---- TIDE CURVE PANEL (bottom right, integrated, no table) ----
+    var pw=Math.min(W*0.32,260),ph=Math.min(H*0.20,108);
+    var px0=W-pw-W*0.04,py0=H-ph-H*0.14;
+    // panel bg
+    roundRect(ctx,px0,py0,pw,ph,12);
+    ctx.fillStyle='rgba(8,10,26,0.42)';ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=1;ctx.stroke();
+    // label
+    ctx.fillStyle='rgba(225,231,246,0.5)';ctx.font='600 9px Inter,sans-serif';
+    ctx.textBaseline='alphabetic';ctx.textAlign='left';
+    ctx.fillText('TIDE HEIGHT · 24 H',px0+12,py0+16);
+    // curve area
+    var ca_x=px0+12,ca_y=py0+24,ca_w=pw-24,ca_h=ph-36;
+    // midline
+    ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(ca_x,ca_y+ca_h*0.5);ctx.lineTo(ca_x+ca_w,ca_y+ca_h*0.5);ctx.stroke();
+    // curve fill
+    ctx.beginPath();
+    for(var ci=0;ci<hist.length;ci++){
+      var xx=ca_x+(ci/(HISTN-1))*ca_w;
+      var yy=ca_y+ca_h-(hist[ci])*ca_h;
+      if(ci===0)ctx.moveTo(xx,yy);else ctx.lineTo(xx,yy);
+    }
+    var cgrad=ctx.createLinearGradient(0,ca_y,0,ca_y+ca_h);
+    ctx.lineTo(ca_x+ca_w,ca_y+ca_h);ctx.lineTo(ca_x,ca_y+ca_h);ctx.closePath();
+    cgrad.addColorStop(0,'rgba('+hexA(ac,1)+',0.30)');cgrad.addColorStop(1,'rgba('+hexA(ac,1)+',0.02)');
+    ctx.fillStyle=cgrad;ctx.fill();
+    // curve line
+    ctx.beginPath();
+    for(var di=0;di<hist.length;di++){
+      var dx=ca_x+(di/(HISTN-1))*ca_w;
+      var dy=ca_y+ca_h-(hist[di])*ca_h;
+      if(di===0)ctx.moveTo(dx,dy);else ctx.lineTo(dx,dy);
+    }
+    ctx.strokeStyle=ac;ctx.lineWidth=1.8;ctx.save();ctx.shadowColor=ac;ctx.shadowBlur=10;ctx.stroke();ctx.restore();
+    // live head dot
+    var hdx=ca_x+ca_w,hdy=ca_y+ca_h-(hist[hist.length-1])*ca_h;
+    ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(hdx,hdy,2.6,0,6.283);ctx.fill();
+
+    ctx.restore(); // dpr
+
+    // ---- HUD text ----
+    var degMoon=((moonAng*180/Math.PI)%360+360)%360;
+    if(elLunar)elLunar.textContent=degMoon.toFixed(0)+'° orbital';
+    if(elHeight){
+      var meters=(markerHeight*2-1)*0.54; // illustrative metres around mean
+      var arrow=meters>=0?'▲':'▼';
+      elHeight.textContent=arrow+' '+(meters>=0?'+':'')+meters.toFixed(2)+' m';
+    }
+    if(elState){
+      var st = av<0.28? 'Spring tide' : av>0.72? 'Neap tide' : 'Transition';
+      elState.textContent=st;
+    }
+
+    raf=requestAnimationFrame(draw);
+  }
+
+  function roundRect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+
+  function hexA(hex,_a){
+    hex=hex.replace('#','');
+    if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    var r=parseInt(hex.substring(0,2),16)||124;
+    var g=parseInt(hex.substring(2,4),16)||196;
+    var b=parseInt(hex.substring(4,6),16)||255;
+    return r+','+g+','+b;
+  }
+
+  var raf=null;
+  var ro=new ResizeObserver(function(){resize();});
+  ro.observe(root);
+  window.addEventListener('resize',resize);
+  resize();
+  raf=requestAnimationFrame(draw);
 })();
 </script>
 </body></html>

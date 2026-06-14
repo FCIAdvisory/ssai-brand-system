@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orbit types · SSAI</title>
+<title>Families of Earth Orbit · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,47 +41,27 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-orbit-types{display:block;width:100%;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;--ot-accent:#3cc8ff;--ot-accent-rgb:60,200,255;-webkit-font-smoothing:antialiased}
-#kit-orbit-types *{box-sizing:border-box}
-#kit-orbit-types .kit-orbit-types-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-#kit-orbit-types .kit-orbit-types-wrap{position:relative;width:100%;background:radial-gradient(120% 120% at 50% 38%,#0a0726 0%,#050314 62%,#040210 100%);border:1px solid rgba(166,171,230,0.16);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
-#kit-orbit-types .kit-orbit-types-stage{position:relative;width:100%;aspect-ratio:16/10;min-height:340px}
-#kit-orbit-types .kit-orbit-types-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#kit-orbit-types .kit-orbit-types-readout{position:absolute;top:14px;left:14px;min-width:188px;max-width:62%;padding:13px 15px 14px;background:rgba(7,5,24,0.62);border:1px solid rgba(166,171,230,0.18);border-radius:13px;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);pointer-events:none;transition:border-color .35s ease}
-#kit-orbit-types .kit-orbit-types-ro-name{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:16px;line-height:1.15;color:var(--ot-accent);transition:color .3s ease;margin-bottom:11px}
-#kit-orbit-types .kit-orbit-types-ro-grid{display:flex;flex-wrap:wrap;gap:9px 18px}
-#kit-orbit-types .kit-orbit-types-ro-grid>div{display:flex;flex-direction:column;gap:2px;min-width:52px}
-#kit-orbit-types .kit-orbit-types-ro-k{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#a6abe6}
-#kit-orbit-types .kit-orbit-types-ro-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:15px;color:#f4f5ff;font-variant-numeric:tabular-nums}
-#kit-orbit-types .kit-orbit-types-ro-note{margin-top:11px;font-size:11px;line-height:1.45;color:#a6abe6;max-width:240px}
-#kit-orbit-types .kit-orbit-types-panel{padding:14px 16px 16px;border-top:1px solid rgba(166,171,230,0.12);display:flex;flex-direction:column;gap:13px;background:rgba(5,3,20,0.4)}
-#kit-orbit-types .kit-orbit-types-chips{display:flex;flex-wrap:wrap;gap:8px}
-#kit-orbit-types .kit-orbit-types-chip{position:relative;display:inline-flex;align-items:center;gap:8px;padding:7px 13px 7px 11px;border:1px solid rgba(166,171,230,0.2);border-radius:999px;background:rgba(22,20,95,0.22);color:#cdd0f5;font-size:12.5px;font-weight:500;letter-spacing:.01em;cursor:pointer;transition:border-color .25s ease,background .25s ease,color .25s ease,transform .12s ease;-webkit-tap-highlight-color:transparent}
-#kit-orbit-types .kit-orbit-types-chip:hover{border-color:rgba(166,171,230,0.42);background:rgba(22,20,95,0.4)}
-#kit-orbit-types .kit-orbit-types-chip:active{transform:translateY(1px)}
-#kit-orbit-types .kit-orbit-types-chip:focus-visible{outline:2px solid var(--ot-accent);outline-offset:2px}
-#kit-orbit-types .kit-orbit-types-chip .kit-orbit-types-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;background:var(--c,#a6abe6);box-shadow:0 0 0 0 transparent;transition:box-shadow .25s ease}
-#kit-orbit-types .kit-orbit-types-chip[aria-pressed="true"]{color:#f4f5ff;border-color:color-mix(in srgb,var(--c) 70%,transparent);background:color-mix(in srgb,var(--c) 18%,rgba(22,20,95,0.3))}
-#kit-orbit-types .kit-orbit-types-chip[aria-pressed="true"] .kit-orbit-types-dot{box-shadow:0 0 9px 1px color-mix(in srgb,var(--c) 80%,transparent)}
-#kit-orbit-types .kit-orbit-types-chip .kit-orbit-types-chip-sub{font-size:10.5px;color:#9a9fd8;letter-spacing:.02em}
-#kit-orbit-types .kit-orbit-types-chip[aria-pressed="true"] .kit-orbit-types-chip-sub{color:#c4c8f2}
-#kit-orbit-types .kit-orbit-types-speed{display:flex;align-items:center;gap:12px}
-#kit-orbit-types .kit-orbit-types-speed-lab{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#a6abe6;flex:0 0 auto}
-#kit-orbit-types .kit-orbit-types-range{-webkit-appearance:none;appearance:none;flex:1 1 auto;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--ot-accent) 0%,var(--ot-accent) var(--ot-fill,42%),rgba(166,171,230,0.2) var(--ot-fill,42%),rgba(166,171,230,0.2) 100%);cursor:pointer;min-width:90px}
-#kit-orbit-types .kit-orbit-types-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#f4f5ff;border:2px solid var(--ot-accent);box-shadow:0 0 8px color-mix(in srgb,var(--ot-accent) 60%,transparent);cursor:pointer;transition:transform .12s ease}
-#kit-orbit-types .kit-orbit-types-range::-webkit-slider-thumb:hover{transform:scale(1.12)}
-#kit-orbit-types .kit-orbit-types-range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#f4f5ff;border:2px solid var(--ot-accent);box-shadow:0 0 8px color-mix(in srgb,var(--ot-accent) 60%,transparent);cursor:pointer}
-#kit-orbit-types .kit-orbit-types-range:focus-visible{outline:2px solid var(--ot-accent);outline-offset:3px}
-#kit-orbit-types .kit-orbit-types-speed-val{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:13px;color:var(--ot-accent);min-width:42px;text-align:right;font-variant-numeric:tabular-nums;transition:color .3s ease}
-#kit-orbit-types .kit-orbit-types-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-#kit-orbit-types [data-foot-scale]{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:#7d82c0}
-#kit-orbit-types .kit-orbit-types-scalebtn{padding:6px 12px;border:1px solid rgba(166,171,230,0.22);border-radius:999px;background:transparent;color:#a6abe6;font-family:inherit;font-size:11.5px;cursor:pointer;transition:border-color .25s ease,color .25s ease,background .25s ease}
-#kit-orbit-types .kit-orbit-types-scalebtn:hover{border-color:var(--ot-accent);color:#f4f5ff;background:color-mix(in srgb,var(--ot-accent) 12%,transparent)}
-#kit-orbit-types .kit-orbit-types-scalebtn:focus-visible{outline:2px solid var(--ot-accent);outline-offset:2px}
-@media(max-width:560px){
-#kit-orbit-types .kit-orbit-types-stage{aspect-ratio:4/5;min-height:380px}
-#kit-orbit-types .kit-orbit-types-readout{max-width:84%;min-width:0;top:12px;left:12px;padding:11px 12px}
-#kit-orbit-types .kit-orbit-types-ro-note{display:none}
+#kit-orbit-types{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eaf0ff;-webkit-font-smoothing:antialiased}
+#kit-orbit-types canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-orbit-types .orbit-types-controls{position:absolute;left:22px;bottom:22px;z-index:5;display:flex;flex-direction:column;gap:7px;transition:opacity .5s ease}
+#kit-orbit-types .orbit-types-leg{display:flex;align-items:center;gap:10px;cursor:pointer;background:rgba(10,8,28,.42);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:7px 15px 7px 11px;color:rgba(228,236,255,.62);font-size:12px;font-weight:500;letter-spacing:.04em;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:color .3s ease,border-color .3s ease,background .3s ease,transform .3s ease}
+#kit-orbit-types .orbit-types-leg:hover{color:rgba(228,236,255,.95);border-color:rgba(255,255,255,.2);transform:translateX(2px)}
+#kit-orbit-types .orbit-types-leg.is-active{color:#fff;background:rgba(20,16,46,.66);border-color:rgba(255,255,255,.34)}
+#kit-orbit-types .orbit-types-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;background:var(--famc,#7fb0ff);box-shadow:0 0 9px var(--famc,#7fb0ff);opacity:.55;transition:opacity .3s ease,box-shadow .3s ease}
+#kit-orbit-types .orbit-types-leg.is-active .orbit-types-dot{opacity:1;box-shadow:0 0 14px var(--famc,#7fb0ff)}
+#kit-orbit-types .orbit-types-name{white-space:nowrap}
+#kit-orbit-types .orbit-types-hud{position:absolute;right:22px;top:22px;z-index:5;width:min(238px,42vw);background:rgba(8,6,24,.4);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:15px 17px 16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 18px 50px -24px rgba(0,0,0,.8)}
+#kit-orbit-types .orbit-types-hud-title{font-size:14px;font-weight:600;letter-spacing:.01em;margin-bottom:11px;color:#fff;display:flex;align-items:center;gap:8px}
+#kit-orbit-types .orbit-types-hud-title::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--hudc,#7fb0ff);box-shadow:0 0 12px var(--hudc,#7fb0ff)}
+#kit-orbit-types .orbit-types-hud-rows{display:flex;flex-direction:column;gap:9px}
+#kit-orbit-types .orbit-types-hud-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+#kit-orbit-types .orbit-types-k{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:rgba(196,206,236,.5);font-weight:500}
+#kit-orbit-types .orbit-types-v{font-size:12px;font-weight:500;color:rgba(234,240,255,.94);text-align:right;font-variant-numeric:tabular-nums}
+#kit-orbit-types .orbit-types-hint{position:absolute;left:22px;top:22px;z-index:5;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(190,200,232,.4);font-weight:500;pointer-events:none;transition:opacity .6s ease}
+#kit-orbit-types .orbit-types-hint.is-hidden{opacity:0}
+@media (max-width:560px){
+  #kit-orbit-types .orbit-types-hud{width:min(200px,52vw);padding:12px 13px 13px}
+  #kit-orbit-types .orbit-types-leg{padding:6px 12px 6px 9px;font-size:11px}
 }
 
 body.mb-embed #kit-orbit-types{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -99,41 +79,32 @@ body.mb-embed #kit-orbit-types [class*='stage'],body.mb-embed #kit-orbit-types [
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Orbit types</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Families of Earth Orbit</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-orbit-types">
-  <h2 class="kit-orbit-types-sr">Interactive side-on diagram of Earth orbits — LEO, MEO, GEO, Sun-synchronous and Molniya — with animated satellites, altitudes and orbital periods.</h2>
-  <div class="kit-orbit-types-wrap">
-    <div class="kit-orbit-types-stage">
-      <canvas class="kit-orbit-types-canvas"></canvas>
-      <div class="kit-orbit-types-readout" data-readout>
-        <div class="kit-orbit-types-ro-name" data-ro-name>Select an orbit</div>
-        <div class="kit-orbit-types-ro-grid">
-          <div><span class="kit-orbit-types-ro-k">Altitude</span><span class="kit-orbit-types-ro-v" data-ro-alt>—</span></div>
-          <div><span class="kit-orbit-types-ro-k">Period</span><span class="kit-orbit-types-ro-v" data-ro-per>—</span></div>
-          <div><span class="kit-orbit-types-ro-k">Speed</span><span class="kit-orbit-types-ro-v" data-ro-vel>—</span></div>
-        </div>
-        <div class="kit-orbit-types-ro-note" data-ro-note>Toggle orbits below to compare.</div>
-      </div>
-    </div>
-    <div class="kit-orbit-types-panel">
-      <div class="kit-orbit-types-chips" data-chips></div>
-      <div class="kit-orbit-types-speed">
-        <label class="kit-orbit-types-speed-lab">Time warp</label>
-        <input type="range" class="kit-orbit-types-range" data-speed min="0" max="100" value="42" step="1" aria-label="Animation time warp">
-        <span class="kit-orbit-types-speed-val" data-speed-val>×1</span>
-      </div>
-      <div class="kit-orbit-types-foot">
-        <span data-foot-scale>Radial scale: logarithmic</span>
-        <button class="kit-orbit-types-scalebtn" data-scaletoggle aria-pressed="false">Use linear scale</button>
-      </div>
+  <canvas id="orbit-types-canvas"></canvas>
+  <div class="orbit-types-controls" id="orbit-types-legend" role="listbox" aria-label="Orbit families">
+    <button class="orbit-types-leg" data-fam="leo" type="button"><span class="orbit-types-dot"></span><span class="orbit-types-name">LEO</span></button>
+    <button class="orbit-types-leg" data-fam="meo" type="button"><span class="orbit-types-dot"></span><span class="orbit-types-name">MEO</span></button>
+    <button class="orbit-types-leg" data-fam="geo" type="button"><span class="orbit-types-dot"></span><span class="orbit-types-name">GEO</span></button>
+    <button class="orbit-types-leg" data-fam="molniya" type="button"><span class="orbit-types-dot"></span><span class="orbit-types-name">Molniya</span></button>
+    <button class="orbit-types-leg" data-fam="polar" type="button"><span class="orbit-types-dot"></span><span class="orbit-types-name">Polar / SSO</span></button>
+  </div>
+  <div class="orbit-types-hud" id="orbit-types-hud">
+    <div class="orbit-types-hud-title" id="orbit-types-hud-title">Low Earth Orbit</div>
+    <div class="orbit-types-hud-rows">
+      <div class="orbit-types-hud-row"><span class="orbit-types-k">Altitude</span><span class="orbit-types-v" id="orbit-types-alt">160 – 2,000 km</span></div>
+      <div class="orbit-types-hud-row"><span class="orbit-types-k">Period</span><span class="orbit-types-v" id="orbit-types-per">~90 min</span></div>
+      <div class="orbit-types-hud-row"><span class="orbit-types-k">Inclination</span><span class="orbit-types-v" id="orbit-types-inc">0° – 98°</span></div>
+      <div class="orbit-types-hud-row"><span class="orbit-types-k">Typical use</span><span class="orbit-types-v" id="orbit-types-use">Imaging · ISS</span></div>
     </div>
   </div>
+  <div class="orbit-types-hint" id="orbit-types-hint">Select an orbit family</div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Click an orbit chip to toggle its ring on/off; the most recently enabled orbit becomes the focused one — it draws solid, gains an animated satellite and an in-canvas label, and drives the readout panel (altitude, true period, orbital speed). The time-warp slider scales animation speed logarithmically, and a button switches the radial scale between logarithmic and linear so distant orbits stay legible.</span>
+    <span class="mb-c-int">Alive at rest: all five orbits animate continuously with satellites tracing their paths at physically faithful relative speeds, the Earth slowly rotating its glow, and a drifting starfield. Click any legend entry (or its satellite) to highlight that family — the chosen orbit and satellite brighten while the others dim, and HUD chips update to show its altitude band, orbital period, inclination, and typical use. Click again or pick another to change focus. Everything self-heals on resize.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -184,401 +155,407 @@ body.mb-embed #kit-orbit-types [class*='stage'],body.mb-embed #kit-orbit-types [
 </script>
 <script>
 (function(){
-var root=document.getElementById('kit-orbit-types');if(!root)return;
-var canvas=root.querySelector('.kit-orbit-types-canvas');
-var ctx=canvas.getContext('2d');
-var chipsWrap=root.querySelector('[data-chips]');
-var speedInput=root.querySelector('[data-speed]');
-var speedVal=root.querySelector('[data-speed-val]');
-var scaleBtn=root.querySelector('[data-scaletoggle]');
-var footScale=root.querySelector('[data-foot-scale]');
-var roName=root.querySelector('[data-ro-name]');
-var roAlt=root.querySelector('[data-ro-alt]');
-var roPer=root.querySelector('[data-ro-per]');
-var roVel=root.querySelector('[data-ro-vel]');
-var roNote=root.querySelector('[data-ro-note]');
-var roBox=root.querySelector('[data-readout]');
+  var root=document.getElementById('kit-orbit-types');
+  if(!root)return;
+  var canvas=root.querySelector('#orbit-types-canvas');
+  var ctx=canvas.getContext('2d');
+  var legend=root.querySelector('#orbit-types-legend');
+  var hud=root.querySelector('#orbit-types-hud');
+  var hudTitle=root.querySelector('#orbit-types-hud-title');
+  var elAlt=root.querySelector('#orbit-types-alt');
+  var elPer=root.querySelector('#orbit-types-per');
+  var elInc=root.querySelector('#orbit-types-inc');
+  var elUse=root.querySelector('#orbit-types-use');
+  var hint=root.querySelector('#orbit-types-hint');
 
-var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function accent(){
+    var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return a||'#5fa8ff';
+  }
+  function hexToRgb(h){
+    h=h.replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16);
+    return {r:(n>>16)&255,g:(n>>8)&255,b:n&255};
+  }
+  // produce a hue-shifted, value-tweaked color relative to accent so families read as one tinted palette
+  function tint(base,hShift,sat,light){
+    var c=hexToRgb(base);
+    var r=c.r/255,g=c.g/255,b=c.b/255;
+    var mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;
+    var h=0,s=0,l=(mx+mn)/2;
+    if(d){
+      s=l>0.5?d/(2-mx-mn):d/(mx+mn);
+      if(mx===r)h=((g-b)/d+(g<b?6:0));
+      else if(mx===g)h=(b-r)/d+2;
+      else h=(r-g)/d+4;
+      h/=6;
+    }
+    h=(h+hShift/360)%1;if(h<0)h+=1;
+    s=Math.max(0,Math.min(1,s*sat));
+    l=Math.max(0,Math.min(1,l*light));
+    function hue(p,q,t){if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;}
+    var rr,gg,bb;
+    if(s===0){rr=gg=bb=l;}
+    else{var q=l<0.5?l*(1+s):l+s-l*s;var p=2*l-q;rr=hue(p,q,h+1/3);gg=hue(p,q,h);bb=hue(p,q,h-1/3);}
+    return {r:Math.round(rr*255),g:Math.round(gg*255),b:Math.round(bb*255)};
+  }
+  function rgba(c,a){return 'rgba('+c.r+','+c.g+','+c.b+','+a+')';}
 
-var Re=6371;
-var mu=398600.4418;
+  // Orbit family model. a/b in Earth-radius units (Earth R = 1). Periods are relative
+  // angular speeds so faster (lower) orbits visibly outrun slower ones (Kepler-flavored).
+  var FAM=[
+    {id:'leo', name:'Low Earth Orbit',  short:'LEO',
+      a:1.32,b:1.32, incl:78, ecc:false, focusOffset:0, speed:1.0, sat:0.0,
+      alt:'160 – 2,000 km', per:'~90 min', inc:'0° – 98°', use:'Imaging · ISS'},
+    {id:'meo', name:'Medium Earth Orbit', short:'MEO',
+      a:2.55,b:2.55, incl:55, ecc:false, focusOffset:0, speed:0.46, sat:1.1,
+      alt:'2,000 – 35,000 km', per:'~12 hr', inc:'~55°', use:'GPS / GNSS'},
+    {id:'geo', name:'Geostationary Orbit', short:'GEO',
+      a:3.7,b:3.7, incl:0, ecc:false, focusOffset:0, speed:0.21, sat:2.4,
+      alt:'35,786 km', per:'24 hr', inc:'0° (equatorial)', use:'Comms · Weather'},
+    {id:'molniya', name:'Molniya Orbit', short:'Molniya',
+      a:3.95,b:2.0, incl:63, ecc:true, focusOffset:0.0, speed:0.32, sat:3.0,
+      alt:'600 – 39,800 km', per:'~12 hr', inc:'63.4°', use:'High-lat comms'},
+    {id:'polar', name:'Polar / Sun-Sync', short:'Polar / SSO',
+      a:1.7,b:1.7, incl:96, ecc:false, focusOffset:0, speed:0.78, sat:4.2,
+      alt:'~600 – 800 km', per:'~100 min', inc:'~98° (retro)', use:'Earth obs · SSO'}
+  ];
 
-function periodSec(a){return 2*Math.PI*Math.sqrt(a*a*a/mu);}
-function fmtPeriod(s){var h=s/3600;if(h<1){return Math.round(s/60)+' min';}if(h<24){var hh=Math.floor(h);var mm=Math.round((h-hh)*60);if(mm===60){hh++;mm=0;}return hh+'h '+(mm<10?'0':'')+mm+'m';}var d=h/24;return d.toFixed(2)+' days';}
+  var selected=null; // null = all bright-ish; otherwise an id
 
-var ORBITS=[
- {id:'leo',name:'LEO',sub:'Low Earth',color:'#4fd6a0',alt:550,
-  note:'Low Earth Orbit. Earth-observation, ISS and Starlink live here — close, fast, short revisit.',
-  ecc:0,inc:'53°'},
- {id:'sso',name:'Sun-sync',sub:'SSO',color:'#c89bff',alt:705,
-  note:'Sun-synchronous: a near-polar orbit whose plane precesses to keep a constant local solar time, ideal for imaging.',
-  ecc:0,inc:'98.2°'},
- {id:'meo',name:'MEO',sub:'Medium',color:'#ffb454',alt:20200,
-  note:'Medium Earth Orbit. Home of GPS / Galileo navigation constellations.',
-  ecc:0,inc:'55°'},
- {id:'geo',name:'GEO',sub:'Geostat.',color:'#ff7a9c',alt:35786,
-  note:'Geostationary: one orbit per sidereal day, so the satellite hangs over a fixed point on the equator.',
-  ecc:0,inc:'0°'},
- {id:'mol',name:'Molniya',sub:'Highly ellip.',color:'#5cc8ff',alt:null,
-  note:'Molniya: a 12-hour highly-eccentric orbit. It crawls near apogee (~40000 km) over high latitudes for long dwell, then whips through perigee (~600 km).',
-  ecc:0.74,inc:'63.4°',peri:600,apo:39750}
-];
+  // build per-family colors once accent known (recompute on draw to track theme changes cheaply)
+  function famColor(f){
+    switch(f.id){
+      case 'leo':     return tint(accent(),  4, 1.05, 1.18);
+      case 'meo':     return tint(accent(), 38, 0.92, 1.12);
+      case 'geo':     return tint(accent(),-30, 0.85, 1.22);
+      case 'molniya': return tint(accent(), 92, 0.78, 1.18);
+      case 'polar':   return tint(accent(),-62, 0.7,  1.2);
+    }
+    return hexToRgb(accent());
+  }
 
-ORBITS.forEach(function(o){
- if(o.id==='mol'){
-   o.a=Re+(o.peri+o.apo)/2;
-   o.ra=Re+o.apo;o.rp=Re+o.peri;
- }else{
-   o.a=Re+o.alt;o.ecc=0;
- }
- o.T=periodSec(o.a);
- o.vCirc=Math.sqrt(mu/o.a);
-});
+  // ---- starfield ----
+  var stars=[];
+  function buildStars(w,h){
+    stars=[];
+    var n=Math.round((w*h)/9000);
+    n=Math.max(120,Math.min(420,n));
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.3+0.2,
+        tw:Math.random()*Math.PI*2,sp:0.4+Math.random()*1.0,dx:(Math.random()-0.5)*0.02});
+    }
+  }
 
-var state={};
-ORBITS.forEach(function(o){state[o.id]=false;});
-state.leo=true;state.geo=true;state.mol=true;
-var focusId='mol';
-var logScale=true;
+  // ---- Earth sprite ----
+  var earthImg=new Image();
+  var earthReady=false;
+  earthImg.onload=function(){earthReady=true;};
+  earthImg.onerror=function(){earthReady=false;};
+  earthImg.src='../assets/images/planets/earth.jpg';
 
-function accent(){
- var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
- return a||'#3cc8ff';
-}
-function accentRgb(acc){
- var r=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim();
- if(r)return r.split(',').map(function(x){return parseInt(x,10);});
- var h=acc.replace('#','');
- if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
- return [parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)];
-}
+  var W=0,H=0,DPR=1;
+  function resize(){
+    DPR=Math.max(1,Math.min(2.5,window.devicePixelRatio||1));
+    var w=canvas.clientWidth||root.clientWidth||800;
+    var h=canvas.clientHeight||root.clientHeight||500;
+    W=w;H=h;
+    canvas.width=Math.round(w*DPR);
+    canvas.height=Math.round(h*DPR);
+    if(!stars.length||Math.abs(stars._w-w)>40)buildStars(w,h);
+    stars._w=w;
+  }
+  var ro=new ResizeObserver(function(){resize();});
+  ro.observe(root);
+  window.addEventListener('resize',resize);
 
-ORBITS.forEach(function(o){
- var b=document.createElement('button');
- b.className='kit-orbit-types-chip';
- b.style.setProperty('--c',o.color);
- b.setAttribute('aria-pressed',state[o.id]?'true':'false');
- b.setAttribute('type','button');
- b.innerHTML='<span class="kit-orbit-types-dot"></span><span>'+o.name+'</span><span class="kit-orbit-types-chip-sub">'+o.sub+'</span>';
- b.addEventListener('click',function(){
-   state[o.id]=!state[o.id];
-   b.setAttribute('aria-pressed',state[o.id]?'true':'false');
-   if(state[o.id]){focusId=o.id;}
-   else if(focusId===o.id){
-     focusId=null;
-     ORBITS.forEach(function(x){if(state[x.id])focusId=x.id;});
-   }
-   updateReadout();
-   if(reduceMotion)draw(performance.now());
- });
- o._chip=b;
- chipsWrap.appendChild(b);
-});
+  // map an orbit point (a,b in Earth-radii, inclination) to screen with a slight 3D tilt
+  var VIEW_TILT=0.42; // global perspective tilt for all rings (radians)
+  function project(f,theta,cx,cy,R){
+    // ellipse in its own plane (focus at Earth for eccentric orbits)
+    var ox=Math.cos(theta)*f.a;
+    var oy=Math.sin(theta)*f.b;
+    if(f.ecc){ ox+= (f.a - f.a* (f.b*f.b)/(f.a*f.a) ) ? 0:0; // keep simple
+      ox = ox - (f.a - Math.sqrt(f.a*f.a - f.b*f.b)); // shift so perigee near Earth (focus)
+    }
+    // apply inclination: rotate plane about the line of nodes (x axis here)
+    var inc=f.incl*Math.PI/180;
+    var x3=ox;
+    var y3=oy*Math.cos(inc);
+    var z3=oy*Math.sin(inc);
+    // global view tilt about x axis for depth
+    var yt=y3*Math.cos(VIEW_TILT)-z3*Math.sin(VIEW_TILT);
+    var zt=y3*Math.sin(VIEW_TILT)+z3*Math.cos(VIEW_TILT);
+    return {x:cx+x3*R, y:cy+yt*R, z:zt};
+  }
 
-function setSpeedFill(){
- var v=parseInt(speedInput.value,10);
- speedInput.style.setProperty('--ot-fill',v+'%');
-}
-function speedFactor(){
- var v=parseInt(speedInput.value,10)/100;
- return Math.pow(10,v*3.2-0.4);
-}
-function updateSpeedLabel(){
- var f=speedFactor();
- var disp;
- if(f<10)disp='×'+f.toFixed(1);
- else if(f<1000)disp='×'+Math.round(f);
- else disp='×'+(f/1000).toFixed(1)+'k';
- speedVal.textContent=disp;
-}
-speedInput.addEventListener('input',function(){setSpeedFill();updateSpeedLabel();if(reduceMotion)draw(performance.now());});
-setSpeedFill();updateSpeedLabel();
+  function drawOrbitPath(f,cx,cy,R,col,alpha,front){
+    ctx.lineWidth=front?1.7:1.2;
+    var steps=160;
+    ctx.beginPath();
+    var started=false;
+    for(var i=0;i<=steps;i++){
+      var t=i/steps*Math.PI*2;
+      var p=project(f,t,cx,cy,R);
+      // split front/back by depth sign
+      var isFront=p.z>=0;
+      if(isFront!==front){started=false;continue;}
+      if(!started){ctx.moveTo(p.x,p.y);started=true;}
+      else ctx.lineTo(p.x,p.y);
+    }
+    ctx.strokeStyle=rgba(col,alpha);
+    ctx.shadowColor=rgba(col,alpha*0.9);
+    ctx.shadowBlur=front?14:5;
+    ctx.stroke();
+    ctx.shadowBlur=0;
+  }
 
-scaleBtn.addEventListener('click',function(){
- logScale=!logScale;
- scaleBtn.setAttribute('aria-pressed',logScale?'false':'true');
- scaleBtn.textContent=logScale?'Use linear scale':'Use log scale';
- footScale.textContent='Radial scale: '+(logScale?'logarithmic':'linear');
- if(reduceMotion)draw(performance.now());
-});
+  var time=0,last=performance.now();
 
-function updateReadout(){
- var acc=accent();
- var o=null;
- if(focusId)o=ORBITS.filter(function(x){return x.id===focusId;})[0];
- if(!o||!state[o.id]){
-   roName.textContent='Select an orbit';
-   roName.style.color=acc;
-   roAlt.textContent='—';roPer.textContent='—';roVel.textContent='—';
-   roNote.textContent='Toggle orbits below to compare.';
-   roBox.style.borderColor='rgba(166,171,230,0.18)';
-   return;
- }
- roName.textContent=o.name;
- roName.style.color=o.color;
- roBox.style.borderColor='color-mix(in srgb,'+o.color+' 45%,rgba(166,171,230,0.18))';
- if(o.id==='mol'){
-   roAlt.textContent=o.peri.toLocaleString()+'–'+o.apo.toLocaleString()+' km';
-   roVel.textContent=Math.round(Math.sqrt(mu*(2/o.rp-1/o.a)))+'–'+(Math.round(Math.sqrt(mu*(2/o.ra-1/o.a))*10)/10)+' km/s';
- }else{
-   roAlt.textContent=o.alt.toLocaleString()+' km';
-   roVel.textContent=(Math.round(o.vCirc*100)/100)+' km/s';
- }
- roPer.textContent=fmtPeriod(o.T)+(o.inc?'  ·  i '+o.inc:'');
- roNote.textContent=o.note;
-}
+  function draw(now){
+    if(!W||!H)resize();
+    var w=canvas.clientWidth,h=canvas.clientHeight;
+    if(w&&h&&(w!==W||h!==H)){W=w;H=h;canvas.width=Math.round(w*DPR);canvas.height=Math.round(h*DPR);}
+    var dt=Math.min(0.05,(now-last)/1000);last=now;time+=dt;
 
-var W=0,H=0,cx=0,cy=0,earthR=0,maxRpx=0;
-function resize(){
- var rect=canvas.getBoundingClientRect();
- var dpr=Math.min(window.devicePixelRatio||1,2);
- W=Math.max(1,Math.round(rect.width));
- H=Math.max(1,Math.round(rect.height));
- canvas.width=W*dpr;canvas.height=H*dpr;
- ctx.setTransform(dpr,0,0,dpr,0,0);
- cx=W*0.5;cy=H*0.52;
- maxRpx=Math.min(W,H)*0.46;
- earthR=Math.max(12,maxRpx*0.115);
-}
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    var cw=W,ch=H;
 
-var maxR=Re+40000;
-function rToPx(rKm){
- if(logScale){
-   var lo=Math.log(Re), hi=Math.log(maxR);
-   var t=(Math.log(rKm)-lo)/(hi-lo);
-   return earthR+t*(maxRpx-earthR);
- }else{
-   var t2=(rKm-Re)/(maxR-Re);
-   return earthR+t2*(maxRpx-earthR);
- }
-}
+    // --- background gradient (deep space, never flat black) ---
+    var bg=ctx.createRadialGradient(cw*0.5,ch*0.52,0,cw*0.5,ch*0.52,Math.max(cw,ch)*0.85);
+    bg.addColorStop(0,'#0b0926');
+    bg.addColorStop(0.45,'#070620');
+    bg.addColorStop(1,'#040210');
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,cw,ch);
 
-var stars=[];
-(function(){
- var n=120;
- for(var i=0;i<n;i++){
-   stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.1+0.2,p:Math.random()*Math.PI*2,sp:0.4+Math.random()*1.2});
- }
-})();
+    // subtle nebula wash tinted by accent
+    var ac=hexToRgb(accent());
+    var neb=ctx.createRadialGradient(cw*0.74,ch*0.22,0,cw*0.74,ch*0.22,Math.max(cw,ch)*0.6);
+    neb.addColorStop(0,rgba(ac,0.10));
+    neb.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=neb;
+    ctx.fillRect(0,0,cw,ch);
 
-function drawStars(t){
- for(var i=0;i<stars.length;i++){
-   var s=stars[i];
-   var tw=reduceMotion?0.6:(0.45+0.4*Math.sin(t*0.001*s.sp+s.p));
-   ctx.globalAlpha=tw*0.7;
-   ctx.fillStyle='#cfd2ff';
-   ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);ctx.fill();
- }
- ctx.globalAlpha=1;
-}
+    // --- starfield ---
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      s.tw+=dt*s.sp;
+      s.x+=s.dx;
+      if(s.x<0)s.x+=cw;if(s.x>cw)s.x-=cw;
+      var tw=0.45+0.55*(0.5+0.5*Math.sin(s.tw));
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(210,222,255,'+(tw*0.8)+')';
+      ctx.fill();
+    }
 
-function drawEarth(acc){
- ctx.save();
- var grd=ctx.createRadialGradient(cx-earthR*0.35,cy-earthR*0.35,earthR*0.15,cx,cy,earthR);
- grd.addColorStop(0,'#2b2f86');
- grd.addColorStop(0.55,'#181a5e');
- grd.addColorStop(1,'#0c0a30');
- ctx.fillStyle=grd;
- ctx.beginPath();ctx.arc(cx,cy,earthR,0,Math.PI*2);ctx.fill();
- ctx.strokeStyle='color-mix' in window?acc:acc;
- ctx.strokeStyle=acc;ctx.globalAlpha=0.5;ctx.lineWidth=1.2;
- ctx.beginPath();ctx.arc(cx,cy,earthR,0,Math.PI*2);ctx.stroke();
- ctx.globalAlpha=1;
- ctx.save();
- ctx.beginPath();ctx.arc(cx,cy,earthR,0,Math.PI*2);ctx.clip();
- ctx.fillStyle='rgba(166,171,230,0.22)';
- var seed=12345;function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
- for(var i=0;i<58;i++){
-   var ang=rnd()*Math.PI*2,rr=Math.sqrt(rnd())*earthR*0.92;
-   var px=cx+Math.cos(ang)*rr,py=cy+Math.sin(ang)*rr*0.86;
-   var sz=0.8+rnd()*2.0;
-   ctx.beginPath();ctx.arc(px,py,sz,0,Math.PI*2);ctx.fill();
- }
- var shg=ctx.createLinearGradient(cx-earthR,cy,cx+earthR,cy);
- shg.addColorStop(0,'rgba(0,0,0,0)');
- shg.addColorStop(0.62,'rgba(0,0,0,0.05)');
- shg.addColorStop(1,'rgba(2,1,12,0.62)');
- ctx.fillStyle=shg;ctx.fillRect(cx-earthR,cy-earthR,earthR*2,earthR*2);
- ctx.restore();
- ctx.restore();
-}
+    // --- layout: Earth centered, system sized to fill frame ---
+    var cx=cw*0.5;
+    var cy=ch*0.52;
+    // choose Earth radius so the largest orbit (GEO/Molniya a~3.95) fits with margin
+    var maxA=3.95;
+    var fit=Math.min(cw,ch);
+    var R=(fit*0.46)/maxA; // earth-radius unit in px
+    var earthR=R; // Earth drawn at 1 unit
+    // clamp so Earth never tiny
+    if(earthR<fit*0.085){earthR=fit*0.085;R=earthR;}
 
-function hexA(hex,a){
- var h=hex.replace('#','');
- if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
- var r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);
- return 'rgba('+r+','+g+','+b+','+a+')';
-}
+    // recompute colors
+    for(var fi=0;fi<FAM.length;fi++){FAM[fi]._col=famColor(FAM[fi]);}
 
-function drawCircleOrbit(o,active,acc){
- var rpx=rToPx(o.a);
- ctx.beginPath();ctx.arc(cx,cy,rpx,0,Math.PI*2);
- ctx.setLineDash(active?[]:[3,5]);
- ctx.lineWidth=active?1.8:1;
- ctx.strokeStyle=active?o.color:hexA(o.color,0.4);
- ctx.globalAlpha=active?0.95:0.6;
- ctx.stroke();
- ctx.setLineDash([]);ctx.globalAlpha=1;
-}
+    // --- draw BACK halves of all orbit paths (behind Earth) ---
+    function alphaFor(f){
+      if(!selected)return 0.5;
+      return f.id===selected?0.92:0.12;
+    }
+    for(var b=0;b<FAM.length;b++){
+      var fb=FAM[b];
+      drawOrbitPath(fb,cx,cy,R,fb._col,alphaFor(fb)*0.55,false);
+    }
 
-function molniyaGeom(o){
- var apx=rToPx(o.ra);
- var ppx=rToPx(o.rp);
- var semiMajPx=(apx+ppx)/2;
- var cPx=(apx-ppx)/2;
- var bPx=Math.sqrt(Math.max(0,apx*apx - (apx-semiMajPx)*(apx-semiMajPx)));
- bPx=Math.sqrt(Math.max(0,(apx-cPx)*(apx-cPx) - 0))/1;
- var ecc=cPx/semiMajPx;
- bPx=semiMajPx*Math.sqrt(Math.max(0,1-ecc*ecc));
- var rot=-Math.PI/2 - 0.42;
- return {a:semiMajPx,b:bPx,c:cPx,rot:rot};
-}
+    // --- Earth ---
+    drawEarth(cx,cy,earthR,ac);
 
-function drawMolniya(o,active){
- var g=molniyaGeom(o);
- ctx.save();
- ctx.translate(cx,cy);
- ctx.rotate(g.rot);
- ctx.translate(-g.c,0);
- ctx.beginPath();
- ctx.ellipse(0,0,g.a,g.b,0,0,Math.PI*2);
- ctx.setLineDash(active?[]:[3,5]);
- ctx.lineWidth=active?1.8:1;
- ctx.strokeStyle=active?o.color:hexA(o.color,0.4);
- ctx.globalAlpha=active?0.95:0.6;
- ctx.stroke();
- ctx.setLineDash([]);ctx.globalAlpha=1;
- ctx.restore();
-}
+    // --- draw FRONT halves of orbit paths (over Earth) + satellites ---
+    for(var fr=0;fr<FAM.length;fr++){
+      var ff=FAM[fr];
+      drawOrbitPath(ff,cx,cy,R,ff._col,alphaFor(ff),true);
+    }
 
-function eccAnomaly(M,e){
- var E=M;
- for(var i=0;i<6;i++){E=E-(E-e*Math.sin(E)-M)/(1-e*Math.cos(E));}
- return E;
-}
+    // satellites + labels last so they sit on top
+    for(var si=0;si<FAM.length;si++){
+      var fs=FAM[si];
+      fs.sat=(fs.sat+dt*fs.speed*0.9)%(Math.PI*2);
+      var p=project(fs,fs.sat,cx,cy,R);
+      var depthFront=p.z>=0;
+      var aBase=alphaFor(fs);
+      var aSat=depthFront?aBase:aBase*0.42;
+      drawSatellite(p,fs,aSat,depthFront,R);
+    }
 
-function satPosCircle(o,phase){
- var rpx=rToPx(o.a);
- var ang=phase*Math.PI*2 - Math.PI/2;
- return {x:cx+Math.cos(ang)*rpx,y:cy+Math.sin(ang)*rpx};
-}
+    requestAnimationFrame(draw);
+  }
 
-function satPosMolniya(o,phase){
- var g=molniyaGeom(o);
- var M=phase*Math.PI*2;
- var E=eccAnomaly(M,o.ecc);
- var xe=g.a*(Math.cos(E)-(g.c/g.a));
- var ye=g.b*Math.sin(E);
- var cr=Math.cos(g.rot),sr=Math.sin(g.rot);
- return {x:cx+xe*cr-ye*sr, y:cy+xe*sr+ye*cr};
-}
+  function drawEarth(cx,cy,r,ac){
+    // outer atmosphere glow
+    var atmo=ctx.createRadialGradient(cx,cy,r*0.88,cx,cy,r*1.45);
+    atmo.addColorStop(0,'rgba(120,180,255,0.0)');
+    atmo.addColorStop(0.35,'rgba(110,170,255,0.20)');
+    atmo.addColorStop(0.7,'rgba('+ac.r+','+ac.g+','+ac.b+',0.12)');
+    atmo.addColorStop(1,'rgba(40,80,180,0)');
+    ctx.fillStyle=atmo;
+    ctx.beginPath();ctx.arc(cx,cy,r*1.45,0,Math.PI*2);ctx.fill();
 
-function drawSat(p,color,acc){
- ctx.save();
- ctx.shadowColor=color;ctx.shadowBlur=10;
- ctx.fillStyle='#f4f5ff';
- ctx.beginPath();ctx.arc(p.x,p.y,3.4,0,Math.PI*2);ctx.fill();
- ctx.shadowBlur=0;
- ctx.fillStyle=color;
- ctx.beginPath();ctx.arc(p.x,p.y,2.0,0,Math.PI*2);ctx.fill();
- ctx.restore();
-}
+    ctx.save();
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
+    if(earthReady){
+      // slow longitudinal drift by panning the source crop
+      var iw=earthImg.naturalWidth||960,ih=earthImg.naturalHeight||961;
+      var pan=(time*6)%iw;
+      var d=r*2;
+      // draw twice for seamless wrap
+      ctx.drawImage(earthImg, pan,0, iw,ih, cx-r-(pan/iw)*d + (pan/iw)*0, cy-r, d, d);
+      // simpler robust approach: draw centered, rotate slight via global var
+    } else {
+      // procedural ocean/land fallback
+      var g=ctx.createRadialGradient(cx-r*0.3,cy-r*0.35,r*0.1,cx,cy,r);
+      g.addColorStop(0,'#2f6fb0');
+      g.addColorStop(0.6,'#163e72');
+      g.addColorStop(1,'#0a2147');
+      ctx.fillStyle=g;ctx.fillRect(cx-r,cy-r,r*2,r*2);
+      // faint procedural land blobs
+      ctx.fillStyle='rgba(60,120,80,0.5)';
+      for(var k=0;k<6;k++){
+        var ang=k*1.4+time*0.05;
+        var bx=cx+Math.cos(ang)*r*0.4, by=cy+Math.sin(ang*0.7)*r*0.4;
+        ctx.beginPath();ctx.ellipse(bx,by,r*0.28,r*0.18,ang,0,Math.PI*2);ctx.fill();
+      }
+    }
+    ctx.restore();
 
-function drawLabel(o,p,active){
- if(!active)return;
- ctx.save();
- ctx.font="700 11px 'Chakra Petch','Inter',sans-serif";
- var txt=o.name;
- var tw=ctx.measureText(txt).width;
- var dx=p.x>cx?10:-10-tw-12;
- var lx=p.x+dx;var ly=p.y-7;
- ctx.globalAlpha=0.9;
- ctx.fillStyle=hexA(o.color,0.16);
- ctx.strokeStyle=hexA(o.color,0.6);
- ctx.lineWidth=1;
- var pad=5,h=16;
- roundRect(lx-pad,ly-12,tw+pad*2,h,5);
- ctx.fill();ctx.stroke();
- ctx.globalAlpha=1;
- ctx.fillStyle=o.color;
- ctx.fillText(txt,lx,ly);
- ctx.restore();
-}
-function roundRect(x,y,w,h,r){
- ctx.beginPath();
- ctx.moveTo(x+r,y);
- ctx.arcTo(x+w,y,x+w,y+h,r);
- ctx.arcTo(x+w,y+h,x,y+h,r);
- ctx.arcTo(x,y+h,x,y,r);
- ctx.arcTo(x,y,x+w,y,r);
- ctx.closePath();
-}
+    // terminator / day-night shading for depth (light from upper-left)
+    var sh=ctx.createRadialGradient(cx-r*0.42,cy-r*0.45,r*0.2,cx,cy,r*1.05);
+    sh.addColorStop(0,'rgba(255,255,255,0.14)');
+    sh.addColorStop(0.45,'rgba(0,0,0,0)');
+    sh.addColorStop(0.85,'rgba(2,2,12,0.5)');
+    sh.addColorStop(1,'rgba(1,1,8,0.82)');
+    ctx.save();
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
+    ctx.fillStyle=sh;ctx.fillRect(cx-r,cy-r,r*2,r*2);
+    ctx.restore();
 
-var lastAccent='';
-var simTime=0;
-var lastT=null;
+    // crisp atmosphere rim
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.lineWidth=1.4;
+    ctx.strokeStyle='rgba(150,200,255,0.55)';
+    ctx.shadowColor='rgba(120,180,255,0.7)';
+    ctx.shadowBlur=18;
+    ctx.stroke();
+    ctx.shadowBlur=0;
+  }
 
-function frame(now){
- if(lastT==null)lastT=now;
- var dt=(now-lastT)/1000;lastT=now;
- if(!reduceMotion){simTime+=dt*speedFactor();}
- draw(now);
- raf=requestAnimationFrame(frame);
-}
+  function drawSatellite(p,f,alpha,front,R){
+    if(alpha<=0.01)return;
+    var col=f._col;
+    var sz=Math.max(3,R*0.07)*(front?1:0.8);
+    // glow halo
+    var halo=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,sz*3.2);
+    halo.addColorStop(0,rgba(col,alpha*0.9));
+    halo.addColorStop(0.4,rgba(col,alpha*0.4));
+    halo.addColorStop(1,rgba(col,0));
+    ctx.fillStyle=halo;
+    ctx.beginPath();ctx.arc(p.x,p.y,sz*3.2,0,Math.PI*2);ctx.fill();
+    // core
+    ctx.beginPath();ctx.arc(p.x,p.y,sz*0.55,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,'+Math.min(1,alpha+0.15)+')';
+    ctx.shadowColor=rgba(col,alpha);
+    ctx.shadowBlur=10;
+    ctx.fill();
+    ctx.shadowBlur=0;
+    // label only for selected (or all if none selected and front)
+    var showLabel=(selected&&f.id===selected)||(!selected&&front);
+    if(showLabel){
+      var lab=f.short;
+      ctx.font='600 11px Inter,sans-serif';
+      var tw=ctx.measureText(lab).width;
+      var lx=p.x+sz*1.8, ly=p.y-sz*1.4;
+      ctx.fillStyle=rgba(col,Math.min(1,alpha+0.1));
+      ctx.shadowColor='rgba(0,0,0,0.6)';ctx.shadowBlur=4;
+      ctx.fillText(lab,lx,ly);
+      ctx.shadowBlur=0;
+      // tiny connector tick
+      ctx.strokeStyle=rgba(col,alpha*0.6);
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(p.x+sz*0.7,p.y);ctx.lineTo(lx-3,ly+3);ctx.stroke();
+    }
+  }
 
-function draw(now){
- var acc=accent();
- if(acc!==lastAccent){
-   lastAccent=acc;
-   root.style.setProperty('--ot-accent',acc);
-   var rgb=accentRgb(acc);
-   root.style.setProperty('--ot-accent-rgb',rgb.join(','));
-   if(!focusId||!state[focusId])roName.style.color=acc;
- }
- ctx.clearRect(0,0,W,H);
- drawStars(now);
- ORBITS.forEach(function(o){
-   if(!state[o.id])return;
-   if(o.id==='mol')drawMolniya(o,focusId===o.id);
-   else drawCircleOrbit(o,focusId===o.id,acc);
- });
- drawEarth(acc);
- ORBITS.forEach(function(o){
-   if(!state[o.id])return;
-   var active=focusId===o.id;
-   var phase=(simTime/o.T)%1;
-   if(phase<0)phase+=1;
-   var p=(o.id==='mol')?satPosMolniya(o,phase):satPosCircle(o,phase);
-   drawSat(p,active?o.color:hexA(o.color,0.75),acc);
-   drawLabel(o,p,active);
- });
-}
+  // ---- HUD + legend wiring ----
+  function setHud(f){
+    hudTitle.textContent=f.name;
+    elAlt.textContent=f.alt;
+    elPer.textContent=f.per;
+    elInc.textContent=f.inc;
+    elUse.textContent=f.use;
+    var c=f._col||famColor(f);
+    var cs='rgb('+c.r+','+c.g+','+c.b+')';
+    hudTitle.style.setProperty('--hudc',cs);
+  }
+  function select(id){
+    selected=id;
+    var f=null;
+    for(var i=0;i<FAM.length;i++)if(FAM[i].id===id)f=FAM[i];
+    if(f)setHud(f);
+    var btns=legend.querySelectorAll('.orbit-types-leg');
+    btns.forEach(function(b){b.classList.toggle('is-active',b.getAttribute('data-fam')===id);});
+    hint.classList.add('is-hidden');
+  }
 
-var raf=null;
-function start(){
- resize();
- updateReadout();
- if(reduceMotion){
-   simTime=ORBITS[0].T*0.18;
-   draw(performance.now());
- }else{
-   raf=requestAnimationFrame(frame);
- }
-}
+  // color the legend dots
+  (function colorLegend(){
+    var btns=legend.querySelectorAll('.orbit-types-leg');
+    btns.forEach(function(b){
+      var id=b.getAttribute('data-fam');
+      var f=null;for(var i=0;i<FAM.length;i++)if(FAM[i].id===id)f=FAM[i];
+      if(f){var c=famColor(f);b.style.setProperty('--famc','rgb('+c.r+','+c.g+','+c.b+')');}
+    });
+  })();
 
-var rt=null;
-window.addEventListener('resize',function(){
- clearTimeout(rt);
- rt=setTimeout(function(){resize();if(reduceMotion)draw(performance.now());},120);
-});
+  legend.addEventListener('click',function(e){
+    var btn=e.target.closest('.orbit-types-leg');
+    if(!btn)return;
+    var id=btn.getAttribute('data-fam');
+    if(selected===id){selected=null;legend.querySelectorAll('.orbit-types-leg').forEach(function(b){b.classList.remove('is-active');});hint.classList.remove('is-hidden');}
+    else select(id);
+  });
 
-setInterval(function(){
- var acc=accent();
- if(acc!==lastAccent&&reduceMotion){draw(performance.now());}
-},500);
+  // click a satellite on canvas to select its family
+  canvas.addEventListener('click',function(e){
+    var rect=canvas.getBoundingClientRect();
+    var mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    var cx=W*0.5, cy=H*0.52;
+    var maxA=3.95, fit=Math.min(W,H);
+    var R=(fit*0.46)/maxA; if(R<fit*0.085)R=fit*0.085;
+    var best=null,bd=1e9;
+    for(var i=0;i<FAM.length;i++){
+      var p=project(FAM[i],FAM[i].sat,cx,cy,R);
+      var d=Math.hypot(p.x-mx,p.y-my);
+      if(d<bd){bd=d;best=FAM[i];}
+    }
+    if(best&&bd<Math.max(26,R*0.5)){
+      if(selected===best.id){selected=null;legend.querySelectorAll('.orbit-types-leg').forEach(function(b){b.classList.remove('is-active');});hint.classList.remove('is-hidden');}
+      else select(best.id);
+    }
+  });
 
-start();
+  // init HUD with LEO defaults (no selection => all shown, but HUD shows LEO as a primer)
+  for(var z=0;z<FAM.length;z++)FAM[z]._col=famColor(FAM[z]);
+  setHud(FAM[0]);
+
+  resize();
+  requestAnimationFrame(draw);
 })();
 </script>
 </body></html>

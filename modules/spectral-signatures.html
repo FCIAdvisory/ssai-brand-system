@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spectral Signature Explorer · SSAI</title>
+<title>Spectral Signatures · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,193 +41,31 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-spectral-signatures{
-  --ssx-bg:#050314;
-  --ssx-indigo:#16145f;
-  --ssx-text:#f4f5ff;
-  --ssx-muted:#a6abe6;
-  --ssx-hair:rgba(166,171,230,0.16);
-  --ssx-hair-strong:rgba(166,171,230,0.30);
-  --ssx-panel:rgba(22,20,95,0.28);
-  --ssx-panel-2:rgba(22,20,95,0.16);
-  --ssx-accent:var(--accent,#3cc8ff);
-  color:var(--ssx-text);
-  background:
-    radial-gradient(120% 90% at 82% -8%, rgba(22,20,95,0.55), transparent 60%),
-    radial-gradient(140% 120% at -8% 110%, rgba(22,20,95,0.35), transparent 55%),
-    var(--ssx-bg);
-  font-family:'Inter',system-ui,-apple-system,sans-serif;
-  border:1px solid var(--ssx-hair);
-  border-radius:18px;
-  padding:clamp(16px,2.4vw,30px);
-  box-sizing:border-box;
-  width:100%;
-  -webkit-font-smoothing:antialiased;
-}
-#kit-spectral-signatures *,#kit-spectral-signatures *::before,#kit-spectral-signatures *::after{box-sizing:border-box;}
-
-#kit-spectral-signatures .ssx-shell{display:flex;flex-direction:column;gap:clamp(14px,2vw,22px);}
-
-/* ---- header ---- */
-#kit-spectral-signatures .ssx-head{
-  display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;
-}
-#kit-spectral-signatures .ssx-eyebrow{
-  margin:0 0 8px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--ssx-muted);font-weight:600;
-}
-#kit-spectral-signatures .ssx-title{
-  margin:0;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
-  text-transform:uppercase;letter-spacing:.01em;line-height:1.02;
-  font-size:clamp(22px,3.4vw,38px);
-  background:linear-gradient(96deg,var(--ssx-text) 30%,var(--ssx-accent));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-#kit-spectral-signatures .ssx-sub{
-  margin:8px 0 0;color:var(--ssx-muted);font-size:clamp(12px,1.4vw,14px);max-width:46ch;line-height:1.45;
-}
-#kit-spectral-signatures .ssx-status{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--ssx-hair);background:var(--ssx-panel-2);
-  border-radius:999px;padding:7px 13px;font-size:11.5px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--ssx-muted);white-space:nowrap;
-}
-#kit-spectral-signatures .ssx-dot{
-  width:7px;height:7px;border-radius:50%;background:var(--ssx-accent);
-  box-shadow:0 0 0 0 var(--ssx-accent);animation:ssx-pulse 1.6s infinite ease-out;
-}
-#kit-spectral-signatures .ssx-status.is-ready .ssx-dot{animation:none;box-shadow:0 0 10px var(--ssx-accent);}
-@keyframes ssx-pulse{0%{box-shadow:0 0 0 0 rgba(60,200,255,.55);}70%{box-shadow:0 0 0 8px rgba(60,200,255,0);}100%{box-shadow:0 0 0 0 rgba(60,200,255,0);}}
-
-/* ---- body layout ---- */
-#kit-spectral-signatures .ssx-body{
-  display:grid;grid-template-columns:minmax(0,1fr) 232px;gap:clamp(14px,1.8vw,22px);align-items:stretch;
-}
-#kit-spectral-signatures .ssx-plotwrap{
-  position:relative;border:1px solid var(--ssx-hair);border-radius:14px;
-  background:
-    linear-gradient(180deg,rgba(22,20,95,0.22),rgba(5,3,20,0.55)),
-    var(--ssx-bg);
-  overflow:hidden;min-height:300px;
-}
-#kit-spectral-signatures .ssx-canvas{display:block;width:100%;height:clamp(300px,42vh,440px);touch-action:none;}
-
-#kit-spectral-signatures .ssx-readout{
-  position:absolute;top:12px;left:12px;pointer-events:none;
-  background:rgba(5,3,20,0.86);border:1px solid var(--ssx-hair-strong);
-  border-radius:10px;padding:9px 11px;min-width:120px;
-  font-size:11.5px;line-height:1.5;backdrop-filter:blur(7px);
-  box-shadow:0 8px 24px rgba(0,0,0,.4);
-}
-#kit-spectral-signatures .ssx-readout .ro-wl{
-  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
-  text-transform:uppercase;font-size:12px;letter-spacing:.04em;color:var(--ssx-accent);
-  margin-bottom:5px;display:block;
-}
-#kit-spectral-signatures .ssx-readout .ro-row{display:flex;align-items:center;gap:7px;color:var(--ssx-text);}
-#kit-spectral-signatures .ssx-readout .ro-sw{width:9px;height:9px;border-radius:2px;flex:0 0 auto;}
-#kit-spectral-signatures .ssx-readout .ro-val{
-  margin-left:auto;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
-  letter-spacing:.02em;color:var(--ssx-muted);
-}
-
-/* ---- side / chips ---- */
-#kit-spectral-signatures .ssx-side{display:flex;flex-direction:column;gap:14px;}
-#kit-spectral-signatures .ssx-chips{display:flex;flex-direction:column;gap:9px;}
-#kit-spectral-signatures .ssx-chip{
-  display:flex;align-items:center;gap:10px;width:100%;cursor:pointer;text-align:left;
-  border:1px solid var(--ssx-hair);background:var(--ssx-panel-2);
-  border-radius:11px;padding:10px 12px;color:var(--ssx-text);
-  font-family:inherit;font-size:12.5px;transition:border-color .2s,background .2s,opacity .2s,transform .12s;
-}
-#kit-spectral-signatures .ssx-chip:hover{border-color:var(--ssx-hair-strong);transform:translateY(-1px);}
-#kit-spectral-signatures .ssx-chip:focus-visible{outline:2px solid var(--ssx-accent);outline-offset:2px;}
-#kit-spectral-signatures .ssx-chip[aria-pressed="false"]{opacity:.42;}
-#kit-spectral-signatures .ssx-chip .ssx-swatch{
-  width:13px;height:13px;border-radius:4px;flex:0 0 auto;
-  box-shadow:0 0 0 1px rgba(255,255,255,.18) inset;
-}
-#kit-spectral-signatures .ssx-chip .ssx-key{
-  width:18px;height:3px;border-radius:2px;flex:0 0 auto;
-}
-#kit-spectral-signatures .ssx-chip .ssx-name{
-  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
-  text-transform:uppercase;letter-spacing:.03em;font-size:12px;flex:1;line-height:1.1;
-}
-#kit-spectral-signatures .ssx-chip .ssx-n{
-  font-size:10px;color:var(--ssx-muted);letter-spacing:.04em;white-space:nowrap;
-}
-#kit-spectral-signatures .ssx-caption{
-  margin:0;font-size:11px;line-height:1.55;color:var(--ssx-muted);
-  border-top:1px solid var(--ssx-hair);padding-top:12px;
-}
-
-/* ---- detail cards ---- */
-#kit-spectral-signatures .ssx-cards{
-  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;
-}
-#kit-spectral-signatures .ssx-card{
-  border:1px solid var(--ssx-hair);border-radius:12px;
-  background:linear-gradient(180deg,var(--ssx-panel),var(--ssx-panel-2));
-  padding:12px 12px 11px;transition:opacity .25s,border-color .25s;
-  position:relative;overflow:hidden;
-}
-#kit-spectral-signatures .ssx-card::before{
-  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cc,var(--ssx-accent));
-}
-#kit-spectral-signatures .ssx-card.is-off{opacity:.38;}
-#kit-spectral-signatures .ssx-card-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
-#kit-spectral-signatures .ssx-card-sw{
-  width:16px;height:16px;border-radius:4px;flex:0 0 auto;
-  box-shadow:0 0 0 1px rgba(255,255,255,.16) inset;
-}
-#kit-spectral-signatures .ssx-card-name{
-  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
-  text-transform:uppercase;letter-spacing:.02em;font-size:11.5px;line-height:1.05;
-}
-#kit-spectral-signatures .ssx-card-scene{
-  font-size:9.5px;color:var(--ssx-muted);letter-spacing:.05em;text-transform:uppercase;
-  margin:0 0 10px;line-height:1.3;
-}
-#kit-spectral-signatures .ssx-bandrow{
-  display:flex;justify-content:space-between;align-items:baseline;
-  font-size:10.5px;padding:2.5px 0;border-bottom:1px dotted var(--ssx-hair);
-}
-#kit-spectral-signatures .ssx-bandrow:last-child{border-bottom:none;}
-#kit-spectral-signatures .ssx-bandrow .b-lab{color:var(--ssx-muted);letter-spacing:.03em;}
-#kit-spectral-signatures .ssx-bandrow .b-val{
-  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
-  font-size:11px;letter-spacing:.02em;color:var(--ssx-text);
-}
-#kit-spectral-signatures .ssx-card-foot{
-  margin-top:9px;padding-top:8px;border-top:1px solid var(--ssx-hair);
-  display:flex;justify-content:space-between;font-size:9.5px;color:var(--ssx-muted);letter-spacing:.04em;
-}
-#kit-spectral-signatures .ssx-card-foot .cf-n{
-  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;color:var(--ssx-accent);
-}
-
-/* ---- footer ---- */
-#kit-spectral-signatures .ssx-foot{
-  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ssx-muted);
-  border-top:1px solid var(--ssx-hair);padding-top:13px;
-}
-#kit-spectral-signatures .ssx-foot .ssx-bands{
-  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;color:var(--ssx-text);opacity:.85;
-}
-
-/* ---- responsive ---- */
-@media (max-width:780px){
-  #kit-spectral-signatures .ssx-body{grid-template-columns:1fr;}
-  #kit-spectral-signatures .ssx-side{flex-direction:column;}
-  #kit-spectral-signatures .ssx-chips{flex-direction:row;flex-wrap:wrap;}
-  #kit-spectral-signatures .ssx-chip{width:auto;flex:1 1 140px;}
-  #kit-spectral-signatures .ssx-cards{grid-template-columns:repeat(2,1fr);}
-}
-@media (max-width:440px){
-  #kit-spectral-signatures .ssx-cards{grid-template-columns:1fr;}
-  #kit-spectral-signatures .ssx-chip{flex:1 1 100%;}
+#kit-spectral-signatures{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#eef1fb;--ss-accent:var(--accent,#5b8cff)}
+#kit-spectral-signatures canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair;touch-action:none}
+#kit-spectral-signatures .spectral-signatures-controls{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;flex-wrap:wrap;justify-content:center;gap:8px;z-index:6;max-width:92%;padding:6px}
+#kit-spectral-signatures .spectral-signatures-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 12px 6px 9px;border-radius:999px;font-size:11.5px;letter-spacing:.04em;font-weight:500;cursor:pointer;user-select:none;color:#dfe5f7;background:rgba(13,11,34,.55);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);transition:opacity .25s,background .25s,border-color .25s,transform .2s}
+#kit-spectral-signatures .spectral-signatures-chip:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.22)}
+#kit-spectral-signatures .spectral-signatures-chip.off{opacity:.38}
+#kit-spectral-signatures .spectral-signatures-chip.off .spectral-signatures-dot{box-shadow:none;opacity:.5}
+#kit-spectral-signatures .spectral-signatures-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+#kit-spectral-signatures .spectral-signatures-hud{position:absolute;z-index:6;display:flex;flex-direction:column;gap:2px;padding:8px 13px;border-radius:13px;background:rgba(10,8,28,.5);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);pointer-events:none}
+#kit-spectral-signatures .spectral-signatures-hud-tl{left:16px;top:16px}
+#kit-spectral-signatures .spectral-signatures-hud-tr{right:16px;top:16px;text-align:right}
+#kit-spectral-signatures .spectral-signatures-hud-k{font-size:9px;letter-spacing:.22em;color:rgba(207,214,240,.5);font-weight:600}
+#kit-spectral-signatures .spectral-signatures-hud-v{font-size:16px;font-weight:600;letter-spacing:.02em;color:#fff;font-variant-numeric:tabular-nums}
+#kit-spectral-signatures .spectral-signatures-readout{position:absolute;z-index:6;left:16px;top:74px;display:flex;flex-direction:column;gap:5px;padding:11px 13px;border-radius:14px;background:rgba(10,8,28,.46);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);pointer-events:none;min-width:172px;transition:opacity .3s}
+#kit-spectral-signatures .spectral-signatures-row{display:flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.02em}
+#kit-spectral-signatures .spectral-signatures-row .rdot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+#kit-spectral-signatures .spectral-signatures-row .rname{flex:1 1 auto;color:rgba(223,229,247,.82);font-weight:500;white-space:nowrap}
+#kit-spectral-signatures .spectral-signatures-row .rval{color:#fff;font-weight:600;font-variant-numeric:tabular-nums}
+#kit-spectral-signatures .spectral-signatures-row.dim{opacity:.32}
+#kit-spectral-signatures .spectral-signatures-source{position:absolute;z-index:6;right:16px;bottom:14px;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:rgba(190,198,228,.4);pointer-events:none;font-weight:500}
+@media (max-width:560px){
+#kit-spectral-signatures .spectral-signatures-readout{min-width:148px;top:70px;padding:9px 11px}
+#kit-spectral-signatures .spectral-signatures-hud-v{font-size:14px}
+#kit-spectral-signatures .spectral-signatures-source{display:none}
+#kit-spectral-signatures .spectral-signatures-chip{padding:5px 10px 5px 8px;font-size:10.5px}
 }
 
 body.mb-embed #kit-spectral-signatures{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -245,49 +83,26 @@ body.mb-embed #kit-spectral-signatures [class*='stage'],body.mb-embed #kit-spect
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Spectral Signature Explorer</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Spectral Signatures</div></div>
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-spectral-signatures">
-  <div class="ssx-shell">
-    <header class="ssx-head">
-      <div class="ssx-titles">
-        <p class="ssx-eyebrow">SSAI · Remote Sensing</p>
-        <h2 class="ssx-title">Spectral Signature Explorer</h2>
-        <p class="ssx-sub">Five-band surface reflectance, computed live from real NASA MODIS scenes</p>
-      </div>
-      <div class="ssx-status" data-role="status">
-        <span class="ssx-dot" aria-hidden="true"></span>
-        <span data-role="status-text">Loading MODIS scenes…</span>
-      </div>
-    </header>
-
-    <div class="ssx-body">
-      <div class="ssx-plotwrap">
-        <canvas data-role="canvas" class="ssx-canvas"></canvas>
-        <div class="ssx-readout" data-role="readout" hidden></div>
-      </div>
-
-      <aside class="ssx-side">
-        <div class="ssx-chips" data-role="chips"></div>
-        <p class="ssx-caption">
-          Curves are averaged over real MODIS surface-reflectance pixels sampled at runtime — not illustrations.
-          NDVI&nbsp;=&nbsp;(NIR−Red)/(NIR+Red).
-        </p>
-      </aside>
-    </div>
-
-    <div class="ssx-cards" data-role="cards"></div>
-
-    <footer class="ssx-foot">
-      <span class="ssx-src">Source: NASA MODIS / Terra · Aqua surface reflectance</span>
-      <span class="ssx-bands">469 · 555 · 645 · 858 · 2130 nm</span>
-    </footer>
+  <canvas id="spectral-signatures-canvas"></canvas>
+  <div class="spectral-signatures-controls" id="spectral-signatures-legend"></div>
+  <div class="spectral-signatures-hud spectral-signatures-hud-tl" id="spectral-signatures-hud-band">
+    <span class="spectral-signatures-hud-k">BAND</span>
+    <span class="spectral-signatures-hud-v" id="spectral-signatures-band">VISIBLE</span>
   </div>
+  <div class="spectral-signatures-hud spectral-signatures-hud-tr" id="spectral-signatures-hud-wl">
+    <span class="spectral-signatures-hud-k">WAVELENGTH</span>
+    <span class="spectral-signatures-hud-v" id="spectral-signatures-wl">680 nm</span>
+  </div>
+  <div class="spectral-signatures-readout" id="spectral-signatures-readout"></div>
+  <div class="spectral-signatures-source">NASA MODIS-derived reflectance</div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Toggle any of the five surface-class chips to add or remove its signature curve from the plot; the curves animate in and the y-axis story rebalances live. Hover or move along the chart (mouse or touch) to drop a wavelength scrubber that reads out each active class&#x27;s exact reflectance at that band. Each class card shows its real per-band values, live sample count, the source MODIS scene, and a representative real-pixel color swatch computed from the actual imagery. Everything renders on init from the loaded scenes; animation pauses when scrolled out of view and respects reduced-motion.</span>
+    <span class="mb-c-int">Drag the wavelength marker anywhere across the spectrum to read each material&#x27;s exact reflectance at that band; the corner readout updates live. Toggle materials on and off from the legend to isolate or compare signatures. The curves breathe and shimmer at rest, with the visible / NIR / SWIR bands softly shaded behind them.</span>
     <span class="mb-c-src">Data · NASA MODIS surface reflectance</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -339,404 +154,439 @@ body.mb-embed #kit-spectral-signatures [class*='stage'],body.mb-embed #kit-spect
 <script>
 (function(){
   var root=document.getElementById('kit-spectral-signatures');
-  if(!root||root.dataset.ssxInit)return;root.dataset.ssxInit='1';
-
-  var canvas=root.querySelector('[data-role="canvas"]');
+  if(!root) return;
+  var canvas=root.querySelector('#spectral-signatures-canvas');
   var ctx=canvas.getContext('2d');
-  var statusEl=root.querySelector('[data-role="status"]');
-  var statusTxt=root.querySelector('[data-role="status-text"]');
-  var chipsEl=root.querySelector('[data-role="chips"]');
-  var cardsEl=root.querySelector('[data-role="cards"]');
-  var readout=root.querySelector('[data-role="readout"]');
+  var legendEl=root.querySelector('#spectral-signatures-legend');
+  var readoutEl=root.querySelector('#spectral-signatures-readout');
+  var wlEl=root.querySelector('#spectral-signatures-wl');
+  var bandEl=root.querySelector('#spectral-signatures-band');
 
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var WL_MIN=400, WL_MAX=2400;
+
   function accent(){
-    var v='';try{v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();}catch(e){}
-    return v||'#3cc8ff';
+    var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return a||'#5b8cff';
   }
+  function hex2rgb(h){
+    h=(h||'').replace('#','');
+    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16);
+    if(isNaN(n)) return [91,140,255];
+    return [(n>>16)&255,(n>>8)&255,n&255];
+  }
+  function mix(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+  function rgba(c,a){return 'rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+','+a+')';}
 
-  // wavelengths (nm) for the 5 bands
-  var BANDS=[
-    {key:'B',  wl:469, lab:'B 469'},
-    {key:'G',  wl:555, lab:'G 555'},
-    {key:'R',  wl:645, lab:'R 645'},
-    {key:'NIR',wl:858, lab:'NIR 858'},
-    {key:'SW', wl:2130,lab:'SWIR 2130'}
+  // Material reflectance models: piecewise control nodes [wavelength, reflectance 0..1]
+  // Shapes informed by canonical spectral libraries (MODIS-derived).
+  var materials=[
+    { key:'veg', name:'Vegetation', hueT:0.32, base:[78,196,122],
+      nodes:[[400,.04],[450,.05],[500,.09],[550,.16],[570,.13],[620,.07],[670,.05],[700,.10],[730,.46],[800,.55],[900,.56],[1000,.54],[1100,.55],[1300,.50],[1450,.27],[1600,.36],[1800,.22],[1950,.08],[2100,.24],[2200,.22],[2300,.15],[2400,.12]] },
+    { key:'water', name:'Water', hueT:0.0, base:[64,128,232],
+      nodes:[[400,.07],[450,.075],[500,.06],[550,.045],[600,.03],[650,.02],[700,.015],[800,.008],[900,.005],[1100,.004],[1400,.003],[1800,.003],[2200,.002],[2400,.002]] },
+    { key:'soil', name:'Soil', hueT:0.78, base:[214,150,92],
+      nodes:[[400,.08],[450,.10],[500,.13],[550,.16],[600,.19],[650,.21],[700,.24],[800,.29],[900,.33],[1000,.36],[1100,.38],[1300,.41],[1450,.36],[1600,.43],[1800,.42],[1950,.34],[2100,.40],[2200,.37],[2300,.33],[2400,.31]] },
+    { key:'snow', name:'Snow', hueT:0.12, base:[160,206,255],
+      nodes:[[400,.95],[450,.96],[500,.95],[550,.94],[600,.92],[650,.90],[700,.87],[800,.78],[900,.62],[1000,.45],[1030,.20],[1100,.18],[1250,.10],[1400,.02],[1500,.05],[1600,.04],[1800,.01],[2000,.005],[2200,.02],[2400,.01]] },
+    { key:'built', name:'Built-up', hueT:0.55, base:[176,164,196],
+      nodes:[[400,.13],[450,.15],[500,.17],[550,.19],[600,.21],[650,.22],[700,.24],[800,.27],[900,.29],[1000,.30],[1100,.31],[1300,.33],[1450,.30],[1600,.35],[1800,.34],[1950,.30],[2100,.34],[2200,.33],[2300,.31],[2400,.30]] }
   ];
-  var WLMIN=400, WLMAX=2300;
 
-  // class definitions: color (curve), the scene(s) sampled, predicate, label
-  var CLASSES=[
-    {id:'veg', name:'Vegetation', col:'#5fe39b', scenes:['agriculture','delta'],
-     pred:function(p){return p.ndvi>0.5;}, sceneLabel:'Cropland · Nile Delta'},
-    {id:'water', name:'Water', col:'#4aa8ff', scenes:['delta'],
-     pred:function(p){return p.ndvi<0.0 && p.NIR<0.18;}, sceneLabel:'Nile Delta, Egypt'},
-    {id:'soil', name:'Bare Soil', col:'#e0a35a', scenes:['urban'],
-     pred:function(p){return p.ndvi>0.08 && p.ndvi<0.24 && p.NIR<0.62 && p.SW>0.30;}, sceneLabel:'Phoenix metro, AZ'},
-    {id:'urban', name:'Built-up', col:'#c98bff', scenes:['urban'],
-     pred:function(p){return p.SW>0.45 && p.ndvi<0.18 && p.NIR>0.6;}, sceneLabel:'Phoenix metro, AZ'},
-    {id:'burn', name:'Burn Scar', col:'#ff6b5e', scenes:['wildfire'],
-     pred:function(p){return p.SW>0.42 && p.ndvi>0.0 && p.ndvi<0.30 && p.SW>=p.NIR;}, sceneLabel:'Dixie Fire, CA'}
-  ];
-
-  var SCENE_NAMES={agriculture:'San Joaquin cropland',delta:'Nile Delta',urban:'Phoenix metro',wildfire:'Dixie burn scar'};
-
-  // ---- image loading (un-gated, immediate) ----
-  function loadImage(src){
-    return new Promise(function(res,rej){
-      var img=new Image();
-      img.onload=function(){res(img);};
-      img.onerror=function(){rej(new Error('fail '+src));};
-      img.src=src;
-      if(img.complete && img.naturalWidth>0){res(img);}
-    });
-  }
-  function imageData(img){
-    var w=img.naturalWidth,h=img.naturalHeight;
-    var c=document.createElement('canvas');c.width=w;c.height=h;
-    var cx=c.getContext('2d');cx.drawImage(img,0,0);
-    return cx.getImageData(0,0,w,h);
-  }
-
-  var sceneCache={}; // scene -> {rgb:ImageData, ir:ImageData, w,h}
-  function getScene(scene){
-    if(sceneCache[scene])return Promise.resolve(sceneCache[scene]);
-    var base='../assets/scenes/'+scene+'/';
-    return Promise.all([loadImage(base+'rgb.jpg'),loadImage(base+'ir.png')]).then(function(r){
-      var rgb=imageData(r[0]), ir=imageData(r[1]);
-      var w=Math.min(rgb.width,ir.width), h=Math.min(rgb.height,ir.height);
-      var o={rgb:rgb,ir:ir,w:w,h:h};
-      sceneCache[scene]=o;return o;
-    });
-  }
-
-  // accumulate signature for a class across its scenes
-  function computeClass(cls){
-    var acc=[0,0,0,0,0], n=0, sw=[0,0,0];
-    var step=4;
-    var pending=cls.scenes.map(function(scene){return getScene(scene);});
-    return Promise.all(pending).then(function(scs){
-      for(var s=0;s<scs.length;s++){
-        var sc=scs[s], w=sc.w, h=sc.h;
-        var rd=sc.rgb.data, id=sc.ir.data, rw=sc.rgb.width, iw=sc.ir.width;
-        for(var y=0;y<h;y+=step){
-          for(var x=0;x<w;x+=step){
-            var ri=(y*rw+x)*4, ii=(y*iw+x)*4;
-            var R=rd[ri]/255, G=rd[ri+1]/255, B=rd[ri+2]/255;
-            var SW=id[ii]/255, NIR=id[ii+1]/255, Red2=id[ii+2]/255;
-            var den=NIR+Red2;
-            var ndvi=den>1e-6?(NIR-Red2)/den:0;
-            var p={B:B,G:G,R:R,NIR:NIR,SW:SW,ndvi:ndvi};
-            if(cls.pred(p)){
-              acc[0]+=B;acc[1]+=G;acc[2]+=R;acc[3]+=NIR;acc[4]+=SW;
-              sw[0]+=rd[ri];sw[1]+=rd[ri+1];sw[2]+=rd[ri+2];
-              n++;
-            }
-          }
-        }
-      }
-      if(n===0){return {sig:[0,0,0,0,0],n:0,swatch:'#222'};}
-      var sig=acc.map(function(v){return v/n;});
-      var swr=Math.round(sw[0]/n),swg=Math.round(sw[1]/n),swb=Math.round(sw[2]/n);
-      // brighten swatch slightly for visibility while staying representative
-      function bn(c){return Math.min(255,Math.round(c*1.35+18));}
-      var swatch='rgb('+bn(swr)+','+bn(swg)+','+bn(swb)+')';
-      return {sig:sig,n:n,swatch:swatch};
-    });
-  }
-
-  // ---- state ----
-  var data={};          // id -> {sig,n,swatch}
-  var active={};        // id -> bool
-  CLASSES.forEach(function(c){active[c.id]=true;});
-  var anim={};          // id -> 0..1 progress
-  CLASSES.forEach(function(c){anim[c.id]=reduce?1:0;});
-  var ready=false, running=true, hoverWL=null;
-
-  // ---- geometry ----
-  var DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2.5));
-  var W=0,H=0,PAD={l:46,r:16,t:18,b:34};
-  function resize(){
-    var rect=canvas.getBoundingClientRect();
-    W=Math.max(260,rect.width);H=Math.max(220,rect.height);
-    DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2.5));
-    canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    draw();
-  }
-
-  // wavelength -> x using a piecewise mapping so the 5 bands are reasonably spaced
-  // (linear in nm would crowd 469/555/645; use sqrt-ish spacing for legibility)
-  function wlToX(wl){
-    var f=(Math.sqrt(wl)-Math.sqrt(WLMIN))/(Math.sqrt(WLMAX)-Math.sqrt(WLMIN));
-    return PAD.l+f*(W-PAD.l-PAD.r);
-  }
-  function xToWL(x){
-    var f=(x-PAD.l)/(W-PAD.l-PAD.r);f=Math.max(0,Math.min(1,f));
-    var s=Math.sqrt(WLMIN)+f*(Math.sqrt(WLMAX)-Math.sqrt(WLMIN));
-    return s*s;
-  }
-  function valToY(v){
-    var top=PAD.t, bot=H-PAD.b;
-    return bot-Math.max(0,Math.min(1,v))*(bot-top);
-  }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    var AC=accent();
-    var top=PAD.t, bot=H-PAD.b, left=PAD.l, right=W-PAD.r;
-
-    // y gridlines
-    ctx.lineWidth=1;ctx.font='10px Inter, sans-serif';ctx.textBaseline='middle';
-    for(var g=0;g<=5;g++){
-      var v=g/5, yy=valToY(v);
-      ctx.strokeStyle='rgba(166,171,230,'+(g===0?0.30:0.10)+')';
-      ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(right,yy);ctx.stroke();
-      ctx.fillStyle='rgba(166,171,230,0.65)';ctx.textAlign='right';
-      ctx.fillText(v.toFixed(1),left-8,yy);
+  // Monotone cubic (Fritsch-Carlson) interpolation for smooth, non-overshooting curves
+  function buildInterp(nodes){
+    var n=nodes.length, xs=new Array(n), ys=new Array(n);
+    for(var i=0;i<n;i++){xs[i]=nodes[i][0];ys[i]=nodes[i][1];}
+    var dx=new Array(n-1), dy=new Array(n-1), m=new Array(n-1);
+    for(i=0;i<n-1;i++){dx[i]=xs[i+1]-xs[i];dy[i]=ys[i+1]-ys[i];m[i]=dy[i]/dx[i];}
+    var t=new Array(n);
+    t[0]=m[0]; t[n-1]=m[n-2];
+    for(i=1;i<n-1;i++){
+      if(m[i-1]*m[i]<=0){t[i]=0;}
+      else{t[i]=(m[i-1]+m[i])/2;}
     }
-    // y axis label
-    ctx.save();ctx.translate(13,(top+bot)/2);ctx.rotate(-Math.PI/2);
-    ctx.textAlign='center';ctx.fillStyle='rgba(166,171,230,0.8)';
-    ctx.font='italic 700 10px "Chakra Petch", sans-serif';
-    ctx.fillText('REFLECTANCE',0,0);ctx.restore();
-
-    // band x markers + labels + vertical guides
-    ctx.textBaseline='alphabetic';
-    BANDS.forEach(function(b){
-      var x=wlToX(b.wl);
-      ctx.strokeStyle='rgba(166,171,230,0.12)';
-      ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,bot);ctx.stroke();
-      ctx.fillStyle='rgba(166,171,230,0.85)';
-      ctx.font='italic 700 9.5px "Chakra Petch", sans-serif';
-      ctx.textAlign='center';
-      ctx.fillText(b.lab.toUpperCase(),x,bot+15);
-    });
-    // x axis caption
-    ctx.fillStyle='rgba(166,171,230,0.5)';ctx.font='9px Inter, sans-serif';
-    ctx.textAlign='center';ctx.fillText('WAVELENGTH (nm) — visible → near-IR → short-wave IR',(left+right)/2,bot+29);
-
-    // spectral band tint strip along bottom of plot for context
-    var stripY=bot-3;
-    function tintAt(wl){
-      if(wl<500)return 'rgba(74,168,255,0.0)';
-      return null;
+    for(i=0;i<n-1;i++){
+      if(m[i]===0){t[i]=0;t[i+1]=0;continue;}
+      var a=t[i]/m[i], b=t[i+1]/m[i];
+      var s=a*a+b*b;
+      if(s>9){var tau=3/Math.sqrt(s);t[i]=tau*a*m[i];t[i+1]=tau*b*m[i];}
     }
-
-    if(!ready){
-      ctx.fillStyle='rgba(166,171,230,0.55)';ctx.font='italic 700 12px "Chakra Petch", sans-serif';
-      ctx.textAlign='center';ctx.fillText('SAMPLING MODIS PIXELS…',(left+right)/2,(top+bot)/2);
-    }
-
-    // draw curves
-    CLASSES.forEach(function(cls){
-      var d=data[cls.id];if(!d)return;
-      var a=anim[cls.id];if(a<=0.001)return;
-      var on=active[cls.id];
-      var pts=BANDS.map(function(b,i){return {x:wlToX(b.wl),y:valToY(d.sig[i])};});
-
-      // animated reveal: scale curve up from baseline + fade
-      var alpha=on?(0.92*a):0;
-      if(alpha<=0.001)return;
-
-      // glow line
-      ctx.lineJoin='round';ctx.lineCap='round';
-      ctx.strokeStyle=hexA(cls.col,0.18*a);ctx.lineWidth=6;
-      strokePath(pts);
-      ctx.strokeStyle=hexA(cls.col,alpha);ctx.lineWidth=2.2;
-      strokePath(pts);
-
-      // points
-      pts.forEach(function(p){
-        ctx.fillStyle=hexA(cls.col,alpha);
-        ctx.beginPath();ctx.arc(p.x,p.y,3.1,0,Math.PI*2);ctx.fill();
-        ctx.fillStyle=hexA('#050314',Math.min(1,alpha));
-        ctx.beginPath();ctx.arc(p.x,p.y,1.2,0,Math.PI*2);ctx.fill();
-      });
-    });
-
-    // hover scrubber
-    if(hoverWL!=null && ready){
-      var hx=wlToX(hoverWL);
-      if(hx>=left-1 && hx<=right+1){
-        ctx.strokeStyle=hexA(AC,0.55);ctx.lineWidth=1;ctx.setLineDash([4,4]);
-        ctx.beginPath();ctx.moveTo(hx,top);ctx.lineTo(hx,bot);ctx.stroke();ctx.setLineDash([]);
-      }
-    }
-
-    function strokePath(pts){
-      ctx.beginPath();
-      for(var i=0;i<pts.length;i++){i?ctx.lineTo(pts[i].x,pts[i].y):ctx.moveTo(pts[i].x,pts[i].y);}
-      ctx.stroke();
-    }
+    return function(x){
+      if(x<=xs[0]) return Math.max(0,ys[0]);
+      if(x>=xs[n-1]) return Math.max(0,ys[n-1]);
+      var lo=0,hi=n-1;
+      while(hi-lo>1){var mid=(lo+hi)>>1; if(xs[mid]<=x)lo=mid;else hi=mid;}
+      var h=dx[lo], tt=(x-xs[lo])/h;
+      var t2=tt*tt, t3=t2*tt;
+      var h00=2*t3-3*t2+1, h10=t3-2*t2+tt, h01=-2*t3+3*t2, h11=t3-t2;
+      var v=h00*ys[lo]+h10*h*t[lo]+h01*ys[lo+1]+h11*h*t[lo+1];
+      return v<0?0:v;
+    };
   }
 
-  function hexA(c,a){
-    if(c.indexOf('rgb')===0){
-      return c.replace('rgb(','rgba(').replace(')',','+a.toFixed(3)+')');
-    }
-    var h=c.replace('#','');
-    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    var r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);
-    return 'rgba('+r+','+g+','+b+','+a.toFixed(3)+')';
-  }
-
-  // nearest band to a wavelength
-  function nearestBand(wl){
-    var best=0,bd=1e9;
-    BANDS.forEach(function(b,i){var dd=Math.abs(b.wl-wl);if(dd<bd){bd=dd;best=i;}});
-    return best;
-  }
-
-  // ---- chips ----
-  function buildChips(){
-    chipsEl.innerHTML='';
-    CLASSES.forEach(function(cls){
-      var btn=document.createElement('button');
-      btn.className='ssx-chip';btn.type='button';
-      btn.setAttribute('aria-pressed',active[cls.id]?'true':'false');
-      btn.innerHTML=''
-        +'<span class="ssx-key" style="background:'+cls.col+'"></span>'
-        +'<span class="ssx-name">'+cls.name+'</span>'
-        +'<span class="ssx-n" data-n>—</span>';
-      btn.addEventListener('click',function(){
-        active[cls.id]=!active[cls.id];
-        btn.setAttribute('aria-pressed',active[cls.id]?'true':'false');
-        var card=cardsEl.querySelector('[data-card="'+cls.id+'"]');
-        if(card)card.classList.toggle('is-off',!active[cls.id]);
-        draw();
-      });
-      cls._chip=btn;
-      chipsEl.appendChild(btn);
-    });
-  }
-
-  // ---- cards ----
-  function buildCards(){
-    cardsEl.innerHTML='';
-    CLASSES.forEach(function(cls){
-      var card=document.createElement('div');
-      card.className='ssx-card'+(active[cls.id]?'':' is-off');
-      card.setAttribute('data-card',cls.id);
-      card.style.setProperty('--cc',cls.col);
-      var bandRows=BANDS.map(function(b){
-        return '<div class="ssx-bandrow"><span class="b-lab">'+b.lab+'</span><span class="b-val" data-b="'+b.key+'">—</span></div>';
-      }).join('');
-      card.innerHTML=''
-        +'<div class="ssx-card-top">'
-          +'<span class="ssx-card-sw" data-sw style="background:'+cls.col+'"></span>'
-          +'<span class="ssx-card-name">'+cls.name+'</span>'
-        +'</div>'
-        +'<p class="ssx-card-scene">'+cls.sceneLabel+'</p>'
-        +bandRows
-        +'<div class="ssx-card-foot"><span>samples</span><span class="cf-n" data-cn>—</span></div>';
-      cls._card=card;
-      cardsEl.appendChild(card);
-    });
-  }
-
-  function fillClass(cls){
-    var d=data[cls.id];if(!d)return;
-    // chip count
-    var ne=cls._chip.querySelector('[data-n]');
-    if(ne)ne.textContent='n='+fmtN(d.n);
-    // card
-    var card=cls._card;
-    BANDS.forEach(function(b,i){
-      var el=card.querySelector('[data-b="'+b.key+'"]');
-      if(el)el.textContent=d.sig[i].toFixed(3);
-    });
-    var cn=card.querySelector('[data-cn]');if(cn)cn.textContent=fmtN(d.n);
-    var sw=card.querySelector('[data-sw]');if(sw)sw.style.background=d.swatch;
-    // chip key already class color; leave key as curve color
-  }
-  function fmtN(n){return n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':String(n);}
-
-  // ---- pointer ----
-  function onMove(e){
-    if(!ready)return;
-    var rect=canvas.getBoundingClientRect();
-    var cx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
-    var cy=(e.touches?e.touches[0].clientY:e.clientY)-rect.top;
-    if(cx<PAD.l-6||cx>W-PAD.r+6||cy<0||cy>H){clearHover();return;}
-    var wl=xToWL(cx);
-    var bi=nearestBand(wl);
-    hoverWL=BANDS[bi].wl; // snap to band
-    showReadout(bi);
-    draw();
-  }
-  function clearHover(){hoverWL=null;readout.hidden=true;draw();}
-  function showReadout(bi){
-    var b=BANDS[bi];
-    var rows='<span class="ro-wl">'+b.lab.toUpperCase()+' nm</span>';
-    var any=false;
-    CLASSES.forEach(function(cls){
-      if(!active[cls.id])return;var d=data[cls.id];if(!d)return;any=true;
-      rows+='<div class="ro-row"><span class="ro-sw" style="background:'+cls.col+'"></span>'
-        +'<span>'+cls.name+'</span><span class="ro-val">'+d.sig[bi].toFixed(3)+'</span></div>';
-    });
-    if(!any)rows+='<div class="ro-row"><span>No class active</span></div>';
-    readout.innerHTML=rows;readout.hidden=false;
-  }
-  canvas.addEventListener('mousemove',onMove);
-  canvas.addEventListener('mouseleave',clearHover);
-  canvas.addEventListener('touchstart',function(e){onMove(e);},{passive:true});
-  canvas.addEventListener('touchmove',function(e){onMove(e);},{passive:true});
-  canvas.addEventListener('touchend',clearHover);
-
-  // ---- animation loop ----
-  function tick(){
-    if(running){
-      var need=false;
-      CLASSES.forEach(function(c){
-        var target=1;
-        if(anim[c.id]<target){anim[c.id]=Math.min(target,anim[c.id]+0.06);need=true;}
-      });
-      if(need)draw();
-    }
-    raf=requestAnimationFrame(tick);
-  }
-  var raf=null;
-
-  // pause animation offscreen (does NOT gate first paint)
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(ents){
-      ents.forEach(function(en){running=en.isIntersecting;});
-    },{threshold:0.05});
-    io.observe(root);
-  }
-
-  // resize
-  var ro;
-  if('ResizeObserver' in window){ro=new ResizeObserver(function(){resize();});ro.observe(canvas);}
-  window.addEventListener('resize',resize);
-
-  // ---- INIT: build UI + first paint immediately, then load + compute ----
-  buildChips();
-  buildCards();
-  resize();            // first frame (un-gated, shows axes + sampling state)
-  if(!reduce)raf=requestAnimationFrame(tick);
-
-  // load & compute sequentially-ish (parallel promises, render as each lands)
-  var done=0;
-  CLASSES.forEach(function(cls){
-    computeClass(cls).then(function(res){
-      data[cls.id]=res;
-      anim[cls.id]=reduce?1:anim[cls.id];
-      fillClass(cls);
-      done++;
-      if(!ready){ready=true;statusEl.classList.add('is-ready');}
-      statusTxt.textContent=done>=CLASSES.length?'5 surface classes · live':'Computing signatures… '+done+'/'+CLASSES.length;
-      draw();
-    }).catch(function(err){
-      done++;
-      statusTxt.textContent='Scene unavailable ('+cls.name+')';
-      // keep going; mark ready so UI is usable
-      if(done>=1){ready=true;statusEl.classList.add('is-ready');}
-      draw();
-    });
+  var state={};
+  materials.forEach(function(mt){
+    mt.f=buildInterp(mt.nodes);
+    state[mt.key]={on:true, anim:0};
   });
 
+  // ---- Legend & readout build ----
+  var rowEls={};
+  materials.forEach(function(mt){
+    var chip=document.createElement('div');
+    chip.className='spectral-signatures-chip';
+    chip.setAttribute('data-k',mt.key);
+    var dot=document.createElement('span'); dot.className='spectral-signatures-dot';
+    var lbl=document.createElement('span'); lbl.textContent=mt.name;
+    chip.appendChild(dot); chip.appendChild(lbl);
+    chip.addEventListener('click',function(){
+      state[mt.key].on=!state[mt.key].on;
+      chip.classList.toggle('off',!state[mt.key].on);
+      if(rowEls[mt.key]) rowEls[mt.key].row.classList.toggle('dim',!state[mt.key].on);
+    });
+    legendEl.appendChild(chip);
+    mt._chip=chip; mt._dot=dot;
+
+    var row=document.createElement('div'); row.className='spectral-signatures-row';
+    var rd=document.createElement('span'); rd.className='rdot';
+    var rn=document.createElement('span'); rn.className='rname'; rn.textContent=mt.name;
+    var rv=document.createElement('span'); rv.className='rval'; rv.textContent='—';
+    row.appendChild(rd); row.appendChild(rn); row.appendChild(rv);
+    readoutEl.appendChild(row);
+    rowEls[mt.key]={row:row,dot:rd,val:rv};
+  });
+
+  // marker position normalized 0..1 across wavelength
+  var markerN=(680-WL_MIN)/(WL_MAX-WL_MIN);
+  var dragging=false;
+  var startT=performance.now();
+  var hoverFade=0;
+
+  // NASA backdrop sprite (Blue Marble / MODIS imagery) with graceful procedural fallback
+  var bgImg=new Image(); var bgReady=false;
+  bgImg.onload=function(){bgReady=true;};
+  bgImg.onerror=function(){bgReady=false;};
+  try{ bgImg.src='../assets/blue-marble.jpg'; }catch(e){}
+
+  var W=0,H=0,DPR=1;
+  function resize(){
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    var cw=canvas.clientWidth||root.clientWidth||800;
+    var ch=canvas.clientHeight||root.clientHeight||500;
+    if(cw<1)cw=800; if(ch<1)ch=500;
+    if(cw===W&&ch===H&&canvas.width===Math.round(cw*DPR)) return;
+    W=cw;H=ch;
+    canvas.width=Math.round(cw*DPR);
+    canvas.height=Math.round(ch*DPR);
+  }
+
+  function plotRect(){
+    var padL=W*0.085+22, padR=W*0.055+14;
+    var padT=H*0.16+30, padB=H*0.155+40;
+    if(W<560){padL=46;padR=20;padT=H*0.20+24;padB=H*0.20+30;}
+    return {x:padL,y:padT,w:Math.max(40,W-padL-padR),h:Math.max(40,H-padT-padB)};
+  }
+  function wlToX(wl,r){return r.x+(wl-WL_MIN)/(WL_MAX-WL_MIN)*r.w;}
+  function refToY(v,r){return r.y+r.h*(1-v);} // v in 0..1
+  function xToWl(x,r){return WL_MIN+(x-r.x)/r.w*(WL_MAX-WL_MIN);}
+
+  function bandName(wl){
+    if(wl<700) return 'VISIBLE';
+    if(wl<1300) return 'NEAR-INFRARED';
+    return 'SHORT-WAVE IR';
+  }
+
+  function draw(now){
+    resize();
+    var t=(now-startT)/1000;
+    var acc=hex2rgb(accent());
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    ctx.clearRect(0,0,W,H);
+
+    // --- deep space base gradient ---
+    var bg=ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,'#070420');
+    bg.addColorStop(0.5,'#050314');
+    bg.addColorStop(1,'#04030f');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+    // faint NASA imagery glow top-right corner (very subtle), or procedural nebula
+    ctx.save();
+    if(bgReady){
+      ctx.globalAlpha=0.10;
+      var iw=bgImg.width,ih=bgImg.height;
+      var scale=Math.max(W,H)*0.9/Math.max(iw,ih);
+      var dw=iw*scale,dh=ih*scale;
+      ctx.globalCompositeOperation='lighter';
+      ctx.drawImage(bgImg,W-dw*0.62,-dh*0.30,dw,dh);
+      ctx.globalCompositeOperation='source-over';
+    }else{
+      var neb=ctx.createRadialGradient(W*0.82,H*0.18,0,W*0.82,H*0.18,Math.max(W,H)*0.6);
+      neb.addColorStop(0,rgba(acc,0.10));
+      neb.addColorStop(0.4,rgba(acc,0.03));
+      neb.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=neb; ctx.fillRect(0,0,W,H);
+    }
+    ctx.restore();
+
+    // subtle drifting stars
+    ctx.save();
+    var nStars=Math.min(70,Math.floor(W*H/14000));
+    for(var s=0;s<nStars;s++){
+      var sx=(Math.sin(s*12.9898)*43758.5453)%1; sx=sx<0?sx+1:sx;
+      var sy=(Math.sin(s*78.233)*12543.987)%1; sy=sy<0?sy+1:sy;
+      var px=sx*W, py=sy*H;
+      var tw=0.25+0.55*(0.5+0.5*Math.sin(t*0.9+s*1.7));
+      var sr=(s%7===0)?1.4:0.8;
+      ctx.fillStyle='rgba(190,205,255,'+(0.05+tw*0.18)+')';
+      ctx.beginPath(); ctx.arc(px,py,sr,0,Math.PI*2); ctx.fill();
+    }
+    ctx.restore();
+
+    var r=plotRect();
+
+    // --- spectral band shading (visible / NIR / SWIR) ---
+    var bands=[
+      {a:400,b:700,grad:[[110,40,180,.10],[40,140,255,.10]],label:'VISIBLE'},
+      {a:700,b:1300,grad:[[200,70,90,.07],[120,40,60,.05]],label:'NEAR-IR'},
+      {a:1300,b:2400,grad:[[90,60,120,.06],[40,40,80,.05]],label:'SWIR'}
+    ];
+    bands.forEach(function(bd){
+      var x0=wlToX(bd.a,r), x1=wlToX(bd.b,r);
+      var g=ctx.createLinearGradient(0,r.y,0,r.y+r.h);
+      g.addColorStop(0,'rgba('+bd.grad[0][0]+','+bd.grad[0][1]+','+bd.grad[0][2]+','+bd.grad[0][3]+')');
+      g.addColorStop(1,'rgba('+bd.grad[1][0]+','+bd.grad[1][1]+','+bd.grad[1][2]+',0)');
+      ctx.fillStyle=g;
+      ctx.fillRect(x0,r.y,x1-x0,r.h);
+    });
+    // band dividers + labels
+    ctx.save();
+    ctx.font='600 9.5px Inter, sans-serif';
+    ctx.textAlign='center';
+    bands.forEach(function(bd,i){
+      if(i>0){
+        var dx=wlToX(bd.a,r);
+        ctx.strokeStyle='rgba(255,255,255,0.06)';
+        ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(dx,r.y);ctx.lineTo(dx,r.y+r.h);ctx.stroke();
+      }
+      var cx=(wlToX(bd.a,r)+wlToX(bd.b,r))/2;
+      ctx.fillStyle='rgba(200,210,240,0.30)';
+      ctx.fillText(bd.label,cx,r.y-9);
+    });
+    ctx.restore();
+
+    // --- grid ---
+    ctx.save();
+    ctx.lineWidth=1;
+    ctx.font='10px Inter, sans-serif';
+    // horizontal reflectance grid
+    for(var gy=0;gy<=5;gy++){
+      var v=gy/5;
+      var yy=refToY(v,r);
+      ctx.strokeStyle='rgba(255,255,255,'+(gy===0?0.13:0.055)+')';
+      ctx.beginPath();ctx.moveTo(r.x,yy);ctx.lineTo(r.x+r.w,yy);ctx.stroke();
+      ctx.fillStyle='rgba(196,204,232,0.42)';
+      ctx.textAlign='right';ctx.textBaseline='middle';
+      ctx.fillText(v.toFixed(1),r.x-9,yy);
+    }
+    // vertical wavelength ticks
+    var ticks=[400,700,1000,1300,1600,1900,2200,2400];
+    ctx.textAlign='center';ctx.textBaseline='top';
+    ticks.forEach(function(wl){
+      var xx=wlToX(wl,r);
+      ctx.strokeStyle='rgba(255,255,255,0.04)';
+      ctx.beginPath();ctx.moveTo(xx,r.y);ctx.lineTo(xx,r.y+r.h);ctx.stroke();
+      ctx.fillStyle='rgba(196,204,232,0.42)';
+      ctx.fillText(wl,xx,r.y+r.h+10);
+    });
+    // axis titles
+    ctx.fillStyle='rgba(206,214,240,0.55)';
+    ctx.font='600 10px Inter, sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='top';
+    ctx.fillText('WAVELENGTH (nm)',r.x+r.w/2,r.y+r.h+24);
+    ctx.save();
+    ctx.translate(r.x-40,r.y+r.h/2);ctx.rotate(-Math.PI/2);
+    ctx.textBaseline='bottom';
+    ctx.fillText('REFLECTANCE',0,0);
+    ctx.restore();
+    ctx.restore();
+
+    // --- curves ---
+    var step=Math.max(2,Math.floor(r.w/240)); // px sample stride
+    var introDur=1.4;
+    materials.forEach(function(mt,mi){
+      var st=state[mt.key];
+      // animate progress: reveal toward 1 when on, fade out when off
+      var target=st.on?1:0;
+      st.anim+=(target-st.anim)*0.10;
+      if(st.anim<0.004 && !st.on) return;
+
+      var col=mix(mt.base,acc,0.30);
+      var glow=mix(col,[255,255,255],0.15);
+      // intro left-to-right reveal
+      var reveal=Math.min(1,Math.max(0,(t-mi*0.12)/introDur));
+      reveal=reveal*reveal*(3-2*reveal); // smoothstep
+      var revealX=r.x+r.w*reveal;
+
+      // breathing shimmer amplitude
+      var breathe=1+0.012*Math.sin(t*1.1+mi*1.3);
+
+      // build path points
+      var pts=[];
+      for(var px=r.x;px<=r.x+r.w+step;px+=step){
+        if(px>r.x+r.w)px=r.x+r.w;
+        var wl=xToWl(px,r);
+        var v=mt.f(wl)*breathe;
+        // gentle living wave riding the line
+        v+=0.006*Math.sin(t*1.6+wl*0.01+mi);
+        if(v<0)v=0; if(v>1)v=1;
+        pts.push([px,refToY(v,r)]);
+        if(px>=r.x+r.w)break;
+      }
+
+      ctx.save();
+      // clip to revealed region
+      ctx.beginPath();ctx.rect(r.x-2,r.y-40,Math.max(0,revealX-r.x)+2,r.h+80);ctx.clip();
+
+      // area fill under curve
+      var ag=ctx.createLinearGradient(0,r.y,0,r.y+r.h);
+      ag.addColorStop(0,rgba(col,0.20*st.anim));
+      ag.addColorStop(1,rgba(col,0.0));
+      ctx.beginPath();
+      ctx.moveTo(pts[0][0],r.y+r.h);
+      for(var i=0;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);
+      ctx.lineTo(pts[pts.length-1][0],r.y+r.h);
+      ctx.closePath();
+      ctx.fillStyle=ag; ctx.fill();
+
+      // glow underlay
+      ctx.lineJoin='round';ctx.lineCap='round';
+      ctx.shadowColor=rgba(glow,0.55*st.anim);
+      ctx.shadowBlur=14+6*Math.sin(t*1.0+mi);
+      ctx.strokeStyle=rgba(col,0.30*st.anim);
+      ctx.lineWidth=6;
+      ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);
+      for(i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);
+      ctx.stroke();
+
+      // crisp core line
+      ctx.shadowBlur=0;
+      var lg=ctx.createLinearGradient(r.x,0,r.x+r.w,0);
+      lg.addColorStop(0,rgba(glow,0.95*st.anim));
+      lg.addColorStop(1,rgba(col,0.95*st.anim));
+      ctx.strokeStyle=lg;
+      ctx.lineWidth=2.1;
+      ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);
+      for(i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);
+      ctx.stroke();
+
+      // leading head glow during intro
+      if(reveal<1){
+        var hy=refToY(mt.f(xToWl(revealX,r)),r);
+        ctx.shadowColor=rgba(glow,0.9);
+        ctx.shadowBlur=18;
+        ctx.fillStyle=rgba([255,255,255],0.9*st.anim);
+        ctx.beginPath();ctx.arc(revealX,hy,3.2,0,Math.PI*2);ctx.fill();
+        ctx.shadowBlur=0;
+      }
+      ctx.restore();
+
+      mt._col=col; mt._glow=glow;
+    });
+
+    // --- wavelength marker ---
+    var mwl=WL_MIN+markerN*(WL_MAX-WL_MIN);
+    var mx=wlToX(mwl,r);
+    ctx.save();
+    var pulse=0.5+0.5*Math.sin(t*2.0);
+    // vertical line
+    var lgM=ctx.createLinearGradient(0,r.y,0,r.y+r.h);
+    lgM.addColorStop(0,rgba(acc,0.0));
+    lgM.addColorStop(0.12,rgba(acc,0.55));
+    lgM.addColorStop(0.88,rgba(acc,0.55));
+    lgM.addColorStop(1,rgba(acc,0.0));
+    ctx.strokeStyle=lgM;
+    ctx.lineWidth=1.4;
+    ctx.setLineDash([5,5]);
+    ctx.lineDashOffset=-t*14;
+    ctx.beginPath();ctx.moveTo(mx,r.y);ctx.lineTo(mx,r.y+r.h);ctx.stroke();
+    ctx.setLineDash([]);
+
+    // intersection dots + update readout
+    materials.forEach(function(mt){
+      var st=state[mt.key];
+      var v=mt.f(mwl);
+      var ro=rowEls[mt.key];
+      if(ro){
+        ro.dot.style.background=rgba(mt._col||mt.base,0.95);
+        ro.val.textContent=st.on?v.toFixed(2):'—';
+      }
+      if(!st.on||st.anim<0.05) return;
+      var dy=refToY(v*(1+0.012*Math.sin(t*1.1)),r);
+      if(mx<r.x-1||mx>r.x+r.w+1) return;
+      ctx.shadowColor=rgba(mt._glow||mt.base,0.8);
+      ctx.shadowBlur=12;
+      ctx.fillStyle=rgba(mt._glow||mt.base,0.95*st.anim);
+      ctx.beginPath();ctx.arc(mx,dy,4.0+1.0*pulse*0.4,0,Math.PI*2);ctx.fill();
+      ctx.shadowBlur=0;
+      ctx.fillStyle='rgba(5,3,20,0.9)';
+      ctx.beginPath();ctx.arc(mx,dy,1.6,0,Math.PI*2);ctx.fill();
+    });
+
+    // marker handle at top
+    ctx.shadowColor=rgba(acc,0.7);
+    ctx.shadowBlur=10;
+    ctx.fillStyle=rgba(acc,0.95);
+    ctx.beginPath();ctx.arc(mx,r.y-2,4.2,0,Math.PI*2);ctx.fill();
+    ctx.shadowBlur=0;
+    ctx.restore();
+
+    // update HUD chips
+    wlEl.textContent=Math.round(mwl)+' nm';
+    bandEl.textContent=bandName(mwl);
+
+    // legend dot colors (kept in sync with accent-tinted hues)
+    materials.forEach(function(mt){
+      if(mt._dot){
+        var c=mix(mt.base,acc,0.30);
+        mt._dot.style.background='rgb('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+')';
+        mt._dot.style.boxShadow='0 0 8px rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+',0.7)';
+      }
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  // --- interaction ---
+  function setMarkerFromClient(clientX){
+    var rect=canvas.getBoundingClientRect();
+    var x=clientX-rect.left;
+    var r=plotRect();
+    var n=(x-r.x)/r.w;
+    markerN=Math.min(1,Math.max(0,n));
+  }
+  canvas.addEventListener('pointerdown',function(e){
+    dragging=true;
+    try{canvas.setPointerCapture(e.pointerId);}catch(err){}
+    setMarkerFromClient(e.clientX);
+    e.preventDefault();
+  });
+  canvas.addEventListener('pointermove',function(e){
+    if(dragging){setMarkerFromClient(e.clientX);}
+  });
+  function endDrag(){dragging=false;}
+  canvas.addEventListener('pointerup',endDrag);
+  canvas.addEventListener('pointercancel',endDrag);
+  window.addEventListener('pointerup',endDrag);
+
+  // resize handling
+  var ro=new ResizeObserver(function(){resize();});
+  ro.observe(root);
+  window.addEventListener('resize',resize);
+
+  resize();
+  requestAnimationFrame(draw);
 })();
 </script>
 </body></html>

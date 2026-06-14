@@ -109,12 +109,12 @@
     },
     {
       "slug": "sea-level",
-      "title": "Sea-level rise \u2014 Nile Delta",
+      "title": "Rising Tide \u2014 Nile Delta",
       "collection": "earth-climate",
       "source": "NASA",
       "credit": "Data \u00b7 NASA MODIS \u2014 Nile Delta",
-      "blurb": "A sobering, premium sea-level-rise visualizer built on the real NASA MODIS/Terra true-color scene of the Nile Delta \u2014 one of Earth's most exposed low-lying coasts. A 0 to +2 m slider (with 2050/2100 low- vs high-emissions scenario presets and an ice-sheet-collapse tail) raises the Mediterranean, and a translucent ocean overlay encroaches inland, drowning the lowest ground first. Land elevation is approximated per-pixel from the real imagery \u2014 proximity to existing water (low NIR / NDVI&lt;0), low brightness, and low NDVI \u2014 so the flood spreads from the coast and up the river channels realistically rather than as a flat clip line. Shows live sea-level rise, estimated affected-land %, and the active scenario, with an honest caption that the inundation is an illustrative elevation-proxy projection, not a surveyed flood model. Demonstrates SSAI's Earth-observation and climate-monitoring credibility.",
-      "interaction": "Loads the real Nile Delta scene and paints the true-color basemap immediately on init (no interaction or scroll gating). Drag the sea-level slider from 0 to +2.0 m, or tap a scenario preset (Today, 2050 Low/High, 2100 Low/High, +2.0 m), to raise the water: a translucent ocean-blue overlay floods inward from the existing coast and channels, deepening in color over the lowest ground, with an accent-colored waterline that shimmers along the advancing shoreline. The HUD updates live \u2014 sea-level rise in metres, estimated land inundated %, and the year/emissions scenario \u2014 and the matching preset and on-image scenario chip highlight. Animation (waterline shimmer) pauses when the module scrolls off-screen and is disabled entirely under prefers-reduced-motion (still fully interactive, repainting on each slider change). The accent color is read live from --accent and applied to the slider, eyebrow, chip, waterline and main stat.",
+      "blurb": "Visualizes how progressive sea-level rise inundates a real low-lying coastline. The Nile Delta (NASA MODIS true-color) fills the frame; a translucent, shimmering water layer floods the lowest terrain first as you raise sea level, with live readouts for rise (m), land inundated (%), and a population-at-risk proxy.",
+      "interaction": "Drag the sea-level slider to raise the water line from 0 to 10 m. Darker (lower) terrain floods first using image brightness as an elevation proxy; the shoreline breathes and the flooded water caustically shimmers. At rest, ambient tide animation and drifting light keep the scene alive.",
       "real": true
     },
     {
@@ -179,12 +179,12 @@
     },
     {
       "slug": "spectral-signatures",
-      "title": "Spectral Signature Explorer",
+      "title": "Spectral Signatures",
       "collection": "remote-sensing",
       "source": "NASA",
       "credit": "Data \u00b7 NASA MODIS surface reflectance",
-      "blurb": "An interactive spectral-signature explorer for SSAI's brand site that loads four real NASA MODIS surface-reflectance scenes (cropland, Nile Delta, Phoenix metro, Dixie Fire burn scar), samples real pixels at runtime, and computes the averaged five-band reflectance signature for each of five surface classes \u2014 vegetation, water, bare soil/desert, built-up/urban, and burn scar. It demonstrates SSAI's remote-sensing credibility by letting a viewer toggle classes on and off to compare how each material reflects across Blue 469, Green 555, Red 645, NIR 858, and SWIR 2130 nm, watching the textbook physics (the vegetation red edge, water's NIR collapse, soil rising into SWIR, the burn scar's elevated SWIR) emerge directly from genuine satellite data rather than illustration.",
-      "interaction": "Toggle any of the five surface-class chips to add or remove its signature curve from the plot; the curves animate in and the y-axis story rebalances live. Hover or move along the chart (mouse or touch) to drop a wavelength scrubber that reads out each active class's exact reflectance at that band. Each class card shows its real per-band values, live sample count, the source MODIS scene, and a representative real-pixel color swatch computed from the actual imagery. Everything renders on init from the loaded scenes; animation pauses when scrolled out of view and respects reduced-motion.",
+      "blurb": "Every surface on Earth reflects sunlight in a unique way across the electromagnetic spectrum \u2014 a fingerprint that lets remote sensing instruments tell vegetation from water, soil from snow, nature from the built world. This instrument plots reflectance against wavelength from the visible through near- and short-wave infrared, revealing why a healthy leaf glows in the near-infrared while water vanishes, and how snow betrays itself by collapsing in the SWIR.",
+      "interaction": "Drag the wavelength marker anywhere across the spectrum to read each material's exact reflectance at that band; the corner readout updates live. Toggle materials on and off from the legend to isolate or compare signatures. The curves breathe and shimmer at rest, with the visible / NIR / SWIR bands softly shaded behind them.",
       "real": true
     },
     {
@@ -219,12 +219,12 @@
     },
     {
       "slug": "orbit-types",
-      "title": "Orbit types",
+      "title": "Families of Earth Orbit",
       "collection": "satellites-orbits",
       "source": "",
       "credit": "",
-      "blurb": "Side-on Earth diagram letting you toggle LEO, MEO, GEO, Sun-synchronous and Molniya orbits, each with an animated satellite, altitude and true Keplerian orbital period.",
-      "interaction": "Click an orbit chip to toggle its ring on/off; the most recently enabled orbit becomes the focused one \u2014 it draws solid, gains an animated satellite and an in-canvas label, and drives the readout panel (altitude, true period, orbital speed). The time-warp slider scales animation speed logarithmically, and a button switches the radial scale between logarithmic and linear so distant orbits stay legible.",
+      "blurb": "A cinematic, full-bleed visualization of the principal Earth-orbit families \u2014 LEO, MEO, GEO, Molniya, and Polar / Sun-synchronous \u2014 rendered simultaneously around a large Blue Marble, each with a labelled satellite moving at the correct relative speed. Viewers highlight a family to read its altitude band, period, inclination, and mission role, illustrating how altitude, shape and inclination define what an orbit is for.",
+      "interaction": "Alive at rest: all five orbits animate continuously with satellites tracing their paths at physically faithful relative speeds, the Earth slowly rotating its glow, and a drifting starfield. Click any legend entry (or its satellite) to highlight that family \u2014 the chosen orbit and satellite brighten while the others dim, and HUD chips update to show its altitude band, orbital period, inclination, and typical use. Click again or pick another to change focus. Everything self-heals on resize.",
       "real": false
     },
     {
@@ -289,12 +289,12 @@
     },
     {
       "slug": "reentry-heating",
-      "title": "Atmospheric reentry",
+      "title": "Atmospheric Reentry Heating",
       "collection": "satellites-orbits",
       "source": "",
       "credit": "",
-      "blurb": "Fly a capsule into the atmosphere and find the narrow reentry corridor between skipping back to space and burning up.",
-      "interaction": "Drag the entry-angle and speed sliders, then press Initiate reentry to watch the heat-shield plasma, live telemetry (altitude, Mach, g-load, shield temperature) and the deceleration trace.",
+      "blurb": "Visualizes the searing plasma-shock heating a crewed capsule endures during hypersonic atmospheric reentry, from exo-atmospheric interface down through peak heating to the glowing limb of Earth \u2014 the discipline behind thermal-protection-system engineering and entry, descent and landing analysis.",
+      "interaction": "A single slider sets the entry speed and angle (gentle skip to steep ballistic). As it changes, the plasma shock-sheath brightness, ablation ember trail, peak heat flux, plasma temperature and G-load all respond. The descent auto-loops continuously, alive at rest. Corner HUD chips read altitude, velocity in Mach, G-load, peak heat flux and plasma temperature in real time.",
       "real": false
     },
     {
@@ -329,12 +329,12 @@
     },
     {
       "slug": "magnetosphere",
-      "title": "Earth's Magnetosphere &amp; the Solar Wind",
+      "title": "Earth's Magnetosphere",
       "collection": "sun-space-weather",
       "source": "NOAA",
       "credit": "NOAA SWPC \u00b7 NASA",
-      "blurb": "An immersive, full-bleed simulation of Earth's magnetosphere reshaping in real time as a solar-wind-speed slider compresses the magnetopause, drives the bow shock inward, and brightens the polar aurora \u2014 using real scales (Earth radii, km/s, nT).",
-      "interaction": "Drag the SOLAR WIND SPEED chip slider (300-800 km/s) to vary dynamic pressure: the magnetopause and bow shock compress toward Earth, the sub-solar standoff distance readout drops from ~10 Re toward ~6 Re, field lines bend, and the auroral ovals intensify and widen. Toggle field lines / solar wind / labels via small HUD chips.",
+      "blurb": "Visualizes how Earth's dipole magnetic field deflects the solar wind \u2014 a compressed sunward bow shock and magnetopause, a streaming magnetotail, charged particles flowing in and deflecting around the shield, and auroral ovals that brighten as solar-wind pressure rises. Drag the pressure slider to watch the standoff distance shrink, the field compress, and the aurora intensify in real time.",
+      "interaction": "Continuous animation runs on load: solar-wind particles stream from the sunward edge and deflect around the magnetopause, field lines shimmer, the magnetotail flutters, and auroral ovals pulse. One slider sets solar-wind dynamic pressure; raising it compresses the dayside, pushes the standoff distance inward, speeds the wind, and intensifies the aurora and bow-shock glow. HUD chips report solar-wind speed, Bz, Kp index, and magnetopause standoff distance.",
       "real": true
     },
     {
@@ -359,52 +359,52 @@
     },
     {
       "slug": "orrery",
-      "title": "Solar system orrery",
+      "title": "The Orrery",
       "collection": "solar-system",
       "source": "",
       "credit": "",
-      "blurb": "A top-down animated orrery where the planets orbit the Sun at correct relative periods, so inner worlds visibly outrace outer ones.",
-      "interaction": "Drag the speed slider to scrub time, toggle trails and play/pause, and hover or click any planet to read its real orbital period, distance and size.",
+      "blurb": "A cinematic, jewel-like model of the solar system in motion \u2014 the Sun ablaze at centre with eight planets sweeping their luminous orbits at true relative speeds, distances log-compressed so Mercury through Neptune fill a single frame. Hover or tap any planet to read its name, orbital period and distance from the Sun; drag the speed dial to slow the dance to a meditative crawl or spin a century in seconds.",
+      "interaction": "Continuously alive on load \u2014 planets orbit automatically. Hover (or tap on touch) any planet or its orbit to surface a HUD card with the planet's name, orbital period and distance in AU; the selected world brightens with a halo. A single speed slider, overlaid bottom-left, scales time from a near-still drift to a brisk century-per-minute sweep. All controls fade with the global hide-controls toggle.",
       "real": false
     },
     {
       "slug": "eclipse-sim",
-      "title": "Eclipse Simulator",
+      "title": "Total Solar Eclipse \u2014 Geometry of Totality",
       "collection": "solar-system",
       "source": "",
       "credit": "",
-      "blurb": "Drag the Moon around its orbit to align Sun, Earth and Moon and watch real shadow-cone geometry produce solar and lunar eclipses.",
-      "interaction": "Grab the Moon and drag it along its orbit; place it between Sun and Earth for a solar eclipse (umbra/penumbra cone darkens Earth) or behind Earth for a lunar eclipse (Moon reddens into a Blood Moon), with a live type readout, alignment angle, obscuration % and phase. Arrow keys nudge, Play autoruns the orbit, and Shadow cones toggles the geometry.",
+      "blurb": "Reveals the precise geometry of a solar eclipse: the Moon's disc tracking across a radiant Sun until totality unveils the pearly streaming corona, the diamond-ring flash and Baily's beads, while the sky darkens to deep indigo and stars emerge.",
+      "interaction": "Drag the slider to move the Moon across the Sun, or let it auto-play through a full eclipse cycle. HUD chips report phase, percent obscured and magnitude; a small inset diagram shows the Sun\u2013Moon\u2013Earth alignment with umbra and penumbra cones.",
       "real": false
     },
     {
       "slug": "comet",
-      "title": "Comet",
+      "title": "Comet \u2014 Coma & Anti-Sunward Tails",
       "collection": "solar-system",
       "source": "",
       "credit": "",
-      "blurb": "Watch a comet race through a stretched elliptical orbit, speeding up at perihelion while its ion and dust tails sweep to always face away from the Sun.",
-      "interaction": "Drag the orbit-speed slider to scrub the time-lapse and press play/pause; the live readout reports distance (AU), Keplerian speed (km/s), and orbital phase as the tails grow and shrink.",
+      "blurb": "Shows how a comet brightens, grows a glowing coma, and unfurls its ion and dust tails as it approaches perihelion \u2014 with both tails always streaming directly away from the Sun.",
+      "interaction": "Drag the orbit slider to scrub the comet from aphelion to perihelion and back, or let it auto-orbit. As it nears the Sun the coma swells, the warm golden dust tail curves and the blue ion tail lengthens \u2014 both anti-sunward. HUD chips read out heliocentric distance (AU), orbital speed (km/s) and tail length.",
       "real": false
     },
     {
       "slug": "lagrange",
-      "title": "Sun\u2013Earth Lagrange Points",
+      "title": "The Five Lagrange Points",
       "collection": "solar-system",
       "source": "",
       "credit": "",
-      "blurb": "Shows the five Sun\u2013Earth Lagrange points at correct geometry with real spacecraft (JWST at L2, SOHO at L1) holding station as Earth orbits.",
-      "interaction": "Hover any L-point, planet, or spacecraft for a one-line label; toggle \"Pause orbit\" to freeze Earth and \"Lock frame\" to switch into the co-rotating reference frame where Earth and all five points stand still.",
+      "blurb": "Reveals the five Sun-Earth Lagrange points where gravitational and orbital forces balance, rendered over a living gravitational-potential field. L1 and L2 host SSAI-supported missions SOHO and JWST, shown in gentle halo orbits as the whole system co-rotates. Click any point to read its stability, distance from Earth, and resident mission.",
+      "interaction": "The Sun, Earth and all five Lagrange points sit on a slowly co-rotating orbital plane over a glowing saddle-contour potential field that fills the frame; SOHO at L1 and JWST at L2 trace small halo-orbit wobbles. Hover or click any Lagrange point to select it \u2014 a HUD chip reports its name, stability, distance from Earth and resident mission. A single slider adjusts the field intensity, and a toggle shows/hides the contour field.",
       "real": false
     },
     {
       "slug": "tides",
-      "title": "Two Tides A Day",
+      "title": "Two Tides a Day",
       "collection": "solar-system",
       "source": "",
       "credit": "",
-      "blurb": "Shows how the Moon's gravity raises two ocean bulges on Earth \u2014 one facing the Moon, one on the far side \u2014 producing two high tides per day at any coastline.",
-      "interaction": "Drag the Moon around its orbit (or let it auto-orbit and tune the Speed slider / Pause); the two tidal bulges track the Moon and the coastal tide gauge rises and falls twice per orbit.",
+      "blurb": "Reveals why Earth has two tidal bulges and two high tides daily, with the Moon's gravity stretching the ocean on both the near and far sides, and the Sun's alignment driving spring and neap tides.",
+      "interaction": "Alive on load: the Moon orbits Earth, Earth rotates, and the two ocean bulges track the Moon while a surface marker traces a two-peak daily tide curve. A single slider sweeps the Moon-Sun alignment from spring (aligned) to neap (90 degrees), reshaping the bulges in real time. HUD chips report lunar angle, marker tide height, and spring/neap state.",
       "real": false
     },
     {
@@ -449,12 +449,12 @@
     },
     {
       "slug": "galaxy-gen",
-      "title": "Galaxy generator",
+      "title": "Spiral Galaxy Generator",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "Procedurally generate a living spiral galaxy and explore how arm count, winding tightness and spin shape it.",
-      "interaction": "Drag the disk to reorient its inclination and roll; adjust the Arms, Arm tightness and Spin sliders to reshape and rewind it live; click Regenerate for a fresh galaxy.",
+      "blurb": "Reveals the architecture of a spiral galaxy as a living, procedurally-generated system \u2014 a golden core bulge, sweeping logarithmic arms seeded with thousands of blue young stars, glowing pink HII star-forming regions and a faint dust lane, all turning under realistic differential rotation. Shows how arm count, winding and stellar density shape galactic structure.",
+      "interaction": "Three overlaid sliders adjust the number of spiral arms, the winding tightness of the arms, and the star density. The galaxy rotates continuously and differentially (inner stars faster than outer) at rest. HUD chips report arms, total star count and rotation rate. Changing any control re-seeds and re-flows the structure live.",
       "real": false
     },
     {
@@ -529,22 +529,22 @@
     },
     {
       "slug": "nbody-gravity",
-      "title": "Gravity sandbox",
+      "title": "N-Body Gravity Sandbox",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "Drop stars and planets into a live Newtonian gravity field and watch them orbit, slingshot, and merge in real time.",
-      "interaction": "Click-drag on the canvas to launch a body in the drag direction; use Add planet / Add star / Clear and the mass + speed sliders to sculpt the system.",
+      "blurb": "An interactive gravitational sandbox where a pre-seeded planetary system orbits a bright central star with glowing colour-coded motion-trail ribbons. Visitors click-drag to fling new bodies into the field with velocity and watch gravity sculpt new orbits in real time, illustrating the n-body simulation work at the heart of NASA mission planning, celestial mechanics, and trajectory design.",
+      "interaction": "Alive on load: a luminous star anchors several orbiting bodies (including a tight binary pair) that paint elegant fading ribbons across a faint starfield. Click and drag anywhere to aim and release to fling a new body with the drag velocity. Controls (top-left): Add seeds a random orbiter, Clear resets to the pristine seed system, and a Gravity strength slider warps every orbit instantly. HUD chips read live body count and total system energy.",
       "real": false
     },
     {
       "slug": "gravity-waves",
-      "title": "Gravitational Waves",
+      "title": "Gravitational Waves \u2014 The Chirp",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "Watch two black holes spiral inward and merge, warping a spacetime mesh and emitting ripples while a live LIGO-style chirp waveform rises then rings down.",
-      "interaction": "Drag the total-mass slider to retune the system, and hit Replay to restart the inspiral from the top.",
+      "blurb": "Visualizes the inspiral, merger, and ringdown of two compact objects as ripples in spacetime, with the characteristic strain \"chirp\" waveform drawing in sync. Auto-loops through the full coalescence with live readouts of component masses, GW frequency, separation, and peak strain.",
+      "interaction": "Fully autonomous, alive on load. A continuous loop cycles inspiral -> merger -> bright flash -> ringdown -> reset. The single overlaid control toggles the spacetime warp grid on/off. HUD chips in the corners track component masses, gravitational-wave frequency, orbital separation, and peak strain. The strain waveform draws across the lower band in lockstep with the orbit.",
       "real": false
     },
     {
@@ -559,32 +559,32 @@
     },
     {
       "slug": "missions-filter",
-      "title": "Mission filter",
+      "title": "Mission Constellation",
       "collection": "mission-tools",
       "source": "NASA",
       "credit": "24 real NASA missions",
-      "blurb": "A filterable constellation of SSAI's 24 real NASA missions, grouped by domain (Sun / Earth / Universe), for a website section that shows the breadth of the mission portfolio at a glance.",
-      "interaction": "Click All / Sun / Earth / Universe to smoothly highlight matching mission nodes, fade the rest, and update the live count; click any glowing node to reveal its name and one-line contribution below.",
+      "blurb": "Explore SSAI and NASA's real mission portfolio organized into glowing domain constellations \u2014 Sun, Earth, and Universe \u2014 on a living starfield. Filter pills re-cluster the field and highlight the active domain; selecting any mission reveals its launch year, domain and purpose.",
+      "interaction": "Missions appear as labelled glowing nodes grouped into three domain clusters linked by faint constellation lines, drifting gently at rest. Tap a filter pill (All / Sun / Earth / Universe) to smoothly re-cluster the field and spotlight one domain. Click or tap any node to select it and read its details in the lower HUD card.",
       "real": true
     },
     {
       "slug": "mission-timeline",
-      "title": "Mission timeline",
+      "title": "Mission Timeline",
       "collection": "mission-tools",
       "source": "NASA",
       "credit": "Real NASA mission milestones",
-      "blurb": "A draggable 1977\u20132026 timeline scrubber that surfaces the active year large in Chakra italic and lights up nearby mission markers by domain.",
-      "interaction": "Drag the scrubber (or click any mission marker / use arrow keys) to scrub the year; the large year, mission name, domain accent, progress rail and nearby markers all update live.",
+      "blurb": "A cinematic horizontal timeline tracing nearly five decades of real NASA Earth- and space-science missions SSAI has supported \u2014 from the Voyager launches of 1977 through PACE in 2024 \u2014 as a luminous era track of glowing milestone nodes. Visitors drag a scrubber along the track; nearby missions swell with a fisheye proximity effect while the focused one resolves into a large editorial readout with its year, name, and a one-line description. It reframes a sparse list of dates into a living arc of institutional legacy.",
+      "interaction": "Drag the glowing scrubber handle (or click/tap anywhere on the track) to glide focus along the timeline; the nearest mission node scales up via a fisheye falloff and its details animate into the large readout. Left/right arrow keys step between missions. At rest the focus drifts slowly and autonomously across the eras so the piece is always alive, and a faint starfield with parallax drift keeps the frame full. Use the era toggle to switch the era band labels on or off.",
       "real": true
     },
     {
       "slug": "signal-pipeline",
-      "title": "Observation to understanding",
+      "title": "Signal Pipeline",
       "collection": "mission-tools",
       "source": "",
       "credit": "",
-      "blurb": "Hero or about-section centerpiece that visualizes SSAI's core idea \u2014 turning raw observation into understanding through a four-stage pipeline.",
-      "interaction": "Hover (or focus/tap) any of the four nodes to reveal a one-line description; signal dots flow continuously left to right along the connecting lines.",
+      "blurb": "Visualizes SSAI's end-to-end value chain \u2014 Observe, Data, Model, Knowledge \u2014 as one continuous luminous stream that transforms raw photons into a single crisp insight. Used to communicate \"From observation to understanding\" with cinematic clarity.",
+      "interaction": "Alive on load: particles flow left to right and visibly change state at each of four glowing stations (scattered photons collapse into structured data points, fit to a model curve, then converge to one insight). Hovering or tapping a station gently focuses it and lifts its live metric. A single Flow Rate control overlays the speed of the stream; readout chips report throughput and signal yield. Everything self-heals to the canvas size.",
       "real": false
     },
     {

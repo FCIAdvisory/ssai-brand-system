@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mission filter · SSAI</title>
+<title>Mission Constellation · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,113 +41,29 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-missions-filter{
-  width:100%;
-  box-sizing:border-box;
-  font-family:'Inter',system-ui,sans-serif;
-  color:#f4f5ff;
-  background:transparent;
-  padding:4px;
-  -webkit-font-smoothing:antialiased;
-}
-#kit-missions-filter *{box-sizing:border-box;}
-#kit-missions-filter .kmf-head{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  gap:16px;margin-bottom:14px;
-}
-#kit-missions-filter .kmf-title{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;font-weight:700;text-transform:uppercase;
-  letter-spacing:0.06em;font-size:15px;color:#f4f5ff;line-height:1;
-}
-#kit-missions-filter .kmf-count{
-  display:flex;align-items:baseline;gap:7px;
-}
-#kit-missions-filter .kmf-num{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;font-weight:700;font-size:24px;color:#3c7be0;
-  line-height:1;min-width:30px;text-align:right;
-  font-variant-numeric:tabular-nums;
-}
-#kit-missions-filter .kmf-lbl{
-  font-size:11px;color:#a6abe6;text-transform:uppercase;letter-spacing:0.08em;
-}
-#kit-missions-filter .kmf-controls{
-  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;
-}
-#kit-missions-filter .kmf-btn{
-  display:inline-flex;align-items:center;gap:7px;
-  font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;
-  color:#a6abe6;background:rgba(166,171,230,0.05);
-  border:1px solid rgba(166,171,230,0.16);
-  border-radius:999px;padding:7px 14px;cursor:pointer;
-  transition:color .25s ease,border-color .25s ease,background .25s ease,box-shadow .25s ease;
-  -webkit-appearance:none;appearance:none;line-height:1;
-}
-#kit-missions-filter .kmf-btn:hover{
-  color:#f4f5ff;border-color:rgba(166,171,230,0.34);
-  background:rgba(166,171,230,0.09);
-}
-#kit-missions-filter .kmf-btn.on{
-  color:#f4f5ff;border-color:rgba(60,123,224,0.55);
-  background:rgba(60,123,224,0.12);
-  box-shadow:0 0 0 1px rgba(60,123,224,0.18);
-}
-#kit-missions-filter .kmf-btn:focus-visible{
-  outline:2px solid rgba(60,123,224,0.6);outline-offset:2px;
-}
-#kit-missions-filter .kmf-dot{
-  width:8px;height:8px;border-radius:50%;flex:0 0 auto;
-  transition:opacity .25s ease,transform .25s ease;
-  box-shadow:0 0 6px currentColor;
-}
-#kit-missions-filter .kmf-stage{
-  position:relative;width:100%;
-  aspect-ratio:16/10;min-height:300px;
-  border:1px solid rgba(166,171,230,0.14);
-  border-radius:14px;
-  background:radial-gradient(120% 120% at 50% 40%,rgba(22,20,95,0.22),rgba(5,3,20,0) 70%);
-  overflow:hidden;
-}
-#kit-missions-filter .kmf-canvas{
-  display:block;width:100%;height:100%;touch-action:manipulation;
-}
-#kit-missions-filter .kmf-detail{
-  margin-top:12px;min-height:58px;
-}
-#kit-missions-filter .kmf-d-empty{
-  font-size:12.5px;color:#a6abe6;opacity:0.7;
-  padding:14px 2px;letter-spacing:0.02em;
-}
-#kit-missions-filter .kmf-d-card{
-  border:1px solid rgba(166,171,230,0.16);
-  border-radius:12px;padding:13px 15px;
-  background:rgba(22,20,95,0.16);
-  animation:kit-missions-filter-rise .35s cubic-bezier(.22,.61,.36,1) both;
-}
-#kit-missions-filter .kmf-d-top{
-  display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;
-}
-#kit-missions-filter .kmf-d-tag{
-  font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;
-  padding:3px 9px;border-radius:999px;border:1px solid;line-height:1;
-}
-#kit-missions-filter .kmf-d-name{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
-  font-size:15px;color:#f4f5ff;
-}
-#kit-missions-filter .kmf-d-desc{
-  font-size:13px;line-height:1.5;color:#a6abe6;
-}
-@keyframes kit-missions-filter-rise{
-  from{opacity:0;transform:translateY(6px);}
-  to{opacity:1;transform:translateY(0);}
-}
-@media (prefers-reduced-motion: reduce){
-  #kit-missions-filter .kmf-d-card{animation:none;}
-  #kit-missions-filter .kmf-btn,
-  #kit-missions-filter .kmf-dot{transition:none;}
+#kit-missions-filter{position:relative;width:100%;height:100%;overflow:hidden;background:radial-gradient(140% 120% at 50% 18%,#0a0726 0%,#070420 42%,#050314 100%);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eef1ff;user-select:none;-webkit-tap-highlight-color:transparent}
+#kit-missions-filter canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
+#kit-missions-filter .missions-filter-controls{position:absolute;top:18px;left:50%;transform:translateX(-50%);display:flex;gap:7px;padding:5px;border-radius:999px;background:rgba(10,8,30,.42);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(150,165,230,.16);box-shadow:0 8px 34px rgba(0,0,0,.4);z-index:6}
+#kit-missions-filter .missions-filter-pill{appearance:none;border:0;background:transparent;color:rgba(220,226,255,.6);font-family:inherit;font-size:12.5px;font-weight:560;letter-spacing:.03em;padding:7px 17px;border-radius:999px;cursor:pointer;transition:color .35s ease,background .35s ease,box-shadow .35s ease;white-space:nowrap}
+#kit-missions-filter .missions-filter-pill:hover{color:rgba(255,255,255,.92)}
+#kit-missions-filter .missions-filter-pill.missions-filter-active{color:#06040f;background:var(--accent,#7fd4ff);box-shadow:0 0 22px -3px var(--accent,#7fd4ff)}
+#kit-missions-filter .missions-filter-legend{position:absolute;top:20px;left:20px;display:flex;flex-direction:column;gap:8px;z-index:5;pointer-events:none}
+#kit-missions-filter .missions-filter-leg{display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:520;letter-spacing:.08em;text-transform:uppercase;color:rgba(206,214,250,.62)}
+#kit-missions-filter .missions-filter-leg i{width:8px;height:8px;border-radius:50%;box-shadow:0 0 10px currentColor}
+#kit-missions-filter .missions-filter-leg-sun i{background:#ffcf6e;color:#ffcf6e}
+#kit-missions-filter .missions-filter-leg-earth i{background:#62e3b6;color:#62e3b6}
+#kit-missions-filter .missions-filter-leg-universe i{background:#a98bff;color:#a98bff}
+#kit-missions-filter .missions-filter-count{position:absolute;top:22px;right:20px;font-size:10.5px;font-weight:560;letter-spacing:.14em;text-transform:uppercase;color:rgba(206,214,250,.5);z-index:5;pointer-events:none}
+#kit-missions-filter .missions-filter-card{position:absolute;left:20px;bottom:20px;width:min(330px,calc(100% - 40px));padding:15px 18px 16px;border-radius:16px;background:linear-gradient(180deg,rgba(16,13,42,.62),rgba(9,6,26,.74));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(150,165,230,.16);box-shadow:0 14px 44px rgba(0,0,0,.46);z-index:6;transition:border-color .4s ease,box-shadow .4s ease}
+#kit-missions-filter .missions-filter-card-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+#kit-missions-filter .missions-filter-card-name{font-size:17px;font-weight:640;letter-spacing:-.01em;color:#fff;line-height:1.2}
+#kit-missions-filter .missions-filter-card-year{font-size:13px;font-weight:600;color:var(--accent,#7fd4ff);font-variant-numeric:tabular-nums;flex:0 0 auto}
+#kit-missions-filter .missions-filter-card-domain{margin-top:7px;font-size:9.5px;font-weight:620;letter-spacing:.18em;text-transform:uppercase;color:rgba(190,200,245,.72)}
+#kit-missions-filter .missions-filter-card-desc{margin-top:9px;font-size:12.5px;line-height:1.5;color:rgba(214,221,252,.78);font-weight:430}
+@media (max-width:520px){
+#kit-missions-filter .missions-filter-legend{display:none}
+#kit-missions-filter .missions-filter-count{display:none}
+#kit-missions-filter .missions-filter-pill{padding:6px 13px;font-size:11.5px}
 }
 
 body.mb-embed #kit-missions-filter{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -165,13 +81,35 @@ body.mb-embed #kit-missions-filter [class*='stage'],body.mb-embed #kit-missions-
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Mission filter</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Mission Constellation</div></div>
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
-  <div class="mb-stage"><div class="kfig" id="kit-missions-filter"></div></div>
+  <div class="mb-stage"><div class="kfig" id="kit-missions-filter">
+  <canvas id="missions-filter-canvas"></canvas>
+  <div class="missions-filter-controls" id="missions-filter-controls" role="tablist" aria-label="Filter missions by domain">
+    <button class="missions-filter-pill missions-filter-active" data-domain="all" role="tab" aria-selected="true">All</button>
+    <button class="missions-filter-pill" data-domain="sun" role="tab" aria-selected="false">Sun</button>
+    <button class="missions-filter-pill" data-domain="earth" role="tab" aria-selected="false">Earth</button>
+    <button class="missions-filter-pill" data-domain="universe" role="tab" aria-selected="false">Universe</button>
+  </div>
+  <div class="missions-filter-legend" id="missions-filter-legend" aria-hidden="true">
+    <span class="missions-filter-leg missions-filter-leg-sun"><i></i>Sun</span>
+    <span class="missions-filter-leg missions-filter-leg-earth"><i></i>Earth</span>
+    <span class="missions-filter-leg missions-filter-leg-universe"><i></i>Universe</span>
+  </div>
+  <div class="missions-filter-count" id="missions-filter-count" aria-live="polite">28 missions</div>
+  <div class="missions-filter-card" id="missions-filter-card" aria-live="polite">
+    <div class="missions-filter-card-top">
+      <span class="missions-filter-card-name" id="missions-filter-name">Select a mission</span>
+      <span class="missions-filter-card-year" id="missions-filter-year"></span>
+    </div>
+    <div class="missions-filter-card-domain" id="missions-filter-cdomain"></div>
+    <div class="missions-filter-card-desc" id="missions-filter-desc">Tap any point of light to explore a NASA mission.</div>
+  </div>
+</div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Click All / Sun / Earth / Universe to smoothly highlight matching mission nodes, fade the rest, and update the live count; click any glowing node to reveal its name and one-line contribution below.</span>
+    <span class="mb-c-int">Missions appear as labelled glowing nodes grouped into three domain clusters linked by faint constellation lines, drifting gently at rest. Tap a filter pill (All / Sun / Earth / Universe) to smoothly re-cluster the field and spotlight one domain. Click or tap any node to select it and read its details in the lower HUD card.</span>
     <span class="mb-c-src">24 real NASA missions</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -222,317 +160,411 @@ body.mb-embed #kit-missions-filter [class*='stage'],body.mb-embed #kit-missions-
 </script>
 <script>
 (function(){
-  var root=document.getElementById('kit-missions-filter'); if(!root) return;
+  var root=document.getElementById('kit-missions-filter');
+  if(!root)return;
+  var canvas=root.querySelector('#missions-filter-canvas');
+  var ctx=canvas.getContext('2d');
+  var elName=root.querySelector('#missions-filter-name');
+  var elYear=root.querySelector('#missions-filter-year');
+  var elCDom=root.querySelector('#missions-filter-cdomain');
+  var elDesc=root.querySelector('#missions-filter-desc');
+  var elCard=root.querySelector('#missions-filter-card');
+  var elCount=root.querySelector('#missions-filter-count');
+  var pills=root.querySelectorAll('.missions-filter-pill');
 
-  var MISSIONS=[
-    {n:'MERRA-2', g:'earth', d:'Reanalysis of Earth’s atmosphere across the satellite era.'},
-    {n:'Black Marble', g:'earth', d:'Nightlights mapping human activity from space.'},
-    {n:'TEMPO', g:'earth', d:'Hourly air-quality measurements across North America.'},
-    {n:'GOES-R', g:'earth', d:'Real-time weather and storm tracking from geostationary orbit.'},
-    {n:'PACE', g:'earth', d:'Ocean color, aerosols and clouds for the living biosphere.'},
-    {n:'MODIS', g:'earth', d:'Daily global imaging of land, ocean and atmosphere.'},
-    {n:'OMI', g:'earth', d:'Tracking ozone and pollutants throughout the atmosphere.'},
-    {n:'ICESat-2', g:'earth', d:'Laser altimetry of ice sheets, sea ice and forests.'},
-    {n:'SAGE III', g:'earth', d:'Profiling ozone and aerosols from the Space Station.'},
-    {n:'MAIA', g:'earth', d:'Linking airborne particles to human health.'},
-    {n:'OMPS', g:'earth', d:'Monitoring the ozone layer’s recovery over time.'},
-    {n:'CERES', g:'earth', d:'Measuring Earth’s incoming and outgoing energy balance.'},
-    {n:'SDO', g:'sun', d:'Continuous high-resolution view of the Sun’s activity.'},
-    {n:'Hinode', g:'sun', d:'Studying the solar magnetic field and corona.'},
-    {n:'TSIS-2', g:'sun', d:'Measuring total solar irradiance that drives Earth’s climate.'},
-    {n:'NAIRAS', g:'sun', d:'Modeling solar-storm radiation for aviation safety.'},
-    {n:'JPSS-2', g:'sun', d:'Operational forecasting of space and Earth weather.'},
-    {n:'JWST', g:'universe', d:'Infrared eye on the first galaxies and distant worlds.'},
-    {n:'Roman', g:'universe', d:'Wide-field survey of dark energy and exoplanets.'},
-    {n:'Chandra', g:'universe', d:'X-ray vision into black holes and supernovae.'},
-    {n:'IXPE', g:'universe', d:'X-ray polarimetry of the most extreme cosmic objects.'},
-    {n:'Lucy', g:'universe', d:'First tour of Jupiter’s ancient Trojan asteroids.'},
-    {n:'Dragonfly', g:'universe', d:'A rotorcraft to explore the surface of Titan.'},
-    {n:'DAVINCI+', g:'universe', d:'Descending through Venus’ atmosphere to its surface.'}
-  ];
+  function accent(){
+    var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return a||'#7fd4ff';
+  }
 
-  var GROUPS={
-    sun:{label:'Sun', c:'#f2b43c'},
-    earth:{label:'Earth', c:'#2fd9c3'},
-    universe:{label:'Universe', c:'#8a5cff'}
+  var DOM={
+    sun:{label:'Sun',color:[255,207,110]},
+    earth:{label:'Earth',color:[98,227,182]},
+    universe:{label:'Universe',color:[169,139,255]}
   };
 
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Real NASA / SSAI-relevant missions. sig 1..3 (significance -> node size)
+  var MISSIONS=[
+    {n:'SDO',d:'sun',y:2010,sig:2,p:'Solar Dynamics Observatory imaging the Sun in extreme ultraviolet.'},
+    {n:'SOHO',d:'sun',y:1995,sig:3,p:'Solar & Heliospheric Observatory watching the Sun nonstop for decades.'},
+    {n:'Parker Solar Probe',d:'sun',y:2018,sig:3,p:'First spacecraft to fly through the Sun’s corona.'},
+    {n:'IRIS',d:'sun',y:2013,sig:1,p:'Studies energy flow through the Sun’s lower atmosphere.'},
+    {n:'STEREO',d:'sun',y:2006,sig:1,p:'Twin observatories giving 3D views of solar storms.'},
+    {n:'Solar Orbiter',d:'sun',y:2020,sig:2,p:'Imaging the Sun’s poles and unexplored polar regions.'},
+    {n:'TIMED',d:'sun',y:2001,sig:1,p:'Studies the influence of the Sun on the upper atmosphere.'},
+    {n:'Wind',d:'sun',y:1994,sig:1,p:'Measures the solar wind reaching near-Earth space.'},
+    {n:'ACE',d:'sun',y:1997,sig:1,p:'Advanced Composition Explorer sampling solar and galactic particles.'},
 
-  root.innerHTML='';
-  var head=document.createElement('div'); head.className='kmf-head';
-  var title=document.createElement('div'); title.className='kmf-title';
-  title.innerHTML='<span>Mission filter</span>';
-  var count=document.createElement('div'); count.className='kmf-count';
-  count.innerHTML='<b class="kmf-num">24</b><span class="kmf-lbl">missions</span>';
-  head.appendChild(title); head.appendChild(count);
+    {n:'Terra',d:'earth',y:1999,sig:3,p:'Flagship Earth-observing platform tracking land, ocean and air.'},
+    {n:'Aqua',d:'earth',y:2002,sig:3,p:'Studies Earth’s water cycle across ice, ocean and atmosphere.'},
+    {n:'Landsat 9',d:'earth',y:2021,sig:2,p:'Continues the longest record of Earth’s land surface.'},
+    {n:'PACE',d:'earth',y:2024,sig:2,p:'Studies ocean color, aerosols and clouds for ocean health.'},
+    {n:'GPM',d:'earth',y:2014,sig:2,p:'Global Precipitation Measurement mapping rain and snow worldwide.'},
+    {n:'ICESat-2',d:'earth',y:2018,sig:2,p:'Laser altimetry measuring ice-sheet and sea-ice change.'},
+    {n:'Aura',d:'earth',y:2004,sig:1,p:'Monitors ozone, air quality and atmospheric chemistry.'},
+    {n:'SMAP',d:'earth',y:2015,sig:1,p:'Maps global soil moisture and freeze/thaw state.'},
+    {n:'GRACE-FO',d:'earth',y:2018,sig:1,p:'Tracks Earth’s water movement through tiny gravity changes.'},
+    {n:'Suomi NPP',d:'earth',y:2011,sig:1,p:'Weather and climate observations for the JPSS series.'},
+    {n:'OCO-2',d:'earth',y:2014,sig:1,p:'Measures atmospheric carbon dioxide from space.'},
 
-  var controls=document.createElement('div'); controls.className='kmf-controls';
-  var filters=[
-    {k:'all', label:'All', c:'#a6abe6'},
-    {k:'sun', label:'Sun', c:GROUPS.sun.c},
-    {k:'earth', label:'Earth', c:GROUPS.earth.c},
-    {k:'universe', label:'Universe', c:GROUPS.universe.c}
+    {n:'Hubble',d:'universe',y:1990,sig:3,p:'Iconic space telescope revealing the deep universe in visible light.'},
+    {n:'JWST',d:'universe',y:2021,sig:3,p:'Infrared flagship peering at the first galaxies and exoplanets.'},
+    {n:'Voyager 1',d:'universe',y:1977,sig:3,p:'Humanity’s farthest spacecraft, now in interstellar space.'},
+    {n:'Voyager 2',d:'universe',y:1977,sig:2,p:'Toured the outer planets and crossed into interstellar space.'},
+    {n:'TESS',d:'universe',y:2018,sig:2,p:'Surveys nearby stars to find transiting exoplanets.'},
+    {n:'Chandra',d:'universe',y:1999,sig:2,p:'X-ray observatory imaging black holes and exploded stars.'},
+    {n:'Fermi',d:'universe',y:2008,sig:1,p:'Gamma-ray telescope mapping the most energetic cosmos.'},
+    {n:'Spitzer',d:'universe',y:2003,sig:1,p:'Infrared observatory that studied dust, stars and galaxies.'}
   ];
-  var btns={};
-  filters.forEach(function(f){
-    var b=document.createElement('button'); b.className='kmf-btn'; b.type='button';
-    b.setAttribute('data-k',f.k);
-    b.setAttribute('aria-pressed',f.k==='all'?'true':'false');
-    b.innerHTML='<i class="kmf-dot" style="background:'+f.c+';color:'+f.c+'"></i>'+f.label;
-    if(f.k==='all'){ b.classList.add('on'); b.querySelector('.kmf-dot').style.opacity='0'; }
-    controls.appendChild(b); btns[f.k]=b;
-  });
 
-  var stage=document.createElement('div'); stage.className='kmf-stage';
-  var canvas=document.createElement('canvas'); canvas.className='kmf-canvas';
-  stage.appendChild(canvas);
+  var DPR=1,W=0,H=0,t=0,last=performance.now();
+  var filter='all';
+  var selected=null,hover=null;
+  var stars=[],dust=[];
+  var img=new Image(),imgReady=false;
+  img.onload=function(){imgReady=true;};
+  img.onerror=function(){imgReady=false;};
+  try{img.src='../assets/nasa/starfield.jpg';}catch(e){}
 
-  var detail=document.createElement('div'); detail.className='kmf-detail';
-  detail.innerHTML='<div class="kmf-d-empty">Select a node to read its contribution</div>';
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function easeOut(x){return 1-Math.pow(1-x,3);}
 
-  root.appendChild(head);
-  root.appendChild(controls);
-  root.appendChild(stage);
-  root.appendChild(detail);
-
-  var ctx=canvas.getContext('2d');
-  var W=0,H=0,dpr=1;
-  var active='all';
-  var selected=-1;
-  var hover=-1;
-  var nodes=[];
-
-  function hx(h,a){
-    var n=parseInt(h.slice(1),16);
-    return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';
+  function seedStars(){
+    stars=[];
+    var n=Math.round(Math.min(260,Math.max(110,(W*H)/9000)));
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.3+0.25,
+        b:Math.random()*0.5+0.2,tw:Math.random()*Math.PI*2,ts:Math.random()*0.8+0.3});
+    }
+    dust=[];
+    for(var j=0;j<26;j++){
+      dust.push({x:Math.random(),y:Math.random(),r:Math.random()*0.18+0.06,
+        h:Math.random()*60+200,sp:Math.random()*0.004+0.0015,ph:Math.random()*Math.PI*2});
+    }
   }
 
-  function layout(){
-    var n=MISSIONS.length;
-    nodes=[];
-    for(var i=0;i<n;i++){
-      var m=MISSIONS[i];
-      var t=i/n;
-      var ring=i%3;
-      var rad=(0.30+ring*0.18)*Math.min(W,H)*0.5;
-      var ang=t*Math.PI*2*2.0 + ring*0.7;
-      var jx=(Math.sin(i*12.9898)*0.5)*rad*0.16;
-      var jy=(Math.cos(i*78.233)*0.5)*rad*0.16;
-      nodes.push({
-        m:m,
-        bx:W*0.5+Math.cos(ang)*rad+jx,
-        by:H*0.5+Math.sin(ang)*rad*0.82+jy,
-        x:0,y:0,
-        ph:i*0.6,
-        r:4.4,
-        cur:1, tgt:1,
-        glow:0
+  // assign each mission a stable position within its cluster
+  var clusterOrder={sun:0,earth:1,universe:2};
+  (function init(){
+    var counts={sun:0,earth:0,universe:0};
+    MISSIONS.forEach(function(m){counts[m.d]++;});
+    var idx={sun:0,earth:0,universe:0};
+    MISSIONS.forEach(function(m){
+      var c=counts[m.d],i=idx[m.d]++;
+      // spiral-ish placement inside cluster (unit space, recomputed to px each frame)
+      var golden=2.399963;
+      var ang=i*golden + clusterOrder[m.d]*1.3;
+      var rad=Math.sqrt((i+0.6)/c);
+      m.lx=Math.cos(ang)*rad;
+      m.ly=Math.sin(ang)*rad*0.86;
+      m.tw=Math.random()*Math.PI*2;
+      m.px=0;m.py=0;m.cx=0;m.cy=0; // current + target px
+      m.appear=0; // 0..1 size
+      m.glowP=Math.random()*Math.PI*2;
+      m.drift=Math.random()*Math.PI*2;
+      m.driftS=0.0006+Math.random()*0.0008;
+      m.driftR=6+Math.random()*10;
+    });
+  })();
+
+  function clusterCenters(){
+    // returns px centers + radius for each domain depending on filter
+    var cx=W/2,cy=H/2;
+    var minD=Math.min(W,H);
+    var centers={};
+    if(filter==='all'){
+      var spreadX=W*0.27, spreadY=H*0.10;
+      var R=minD*0.20;
+      centers.sun     ={x:cx-spreadX, y:cy-spreadY*0.4+H*0.03, r:R};
+      centers.earth   ={x:cx,          y:cy+spreadY*1.4+H*0.02, r:R};
+      centers.universe={x:cx+spreadX,  y:cy-spreadY*0.4+H*0.03, r:R};
+    }else{
+      // focused: active centered & large, others pushed to faint edges
+      var bigR=minD*0.34;
+      var order=['sun','earth','universe'];
+      order.forEach(function(d){
+        if(d===filter){centers[d]={x:cx,y:cy+H*0.02,r:bigR};}
+      });
+      var sideIdx=0;
+      order.forEach(function(d){
+        if(d!==filter){
+          var sx=sideIdx===0? W*0.085 : W*0.915;
+          var sy=sideIdx===0? H*0.16 : H*0.20;
+          centers[d]={x:sx,y:sy,r:minD*0.085};
+          sideIdx++;
+        }
       });
     }
-    nodes.forEach(function(nd){ nd.x=nd.bx; nd.y=nd.by; });
+    return centers;
   }
 
-  function size(){
-    W=root.clientWidth||stage.clientWidth||600;
-    H=stage.clientHeight||Math.round(W*0.62);
-    dpr=Math.min(window.devicePixelRatio||1,2);
-    canvas.width=Math.round(W*dpr);
-    canvas.height=Math.round(H*dpr);
-    canvas.style.width=W+'px';
-    canvas.style.height=H+'px';
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    layout();
+  function visibleCount(){
+    if(filter==='all')return MISSIONS.length;
+    var c=0;MISSIONS.forEach(function(m){if(m.d===filter)c++;});return c;
   }
 
-  function matches(nd){ return active==='all'||nd.m.g===active; }
-
-  function updateTargets(){
-    var c=0;
-    nodes.forEach(function(nd){
-      var on=matches(nd);
-      if(on) c++;
-      nd.tgt=on?1:0;
-    });
-    var num=count.querySelector('.kmf-num');
-    num.textContent=c;
-    var lbl=count.querySelector('.kmf-lbl');
-    lbl.textContent=c===1?'mission':'missions';
-  }
-
-  function setActive(k){
-    active=k;
-    Object.keys(btns).forEach(function(key){
-      var on=key===k;
-      btns[key].classList.toggle('on',on);
-      btns[key].setAttribute('aria-pressed',on?'true':'false');
-    });
-    if(selected>=0 && !matches(nodes[selected])){ selected=-1; renderDetail(); }
-    updateTargets();
-    if(reduce){ nodes.forEach(function(nd){ nd.cur=nd.tgt; }); draw(0); }
-  }
-
-  function renderDetail(){
-    if(selected<0){
-      detail.innerHTML='<div class="kmf-d-empty">Select a node to read its contribution</div>';
-      return;
+  function resize(){
+    var cw=canvas.clientWidth||root.clientWidth||800;
+    var ch=canvas.clientHeight||root.clientHeight||500;
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    var nw=Math.max(1,Math.round(cw*DPR)), nh=Math.max(1,Math.round(ch*DPR));
+    if(nw!==canvas.width||nh!==canvas.height){
+      canvas.width=nw;canvas.height=nh;
     }
-    var m=nodes[selected].m;
-    var g=GROUPS[m.g];
-    detail.innerHTML=
-      '<div class="kmf-d-card">'+
-      '<div class="kmf-d-top">'+
-      '<span class="kmf-d-tag" style="color:'+g.c+';border-color:'+hx(g.c,0.4)+';background:'+hx(g.c,0.10)+'">'+g.label+'</span>'+
-      '<span class="kmf-d-name">'+m.n+'</span>'+
-      '</div>'+
-      '<div class="kmf-d-desc">'+m.d+'</div>'+
-      '</div>';
+    W=cw;H=ch;
+    if(stars.length===0||Math.abs(stars._w-W)>40){seedStars();stars._w=W;}
   }
 
-  function pick(px,py){
-    var best=-1, bd=18*18;
-    for(var i=0;i<nodes.length;i++){
-      var nd=nodes[i];
-      if(nd.cur<0.35) continue;
-      var dx=px-nd.x, dy=py-nd.y;
-      var d=dx*dx+dy*dy;
-      if(d<bd){ bd=d; best=i; }
+  function targetFor(m){
+    var c=clusterCenters()[m.d];
+    return {x:c.x+m.lx*c.r, y:c.y+m.ly*c.r};
+  }
+
+  function nodeRadius(m){
+    var base=(Math.min(W,H))*0.006;
+    var s=[0,base*1.0,base*1.5,base*2.2][m.sig];
+    return Math.max(2.4,s);
+  }
+
+  function domAlpha(m){
+    if(filter==='all')return 1;
+    return m.d===filter?1:0.16;
+  }
+
+  function draw(now){
+    var dt=Math.min(50,now-last);last=now;t+=dt;
+    resize();
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    ctx.clearRect(0,0,W,H);
+
+    // base gradient wash
+    var g=ctx.createRadialGradient(W*0.5,H*0.18,0,W*0.5,H*0.18,Math.max(W,H)*0.9);
+    g.addColorStop(0,'rgba(18,14,52,0.55)');
+    g.addColorStop(0.5,'rgba(8,5,30,0.25)');
+    g.addColorStop(1,'rgba(5,3,20,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+    // optional nasa starfield sprite, very subtle
+    if(imgReady){
+      ctx.globalAlpha=0.18;
+      var iw=img.width,ih=img.height,ir=iw/ih,cr=W/H,dw,dh,dx,dy;
+      if(cr>ir){dw=W;dh=W/ir;}else{dh=H;dw=H*ir;}
+      dx=(W-dw)/2;dy=(H-dh)/2;
+      ctx.drawImage(img,dx,dy,dw,dh);
+      ctx.globalAlpha=1;
     }
-    return best;
+
+    // nebula dust
+    ctx.globalCompositeOperation='lighter';
+    for(var d0=0;d0<dust.length;d0++){
+      var du=dust[d0];
+      du.ph+=du.sp;
+      var dxp=(du.x+Math.sin(du.ph)*0.02)*W;
+      var dyp=(du.y+Math.cos(du.ph*0.8)*0.02)*H;
+      var dr=du.r*Math.min(W,H);
+      var ng=ctx.createRadialGradient(dxp,dyp,0,dxp,dyp,dr);
+      ng.addColorStop(0,'hsla('+du.h+',70%,60%,0.05)');
+      ng.addColorStop(1,'hsla('+du.h+',70%,60%,0)');
+      ctx.fillStyle=ng;ctx.beginPath();ctx.arc(dxp,dyp,dr,0,7);ctx.fill();
+    }
+
+    // stars
+    for(var s0=0;s0<stars.length;s0++){
+      var st=stars[s0];
+      st.tw+=0.0016*st.ts*dt;
+      var b=st.b*(0.55+0.45*Math.sin(st.tw));
+      ctx.globalAlpha=b;
+      ctx.fillStyle='#dfe6ff';
+      ctx.beginPath();ctx.arc(st.x*W,st.y*H,st.r,0,7);ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    ctx.globalCompositeOperation='source-over';
+
+    var ac=accent();
+
+    // update positions toward targets
+    for(var i=0;i<MISSIONS.length;i++){
+      var m=MISSIONS[i];
+      var tg=targetFor(m);
+      m.drift+=m.driftS*dt;
+      var dax=Math.cos(m.drift)*m.driftR;
+      var day=Math.sin(m.drift*1.1)*m.driftR;
+      var txx=tg.x+dax, tyy=tg.y+day;
+      if(m.px===0&&m.py===0){m.px=txx;m.py=tyy;}
+      m.px=lerp(m.px,txx,Math.min(1,0.06*dt/16));
+      m.py=lerp(m.py,tyy,Math.min(1,0.06*dt/16));
+      m.appear=lerp(m.appear,1,0.04);
+      m.cx=m.px;m.cy=m.py;
+    }
+
+    // constellation lines per domain (nearest-neighbor chains)
+    var domains=['sun','earth','universe'];
+    ctx.globalCompositeOperation='lighter';
+    domains.forEach(function(dd){
+      var pts=MISSIONS.filter(function(m){return m.d===dd;});
+      var col=DOM[dd].color;
+      var a=(filter==='all')?0.22:(dd===filter?0.30:0.03);
+      if(a<=0.001)return;
+      ctx.lineWidth=1;
+      // connect each point to its 2 nearest siblings
+      for(var p=0;p<pts.length;p++){
+        var A=pts[p];
+        var dists=[];
+        for(var q=0;q<pts.length;q++){
+          if(q===p)continue;
+          var B=pts[q];
+          var dd2=(A.cx-B.cx)*(A.cx-B.cx)+(A.cy-B.cy)*(A.cy-B.cy);
+          dists.push([dd2,B]);
+        }
+        dists.sort(function(x,y){return x[0]-y[0];});
+        for(var k=0;k<Math.min(2,dists.length);k++){
+          var Bp=dists[k][1];
+          ctx.strokeStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+a+')';
+          ctx.beginPath();ctx.moveTo(A.cx,A.cy);ctx.lineTo(Bp.cx,Bp.cy);ctx.stroke();
+        }
+      }
+    });
+    ctx.globalCompositeOperation='source-over';
+
+    // nodes
+    var fontPx=Math.max(9,Math.min(13,Math.min(W,H)*0.018));
+    ctx.textBaseline='middle';
+    for(var n=0;n<MISSIONS.length;n++){
+      var mn=MISSIONS[n];
+      var col2=DOM[mn.d].color;
+      var alpha=domAlpha(mn)*mn.appear;
+      var r=nodeRadius(mn)*(0.6+0.4*mn.appear);
+      var isSel=selected===mn, isHov=hover===mn;
+      mn.glowP+=0.0018*dt;
+      var pulse=0.5+0.5*Math.sin(mn.glowP);
+
+      // glow halo
+      var haloR=r*(isSel?6.5:isHov?5:3.4);
+      ctx.globalCompositeOperation='lighter';
+      var hg=ctx.createRadialGradient(mn.cx,mn.cy,0,mn.cx,mn.cy,haloR);
+      var ha=alpha*(isSel?0.55:isHov?0.42:0.22)*(0.7+0.3*pulse);
+      hg.addColorStop(0,'rgba('+col2[0]+','+col2[1]+','+col2[2]+','+ha+')');
+      hg.addColorStop(1,'rgba('+col2[0]+','+col2[1]+','+col2[2]+',0)');
+      ctx.fillStyle=hg;ctx.beginPath();ctx.arc(mn.cx,mn.cy,haloR,0,7);ctx.fill();
+      ctx.globalCompositeOperation='source-over';
+
+      // core
+      ctx.globalAlpha=alpha;
+      ctx.fillStyle='rgba('+col2[0]+','+col2[1]+','+col2[2]+',1)';
+      ctx.beginPath();ctx.arc(mn.cx,mn.cy,r,0,7);ctx.fill();
+      // bright center
+      ctx.fillStyle='rgba(255,255,255,'+(0.85*alpha)+')';
+      ctx.beginPath();ctx.arc(mn.cx,mn.cy,r*0.42,0,7);ctx.fill();
+
+      // selection ring
+      if(isSel){
+        ctx.globalAlpha=alpha;
+        ctx.strokeStyle=ac;ctx.lineWidth=1.4;
+        var ring=r+5+Math.sin(t*0.005)*2;
+        ctx.beginPath();ctx.arc(mn.cx,mn.cy,ring,0,7);ctx.stroke();
+      }
+
+      // labels: show all when 'all' only for big sig OR when focused; always for sel/hover
+      var showLabel=isSel||isHov|| (filter!=='all'&&mn.d===filter) || (filter==='all'&&mn.sig>=3);
+      if(showLabel){
+        var labA=Math.min(1,alpha* (isSel||isHov?1:0.78));
+        ctx.globalAlpha=labA;
+        ctx.font='600 '+fontPx+'px Inter,system-ui,sans-serif';
+        var label=mn.n;
+        var tw=ctx.measureText(label).width;
+        var lx=mn.cx+r+7, ly=mn.cy;
+        if(lx+tw>W-10){lx=mn.cx-r-7-tw;}
+        // subtle shadow plate
+        ctx.shadowColor='rgba(0,0,0,0.6)';ctx.shadowBlur=6;
+        ctx.fillStyle='rgba(238,242,255,0.95)';
+        ctx.fillText(label,lx,ly);
+        ctx.shadowBlur=0;
+      }
+      ctx.globalAlpha=1;
+    }
+
+    requestAnimationFrame(draw);
   }
 
-  function evtPos(e){
+  // interaction
+  function pos(e){
     var rect=canvas.getBoundingClientRect();
     var cx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
     var cy=(e.touches?e.touches[0].clientY:e.clientY)-rect.top;
     return {x:cx,y:cy};
   }
-
+  function pick(p){
+    var best=null,bd=1e9;
+    for(var i=0;i<MISSIONS.length;i++){
+      var m=MISSIONS[i];
+      if(filter!=='all'&&m.d!==filter)continue;
+      var dx=m.cx-p.x,dy=m.cy-p.y;
+      var d=dx*dx+dy*dy;
+      var hit=nodeRadius(m)+16;
+      if(d<hit*hit&&d<bd){bd=d;best=m;}
+    }
+    return best;
+  }
   canvas.addEventListener('mousemove',function(e){
-    var p=evtPos(e);
-    var h=pick(p.x,p.y);
-    if(h!==hover){ hover=h; canvas.style.cursor=h>=0?'pointer':'default'; }
+    hover=pick(pos(e));
+    canvas.style.cursor=hover?'pointer':'crosshair';
   });
-  canvas.addEventListener('mouseleave',function(){ hover=-1; });
-  canvas.addEventListener('click',function(e){
-    var p=evtPos(e);
-    var h=pick(p.x,p.y);
-    if(h>=0){ selected=(selected===h)?-1:h; renderDetail(); }
-  });
+  canvas.addEventListener('mouseleave',function(){hover=null;});
+  function selectAt(e){
+    var m=pick(pos(e));
+    if(m){selectMission(m);}
+  }
+  canvas.addEventListener('click',selectAt);
   canvas.addEventListener('touchstart',function(e){
-    var p=evtPos(e);
-    var h=pick(p.x,p.y);
-    if(h>=0){ selected=(selected===h)?-1:h; renderDetail(); e.preventDefault(); }
+    var m=pick(pos(e));
+    if(m){e.preventDefault();selectMission(m);}
   },{passive:false});
 
-  controls.addEventListener('click',function(e){
-    var b=e.target.closest('.kmf-btn'); if(!b) return;
-    setActive(b.getAttribute('data-k'));
-  });
-
-  function ease(a,b,k){ return a+(b-a)*k; }
-
-  function draw(time){
-    ctx.clearRect(0,0,W,H);
-    var i,nd,a,b;
-
-    for(i=0;i<nodes.length;i++){
-      nd=nodes[i];
-      nd.cur=ease(nd.cur,nd.tgt,reduce?1:0.12);
-      var fl=reduce?0:Math.sin(time*0.0011+nd.ph)*3.0;
-      var fl2=reduce?0:Math.cos(time*0.0009+nd.ph*1.3)*2.4;
-      nd.x=nd.bx+fl;
-      nd.y=nd.by+fl2;
-      var hovOn=(hover===i)||(selected===i);
-      nd.glow=ease(nd.glow,hovOn?1:0,reduce?1:0.18);
-    }
-
-    for(i=0;i<nodes.length;i++){
-      a=nodes[i];
-      if(a.cur<0.18) continue;
-      for(var j=i+1;j<nodes.length;j++){
-        b=nodes[j];
-        if(b.cur<0.18) continue;
-        if(a.m.g!==b.m.g) continue;
-        var dx=a.x-b.x, dy=a.y-b.y;
-        var dd=Math.sqrt(dx*dx+dy*dy);
-        var maxd=Math.min(W,H)*0.30;
-        if(dd<maxd){
-          var op=(1-dd/maxd)*0.5*Math.min(a.cur,b.cur)*Math.min(a.cur,b.cur);
-          if(op<0.012) continue;
-          var col=GROUPS[a.m.g].c;
-          ctx.strokeStyle=hx(col,op);
-          ctx.lineWidth=1;
-          ctx.beginPath();
-          ctx.moveTo(a.x,a.y);
-          ctx.lineTo(b.x,b.y);
-          ctx.stroke();
-        }
-      }
-    }
-
-    for(i=0;i<nodes.length;i++){
-      nd=nodes[i];
-      var vis=nd.cur;
-      if(vis<0.04) continue;
-      var col=GROUPS[nd.m.g].c;
-      var sel=(selected===i);
-      var hovd=(hover===i);
-      var em=0.18+0.82*vis;
-      var r=nd.r*(0.85+vis*0.15)+nd.glow*2.2+(sel?1.4:0);
-
-      if((nd.glow>0.02||sel)&&vis>0.3){
-        ctx.beginPath();
-        ctx.arc(nd.x,nd.y,r+8*nd.glow+(sel?5:0),0,Math.PI*2);
-        ctx.fillStyle=hx(col,0.14*nd.glow+(sel?0.10:0));
-        ctx.fill();
-      }
-
-      ctx.beginPath();
-      ctx.arc(nd.x,nd.y,r,0,Math.PI*2);
-      ctx.fillStyle=hx(col,em);
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(nd.x,nd.y,r,0,Math.PI*2);
-      ctx.strokeStyle=hx('#f4f5ff',(0.25+0.45*vis)*(sel||hovd?1:0.6));
-      ctx.lineWidth=sel?1.4:1;
-      ctx.stroke();
-
-      var labelAlpha=(active!=='all')?Math.max(0,(vis-0.5)*2):Math.max(nd.glow,sel?1:0);
-      if(labelAlpha>0.03){
-        ctx.font='600 11px Inter, system-ui, sans-serif';
-        ctx.textAlign='center';
-        ctx.textBaseline='top';
-        var tx=nd.x, ty=nd.y+r+4;
-        var label=nd.m.n;
-        var tw=ctx.measureText(label).width;
-        ctx.fillStyle=hx('#050314',0.55*labelAlpha);
-        ctx.fillRect(tx-tw/2-3,ty-1,tw+6,15);
-        ctx.fillStyle=hx('#f4f5ff',(sel?1:0.88)*labelAlpha);
-        ctx.fillText(label,tx,ty);
-      }
-    }
+  function selectMission(m){
+    selected=m;
+    elName.textContent=m.n;
+    elYear.textContent=m.y;
+    elCDom.textContent=DOM[m.d].label+' • Domain';
+    elDesc.textContent=m.p;
+    var c=DOM[m.d].color;
+    elCard.style.borderColor='rgba('+c[0]+','+c[1]+','+c[2]+',0.5)';
+    elCard.style.boxShadow='0 14px 44px rgba(0,0,0,.46), 0 0 26px -10px rgba('+c[0]+','+c[1]+','+c[2]+',0.9)';
   }
 
-  var raf;
-  function loop(t){ draw(t); raf=requestAnimationFrame(loop); }
-
-  function start(){
-    size();
-    updateTargets();
-    nodes.forEach(function(nd){ nd.cur=nd.tgt; });
-    if(reduce){ draw(0); }
-    else { raf=requestAnimationFrame(loop); }
-  }
-
-  var rt;
-  window.addEventListener('resize',function(){
-    clearTimeout(rt);
-    rt=setTimeout(function(){ size(); if(reduce) draw(0); },120);
+  pills.forEach(function(b){
+    b.addEventListener('click',function(){
+      filter=b.getAttribute('data-domain');
+      pills.forEach(function(o){
+        var on=o===b;
+        o.classList.toggle('missions-filter-active',on);
+        o.setAttribute('aria-selected',on?'true':'false');
+      });
+      var vc=visibleCount();
+      elCount.textContent=vc+' mission'+(vc===1?'':'s');
+      if(selected&&filter!=='all'&&selected.d!==filter){
+        // keep selection but it'll fade; that's fine
+      }
+    });
   });
 
-  start();
+  // initial readouts + select a flagship
+  elCount.textContent=MISSIONS.length+' missions';
+
+  var ro;
+  if('ResizeObserver' in window){
+    ro=new ResizeObserver(function(){resize();});
+    ro.observe(root);
+  }
+  window.addEventListener('resize',resize);
+
+  resize();
+  // pick Hubble as a graceful default highlight after layout settles
+  setTimeout(function(){
+    var def=MISSIONS.find(function(m){return m.n==='Hubble';});
+    if(def){def.appear=0.3;}
+  },50);
+
+  requestAnimationFrame(draw);
 })();
 </script>
 </body></html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sun–Earth Lagrange Points · SSAI</title>
+<title>The Five Lagrange Points · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,26 +41,33 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-lagrange{ position:relative; width:100%; color:#f4f5ff; font-family:'Inter',system-ui,sans-serif; }
-#kit-lagrange .kfig-stage{ position:relative; width:100%; min-height:320px; border:1px solid rgba(166,171,230,0.16); border-radius:14px; background:radial-gradient(120% 90% at 50% 40%, #0a0726 0%, #050314 70%); overflow:hidden; }
-#kit-lagrange .kfig-canvas{ display:block; width:100%; touch-action:pan-y; }
-#kit-lagrange .kfig-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 10px; }
-#kit-lagrange .kfig-title{ font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; font-size:15px; color:#f4f5ff; margin:0; }
-#kit-lagrange .kfig-sub{ font-size:12px; color:#a6abe6; margin:0; }
-#kit-lagrange .kfig-tip{ position:absolute; top:0; left:0; max-width:230px; padding:9px 11px; background:rgba(8,6,28,0.92); border:1px solid rgba(166,171,230,0.28); border-radius:9px; pointer-events:none; opacity:0; transition:opacity .14s ease; z-index:4; will-change:transform,opacity; }
-#kit-lagrange .kfig-tip.on{ opacity:1; }
-#kit-lagrange .kfig-tip-t{ display:block; font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase; font-size:12px; color:var(--accent,#3cc8ff); letter-spacing:0.03em; margin-bottom:3px; }
-#kit-lagrange .kfig-tip-d{ display:block; font-size:11.5px; line-height:1.45; color:#d7d9f5; }
-#kit-lagrange .kfig-bar{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:10px; }
-#kit-lagrange .kfig-btn{ font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; font-size:11px; color:#f4f5ff; background:rgba(22,20,95,0.55); border:1px solid rgba(166,171,230,0.28); border-radius:8px; padding:7px 13px; cursor:pointer; transition:border-color .15s ease, background .15s ease, transform .1s ease; }
-#kit-lagrange .kfig-btn:hover{ border-color:var(--accent,#3cc8ff); background:rgba(22,20,95,0.85); }
-#kit-lagrange .kfig-btn:active{ transform:scale(0.97); }
-#kit-lagrange .kfig-btn:focus-visible{ outline:2px solid var(--accent,#3cc8ff); outline-offset:2px; }
-#kit-lagrange .kfig-readout{ font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; font-size:11px; color:#a6abe6; margin-left:auto; }
-#kit-lagrange .kfig-legend{ display:flex; gap:14px; flex-wrap:wrap; margin-top:9px; font-size:11px; color:#a6abe6; }
-#kit-lagrange .kfig-legend span{ display:inline-flex; align-items:center; gap:6px; }
-#kit-lagrange .kfig-dot{ width:9px; height:9px; border-radius:50%; display:inline-block; }
-@media (max-width:520px){ #kit-lagrange .kfig-readout{ margin-left:0; width:100%; } }
+#kit-lagrange{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eaf0ff;-webkit-font-smoothing:antialiased}
+#kit-lagrange canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
+#kit-lagrange .lagrange-controls{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:flex;align-items:center;gap:18px;padding:10px 16px;border-radius:999px;background:rgba(10,8,30,0.46);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(180,200,255,0.12);box-shadow:0 8px 40px rgba(0,0,0,0.45);z-index:6}
+#kit-lagrange .lagrange-ctl{display:flex;align-items:center;gap:10px}
+#kit-lagrange .lagrange-ctl-lbl{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(210,220,255,0.62);font-weight:600}
+#kit-lagrange .lagrange-slider{-webkit-appearance:none;appearance:none;width:118px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent,#7fb0ff),rgba(180,200,255,0.18));outline:none;cursor:pointer}
+#kit-lagrange .lagrange-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 10px var(--accent,#7fb0ff),0 2px 6px rgba(0,0,0,0.5);cursor:pointer}
+#kit-lagrange .lagrange-slider::-moz-range-thumb{width:14px;height:14px;border:none;border-radius:50%;background:#fff;box-shadow:0 0 10px var(--accent,#7fb0ff);cursor:pointer}
+#kit-lagrange .lagrange-toggle{font-family:inherit;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;font-weight:600;color:rgba(210,220,255,0.7);padding:7px 13px;border-radius:999px;border:1px solid rgba(180,200,255,0.2);background:rgba(127,176,255,0.14);cursor:pointer;transition:all .25s ease}
+#kit-lagrange .lagrange-toggle:hover{color:#fff;border-color:rgba(180,200,255,0.4)}
+#kit-lagrange .lagrange-toggle[aria-pressed="false"]{opacity:0.45;background:rgba(127,176,255,0.04)}
+#kit-lagrange .lagrange-hud{position:absolute;z-index:5;pointer-events:none;background:rgba(8,6,24,0.4);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(180,200,255,0.1);border-radius:14px;padding:14px 17px;box-shadow:0 8px 36px rgba(0,0,0,0.4)}
+#kit-lagrange .lagrange-hud-tl{top:20px;left:20px;max-width:min(58%,300px)}
+#kit-lagrange .lagrange-hud-br{bottom:20px;right:20px;padding:11px 14px}
+#kit-lagrange .lagrange-hud-eyebrow{font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(200,212,255,0.5);font-weight:600;margin-bottom:5px}
+#kit-lagrange .lagrange-hud-title{font-size:18px;font-weight:600;letter-spacing:0.01em;line-height:1.15;margin-bottom:9px;color:#f4f7ff}
+#kit-lagrange .lagrange-hud-row{display:flex;align-items:center;gap:11px;margin-bottom:8px;flex-wrap:wrap}
+#kit-lagrange .lagrange-pill{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;padding:3px 9px;border-radius:999px;background:rgba(255,150,120,0.16);color:#ffb59a;border:1px solid rgba(255,150,120,0.3)}
+#kit-lagrange .lagrange-pill.is-stable{background:rgba(120,235,180,0.15);color:#8af0bf;border-color:rgba(120,235,180,0.32)}
+#kit-lagrange .lagrange-dist{font-size:11.5px;color:rgba(214,224,255,0.74);font-variant-numeric:tabular-nums}
+#kit-lagrange .lagrange-hud-mission{font-size:11.5px;color:rgba(214,224,255,0.82);line-height:1.35}
+#kit-lagrange .lagrange-leg-row{display:flex;align-items:center;gap:8px;font-size:10.5px;color:rgba(210,220,255,0.66);letter-spacing:0.02em}
+#kit-lagrange .lagrange-leg-row+.lagrange-leg-row{margin-top:6px}
+#kit-lagrange .lagrange-dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+#kit-lagrange .lagrange-dot-stable{background:#8af0bf;box-shadow:0 0 8px rgba(120,235,180,0.7)}
+#kit-lagrange .lagrange-dot-unstable{background:#ffb59a;box-shadow:0 0 8px rgba(255,150,120,0.7)}
+@media (max-width:560px){#kit-lagrange .lagrange-hud-tl{max-width:64%}#kit-lagrange .lagrange-legend{display:none}#kit-lagrange .lagrange-slider{width:88px}}
 
 body.mb-embed #kit-lagrange{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-lagrange [class*='frame'],body.mb-embed #kit-lagrange [class*='shell'],body.mb-embed #kit-lagrange [class*='-inner'],body.mb-embed #kit-lagrange [class*='wrapper']{display:contents!important;}
@@ -77,32 +84,32 @@ body.mb-embed #kit-lagrange [class*='stage'],body.mb-embed #kit-lagrange [class*
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Sun–Earth Lagrange Points</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">The Five Lagrange Points</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-lagrange">
-  <div class="kfig-head">
-    <p class="kfig-title">Sun–Earth Lagrange Points</p>
-    <p class="kfig-sub">Five gravitational parking spots that ride with Earth's orbit</p>
+  <canvas id="lagrange-canvas"></canvas>
+  <div class="lagrange-controls" id="lagrange-controls">
+    <label class="lagrange-ctl">
+      <span class="lagrange-ctl-lbl">Field</span>
+      <input type="range" id="lagrange-field" class="lagrange-slider" min="0" max="100" value="62" aria-label="Gravitational field intensity">
+    </label>
+    <button type="button" id="lagrange-contours" class="lagrange-toggle" aria-pressed="true">Contours</button>
   </div>
-  <div class="kfig-stage">
-    <canvas class="kfig-canvas"></canvas>
-    <div class="kfig-tip"></div>
+  <div class="lagrange-hud lagrange-hud-tl" id="lagrange-hud-sel">
+    <div class="lagrange-hud-eyebrow">Selected point</div>
+    <div class="lagrange-hud-title" id="lagrange-name">L2 · Earth–Sun</div>
+    <div class="lagrange-hud-row"><span id="lagrange-stab" class="lagrange-pill">Unstable</span><span class="lagrange-dist" id="lagrange-dist">1.5M km from Earth</span></div>
+    <div class="lagrange-hud-mission" id="lagrange-mission">Resident: James Webb Space Telescope</div>
   </div>
-  <div class="kfig-legend">
-    <span><i class="kfig-dot" style="background:var(--accent,#3cc8ff)"></i>Collinear L1·L2·L3 (unstable)</span>
-    <span><i class="kfig-dot" style="background:#ffcf6e"></i>Triangular L4·L5 (stable)</span>
-    <span><i class="kfig-dot" style="background:#f4f5ff"></i>Spacecraft on station</span>
-  </div>
-  <div class="kfig-bar">
-    <button class="kfig-btn" data-act="spin" aria-pressed="true">Pause orbit</button>
-    <button class="kfig-btn" data-act="frame" aria-pressed="false">Lock frame</button>
-    <span class="kfig-readout">Inertial frame</span>
+  <div class="lagrange-hud lagrange-hud-br" id="lagrange-legend">
+    <div class="lagrange-leg-row"><span class="lagrange-dot lagrange-dot-stable"></span>Stable equilibrium</div>
+    <div class="lagrange-leg-row"><span class="lagrange-dot lagrange-dot-unstable"></span>Unstable saddle</div>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Hover any L-point, planet, or spacecraft for a one-line label; toggle &quot;Pause orbit&quot; to freeze Earth and &quot;Lock frame&quot; to switch into the co-rotating reference frame where Earth and all five points stand still.</span>
+    <span class="mb-c-int">The Sun, Earth and all five Lagrange points sit on a slowly co-rotating orbital plane over a glowing saddle-contour potential field that fills the frame; SOHO at L1 and JWST at L2 trace small halo-orbit wobbles. Hover or click any Lagrange point to select it — a HUD chip reports its name, stability, distance from Earth and resident mission. A single slider adjusts the field intensity, and a toggle shows/hides the contour field.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -153,372 +160,428 @@ body.mb-embed #kit-lagrange [class*='stage'],body.mb-embed #kit-lagrange [class*
 </script>
 <script>
 (function(){
-  var root = document.getElementById('kit-lagrange');
-  if(!root) return;
+  var root=document.getElementById('kit-lagrange');
+  if(!root)return;
+  var canvas=root.querySelector('#lagrange-canvas');
+  var ctx=canvas.getContext('2d');
+  var slider=root.querySelector('#lagrange-field');
+  var contourBtn=root.querySelector('#lagrange-contours');
+  var nameEl=root.querySelector('#lagrange-name');
+  var stabEl=root.querySelector('#lagrange-stab');
+  var distEl=root.querySelector('#lagrange-dist');
+  var missionEl=root.querySelector('#lagrange-mission');
 
-  var canvas = root.querySelector('.kfig-canvas');
-  var ctx = canvas.getContext('2d');
-  var tip = root.querySelector('.kfig-tip');
-  var readout = root.querySelector('.kfig-readout');
-  var btnSpin = root.querySelector('[data-act="spin"]');
-  var btnReset = root.querySelector('[data-act="frame"]');
-
-  var reduce = false;
-  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
-
-  var DPR = 1, W = 0, H = 0, cx = 0, cy = 0;
-  var accent = '#3cc8ff', accentRgb = '60,200,255';
-
-  var earthAng = -0.55;
-  var spinSpeed = 0.16;
-  var rotating = !reduce;
-  var corotate = false;
-  var corotPhase = 0;
-  var hoverKey = null;
-  var pointerX = 0, pointerY = 0, hasPointer = false;
-
-  var POINTS = [
-    { key:'L1', radial:0.90, angOff:0, color:function(){return accent;},
-      title:'L1 · Sunward gateway',
-      desc:'1.5M km sunward of Earth. SOHO watches the Sun here, unobscured, day and night.' },
-    { key:'L2', radial:1.10, angOff:0, color:function(){return accent;},
-      title:'L2 · The cold shadow',
-      desc:'1.5M km beyond Earth. JWST parks here so Sun, Earth and Moon stay on one side — deep, stable cold.' },
-    { key:'L3', radial:1.06, angOff:Math.PI, color:function(){return accent;},
-      title:'L3 · Hidden far side',
-      desc:'Opposite the Sun, ~300M km away, forever blocked from Earth. Unstable — the realm of sci-fi "Counter-Earths".' },
-    { key:'L4', radial:1.0, angOff:Math.PI/3, color:function(){return '#ffcf6e';},
-      title:'L4 · Leading triangle',
-      desc:'60° ahead of Earth, an equilateral point. Stable — it gently traps dust and Trojan asteroids.' },
-    { key:'L5', radial:1.0, angOff:-Math.PI/3, color:function(){return '#ffcf6e';},
-      title:'L5 · Trailing triangle',
-      desc:'60° behind Earth, mirror of L4. Stable — proposed home for space telescopes and habitats.' }
-  ];
-
-  var CRAFT = [
-    { key:'JWST', host:'L2', title:'JWST', desc:'James Webb Space Telescope — holds station at L2 since 2022.' },
-    { key:'SOHO', host:'L1', title:'SOHO', desc:'Solar & Heliospheric Observatory — orbiting L1 since 1996.' }
-  ];
-
-  var stars = [];
-  function seedStars(n){
-    stars = [];
-    for(var i=0;i<n;i++){
-      stars.push({ x:Math.random(), y:Math.random(), r:Math.random()*1.1+0.2, t:Math.random()*6.28, s:Math.random()*0.7+0.3 });
-    }
+  var accent='#7fb0ff';
+  function readAccent(){
+    var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    if(a)accent=a;
   }
-  seedStars(140);
+  readAccent();
 
   function hexToRgb(h){
-    if(!h) return null;
-    h = h.replace('#','');
-    if(h.length===3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    if(h.length!==6) return null;
-    var n = parseInt(h,16);
-    if(isNaN(n)) return null;
-    return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);
+    h=(h||'').replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16);
+    if(isNaN(n))return{r:127,g:176,b:255};
+    return{r:(n>>16)&255,g:(n>>8)&255,b:n&255};
   }
-  function readAccent(){
-    try {
-      var cs = getComputedStyle(document.documentElement);
-      var a = cs.getPropertyValue('--accent').trim();
-      if(a) accent = a;
-      var rgb = cs.getPropertyValue('--accent-rgb').trim();
-      if(rgb) accentRgb = rgb;
-      else { var r = hexToRgb(accent); if(r) accentRgb = r; }
-    } catch(e){}
+  var aRGB=hexToRgb(accent);
+  function aStr(al){return'rgba('+aRGB.r+','+aRGB.g+','+aRGB.b+','+al+')';}
+
+  // Sun image (real NASA asset) with procedural fallback
+  var sunImg=new Image();var sunReady=false;
+  sunImg.onload=function(){sunReady=true;};
+  sunImg.onerror=function(){sunReady=false;};
+  try{sunImg.src='../assets/sun.jpg';}catch(e){}
+  var earthImg=new Image();var earthReady=false;
+  earthImg.onload=function(){earthReady=true;};
+  earthImg.onerror=function(){earthReady=false;};
+  try{earthImg.src='../assets/earth.jpg';}catch(e){}
+
+  // Lagrange points: angle offset(rad) & radial position relative to Earth orbit (1 = Earth orbit radius)
+  // x along Sun->Earth axis. L1 inside, L2 outside, L3 opposite, L4/L5 at +-60deg
+  var points=[
+    {id:'L1',rx:0.94,ang:0,stable:false,name:'L1 · Earth–Sun',dist:'1.5M km sunward of Earth',mission:'Resident: SOHO solar observatory'},
+    {id:'L2',rx:1.06,ang:0,stable:false,name:'L2 · Earth–Sun',dist:'1.5M km anti-sunward',mission:'Resident: James Webb Space Telescope'},
+    {id:'L3',rx:1.00,ang:Math.PI,stable:false,name:'L3 · Earth–Sun',dist:'~300M km, far side of Sun',mission:'Resident: none (no missions)'},
+    {id:'L4',rx:1.00,ang:Math.PI/3,stable:true,name:'L4 · Earth–Sun',dist:'~150M km, leading 60°',mission:'Resident: dust & trojan candidates'},
+    {id:'L5',rx:1.00,ang:-Math.PI/3,stable:true,name:'L5 · Earth–Sun',dist:'~150M km, trailing 60°',mission:'Resident: dust & trojan candidates'}
+  ];
+  var selected=1; // L2 (JWST)
+
+  // starfield
+  var stars=[];
+  function seedStars(w,h){
+    stars=[];
+    var n=Math.round((w*h)/9000);
+    n=Math.max(80,Math.min(420,n));
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.3+0.2,p:Math.random()*Math.PI*2,sp:0.4+Math.random()*1.6});
+    }
   }
 
+  var dpr=1,W=0,H=0;
   function resize(){
-    var rect = root.getBoundingClientRect();
-    var w = Math.max(280, rect.width);
-    var h = Math.max(320, Math.round(w * 0.62));
-    DPR = Math.min(window.devicePixelRatio||1, 2);
-    canvas.width = Math.round(w*DPR);
-    canvas.height = Math.round(h*DPR);
-    canvas.style.width = w+'px';
-    canvas.style.height = h+'px';
-    W = w; H = h;
-    cx = W*0.5; cy = H*0.52;
-    ctx.setTransform(DPR,0,0,DPR,0,0);
+    var cw=canvas.clientWidth||root.clientWidth||800;
+    var ch=canvas.clientHeight||root.clientHeight||500;
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    var nw=Math.max(1,Math.round(cw*dpr)),nh=Math.max(1,Math.round(ch*dpr));
+    if(nw!==canvas.width||nh!==canvas.height){
+      canvas.width=nw;canvas.height=nh;
+      if(!stars.length||Math.abs(W-cw)>40||Math.abs(H-ch)>40)seedStars(cw,ch);
+    }
+    W=cw;H=ch;
   }
 
-  function orbitR(){ return Math.min(W,H) * 0.36; }
-  function worldToScreen(radialFrac, worldAng){
-    var R = orbitR()*radialFrac;
-    return { x: cx + Math.cos(worldAng)*R, y: cy + Math.sin(worldAng)*R };
+  var fieldI=0.62;
+  slider.addEventListener('input',function(){fieldI=(+slider.value)/100;});
+  var showContours=true;
+  contourBtn.addEventListener('click',function(){
+    showContours=!showContours;
+    contourBtn.setAttribute('aria-pressed',showContours?'true':'false');
+  });
+
+  function updateHUD(){
+    var p=points[selected];
+    nameEl.textContent=p.name;
+    stabEl.textContent=p.stable?'Stable':'Unstable';
+    stabEl.classList.toggle('is-stable',p.stable);
+    distEl.textContent=p.dist;
+    missionEl.textContent=p.mission;
+  }
+  updateHUD();
+
+  // layout geometry computed each frame
+  var geo={cx:0,cy:0,sunX:0,sunY:0,earthX:0,earthY:0,orbitR:0,sunR:0,earthR:0,scaleX:0,rot:0};
+  var ptScreen=[];
+
+  function computeGeo(t){
+    var cx=W*0.5, cy=H*0.5;
+    // Sun sits left-of-center, Earth orbit large to fill frame
+    var orbitR=Math.min(W,H)*0.40;
+    // place Sun toward left third so the Sun->Earth axis spans frame
+    var sunX=W*0.30, sunY=H*0.52;
+    var rot=t*0.045; // global slow co-rotation
+    geo.sunX=sunX;geo.sunY=sunY;geo.orbitR=orbitR;geo.rot=rot;
+    geo.sunR=Math.max(26,Math.min(W,H)*0.075);
+    geo.earthR=Math.max(7,Math.min(W,H)*0.018);
+    // Earth position on orbit, current rotation
+    var ea=rot;
+    geo.earthX=sunX+Math.cos(ea)*orbitR;
+    geo.earthY=sunY+Math.sin(ea)*orbitR*0.78; // slight ellipse for perspective
+    geo.ellY=0.78;
+    // compute each lagrange point screen pos
+    ptScreen=[];
+    for(var i=0;i<points.length;i++){
+      var p=points[i];
+      var a=ea+p.ang;
+      var r=orbitR*p.rx;
+      // L1/L2 lie on Sun-Earth line: handle via rx scaling along Earth angle
+      var px,py;
+      if(p.id==='L1'||p.id==='L2'){
+        px=sunX+Math.cos(ea)*r;
+        py=sunY+Math.sin(ea)*r*geo.ellY;
+      }else{
+        px=sunX+Math.cos(a)*r;
+        py=sunY+Math.sin(a)*r*geo.ellY;
+      }
+      ptScreen.push({x:px,y:py,p:p,i:i});
+    }
   }
 
-  function clk(){ return (window.performance && performance.now) ? performance.now() : Date.now(); }
-  var startT = clk();
-  function nowt(){ return (clk() - startT)/1000; }
-
-  function draw(){
-    readAccent();
-    ctx.clearRect(0,0,W,H);
-    var frame = -earthAng * corotPhase;
-
-    drawStars();
-    drawOrbit();
-    drawSun();
-
-    var ePos = worldToScreen(1.0, earthAng + frame);
-
+  // gravitational potential field rendered to offscreen, low-res for glow
+  var off=document.createElement('canvas');
+  var octx=off.getContext('2d');
+  var fieldT=0;
+  function drawField(t){
+    if(fieldI<=0.01)return;
+    var fw=Math.max(60,Math.round(W/7)), fh=Math.max(40,Math.round(H/7));
+    if(off.width!==fw||off.height!==fh){off.width=fw;off.height=fh;}
+    var img=octx.createImageData(fw,fh);
+    var d=img.data;
+    var sunfx=geo.sunX/W*fw, sunfy=geo.sunY/H*fh;
+    var eafx=geo.earthX/W*fw, eafy=geo.earthY/H*fh;
+    var orbitf=geo.orbitR/W*fw;
+    var massRatioE=0.16; // earth potential weight (exaggerated for visibility)
+    for(var y=0;y<fh;y++){
+      for(var x=0;x<fw;x++){
+        var dxs=x-sunfx, dys=(y-sunfy);
+        var ds=Math.sqrt(dxs*dxs+dys*dys)+2;
+        var dxe=x-eafx, dye=(y-eafy);
+        var de=Math.sqrt(dxe*dxe+dye*dye)+1.2;
+        // centrifugal term ~ distance from barycenter (approx sun)
+        var rc=Math.sqrt(dxs*dxs+dys*dys);
+        var cf=0.5*Math.pow(rc/(orbitf+1),2)*1.0;
+        // effective potential (negative wells); we map to brightness
+        var pot=-(1.0/ds)*1.0 - (massRatioE/de) - cf*0.55;
+        // contour banding via sine of potential
+        var band=pot*36 + fieldT*0.6;
+        var line=Math.pow(Math.abs(Math.sin(band)),14);
+        var glow=Math.exp(-Math.abs(pot)*1.1)*0.5;
+        var v=(showContours? line*0.85:0)+glow*0.5;
+        // saddle emphasis near earth axis
+        v*=fieldI;
+        var idx=(y*fw+x)*4;
+        var rr=aRGB.r*0.55+90*v;
+        var gg=aRGB.g*0.6+110*v;
+        var bb=aRGB.b*0.7+140*v;
+        d[idx]=Math.min(255,rr*v*2.2);
+        d[idx+1]=Math.min(255,gg*v*2.2);
+        d[idx+2]=Math.min(255,bb*v*2.4);
+        d[idx+3]=Math.min(210,v*420);
+      }
+    }
+    octx.putImageData(img,0,0);
     ctx.save();
-    ctx.strokeStyle = 'rgba(166,171,230,0.18)';
-    ctx.lineWidth = 1; ctx.setLineDash([3,5]);
-    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(ePos.x, ePos.y); ctx.stroke();
+    ctx.globalCompositeOperation='lighter';
+    ctx.imageSmoothingEnabled=true;
+    ctx.globalAlpha=0.9;
+    ctx.drawImage(off,0,0,fw,fh,0,0,W,H);
     ctx.restore();
-
-    var l4 = worldToScreen(1.0, earthAng + Math.PI/3 + frame);
-    var l5 = worldToScreen(1.0, earthAng - Math.PI/3 + frame);
-    drawTriangle(ePos, l4, l5);
-
-    var hits = [];
-    for(var i=0;i<POINTS.length;i++){
-      var p = POINTS[i];
-      var wa = earthAng + p.angOff + frame;
-      var pos = worldToScreen(p.radial, wa);
-      p._pos = pos;
-      drawLPoint(p, pos);
-      hits.push({ key:p.key, x:pos.x, y:pos.y, r:16, data:p });
-    }
-
-    drawEarth(ePos);
-    hits.push({ key:'EARTH', x:ePos.x, y:ePos.y, r:14, data:{ key:'EARTH', title:'Earth', desc:'Our planet, orbiting the Sun once a year. The five L-points ride along with it.' } });
-
-    for(var c=0;c<CRAFT.length;c++){
-      var craft = CRAFT[c];
-      var host = pointByKey(craft.host);
-      if(host && host._pos){
-        var sp = drawCraft(craft, host._pos, host.key);
-        hits.push({ key:craft.key, x:sp.x, y:sp.y, r:13, data:craft });
-      }
-    }
-
-    hoverKey = null;
-    if(hasPointer){
-      var best=null, bestD=1e9;
-      for(var k=0;k<hits.length;k++){
-        var dx = hits[k].x - pointerX, dy = hits[k].y - pointerY;
-        var d = dx*dx+dy*dy;
-        if(d < hits[k].r*hits[k].r && d < bestD){ bestD=d; best=hits[k]; }
-      }
-      if(best){ hoverKey = best.key; showTip(best); } else hideTip();
-    } else hideTip();
-
-    if(hoverKey){
-      for(var h2=0;h2<hits.length;h2++){
-        if(hits[h2].key===hoverKey){ ring(hits[h2].x, hits[h2].y, hits[h2].r+5); break; }
-      }
-    }
   }
 
-  function pointByKey(key){
-    for(var i=0;i<POINTS.length;i++) if(POINTS[i].key===key) return POINTS[i];
-    return null;
-  }
-
-  function drawStars(){
-    var t = nowt();
+  function drawBackground(t){
+    // deep space vertical gradient
+    var g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#070420');
+    g.addColorStop(0.55,'#050314');
+    g.addColorStop(1,'#03020e');
+    ctx.fillStyle=g;
+    ctx.fillRect(0,0,W,H);
+    // subtle radial vignette toward sun
+    var rg=ctx.createRadialGradient(geo.sunX,geo.sunY,geo.sunR*0.5,geo.sunX,geo.sunY,Math.max(W,H)*0.9);
+    rg.addColorStop(0,aStr(0.05));
+    rg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=rg;
+    ctx.fillRect(0,0,W,H);
+    // stars
     for(var i=0;i<stars.length;i++){
-      var s = stars[i];
-      var x = s.x*W, y = s.y*H;
-      var tw = reduce ? 0.7 : (0.45 + 0.55*Math.abs(Math.sin(t*s.s + s.t)));
-      ctx.globalAlpha = 0.25 + 0.55*tw;
-      ctx.fillStyle = '#f4f5ff';
-      ctx.beginPath(); ctx.arc(x,y,s.r,0,6.2832); ctx.fill();
+      var s=stars[i];
+      var tw=0.4+0.6*Math.abs(Math.sin(t*s.sp+s.p));
+      ctx.globalAlpha=tw*0.8;
+      ctx.fillStyle='#dfe8ff';
+      ctx.beginPath();
+      ctx.arc(s.x*W,s.y*H,s.r,0,6.283);
+      ctx.fill();
     }
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha=1;
   }
 
   function drawOrbit(){
-    var R = orbitR();
     ctx.save();
-    ctx.strokeStyle = 'rgba(166,171,230,0.22)';
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.stroke();
-    ctx.restore();
-  }
-
-  function drawTriangle(e, l4, l5){
-    ctx.save();
-    ctx.strokeStyle = 'rgba(255,207,110,0.28)';
-    ctx.lineWidth = 1; ctx.setLineDash([2,4]);
+    ctx.strokeStyle=aStr(0.16);
+    ctx.lineWidth=1;
+    ctx.setLineDash([2,7]);
     ctx.beginPath();
-    ctx.moveTo(cx,cy); ctx.lineTo(l4.x,l4.y);
-    ctx.lineTo(e.x,e.y); ctx.lineTo(l5.x,l5.y);
-    ctx.lineTo(cx,cy); ctx.stroke();
-    ctx.restore();
-  }
-
-  function drawSun(){
-    var r = Math.max(11, Math.min(W,H)*0.05);
-    var g = ctx.createRadialGradient(cx,cy,1,cx,cy,r*3.4);
-    g.addColorStop(0,'rgba(255,236,170,0.95)');
-    g.addColorStop(0.18,'rgba(255,196,84,0.85)');
-    g.addColorStop(0.55,'rgba(255,150,50,0.20)');
-    g.addColorStop(1,'rgba(255,150,50,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(cx,cy,r*3.4,0,6.2832); ctx.fill();
-    var core = ctx.createRadialGradient(cx-r*0.3,cy-r*0.3,1,cx,cy,r);
-    core.addColorStop(0,'#fff6d8');
-    core.addColorStop(0.6,'#ffd166');
-    core.addColorStop(1,'#ff9e3b');
-    ctx.fillStyle = core;
-    ctx.beginPath(); ctx.arc(cx,cy,r,0,6.2832); ctx.fill();
-  }
-
-  function drawEarth(p){
-    var r = Math.max(5, Math.min(W,H)*0.018);
-    var g = ctx.createRadialGradient(p.x,p.y,1,p.x,p.y,r*2.6);
-    g.addColorStop(0,'rgba(80,160,255,0.5)');
-    g.addColorStop(1,'rgba(80,160,255,0)');
-    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x,p.y,r*2.6,0,6.2832); ctx.fill();
-    var core = ctx.createRadialGradient(p.x-r*0.4,p.y-r*0.4,1,p.x,p.y,r);
-    core.addColorStop(0,'#bfe0ff');
-    core.addColorStop(0.5,'#3f7fd6');
-    core.addColorStop(1,'#1b3f86');
-    ctx.fillStyle = core;
-    ctx.beginPath(); ctx.arc(p.x,p.y,r,0,6.2832); ctx.fill();
-    ctx.save();
-    ctx.font = "italic 700 11px 'Chakra Petch', sans-serif";
-    ctx.fillStyle = '#bfe0ff'; ctx.globalAlpha = 0.9;
-    ctx.textBaseline = 'top'; ctx.textAlign = 'center';
-    ctx.fillText('EARTH', p.x, p.y + r + 3);
-    ctx.restore();
-  }
-
-  function drawLPoint(p, pos){
-    var col = p.color();
-    ctx.save();
-    ctx.strokeStyle = col; ctx.globalAlpha = 0.85; ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    ctx.moveTo(pos.x-7,pos.y); ctx.lineTo(pos.x+7,pos.y);
-    ctx.moveTo(pos.x,pos.y-7); ctx.lineTo(pos.x,pos.y+7);
+    ctx.ellipse(geo.sunX,geo.sunY,geo.orbitR,geo.orbitR*geo.ellY,0,0,6.283);
     ctx.stroke();
-    ctx.globalAlpha = 1; ctx.fillStyle = col;
-    ctx.beginPath(); ctx.arc(pos.x,pos.y,2.5,0,6.2832); ctx.fill();
     ctx.restore();
+  }
+
+  function drawSun(t){
+    var x=geo.sunX,y=geo.sunY,r=geo.sunR;
+    // corona glow
+    var pulse=1+0.04*Math.sin(t*1.3);
+    var g=ctx.createRadialGradient(x,y,r*0.3,x,y,r*5.5*pulse);
+    g.addColorStop(0,'rgba(255,236,190,0.55)');
+    g.addColorStop(0.18,'rgba(255,196,120,0.32)');
+    g.addColorStop(0.5,aStr(0.14));
+    g.addColorStop(1,'rgba(0,0,0,0)');
     ctx.save();
-    ctx.font = "italic 700 12px 'Chakra Petch', sans-serif";
-    ctx.fillStyle = col; ctx.globalAlpha = 0.92; ctx.textBaseline = 'middle';
-    var lx = pos.x + 10, ly = pos.y - 9;
-    if(lx + 26 > W) lx = pos.x - 30;
-    ctx.fillText(p.key, lx, ly);
+    ctx.globalCompositeOperation='lighter';
+    ctx.fillStyle=g;
+    ctx.beginPath();ctx.arc(x,y,r*5.5*pulse,0,6.283);ctx.fill();
     ctx.restore();
-  }
-
-  function drawCraft(craft, hostPos, hostKey){
-    var ox = hostKey==='L1' ? -10 : 10;
-    var oy = -12;
-    var x = hostPos.x + ox, y = hostPos.y + oy;
-    if(x+30>W) x = hostPos.x - 22;
-    if(x<6) x = hostPos.x + 14;
+    // body
     ctx.save();
-    ctx.strokeStyle = 'rgba(244,245,255,0.35)'; ctx.lineWidth = 0.8;
-    ctx.beginPath(); ctx.moveTo(hostPos.x,hostPos.y); ctx.lineTo(x,y); ctx.stroke();
-    ctx.fillStyle = '#f4f5ff';
-    ctx.fillRect(x-2.4,y-2.4,4.8,4.8);
-    ctx.fillStyle = 'rgba('+accentRgb+',0.85)';
-    ctx.fillRect(x-7.5,y-1.3,4,2.6);
-    ctx.fillRect(x+3.5,y-1.3,4,2.6);
-    ctx.font = "italic 700 10px 'Chakra Petch', sans-serif";
-    ctx.fillStyle = '#f4f5ff'; ctx.globalAlpha = 0.9; ctx.textBaseline = 'middle';
-    var tx = x+11;
-    if(tx+34>W) tx = x-40;
-    ctx.fillText(craft.key, tx, y);
+    ctx.beginPath();ctx.arc(x,y,r,0,6.283);ctx.closePath();ctx.clip();
+    if(sunReady){
+      ctx.drawImage(sunImg,x-r,y-r,r*2,r*2);
+      var tint=ctx.createRadialGradient(x-r*0.3,y-r*0.3,r*0.2,x,y,r);
+      tint.addColorStop(0,'rgba(255,245,210,0.25)');
+      tint.addColorStop(1,'rgba(255,150,40,0.12)');
+      ctx.fillStyle=tint;ctx.fillRect(x-r,y-r,r*2,r*2);
+    }else{
+      var sg=ctx.createRadialGradient(x-r*0.25,y-r*0.25,r*0.1,x,y,r);
+      sg.addColorStop(0,'#fff6da');
+      sg.addColorStop(0.5,'#ffd483');
+      sg.addColorStop(1,'#ff9d3c');
+      ctx.fillStyle=sg;ctx.fillRect(x-r,y-r,r*2,r*2);
+    }
     ctx.restore();
-    return { x:x, y:y };
-  }
-
-  function ring(x,y,r){
+    // rim
     ctx.save();
-    ctx.strokeStyle = 'rgba('+accentRgb+',0.9)'; ctx.lineWidth = 1.4;
-    ctx.beginPath(); ctx.arc(x,y,r,0,6.2832); ctx.stroke();
+    ctx.globalCompositeOperation='lighter';
+    ctx.strokeStyle='rgba(255,220,160,0.5)';
+    ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(x,y,r,0,6.283);ctx.stroke();
     ctx.restore();
   }
 
-  function showTip(hit){
-    var d = hit.data;
-    tip.innerHTML = '<span class="kfig-tip-t">'+(d.title||hit.key)+'</span><span class="kfig-tip-d">'+(d.desc||'')+'</span>';
-    tip.classList.add('on');
-    var tw = tip.offsetWidth, th = tip.offsetHeight;
-    var tx = hit.x + 16, ty = hit.y - th - 10;
-    if(tx + tw > W-6) tx = hit.x - tw - 16;
-    if(tx < 6) tx = 6;
-    if(ty < 6) ty = hit.y + 16;
-    tip.style.transform = 'translate('+tx+'px,'+ty+'px)';
-    canvas.style.cursor = 'pointer';
-  }
-  function hideTip(){ tip.classList.remove('on'); canvas.style.cursor = 'default'; }
-
-  function updateReadout(){ readout.textContent = corotate ? 'Rotating frame (Earth fixed)' : 'Inertial frame'; }
-
-  var raf = null, last = 0, running = false;
-  function loop(ts){
-    if(!running) return;
-    if(!last) last = ts;
-    var dt = Math.min(0.05, (ts-last)/1000); last = ts;
-    if(rotating && !reduce) earthAng += spinSpeed*dt;
-    var target = corotate ? 1 : 0;
-    corotPhase += (target - corotPhase) * Math.min(1, dt*4);
-    if(Math.abs(target-corotPhase) < 0.001) corotPhase = target;
-    draw();
-    raf = requestAnimationFrame(loop);
-  }
-  function start(){ if(running) return; running = true; last = 0; raf = requestAnimationFrame(loop); }
-  function stop(){ running = false; if(raf) cancelAnimationFrame(raf); raf = null; }
-
-  canvas.addEventListener('pointermove', function(e){
-    var rect = canvas.getBoundingClientRect();
-    pointerX = e.clientX - rect.left; pointerY = e.clientY - rect.top; hasPointer = true;
-    if(reduce && !running) draw();
-  });
-  canvas.addEventListener('pointerleave', function(){ hasPointer=false; if(reduce && !running) draw(); });
-  canvas.addEventListener('pointerdown', function(e){
-    var rect = canvas.getBoundingClientRect();
-    pointerX = e.clientX - rect.left; pointerY = e.clientY - rect.top; hasPointer = true;
-    if(reduce) draw();
-  });
-
-  if(btnSpin){
-    btnSpin.addEventListener('click', function(){
-      if(reduce){ earthAng += 0.5; draw(); return; }
-      rotating = !rotating;
-      btnSpin.setAttribute('aria-pressed', rotating?'true':'false');
-      btnSpin.textContent = rotating ? 'Pause orbit' : 'Resume orbit';
-    });
-    if(reduce) btnSpin.textContent = 'Step orbit';
-  }
-  if(btnReset){
-    btnReset.addEventListener('click', function(){
-      corotate = !corotate;
-      btnReset.setAttribute('aria-pressed', corotate?'true':'false');
-      btnReset.textContent = corotate ? 'Inertial frame' : 'Lock frame';
-      updateReadout();
-      if(reduce) draw();
-    });
+  function drawEarth(t){
+    var x=geo.earthX,y=geo.earthY,r=geo.earthR;
+    // glow
+    var g=ctx.createRadialGradient(x,y,r*0.4,x,y,r*3.2);
+    g.addColorStop(0,aStr(0.4));
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.save();ctx.globalCompositeOperation='lighter';
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*3.2,0,6.283);ctx.fill();ctx.restore();
+    ctx.save();
+    ctx.beginPath();ctx.arc(x,y,r,0,6.283);ctx.clip();
+    if(earthReady){
+      ctx.drawImage(earthImg,x-r,y-r,r*2,r*2);
+    }else{
+      var eg=ctx.createRadialGradient(x-r*0.3,y-r*0.3,r*0.2,x,y,r);
+      eg.addColorStop(0,'#9fd8ff');
+      eg.addColorStop(0.6,'#3a72c4');
+      eg.addColorStop(1,'#11305f');
+      ctx.fillStyle=eg;ctx.fillRect(x-r,y-r,r*2,r*2);
+    }
+    // night-side shadow (away from sun)
+    var sa=Math.atan2(y-geo.sunY,x-geo.sunX);
+    var sh=ctx.createLinearGradient(x-Math.cos(sa)*r,y-Math.sin(sa)*r,x+Math.cos(sa)*r,y+Math.sin(sa)*r);
+    sh.addColorStop(0,'rgba(0,0,0,0)');
+    sh.addColorStop(1,'rgba(2,3,16,0.78)');
+    ctx.fillStyle=sh;ctx.fillRect(x-r,y-r,r*2,r*2);
+    ctx.restore();
+    ctx.strokeStyle=aStr(0.3);ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(x,y,r,0,6.283);ctx.stroke();
   }
 
-  window.addEventListener('resize', function(){ resize(); if(reduce || !running) draw(); });
+  function drawCraft(scr,t,which){
+    // small spacecraft sprite with halo-orbit wobble
+    var wob=which==='SOHO'?
+      {ax:8,ay:5,sp:1.6,ph:0}:
+      {ax:10,ay:6,sp:1.2,ph:2};
+    var dx=Math.cos(t*wob.sp+wob.ph)*wob.ax;
+    var dy=Math.sin(t*wob.sp*1.3+wob.ph)*wob.ay;
+    var x=scr.x+dx,y=scr.y+dy;
+    var col=which==='SOHO'?'rgba(255,210,140,1)':aStr(1);
+    // wobble path ghost
+    ctx.save();
+    ctx.strokeStyle=which==='SOHO'?'rgba(255,210,140,0.3)':aStr(0.32);
+    ctx.lineWidth=1;
+    ctx.beginPath();
+    for(var k=0;k<=40;k++){
+      var tt=t-(40-k)*0.04;
+      var gx=scr.x+Math.cos(tt*wob.sp+wob.ph)*wob.ax;
+      var gy=scr.y+Math.sin(tt*wob.sp*1.3+wob.ph)*wob.ay;
+      if(k===0)ctx.moveTo(gx,gy);else ctx.lineTo(gx,gy);
+    }
+    ctx.globalAlpha=0.6;ctx.stroke();ctx.restore();
+    // craft body
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    var g=ctx.createRadialGradient(x,y,0,x,y,9);
+    g.addColorStop(0,col);
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,9,0,6.283);ctx.fill();
+    ctx.restore();
+    ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,2.1,0,6.283);ctx.fill();
+    // label
+    ctx.save();
+    ctx.font='600 10px Inter,sans-serif';
+    ctx.fillStyle='rgba(240,246,255,0.9)';
+    ctx.textBaseline='middle';
+    var lx=x+12;
+    ctx.fillText(which,lx,y);
+    ctx.restore();
+  }
 
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      for(var i=0;i<entries.length;i++){
-        if(entries[i].isIntersecting){ if(!reduce) start(); else draw(); }
-        else { stop(); }
+  function drawPoints(t){
+    for(var i=0;i<ptScreen.length;i++){
+      var s=ptScreen[i];var p=s.p;
+      var sel=(i===selected);
+      var col=p.stable?'rgba(138,240,191,1)':'rgba(255,181,154,1)';
+      var pulse=0.5+0.5*Math.sin(t*1.8+i);
+      // glow
+      ctx.save();ctx.globalCompositeOperation='lighter';
+      var gr=sel?20:13;
+      var g=ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,gr+pulse*4);
+      g.addColorStop(0,p.stable?'rgba(138,240,191,0.7)':'rgba(255,181,154,0.7)');
+      g.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(s.x,s.y,gr+pulse*4,0,6.283);ctx.fill();
+      ctx.restore();
+      // ring for selected
+      if(sel){
+        ctx.save();
+        ctx.strokeStyle=col;ctx.lineWidth=1.4;ctx.globalAlpha=0.8;
+        ctx.beginPath();ctx.arc(s.x,s.y,11+pulse*3,0,6.283);ctx.stroke();
+        ctx.globalAlpha=0.3;
+        ctx.beginPath();ctx.arc(s.x,s.y,16+pulse*5,0,6.283);ctx.stroke();
+        ctx.restore();
       }
-    }, { threshold: 0.05 });
-    io.observe(root);
-  } else {
-    if(!reduce) start(); else draw();
+      // core
+      ctx.fillStyle=col;
+      ctx.beginPath();ctx.arc(s.x,s.y,sel?4:3,0,6.283);ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.85)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(s.x,s.y,sel?4:3,0,6.283);ctx.stroke();
+      // label
+      ctx.save();
+      ctx.font=(sel?'700 ':'600 ')+(sel?'12px':'11px')+' Inter,sans-serif';
+      ctx.fillStyle=sel?'#ffffff':'rgba(225,232,255,0.78)';
+      ctx.textBaseline='middle';
+      var ox=p.id==='L1'?-26:8;
+      if(p.id==='L1')ctx.textAlign='right';else ctx.textAlign='left';
+      ctx.fillText(p.id,s.x+(p.id==='L1'?-9:9),s.y-11);
+      ctx.restore();
+    }
   }
 
-  resize();
-  readAccent();
-  updateReadout();
-  draw();
+  // interaction: hover/click select nearest point
+  function pick(ev){
+    var rect=canvas.getBoundingClientRect();
+    var mx=(ev.clientX-rect.left), my=(ev.clientY-rect.top);
+    var best=-1,bd=1e9;
+    for(var i=0;i<ptScreen.length;i++){
+      var s=ptScreen[i];
+      var d=(s.x-mx)*(s.x-mx)+(s.y-my)*(s.y-my);
+      if(d<bd){bd=d;best=i;}
+    }
+    if(best>=0&&bd<900){return best;}
+    return -1;
+  }
+  canvas.addEventListener('mousemove',function(ev){
+    var hit=pick(ev);
+    canvas.style.cursor=hit>=0?'pointer':'crosshair';
+    if(hit>=0&&hit!==selected){selected=hit;updateHUD();}
+  });
+  canvas.addEventListener('click',function(ev){
+    var hit=pick(ev);
+    if(hit>=0){selected=hit;updateHUD();}
+  });
+  canvas.addEventListener('touchstart',function(ev){
+    if(ev.touches&&ev.touches[0]){
+      var hit=pick(ev.touches[0]);
+      if(hit>=0){selected=hit;updateHUD();}
+    }
+  },{passive:true});
+
+  var start=performance.now();
+  function frame(now){
+    resize();
+    if(W<2||H<2){requestAnimationFrame(frame);return;}
+    var t=(now-start)/1000;
+    fieldT=t;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,H);
+    computeGeo(t);
+    drawBackground(t);
+    drawField(t);
+    drawOrbit();
+    drawSun(t);
+    drawEarth(t);
+    drawPoints(t);
+    // craft on L1 (SOHO) and L2 (JWST)
+    drawCraft(ptScreen[0],t,'SOHO');
+    drawCraft(ptScreen[1],t,'JWST');
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  var ro=new ResizeObserver(function(){resize();});
+  ro.observe(root);
+  window.addEventListener('resize',function(){readAccent();aRGB=hexToRgb(accent);resize();});
 })();
 </script>
 </body></html>
