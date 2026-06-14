@@ -649,8 +649,9 @@ body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-view
     if(wideBufKey!==key){ try{ wideBuf=buildWideBuf(im); wideBufKey=key; }catch(e){ wideBuf=null; } }
     var src=wideBuf||im;
     var iw=src.width, ih=src.height;
-    // size so the planet + full ring span fill the frame (rings extend past the body)
-    var s=(R*2*scale*1.32)/ih;
+    // contain-fit the full keyed planet+rings within the frame (bg is transparent, so the
+    // whole ring span shows with margin and never clips into a rectangle)
+    var s=Math.min((W*0.94)/iw,(H*0.92)/ih)*scale;
     var dw=iw*s, dh=ih*s;
     ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
     ctx.drawImage(src, cx-dw/2, cy+dy-dh/2, dw, dh);
