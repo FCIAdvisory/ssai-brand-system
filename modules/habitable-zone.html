@@ -30,8 +30,8 @@ html,body{height:100%;}
 body.mb-embed{overflow:hidden;}
 body.mb-embed .mb-wrap{height:100%;}
 body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
-body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
-body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-habitable-zone{--ac:var(--accent,#3cc8ff);width:100%;box-sizing:border-box;background:transparent;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;border:1px solid rgba(166,171,230,0.16);border-radius:18px;padding:20px 20px 22px;background:radial-gradient(120% 140% at 20% 0%,rgba(22,20,95,0.55),rgba(5,3,20,0.92));overflow:hidden}
 #kit-habitable-zone *{box-sizing:border-box}
@@ -70,10 +70,13 @@ body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media (prefers-reduced-motion:reduce){#kit-habitable-zone .kfig-verdict{transition:none}}
 
 body.mb-embed #kit-habitable-zone{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
-body.mb-embed #kit-habitable-zone{display:flex!important;flex-direction:column!important;gap:6px!important;}
-body.mb-embed #kit-habitable-zone>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-habitable-zone [class*='frame'],body.mb-embed #kit-habitable-zone [class*='shell'],body.mb-embed #kit-habitable-zone [class*='-inner'],body.mb-embed #kit-habitable-zone [class*='wrapper']{display:contents!important;}
-body.mb-embed #kit-habitable-zone [class*='stage'],body.mb-embed #kit-habitable-zone [class*='scene'],body.mb-embed #kit-habitable-zone [class*='plotwrap'],body.mb-embed #kit-habitable-zone [class*='plot-'],body.mb-embed #kit-habitable-zone [class*='canvas-wrap'],body.mb-embed #kit-habitable-zone [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
+body.mb-embed #kit-habitable-zone [class*='stage'],body.mb-embed #kit-habitable-zone [class*='scene'],body.mb-embed #kit-habitable-zone [class*='map'],body.mb-embed #kit-habitable-zone [class*='plot'],body.mb-embed #kit-habitable-zone [class*='canvas'],body.mb-embed #kit-habitable-zone [class*='globe'],body.mb-embed #kit-habitable-zone canvas,body.mb-embed #kit-habitable-zone svg{aspect-ratio:auto!important;max-height:none!important;max-width:none!important;min-height:0!important;}
+body.mb-embed #kit-habitable-zone [class*='wrap'],body.mb-embed #kit-habitable-zone [class*='body'],body.mb-embed #kit-habitable-zone [class*='grid'],body.mb-embed #kit-habitable-zone [class*='layout'],body.mb-embed #kit-habitable-zone [class*='main'],body.mb-embed #kit-habitable-zone [class*='stagewrap']{height:100%!important;min-height:0!important;align-items:stretch!important;align-content:stretch!important;}
+body.mb-embed #kit-habitable-zone canvas{height:100%!important;width:100%!important;}
+body.mb-embed #kit-habitable-zone{display:flex!important;flex-direction:column!important;gap:clamp(6px,1vh,12px)!important;}
+body.mb-embed #kit-habitable-zone>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-habitable-zone [class*='stage'],body.mb-embed #kit-habitable-zone [class*='scene'],body.mb-embed #kit-habitable-zone [class*='map'],body.mb-embed #kit-habitable-zone [class*='plot'],body.mb-embed #kit-habitable-zone [class*='globe'],body.mb-embed #kit-habitable-zone [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
 </style></head>
 <body>

@@ -30,8 +30,8 @@ html,body{height:100%;}
 body.mb-embed{overflow:hidden;}
 body.mb-embed .mb-wrap{height:100%;}
 body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
-body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
-body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-counter-cluster{
   width:100%;
@@ -184,10 +184,13 @@ body{transition:background .5s ease,color .5s ease}
 /* ===== KIT EXPANSION (20 modules) ===== */
 
 body.mb-embed #kit-counter-cluster{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
-body.mb-embed #kit-counter-cluster{display:flex!important;flex-direction:column!important;gap:6px!important;}
-body.mb-embed #kit-counter-cluster>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-counter-cluster [class*='frame'],body.mb-embed #kit-counter-cluster [class*='shell'],body.mb-embed #kit-counter-cluster [class*='-inner'],body.mb-embed #kit-counter-cluster [class*='wrapper']{display:contents!important;}
-body.mb-embed #kit-counter-cluster [class*='stage'],body.mb-embed #kit-counter-cluster [class*='scene'],body.mb-embed #kit-counter-cluster [class*='plotwrap'],body.mb-embed #kit-counter-cluster [class*='plot-'],body.mb-embed #kit-counter-cluster [class*='canvas-wrap'],body.mb-embed #kit-counter-cluster [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
+body.mb-embed #kit-counter-cluster [class*='stage'],body.mb-embed #kit-counter-cluster [class*='scene'],body.mb-embed #kit-counter-cluster [class*='map'],body.mb-embed #kit-counter-cluster [class*='plot'],body.mb-embed #kit-counter-cluster [class*='canvas'],body.mb-embed #kit-counter-cluster [class*='globe'],body.mb-embed #kit-counter-cluster canvas,body.mb-embed #kit-counter-cluster svg{aspect-ratio:auto!important;max-height:none!important;max-width:none!important;min-height:0!important;}
+body.mb-embed #kit-counter-cluster [class*='wrap'],body.mb-embed #kit-counter-cluster [class*='body'],body.mb-embed #kit-counter-cluster [class*='grid'],body.mb-embed #kit-counter-cluster [class*='layout'],body.mb-embed #kit-counter-cluster [class*='main'],body.mb-embed #kit-counter-cluster [class*='stagewrap']{height:100%!important;min-height:0!important;align-items:stretch!important;align-content:stretch!important;}
+body.mb-embed #kit-counter-cluster canvas{height:100%!important;width:100%!important;}
+body.mb-embed #kit-counter-cluster{display:flex!important;flex-direction:column!important;gap:clamp(6px,1vh,12px)!important;}
+body.mb-embed #kit-counter-cluster>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-counter-cluster [class*='stage'],body.mb-embed #kit-counter-cluster [class*='scene'],body.mb-embed #kit-counter-cluster [class*='map'],body.mb-embed #kit-counter-cluster [class*='plot'],body.mb-embed #kit-counter-cluster [class*='globe'],body.mb-embed #kit-counter-cluster [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
 </style></head>
 <body>

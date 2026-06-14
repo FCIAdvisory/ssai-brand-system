@@ -30,8 +30,8 @@ html,body{height:100%;}
 body.mb-embed{overflow:hidden;}
 body.mb-embed .mb-wrap{height:100%;}
 body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
-body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
-body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-moon-phase{
   --star:#f4f5ff; --muted:#a6abe6; --hair:rgba(166,171,230,0.16);
@@ -146,10 +146,13 @@ body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 }
 
 body.mb-embed #kit-moon-phase{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
-body.mb-embed #kit-moon-phase{display:flex!important;flex-direction:column!important;gap:6px!important;}
-body.mb-embed #kit-moon-phase>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-moon-phase [class*='frame'],body.mb-embed #kit-moon-phase [class*='shell'],body.mb-embed #kit-moon-phase [class*='-inner'],body.mb-embed #kit-moon-phase [class*='wrapper']{display:contents!important;}
-body.mb-embed #kit-moon-phase [class*='stage'],body.mb-embed #kit-moon-phase [class*='scene'],body.mb-embed #kit-moon-phase [class*='plotwrap'],body.mb-embed #kit-moon-phase [class*='plot-'],body.mb-embed #kit-moon-phase [class*='canvas-wrap'],body.mb-embed #kit-moon-phase [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
+body.mb-embed #kit-moon-phase [class*='stage'],body.mb-embed #kit-moon-phase [class*='scene'],body.mb-embed #kit-moon-phase [class*='map'],body.mb-embed #kit-moon-phase [class*='plot'],body.mb-embed #kit-moon-phase [class*='canvas'],body.mb-embed #kit-moon-phase [class*='globe'],body.mb-embed #kit-moon-phase canvas,body.mb-embed #kit-moon-phase svg{aspect-ratio:auto!important;max-height:none!important;max-width:none!important;min-height:0!important;}
+body.mb-embed #kit-moon-phase [class*='wrap'],body.mb-embed #kit-moon-phase [class*='body'],body.mb-embed #kit-moon-phase [class*='grid'],body.mb-embed #kit-moon-phase [class*='layout'],body.mb-embed #kit-moon-phase [class*='main'],body.mb-embed #kit-moon-phase [class*='stagewrap']{height:100%!important;min-height:0!important;align-items:stretch!important;align-content:stretch!important;}
+body.mb-embed #kit-moon-phase canvas{height:100%!important;width:100%!important;}
+body.mb-embed #kit-moon-phase{display:flex!important;flex-direction:column!important;gap:clamp(6px,1vh,12px)!important;}
+body.mb-embed #kit-moon-phase>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-moon-phase [class*='stage'],body.mb-embed #kit-moon-phase [class*='scene'],body.mb-embed #kit-moon-phase [class*='map'],body.mb-embed #kit-moon-phase [class*='plot'],body.mb-embed #kit-moon-phase [class*='globe'],body.mb-embed #kit-moon-phase [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
 </style></head>
 <body>

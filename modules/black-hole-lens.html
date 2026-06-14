@@ -30,8 +30,8 @@ html,body{height:100%;}
 body.mb-embed{overflow:hidden;}
 body.mb-embed .mb-wrap{height:100%;}
 body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
-body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
-body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-black-hole-lens{position:relative;width:100%;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-user-select:none;user-select:none;}
 #kit-black-hole-lens *{box-sizing:border-box;}
@@ -61,10 +61,13 @@ body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 #kit-black-hole-lens .bhl-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);border:0;}
 
 body.mb-embed #kit-black-hole-lens{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
-body.mb-embed #kit-black-hole-lens{display:flex!important;flex-direction:column!important;gap:6px!important;}
-body.mb-embed #kit-black-hole-lens>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-black-hole-lens [class*='frame'],body.mb-embed #kit-black-hole-lens [class*='shell'],body.mb-embed #kit-black-hole-lens [class*='-inner'],body.mb-embed #kit-black-hole-lens [class*='wrapper']{display:contents!important;}
-body.mb-embed #kit-black-hole-lens [class*='stage'],body.mb-embed #kit-black-hole-lens [class*='scene'],body.mb-embed #kit-black-hole-lens [class*='plotwrap'],body.mb-embed #kit-black-hole-lens [class*='plot-'],body.mb-embed #kit-black-hole-lens [class*='canvas-wrap'],body.mb-embed #kit-black-hole-lens [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
+body.mb-embed #kit-black-hole-lens [class*='stage'],body.mb-embed #kit-black-hole-lens [class*='scene'],body.mb-embed #kit-black-hole-lens [class*='map'],body.mb-embed #kit-black-hole-lens [class*='plot'],body.mb-embed #kit-black-hole-lens [class*='canvas'],body.mb-embed #kit-black-hole-lens [class*='globe'],body.mb-embed #kit-black-hole-lens canvas,body.mb-embed #kit-black-hole-lens svg{aspect-ratio:auto!important;max-height:none!important;max-width:none!important;min-height:0!important;}
+body.mb-embed #kit-black-hole-lens [class*='wrap'],body.mb-embed #kit-black-hole-lens [class*='body'],body.mb-embed #kit-black-hole-lens [class*='grid'],body.mb-embed #kit-black-hole-lens [class*='layout'],body.mb-embed #kit-black-hole-lens [class*='main'],body.mb-embed #kit-black-hole-lens [class*='stagewrap']{height:100%!important;min-height:0!important;align-items:stretch!important;align-content:stretch!important;}
+body.mb-embed #kit-black-hole-lens canvas{height:100%!important;width:100%!important;}
+body.mb-embed #kit-black-hole-lens{display:flex!important;flex-direction:column!important;gap:clamp(6px,1vh,12px)!important;}
+body.mb-embed #kit-black-hole-lens>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-black-hole-lens [class*='stage'],body.mb-embed #kit-black-hole-lens [class*='scene'],body.mb-embed #kit-black-hole-lens [class*='map'],body.mb-embed #kit-black-hole-lens [class*='plot'],body.mb-embed #kit-black-hole-lens [class*='globe'],body.mb-embed #kit-black-hole-lens [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
 </style></head>
 <body>

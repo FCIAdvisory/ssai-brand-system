@@ -30,8 +30,8 @@ html,body{height:100%;}
 body.mb-embed{overflow:hidden;}
 body.mb-embed .mb-wrap{height:100%;}
 body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
-body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
-body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-constellation-coverage{--cc2-bg:#050314;--cc2-indigo:#16145f;--cc2-text:#f4f5ff;--cc2-muted:#a6abe6;--cc2-line:rgba(166,171,230,0.16);--cc2-acc:#3cc8ff;--cc2-acc-rgb:60,200,255;position:relative;width:100%;box-sizing:border-box;padding:22px;border-radius:18px;background:radial-gradient(120% 140% at 80% -10%,rgba(22,20,95,0.55),rgba(5,3,20,0) 60%),var(--cc2-bg);border:1px solid var(--cc2-line);color:var(--cc2-text);font-family:'Inter',system-ui,sans-serif;overflow:hidden}
 #kit-constellation-coverage *{box-sizing:border-box}
@@ -80,10 +80,13 @@ body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media (max-width:640px){#kit-constellation-coverage{padding:16px}#kit-constellation-coverage .cc2-title h3{font-size:21px}#kit-constellation-coverage .cc2-pctval{font-size:42px}#kit-constellation-coverage .cc2-controls{gap:18px}#kit-constellation-coverage .cc2-side{align-items:flex-start;width:100%}#kit-constellation-coverage .cc2-stats{gap:16px;flex-wrap:wrap}}
 
 body.mb-embed #kit-constellation-coverage{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
-body.mb-embed #kit-constellation-coverage{display:flex!important;flex-direction:column!important;gap:6px!important;}
-body.mb-embed #kit-constellation-coverage>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-constellation-coverage [class*='frame'],body.mb-embed #kit-constellation-coverage [class*='shell'],body.mb-embed #kit-constellation-coverage [class*='-inner'],body.mb-embed #kit-constellation-coverage [class*='wrapper']{display:contents!important;}
-body.mb-embed #kit-constellation-coverage [class*='stage'],body.mb-embed #kit-constellation-coverage [class*='scene'],body.mb-embed #kit-constellation-coverage [class*='plotwrap'],body.mb-embed #kit-constellation-coverage [class*='plot-'],body.mb-embed #kit-constellation-coverage [class*='canvas-wrap'],body.mb-embed #kit-constellation-coverage [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
+body.mb-embed #kit-constellation-coverage [class*='stage'],body.mb-embed #kit-constellation-coverage [class*='scene'],body.mb-embed #kit-constellation-coverage [class*='map'],body.mb-embed #kit-constellation-coverage [class*='plot'],body.mb-embed #kit-constellation-coverage [class*='canvas'],body.mb-embed #kit-constellation-coverage [class*='globe'],body.mb-embed #kit-constellation-coverage canvas,body.mb-embed #kit-constellation-coverage svg{aspect-ratio:auto!important;max-height:none!important;max-width:none!important;min-height:0!important;}
+body.mb-embed #kit-constellation-coverage [class*='wrap'],body.mb-embed #kit-constellation-coverage [class*='body'],body.mb-embed #kit-constellation-coverage [class*='grid'],body.mb-embed #kit-constellation-coverage [class*='layout'],body.mb-embed #kit-constellation-coverage [class*='main'],body.mb-embed #kit-constellation-coverage [class*='stagewrap']{height:100%!important;min-height:0!important;align-items:stretch!important;align-content:stretch!important;}
+body.mb-embed #kit-constellation-coverage canvas{height:100%!important;width:100%!important;}
+body.mb-embed #kit-constellation-coverage{display:flex!important;flex-direction:column!important;gap:clamp(6px,1vh,12px)!important;}
+body.mb-embed #kit-constellation-coverage>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-constellation-coverage [class*='stage'],body.mb-embed #kit-constellation-coverage [class*='scene'],body.mb-embed #kit-constellation-coverage [class*='map'],body.mb-embed #kit-constellation-coverage [class*='plot'],body.mb-embed #kit-constellation-coverage [class*='globe'],body.mb-embed #kit-constellation-coverage [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
 </style></head>
 <body>

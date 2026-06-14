@@ -30,8 +30,8 @@ html,body{height:100%;}
 body.mb-embed{overflow:hidden;}
 body.mb-embed .mb-wrap{height:100%;}
 body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
-body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
-body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-galaxy-gen{position:relative;width:100%;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;border-radius:14px;overflow:hidden;background:radial-gradient(120% 120% at 50% 35%,#0a0726 0%,#050314 60%,#040210 100%);border:1px solid rgba(166,171,230,0.16)}
 #kit-galaxy-gen *{box-sizing:border-box}
@@ -58,7 +58,13 @@ body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media (prefers-reduced-motion:reduce){#kit-galaxy-gen .gg-hint::after{content:' · static'}}
 
 body.mb-embed #kit-galaxy-gen{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
-body.mb-embed #kit-galaxy-gen [class*='stage'],body.mb-embed #kit-galaxy-gen [class*='scene'],body.mb-embed #kit-galaxy-gen [class*='canvas'],body.mb-embed #kit-galaxy-gen canvas{aspect-ratio:auto!important;min-height:0!important;max-height:100%!important;}
+body.mb-embed #kit-galaxy-gen [class*='frame'],body.mb-embed #kit-galaxy-gen [class*='shell'],body.mb-embed #kit-galaxy-gen [class*='-inner'],body.mb-embed #kit-galaxy-gen [class*='wrapper']{display:contents!important;}
+body.mb-embed #kit-galaxy-gen [class*='stage'],body.mb-embed #kit-galaxy-gen [class*='scene'],body.mb-embed #kit-galaxy-gen [class*='map'],body.mb-embed #kit-galaxy-gen [class*='plot'],body.mb-embed #kit-galaxy-gen [class*='canvas'],body.mb-embed #kit-galaxy-gen [class*='globe'],body.mb-embed #kit-galaxy-gen canvas,body.mb-embed #kit-galaxy-gen svg{aspect-ratio:auto!important;max-height:none!important;max-width:none!important;min-height:0!important;}
+body.mb-embed #kit-galaxy-gen [class*='wrap'],body.mb-embed #kit-galaxy-gen [class*='body'],body.mb-embed #kit-galaxy-gen [class*='grid'],body.mb-embed #kit-galaxy-gen [class*='layout'],body.mb-embed #kit-galaxy-gen [class*='main'],body.mb-embed #kit-galaxy-gen [class*='stagewrap']{height:100%!important;min-height:0!important;align-items:stretch!important;align-content:stretch!important;}
+body.mb-embed #kit-galaxy-gen canvas{height:100%!important;width:100%!important;}
+body.mb-embed #kit-galaxy-gen{display:flex!important;flex-direction:column!important;gap:clamp(6px,1vh,12px)!important;}
+body.mb-embed #kit-galaxy-gen>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-galaxy-gen [class*='stage'],body.mb-embed #kit-galaxy-gen [class*='scene'],body.mb-embed #kit-galaxy-gen [class*='map'],body.mb-embed #kit-galaxy-gen [class*='plot'],body.mb-embed #kit-galaxy-gen [class*='globe'],body.mb-embed #kit-galaxy-gen [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
 </style></head>
 <body>
