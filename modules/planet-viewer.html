@@ -33,32 +33,145 @@ body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
 body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
 body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
-#kit-planet-viewer{--pv-accent:#2fd9c3;position:relative;width:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:20px;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;background:radial-gradient(120% 90% at 50% 0%,rgba(60,123,224,0.05),transparent 60%);border-radius:14px;-webkit-font-smoothing:antialiased;overflow:hidden;}
+#kit-planet-viewer{
+  --pv-bg:#050314; --pv-indigo:#16145f; --pv-text:#f4f5ff; --pv-muted:#a6abe6;
+  --pv-hair:rgba(166,171,230,0.16); --pv-accent:#3cc8ff;
+  position:relative; display:flex; flex-direction:column; width:100%; height:100%;
+  min-height:280px; box-sizing:border-box; gap:0;
+  background:radial-gradient(140% 120% at 50% 18%, #0b0826 0%, #050314 60%, #03020d 100%);
+  color:var(--pv-text); font-family:'Inter',system-ui,sans-serif; overflow:hidden;
+  border:1px solid var(--pv-hair); border-radius:14px;
+  -webkit-font-smoothing:antialiased;
+}
 #kit-planet-viewer *{box-sizing:border-box;}
-#kit-planet-viewer .pv-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;}
-#kit-planet-viewer .pv-meta{min-width:160px;flex:1 1 220px;}
-#kit-planet-viewer .pv-eyebrow{display:inline-block;font-size:10.5px;letter-spacing:0.22em;text-transform:uppercase;color:#a6abe6;margin-bottom:8px;}
-#kit-planet-viewer .pv-name{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:30px;line-height:1;letter-spacing:0.01em;margin:0 0 8px;color:#f4f5ff;transition:color .5s ease;}
-#kit-planet-viewer .pv-desc{margin:0;font-size:13px;line-height:1.5;color:#a6abe6;max-width:34ch;}
-#kit-planet-viewer .pv-toggle{display:inline-flex;padding:4px;gap:2px;border:1px solid rgba(166,171,230,0.16);border-radius:11px;background:rgba(22,20,95,0.32);}
-#kit-planet-viewer .pv-btn{appearance:none;border:0;cursor:pointer;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:0.04em;color:#a6abe6;background:transparent;padding:8px 14px;border-radius:8px;transition:color .3s ease,background .3s ease,box-shadow .3s ease;}
-#kit-planet-viewer .pv-btn:hover{color:#f4f5ff;}
-#kit-planet-viewer .pv-btn:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(60,123,224,0.55);}
-#kit-planet-viewer .pv-btn[aria-pressed="true"]{color:#050314;background:var(--pv-accent);box-shadow:0 0 18px -4px var(--pv-accent);}
-#kit-planet-viewer .pv-stage{position:relative;width:100%;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;}
-#kit-planet-viewer .pv-stage.pv-grab{cursor:grabbing;}
-#kit-planet-viewer .pv-stage canvas{display:block;max-width:100%;}
-#kit-planet-viewer .pv-hint{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.06em;color:#a6abe6;text-transform:uppercase;}
-#kit-planet-viewer .pv-dot{width:6px;height:6px;border-radius:50%;background:var(--pv-accent);box-shadow:0 0 8px var(--pv-accent);transition:background .5s ease,box-shadow .5s ease;animation:kit-planet-viewer-pulse 2.6s ease-in-out infinite;}
-@keyframes kit-planet-viewer-pulse{0%,100%{opacity:.55;}50%{opacity:1;}}
-@media (prefers-reduced-motion: reduce){#kit-planet-viewer .pv-dot{animation:none;}}
-@media (max-width:520px){#kit-planet-viewer .pv-name{font-size:25px;}#kit-planet-viewer .pv-toggle{width:100%;justify-content:space-between;}#kit-planet-viewer .pv-btn{flex:1;text-align:center;}}
+#kit-planet-viewer .pv-stagewrap{position:relative; flex:1 1 auto; min-height:0; overflow:hidden;}
+#kit-planet-viewer .pv-canvas{position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none;}
+#kit-planet-viewer .pv-vignette{
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(120% 100% at 50% 45%, rgba(5,3,20,0) 52%, rgba(5,3,20,0.55) 100%);
+}
+#kit-planet-viewer .pv-loader{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:9px;
+  z-index:6; transition:opacity .5s ease; background:transparent;
+}
+#kit-planet-viewer .pv-loader.pv-hide{opacity:0; pointer-events:none;}
+#kit-planet-viewer .pv-loaddot{
+  width:7px; height:7px; border-radius:50%; background:var(--pv-accent);
+  opacity:.35; animation:pvpulse 1.05s ease-in-out infinite;
+}
+#kit-planet-viewer .pv-loaddot:nth-child(2){animation-delay:.16s;}
+#kit-planet-viewer .pv-loaddot:nth-child(3){animation-delay:.32s;}
+@keyframes pvpulse{0%,100%{opacity:.25; transform:scale(.8);}50%{opacity:1; transform:scale(1.25);}}
+
+#kit-planet-viewer .pv-hud{
+  position:absolute; top:clamp(12px,3.5%,22px); left:clamp(14px,4%,26px);
+  pointer-events:none; max-width:62%; z-index:4;
+  text-shadow:0 1px 18px rgba(5,3,20,0.85);
+}
+#kit-planet-viewer .pv-eyebrow{
+  font-size:9.5px; letter-spacing:.26em; color:var(--pv-muted); font-weight:600;
+  text-transform:uppercase; opacity:.8; margin-bottom:6px;
+}
+#kit-planet-viewer .pv-title{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  text-transform:uppercase; letter-spacing:.02em; line-height:.96;
+  font-size:clamp(26px,6.4vw,52px); margin:0;
+  background:linear-gradient(180deg, #ffffff 0%, var(--pv-muted) 130%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+#kit-planet-viewer .pv-sub{
+  font-size:clamp(11px,1.5vw,13px); color:var(--pv-muted); margin-top:7px;
+  font-weight:400; line-height:1.35; max-width:30ch;
+}
+
+#kit-planet-viewer .pv-panel{
+  position:absolute; right:clamp(12px,3.5%,22px); top:50%; transform:translateY(-50%);
+  display:grid; grid-template-columns:1fr; gap:1px; z-index:4; min-width:140px;
+  background:linear-gradient(180deg, rgba(22,20,95,0.30), rgba(8,6,30,0.34));
+  border:1px solid var(--pv-hair); border-radius:11px; overflow:hidden;
+  backdrop-filter:blur(7px); -webkit-backdrop-filter:blur(7px);
+  box-shadow:0 18px 50px rgba(2,1,10,0.5);
+}
+#kit-planet-viewer .pv-stat{
+  display:flex; align-items:baseline; justify-content:space-between; gap:14px;
+  padding:8px 13px; background:rgba(5,3,20,0.30);
+}
+#kit-planet-viewer .pv-k{
+  font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--pv-muted);
+  font-weight:600; white-space:nowrap; opacity:.85;
+}
+#kit-planet-viewer .pv-v{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  text-transform:uppercase; font-size:13px; color:var(--pv-text); white-space:nowrap;
+  transition:color .3s ease, opacity .3s ease;
+}
+#kit-planet-viewer .pv-credit{
+  position:absolute; bottom:9px; left:clamp(14px,4%,26px); z-index:4; pointer-events:none;
+  font-size:8.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--pv-muted);
+  opacity:.5; font-weight:500;
+}
+
+#kit-planet-viewer .pv-rail{
+  flex:0 0 auto; display:flex; align-items:center; gap:4px;
+  padding:9px clamp(12px,4%,22px); overflow-x:auto; overflow-y:hidden;
+  border-top:1px solid var(--pv-hair);
+  background:linear-gradient(180deg, rgba(8,6,30,0.0), rgba(8,6,30,0.55));
+  scrollbar-width:none; outline:none;
+}
+#kit-planet-viewer .pv-rail::-webkit-scrollbar{height:0; display:none;}
+#kit-planet-viewer .pv-rail:focus-visible{box-shadow:inset 0 0 0 1px var(--pv-accent);}
+#kit-planet-viewer .pv-chip{
+  display:inline-flex; align-items:center; gap:7px; flex:0 0 auto;
+  padding:6px 11px 6px 8px; border-radius:999px; cursor:pointer;
+  background:transparent; border:1px solid transparent; color:var(--pv-muted);
+  font-family:inherit; font-size:11px; font-weight:500; letter-spacing:.02em;
+  transition:background .25s ease, border-color .25s ease, color .25s ease, transform .15s ease;
+  white-space:nowrap;
+}
+#kit-planet-viewer .pv-chip:hover{color:var(--pv-text); background:rgba(166,171,230,0.07);}
+#kit-planet-viewer .pv-chip[aria-selected="true"]{
+  color:var(--pv-text); background:rgba(22,20,95,0.45);
+  border-color:color-mix(in srgb, var(--pv-accent) 55%, transparent);
+}
+#kit-planet-viewer .pv-dot{
+  width:11px; height:11px; border-radius:50%; flex:0 0 auto;
+  background:radial-gradient(circle at 32% 30%, #d8dcff, #6a6fb8 70%);
+  box-shadow:0 0 0 1px rgba(166,171,230,0.25);
+  transition:box-shadow .25s ease, transform .2s ease;
+}
+#kit-planet-viewer .pv-chip[aria-selected="true"] .pv-dot{
+  box-shadow:0 0 0 1px var(--pv-accent), 0 0 10px 1px color-mix(in srgb, var(--pv-accent) 60%, transparent);
+  transform:scale(1.08);
+}
+#kit-planet-viewer .pv-chip[data-key="mercury"] .pv-dot{background:radial-gradient(circle at 32% 30%, #cdbfa9, #7a6f60 72%);}
+#kit-planet-viewer .pv-chip[data-key="venus"]   .pv-dot{background:radial-gradient(circle at 32% 30%, #f4e3b6, #c79a4e 72%);}
+#kit-planet-viewer .pv-chip[data-key="earth"]   .pv-dot{background:radial-gradient(circle at 32% 30%, #aee0ff, #2f6db0 72%);}
+#kit-planet-viewer .pv-chip[data-key="moon"]    .pv-dot{background:radial-gradient(circle at 32% 30%, #e2e3ec, #8a8c98 72%);}
+#kit-planet-viewer .pv-chip[data-key="mars"]    .pv-dot{background:radial-gradient(circle at 32% 30%, #e89a6a, #a8492a 72%);}
+#kit-planet-viewer .pv-chip[data-key="jupiter"] .pv-dot{background:radial-gradient(circle at 32% 30%, #e8cda6, #b07c4e 72%);}
+#kit-planet-viewer .pv-chip[data-key="saturn"]  .pv-dot{background:radial-gradient(circle at 32% 30%, #f0e0b6, #c4a55e 72%);}
+#kit-planet-viewer .pv-chip[data-key="uranus"]  .pv-dot{background:radial-gradient(circle at 32% 30%, #cdeef0, #6fb8bf 72%);}
+#kit-planet-viewer .pv-chip[data-key="neptune"] .pv-dot{background:radial-gradient(circle at 32% 30%, #aabfff, #2f47b0 72%);}
+
+@media (max-width:640px){
+  #kit-planet-viewer .pv-panel{min-width:124px;}
+  #kit-planet-viewer .pv-v{font-size:12px;}
+  #kit-planet-viewer .pv-stat{padding:6.5px 10px;}
+  #kit-planet-viewer .pv-sub{display:none;}
+}
+@media (max-width:460px){
+  #kit-planet-viewer .pv-panel{
+    top:auto; bottom:34px; right:50%; transform:translateX(50%);
+    grid-template-columns:1fr 1fr; min-width:0; width:calc(100% - 28px);
+  }
+  #kit-planet-viewer .pv-credit{left:50%; transform:translateX(-50%); text-align:center;}
+}
+@media (prefers-reduced-motion:reduce){
+  #kit-planet-viewer .pv-loaddot{animation:none;}
+}
 
 body.mb-embed #kit-planet-viewer{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
-body.mb-embed #kit-planet-viewer{display:flex!important;flex-direction:column!important;gap:6px!important;}
-body.mb-embed #kit-planet-viewer>*{flex:0 0 auto;min-height:0;}
-body.mb-embed #kit-planet-viewer [class*='frame'],body.mb-embed #kit-planet-viewer [class*='shell'],body.mb-embed #kit-planet-viewer [class*='-inner'],body.mb-embed #kit-planet-viewer [class*='wrapper']{display:contents!important;}
-body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-viewer [class*='scene'],body.mb-embed #kit-planet-viewer [class*='plotwrap'],body.mb-embed #kit-planet-viewer [class*='plot-'],body.mb-embed #kit-planet-viewer [class*='canvas-wrap'],body.mb-embed #kit-planet-viewer [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
+body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-viewer [class*='scene'],body.mb-embed #kit-planet-viewer [class*='canvas'],body.mb-embed #kit-planet-viewer canvas{aspect-ratio:auto!important;min-height:0!important;max-height:100%!important;}
 
 </style></head>
 <body>
@@ -68,27 +181,43 @@ body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-view
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
       <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Planet Viewer</div></div>
     </div>
-    
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
-  <div class="mb-stage"><div class="kfig" id="kit-planet-viewer">
-  <div class="pv-head">
-    <div class="pv-meta">
-      <span class="pv-eyebrow">Planetary bodies</span>
-      <h3 class="pv-name">EARTH</h3>
-      <p class="pv-desc">Oceans, continents, polar ice — our pale blue world.</p>
+  <div class="mb-stage"><div class="kfig" id="kit-planet-viewer" role="group" aria-label="Solar System planet viewer on real NASA imagery">
+  <div class="pv-stagewrap">
+    <canvas class="pv-canvas" aria-hidden="true"></canvas>
+    <div class="pv-loader" aria-hidden="true"><span class="pv-loaddot"></span><span class="pv-loaddot"></span><span class="pv-loaddot"></span></div>
+    <div class="pv-vignette" aria-hidden="true"></div>
+    <div class="pv-hud">
+      <div class="pv-eyebrow">SSAI &middot; PLANETARY ARCHIVE</div>
+      <div class="pv-title" id="pv-name">EARTH</div>
+      <div class="pv-sub" id="pv-tagline">The pale blue dot &mdash; our home world</div>
     </div>
-    <div class="pv-toggle" role="group" aria-label="Choose a body">
-      <button class="pv-btn" data-body="earth" aria-pressed="true">Earth</button>
-      <button class="pv-btn" data-body="mars" aria-pressed="false">Mars</button>
-      <button class="pv-btn" data-body="moon" aria-pressed="false">Moon</button>
+    <div class="pv-panel" aria-live="polite">
+      <div class="pv-stat"><span class="pv-k">Diameter</span><span class="pv-v" id="pv-dia">12,742 km</span></div>
+      <div class="pv-stat"><span class="pv-k">Day length</span><span class="pv-v" id="pv-day">24 h</span></div>
+      <div class="pv-stat"><span class="pv-k">Year</span><span class="pv-v" id="pv-year">365 d</span></div>
+      <div class="pv-stat"><span class="pv-k">Moons</span><span class="pv-v" id="pv-moons">1</span></div>
+      <div class="pv-stat"><span class="pv-k">Mean temp</span><span class="pv-v" id="pv-temp">15 &deg;C</span></div>
+      <div class="pv-stat"><span class="pv-k">From Sun</span><span class="pv-v" id="pv-dist">1.00 AU</span></div>
     </div>
+    <div class="pv-credit">Imagery: NASA / JPL-Caltech / USGS</div>
   </div>
-  <div class="pv-stage" aria-hidden="true"></div>
-  <div class="pv-hint"><span class="pv-dot"></span>Drag to spin · auto-rotates when idle</div>
+  <div class="pv-rail" role="listbox" tabindex="0" aria-label="Select a Solar System body">
+    <button class="pv-chip" role="option" data-key="mercury" tabindex="-1"><span class="pv-dot"></span><span class="pv-cname">Mercury</span></button>
+    <button class="pv-chip" role="option" data-key="venus" tabindex="-1"><span class="pv-dot"></span><span class="pv-cname">Venus</span></button>
+    <button class="pv-chip" role="option" data-key="earth" tabindex="-1" aria-selected="true"><span class="pv-dot"></span><span class="pv-cname">Earth</span></button>
+    <button class="pv-chip" role="option" data-key="moon" tabindex="-1"><span class="pv-dot"></span><span class="pv-cname">Moon</span></button>
+    <button class="pv-chip" role="option" data-key="mars" tabindex="-1"><span class="pv-dot"></span><span class="pv-cname">Mars</span></button>
+    <button class="pv-chip" role="option" data-key="jupiter" tabindex="-1"><span class="pv-dot"></span><span class="pv-cname">Jupiter</span></button>
+    <button class="pv-chip" role="option" data-key="saturn" tabindex="-1"><span class="pv-dot"></span><span class="pv-cname">Saturn</span></button>
+    <button class="pv-chip" role="option" data-key="uranus" tabindex="-1"><span class="pv-dot"></span><span class="pv-cname">Uranus</span></button>
+    <button class="pv-chip" role="option" data-key="neptune" tabindex="-1"><span class="pv-dot"></span><span class="pv-cname">Neptune</span></button>
+  </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag the planet to spin it (it auto-rotates when idle), and tap Earth / Mars / Moon to morph the procedural surface, palette, and atmosphere; terminator shading marks the lit and dark hemispheres.</span>
-    <span class="mb-c-src">Concept · SSAI</span>
+    <span class="mb-c-int">Click a planet dot or name in the selector rail to switch bodies; the new world cinematically crossfades over the old one while the fact panel cross-updates. Earth auto-rotates as a real globe; all bodies have a slow cinematic float. Hover a selector item to preview its name. Keyboard: focus the rail and use Left/Right arrows (or Up/Down) to step between worlds; Home/End jump to the first/last. Everything renders a first frame on init with no gating; animation pauses when scrolled off-screen and falls back to a static, fully-rendered frame under prefers-reduced-motion.</span>
+    <span class="mb-c-src">Imagery · NASA / JPL-Caltech / USGS</span>
   </footer>
 </div>
 <script>
@@ -101,6 +230,8 @@ body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-view
     var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
     if(q.get('embed')==='1') document.body.classList.add('mb-embed');
   }catch(e){}
+  /* nudge a resize after layout settles so canvas modules that measured too early redraw at the right size */
+  window.addEventListener('load',function(){ [120,420,1000].forEach(function(t){ setTimeout(function(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} },t); }); });
   /* safety: some modules forget to hide their loading overlay after the image resolves */
   window.addEventListener('load',function(){ setTimeout(function(){
     var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
@@ -112,141 +243,367 @@ body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-view
 </script>
 <script>
 (function(){
-var root=document.getElementById('kit-planet-viewer');if(!root)return;
-var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-var stage=root.querySelector('.pv-stage');
-var nameEl=root.querySelector('.pv-name');
-var descEl=root.querySelector('.pv-desc');
-var btns=root.querySelectorAll('.pv-btn');
-var canvas=document.createElement('canvas');stage.appendChild(canvas);
-var ctx=canvas.getContext('2d');
-var dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
-var W=0,H=0,cx=0,cy=0,R=0,buf=null,bw=0;
-function clamp(v,a,b){return v<a?a:v>b?b:v;}
-function mix(a,b,t){return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
-function hash(x,y,z){var n=Math.sin(x*127.1+y*311.7+z*269.5)*43758.5453;return n-Math.floor(n);}
-function smooth(t){return t*t*(3-2*t);}
-function vnoise(x,y,z){
-  var xi=Math.floor(x),yi=Math.floor(y),zi=Math.floor(z);
-  var u=smooth(x-xi),v=smooth(y-yi),w=smooth(z-zi);
-  function g(a,b,c){return hash(xi+a,yi+b,zi+c);}
-  var x00=g(0,0,0)+(g(1,0,0)-g(0,0,0))*u,x10=g(0,1,0)+(g(1,1,0)-g(0,1,0))*u;
-  var x01=g(0,0,1)+(g(1,0,1)-g(0,0,1))*u,x11=g(0,1,1)+(g(1,1,1)-g(0,1,1))*u;
-  var y0=x00+(x10-x00)*v,y1=x01+(x11-x01)*v;
-  return y0+(y1-y0)*w;
-}
-function fbm(x,y,z,oct){var t=0,a=0.5,f=1,m=0;for(var i=0;i<oct;i++){t+=vnoise(x*f,y*f,z*f)*a;m+=a;f*=2.02;a*=0.5;}return t/m;}
-var EARTH={name:'EARTH',desc:'Oceans, continents, polar ice — our pale blue world.',accent:[47,217,195],accentHex:'#2fd9c3',
-  surf:function(nx,ny,nz,lat){
-    var c=fbm(nx*2.1+5,ny*2.1+5,nz*2.1+5,5);
-    var ice=clamp((Math.abs(lat)-1.18)/0.32,0,1);
-    var col;
-    if(c>0.52){
-      var h=(c-0.52)/0.48;col=mix([46,92,52],[150,134,86],clamp(h*1.3,0,1));
-      var snow=fbm(nx*4+9,ny*4+9,nz*4+9,3);
-      if(h>0.7&&snow>0.55)col=mix(col,[210,216,224],clamp((h-0.7)*2,0,0.7));
-    }else{
-      var d=fbm(nx*3+2,ny*3+2,nz*3+2,3);col=mix([10,32,78],[26,86,138],clamp(d*1.1+0.15,0,1));
-    }
-    if(ice>0)col=mix(col,[226,234,244],ice);return col;
-  }};
-var MARS={name:'MARS',desc:'Iron-oxide deserts, canyons and bright polar caps.',accent:[242,103,60],accentHex:'#f2673c',
-  surf:function(nx,ny,nz,lat){
-    var c=fbm(nx*2.4+1,ny*2.4+1,nz*2.4+1,5);
-    var cap=clamp((Math.abs(lat)-1.30)/0.26,0,1);
-    var t=clamp(c*1.25+0.05,0,1);
-    var col=t<0.5?mix([108,44,26],[176,82,44],t*2):mix([176,82,44],[212,140,98],(t-0.5)*2);
-    var dark=fbm(nx*5+7,ny*5+7,nz*5+7,3);
-    if(dark<0.4)col=mix(col,[86,40,28],(0.4-dark)*1.3);
-    if(cap>0)col=mix(col,[228,222,228],cap);return col;
-  }};
-var MOON={name:'MOON',desc:'Cratered highlands and dark basaltic maria.',accent:[166,171,230],accentHex:'#a6abe6',
-  surf:function(nx,ny,nz,lat){
-    var c=fbm(nx*2.6+3,ny*2.6+3,nz*2.6+3,5);
-    var t=clamp(c*1.2,0,1);
-    var col=t<0.5?mix([70,72,82],[128,130,140],t*2):mix([128,130,140],[176,178,188],(t-0.5)*2);
-    var mare=fbm(nx*1.6+11,ny*1.6+11,nz*1.6+11,3);
-    if(mare<0.42)col=mix(col,[58,60,70],(0.42-mare)*1.6);
-    var cr=vnoise(nx*9+20,ny*9+20,nz*9+20);
-    if(cr>0.78)col=mix(col,[40,42,52],(cr-0.78)*3);else if(cr<0.16)col=mix(col,[196,198,206],(0.16-cr)*2.5);
-    return col;
-  }};
-var BODIES={earth:EARTH,mars:MARS,moon:MOON};
-var rot=0,vel=0.0022,dragging=false,lastX=0,idle=0,velFromDrag=0;
-var curKey='earth',fromKey='earth',toKey='earth',trans=1;
-var lx=0.66,ly=0.12,lz=0.74;var Ln=Math.hypot(lx,ly,lz);lx/=Ln;ly/=Ln;lz/=Ln;
-function applyAccent(body){root.style.setProperty('--pv-accent',body.accentHex);if(nameEl)nameEl.textContent=body.name;if(descEl)descEl.textContent=body.desc;}
-function select(key){
-  if(key===toKey||!BODIES[key])return;
-  fromKey=curKey;toKey=key;trans=0;idle=0;
-  for(var i=0;i<btns.length;i++){btns[i].setAttribute('aria-pressed',btns[i].getAttribute('data-body')===key?'true':'false');}
-  applyAccent(BODIES[key]);if(reduce){curKey=key;trans=1;frame();}
-}
-function resize(){
-  W=root.querySelector('.pv-stage').clientWidth||root.clientWidth||320;
-  H=Math.round(clamp(W*0.6,220,420));
-  canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
-  canvas.style.width=W+'px';canvas.style.height=H+'px';
-  cx=W*0.5;cy=H*0.5;R=Math.min(W,H)*0.4;
-  bw=Math.max(48,Math.min(220,Math.round(R*2*dpr*0.6)));
-  buf=ctx.createImageData(bw,bw);
-}
-function drawGlow(){
-  var g=ctx.createRadialGradient(cx,cy,R*0.55,cx,cy,R*1.6);
-  var a=BODIES[toKey].accent;
-  g.addColorStop(0,'rgba('+a[0]+','+a[1]+','+a[2]+',0.16)');
-  g.addColorStop(1,'rgba('+a[0]+','+a[1]+','+a[2]+',0)');
-  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R*1.6,0,Math.PI*2);ctx.fill();
-}
-function renderPlanet(){
-  var fromB=BODIES[fromKey],toB=BODIES[toKey],tt=smooth(trans);
-  var data=buf.data,n=bw,half=n/2,inv=1/half;
-  var cosR=Math.cos(rot),sinR=Math.sin(rot);var idx=0;
-  for(var py=0;py<n;py++){
-    var sy=(py+0.5)*inv-1;
-    for(var px=0;px<n;px++){
-      var sx=(px+0.5)*inv-1;var d2=sx*sx+sy*sy;
-      if(d2>1){data[idx+3]=0;idx+=4;continue;}
-      var sz=Math.sqrt(1-d2);
-      var nx=sx*cosR+sz*sinR,nz=-sx*sinR+sz*cosR,ny=sy;
-      var lat=Math.asin(clamp(ny,-1,1));
-      var c1=fromB.surf(nx,ny,nz,lat);
-      var col=tt>=1?toB.surf(nx,ny,nz,lat):tt<=0?c1:mix(c1,toB.surf(nx,ny,nz,lat),tt);
-      var lite=nx*lx+ny*ly+nz*lz;var sh=clamp(lite,-1,1);
-      var lum=0.10+0.90*clamp(sh,0,1);
-      var term=smooth(clamp((sh+0.14)/0.30,0,1));
-      lum*=(0.18+0.82*term);
-      var a=toB.accent;var rim=Math.pow(clamp(lite,0,1),2)*Math.pow(d2,3)*0.5;
-      var r=col[0]*lum+a[0]*rim,g=col[1]*lum+a[1]*rim,b=col[2]*lum+a[2]*rim;
-      data[idx]=clamp(r,0,255);data[idx+1]=clamp(g,0,255);data[idx+2]=clamp(b,0,255);data[idx+3]=255;
-      idx+=4;
+  var root=document.getElementById('kit-planet-viewer');
+  if(!root) return;
+  var canvas=root.querySelector('.pv-canvas');
+  var ctx=canvas.getContext('2d');
+  var loader=root.querySelector('.pv-loader');
+  var rail=root.querySelector('.pv-rail');
+  var chips=Array.prototype.slice.call(root.querySelectorAll('.pv-chip'));
+  var nameEl=root.querySelector('#pv-name');
+  var tagEl=root.querySelector('#pv-tagline');
+  var elDia=root.querySelector('#pv-dia'), elDay=root.querySelector('#pv-day'),
+      elYear=root.querySelector('#pv-year'), elMoons=root.querySelector('#pv-moons'),
+      elTemp=root.querySelector('#pv-temp'), elDist=root.querySelector('#pv-dist');
+
+  var reduce=false;
+  try{reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(e){}
+
+  function accent(){
+    var v='';
+    try{v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();}catch(e){}
+    return v||'#3cc8ff';
+  }
+  function hexRGB(h){
+    h=(h||'').replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16);
+    if(isNaN(n))return[60,200,255];
+    return[(n>>16)&255,(n>>8)&255,n&255];
+  }
+  var ACC=accent(); var ACCRGB=hexRGB(ACC);
+  root.style.setProperty('--pv-accent',ACC);
+
+  // ---- Body data (accurate values per brief) ----
+  var DATA={
+    mercury:{name:'MERCURY', tag:'Sun-scorched, cratered and airless',           img:'../assets/images/planets/mercury.jpg', disk:true,
+      dia:'4,879 km', day:'1,408 h', year:'88 d',   moons:'0', temp:'~167 °C', dist:'0.39 AU', glow:[200,176,150]},
+    venus:{name:'VENUS',     tag:'A furnace beneath thick toxic cloud',          img:'../assets/images/planets/venus.jpg',   disk:true,
+      dia:'12,104 km', day:'5,832 h (retrograde)', year:'225 d', moons:'0', temp:'464 °C', dist:'0.72 AU', glow:[236,200,120]},
+    earth:{name:'EARTH',     tag:'The pale blue dot — our home world',      img:'../assets/images/planets/earth.jpg', disk:true, sphere:false,
+      dia:'12,742 km', day:'24 h', year:'365 d', moons:'1', temp:'15 °C', dist:'1.00 AU', glow:[90,170,255]},
+    moon:{name:'MOON',       tag:'Cratered highlands and dark maria',            img:'../assets/images/planets/moon.jpg',    disk:true,
+      dia:'3,475 km', day:'27.3 d', year:'—', moons:'0', temp:'−20 °C avg', dist:'—', glow:[200,202,214]},
+    mars:{name:'MARS',       tag:'The rusted red world of dust and ice',         img:'../assets/images/planets/mars.jpg',    disk:true,
+      dia:'6,779 km', day:'24.6 h', year:'687 d', moons:'2', temp:'−65 °C', dist:'1.52 AU', glow:[224,120,80]},
+    jupiter:{name:'JUPITER', tag:'A gas giant wrapped in churning storms',       img:'../assets/images/planets/jupiter.jpg', disk:true,
+      dia:'139,820 km', day:'9.9 h', year:'11.9 yr', moons:'95', temp:'−110 °C', dist:'5.20 AU', glow:[224,190,150]},
+    saturn:{name:'SATURN',   tag:'The ringed jewel of the Solar System',         img:'../assets/images/planets/saturn.jpg',  disk:true, wide:true,
+      dia:'116,460 km', day:'10.7 h', year:'29.4 yr', moons:'146', temp:'−140 °C', dist:'9.54 AU', glow:[230,206,150]},
+    uranus:{name:'URANUS',   tag:'A serene ice giant tipped on its side',        img:'../assets/images/planets/uranus.jpg',  disk:true,
+      dia:'50,724 km', day:'17.2 h', year:'84 yr', moons:'28', temp:'−195 °C', dist:'19.2 AU', glow:[150,224,228]},
+    neptune:{name:'NEPTUNE', tag:'The deep blue giant on the dark frontier',     img:'../assets/images/planets/neptune.jpg', disk:true,
+      dia:'49,244 km', day:'16.1 h', year:'165 yr', moons:'16', temp:'−200 °C', dist:'30.1 AU', glow:[90,120,240]}
+  };
+  var ORDER=['mercury','venus','earth','moon','mars','jupiter','saturn','uranus','neptune'];
+
+  // ---- image loading ----
+  var imgs={}, ready={};
+  function load(key){
+    var b=DATA[key];
+    var im=new Image();
+    im.onload=function(){imgs[key]=im; ready[key]=true; maybeHideLoader();};
+    im.onerror=function(){ready[key]=false; maybeHideLoader();};
+    im.src=b.img;
+  }
+  function maybeHideLoader(){
+    if(ready['earth']!==undefined && loader && !loader.classList.contains('pv-hide')){
+      loader.classList.add('pv-hide');
     }
   }
-}
-var tmp=document.createElement('canvas');var tctx=tmp.getContext('2d');
-function blit(){tmp.width=bw;tmp.height=bw;tctx.putImageData(buf,0,0);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(tmp,cx-R,cy-R,R*2,R*2);}
-function frame(){
-  if(!W)return;
-  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
-  if(!dragging){idle++;if(idle>40){velFromDrag*=0.94;vel+=(0.0022-vel)*0.02;}rot+=vel+velFromDrag;}
-  if(trans<1){trans=Math.min(1,trans+(reduce?1:0.035));if(trans>=1)curKey=toKey;}
-  drawGlow();renderPlanet();blit();
-}
-function loop(){frame();if(!reduce)requestAnimationFrame(loop);}
-function getX(e){return e.touches?e.touches[0].clientX:e.clientX;}
-function down(e){dragging=true;idle=0;lastX=getX(e);velFromDrag=0;stage.classList.add('pv-grab');if(e.cancelable&&e.touches)e.preventDefault();}
-function move(e){if(!dragging)return;var x=getX(e),dx=(x-lastX)/Math.max(120,R*2);lastX=x;rot+=dx;velFromDrag=dx*0.5;if(e.cancelable&&e.touches)e.preventDefault();}
-function up(){if(!dragging)return;dragging=false;idle=0;stage.classList.remove('pv-grab');}
-stage.addEventListener('mousedown',down);
-window.addEventListener('mousemove',move);
-window.addEventListener('mouseup',up);
-stage.addEventListener('touchstart',down,{passive:false});
-window.addEventListener('touchmove',move,{passive:false});
-window.addEventListener('touchend',up);
-for(var i=0;i<btns.length;i++){(function(b){b.addEventListener('click',function(){select(b.getAttribute('data-body'));});})(btns[i]);}
-window.addEventListener('resize',function(){resize();if(reduce)frame();});
-applyAccent(EARTH);resize();
-if(reduce){frame();}else{requestAnimationFrame(loop);}
+  ORDER.forEach(load);
+
+  // ---- offscreen sphere texture buffer (for Earth equirectangular) ----
+  var sphereCanvas=document.createElement('canvas');
+  var sctx=sphereCanvas.getContext('2d');
+  var sphereBuf=null, sphereN=0, sphereSrc=null, srcData=null, srcW=0, srcH=0;
+  var srcCanvas=document.createElement('canvas'), srcCtx=srcCanvas.getContext('2d');
+
+  function ensureSrcData(im){
+    if(sphereSrc===im && srcData) return;
+    var sw=Math.min(1024, im.naturalWidth||im.width);
+    var sh=Math.round(sw*((im.naturalHeight||im.height)/(im.naturalWidth||im.width)));
+    srcCanvas.width=sw; srcCanvas.height=sh;
+    srcCtx.drawImage(im,0,0,sw,sh);
+    try{ srcData=srcCtx.getImageData(0,0,sw,sh).data; srcW=sw; srcH=sh; sphereSrc=im; }
+    catch(e){ srcData=null; }
+  }
+  function ensureSphereBuf(n){
+    if(sphereN!==n || !sphereBuf){
+      sphereN=n; sphereCanvas.width=n; sphereCanvas.height=n;
+      sphereBuf=sctx.createImageData(n,n);
+    }
+  }
+
+  // render Earth as a real rotating globe from equirectangular texture
+  function renderSphere(im, rot, R){
+    ensureSrcData(im);
+    var n=Math.max(40, Math.min(420, Math.round(R*2*0.62)));
+    ensureSphereBuf(n);
+    if(!srcData){ // fallback: just draw disk
+      return null;
+    }
+    var data=sphereBuf.data, half=n/2, inv=1/half, idx=0;
+    // light direction
+    var lx=0.62, ly=0.16, lz=0.77; var Ln=Math.hypot(lx,ly,lz); lx/=Ln; ly/=Ln; lz/=Ln;
+    var cosR=Math.cos(rot), sinR=Math.sin(rot);
+    var a0=ACCRGB[0], a1=ACCRGB[1], a2=ACCRGB[2];
+    for(var py=0;py<n;py++){
+      var sy=(py+0.5)*inv-1;
+      for(var px=0;px<n;px++){
+        var sx=(px+0.5)*inv-1; var d2=sx*sx+sy*sy;
+        if(d2>1){ data[idx+3]=0; idx+=4; continue; }
+        var sz=Math.sqrt(1-d2);
+        // rotate around vertical (y) axis
+        var nx=sx*cosR+sz*sinR, nz=-sx*sinR+sz*cosR, ny=sy;
+        var lon=Math.atan2(nx,nz);            // -PI..PI
+        var lat=Math.asin(ny<-1?-1:ny>1?1:ny); // -PI/2..PI/2
+        var u=(lon/(Math.PI*2))+0.5;
+        var vv=0.5-(lat/Math.PI);
+        var tx=(u*srcW)|0; if(tx<0)tx=0; else if(tx>=srcW)tx=srcW-1;
+        var ty=(vv*srcH)|0; if(ty<0)ty=0; else if(ty>=srcH)ty=srcH-1;
+        var si=(ty*srcW+tx)*4;
+        var r=srcData[si], g=srcData[si+1], b=srcData[si+2];
+        // lambert + terminator
+        var lite=nx*lx+ny*ly+nz*lz;
+        var sh=lite<-1?-1:lite>1?1:lite;
+        var lum=0.10+0.92*(sh<0?0:sh);
+        var term=(sh+0.16)/0.34; if(term<0)term=0; else if(term>1)term=1;
+        term=term*term*(3-2*term);
+        lum*=(0.16+0.84*term);
+        // atmospheric rim (accent)
+        var rim=Math.pow(d2,3)*(lite<0?0:lite)*0.55;
+        data[idx]=Math.min(255, r*lum+a0*rim);
+        data[idx+1]=Math.min(255, g*lum+a1*rim);
+        data[idx+2]=Math.min(255, b*lum+a2*rim);
+        data[idx+3]=255;
+        idx+=4;
+      }
+    }
+    sctx.putImageData(sphereBuf,0,0);
+    return n;
+  }
+
+  // ---- sizing ----
+  var W=0,H=0,dpr=1,cx=0,cy=0,R=0;
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1, 2.2);
+    var wrap=root.querySelector('.pv-stagewrap');
+    W=wrap.clientWidth||root.clientWidth||320;
+    H=wrap.clientHeight||220;
+    if(H<140)H=140;
+    canvas.width=Math.max(1,Math.round(W*dpr));
+    canvas.height=Math.max(1,Math.round(H*dpr));
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+    cx=W*0.5; cy=H*0.5;
+    R=Math.min(W*0.46, H*0.46);
+    if(R<40)R=40;
+  }
+
+  // ---- state ----
+  var curKey='earth', fromKey='earth', toKey='earth';
+  var trans=1;                 // crossfade 0..1
+  var rot=0;                   // earth rotation
+  var t=0;                     // global time for float
+  var floatPhase=Math.random()*6.28;
+
+  function smooth(x){return x<=0?0:x>=1?1:x*x*(3-2*x);}
+
+  function applyData(key){
+    var b=DATA[key];
+    if(nameEl)nameEl.textContent=b.name;
+    if(tagEl)tagEl.textContent=b.tag;
+    if(elDia)elDia.textContent=b.dia;
+    if(elDay)elDay.textContent=b.day;
+    if(elYear)elYear.textContent=b.year;
+    if(elMoons)elMoons.textContent=b.moons;
+    if(elTemp)elTemp.textContent=b.temp;
+    if(elDist)elDist.textContent=b.dist;
+  }
+
+  function select(key){
+    if(!DATA[key]||key===toKey)return;
+    fromKey=curKey; toKey=key; trans=0;
+    chips.forEach(function(c){
+      var on=c.getAttribute('data-key')===key;
+      c.setAttribute('aria-selected', on?'true':'false');
+    });
+    applyData(key);
+    if(reduce){curKey=key; trans=1; draw();}
+  }
+
+  // ---- draw one body image (photographic disk or wide ring image) ----
+  function drawBody(key, alpha, scale, dy){
+    var b=DATA[key];
+    if(alpha<=0.001)return;
+    ctx.save();
+    ctx.globalAlpha=alpha;
+
+    // soft atmosphere / glow halo
+    var gl=b.glow||ACCRGB;
+    var haloR=R*1.7*scale;
+    var grd=ctx.createRadialGradient(cx,cy+dy,R*0.55*scale,cx,cy+dy,haloR);
+    grd.addColorStop(0,'rgba('+gl[0]+','+gl[1]+','+gl[2]+','+(0.16*alpha)+')');
+    grd.addColorStop(0.5,'rgba('+gl[0]+','+gl[1]+','+gl[2]+','+(0.05*alpha)+')');
+    grd.addColorStop(1,'rgba('+gl[0]+','+gl[1]+','+gl[2]+',0)');
+    ctx.globalAlpha=1; ctx.fillStyle=grd;
+    ctx.beginPath(); ctx.arc(cx,cy+dy,haloR,0,6.2832); ctx.fill();
+    ctx.globalAlpha=alpha;
+
+    if(b.sphere){
+      var n=renderSphere(imgs[key], rot, R*scale);
+      if(n){
+        var sz=R*2*scale;
+        ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+        ctx.drawImage(sphereCanvas,0,0,n,n, cx-R*scale, cy+dy-R*scale, sz, sz);
+      } else {
+        drawPhotoDisk(key, scale, dy);
+      }
+    } else if(b.wide){
+      drawWide(key, scale, dy);
+    } else {
+      drawPhotoDisk(key, scale, dy);
+    }
+
+    // shading vignette to add dimensionality on flat photo disks
+    if(!b.sphere){
+      var rr=R*scale*(b.wide?1.02:1.0);
+      var shade=ctx.createRadialGradient(cx-rr*0.32, cy+dy-rr*0.34, rr*0.1, cx, cy+dy, rr*1.15);
+      shade.addColorStop(0,'rgba(255,255,255,0.10)');
+      shade.addColorStop(0.55,'rgba(0,0,0,0)');
+      shade.addColorStop(1,'rgba(2,1,10,0.62)');
+      ctx.globalCompositeOperation='source-over';
+      ctx.fillStyle=shade;
+      if(b.wide){
+        ctx.beginPath(); ctx.arc(cx,cy+dy,rr,0,6.2832); ctx.fill();
+      } else {
+        ctx.beginPath(); ctx.arc(cx,cy+dy,rr,0,6.2832); ctx.fill();
+      }
+    }
+
+    // thin accent rim
+    ctx.globalCompositeOperation='source-over';
+    ctx.globalAlpha=alpha*0.5;
+    ctx.lineWidth=Math.max(1,R*0.012);
+    ctx.strokeStyle='rgba('+ACCRGB[0]+','+ACCRGB[1]+','+ACCRGB[2]+',0.35)';
+    if(!b.wide){
+      ctx.beginPath(); ctx.arc(cx,cy+dy,R*scale,0,6.2832); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawPhotoDisk(key, scale, dy){
+    var im=imgs[key]; if(!im)return;
+    var rr=R*scale;
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx,cy+dy,rr,0,6.2832); ctx.clip();
+    var iw=im.naturalWidth||im.width, ih=im.naturalHeight||im.height;
+    var s=Math.max((rr*2)/iw,(rr*2)/ih);
+    var dw=iw*s, dh=ih*s;
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(im, cx-dw/2, cy+dy-dh/2, dw, dh);
+    ctx.restore();
+  }
+
+  // Saturn: preserve full frame incl. rings (no circular clip)
+  function drawWide(key, scale, dy){
+    var im=imgs[key]; if(!im)return;
+    var iw=im.naturalWidth||im.width, ih=im.naturalHeight||im.height;
+    // fit the planet body to ~2R: use height of frame relative to disk
+    var target=R*2*scale*1.18;
+    var s=target/iw;
+    var dw=iw*s, dh=ih*s;
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(im, cx-dw/2, cy+dy-dh/2, dw, dh);
+  }
+
+  function draw(){
+    if(!W)return;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation='source-over';
+
+    // slow cinematic float
+    var floatY=Math.sin(t*0.6+floatPhase)*R*0.018;
+    var floatS=1+Math.sin(t*0.45)*0.006;
+
+    var tt=smooth(trans);
+    // crossfade: out-going then in-coming
+    if(tt<1 && fromKey!==toKey){
+      drawBody(fromKey, 1-tt, floatS, floatY);
+    }
+    drawBody(toKey, tt>=1?1:tt, floatS, floatY);
+  }
+
+  // ---- animation loop ----
+  var rafId=null, running=false, visible=true;
+  function step(){
+    if(!running){rafId=null;return;}
+    t+=0.016;
+    if(!reduce){ rot+=0.0016; }
+    if(trans<1){ trans=Math.min(1, trans+(reduce?1:0.028)); if(trans>=1)curKey=toKey; }
+    draw();
+    rafId=requestAnimationFrame(step);
+  }
+  function start(){
+    if(reduce){draw();return;}
+    if(running)return;
+    running=true; rafId=requestAnimationFrame(step);
+  }
+  function stop(){
+    running=false;
+    if(rafId){cancelAnimationFrame(rafId); rafId=null;}
+  }
+
+  // ---- visibility (pause off-screen) ----
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(ents){
+      ents.forEach(function(e){
+        visible=e.isIntersecting && e.intersectionRatio>0;
+        if(visible){start();} else {stop();}
+      });
+    },{threshold:0.01});
+    io.observe(root);
+  } else { visible=true; }
+
+  // ---- interactions ----
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){ select(c.getAttribute('data-key')); });
+  });
+  rail.addEventListener('keydown', function(e){
+    var i=ORDER.indexOf(toKey); if(i<0)i=0;
+    var k=e.key;
+    if(k==='ArrowRight'||k==='ArrowDown'){ i=(i+1)%ORDER.length; select(ORDER[i]); e.preventDefault(); }
+    else if(k==='ArrowLeft'||k==='ArrowUp'){ i=(i-1+ORDER.length)%ORDER.length; select(ORDER[i]); e.preventDefault(); }
+    else if(k==='Home'){ select(ORDER[0]); e.preventDefault(); }
+    else if(k==='End'){ select(ORDER[ORDER.length-1]); e.preventDefault(); }
+  });
+
+  // ---- resize handling ----
+  var ro=null;
+  if('ResizeObserver' in window){
+    ro=new ResizeObserver(function(){ resize(); draw(); });
+    ro.observe(root);
+  }
+  window.addEventListener('resize', function(){ resize(); draw(); });
+
+  // ---- init (un-gated: build UI + first frame immediately) ----
+  applyData('earth');
+  chips.forEach(function(c){ c.setAttribute('aria-selected', c.getAttribute('data-key')==='earth'?'true':'false'); });
+  resize();
+  draw(); // first frame (may be empty until images decode, then redraw on load via maybeHideLoader/start)
+
+  // when images arrive, refresh frame even if loop not yet running
+  ORDER.forEach(function(key){
+    var b=DATA[key]; var probe=imgs[key];
+    // hook a redraw on each load through onload already set; add a one-shot redraw
+  });
+  // ensure a redraw shortly after init as images decode
+  var settle=setInterval(function(){ draw(); }, 120);
+  setTimeout(function(){ clearInterval(settle); }, 2600);
+
+  if(reduce){ draw(); }
+  else if(visible){ start(); }
 })();
 </script>
 </body></html>

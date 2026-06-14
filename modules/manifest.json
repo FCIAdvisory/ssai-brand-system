@@ -119,13 +119,13 @@
     },
     {
       "slug": "keeling-co2",
-      "title": "The CO2 record",
+      "title": "The CO\u2082 record",
       "collection": "earth-climate",
-      "source": "",
-      "credit": "",
-      "blurb": "An animated, scrubbable Keeling curve of atmospheric CO2 (1960\u20132026) showing the rising trend and seasonal sawtooth in SSAI's dark-cosmic style.",
-      "interaction": "Hover/drag the chart or use the year slider to read year + ppm; toggle the seasonal cycle, replay the draw-on; live accent recolor.",
-      "real": false
+      "source": "NOAA",
+      "credit": "Data \u00b7 NOAA GML \u2014 Mauna Loa",
+      "blurb": "A cinematic, data-credible rendering of the real NOAA Mauna Loa annual-mean atmospheric CO\u2082 record (1959\u20132025), the Keeling Curve. Use it as a flagship hero visualization in SSAI's brand book to demonstrate the company's NASA-grade Earth-science heritage \u2014 a single, authoritative chart that animates the rise from 315.98 ppm to 427.35 ppm against a pre-industrial baseline, with a live hover/scrub readout for exploring any year. Suited to web, presentations, and investor or capability decks where scientific authority and visual prestige both matter.",
+      "interaction": "On load, the line draws on left-to-right with an accent-colored stroke and a soft area glow beneath it, then a focus dot settles on the latest year (2025). Move the pointer (or finger) anywhere over the chart to scrub: a vertical guide, a focus dot, and a floating readout snap to the nearest year and show the real ppm value plus the cumulative rise since 1959. Move away and it relaxes back to the latest reading. A dashed pre-industrial baseline (~280 ppm) is annotated, and two stat callouts report the total rise since 1959 (~+35%) and versus pre-industrial (~+50%). Animation pauses when scrolled off-screen, respects prefers-reduced-motion (renders the final frame instantly), and re-fits crisply on resize at any container size.",
+      "real": true
     },
     {
       "slug": "atmos-sounding",
@@ -341,11 +341,11 @@
       "slug": "planet-viewer",
       "title": "Planet Viewer",
       "collection": "solar-system",
-      "source": "",
-      "credit": "",
-      "blurb": "An interactive generated planet (Earth / Mars / Moon) that visitors can spin and switch between to explore SSAI's three science domains \u2014 the Sun, the Earth, the Universe.",
-      "interaction": "Drag the planet to spin it (it auto-rotates when idle), and tap Earth / Mars / Moon to morph the procedural surface, palette, and atmosphere; terminator shading marks the lit and dark hemispheres.",
-      "real": false
+      "source": "NASA",
+      "credit": "Imagery \u00b7 NASA / JPL-Caltech / USGS",
+      "blurb": "A cinematic planetarium-grade viewer that lets an audience explore the Solar System on real NASA/JPL/USGS full-disk imagery. Drop it into the SSAI brand experience (web, pitch decks, kiosk) to demonstrate, in a single credible interaction, the company's 48 years of planetary and Earth science: a viewer selects any body from Mercury to Neptune (plus the Moon), watches it crossfade in with a soft atmospheric glow and slow float, and reads accurate physical data \u2014 diameter, day length, year, moons, temperature and distance from the Sun. Earth is rendered as a true rotating globe from the Blue Marble equirectangular texture; the photographic disks float with a subtle parallax. Works at any pop-up size, is devicePixelRatio-aware, pauses off-screen and respects reduced-motion.",
+      "interaction": "Click a planet dot or name in the selector rail to switch bodies; the new world cinematically crossfades over the old one while the fact panel cross-updates. Earth auto-rotates as a real globe; all bodies have a slow cinematic float. Hover a selector item to preview its name. Keyboard: focus the rail and use Left/Right arrows (or Up/Down) to step between worlds; Home/End jump to the first/last. Everything renders a first frame on init with no gating; animation pauses when scrolled off-screen and falls back to a static, fully-rendered frame under prefers-reduced-motion.",
+      "real": true
     },
     {
       "slug": "moon-phase",
@@ -479,12 +479,12 @@
     },
     {
       "slug": "emission-spectrum",
-      "title": "Element fingerprints",
+      "title": "Element Fingerprints",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "Pick an element to reveal its characteristic emission-line spectrum and see how astronomers fingerprint atoms in distant stars.",
-      "interaction": "Tap an element to show its bright-line spectrum; toggle Compare to overlay two elements; hover the strip to snap-read each line's wavelength and host element.",
+      "blurb": "An interactive atomic emission spectroscopy viewer for SSAI. It plots real NIST visible emission lines for six elements onto a 380\u2013700 nm spectrum strip, each line colored by its true wavelength-to-RGB value. Users pick a primary element, optionally overlay a second to compare fingerprints, and click any line to read its exact wavelength \u2014 illustrating how SSAI's instruments fingerprint elements in stars and atmospheres.",
+      "interaction": "Click an element button to display its emission fingerprint; the spectrum, line table, and label update with a smooth reveal. Click \"Overlay\" then a second element to compare two fingerprints stacked on one strip. Click (or tap) any bright emission line to select it \u2014 a readout shows the element, wavelength in nm, and visible color band. Hovering a line highlights it and shows a tooltip. A \"Clear overlay\" control removes the second element. Everything is keyboard reachable and respects reduced-motion.",
       "real": false
     },
     {
@@ -499,13 +499,13 @@
     },
     {
       "slug": "exoplanet-transit",
-      "title": "Exoplanet Transit",
+      "title": "Exoplanet Transit Photometry",
       "collection": "cosmos",
-      "source": "",
-      "credit": "",
-      "blurb": "Watch a planet cross its star and see the tiny brightness dip plotted live \u2014 the transit method NASA uses to discover exoplanets.",
-      "interaction": "Drag Planet size to deepen the dip (depth scales as (Rp/R\u2605)\u00b2) and Orbital speed to change the period and dip width; Pause/Play freezes the live light curve. Loops automatically; respects reduced-motion with a static frame.",
-      "real": false
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA Exoplanet Archive (Kepler/TESS)",
+      "blurb": "An interactive photometry instrument that demonstrates the transit method of exoplanet detection using five real, confirmed exoplanets and their archival parameters. The top panel animates the host star with the selected planet crossing its disk; the bottom panel plots the resulting light curve in real time, showing the characteristic U-shaped dip with correct ingress/egress and the real transit depth. Selecting a planet retunes star size/color, orbital period, and dip depth. Built for a 48-year NASA science company (SSAI) to communicate detection science with the credibility of a real mission-grade tool.",
+      "interaction": "Click any planet tab to load its real parameters \u2014 the star disk resizes and recolors, the orbiting planet rescales, and the light curve below redraws with that planet's true transit depth and period. The simulation runs continuously: watch the planet sweep across the stellar disk while a tracing dot rides the live flux curve and dips exactly when the planet occults the star. A live readout shows period, transit depth, planet radius, and current normalized flux. Play/Pause toggles the animation. Respects reduced-motion (renders a static representative frame) and pauses when scrolled off-screen.",
+      "real": true
     },
     {
       "slug": "redshift-doppler",

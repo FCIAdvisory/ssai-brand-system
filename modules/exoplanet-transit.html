@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exoplanet Transit · SSAI</title>
+<title>Exoplanet Transit Photometry · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -34,153 +34,110 @@ body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overfl
 body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-exoplanet-transit{
-  --xt-accent:var(--accent,#3cc8ff);
-  position:relative; width:100%; color:#f4f5ff;
-  font-family:'Inter',-apple-system,Helvetica,Arial,sans-serif;
+  --xp-bg:#050314; --xp-indigo:#16145f; --xp-text:#f4f5ff; --xp-muted:#a6abe6;
+  --xp-hair:rgba(166,171,230,0.16); --xp-hair2:rgba(166,171,230,0.30);
+  --xp-accent:#3cc8ff;
+  width:100%; box-sizing:border-box; color:var(--xp-text);
+  font-family:'Inter',system-ui,sans-serif;
 }
-#kit-exoplanet-transit *{ box-sizing:border-box; }
-#kit-exoplanet-transit .xt-shell{
-  display:grid; grid-template-columns:1.18fr 0.82fr; gap:18px;
-  border:1px solid rgba(166,171,230,0.16); border-radius:16px;
+#kit-exoplanet-transit *,#kit-exoplanet-transit *::before,#kit-exoplanet-transit *::after{box-sizing:border-box;}
+#kit-exoplanet-transit .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+#kit-exoplanet-transit .xpt-frame{
+  position:relative; width:100%; min-height:420px;
+  display:flex; flex-direction:column;
   background:
-    radial-gradient(120% 120% at 50% 28%, rgba(22,20,95,0.22) 0%, rgba(5,3,20,0) 60%),
-    #050314;
-  padding:16px; overflow:hidden;
+    radial-gradient(120% 80% at 80% -10%, rgba(60,200,255,0.10), transparent 55%),
+    radial-gradient(130% 90% at 12% 0%, rgba(22,20,95,0.55), transparent 60%),
+    var(--xp-bg);
+  border:1px solid var(--xp-hair);
+  border-radius:14px; overflow:hidden;
+  padding:16px 16px 12px;
 }
-#kit-exoplanet-transit .xt-scene{ display:flex; flex-direction:column; gap:14px; min-width:0; }
-#kit-exoplanet-transit .xt-stage{
-  position:relative; width:100%; aspect-ratio:16/10; min-height:200px;
-  border:1px solid rgba(166,171,230,0.14); border-radius:13px; overflow:hidden;
-  background:#050314;
+#kit-exoplanet-transit .xpt-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px;}
+#kit-exoplanet-transit .xpt-kicker{
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--xp-muted);
+  margin-bottom:4px; font-weight:500;
 }
-#kit-exoplanet-transit .xt-star{ position:absolute; inset:0; width:100%; height:100%; display:block; }
-#kit-exoplanet-transit .xt-badge{
-  position:absolute; top:11px; left:12px; z-index:2;
-  font-family:'Chakra Petch',system-ui,sans-serif; font-style:italic; font-weight:700;
-  text-transform:uppercase; letter-spacing:.16em; font-size:10px;
-  color:var(--xt-accent);
-  padding:4px 9px; border-radius:999px;
-  border:1px solid rgba(166,171,230,0.20);
-  background:rgba(5,3,20,0.45); backdrop-filter:blur(3px);
+#kit-exoplanet-transit .xpt-title{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  text-transform:uppercase; letter-spacing:.04em; font-size:22px; line-height:1; color:var(--xp-text);
 }
-#kit-exoplanet-transit .xt-plot{
-  position:relative; width:100%; aspect-ratio:16/7; min-height:130px;
-  border:1px solid rgba(166,171,230,0.14); border-radius:13px; overflow:hidden;
-  background:linear-gradient(180deg, rgba(22,20,95,0.10), rgba(5,3,20,0));
+#kit-exoplanet-transit .xpt-play{
+  display:inline-flex; align-items:center; gap:8px; flex:none;
+  background:rgba(166,171,230,0.06); color:var(--xp-text);
+  border:1px solid var(--xp-hair2); border-radius:8px;
+  padding:8px 12px; font-size:12px; font-family:inherit; cursor:pointer;
+  letter-spacing:.04em; transition:background .15s,border-color .15s; white-space:nowrap;
 }
-#kit-exoplanet-transit .xt-curve{ position:absolute; inset:0; width:100%; height:100%; display:block; }
-
-#kit-exoplanet-transit .xt-panel{
-  display:flex; flex-direction:column; gap:16px; min-width:0;
-  padding:4px 2px;
+#kit-exoplanet-transit .xpt-play:hover{background:rgba(60,200,255,0.10); border-color:var(--xp-accent);}
+#kit-exoplanet-transit .xpt-play-ic{
+  width:0;height:0;border-style:solid;
+  border-width:6px 0 6px 10px; border-color:transparent transparent transparent var(--xp-accent);
 }
-#kit-exoplanet-transit .xt-readouts{
-  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+#kit-exoplanet-transit .xpt-play.is-paused .xpt-play-ic{
+  border:none; width:9px; height:11px; position:relative;
 }
-#kit-exoplanet-transit .xt-stat{
-  border:1px solid rgba(166,171,230,0.14); border-radius:11px;
-  background:rgba(120,128,220,0.04);
-  padding:11px 12px; display:flex; flex-direction:column; gap:5px;
+#kit-exoplanet-transit .xpt-play.is-paused .xpt-play-ic::before,
+#kit-exoplanet-transit .xpt-play.is-paused .xpt-play-ic::after{
+  content:""; position:absolute; top:0; width:3px; height:11px; background:var(--xp-accent);
 }
-#kit-exoplanet-transit .xt-stat-k{
-  font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; color:#7e84bf; line-height:1.3;
+#kit-exoplanet-transit .xpt-play.is-paused .xpt-play-ic::before{left:0;}
+#kit-exoplanet-transit .xpt-play.is-paused .xpt-play-ic::after{right:0;}
+#kit-exoplanet-transit .xpt-tabs{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;}
+#kit-exoplanet-transit .xpt-tab{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  text-transform:uppercase; letter-spacing:.05em; font-size:11px;
+  color:var(--xp-muted); background:rgba(166,171,230,0.05);
+  border:1px solid var(--xp-hair); border-radius:7px;
+  padding:7px 11px; cursor:pointer; transition:all .15s; white-space:nowrap;
 }
-#kit-exoplanet-transit .xt-stat-k sub{ font-size:0.8em; }
-#kit-exoplanet-transit .xt-stat-v{
-  font-family:'Chakra Petch',system-ui,sans-serif; font-style:italic; font-weight:700;
-  font-size:19px; letter-spacing:.01em; color:#fff; line-height:1;
+#kit-exoplanet-transit .xpt-tab:hover{color:var(--xp-text); border-color:var(--xp-hair2);}
+#kit-exoplanet-transit .xpt-tab.is-on{
+  color:#050314; background:var(--xp-accent); border-color:var(--xp-accent);
+  box-shadow:0 0 16px rgba(60,200,255,0.35);
 }
-#kit-exoplanet-transit .xt-controls{ display:flex; flex-direction:column; gap:14px; }
-#kit-exoplanet-transit .xt-ctl{ display:flex; flex-direction:column; gap:2px; }
-#kit-exoplanet-transit .xt-ctl-row{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
-#kit-exoplanet-transit .xt-ctl-row label{
-  font-size:12.5px; font-weight:500; color:#f4f5ff; letter-spacing:.01em;
+#kit-exoplanet-transit .xpt-stage{position:relative; flex:1 1 auto; min-height:240px; border-radius:10px; overflow:hidden;}
+#kit-exoplanet-transit .xpt-canvas{display:block; width:100%; height:100%;}
+#kit-exoplanet-transit .xpt-loader{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background:var(--xp-bg); color:var(--xp-muted); font-size:12px; letter-spacing:.18em;
+  text-transform:uppercase; transition:opacity .4s; z-index:2;
 }
-#kit-exoplanet-transit .xt-ctl-hint{
-  font-size:10.5px; color:#7e84bf; letter-spacing:.02em;
+#kit-exoplanet-transit .xpt-loader.is-hidden{opacity:0; pointer-events:none;}
+#kit-exoplanet-transit .xpt-readout{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px;
 }
-#kit-exoplanet-transit .xt-ctl-hint sub,
-#kit-exoplanet-transit .xt-ctl-hint sup{ font-size:0.78em; }
-
-#kit-exoplanet-transit .xt-slider{
-  -webkit-appearance:none; appearance:none;
-  width:100%; height:26px; background:transparent; cursor:pointer; margin:2px 0 0;
+#kit-exoplanet-transit .xpt-cell{
+  background:rgba(166,171,230,0.05); border:1px solid var(--xp-hair);
+  border-radius:8px; padding:8px 10px; min-width:0;
 }
-#kit-exoplanet-transit .xt-slider:focus{ outline:none; }
-#kit-exoplanet-transit .xt-slider:focus-visible::-webkit-slider-thumb{ box-shadow:0 0 0 5px rgba(166,171,230,0.22), 0 2px 8px rgba(5,3,20,0.6); }
-#kit-exoplanet-transit .xt-slider::-webkit-slider-runnable-track{
-  height:3px; border-radius:3px;
-  background:linear-gradient(90deg, rgba(166,171,230,0.16), var(--xt-accent) 55%, rgba(166,171,230,0.16));
+#kit-exoplanet-transit .xpt-cell-l{
+  font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--xp-muted);
+  margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-#kit-exoplanet-transit .xt-slider::-moz-range-track{
-  height:3px; border-radius:3px;
-  background:linear-gradient(90deg, rgba(166,171,230,0.16), var(--xt-accent) 55%, rgba(166,171,230,0.16));
+#kit-exoplanet-transit .xpt-cell-v{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  font-size:16px; letter-spacing:.02em; color:var(--xp-text); white-space:nowrap;
 }
-#kit-exoplanet-transit .xt-slider::-webkit-slider-thumb{
-  -webkit-appearance:none; appearance:none;
-  width:17px; height:17px; margin-top:-7px; border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, #ffffff, #e7eaff 50%, var(--xt-accent) 130%);
-  border:1px solid rgba(244,245,255,0.85);
-  box-shadow:0 0 0 4px rgba(166,171,230,0.12), 0 2px 8px rgba(5,3,20,0.6);
-  transition:box-shadow .2s ease, transform .12s ease;
+#kit-exoplanet-transit .xpt-cell-v small{font-size:10px; color:var(--xp-muted); font-style:normal; font-weight:400; letter-spacing:.04em;}
+#kit-exoplanet-transit .xpt-foot{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:11px;
+  font-size:10.5px; letter-spacing:.1em; color:var(--xp-muted); text-transform:uppercase;
 }
-#kit-exoplanet-transit .xt-slider:hover::-webkit-slider-thumb{ box-shadow:0 0 0 6px rgba(166,171,230,0.18), 0 2px 8px rgba(5,3,20,0.6); }
-#kit-exoplanet-transit .xt-slider:active::-webkit-slider-thumb{ transform:scale(0.93); }
-#kit-exoplanet-transit .xt-slider::-moz-range-thumb{
-  width:17px; height:17px; border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, #ffffff, #e7eaff 50%, var(--xt-accent) 130%);
-  border:1px solid rgba(244,245,255,0.85);
-  box-shadow:0 0 0 4px rgba(166,171,230,0.12), 0 2px 8px rgba(5,3,20,0.6);
+#kit-exoplanet-transit .xpt-flux{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  color:var(--xp-accent); letter-spacing:.06em;
 }
-
-#kit-exoplanet-transit .xt-actions{
-  display:flex; align-items:center; gap:14px; margin-top:2px;
-}
-#kit-exoplanet-transit .xt-play{
-  font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:.02em;
-  color:#f4f5ff; cursor:pointer;
-  padding:9px 20px; border-radius:999px;
-  border:1px solid rgba(166,171,230,0.28);
-  background:rgba(120,128,220,0.07);
-  transition:border-color .2s ease, background .2s ease, transform .12s ease, color .2s ease;
-}
-#kit-exoplanet-transit .xt-play:hover{
-  border-color:var(--xt-accent);
-  color:#fff;
-  background:rgba(120,128,220,0.12);
-}
-#kit-exoplanet-transit .xt-play:active{ transform:scale(0.96); }
-#kit-exoplanet-transit .xt-play:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(166,171,230,0.28); }
-#kit-exoplanet-transit .xt-play[disabled]{ opacity:.55; cursor:default; }
-#kit-exoplanet-transit .xt-statuswrap{
-  display:inline-flex; align-items:center; gap:7px;
-  font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:#a6abe6;
-}
-#kit-exoplanet-transit .xt-dot{
-  width:7px; height:7px; border-radius:50%;
-  background:var(--xt-accent);
-  box-shadow:0 0 8px var(--xt-accent);
-  animation:kit-exoplanet-transit-pulse 2.4s ease-in-out infinite;
-}
-@keyframes kit-exoplanet-transit-pulse{
-  0%,100%{ opacity:.45; transform:scale(0.85); }
-  50%{ opacity:1; transform:scale(1.15); }
-}
-
-@media (max-width:760px){
-  #kit-exoplanet-transit .xt-shell{ grid-template-columns:1fr; }
-  #kit-exoplanet-transit .xt-stage{ aspect-ratio:16/9; }
-}
-@media (max-width:420px){
-  #kit-exoplanet-transit .xt-readouts{ grid-template-columns:1fr 1fr; }
-  #kit-exoplanet-transit .xt-stat-v{ font-size:17px; }
-}
-@media (prefers-reduced-motion:reduce){
-  #kit-exoplanet-transit .xt-dot{ animation:none; }
+@media (max-width:520px){
+  #kit-exoplanet-transit .xpt-readout{grid-template-columns:repeat(2,1fr);}
+  #kit-exoplanet-transit .xpt-title{font-size:19px;}
 }
 
 body.mb-embed #kit-exoplanet-transit{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
-body.mb-embed #kit-exoplanet-transit [class*='stage'],body.mb-embed #kit-exoplanet-transit [class*='scene'],body.mb-embed #kit-exoplanet-transit [class*='canvas'],body.mb-embed #kit-exoplanet-transit canvas{aspect-ratio:auto!important;min-height:0!important;max-height:100%!important;}
+body.mb-embed #kit-exoplanet-transit{display:flex!important;flex-direction:column!important;gap:6px!important;}
+body.mb-embed #kit-exoplanet-transit>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-exoplanet-transit [class*='frame'],body.mb-embed #kit-exoplanet-transit [class*='shell'],body.mb-embed #kit-exoplanet-transit [class*='-inner'],body.mb-embed #kit-exoplanet-transit [class*='wrapper']{display:contents!important;}
+body.mb-embed #kit-exoplanet-transit [class*='stage'],body.mb-embed #kit-exoplanet-transit [class*='scene'],body.mb-embed #kit-exoplanet-transit [class*='plotwrap'],body.mb-embed #kit-exoplanet-transit [class*='plot-'],body.mb-embed #kit-exoplanet-transit [class*='canvas-wrap'],body.mb-embed #kit-exoplanet-transit [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
 
 </style></head>
 <body>
@@ -188,48 +145,41 @@ body.mb-embed #kit-exoplanet-transit [class*='stage'],body.mb-embed #kit-exoplan
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Exoplanet Transit</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Exoplanet Transit Photometry</div></div>
     </div>
-    
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-exoplanet-transit">
-  <div class="xt-shell">
-    <div class="xt-scene">
-      <div class="xt-stage">
-        <canvas class="xt-star" aria-label="A glowing star with a planet transiting across its face"></canvas>
-        <div class="xt-badge">TRANSIT METHOD</div>
+  <h2 class="sr-only">Interactive exoplanet transit photometry tool: select a real exoplanet to see it cross its host star while a live light curve plots the resulting dip in starlight.</h2>
+  <div class="xpt-frame">
+    <div class="xpt-head">
+      <div class="xpt-titles">
+        <div class="xpt-kicker">SSAI · Transit Photometry</div>
+        <div class="xpt-title">Exoplanet Transit</div>
       </div>
-      <div class="xt-plot">
-        <canvas class="xt-curve" aria-label="Live light curve showing the brightness dip during transit"></canvas>
-      </div>
+      <button class="xpt-play" id="xpt-play" type="button" aria-label="Pause animation">
+        <span class="xpt-play-ic" id="xpt-play-ic"></span><span id="xpt-play-tx">Pause</span>
+      </button>
     </div>
-    <div class="xt-panel">
-      <div class="xt-readouts">
-        <div class="xt-stat"><span class="xt-stat-k">Transit depth</span><span class="xt-stat-v xt-depth">--</span></div>
-        <div class="xt-stat"><span class="xt-stat-k">Radius ratio R<sub>p</sub>/R<sub>&#9733;</sub></span><span class="xt-stat-v xt-rratio">--</span></div>
-        <div class="xt-stat"><span class="xt-stat-k">Orbital period</span><span class="xt-stat-v xt-period">--</span></div>
-        <div class="xt-stat"><span class="xt-stat-k">Transit duration</span><span class="xt-stat-v xt-dur">--</span></div>
-      </div>
-      <div class="xt-controls">
-        <div class="xt-ctl">
-          <div class="xt-ctl-row"><label for="xt-size-input">Planet size</label><span class="xt-ctl-hint">depth &prop; (R<sub>p</sub>/R<sub>&#9733;</sub>)<sup>2</sup></span></div>
-          <input id="xt-size-input" class="xt-slider xt-size" type="range" min="0" max="1000" step="1" value="500" aria-label="Planet size relative to the star" />
-        </div>
-        <div class="xt-ctl">
-          <div class="xt-ctl-row"><label for="xt-speed-input">Orbital speed</label><span class="xt-ctl-hint">sets period &amp; dip width</span></div>
-          <input id="xt-speed-input" class="xt-slider xt-speed" type="range" min="0" max="1000" step="1" value="500" aria-label="Orbital speed of the planet" />
-        </div>
-        <div class="xt-actions">
-          <button class="xt-play" type="button" aria-pressed="true">Pause</button>
-          <span class="xt-statuswrap"><span class="xt-dot"></span><span class="xt-status">observing</span></span>
-        </div>
-      </div>
+
+    <div class="xpt-tabs" id="xpt-tabs" role="tablist" aria-label="Select exoplanet"></div>
+
+    <div class="xpt-stage">
+      <canvas class="xpt-canvas" id="xpt-canvas"></canvas>
+      <div class="xpt-loader" id="xpt-loader"><span>Acquiring photometry…</span></div>
+    </div>
+
+    <div class="xpt-readout" id="xpt-readout"></div>
+
+    <div class="xpt-foot">
+      <span class="xpt-src">Source · NASA Exoplanet Archive · Kepler / TESS</span>
+      <span class="xpt-flux" id="xpt-flux">flux 1.0000</span>
     </div>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag Planet size to deepen the dip (depth scales as (Rp/R★)²) and Orbital speed to change the period and dip width; Pause/Play freezes the live light curve. Loops automatically; respects reduced-motion with a static frame.</span>
-    <span class="mb-c-src">Concept · SSAI</span>
+    <span class="mb-c-int">Click any planet tab to load its real parameters — the star disk resizes and recolors, the orbiting planet rescales, and the light curve below redraws with that planet&#x27;s true transit depth and period. The simulation runs continuously: watch the planet sweep across the stellar disk while a tracing dot rides the live flux curve and dips exactly when the planet occults the star. A live readout shows period, transit depth, planet radius, and current normalized flux. Play/Pause toggles the animation. Respects reduced-motion (renders a static representative frame) and pauses when scrolled off-screen.</span>
+    <span class="mb-c-src">Data · NASA Exoplanet Archive (Kepler/TESS)</span>
   </footer>
 </div>
 <script>
@@ -242,6 +192,8 @@ body.mb-embed #kit-exoplanet-transit [class*='stage'],body.mb-embed #kit-exoplan
     var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
     if(q.get('embed')==='1') document.body.classList.add('mb-embed');
   }catch(e){}
+  /* nudge a resize after layout settles so canvas modules that measured too early redraw at the right size */
+  window.addEventListener('load',function(){ [120,420,1000].forEach(function(t){ setTimeout(function(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} },t); }); });
   /* safety: some modules forget to hide their loading overlay after the image resolves */
   window.addEventListener('load',function(){ setTimeout(function(){
     var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
@@ -255,308 +207,480 @@ body.mb-embed #kit-exoplanet-transit [class*='stage'],body.mb-embed #kit-exoplan
 (function(){
   var root=document.getElementById('kit-exoplanet-transit');
   if(!root) return;
+  var canvas=root.querySelector('#xpt-canvas');
+  var ctx=canvas.getContext('2d');
+  var stage=root.querySelector('.xpt-stage');
+  var loader=root.querySelector('#xpt-loader');
+  var tabsWrap=root.querySelector('#xpt-tabs');
+  var readout=root.querySelector('#xpt-readout');
+  var fluxEl=root.querySelector('#xpt-flux');
+  var playBtn=root.querySelector('#xpt-play');
+  var playTx=root.querySelector('#xpt-play-tx');
+
+  var accent='#3cc8ff';
+  try{
+    var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    if(a) accent=a;
+  }catch(e){}
+
+  function hexToRgb(h){
+    h=(h||'').replace('#','');
+    if(h.length===3){h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];}
+    var n=parseInt(h,16);
+    if(isNaN(n)) return {r:60,g:200,b:255};
+    return {r:(n>>16)&255,g:(n>>8)&255,b:n&255};
+  }
+  var acc=hexToRgb(accent);
+  function accA(al){return 'rgba('+acc.r+','+acc.g+','+acc.b+','+al+')';}
 
   var reduce=false;
-  try{reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
 
-  var COL={ space:'#050314', star:'#f4f5ff', muted:'#a6abe6', hair:'rgba(166,171,230,0.16)' };
+  // Real exoplanet parameters (NASA Exoplanet Archive).
+  // depth = (Rp/Rs)^2. starColor reflects host stellar type.
+  var PLANETS=[
+    {key:'HD209458b', name:'HD 209458 b', P:3.52, depth:0.0150, rp:1.38,
+     tag:'First transiting', star:'G0 V', starCol:[255,244,222], starR:1.20, note:'Osiris'},
+    {key:'HD189733b', name:'HD 189733 b', P:2.22, depth:0.0240, rp:1.14,
+     tag:'Deep blue', star:'K1-2 V', starCol:[255,224,180], starR:0.81, note:'Hot Jupiter'},
+    {key:'WASP-12b', name:'WASP-12 b', P:1.09, depth:0.0140, rp:1.90,
+     tag:'Ultra-hot', star:'G0 V', starCol:[255,248,236], starR:1.66, note:'Disrupting'},
+    {key:'Kepler-7b', name:'Kepler-7 b', P:4.89, depth:0.0070, rp:1.61,
+     tag:'Cloudy', star:'G subgiant', starCol:[255,246,228], starR:1.97, note:'Low density'},
+    {key:'TRAPPIST-1b', name:'TRAPPIST-1 b', P:1.51, depth:0.0070, rp:0.10,
+     tag:'M-dwarf', star:'M8 V', starCol:[255,138,92], starR:0.12, note:'Rocky'}
+  ];
+  var cur=0;
 
-  var accent='#3cc8ff', accentRGB='60,200,255', accLast=0;
-  function readAccent(t){
-    if(t-accLast<240 && accLast!==0) return;
-    accLast=t;
-    try{
-      var cs=getComputedStyle(document.documentElement);
-      var a=cs.getPropertyValue('--accent').trim();
-      if(a) accent=a;
-      var r=cs.getPropertyValue('--accent-rgb').trim();
-      if(r) accentRGB=r; else accentRGB=hexToRgb(accent)||accentRGB;
-    }catch(e){}
-  }
-  function hexToRgb(h){
-    if(!h) return null; h=h.replace('#','');
-    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    if(h.length!==6) return null;
-    var n=parseInt(h,16); if(isNaN(n)) return null;
-    return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);
-  }
-  function aRGBA(al){ return 'rgba('+accentRGB+','+al+')'; }
-
-  var starCanvas=root.querySelector('.xt-star');
-  var curveCanvas=root.querySelector('.xt-curve');
-  var sizeSlider=root.querySelector('.xt-size');
-  var speedSlider=root.querySelector('.xt-speed');
-  var playBtn=root.querySelector('.xt-play');
-  var depthOut=root.querySelector('.xt-depth');
-  var periodOut=root.querySelector('.xt-period');
-  var durOut=root.querySelector('.xt-dur');
-  var rratioOut=root.querySelector('.xt-rratio');
-  var statusOut=root.querySelector('.xt-status');
-  if(!starCanvas||!curveCanvas) return;
-
-  var sctx=starCanvas.getContext('2d');
-  var cctx=curveCanvas.getContext('2d');
-  if(!sctx||!cctx) return;
-
-  var rRatio=0.12, speed=0.32, playing=!reduce, phase=0, t0=0;
-
-  var cells=[];
-  function buildCells(){
-    cells=[];
-    for(var i=0;i<46;i++){
-      var ang=Math.random()*6.2832, rr=Math.sqrt(Math.random());
-      cells.push({a:ang,r:rr,sz:Math.random()*0.5+0.5,ph:Math.random()*6.2832,sp:Math.random()*0.0009+0.0004});
-    }
-  }
-  var bg=[];
-  function buildBg(W,H){
-    bg=[];
-    var n=Math.max(36,Math.min(120,Math.round(W*H/9000)));
-    for(var i=0;i<n;i++){
-      bg.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.05+0.25,a:Math.random()*0.5+0.12,tw:Math.random()*0.0016+0.0004,ph:Math.random()*6.2832});
-    }
+  // Geometry display scaling: map true stellar radii to a visual range.
+  var minR=0.12, maxR=1.97;
+  function starDisplayFrac(p){
+    var t=(Math.sqrt(p.starR)-Math.sqrt(minR))/(Math.sqrt(maxR)-Math.sqrt(minR));
+    return 0.46+t*0.52; // 0.46..0.98 of available radius budget
   }
 
-  var U1=0.55, U2=0.18;
-  function limb(rNorm){
-    if(rNorm>=1) return 0;
-    var mu=Math.sqrt(1-rNorm*rNorm);
-    var v=1 - U1*(1-mu) - U2*(1-mu)*(1-mu);
-    return v<0?0:v;
-  }
-  var FTOT=(function(){
-    var sum=0,N=600;
-    for(var i=0;i<N;i++){ var r=(i+0.5)/N; sum+=limb(r)*r; }
-    return sum/N;
-  })();
-
-  function fluxAt(px,py,k){
-    var d=Math.sqrt(px*px+py*py);
-    if(d>=1+k) return 1.0;
-    var G=11, blocked=0, area=0, step=(2*k)/G;
-    for(var iy=0;iy<G;iy++){
-      var sy=py-k+(iy+0.5)*step;
-      for(var ix=0;ix<G;ix++){
-        var sx=px-k+(ix+0.5)*step;
-        var rp=Math.sqrt((sx-px)*(sx-px)+(sy-py)*(sy-py));
-        if(rp>k) continue;
-        area++;
-        var rs=Math.sqrt(sx*sx+sy*sy);
-        if(rs<1){ blocked+=limb(rs); }
-      }
-    }
-    if(area===0) return 1.0;
-    var blockedFlux=(blocked/area)*(Math.PI*k*k);
-    var Fstar=2*Math.PI*FTOT;
-    var fr=blockedFlux/Fstar;
-    if(fr<0) fr=0; if(fr>1) fr=1;
-    return 1-fr;
-  }
-
-  var curve=[], CURVE_MAX=900;
-
-  var SW=0,SH=0,CW=0,CH=0,dpr=1;
-  function sizeCanvas(cv,ctx,wCss,hCss){
+  // ---- DPR-aware sizing ----
+  var W=0,H=0,dpr=1;
+  function resize(){
+    var r=stage.getBoundingClientRect();
+    W=Math.max(40,Math.round(r.width));
+    H=Math.max(40,Math.round(r.height));
     dpr=Math.min(window.devicePixelRatio||1,2);
-    cv.width=Math.round(wCss*dpr); cv.height=Math.round(hCss*dpr);
+    canvas.width=Math.round(W*dpr);
+    canvas.height=Math.round(H*dpr);
+    canvas.style.width=W+'px';
+    canvas.style.height=H+'px';
+    ctx.setTransform(dpr,0,0,dpr,1*0+0,0);
     ctx.setTransform(dpr,0,0,dpr,0,0);
-  }
-  function layout(){
-    var sRect=starCanvas.getBoundingClientRect();
-    var cRect=curveCanvas.getBoundingClientRect();
-    SW=sRect.width; SH=sRect.height; CW=cRect.width; CH=cRect.height;
-    if(SW>0&&SH>0){ sizeCanvas(starCanvas,sctx,SW,SH); buildBg(SW,SH); }
-    if(CW>0&&CH>0){ sizeCanvas(curveCanvas,cctx,CW,CH); }
+    buildStars();
+    drawFrame();
   }
 
-  var bImpact=0.18;
-  function planetPos(ph){ var span=1.7; return {x:(ph*2-1)*span, y:bImpact}; }
-  function modelFlux(ph){ var p=planetPos(ph); return fluxAt(p.x,p.y,rRatio); }
-  function currentDepth(){ return 1-modelFlux(0.5); }
+  // Background starfield
+  var bgStars=[];
+  function buildStars(){
+    bgStars=[];
+    var n=Math.round((W*H)/9000);
+    n=Math.max(28,Math.min(150,n));
+    for(var i=0;i<n;i++){
+      bgStars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+0.2,
+        a:Math.random()*0.5+0.2,tw:Math.random()*Math.PI*2,sp:Math.random()*1.4+0.4});
+    }
+  }
 
-  function drawStar(t){
-    var ctx=sctx;
-    ctx.clearRect(0,0,SW,SH);
-    ctx.fillStyle=COL.space; ctx.fillRect(0,0,SW,SH);
-    for(var i=0;i<bg.length;i++){
-      var s=bg[i];
-      var tw=0.6+0.4*Math.sin(t*s.tw+s.ph);
-      ctx.globalAlpha=s.a*tw; ctx.fillStyle=COL.star;
-      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.2832); ctx.fill();
+  // ---- Transit photometry model ----
+  // Phase: planet center x maps across the star. Use a normalized impact crossing.
+  // We compute geometric overlap area of two circles to get U-shaped curve with
+  // correct ingress/egress and depth = (Rp/Rs)^2.
+  function overlapFrac(d, Rs, Rp){
+    // fraction of stellar disk area covered when planet center is distance d from star center
+    if(d>=Rs+Rp) return 0;
+    if(d<=Rs-Rp) return (Rp*Rp)/(Rs*Rs); // fully on disk -> depth
+    // partial overlap area of two circles
+    var rs2=Rs*Rs, rp2=Rp*Rp;
+    var a1=Math.acos((d*d+rs2-rp2)/(2*d*Rs));
+    var a2=Math.acos((d*d+rp2-rs2)/(2*d*Rp));
+    var area=rs2*(a1-0.5*Math.sin(2*a1))+rp2*(a2-0.5*Math.sin(2*a2));
+    return area/(Math.PI*rs2);
+  }
+
+  // Light curve buffer: scrolling history of flux samples
+  var curve=[];        // flux values 0..1 (normalized)
+  var CURVE_N=220;
+  function resetCurve(){
+    curve=[];
+    for(var i=0;i<CURVE_N;i++) curve.push(1);
+  }
+
+  // animation phase 0..1 represents one orbital period window centered on transit
+  var phase=0.0;
+  var lastT=0;
+  // Visual orbit speed: scale so shorter-period planets sweep faster, but keep watchable
+  function periodSeconds(p){ return 4.0 + p.P*1.05; } // ~5.1s (1.09d) .. ~9.1s (4.89d)
+
+  var curFlux=1;
+
+  function drawFrame(){
+    if(!W||!H) return;
+    var p=PLANETS[cur];
+
+    // layout: star panel (top) + curve panel (bottom)
+    var pad=10;
+    var gap=8;
+    var curveH=Math.max(74,Math.min(150,H*0.34));
+    var starPanelH=H-curveH-gap;
+    if(starPanelH<90){ starPanelH=Math.max(70,H-curveH-gap); }
+
+    // clear
+    ctx.clearRect(0,0,W,H);
+    // panel bg
+    ctx.fillStyle='rgba(5,3,20,0.96)';
+    ctx.fillRect(0,0,W,H);
+
+    // ===== STAR PANEL =====
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0,0,W,starPanelH);
+    ctx.clip();
+
+    // starfield
+    ctx.fillStyle='rgba(5,3,20,1)';
+    ctx.fillRect(0,0,W,starPanelH);
+    for(var i=0;i<bgStars.length;i++){
+      var s=bgStars[i];
+      if(s.y>starPanelH+2) continue;
+      var tw=reduce?s.a:(s.a*(0.6+0.4*Math.sin(s.tw)));
+      ctx.globalAlpha=tw;
+      ctx.fillStyle='#cfd4ff';
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
     }
     ctx.globalAlpha=1;
 
-    var cx=SW*0.5, cy=SH*0.5, R=Math.min(SW,SH)*0.30;
+    // star geometry
+    var cx=W*0.5;
+    var cy=starPanelH*0.52;
+    var budget=Math.min(W*0.5,starPanelH*0.5)-12;
+    var Rs=budget*starDisplayFrac(p);
+    if(Rs<14) Rs=14;
+    var Rp=Rs*Math.sqrt(p.depth); // ensures depth = (Rp/Rs)^2
 
-    var glow=ctx.createRadialGradient(cx,cy,R*0.6,cx,cy,R*2.4);
-    glow.addColorStop(0, aRGBA(0.22));
-    glow.addColorStop(0.35, aRGBA(0.10));
-    glow.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle=glow; ctx.beginPath(); ctx.arc(cx,cy,R*2.4,0,6.2832); ctx.fill();
+    var sc=p.starCol;
+    var coreCol='rgb('+sc[0]+','+sc[1]+','+sc[2]+')';
 
-    var disk=ctx.createRadialGradient(cx,cy,0,cx,cy,R);
-    disk.addColorStop(0,'#fff9ec'); disk.addColorStop(0.45,'#ffe6b8');
-    disk.addColorStop(0.78,'#ffb761'); disk.addColorStop(0.95,'#e8853a');
-    disk.addColorStop(1,'#9c4f24');
-    ctx.fillStyle=disk; ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.fill();
+    // outer glow / corona
+    var g0=ctx.createRadialGradient(cx,cy,Rs*0.2,cx,cy,Rs*2.0);
+    g0.addColorStop(0,'rgba('+sc[0]+','+sc[1]+','+sc[2]+',0.30)');
+    g0.addColorStop(0.5,'rgba('+sc[0]+','+sc[1]+','+sc[2]+',0.10)');
+    g0.addColorStop(1,'rgba('+sc[0]+','+sc[1]+','+sc[2]+',0)');
+    ctx.fillStyle=g0;
+    ctx.beginPath(); ctx.arc(cx,cy,Rs*2.0,0,Math.PI*2); ctx.fill();
 
-    ctx.save();
-    ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.clip();
-    for(var c=0;c<cells.length;c++){
-      var g=cells[c];
-      var gx=cx+Math.cos(g.a)*g.r*R, gy=cy+Math.sin(g.a)*g.r*R;
-      var pulse=0.5+0.5*Math.sin(t*g.sp+g.ph), gr=R*0.16*g.sz;
-      var cg=ctx.createRadialGradient(gx,gy,0,gx,gy,gr);
-      cg.addColorStop(0,'rgba(255,250,235,'+(0.10*pulse)+')');
-      cg.addColorStop(1,'rgba(255,250,235,0)');
-      ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(gx,gy,gr,0,6.2832); ctx.fill();
-    }
+    // stellar disk with limb darkening
+    var g1=ctx.createRadialGradient(cx-Rs*0.18,cy-Rs*0.18,Rs*0.1,cx,cy,Rs);
+    g1.addColorStop(0,'rgb('+Math.min(255,sc[0])+','+Math.min(255,sc[1])+','+Math.min(255,sc[2])+')');
+    g1.addColorStop(0.65,'rgb('+sc[0]+','+sc[1]+','+sc[2]+')');
+    g1.addColorStop(0.92,'rgba('+Math.round(sc[0]*0.72)+','+Math.round(sc[1]*0.6)+','+Math.round(sc[2]*0.45)+',1)');
+    g1.addColorStop(1,'rgba('+Math.round(sc[0]*0.5)+','+Math.round(sc[1]*0.38)+','+Math.round(sc[2]*0.28)+',1)');
+    ctx.fillStyle=g1;
+    ctx.beginPath(); ctx.arc(cx,cy,Rs,0,Math.PI*2); ctx.fill();
+
+    // planet path: travel distance so planet fully clears both sides
+    var travel=Rs+Rp+ (W*0.5 - cx) + Rs*0.6;
+    var startX=cx-(Rs+Rp+Rs*0.45);
+    var endX=cx+(Rs+Rp+Rs*0.45);
+    // small impact parameter so it crosses near-center but not dead center
+    var b=Rs*0.16;
+    var planetX=startX+(endX-startX)*phase;
+    var planetY=cy+b;
+
+    // distance from star center (for overlap + flux)
+    var dCenter=Math.sqrt((planetX-cx)*(planetX-cx)+(planetY-cy)*(planetY-cy));
+    var cov=overlapFrac(dCenter,Rs,Rp);
+    curFlux=1-cov;
+
+    // draw planet (only the part over star is silhouetted dark; off-disk faint)
+    var onDisk=dCenter < Rs+Rp;
+    // planet body
+    var pg=ctx.createRadialGradient(planetX-Rp*0.3,planetY-Rp*0.3,Rp*0.1,planetX,planetY,Rp);
+    pg.addColorStop(0,'rgba(20,18,40,1)');
+    pg.addColorStop(1,'rgba(5,3,18,1)');
+    ctx.fillStyle=pg;
+    ctx.beginPath(); ctx.arc(planetX,planetY,Rp,0,Math.PI*2); ctx.fill();
+    // subtle rim from starlight
+    ctx.lineWidth=Math.max(0.6,Rp*0.06);
+    ctx.strokeStyle='rgba('+sc[0]+','+sc[1]+','+sc[2]+',0.35)';
+    ctx.beginPath(); ctx.arc(planetX,planetY,Rp,0,Math.PI*2); ctx.stroke();
+
+    // orbit guide line (faint)
+    ctx.strokeStyle=accA(0.16);
+    ctx.lineWidth=1;
+    ctx.setLineDash([3,5]);
+    ctx.beginPath(); ctx.moveTo(0,planetY); ctx.lineTo(W,planetY); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // star label
+    ctx.fillStyle='rgba(244,245,255,0.92)';
+    ctx.font='700 italic 13px "Chakra Petch","Inter",sans-serif';
+    ctx.textBaseline='top'; ctx.textAlign='left';
+    ctx.fillText(p.name.toUpperCase(),12,10);
+    ctx.fillStyle=accA(0.95);
+    ctx.font='400 10px "Inter",sans-serif';
+    ctx.fillText('HOST '+p.star+'  ·  '+p.note.toUpperCase(),12,28);
+
     ctx.restore();
 
-    ctx.lineWidth=1.2; ctx.strokeStyle=aRGBA(0.28);
-    ctx.beginPath(); ctx.arc(cx,cy,R+0.6,0,6.2832); ctx.stroke();
+    // ===== CURVE PANEL =====
+    var cy0=starPanelH+gap;
+    var cH=H-cy0;
+    var cxL=pad+30;          // left axis gutter
+    var cxR=W-pad-6;
+    var plotW=cxR-cxL;
+    var topPad=14, botPad=20;
+    var plotTop=cy0+topPad;
+    var plotBot=cy0+cH-botPad;
+    var plotH=plotBot-plotTop;
 
-    ctx.save();
-    ctx.setLineDash([4,6]); ctx.lineWidth=1; ctx.strokeStyle='rgba(166,171,230,0.18)';
-    ctx.beginPath(); ctx.moveTo(cx-1.7*R,cy+bImpact*R); ctx.lineTo(cx+1.7*R,cy+bImpact*R); ctx.stroke();
-    ctx.restore();
+    // panel bg
+    ctx.fillStyle='rgba(8,6,28,0.9)';
+    ctx.fillRect(0,cy0,W,cH);
+    ctx.strokeStyle=accA(0.10);
+    ctx.lineWidth=1;
+    ctx.strokeRect(0.5,cy0+0.5,W-1,cH-1);
 
-    var p=planetPos(phase);
-    var pxc=cx+p.x*R, pyc=cy+p.y*R, pr=rRatio*R;
-    var phalo=ctx.createRadialGradient(pxc,pyc,pr*0.2,pxc,pyc,pr*1.8);
-    phalo.addColorStop(0,'rgba(5,3,20,0.5)'); phalo.addColorStop(1,'rgba(5,3,20,0)');
-    ctx.fillStyle=phalo; ctx.beginPath(); ctx.arc(pxc,pyc,pr*1.8,0,6.2832); ctx.fill();
-    var pbody=ctx.createRadialGradient(pxc-pr*0.3,pyc-pr*0.3,0,pxc,pyc,pr);
-    pbody.addColorStop(0,'#2a2750'); pbody.addColorStop(0.7,'#100e2e'); pbody.addColorStop(1,'#050314');
-    ctx.fillStyle=pbody; ctx.beginPath(); ctx.arc(pxc,pyc,pr,0,6.2832); ctx.fill();
-    ctx.lineWidth=1; ctx.strokeStyle='rgba(166,171,230,0.30)';
-    ctx.beginPath(); ctx.arc(pxc,pyc,pr,0,6.2832); ctx.stroke();
-  }
-
-  function drawCurve(){
-    var ctx=cctx;
-    ctx.clearRect(0,0,CW,CH);
-    var padL=46, padR=14, padT=16, padB=24;
-    var plotW=CW-padL-padR, plotH=CH-padT-padB;
-    if(plotW<=0||plotH<=0) return;
-
-    var depthNow=currentDepth();
-    var yMaxDip=Math.max(0.0025, depthNow*1.35);
-    var fTop=1.0006, fBot=1-yMaxDip;
-    function fy(f){ return padT + (fTop-f)/(fTop-fBot)*plotH; }
-    function px(xp){ return padL + xp*plotW; }
-
-    ctx.strokeStyle=COL.hair; ctx.lineWidth=1;
-    ctx.font='10px Inter, sans-serif'; ctx.fillStyle=COL.muted;
-    ctx.textAlign='right'; ctx.textBaseline='middle';
-    var lines=[1.0000, 1-yMaxDip*0.5, 1-yMaxDip*0.92];
-    for(var li=0;li<lines.length;li++){
-      var f=lines[li], yy=fy(f);
-      ctx.beginPath(); ctx.moveTo(padL,yy); ctx.lineTo(CW-padR,yy); ctx.stroke();
-      var ppm=Math.round((1-f)*1e6);
-      ctx.fillText(li===0?'1.0000':('-'+(ppm>=1000?(ppm/1000).toFixed(1)+'k':ppm)), padL-6, yy);
+    // flux scale: 1.0 at top of plot, (1-depth)*headroom at bottom
+    var depth=p.depth;
+    var fMax=1.0008;
+    var fMin=1-depth*1.45; // headroom below the dip
+    function fy(f){
+      var t=(fMax-f)/(fMax-fMin);
+      return plotTop+t*plotH;
     }
-    ctx.textAlign='left'; ctx.fillStyle=COL.muted;
-    ctx.fillText('RELATIVE BRIGHTNESS', padL, padT-7);
-    ctx.textAlign='right';
-    ctx.fillText('TIME', CW-padR, CH-padB+13);
 
-    ctx.strokeStyle=aRGBA(0.18); ctx.lineWidth=1.2;
-    ctx.beginPath(); var first=true;
-    for(var i=0;i<=160;i++){
-      var ph=i/160, ff=modelFlux(ph), X=px(ph), Y=fy(ff);
-      if(first){ ctx.moveTo(X,Y); first=false; } else ctx.lineTo(X,Y);
+    // gridlines: 1.000 and (1-depth)
+    ctx.strokeStyle=accA(0.10);
+    ctx.lineWidth=1;
+    ctx.font='400 9px "Inter",sans-serif';
+    ctx.textBaseline='middle'; ctx.textAlign='right';
+    var levels=[1.0,1-depth];
+    for(var li=0;li<levels.length;li++){
+      var yy=fy(levels[li]);
+      ctx.setLineDash(li===0?[]:[3,4]);
+      ctx.beginPath(); ctx.moveTo(cxL,yy); ctx.lineTo(cxR,yy); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle='rgba(166,171,230,0.75)';
+      ctx.fillText(levels[li].toFixed(3),cxL-4,yy);
     }
+
+    // axis labels
+    ctx.fillStyle='rgba(166,171,230,0.65)';
+    ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.font='400 9px "Inter",sans-serif';
+    ctx.fillText('RELATIVE FLUX',cxL,cy0+3);
+    ctx.textAlign='right'; ctx.textBaseline='bottom';
+    ctx.fillText('TIME  ·  P = '+p.P.toFixed(2)+' d',cxR,cy0+cH-5);
+
+    // period bracket on time axis
+    var by=cy0+cH-12;
+    ctx.strokeStyle=accA(0.4); ctx.lineWidth=1;
+    ctx.beginPath();
+    ctx.moveTo(cxL,by); ctx.lineTo(cxR,by);
+    ctx.moveTo(cxL,by-3); ctx.lineTo(cxL,by+3);
+    ctx.moveTo(cxR,by-3); ctx.lineTo(cxR,by+3);
     ctx.stroke();
 
+    // shift the live sample into the curve buffer happens in tick(); here we draw
+    // map curve[] across plotW (oldest left, newest right)
     ctx.save();
-    ctx.shadowColor=aRGBA(0.55); ctx.shadowBlur=8;
-    ctx.strokeStyle=accent; ctx.lineWidth=2;
-    ctx.beginPath(); var started=false;
-    for(var j=0;j<curve.length;j++){
-      var pt=curve[j], X2=px(pt.x), Y2=fy(pt.f);
-      if(!started){ ctx.moveTo(X2,Y2); started=true; } else ctx.lineTo(X2,Y2);
+    ctx.beginPath();
+    ctx.rect(cxL,plotTop-2,plotW,plotH+4);
+    ctx.clip();
+
+    // filled area under curve
+    ctx.beginPath();
+    for(var k=0;k<curve.length;k++){
+      var xx=cxL+(k/(curve.length-1))*plotW;
+      var yy2=fy(curve[k]);
+      if(k===0) ctx.moveTo(xx,yy2); else ctx.lineTo(xx,yy2);
     }
-    ctx.stroke(); ctx.restore();
+    var lastX=cxL+plotW, lastY=fy(curve[curve.length-1]);
+    ctx.lineTo(cxR,plotBot+4);
+    ctx.lineTo(cxL,plotBot+4);
+    ctx.closePath();
+    var fillG=ctx.createLinearGradient(0,plotTop,0,plotBot);
+    fillG.addColorStop(0,accA(0.16));
+    fillG.addColorStop(1,accA(0.01));
+    ctx.fillStyle=fillG;
+    ctx.fill();
 
-    if(curve.length){
-      var last=curve[curve.length-1], mx=px(last.x), my=fy(last.f);
-      ctx.fillStyle=accent; ctx.beginPath(); ctx.arc(mx,my,3.2,0,6.2832); ctx.fill();
-      ctx.strokeStyle='rgba(255,255,255,0.85)'; ctx.lineWidth=1; ctx.stroke();
-      ctx.strokeStyle=aRGBA(0.25); ctx.setLineDash([3,4]);
-      ctx.beginPath(); ctx.moveTo(mx,padT); ctx.lineTo(mx,CH-padB); ctx.stroke();
-      ctx.setLineDash([]);
+    // curve stroke
+    ctx.beginPath();
+    for(var k2=0;k2<curve.length;k2++){
+      var xx2=cxL+(k2/(curve.length-1))*plotW;
+      var yy3=fy(curve[k2]);
+      if(k2===0) ctx.moveTo(xx2,yy3); else ctx.lineTo(xx2,yy3);
     }
+    ctx.strokeStyle=accent;
+    ctx.lineWidth=1.8;
+    ctx.lineJoin='round';
+    ctx.shadowColor=accA(0.6);
+    ctx.shadowBlur=6;
+    ctx.stroke();
+    ctx.shadowBlur=0;
 
-    ctx.strokeStyle=COL.hair; ctx.strokeRect(padL,padT,plotW,plotH);
+    // leading dot
+    var headX=cxL+plotW;
+    var headY=fy(curve[curve.length-1]);
+    ctx.fillStyle=accent;
+    ctx.beginPath(); ctx.arc(headX-1,headY,3,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='rgba(244,245,255,0.9)';
+    ctx.lineWidth=1;
+    ctx.beginPath(); ctx.arc(headX-1,headY,3,0,Math.PI*2); ctx.stroke();
+    ctx.restore();
+
+    // update flux readout
+    fluxEl.textContent='flux '+curFlux.toFixed(4);
   }
 
-  function updateReadouts(){
-    var depth=currentDepth(), ppm=depth*1e6, pct=depth*100;
-    if(depthOut) depthOut.textContent = pct>=1 ? pct.toFixed(2)+'%' : Math.round(ppm)+' ppm';
-    if(rratioOut) rratioOut.textContent = rRatio.toFixed(3);
-    var period=6.2/speed;
-    if(periodOut) periodOut.textContent = period.toFixed(1)+' d';
-    var aOverR=11.0;
-    var arg=(1+rRatio)*(1+rRatio)-bImpact*bImpact;
-    var chord=arg>0?2*Math.sqrt(arg):0;
-    var durHours=((period/Math.PI)*(chord/(2*aOverR)))*24;
-    if(durOut) durOut.textContent = (durHours>=1?durHours.toFixed(1)+' h':(durHours*60).toFixed(0)+' min');
+  // ---- readout cells ----
+  function buildReadout(){
+    var p=PLANETS[cur];
+    readout.innerHTML=
+      cell('Period','<span>'+p.P.toFixed(2)+'</span> <small>days</small>')+
+      cell('Transit depth','<span>'+(p.depth*100).toFixed(2)+'</span> <small>%</small>')+
+      cell('Planet radius','<span>'+p.rp.toFixed(2)+'</span> <small>R<sub style="font-size:8px">J</sub></small>')+
+      cell('Host star','<span style="font-size:14px">'+p.star+'</span>');
+  }
+  function cell(l,v){
+    return '<div class="xpt-cell"><div class="xpt-cell-l">'+l+'</div><div class="xpt-cell-v">'+v+'</div></div>';
   }
 
-  var raf=0;
-  function step(t){
-    if(!t0) t0=t;
-    readAccent(t);
-    if(playing && !reduce){
-      var dp=0.00016*(speed*900);
-      phase+=dp;
-      if(phase>1){ phase-=1; curve=[]; }
-      curve.push({x:phase,f:modelFlux(phase)});
-      if(curve.length>CURVE_MAX) curve.shift();
+  // ---- tabs ----
+  PLANETS.forEach(function(p,idx){
+    var b=document.createElement('button');
+    b.className='xpt-tab'+(idx===0?' is-on':'');
+    b.type='button';
+    b.setAttribute('role','tab');
+    b.setAttribute('aria-selected',idx===0?'true':'false');
+    b.textContent=p.name;
+    b.addEventListener('click',function(){ select(idx); });
+    tabsWrap.appendChild(b);
+  });
+  var tabEls=tabsWrap.querySelectorAll('.xpt-tab');
+
+  function select(idx){
+    if(idx===cur) return;
+    cur=idx;
+    tabEls.forEach(function(t,i){
+      t.classList.toggle('is-on',i===idx);
+      t.setAttribute('aria-selected',i===idx?'true':'false');
+    });
+    buildReadout();
+    resetCurve();
+    phase=0.0;
+    // prime curve so it doesn't jump: fill with flat baseline (already 1's)
+    drawFrame();
+  }
+
+  // ---- animation loop ----
+  var playing=!reduce;
+  var visible=true;
+  var rafId=null;
+
+  function tick(t){
+    rafId=null;
+    if(!playing||!visible){ return; }
+    if(!lastT) lastT=t;
+    var dt=(t-lastT)/1000; lastT=t;
+    if(dt>0.1) dt=0.1;
+
+    var p=PLANETS[cur];
+    var dur=periodSeconds(p);
+    phase+=dt/dur;
+    if(phase>1) phase-=1;
+
+    // advance curve: push newest flux sample
+    // compute flux at current phase exactly as in drawFrame mapping
+    // (recompute lightweight)
+    curve.push(curFlux); // curFlux from previous draw; will refine after draw
+    if(curve.length>CURVE_N) curve.shift();
+
+    drawFrame();
+    // after draw curFlux is updated for THIS phase; replace last sample for accuracy
+    curve[curve.length-1]=curFlux;
+
+    schedule();
+  }
+  function schedule(){
+    if(rafId==null && playing && visible){
+      rafId=requestAnimationFrame(tick);
     }
-    drawStar(t); drawCurve();
-    raf=requestAnimationFrame(step);
   }
-
-  function staticRender(){
-    readAccent(performance.now());
-    phase=0.5; curve=[];
-    for(var i=0;i<=160;i++){ var ph=i/160; curve.push({x:ph,f:modelFlux(ph)}); }
-    drawStar(0); drawCurve(); updateReadouts();
-  }
-
-  function syncFromSliders(){
-    if(sizeSlider) rRatio = 0.04 + (parseFloat(sizeSlider.value)/1000)*0.20;
-    if(speedSlider) speed = 0.10 + (parseFloat(speedSlider.value)/1000)*0.85;
-    updateReadouts();
-    if(reduce) staticRender();
-  }
-  if(sizeSlider) sizeSlider.addEventListener('input',syncFromSliders);
-  if(speedSlider) speedSlider.addEventListener('input',syncFromSliders);
 
   function setPlaying(on){
     playing=on;
-    if(playBtn){ playBtn.setAttribute('aria-pressed', on?'true':'false'); playBtn.textContent = on?'Pause':'Play'; }
-    if(statusOut) statusOut.textContent = on?'observing':'paused';
+    playBtn.classList.toggle('is-paused',!on);
+    playTx.textContent=on?'Pause':'Play';
+    playBtn.setAttribute('aria-label',on?'Pause animation':'Play animation');
+    if(on){ lastT=0; schedule(); }
   }
-  if(playBtn){
-    if(reduce){ playBtn.disabled=true; playBtn.textContent='Static'; }
-    else playBtn.addEventListener('click',function(){ setPlaying(!playing); });
+  playBtn.addEventListener('click',function(){ setPlaying(!playing); });
+
+  // ---- visibility ----
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        visible=e.isIntersecting;
+        if(visible){ lastT=0; schedule(); }
+      });
+    },{threshold:0.05});
+    io.observe(root);
   }
 
-  buildCells();
-  layout();
-  syncFromSliders();
+  // ---- resize ----
+  var rt=null;
+  function onResize(){
+    if(rt) cancelAnimationFrame(rt);
+    rt=requestAnimationFrame(resize);
+  }
+  if('ResizeObserver' in window){
+    var ro=new ResizeObserver(onResize);
+    ro.observe(stage);
+  }
+  window.addEventListener('resize',onResize);
 
-  var rT;
-  window.addEventListener('resize',function(){
-    clearTimeout(rT);
-    rT=setTimeout(function(){ layout(); if(reduce) staticRender(); },120);
-  });
+  // ---- init (un-gated) ----
+  function init(){
+    resetCurve();
+    buildReadout();
+    resize();           // builds stars + draws first frame
+    loader.classList.add('is-hidden');
+    if(reduce){
+      // static representative frame: place planet mid-transit and fill a U dip
+      phase=0.5;
+      // synthesize a representative U-curve across buffer
+      var p=PLANETS[cur];
+      for(var i=0;i<CURVE_N;i++){
+        var ph=i/(CURVE_N-1);
+        // build symmetric transit roughly centered
+        var cx=0.5;
+        var halfW=0.16;
+        var dd=Math.abs(ph-cx)/halfW;
+        var f=1;
+        if(dd<1){ f=1-p.depth*(1-Math.pow(dd,4)*0.0); f=1-p.depth*(dd<0.7?1:(1-(dd-0.7)/0.3)); }
+        curve[i]=f<1-p.depth?1-p.depth:f;
+      }
+      drawFrame();
+    }else{
+      setPlaying(true);
+    }
+  }
 
-  if(reduce){ staticRender(); }
-  else { setPlaying(true); raf=requestAnimationFrame(step); }
+  // ensure fonts/layout settled
+  if(document.readyState==='complete'||document.readyState==='interactive'){
+    requestAnimationFrame(init);
+  }else{
+    window.addEventListener('DOMContentLoaded',function(){ requestAnimationFrame(init); });
+  }
 })();
 </script>
 </body></html>

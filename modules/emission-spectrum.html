@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Element fingerprints · SSAI</title>
+<title>Element Fingerprints · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -33,35 +33,224 @@ body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
 body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
 body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
-#kit-emission-spectrum *{ box-sizing:border-box; }
-#kit-emission-spectrum{ --es-accent:#3cc8ff; --es-accent-rgb:60,200,255; width:100%; color:#f4f5ff; font-family:'Inter',system-ui,sans-serif; background:radial-gradient(120% 140% at 50% -20%, rgba(22,20,95,0.55), rgba(5,3,20,0) 60%); border:1px solid rgba(166,171,230,0.16); border-radius:16px; padding:22px 22px 18px; position:relative; overflow:hidden; }
-#kit-emission-spectrum .es-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:16px; }
-#kit-emission-spectrum .es-kicker{ font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; font-size:11px; color:var(--es-accent); opacity:0.9; }
-#kit-emission-spectrum .es-title{ font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:22px; margin:4px 0 0; line-height:1.05; color:#f4f5ff; }
-#kit-emission-spectrum .es-cmp{ flex:0 0 auto; font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; font-size:11px; color:#a6abe6; background:rgba(166,171,230,0.06); border:1px solid rgba(166,171,230,0.18); border-radius:999px; padding:7px 14px; cursor:pointer; transition:all .22s cubic-bezier(.4,0,.2,1); white-space:nowrap; }
-#kit-emission-spectrum .es-cmp:hover{ border-color:rgba(var(--es-accent-rgb),0.5); color:#f4f5ff; }
-#kit-emission-spectrum .es-cmp.on{ background:rgba(var(--es-accent-rgb),0.14); border-color:var(--es-accent); color:#f4f5ff; box-shadow:0 0 18px rgba(var(--es-accent-rgb),0.25); }
-#kit-emission-spectrum .es-elements{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
-#kit-emission-spectrum .es-el{ display:flex; align-items:center; gap:8px; font-family:'Inter',sans-serif; background:rgba(166,171,230,0.05); border:1px solid rgba(166,171,230,0.16); border-radius:12px; padding:8px 13px 8px 9px; cursor:pointer; color:#a6abe6; transition:all .2s cubic-bezier(.4,0,.2,1); position:relative; }
-#kit-emission-spectrum .es-el:hover{ border-color:rgba(var(--es-accent-rgb),0.45); color:#f4f5ff; transform:translateY(-1px); }
-#kit-emission-spectrum .es-el .es-sym{ font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; font-size:15px; min-width:26px; height:26px; display:flex; align-items:center; justify-content:center; border-radius:7px; background:rgba(166,171,230,0.10); color:#f4f5ff; transition:all .2s; }
-#kit-emission-spectrum .es-el .es-elname{ font-size:13px; font-weight:500; letter-spacing:0.01em; }
-#kit-emission-spectrum .es-el.on{ color:#f4f5ff; border-color:var(--es-accent); background:rgba(var(--es-accent-rgb),0.10); }
-#kit-emission-spectrum .es-el.on .es-sym{ background:var(--es-accent); color:#050314; box-shadow:0 0 16px rgba(var(--es-accent-rgb),0.45); }
-#kit-emission-spectrum .es-el[data-slot="1"].on .es-sym{ background:#a6abe6; box-shadow:0 0 16px rgba(166,171,230,0.4); }
-#kit-emission-spectrum .es-stage{ position:relative; width:100%; aspect-ratio:16/7; min-height:180px; }
-#kit-emission-spectrum .es-canvas{ display:block; width:100%; height:100%; }
-#kit-emission-spectrum .es-info{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; margin-top:14px; flex-wrap:wrap; }
-#kit-emission-spectrum .es-name{ font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; font-size:16px; color:#f4f5ff; }
-#kit-emission-spectrum .es-readout{ font-size:12.5px; color:var(--es-accent); font-weight:500; letter-spacing:0.02em; min-height:16px; transition:color .3s; }
-#kit-emission-spectrum .es-note{ font-size:13px; line-height:1.55; color:#a6abe6; margin:6px 0 0; max-width:62ch; }
-#kit-emission-spectrum .es-legend{ display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; transition:opacity .3s; }
-#kit-emission-spectrum .es-leg{ display:flex; align-items:center; gap:7px; font-size:12px; color:#a6abe6; }
-#kit-emission-spectrum .es-leg-dot{ width:18px; height:4px; border-radius:2px; display:inline-block; }
-#kit-emission-spectrum .es-leg-dot.s0{ background:var(--es-accent); box-shadow:0 0 8px rgba(var(--es-accent-rgb),0.6); }
-#kit-emission-spectrum .es-leg-dot.s1{ background:#a6abe6; }
-@media (max-width:540px){ #kit-emission-spectrum .es-el .es-elname{ display:none; } #kit-emission-spectrum .es-title{ font-size:18px; } #kit-emission-spectrum .es-stage{ aspect-ratio:auto; height:220px; } }
-@media (prefers-reduced-motion: reduce){ #kit-emission-spectrum .es-el, #kit-emission-spectrum .es-cmp{ transition:none; } }
+#kit-emission-spectrum *{box-sizing:border-box;margin:0;padding:0}
+#kit-emission-spectrum{
+  --es-bg:#050314;
+  --es-indigo:#16145f;
+  --es-text:#f4f5ff;
+  --es-muted:#a6abe6;
+  --es-hair:rgba(166,171,230,0.16);
+  --es-hair-soft:rgba(166,171,230,0.08);
+  --es-accent:#3cc8ff;
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  background:
+    radial-gradient(120% 90% at 78% -8%, rgba(60,200,255,0.10), transparent 55%),
+    radial-gradient(130% 110% at 8% 110%, rgba(22,20,95,0.55), transparent 60%),
+    var(--es-bg);
+  color:var(--es-text);
+  font-family:'Inter',system-ui,sans-serif;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  container-type:size;
+}
+#kit-emission-spectrum .es-frame{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  padding:clamp(12px,2.4cqw,26px);
+  gap:clamp(8px,1.4cqh,16px);
+}
+
+/* faint star dust */
+#kit-emission-spectrum .es-frame::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(244,245,255,0.55), transparent),
+    radial-gradient(1px 1px at 70% 18%, rgba(244,245,255,0.35), transparent),
+    radial-gradient(1px 1px at 42% 72%, rgba(244,245,255,0.30), transparent),
+    radial-gradient(1px 1px at 88% 60%, rgba(244,245,255,0.40), transparent),
+    radial-gradient(1px 1px at 12% 84%, rgba(244,245,255,0.28), transparent);
+}
+
+#kit-emission-spectrum .es-head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;flex:0 0 auto;
+}
+#kit-emission-spectrum .es-eyebrow{
+  font-size:clamp(9px,1cqw,11px);letter-spacing:.32em;
+  color:var(--es-muted);font-weight:600;margin-bottom:6px;
+}
+#kit-emission-spectrum .es-title{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;text-transform:uppercase;
+  font-size:clamp(20px,3.6cqw,40px);line-height:.96;letter-spacing:.012em;
+  background:linear-gradient(92deg,var(--es-text) 30%, var(--es-accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+#kit-emission-spectrum .es-readout{
+  min-width:clamp(160px,22cqw,260px);
+  border:1px solid var(--es-hair);
+  border-radius:12px;
+  background:linear-gradient(180deg, rgba(22,20,95,0.30), rgba(5,3,20,0.30));
+  padding:10px 14px;backdrop-filter:blur(4px);
+}
+#kit-emission-spectrum .es-readout-empty{
+  font-size:clamp(10px,1.1cqw,12.5px);color:var(--es-muted);
+  letter-spacing:.02em;padding:4px 0;
+}
+#kit-emission-spectrum .es-readout-data{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+#kit-emission-spectrum .es-ro-el{
+  font-size:clamp(10px,1.1cqw,12px);color:var(--es-muted);
+  text-transform:uppercase;letter-spacing:.16em;font-weight:600;
+  width:100%;
+}
+#kit-emission-spectrum .es-ro-nm{
+  font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;
+  font-size:clamp(22px,3.2cqw,34px);line-height:1;color:var(--es-text);
+}
+#kit-emission-spectrum .es-ro-unit{
+  font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;
+  font-size:clamp(11px,1.3cqw,15px);color:var(--es-muted);text-transform:uppercase;
+}
+#kit-emission-spectrum .es-ro-band{
+  margin-left:auto;font-size:clamp(9px,1cqw,11px);text-transform:uppercase;
+  letter-spacing:.14em;color:var(--es-accent);font-weight:600;
+  align-self:center;
+}
+
+#kit-emission-spectrum .es-controls{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:clamp(10px,2cqw,24px);flex-wrap:wrap;flex:0 0 auto;
+}
+#kit-emission-spectrum .es-pickgroup{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#kit-emission-spectrum .es-pick-label,
+#kit-emission-spectrum .es-overlay-toggle{}
+#kit-emission-spectrum .es-pick-label{
+  font-size:clamp(9px,.95cqw,11px);letter-spacing:.24em;color:var(--es-muted);
+  font-weight:600;
+}
+#kit-emission-spectrum .es-buttons{display:flex;gap:6px;flex-wrap:wrap}
+#kit-emission-spectrum .es-buttons button,
+#kit-emission-spectrum .es-overlay-pick button{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(10px,1.05cqw,13px);font-weight:600;
+  color:var(--es-muted);
+  background:rgba(22,20,95,0.22);
+  border:1px solid var(--es-hair);
+  border-radius:999px;
+  padding:7px 14px;cursor:pointer;
+  position:relative;
+  transition:color .2s,border-color .2s,background .2s,transform .12s;
+  display:flex;align-items:center;gap:7px;
+  white-space:nowrap;
+}
+#kit-emission-spectrum .es-buttons button:hover,
+#kit-emission-spectrum .es-overlay-pick button:hover{
+  color:var(--es-text);border-color:rgba(166,171,230,0.40);transform:translateY(-1px);
+}
+#kit-emission-spectrum .es-buttons button .es-swatch,
+#kit-emission-spectrum .es-overlay-pick button .es-swatch{
+  width:8px;height:8px;border-radius:50%;
+  box-shadow:0 0 6px 1px currentColor;flex:0 0 auto;
+}
+#kit-emission-spectrum .es-buttons button[aria-pressed="true"]{
+  color:var(--es-bg);
+  background:linear-gradient(180deg,var(--es-text),#d8dcff);
+  border-color:transparent;
+  box-shadow:0 0 0 1px rgba(60,200,255,0.5),0 6px 18px -8px rgba(60,200,255,0.6);
+}
+#kit-emission-spectrum .es-overlay-pick button[aria-pressed="true"]{
+  color:var(--es-text);
+  border-color:var(--es-accent);
+  background:rgba(60,200,255,0.12);
+}
+#kit-emission-spectrum .es-overlaygroup{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#kit-emission-spectrum .es-overlay-toggle,
+#kit-emission-spectrum .es-clear{
+  font-family:'Inter',sans-serif;font-size:clamp(10px,1.05cqw,12.5px);font-weight:600;
+  letter-spacing:.04em;
+  color:var(--es-accent);background:transparent;
+  border:1px solid rgba(60,200,255,0.35);border-radius:999px;
+  padding:7px 14px;cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s;
+}
+#kit-emission-spectrum .es-overlay-toggle:hover,
+#kit-emission-spectrum .es-clear:hover{background:rgba(60,200,255,0.12)}
+#kit-emission-spectrum .es-overlay-toggle[aria-pressed="true"]{
+  background:rgba(60,200,255,0.16);border-color:var(--es-accent);color:var(--es-text);
+}
+#kit-emission-spectrum .es-clear{color:var(--es-muted);border-color:var(--es-hair)}
+#kit-emission-spectrum .es-overlay-pick{display:flex;gap:6px;flex-wrap:wrap}
+
+#kit-emission-spectrum .es-stage{
+  position:relative;flex:1 1 auto;min-height:0;
+  border:1px solid var(--es-hair);
+  border-radius:14px;
+  overflow:hidden;
+  background:#000;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.6), 0 14px 40px -22px rgba(0,0,0,0.9);
+}
+#kit-emission-spectrum #es-canvas{display:block;width:100%;height:100%}
+#kit-emission-spectrum .es-tooltip{
+  position:absolute;pointer-events:none;z-index:5;
+  transform:translate(-50%,-120%);
+  background:rgba(5,3,20,0.92);
+  border:1px solid var(--es-hair);
+  border-radius:8px;padding:6px 10px;
+  font-size:clamp(10px,1cqw,12px);white-space:nowrap;
+  box-shadow:0 8px 24px -12px rgba(0,0,0,0.9);
+  backdrop-filter:blur(3px);
+}
+#kit-emission-spectrum .es-tooltip b{
+  font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;
+  letter-spacing:.02em;
+}
+
+#kit-emission-spectrum .es-legend{
+  display:flex;gap:clamp(10px,2cqw,22px);flex-wrap:wrap;align-items:center;
+  flex:0 0 auto;min-height:0;
+}
+#kit-emission-spectrum .es-legend .es-leg{
+  display:flex;align-items:center;gap:8px;
+  font-size:clamp(10px,1.05cqw,12.5px);color:var(--es-muted);
+}
+#kit-emission-spectrum .es-legend .es-leg b{
+  color:var(--es-text);font-weight:600;
+  font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;text-transform:uppercase;
+  letter-spacing:.03em;
+}
+#kit-emission-spectrum .es-legend .es-leg .es-leg-sw{
+  width:14px;height:3px;border-radius:2px;box-shadow:0 0 8px 1px currentColor;
+}
+#kit-emission-spectrum .es-legend .es-leg .es-leg-count{
+  font-size:clamp(9px,.95cqw,11px);color:var(--es-muted);opacity:.8;
+}
+
+#kit-emission-spectrum .es-caption{
+  display:flex;align-items:center;gap:8px;flex:0 0 auto;
+  font-size:clamp(9px,1cqw,11.5px);color:var(--es-muted);
+  letter-spacing:.02em;opacity:.85;
+}
+#kit-emission-spectrum .es-caption .es-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--es-accent);
+  box-shadow:0 0 8px 1px var(--es-accent);flex:0 0 auto;
+}
+
+#kit-emission-spectrum .es-buttons button:focus-visible,
+#kit-emission-spectrum .es-overlay-pick button:focus-visible,
+#kit-emission-spectrum .es-overlay-toggle:focus-visible,
+#kit-emission-spectrum .es-clear:focus-visible,
+#kit-emission-spectrum #es-canvas:focus-visible{
+  outline:2px solid var(--es-accent);outline-offset:2px;
+}
+
+@container (max-width: 540px){
+  #kit-emission-spectrum .es-readout{min-width:100%;order:3}
+  #kit-emission-spectrum .es-head{gap:10px}
+}
+@media (prefers-reduced-motion: reduce){
+  #kit-emission-spectrum *{transition:none !important}
+}
 
 body.mb-embed #kit-emission-spectrum{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-emission-spectrum{display:flex!important;flex-direction:column!important;gap:6px!important;}
@@ -75,29 +264,55 @@ body.mb-embed #kit-emission-spectrum [class*='stage'],body.mb-embed #kit-emissio
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Element fingerprints</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Element Fingerprints</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-emission-spectrum">
-  <div class="es-head">
-    <div>
-      <div class="es-kicker">Stars &amp; deep sky</div>
-      <h3 class="es-title">Element fingerprints</h3>
+  <div class="es-frame">
+    <header class="es-head">
+      <div class="es-titlewrap">
+        <div class="es-eyebrow">SPECTROSCOPY · STELLAR FINGERPRINTS</div>
+        <h2 class="es-title">Element Fingerprints</h2>
+      </div>
+      <div class="es-readout" id="es-readout" role="status" aria-live="polite">
+        <div class="es-readout-empty" id="es-readout-empty">Click a bright line to read its wavelength</div>
+        <div class="es-readout-data" id="es-readout-data" hidden>
+          <span class="es-ro-el" id="es-ro-el">Hydrogen</span>
+          <span class="es-ro-nm" id="es-ro-nm">656.3</span>
+          <span class="es-ro-unit">nm</span>
+          <span class="es-ro-band" id="es-ro-band">red</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="es-controls">
+      <div class="es-pickgroup" role="group" aria-label="Choose primary element">
+        <span class="es-pick-label">ELEMENT</span>
+        <div class="es-buttons" id="es-buttons"></div>
+      </div>
+      <div class="es-overlaygroup">
+        <button type="button" class="es-overlay-toggle" id="es-overlay-toggle" aria-pressed="false">+ Overlay</button>
+        <div class="es-overlay-pick" id="es-overlay-pick" hidden role="group" aria-label="Choose comparison element"></div>
+        <button type="button" class="es-clear" id="es-clear" hidden>Clear</button>
+      </div>
     </div>
-    <button class="es-cmp" type="button" aria-pressed="false">+ Compare</button>
+
+    <div class="es-stage" id="es-stage">
+      <canvas id="es-canvas"></canvas>
+      <div class="es-tooltip" id="es-tooltip" hidden></div>
+    </div>
+
+    <div class="es-legend" id="es-legend"></div>
+
+    <footer class="es-caption">
+      <span class="es-dot"></span>
+      Line data from the NIST Atomic Spectra Database · wavelengths in nanometres (air, visible)
+    </footer>
   </div>
-  <div class="es-elements" role="group" aria-label="Choose an element"></div>
-  <div class="es-stage"><canvas class="es-canvas"></canvas></div>
-  <div class="es-info">
-    <span class="es-name">Select an element</span>
-    <span class="es-readout">Hover the spectrum to read wavelengths</span>
-  </div>
-  <p class="es-note"></p>
-  <div class="es-legend" style="opacity:0"></div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Tap an element to show its bright-line spectrum; toggle Compare to overlay two elements; hover the strip to snap-read each line&#x27;s wavelength and host element.</span>
+    <span class="mb-c-int">Click an element button to display its emission fingerprint; the spectrum, line table, and label update with a smooth reveal. Click &quot;Overlay&quot; then a second element to compare two fingerprints stacked on one strip. Click (or tap) any bright emission line to select it — a readout shows the element, wavelength in nm, and visible color band. Hovering a line highlights it and shows a tooltip. A &quot;Clear overlay&quot; control removes the second element. Everything is keyboard reachable and respects reduced-motion.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
 </div>
@@ -111,6 +326,8 @@ body.mb-embed #kit-emission-spectrum [class*='stage'],body.mb-embed #kit-emissio
     var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
     if(q.get('embed')==='1') document.body.classList.add('mb-embed');
   }catch(e){}
+  /* nudge a resize after layout settles so canvas modules that measured too early redraw at the right size */
+  window.addEventListener('load',function(){ [120,420,1000].forEach(function(t){ setTimeout(function(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} },t); }); });
   /* safety: some modules forget to hide their loading overlay after the image resolves */
   window.addEventListener('load',function(){ setTimeout(function(){
     var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
@@ -123,393 +340,522 @@ body.mb-embed #kit-emission-spectrum [class*='stage'],body.mb-embed #kit-emissio
 <script>
 (function(){
   var root=document.getElementById('kit-emission-spectrum');
-  if(!root) return;
+  if(!root)return;
+  var canvas=root.querySelector('#es-canvas');
+  var ctx=canvas.getContext('2d');
+  var stage=root.querySelector('#es-stage');
+  var btnWrap=root.querySelector('#es-buttons');
+  var overlayToggle=root.querySelector('#es-overlay-toggle');
+  var overlayPick=root.querySelector('#es-overlay-pick');
+  var clearBtn=root.querySelector('#es-clear');
+  var legend=root.querySelector('#es-legend');
+  var tooltip=root.querySelector('#es-tooltip');
+  var roEmpty=root.querySelector('#es-readout-empty');
+  var roData=root.querySelector('#es-readout-data');
+  var roEl=root.querySelector('#es-ro-el');
+  var roNm=root.querySelector('#es-ro-nm');
+  var roBand=root.querySelector('#es-ro-band');
 
-  var ELEMENTS = {
-    H:  { name:'Hydrogen', sym:'H',  z:1,
-          note:'Balmer series — the fingerprint of the cosmos. Most abundant element in stars.',
-          lines:[
-            {wl:656.3, i:1.00, lbl:'Hα'},
-            {wl:486.1, i:0.55, lbl:'Hβ'},
-            {wl:434.0, i:0.32, lbl:'Hγ'},
-            {wl:410.2, i:0.20, lbl:'Hδ'},
-            {wl:397.0, i:0.12, lbl:'Hε'}
-          ] },
-    He: { name:'Helium',   sym:'He', z:2,
-          note:'First found in the Sun’s spectrum in 1868 — before it was ever found on Earth.',
-          lines:[
-            {wl:587.6, i:1.00, lbl:'D3'},
-            {wl:667.8, i:0.45},
-            {wl:501.6, i:0.40},
-            {wl:492.2, i:0.30},
-            {wl:471.3, i:0.22},
-            {wl:447.1, i:0.35},
-            {wl:402.6, i:0.18},
-            {wl:388.9, i:0.30}
-          ] },
-    Na: { name:'Sodium',   sym:'Na', z:11,
-          note:'The famous sodium D doublet — the yellow of street lamps and stellar atmospheres.',
-          lines:[
-            {wl:589.0, i:1.00, lbl:'D2'},
-            {wl:589.6, i:0.90, lbl:'D1'},
-            {wl:568.8, i:0.10},
-            {wl:498.3, i:0.06},
-            {wl:330.2, i:0.05}
-          ] },
-    Ne: { name:'Neon',     sym:'Ne', z:10,
-          note:'A forest of red-orange lines — exactly why neon signs glow that warm red.',
-          lines:[
-            {wl:640.2, i:1.00},
-            {wl:638.3, i:0.85},
-            {wl:650.7, i:0.70},
-            {wl:633.4, i:0.65},
-            {wl:626.6, i:0.55},
-            {wl:621.7, i:0.50},
-            {wl:614.3, i:0.55},
-            {wl:609.6, i:0.45},
-            {wl:603.0, i:0.40},
-            {wl:585.2, i:0.60},
-            {wl:540.1, i:0.30},
-            {wl:534.1, i:0.25},
-            {wl:503.8, i:0.18}
-          ] },
-    Hg: { name:'Mercury',  sym:'Hg', z:80,
-          note:'Calibration standard for spectrographs — sharp lines from UV to deep red.',
-          lines:[
-            {wl:546.1, i:1.00, lbl:'green'},
-            {wl:435.8, i:0.80, lbl:'blue'},
-            {wl:404.7, i:0.55, lbl:'violet'},
-            {wl:578.0, i:0.50, lbl:'yellow'},
-            {wl:576.9, i:0.45},
-            {wl:491.6, i:0.20},
-            {wl:407.8, i:0.25}
-          ] },
-    Fe: { name:'Iron',     sym:'Fe', z:26,
-          note:'Thousands of lines — iron paints stellar spectra and reveals a star’s makeup.',
-          lines:[
-            {wl:438.4, i:1.00},
-            {wl:430.8, i:0.85},
-            {wl:427.2, i:0.70},
-            {wl:432.6, i:0.60},
-            {wl:440.5, i:0.55},
-            {wl:452.9, i:0.40},
-            {wl:495.8, i:0.45},
-            {wl:516.7, i:0.50},
-            {wl:526.9, i:0.42},
-            {wl:532.8, i:0.38},
-            {wl:537.1, i:0.35},
-            {wl:561.6, i:0.30},
-            {wl:404.6, i:0.65},
-            {wl:385.9, i:0.55},
-            {wl:382.0, i:0.50},
-            {wl:373.5, i:0.45},
-            {wl:358.1, i:0.40}
-          ] }
-  };
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var ORDER=['H','He','Na','Ne','Hg','Fe'];
-  var WL_MIN=380, WL_MAX=700;
-
-  function readAccent(){
-    var cs=getComputedStyle(document.documentElement);
-    var a=cs.getPropertyValue('--accent').trim()||'#3cc8ff';
-    var rgb=cs.getPropertyValue('--accent-rgb').trim();
-    var r,g,b;
-    if(rgb){ var p=rgb.split(',').map(function(x){return parseInt(x,10);}); r=p[0];g=p[1];b=p[2]; }
-    else { var h=a.replace('#',''); if(h.length===3){h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];}
-           r=parseInt(h.substr(0,2),16); g=parseInt(h.substr(2,2),16); b=parseInt(h.substr(4,2),16); }
-    return {css:a, r:r||60, g:g||200, b:b||255};
+  function accent(){
+    var v='';
+    try{v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();}catch(e){}
+    return v||'#3cc8ff';
   }
-  function rgba(c,a){ return 'rgba('+c.r+','+c.g+','+c.b+','+a+')'; }
 
-  function wlToRGB(wl){
+  // ---- Real NIST strong visible emission lines (nm, air) ----
+  var ELEMENTS=[
+    {name:'Hydrogen', sym:'H',  lines:[410.2,434.0,486.1,656.3]},
+    {name:'Helium',   sym:'He', lines:[447.1,471.3,492.2,501.6,587.6,667.8,706.5]},
+    {name:'Sodium',   sym:'Na', lines:[589.0,589.6]},
+    {name:'Neon',     sym:'Ne', lines:[585.2,588.2,594.5,614.3,640.2,650.7,692.9]},
+    {name:'Mercury',  sym:'Hg', lines:[404.7,435.8,546.1,577.0,579.1]},
+    {name:'Calcium',  sym:'Ca', lines:[393.4,396.8,422.7]}
+  ];
+  var WMIN=380, WMAX=700;
+
+  var state={primary:0, overlay:null, overlayMode:false, selected:null};
+  // selected = {elIdx, lineIdx}
+  var hover=null;
+
+  // ---- wavelength -> RGB (perceptual approximation, true-color) ----
+  function wl2rgb(wl){
     var r=0,g=0,b=0;
-    if(wl>=380&&wl<440){ r=-(wl-440)/(440-380); g=0; b=1; }
-    else if(wl<490){ r=0; g=(wl-440)/(490-440); b=1; }
-    else if(wl<510){ r=0; g=1; b=-(wl-510)/(510-490); }
-    else if(wl<580){ r=(wl-510)/(580-510); g=1; b=0; }
-    else if(wl<645){ r=1; g=-(wl-645)/(645-580); b=0; }
-    else if(wl<=781){ r=1; g=0; b=0; }
+    if(wl>=380&&wl<440){r=-(wl-440)/(440-380);g=0;b=1;}
+    else if(wl>=440&&wl<490){r=0;g=(wl-440)/(490-440);b=1;}
+    else if(wl>=490&&wl<510){r=0;g=1;b=-(wl-510)/(510-490);}
+    else if(wl>=510&&wl<580){r=(wl-510)/(580-510);g=1;b=0;}
+    else if(wl>=580&&wl<645){r=1;g=-(wl-645)/(645-580);b=0;}
+    else if(wl>=645&&wl<=781){r=1;g=0;b=0;}
     var f=1;
-    if(wl<420) f=0.3+0.7*(wl-380)/(420-380);
-    else if(wl>700) f=0.3+0.7*(781-wl)/(781-700);
-    var gm=0.8;
-    function ch(x){ return x<=0?0:Math.round(255*Math.pow(x*f,gm)); }
+    if(wl>=380&&wl<420)f=0.3+0.7*(wl-380)/(420-380);
+    else if(wl>=420&&wl<701)f=1;
+    else if(wl>=701&&wl<=781)f=0.3+0.7*(781-wl)/(781-700);
+    var gamma=0.8;
+    function ch(c){return c<=0?0:Math.round(255*Math.pow(c*f,gamma));}
     return [ch(r),ch(g),ch(b)];
   }
-
-  var btnWrap=root.querySelector('.es-elements');
-  var canvas=root.querySelector('.es-canvas');
-  var ctx=canvas.getContext('2d');
-  var nameEl=root.querySelector('.es-name');
-  var noteEl=root.querySelector('.es-note');
-  var readoutEl=root.querySelector('.es-readout');
-  var cmpToggle=root.querySelector('.es-cmp');
-  var legendEl=root.querySelector('.es-legend');
-
-  var slots=[null,null];
-  var compareMode=false;
-  var hoverX=null;
-  var startTimes={};
-
-  var btns={};
-  ORDER.forEach(function(k){
-    var el=ELEMENTS[k];
-    var b=document.createElement('button');
-    b.className='es-el'; b.type='button'; b.setAttribute('data-k',k);
-    b.innerHTML='<span class="es-sym">'+el.sym+'</span><span class="es-elname">'+el.name+'</span>';
-    b.addEventListener('click',function(){ selectElement(k); });
-    btnWrap.appendChild(b);
-    btns[k]=b;
-  });
-
-  function selectElement(k){
-    if(compareMode){
-      if(slots[0]===k){ slots[0]=slots[1]; slots[1]=null; }
-      else if(slots[1]===k){ slots[1]=null; }
-      else if(!slots[0]){ slots[0]=k; }
-      else if(!slots[1]){ slots[1]=k; }
-      else { slots[1]=slots[0]; slots[0]=k; }
-    } else {
-      slots[0]=(slots[0]===k? null : k);
-      slots[1]=null;
-    }
-    triggerReveal();
-    syncUI();
+  function rgbStr(a,al){return 'rgba('+a[0]+','+a[1]+','+a[2]+','+(al==null?1:al)+')';}
+  function bandName(wl){
+    if(wl<450)return 'violet';
+    if(wl<485)return 'blue';
+    if(wl<500)return 'cyan';
+    if(wl<565)return 'green';
+    if(wl<590)return 'yellow';
+    if(wl<625)return 'orange';
+    return 'red';
   }
 
-  function triggerReveal(){
-    var now=performance.now();
-    activeLines().forEach(function(L){
-      var key=L.slot+':'+L.wl;
-      if(startTimes[key]===undefined){ startTimes[key]=now; }
-    });
-  }
-
-  function activeLines(){
-    var out=[];
-    slots.forEach(function(k,si){
-      if(!k) return;
-      ELEMENTS[k].lines.forEach(function(L){
-        out.push({wl:L.wl, i:L.i, lbl:L.lbl, slot:si, key:k});
-      });
-    });
-    return out;
-  }
-
-  function syncUI(){
-    ORDER.forEach(function(k){
-      var idx=slots.indexOf(k);
-      btns[k].classList.toggle('on',idx>-1);
-      btns[k].setAttribute('data-slot', idx>-1?idx:'');
-    });
-    var ks=slots.filter(Boolean);
-    if(ks.length===0){
-      nameEl.textContent='Select an element';
-      noteEl.textContent='Each element emits light at a unique set of wavelengths — a spectral fingerprint that lets us identify atoms in distant stars.';
-    } else if(ks.length===1){
-      var e=ELEMENTS[ks[0]];
-      nameEl.textContent=e.name+' · Z='+e.z;
-      noteEl.textContent=e.note;
-    } else {
-      nameEl.textContent=ELEMENTS[ks[0]].name+'  vs  '+ELEMENTS[ks[1]].name;
-      noteEl.textContent='Overlaid fingerprints — compare where each element’s lines fall across the spectrum.';
-    }
-    legendEl.innerHTML='';
-    ks.forEach(function(k){
-      var idx=slots.indexOf(k);
-      var sp=document.createElement('span');
-      sp.className='es-leg';
-      sp.innerHTML='<i class="es-leg-dot s'+idx+'"></i>'+ELEMENTS[k].name;
-      legendEl.appendChild(sp);
-    });
-    legendEl.style.opacity = ks.length?1:0;
-  }
-
-  cmpToggle.addEventListener('click',function(){
-    compareMode=!compareMode;
-    cmpToggle.classList.toggle('on',compareMode);
-    cmpToggle.setAttribute('aria-pressed',compareMode?'true':'false');
-    if(!compareMode){ slots[1]=null; }
-    syncUI();
-  });
-
-  var W=0,H=0,dpr=1;
+  // ---- responsive canvas ----
+  var dpr=1, cw=0, ch_=0;
   function resize(){
-    var r=canvas.getBoundingClientRect();
-    dpr=Math.max(1,Math.min(2.5,window.devicePixelRatio||1));
-    W=Math.max(2,r.width); H=Math.max(2,r.height);
-    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
+    var r=stage.getBoundingClientRect();
+    cw=Math.max(10,r.width); ch_=Math.max(10,r.height);
+    dpr=Math.min(window.devicePixelRatio||1,2.5);
+    canvas.width=Math.round(cw*dpr);
+    canvas.height=Math.round(ch_*dpr);
+    canvas.style.width=cw+'px';
+    canvas.style.height=ch_+'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
+    layout();
+    needsStatic=true;
   }
 
-  function geom(){
-    var padL=8, padR=8, top=10;
-    var stripH = Math.max(64, H-58);
-    var axisY = top+stripH;
-    return {x0:padL, x1:W-padR, top:top, stripH:stripH, axisY:axisY};
+  // ---- geometry / layout ----
+  var L={};
+  function layout(){
+    var padL=Math.max(36,cw*0.05);
+    var padR=Math.max(16,cw*0.025);
+    var padT=Math.max(14,ch_*0.06);
+    var padB=Math.max(30,ch_*0.16); // axis room
+    L.x0=padL; L.x1=cw-padR;
+    L.y0=padT; L.y1=ch_-padB;
+    L.w=L.x1-L.x0; L.h=L.y1-L.y0;
   }
-  function wlToX(wl,g){ return g.x0 + (wl-WL_MIN)/(WL_MAX-WL_MIN)*(g.x1-g.x0); }
-  function xToWl(x,g){ return WL_MIN + (x-g.x0)/(g.x1-g.x0)*(WL_MAX-WL_MIN); }
+  function wlToX(wl){return L.x0+(wl-WMIN)/(WMAX-WMIN)*L.w;}
 
-  function pointerMove(e){
-    var r=canvas.getBoundingClientRect();
-    var cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
-    hoverX=cx;
-  }
-  function pointerLeave(){ hoverX=null; }
-  canvas.addEventListener('mousemove',pointerMove);
-  canvas.addEventListener('mouseleave',pointerLeave);
-  canvas.addEventListener('touchstart',function(e){pointerMove(e);},{passive:true});
-  canvas.addEventListener('touchmove',function(e){pointerMove(e);},{passive:true});
-  canvas.addEventListener('touchend',pointerLeave);
-
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function ease(t){ return t<0?0:t>1?1:1-Math.pow(1-t,3); }
-  function roundRect(c,x,y,w,h,r){
-    r=Math.min(r,w/2,h/2);
-    c.beginPath();
-    c.moveTo(x+r,y);
-    c.arcTo(x+w,y,x+w,y+h,r);
-    c.arcTo(x+w,y+h,x,y+h,r);
-    c.arcTo(x,y+h,x,y,r);
-    c.arcTo(x,y,x+w,y,r);
-    c.closePath();
+  // active elements list (primary first, overlay second)
+  function activeEls(){
+    var arr=[{idx:state.primary}];
+    if(state.overlay!=null && state.overlay!==state.primary) arr.push({idx:state.overlay});
+    return arr;
   }
 
-  function draw(){
-    var ac=readAccent();
-    var g=geom();
-    ctx.clearRect(0,0,W,H);
+  // strip rows: when overlay -> two stacked half strips; else one
+  function rowRect(rowIdx,total){
+    var gap = total>1 ? 8 : 0;
+    var rh=(L.h-gap*(total-1))/total;
+    var y=L.y0+rowIdx*(rh+gap);
+    return {x:L.x0,y:y,w:L.w,h:rh};
+  }
 
-    ctx.fillStyle='#000';
-    roundRect(ctx,g.x0,g.top,g.x1-g.x0,g.stripH,6); ctx.fill();
-    var bgr=ctx.createLinearGradient(0,g.top,0,g.top+g.stripH);
-    bgr.addColorStop(0,'rgba(255,255,255,0.04)');
-    bgr.addColorStop(0.5,'rgba(0,0,0,0)');
-    ctx.fillStyle=bgr;
-    roundRect(ctx,g.x0,g.top,g.x1-g.x0,g.stripH,6); ctx.fill();
+  // ---- animation reveal ----
+  var anim=0; // 0..1
+  var animTarget=1;
+  var animStart=0;
+  function triggerReveal(){
+    if(reduce){anim=1;return;}
+    anim=0;animTarget=1;animStart=performance.now();
+  }
 
-    var ticks=[400,450,500,550,600,650,700];
-    ctx.lineWidth=1;
-    ticks.forEach(function(t){
-      var x=wlToX(t,g);
-      ctx.strokeStyle='rgba(166,171,230,0.10)';
-      ctx.beginPath(); ctx.moveTo(x,g.top); ctx.lineTo(x,g.top+g.stripH); ctx.stroke();
-    });
-
-    var now=performance.now();
-    var lines=activeLines();
-
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    lines.forEach(function(L){
-      var key=L.slot+':'+L.wl;
-      var st=startTimes[key]; if(st===undefined){ st=now; startTimes[key]=now; }
-      var t = reduced?1:Math.min(1,(now-st)/420);
-      t = ease(t);
-      if(t<=0) return;
-      var x=wlToX(L.wl,g);
-      if(x<g.x0||x>g.x1) return;
-      var rgb=wlToRGB(L.wl);
-      var inten=Math.pow(L.i,0.7)*t;
-      var slotMul = L.slot===1?0.92:1;
-      var yTop=g.top+4, yBot=g.top+g.stripH-4;
-      var halo=Math.max(2, 7*inten);
-      var grad=ctx.createLinearGradient(x-halo,0,x+halo,0);
-      grad.addColorStop(0,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0)');
-      grad.addColorStop(0.5,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+(0.55*inten*slotMul)+')');
-      grad.addColorStop(1,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0)');
-      ctx.fillStyle=grad;
-      ctx.fillRect(x-halo,yTop,halo*2,yBot-yTop);
-      var coreW=Math.max(1.1, 1.6*Math.pow(L.i,0.5));
-      ctx.fillStyle='rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+Math.min(1,0.85*inten*slotMul+0.2)+')';
-      ctx.fillRect(x-coreW/2,yTop,coreW,yBot-yTop);
-      if(L.slot===1){
-        ctx.fillStyle='rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+(0.9*inten)+')';
-        ctx.fillRect(x-coreW/2, g.top+g.stripH-4, coreW, 4);
+  // ---- static background cache (gradient + axis) ----
+  var staticCanvas=document.createElement('canvas');
+  var sctx=staticCanvas.getContext('2d');
+  var needsStatic=true;
+  function drawStatic(){
+    staticCanvas.width=canvas.width; staticCanvas.height=canvas.height;
+    sctx.setTransform(dpr,0,0,dpr,0,0);
+    sctx.clearRect(0,0,cw,ch_);
+    var els=activeEls();
+    // each row: black strip + faint visible-spectrum reference gradient at bottom edge
+    for(var i=0;i<els.length;i++){
+      var R=rowRect(i,els.length);
+      // pure black emission field
+      sctx.fillStyle='#000';
+      sctx.fillRect(R.x,R.y,R.w,R.h);
+      // subtle frame
+      sctx.strokeStyle='rgba(166,171,230,0.16)';
+      sctx.lineWidth=1;
+      sctx.strokeRect(R.x+0.5,R.y+0.5,R.w-1,R.h-1);
+      // faint continuous spectrum reference band along the very bottom of each strip
+      var refH=Math.min(7,R.h*0.10);
+      var grad=sctx.createLinearGradient(R.x,0,R.x+R.w,0);
+      for(var s=0;s<=40;s++){
+        var t=s/40, wl=WMIN+t*(WMAX-WMIN);
+        grad.addColorStop(t, rgbStr(wl2rgb(wl),0.5));
       }
-    });
-    ctx.restore();
-
-    ctx.lineWidth=1;
-    ctx.strokeStyle=rgba(ac,0.30);
-    roundRect(ctx,g.x0+0.5,g.top+0.5,g.x1-g.x0-1,g.stripH-1,6); ctx.stroke();
-
-    ctx.font='600 11px Inter, system-ui, sans-serif';
-    ctx.textBaseline='top';
-    ticks.forEach(function(t){
-      var x=wlToX(t,g);
-      ctx.strokeStyle='rgba(166,171,230,0.35)';
-      ctx.beginPath(); ctx.moveTo(x,g.axisY+2); ctx.lineTo(x,g.axisY+7); ctx.stroke();
-      ctx.textAlign='center';
-      ctx.fillStyle='rgba(166,171,230,0.8)';
-      ctx.fillText(String(t), x, g.axisY+9);
-    });
-    ctx.textAlign='left';
-    ctx.font='italic 700 10px "Chakra Petch", Inter, sans-serif';
-    ctx.fillStyle='rgba(166,171,230,0.5)';
-    ctx.fillText('WAVELENGTH (nm)', g.x0, g.axisY+24);
-
-    var readoutTxt='';
-    if(hoverX!=null && hoverX>=g.x0 && hoverX<=g.x1){
-      var wl=xToWl(hoverX,g);
-      var best=null, bestD=1e9;
-      lines.forEach(function(L){
-        var d=Math.abs(L.wl-wl);
-        if(d<bestD){ bestD=d; best=L; }
-      });
-      var snap = best && bestD<6;
-      var showWl = snap?best.wl:wl;
-      var sx=wlToX(showWl,g);
-      ctx.save();
-      ctx.setLineDash([3,4]);
-      ctx.strokeStyle=rgba(ac,snap?0.9:0.45);
-      ctx.lineWidth=1;
-      ctx.beginPath(); ctx.moveTo(sx,g.top); ctx.lineTo(sx,g.top+g.stripH); ctx.stroke();
-      ctx.restore();
-      if(snap){
-        var rgb=wlToRGB(best.wl);
-        ctx.fillStyle='rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',1)';
-        ctx.beginPath(); ctx.arc(sx,g.top-0.5,3,0,Math.PI*2); ctx.fill();
-        readoutTxt=(best.lbl?best.lbl+'  ':'')+best.wl.toFixed(1)+' nm  ·  '+ELEMENTS[best.key].name;
-      } else {
-        readoutTxt=Math.round(showWl)+' nm';
-      }
-    } else {
-      readoutTxt='Hover the spectrum to read wavelengths';
+      sctx.fillStyle=grad;
+      sctx.globalAlpha=0.55;
+      sctx.fillRect(R.x,R.y+R.h-refH,R.w,refH);
+      sctx.globalAlpha=1;
     }
-    readoutEl.textContent=readoutTxt;
-
-    root.style.setProperty('--es-accent', ac.css);
-    root.style.setProperty('--es-accent-rgb', ac.r+','+ac.g+','+ac.b);
+    // axis
+    drawAxis(sctx);
+    needsStatic=false;
+  }
+  function drawAxis(c){
+    var ay=L.y1+ Math.min(10, (ch_-L.y1)*0.34);
+    c.strokeStyle='rgba(166,171,230,0.28)';
+    c.lineWidth=1;
+    c.beginPath();c.moveTo(L.x0,ay+0.5);c.lineTo(L.x1,ay+0.5);c.stroke();
+    var ticks=[400,450,500,550,600,650,700];
+    c.fillStyle='#a6abe6';
+    c.font='600 '+Math.max(9,Math.min(12,cw*0.013))+"px 'Inter',sans-serif";
+    c.textAlign='center';c.textBaseline='top';
+    for(var i=0;i<ticks.length;i++){
+      var tx=wlToX(ticks[i]);
+      c.strokeStyle='rgba(166,171,230,0.28)';
+      c.beginPath();c.moveTo(tx+0.5,ay);c.lineTo(tx+0.5,ay+5);c.stroke();
+      c.fillText(ticks[i], tx, ay+7);
+    }
+    // unit label
+    c.textAlign='right';
+    c.fillStyle='rgba(166,171,230,0.7)';
+    c.font='italic 700 '+Math.max(9,Math.min(12,cw*0.013))+"px 'Chakra Petch','Inter',sans-serif";
+    c.fillText('WAVELENGTH (nm)', L.x1, ay+7);
   }
 
-  var rafId=null, visible=false;
-  function loop(){ draw(); rafId=requestAnimationFrame(loop); }
-  function startLoop(){ if(rafId==null){ rafId=requestAnimationFrame(loop); } }
-  function stopLoop(){ if(rafId!=null){ cancelAnimationFrame(rafId); rafId=null; } }
+  // store hit regions each frame
+  var hits=[];
 
-  function onResize(){ resize(); if(reduced && rafId==null) draw(); }
-  window.addEventListener('resize',onResize);
+  function drawLines(time){
+    hits=[];
+    var els=activeEls();
+    for(var ei=0;ei<els.length;ei++){
+      var elIdx=els[ei].idx;
+      var el=ELEMENTS[elIdx];
+      var R=rowRect(ei,els.length);
+      var refH=Math.min(7,R.h*0.10);
+      var topPad=R.h*0.10;
+      var lineTop=R.y+topPad;
+      var lineBot=R.y+R.h-refH-2;
+      // element tag (top-left of row)
+      ctx.save();
+      ctx.font='italic 700 '+Math.max(10,Math.min(15,cw*0.017))+"px 'Chakra Petch','Inter',sans-serif";
+      ctx.textAlign='left';ctx.textBaseline='top';
+      ctx.fillStyle='rgba(244,245,255,0.92)';
+      ctx.fillText(el.sym+'  '+el.name.toUpperCase(), R.x+8, R.y+5);
+      ctx.restore();
 
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(en){
-      visible=en.isIntersecting;
-      if(visible){
-        resize();
-        if(reduced){ draw(); } else { startLoop(); }
-      } else {
-        stopLoop();
+      for(var li=0;li<el.lines.length;li++){
+        var wl=el.lines[li];
+        var x=wlToX(wl);
+        if(x<R.x||x>R.x+R.w)continue;
+        var rgb=wl2rgb(wl);
+        var isSel=state.selected&&state.selected.elIdx===elIdx&&state.selected.lineIdx===li;
+        var isHov=hover&&hover.elIdx===elIdx&&hover.lineIdx===li;
+        // staged reveal by wavelength position
+        var stagger=(wl-WMIN)/(WMAX-WMIN);
+        var local=Math.max(0,Math.min(1,(anim-stagger*0.25)/0.75));
+        if(reduce)local=1;
+        var ease=local<0?0:(1-Math.pow(1-local,3));
+        if(ease<=0)continue;
+
+        var baseAlpha=0.9*ease;
+        // gentle live shimmer
+        var shim = reduce?1:(0.86+0.14*Math.sin(time/520 + wl*0.13 + ei));
+        // glow halo
+        var glowW=Math.max(6,R.h*0.5);
+        var g=ctx.createLinearGradient(x-glowW,0,x+glowW,0);
+        g.addColorStop(0,rgbStr(rgb,0));
+        g.addColorStop(0.5,rgbStr(rgb,0.32*baseAlpha*shim*(isHov||isSel?1.5:1)));
+        g.addColorStop(1,rgbStr(rgb,0));
+        ctx.fillStyle=g;
+        ctx.fillRect(x-glowW,lineTop,glowW*2,lineBot-lineTop);
+
+        // core line
+        var coreW=isSel?3:(isHov?2.4:1.6);
+        ctx.fillStyle=rgbStr(rgb, Math.min(1,baseAlpha*shim+0.1));
+        ctx.fillRect(x-coreW/2,lineTop,coreW,lineBot-lineTop);
+        // bright white-hot center
+        ctx.fillStyle='rgba(255,255,255,'+(0.5*baseAlpha)+')';
+        ctx.fillRect(x-0.5,lineTop,1,lineBot-lineTop);
+
+        // selection / hover markers
+        if(isSel||isHov){
+          ctx.fillStyle=isSel?'#f4f5ff':'rgba(244,245,255,0.8)';
+          // top caret
+          ctx.beginPath();
+          ctx.moveTo(x,lineTop-2);
+          ctx.lineTo(x-4,lineTop-8);
+          ctx.lineTo(x+4,lineTop-8);
+          ctx.closePath();ctx.fill();
+        }
+        if(isSel){
+          ctx.font='italic 700 '+Math.max(9,Math.min(13,cw*0.015))+"px 'Chakra Petch','Inter',sans-serif";
+          ctx.textAlign='center';ctx.textBaseline='bottom';
+          var lbl=wl.toFixed(1);
+          var tw=ctx.measureText(lbl).width;
+          var lx=Math.max(R.x+tw/2+4,Math.min(R.x+R.w-tw/2-4,x));
+          ctx.fillStyle='rgba(5,3,20,0.85)';
+          ctx.fillRect(lx-tw/2-5,lineBot-20,tw+10,17);
+          ctx.strokeStyle=rgbStr(rgb,0.8);ctx.lineWidth=1;
+          ctx.strokeRect(lx-tw/2-5+0.5,lineBot-20+0.5,tw+10,17);
+          ctx.fillStyle='#f4f5ff';
+          ctx.fillText(lbl, lx, lineBot-5);
+        }
+
+        hits.push({x:x,y0:lineTop,y1:lineBot,elIdx:elIdx,lineIdx:li,wl:wl,rgb:rgb,name:el.name});
       }
+    }
+  }
+
+  // ---- main loop ----
+  var running=false, visible=true, rafId=null;
+  function frame(t){
+    if(!running)return;
+    if(animStart){
+      var p=(t-animStart)/700;
+      anim=p>=1?1:p;
+      if(p>=1)animStart=0;
+    }
+    if(needsStatic)drawStatic();
+    ctx.clearRect(0,0,cw,ch_);
+    ctx.drawImage(staticCanvas,0,0,canvas.width,canvas.height,0,0,cw,ch_);
+    drawLines(t);
+    // keep animating if revealing or shimmer (shimmer always unless reduced)
+    if(reduce && anim>=1 && !animStart){
+      running=false; rafId=null; return;
+    }
+    rafId=requestAnimationFrame(frame);
+  }
+  function start(){
+    if(running)return;
+    running=true; rafId=requestAnimationFrame(frame);
+  }
+  function stop(){
+    running=false;
+    if(rafId)cancelAnimationFrame(rafId); rafId=null;
+  }
+  function kick(){ // redraw once even if loop stopped (reduced motion)
+    if(reduce){
+      if(needsStatic)drawStatic();
+      ctx.clearRect(0,0,cw,ch_);
+      ctx.drawImage(staticCanvas,0,0,canvas.width,canvas.height,0,0,cw,ch_);
+      drawLines(performance.now());
+    }else{
+      start();
+    }
+  }
+
+  // ---- interaction ----
+  function pickHit(mx,my){
+    var best=null,bestD=14;
+    for(var i=0;i<hits.length;i++){
+      var h=hits[i];
+      if(my<h.y0-10||my>h.y1+10)continue;
+      var d=Math.abs(mx-h.x);
+      if(d<bestD){bestD=d;best=h;}
+    }
+    return best;
+  }
+  function setSelected(h){
+    if(!h){state.selected=null;}
+    else state.selected={elIdx:h.elIdx,lineIdx:h.lineIdx};
+    updateReadout();
+    needsStatic=false;kick();
+  }
+  function updateReadout(){
+    if(!state.selected){
+      roEmpty.hidden=false; roData.hidden=true; return;
+    }
+    var el=ELEMENTS[state.selected.elIdx];
+    var wl=el.lines[state.selected.lineIdx];
+    roEmpty.hidden=true; roData.hidden=false;
+    roEl.textContent=el.name;
+    roNm.textContent=wl.toFixed(1);
+    var rgb=wl2rgb(wl);
+    roNm.style.color=rgbStr(rgb,1);
+    roNm.style.textShadow='0 0 14px '+rgbStr(rgb,0.6);
+    roBand.textContent=bandName(wl);
+    roBand.style.color=rgbStr(rgb,1);
+  }
+
+  function evtPos(e){
+    var r=canvas.getBoundingClientRect();
+    var cx=(e.touches?e.touches[0].clientX:e.clientX);
+    var cy=(e.touches?e.touches[0].clientY:e.clientY);
+    return {x:cx-r.left,y:cy-r.top};
+  }
+  canvas.addEventListener('mousemove',function(e){
+    var p=evtPos(e);
+    var h=pickHit(p.x,p.y);
+    var changed=(!!h!==!!hover)||(h&&hover&&(h.elIdx!==hover.elIdx||h.lineIdx!==hover.lineIdx));
+    hover=h?{elIdx:h.elIdx,lineIdx:h.lineIdx}:null;
+    canvas.style.cursor=h?'pointer':'default';
+    if(h){
+      tooltip.hidden=false;
+      tooltip.innerHTML='<b>'+h.wl.toFixed(1)+' nm</b> · '+h.name+' · '+bandName(h.wl);
+      tooltip.style.left=h.x+'px';
+      tooltip.style.top=(h.y0)+'px';
+      tooltip.style.borderColor=rgbStr(h.rgb,0.7);
+    }else{
+      tooltip.hidden=true;
+    }
+    if(changed){needsStatic=false;kick();}
+  });
+  canvas.addEventListener('mouseleave',function(){
+    hover=null;tooltip.hidden=true;canvas.style.cursor='default';
+    needsStatic=false;kick();
+  });
+  canvas.addEventListener('click',function(e){
+    var p=evtPos(e);
+    var h=pickHit(p.x,p.y);
+    setSelected(h);
+  });
+  canvas.addEventListener('touchstart',function(e){
+    var p=evtPos(e);
+    var h=pickHit(p.x,p.y);
+    if(h){e.preventDefault();setSelected(h);}
+  },{passive:false});
+
+  // keyboard: arrow through lines of primary
+  canvas.tabIndex=0;
+  canvas.setAttribute('role','application');
+  canvas.setAttribute('aria-label','Emission spectrum. Use left and right arrows to step through emission lines.');
+  canvas.addEventListener('keydown',function(e){
+    if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'&&e.key!=='Enter'&&e.key!==' ')return;
+    e.preventDefault();
+    // build ordered list of all visible lines
+    var all=[];
+    var els=activeEls();
+    for(var ei=0;ei<els.length;ei++){
+      var el=ELEMENTS[els[ei].idx];
+      for(var li=0;li<el.lines.length;li++) all.push({elIdx:els[ei].idx,lineIdx:li,wl:el.lines[li]});
+    }
+    all.sort(function(a,b){return a.wl-b.wl;});
+    var cur=-1;
+    if(state.selected){
+      for(var i=0;i<all.length;i++)if(all[i].elIdx===state.selected.elIdx&&all[i].lineIdx===state.selected.lineIdx){cur=i;break;}
+    }
+    if(e.key==='ArrowRight')cur=(cur+1)%all.length;
+    else if(e.key==='ArrowLeft')cur=(cur-1+all.length)%all.length;
+    else if(cur<0)cur=0;
+    state.selected={elIdx:all[cur].elIdx,lineIdx:all[cur].lineIdx};
+    updateReadout();needsStatic=false;kick();
+  });
+
+  // ---- build element buttons ----
+  function buildButtons(){
+    btnWrap.innerHTML='';overlayPick.innerHTML='';
+    ELEMENTS.forEach(function(el,idx){
+      // representative color = strongest-ish mid line
+      var repWl=el.lines[Math.floor(el.lines.length/2)];
+      var col=rgbStr(wl2rgb(repWl),1);
+      var b=document.createElement('button');
+      b.type='button';
+      b.setAttribute('aria-pressed', idx===state.primary?'true':'false');
+      b.innerHTML='<span class="es-swatch" style="color:'+col+';background:'+col+'"></span>'+el.name;
+      b.addEventListener('click',function(){selectPrimary(idx);});
+      btnWrap.appendChild(b);
+
+      var ob=document.createElement('button');
+      ob.type='button';
+      ob.setAttribute('aria-pressed','false');
+      ob.innerHTML='<span class="es-swatch" style="color:'+col+';background:'+col+'"></span>'+el.name;
+      ob.addEventListener('click',function(){selectOverlay(idx);});
+      overlayPick.appendChild(ob);
+    });
+  }
+  function refreshButtons(){
+    var pb=btnWrap.querySelectorAll('button');
+    pb.forEach(function(b,i){b.setAttribute('aria-pressed', i===state.primary?'true':'false');});
+    var ob=overlayPick.querySelectorAll('button');
+    ob.forEach(function(b,i){
+      var on=(state.overlay===i);
+      b.setAttribute('aria-pressed', on?'true':'false');
+      b.disabled=(i===state.primary);
+      b.style.opacity=(i===state.primary)?'0.3':'1';
+      b.style.cursor=(i===state.primary)?'not-allowed':'pointer';
+    });
+  }
+  function selectPrimary(idx){
+    if(idx===state.primary && state.selected===null) {/* still reveal */}
+    state.primary=idx;
+    if(state.overlay===idx)state.overlay=null;
+    state.selected=null;updateReadout();
+    refreshButtons();buildLegend();
+    needsStatic=true;triggerReveal();start();
+  }
+  function selectOverlay(idx){
+    if(idx===state.primary)return;
+    state.overlay=(state.overlay===idx)?null:idx;
+    state.selected=null;updateReadout();
+    refreshButtons();buildLegend();updateOverlayUI();
+    needsStatic=true;triggerReveal();start();
+  }
+  function updateOverlayUI(){
+    clearBtn.hidden=(state.overlay===null);
+  }
+
+  overlayToggle.addEventListener('click',function(){
+    state.overlayMode=!state.overlayMode;
+    overlayToggle.setAttribute('aria-pressed',state.overlayMode?'true':'false');
+    overlayToggle.textContent=state.overlayMode?'Comparing':'+ Overlay';
+    overlayPick.hidden=!state.overlayMode;
+    if(!state.overlayMode && state.overlay!==null){
+      state.overlay=null;state.selected=null;updateReadout();
+      refreshButtons();buildLegend();updateOverlayUI();
+      needsStatic=true;triggerReveal();start();
+    }
+  });
+  clearBtn.addEventListener('click',function(){
+    state.overlay=null;state.selected=null;updateReadout();
+    refreshButtons();buildLegend();updateOverlayUI();
+    needsStatic=true;triggerReveal();start();
+  });
+
+  // ---- legend ----
+  function buildLegend(){
+    legend.innerHTML='';
+    var els=activeEls();
+    els.forEach(function(o){
+      var el=ELEMENTS[o.idx];
+      var repWl=el.lines[Math.floor(el.lines.length/2)];
+      var col=rgbStr(wl2rgb(repWl),1);
+      var d=document.createElement('div');
+      d.className='es-leg';
+      d.innerHTML='<span class="es-leg-sw" style="color:'+col+';background:'+col+'"></span>'+
+        '<b>'+el.name+'</b><span class="es-leg-count">'+el.lines.length+' lines</span>';
+      legend.appendChild(d);
+    });
+  }
+
+  // ---- accent live sync ----
+  function syncAccent(){root.style.setProperty('--es-accent',accent());}
+
+  // ---- observers ----
+  var ro=new ResizeObserver(function(){resize();needsStatic=true;kick();});
+  ro.observe(stage);
+
+  var io=new IntersectionObserver(function(ents){
+    ents.forEach(function(en){
+      visible=en.isIntersecting;
+      if(visible){ if(!reduce) start(); else kick(); }
+      else stop();
     });
   },{threshold:0.01});
   io.observe(root);
 
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden)stop();
+    else if(visible){ if(!reduce)start(); else kick(); }
+  });
+
+  // ---- init (un-gated, first frame immediately) ----
+  syncAccent();
+  buildButtons();
+  refreshButtons();
+  buildLegend();
+  updateOverlayUI();
+  updateReadout();
   resize();
-  selectElement('H');
-  draw();
+  // preselect the iconic H-alpha line for an inviting first frame
+  state.selected={elIdx:0,lineIdx:3};
+  updateReadout();
+  triggerReveal();
+  kick();
 })();
 </script>
 </body></html>

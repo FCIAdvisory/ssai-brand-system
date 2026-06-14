@@ -195,6 +195,8 @@ var POSTERS={
  'flow-field':'assets/images/sst-gulf-stream.jpg','atmos-sounding':'assets/images/saharan-dust-atlantic.jpg'
 };
 var NASA_LOGO='assets/logo/nasa-logo.png';
+var LOGO_BY={NASA:'assets/logo/nasa-logo.png',ESA:'assets/logo/esa-logo.png',NOAA:'assets/logo/noaa-logo.png'};
+function srcLogo(src){src=src||'';if(/NOAA/.test(src))return LOGO_BY.NOAA;if(/ESA/.test(src)&&!/NASA/.test(src))return LOGO_BY.ESA;return LOGO_BY.NASA;}
 
 var MANIFEST=null, FLAT=[], FILTER={coll:'all',real:false,q:''};
 
@@ -207,7 +209,7 @@ function cardHTML(m){
   var poster=POSTERS[m.slug];
   var pcls=poster?'poster':'poster gen';
   var pstyle=poster?(' style="background-image:url(\''+poster+'\')"'):'';
-  var badge=m.real?('<div class="badge"><img src="'+NASA_LOGO+'" alt="NASA"><span>Real data</span></div>'):
+  var badge=m.real?('<div class="badge"><img src="'+srcLogo(m.source)+'" alt="data source"><span>Real data</span></div>'):
     ('<div class="openhint"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></div>');
   return '<div class="card '+(m.real?'real':'')+'" data-slug="'+m.slug+'" tabindex="0" role="button" aria-label="Open '+esc(m.title)+'">'
     +'<div class="'+pcls+'"'+pstyle+'></div><div class="scrim"></div>'
