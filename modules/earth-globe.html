@@ -25,8 +25,13 @@ html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter'
 .mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
 .mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
 .mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
-body.mb-embed .mb-bar{display:none;}
-body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+/* ----- embed (inside the library modal): full-bleed, fits the viewer, never scrolls ----- */
+html,body{height:100%;}
+body.mb-embed{overflow:hidden;}
+body.mb-embed .mb-wrap{height:100%;}
+body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-earth-globe{position:relative;width:100%;color:#f4f5ff;font-family:'Inter',-apple-system,Helvetica,Arial,sans-serif}
 #kit-earth-globe .egx-stage{position:relative;width:100%;aspect-ratio:1/1;min-height:300px;border-radius:16px;overflow:hidden;touch-action:none;cursor:grab;background:radial-gradient(125% 125% at 50% 44%, rgba(22,20,95,0.26) 0%, rgba(10,8,40,0.10) 46%, rgba(5,3,20,0) 70%)}
@@ -51,6 +56,13 @@ body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
 @keyframes egx-rot{to{transform:rotate(360deg)}}
 #kit-earth-globe .egx-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:-1px;padding:0;border:0}
 @media (prefers-reduced-motion: reduce){#kit-earth-globe .egx-spin{animation:none}}
+
+body.mb-embed #kit-earth-globe{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
+body.mb-embed #kit-earth-globe{display:flex!important;flex-direction:column!important;gap:6px!important;}
+body.mb-embed #kit-earth-globe>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-earth-globe [class*='frame'],body.mb-embed #kit-earth-globe [class*='shell'],body.mb-embed #kit-earth-globe [class*='-inner'],body.mb-embed #kit-earth-globe [class*='wrapper']{display:contents!important;}
+body.mb-embed #kit-earth-globe [class*='stage'],body.mb-embed #kit-earth-globe [class*='scene'],body.mb-embed #kit-earth-globe [class*='plotwrap'],body.mb-embed #kit-earth-globe [class*='plot-'],body.mb-embed #kit-earth-globe [class*='canvas-wrap'],body.mb-embed #kit-earth-globe [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
+
 </style></head>
 <body>
 <div class="mb-wrap">
@@ -232,7 +244,7 @@ body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
         var dot=vx*LIGHT[0]+vy*LIGHT[1]+vz*LIGHT[2];
         var lit=0.5+0.5*dot;              /* 0 (anti-sun) .. 1 (sub-sun) */
         lit=Math.pow(lit,0.55);           /* widen the bright day side */
-        var sh=0.55 + 0.85*lit;           /* night floor 0.55, day up to ~1.4 (gain) */
+        var sh=0.95 + 0.40*lit;           /* bright daylight globe: high floor, gentle day-side lift */
         lutShade[k]=sh;
       }
     }

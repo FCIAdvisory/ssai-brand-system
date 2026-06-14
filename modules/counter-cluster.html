@@ -25,8 +25,13 @@ html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter'
 .mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
 .mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
 .mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
-body.mb-embed .mb-bar{display:none;}
-body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+/* ----- embed (inside the library modal): full-bleed, fits the viewer, never scrolls ----- */
+html,body{height:100%;}
+body.mb-embed{overflow:hidden;}
+body.mb-embed .mb-wrap{height:100%;}
+body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-counter-cluster{
   width:100%;
@@ -177,6 +182,13 @@ body{transition:background .5s ease,color .5s ease}
 :root[data-theme="light"] .theme-tog .i-moon,:root[data-theme="light"] .theme-tog .lbl-dark{display:block}
 
 /* ===== KIT EXPANSION (20 modules) ===== */
+
+body.mb-embed #kit-counter-cluster{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
+body.mb-embed #kit-counter-cluster{display:flex!important;flex-direction:column!important;gap:6px!important;}
+body.mb-embed #kit-counter-cluster>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-counter-cluster [class*='frame'],body.mb-embed #kit-counter-cluster [class*='shell'],body.mb-embed #kit-counter-cluster [class*='-inner'],body.mb-embed #kit-counter-cluster [class*='wrapper']{display:contents!important;}
+body.mb-embed #kit-counter-cluster [class*='stage'],body.mb-embed #kit-counter-cluster [class*='scene'],body.mb-embed #kit-counter-cluster [class*='plotwrap'],body.mb-embed #kit-counter-cluster [class*='plot-'],body.mb-embed #kit-counter-cluster [class*='canvas-wrap'],body.mb-embed #kit-counter-cluster [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
+
 </style></head>
 <body>
 <div class="mb-wrap">

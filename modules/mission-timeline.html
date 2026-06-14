@@ -25,8 +25,13 @@ html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter'
 .mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
 .mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
 .mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
-body.mb-embed .mb-bar{display:none;}
-body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+/* ----- embed (inside the library modal): full-bleed, fits the viewer, never scrolls ----- */
+html,body{height:100%;}
+body.mb-embed{overflow:hidden;}
+body.mb-embed .mb-wrap{height:100%;}
+body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:clamp(8px,1.6vw,18px);overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%;height:100%;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
 #kit-mission-timeline{position:relative;width:100%;box-sizing:border-box;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;user-select:none;padding:4px 2px;}
 #kit-mission-timeline *{box-sizing:border-box;}
@@ -55,6 +60,13 @@ body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
 @media (prefers-reduced-motion:reduce){
   #kit-mission-timeline .mt-year{text-shadow:none;}
 }
+
+body.mb-embed #kit-mission-timeline{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
+body.mb-embed #kit-mission-timeline{display:flex!important;flex-direction:column!important;gap:6px!important;}
+body.mb-embed #kit-mission-timeline>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-mission-timeline [class*='frame'],body.mb-embed #kit-mission-timeline [class*='shell'],body.mb-embed #kit-mission-timeline [class*='-inner'],body.mb-embed #kit-mission-timeline [class*='wrapper']{display:contents!important;}
+body.mb-embed #kit-mission-timeline [class*='stage'],body.mb-embed #kit-mission-timeline [class*='scene'],body.mb-embed #kit-mission-timeline [class*='plotwrap'],body.mb-embed #kit-mission-timeline [class*='plot-'],body.mb-embed #kit-mission-timeline [class*='canvas-wrap'],body.mb-embed #kit-mission-timeline [class*='canvaswrap']{flex:1 1 auto!important;min-height:0!important;aspect-ratio:auto!important;height:auto!important;}
+
 </style></head>
 <body>
 <div class="mb-wrap">
