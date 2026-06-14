@@ -41,29 +41,16 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-earth-globe{position:relative;width:100%;color:#f4f5ff;font-family:'Inter',-apple-system,Helvetica,Arial,sans-serif}
-#kit-earth-globe .egx-stage{position:relative;width:100%;aspect-ratio:1/1;min-height:300px;border-radius:16px;overflow:hidden;touch-action:none;cursor:grab;background:radial-gradient(125% 125% at 50% 44%, rgba(22,20,95,0.26) 0%, rgba(10,8,40,0.10) 46%, rgba(5,3,20,0) 70%)}
-#kit-earth-globe .egx-stage.egx-dragging{cursor:grabbing}
-#kit-earth-globe .egx-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#kit-earth-globe .egx-legend{position:absolute;left:15px;top:14px;display:flex;flex-direction:column;gap:3px;pointer-events:none;z-index:4}
-#kit-earth-globe .egx-title{font-family:'Chakra Petch',system-ui,sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:.12em;color:#f4f5ff;text-shadow:0 1px 10px rgba(5,3,20,.8)}
-#kit-earth-globe .egx-readout{font-size:11.5px;letter-spacing:.04em;color:#a6abe6;text-shadow:0 1px 8px rgba(5,3,20,.85)}
-#kit-earth-globe .egx-coord{font-family:'Chakra Petch',system-ui,sans-serif;font-style:italic;font-weight:700;font-size:12px;color:var(--accent,#3cc8ff);letter-spacing:.05em}
-#kit-earth-globe .egx-cap{position:absolute;right:15px;bottom:13px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8a90cf;opacity:.82;pointer-events:none;z-index:4;text-shadow:0 1px 8px rgba(5,3,20,.9)}
-#kit-earth-globe .egx-tip{position:absolute;left:15px;bottom:13px;display:flex;align-items:center;gap:7px;font-size:11.5px;letter-spacing:.04em;color:#a6abe6;opacity:0;transform:translateY(4px);transition:opacity .6s ease, transform .6s ease;pointer-events:none;z-index:4;text-shadow:0 1px 8px rgba(5,3,20,.9)}
-#kit-earth-globe .egx-stage:hover .egx-tip{opacity:.85;transform:translateY(0)}
-#kit-earth-globe .egx-tip.egx-hide{opacity:0!important;transform:translateY(4px)!important}
-#kit-earth-globe .egx-dot{width:6px;height:6px;border-radius:50%;background:var(--accent,#3cc8ff);box-shadow:0 0 9px var(--accent,#3cc8ff)}
-#kit-earth-globe .egx-label{position:absolute;left:0;top:0;max-width:64%;padding:6px 10px;border-radius:10px;background:rgba(6,4,22,.74);border:1px solid rgba(166,171,230,.20);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);font-size:11.5px;letter-spacing:.02em;color:#f4f5ff;opacity:0;transform:translate(-50%,-145%) scale(.96);transform-origin:center bottom;transition:opacity .2s ease, transform .2s ease;pointer-events:none;white-space:nowrap;z-index:6}
-#kit-earth-globe .egx-label.egx-on{opacity:1;transform:translate(-50%,-156%) scale(1)}
-#kit-earth-globe .egx-label b{display:block;font-family:'Chakra Petch',system-ui,sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:#f4f5ff}
-#kit-earth-globe .egx-label .egx-sub{color:#a6abe6;font-size:10.5px}
-#kit-earth-globe .egx-load{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#a6abe6;z-index:5;transition:opacity .5s ease}
-#kit-earth-globe .egx-load.egx-gone{opacity:0;pointer-events:none}
-#kit-earth-globe .egx-spin{width:13px;height:13px;border-radius:50%;border:2px solid rgba(166,171,230,.28);border-top-color:var(--accent,#3cc8ff);animation:egx-rot .9s linear infinite}
-@keyframes egx-rot{to{transform:rotate(360deg)}}
-#kit-earth-globe .egx-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:-1px;padding:0;border:0}
-@media (prefers-reduced-motion: reduce){#kit-earth-globe .egx-spin{animation:none}}
+#kit-earth-globe{position:relative;width:100%;height:100%;overflow:hidden;background:radial-gradient(130% 120% at 50% 42%,rgba(20,18,80,.34),rgba(5,3,18,0) 66%),#05030f;font-family:'Inter',system-ui,sans-serif;color:#eef1ff}
+#kit-earth-globe .egl-gl{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#kit-earth-globe .egl-markers{position:absolute;inset:0;pointer-events:none;z-index:3}
+#kit-earth-globe .egl-dot{position:absolute;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--accent,#3cc8ff);box-shadow:0 0 10px var(--accent,#3cc8ff),0 0 0 2px rgba(5,8,24,.6)}
+#kit-earth-globe .egl-label{position:absolute;transform:translate(14px,-50%);background:rgba(6,4,22,.82);border:1px solid rgba(166,171,230,.22);border-radius:10px;padding:6px 11px;font-size:12px;line-height:1.25;white-space:nowrap;color:#f4f5ff;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 8px 26px -12px #000}
+#kit-earth-globe .egl-label b{display:block;font-style:italic;font-weight:700;font-size:12.5px;letter-spacing:.01em}
+#kit-earth-globe .egl-label{color:#aab3e0}#kit-earth-globe .egl-label b{color:#fff}
+#kit-earth-globe .egl-hud{position:absolute;left:22px;top:20px;z-index:4;pointer-events:none}
+#kit-earth-globe .egl-eyebrow{font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:#fff}
+#kit-earth-globe .egl-sub{font-size:11px;letter-spacing:.06em;color:rgba(166,171,230,.7);margin-top:3px}
 
 body.mb-embed #kit-earth-globe{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-earth-globe [class*='frame'],body.mb-embed #kit-earth-globe [class*='shell'],body.mb-embed #kit-earth-globe [class*='-inner'],body.mb-embed #kit-earth-globe [class*='wrapper']{display:contents!important;}
@@ -84,22 +71,9 @@ body.mb-embed #kit-earth-globe [class*='stage'],body.mb-embed #kit-earth-globe [
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
-  <div class="mb-stage"><div class="kfig" id="kit-earth-globe">
-  <div class="egx-stage" aria-hidden="false">
-    <canvas class="egx-canvas" aria-hidden="true"></canvas>
-    <div class="egx-legend">
-      <span class="egx-title">Earth observation</span>
-      <span class="egx-readout"><b class="egx-coord">--</b></span>
-    </div>
-    <div class="egx-tip" aria-hidden="true"><span class="egx-dot"></span>Drag to spin</div>
-    <div class="egx-cap" aria-hidden="true">NASA Blue Marble</div>
-    <div class="egx-label" aria-hidden="true"></div>
-    <div class="egx-load"><span class="egx-spin"></span>Acquiring imagery</div>
-  </div>
-  <p class="egx-sr">A photoreal rotating globe rendered from NASA Blue Marble true-color imagery, with labeled markers at NASA science and mission sites. Drag to spin and tilt.</p>
-</div></div>
+  <div class="mb-stage"><div class="kfig" id="kit-earth-globe"><canvas class="egl-gl"></canvas><div class="egl-markers"></div><div class="egl-hud"><div class="egl-eyebrow">Earth Observation</div><div class="egl-sub">SSAI &middot; NASA ground network</div></div></div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Auto-rotates west-to-east on the real Blue Marble; drag (mouse or touch) to spin and tilt the globe with eased momentum, hover a glowing marker to reveal its site label, and the readout tracks the lat/lon at the globe&#x27;s center.</span>
+    <span class="mb-c-int">The globe auto-rotates west-to-east; drag to spin and tilt it. Ground-station markers track their real positions and the front-most one shows its label.</span>
     <span class="mb-c-src">Data · NASA Blue Marble (MODIS)</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -149,402 +123,73 @@ body.mb-embed #kit-earth-globe [class*='stage'],body.mb-embed #kit-earth-globe [
 })();
 </script>
 <script>
-/* earth-globe :: photoreal NASA Blue Marble orthographic globe */
 (function(){
   var root=document.getElementById('kit-earth-globe'); if(!root) return;
-  var stage=root.querySelector('.egx-stage');
-  var canvas=root.querySelector('.egx-canvas');
-  var labelEl=root.querySelector('.egx-label');
-  var coordEl=root.querySelector('.egx-coord');
-  var tipEl=root.querySelector('.egx-tip');
-  var loadEl=root.querySelector('.egx-load');
-  var ctx=canvas.getContext('2d');
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function accent(){
-    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    return v||'#3cc8ff';
+  var cv=root.querySelector('.egl-gl');
+  var gl=cv.getContext('webgl',{alpha:true,antialias:true,premultipliedAlpha:false})||cv.getContext('experimental-webgl');
+  if(!gl){ var f=document.createElement('div'); f.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#9aa3d6;font:500 13px Inter'; f.textContent='WebGL unavailable'; root.appendChild(f); return; }
+  var accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#3cc8ff';
+  var SITES=[{name:'NASA Goddard',sub:'Greenbelt, MD',lat:38.99,lon:-76.85},{name:'JPL',sub:'Pasadena, CA',lat:34.20,lon:-118.17},{name:'Kennedy SC',sub:'Cape Canaveral, FL',lat:28.57,lon:-80.65},{name:'ESA / ESOC',sub:'Darmstadt, DE',lat:49.87,lon:8.62},{name:'Svalbard',sub:'Ground station, NO',lat:78.23,lon:15.40},{name:'Atacama',sub:'Observatory, CL',lat:-23.0,lon:-67.75},{name:'McMurdo',sub:'Antarctic station',lat:-77.85,lon:166.67},{name:'Canberra',sub:'DSN complex, AU',lat:-35.40,lon:148.98}];var mk=root.querySelector('.egl-markers');var dots=SITES.map(function(s){var d=document.createElement('div');d.className='egl-dot';mk.appendChild(d);var lb=document.createElement('div');lb.className='egl-label';lb.innerHTML='<b>'+s.name+'</b>'+s.sub;mk.appendChild(lb);return {el:d,lab:lb,xyz:ll2xyz(s.lat,s.lon)};});
+  function sh(t,src){var o=gl.createShader(t);gl.shaderSource(o,src);gl.compileShader(o);return o;}
+  var vs=sh(gl.VERTEX_SHADER,'attribute vec3 p;attribute vec2 uv;uniform mat4 mvp;uniform mat4 mdl;varying vec2 vuv;varying vec3 vn;void main(){vuv=uv;vn=(mdl*vec4(p,0.0)).xyz;gl_Position=mvp*vec4(p,1.0);}');
+  var fs=sh(gl.FRAGMENT_SHADER,'precision highp float;uniform sampler2D tex;uniform vec3 sun;varying vec2 vuv;varying vec3 vn;void main(){vec3 n=normalize(vn);float l=max(dot(n,normalize(sun)),0.0);float s=0.80+0.40*l;float rim=pow(1.0-max(dot(n,vec3(0.0,0.0,1.0)),0.0),3.0);vec4 c=texture2D(tex,vuv);gl_FragColor=vec4(c.rgb*s+vec3(0.10,0.18,0.34)*rim*0.6,1.0);}');
+  var pr=gl.createProgram();gl.attachShader(pr,vs);gl.attachShader(pr,fs);gl.linkProgram(pr);gl.useProgram(pr);
+  // sphere
+  var LAT=64,LON=128,pos=[],uvs=[],idx=[];
+  for(var i=0;i<=LAT;i++){var lat=Math.PI/2-i/LAT*Math.PI;
+    for(var j=0;j<=LON;j++){var ph=j/LON*2*Math.PI-Math.PI; pos.push(Math.cos(lat)*Math.sin(ph),Math.sin(lat),Math.cos(lat)*Math.cos(ph)); uvs.push(j/LON,i/LAT);}}
+  for(var i=0;i<LAT;i++)for(var j=0;j<LON;j++){var a=i*(LON+1)+j,b=a+LON+1;idx.push(a,b,a+1,b,b+1,a+1);}
+  function ab(data,name,size){var bf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,bf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(data),gl.STATIC_DRAW);var loc=gl.getAttribLocation(pr,name);gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,size,gl.FLOAT,false,0,0);}
+  ab(pos,'p',3); ab(uvs,'uv',2);
+  var ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(idx),gl.STATIC_DRAW);
+  function mkTex(){var t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([8,12,34,255]));gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.REPEAT);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);return t;}
+  function loadTex(t,src,cb){var im=new Image();try{im.crossOrigin='anonymous';}catch(e){}im.onload=function(){gl.bindTexture(gl.TEXTURE_2D,t);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,im);if(cb)cb();};im.src=src;}
+  var uMVP=gl.getUniformLocation(pr,'mvp'),uMDL=gl.getUniformLocation(pr,'mdl');
+  var uTex=gl.getUniformLocation(pr,'tex'),uSun=gl.getUniformLocation(pr,'sun');
+  var tex=mkTex();gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex);loadTex(tex,'../assets/images/blue-marble-world.jpg');
+  gl.enable(gl.DEPTH_TEST); gl.clearColor(0,0,0,0);
+  // 4x4 helpers (column-major)
+  function ident(){return [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];}
+  function mul(a,b){var o=new Array(16);for(var c=0;c<4;c++)for(var r=0;r<4;r++){var s=0;for(var k=0;k<4;k++)s+=a[k*4+r]*b[c*4+k];o[c*4+r]=s;}return o;}
+  function rotY(t){var c=Math.cos(t),s=Math.sin(t);return [c,0,-s,0, 0,1,0,0, s,0,c,0, 0,0,0,1];}
+  function rotX(t){var c=Math.cos(t),s=Math.sin(t);return [1,0,0,0, 0,c,s,0, 0,-s,c,0, 0,0,0,1];}
+  function ortho(l,r,b,tp,n,f){return [2/(r-l),0,0,0, 0,2/(tp-b),0,0, 0,0,-2/(f-n),0, -(r+l)/(r-l),-(tp+b)/(tp-b),-(f+n)/(f-n),1];}
+  var W=1,H=1,DPR=1,Rpx=1,cx=0,cy=0,sExt=1.16;
+  function resize(){DPR=Math.min(window.devicePixelRatio||1,2);W=root.clientWidth||800;H=root.clientHeight||500;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';gl.viewport(0,0,cv.width,cv.height);}
+  // view state
+  var spin=0.4, tilt=-0.32, vel=0, draggingNow=false, lastX=0,lastY=0,moved=false;
+  function modelMat(){return mul(rotX(tilt),rotY(spin));}
+  function projMat(){var a=W/H, ex=sExt*(a>=1?a:1), ey=sExt*(a>=1?1:1/a); return ortho(-ex,ex,-ey,ey,-4,4);}
+  function project(x,y,z){ // local sphere pt -> screen px (+ front flag)
+    var m=modelMat(); var wx=m[0]*x+m[4]*y+m[8]*z, wy=m[1]*x+m[5]*y+m[9]*z, wz=m[2]*x+m[6]*y+m[10]*z;
+    var a=W/H, ex=sExt*(a>=1?a:1), ey=sExt*(a>=1?1:1/a);
+    var sx=(wx/ex*0.5+0.5)*W, sy=(1-(wy/ey*0.5+0.5))*H; return {x:sx,y:sy,front:wz>0,wz:wz}; }
+  function ll2xyz(lat,lon){var la=lat*Math.PI/180, lo=lon*Math.PI/180; return [Math.cos(la)*Math.sin(lo),Math.sin(la),Math.cos(la)*Math.cos(lo)];}
+  var _last=performance.now();
+  function frame(){
+    var _now=performance.now(), dt=Math.min(0.05,(_now-_last)/1000); _last=_now;
+    if(!draggingNow){ spin += 0.10*dt + vel; vel*=0.90; if(Math.abs(vel)<1e-5)vel=0; }
+    var mdl=modelMat(), mvp=mul(projMat(),mdl);
+    gl.useProgram(pr); gl.uniformMatrix4fv(uMVP,false,new Float32Array(mvp)); gl.uniformMatrix4fv(uMDL,false,new Float32Array(mdl));
+    gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex);gl.uniform1i(uTex,0);gl.uniform3f(uSun,0.30,0.18,1.0);
+for(var i=0;i<dots.length;i++){var d=dots[i],pp=project(d.xyz[0],d.xyz[1],d.xyz[2]);
+   if(pp.front){d.el.style.display='block';d.el.style.left=pp.x+'px';d.el.style.top=pp.y+'px';d.el.style.opacity=Math.min(1,pp.wz*2.2);
+     var feat=(pp.wz>0.86); d.lab.style.display=feat?'block':'none'; if(feat){d.lab.style.left=pp.x+'px';d.lab.style.top=pp.y+'px';}}
+   else {d.el.style.display='none';d.lab.style.display='none';}}
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+    gl.drawElements(gl.TRIANGLES,idx.length,gl.UNSIGNED_SHORT,0);
+    raf=requestAnimationFrame(frame);
   }
-  function hexRGB(hex){
-    var h=(hex||'').replace('#','');
-    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    var n=parseInt(h,16);
-    if(isNaN(n)) return [60,200,255];
-    return [(n>>16)&255,(n>>8)&255,n&255];
-  }
-  var ACC=accent(), ACC_RGB=hexRGB(ACC);
-  function rgba(c,a){return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';}
-
-  /* ---- geometry / view state ---- */
-  var DPR=1, W=0, H=0, cx=0, cy=0, R=0;
-  var TILT=-0.16;                 /* polar tilt (latitude view), clamped */
-  var rotY=0.30;                  /* longitude rotation (radians) -> center on Africa/Atlantic */
-  var auto=reduce?0:0.0019;       /* auto west->east */
-  var velY=0, velT=0;             /* momentum */
-  var dragging=false, lastX=0, lastY=0, lastT=0, moved=false;
-
-  /* offscreen globe buffer (orthographic disc) */
-  var gBuf=document.createElement('canvas');
-  var gctx=gBuf.getContext('2d',{willReadFrequently:false});
-  var gImg=null, gData=null, GW=0, GH=0;
-
-  /* per-disc-pixel base lookup: index -> base lat row, base lon0 col, shade */
-  var lut=null, lutW=0, lutH=0, lutSrcW=0;
-
-  /* ---- basemap source (equirectangular) ---- */
-  var SRCW=0, SRCH=0, srcData=null, ready=false;
-  var img=new Image();
-
-  function buildSource(im){
-    SRCW=im.naturalWidth||2048; SRCH=im.naturalHeight||1024;
-    var oc=document.createElement('canvas'); oc.width=SRCW; oc.height=SRCH;
-    var octx=oc.getContext('2d',{willReadFrequently:true});
-    octx.drawImage(im,0,0,SRCW,SRCH);
-    try{ srcData=octx.getImageData(0,0,SRCW,SRCH).data; ready=true; }
-    catch(e){ ready=false; }
-  }
-  function onReady(){
-    if(!img.naturalWidth) return;
-    buildSource(img);
-    if(loadEl) loadEl.classList.add('egx-gone');
-    GW=GH=0;           /* force LUT rebuild now that SRCW/SRCH are valid */
-    resize();
-    drawFrame();
-    if(!reduce) start();
-  }
-  img.onload=onReady;
-  img.onerror=function(){ if(loadEl) loadEl.textContent='Imagery unavailable'; };
-  img.src='../assets/images/blue-marble-world.jpg';
-  if(img.complete && img.naturalWidth) onReady();
-
-  /* ---- mission / science sites (lat, lon) ---- */
-  var SITES=[
-    {name:'NASA Goddard', sub:'Greenbelt, MD',      lat:38.99, lon:-76.85},
-    {name:'JPL',          sub:'Pasadena, CA',       lat:34.20, lon:-118.17},
-    {name:'Kennedy SC',   sub:'Cape Canaveral, FL', lat:28.57, lon:-80.65},
-    {name:'ESA / ESOC',   sub:'Darmstadt, DE',      lat:49.87, lon:8.62},
-    {name:'Svalbard',     sub:'Ground station, NO', lat:78.23, lon:15.40},
-    {name:'Atacama',      sub:'Observatory, CL',    lat:-23.0, lon:-67.75},
-    {name:'McMurdo',      sub:'Antarctic station',  lat:-77.85,lon:166.67},
-    {name:'Canberra',     sub:'DSN complex, AU',    lat:-35.40,lon:148.98}
-  ];
-  SITES.forEach(function(s){
-    var la=s.lat*Math.PI/180, lo=s.lon*Math.PI/180, cl=Math.cos(la);
-    /* unit sphere, lon0 frame: x=east, y=up(north), z=toward lon0 */
-    s.ux=Math.sin(lo)*cl; s.uy=Math.sin(la); s.uz=Math.cos(lo)*cl;
-  });
-
-  /* ---- sizing ---- */
-  var BUF_MAX=460;
-  function resize(){
-    var w=root.clientWidth||stage.clientWidth||320;
-    var h=stage.clientHeight||w; if(!h) h=w;
-    DPR=Math.min(window.devicePixelRatio||1, 2);
-    W=w; H=h;
-    canvas.width=Math.round(w*DPR); canvas.height=Math.round(h*DPR);
-    cx=w/2; cy=h/2; R=Math.min(w,h)*0.405;
-
-    /* globe buffer resolution: cap for perf, render crisp then scale.
-       LUT depends on SRCW/SRCH, so only build once the source is ready. */
-    var target=Math.min(BUF_MAX, Math.round(R*2*Math.min(DPR,1.5)));
-    if(ready && (target!==GW || lutSrcW!==SRCW)){ GW=GH=target; gBuf.width=GW; gBuf.height=GH; buildLUT(); }
-    if(ready) drawFrame();
-  }
-
-  /* precompute orthographic disc -> base (lat,lon0) once per size + tilt.
-     Per pixel: source row (lat) index, base column offset for lon0, and a diffuse
-     shade factor for the day-side terminator. Light dir is fixed in view space. */
-  var LIGHT=[ -0.50, 0.38, 0.78 ]; /* view space: x right, y up, z toward viewer */
-  (function(){var L=LIGHT,m=Math.hypot(L[0],L[1],L[2]);L[0]/=m;L[1]/=m;L[2]/=m;})();
-
-  function buildLUT(){
-    if(!SRCW||!SRCH) return;       /* need source dims first */
-    lutW=GW; lutH=GH; lutSrcW=SRCW;
-    lut=new Int32Array(GW*GH*2);   /* [srcRow, srcCol0] or -1 */
-    lutShade=new Float32Array(GW*GH);
-    var rad=GW/2, inv=1/rad;
-    var ct=Math.cos(TILT), st=Math.sin(TILT);
-    var k=0;
-    for(var py=0;py<GH;py++){
-      var ny=(py - GH/2 + 0.5)*inv;     /* -1..1, +down */
-      for(var px=0;px<GW;px++,k++){
-        var nx=(px - GW/2 + 0.5)*inv;   /* -1..1, +right */
-        var d2=nx*nx+ny*ny;
-        if(d2>1){ lut[k*2]=-1; continue; }
-        var nz=Math.sqrt(1-d2);          /* toward viewer */
-        /* view-space point on sphere: (nx, -ny, nz) (y up) */
-        var vx=nx, vy=-ny, vz=nz;
-        /* undo tilt (rotation about X axis) to get globe-space (lon0 frame) */
-        var gx=vx;
-        var gy= vy*ct + vz*st;
-        var gz=-vy*st + vz*ct;
-        /* lat from gy, lon0 from gx,gz */
-        var lat=Math.asin(Math.max(-1,Math.min(1,gy)));
-        var lon0=Math.atan2(gx,gz);      /* -PI..PI, 0 at viewer center */
-        var row=((Math.PI/2 - lat)/Math.PI)*(SRCH-1);
-        var col0=((lon0+Math.PI)/(2*Math.PI))*(SRCW); /* rotation added per frame, wrap */
-        lut[k*2]=row|0;
-        lut[k*2+1]=col0|0;
-        /* diffuse shade in view space (soft terminator + lifted night side) */
-        var dot=vx*LIGHT[0]+vy*LIGHT[1]+vz*LIGHT[2];
-        var lit=0.5+0.5*dot;              /* 0 (anti-sun) .. 1 (sub-sun) */
-        lit=Math.pow(lit,0.55);           /* widen the bright day side */
-        var sh=0.95 + 0.40*lit;           /* bright daylight globe: high floor, gentle day-side lift */
-        lutShade[k]=sh;
-      }
-    }
-  }
-  var lutShade=null;
-
-  /* ---- atmosphere glow (display canvas, cheap) ---- */
-  function paintAtmosphere(){
-    var og=ctx.createRadialGradient(cx,cy,R*0.86,cx,cy,R*1.20);
-    og.addColorStop(0, rgba(ACC_RGB,0.0));
-    og.addColorStop(0.55, rgba([90,150,235],0.10));
-    og.addColorStop(0.80, rgba(ACC_RGB,0.16));
-    og.addColorStop(1, rgba(ACC_RGB,0));
-    ctx.fillStyle=og;
-    ctx.beginPath(); ctx.arc(cx,cy,R*1.20,0,Math.PI*2); ctx.fill();
-  }
-  function paintRim(){
-    ctx.save();
-    ctx.beginPath(); ctx.arc(cx,cy,R*1.012,0,Math.PI*2);
-    ctx.lineWidth=Math.max(1.4,R*0.018);
-    var rg=ctx.createRadialGradient(cx,cy,R*0.97,cx,cy,R*1.04);
-    rg.addColorStop(0, rgba([120,170,240],0.0));
-    rg.addColorStop(0.6, rgba([130,180,245],0.34));
-    rg.addColorStop(1, rgba(ACC_RGB,0.10));
-    ctx.strokeStyle=rg; ctx.stroke();
-    ctx.restore();
-  }
-
-  /* ---- render the globe into buffer by sampling source ---- */
-  function renderGlobe(){
-    if(!ready||!lut) return;
-    if(!gImg||gImg.width!==GW){ gImg=gctx.createImageData(GW,GH); gData=gImg.data; }
-    var out=gData, sd=srcData, sw=SRCW;
-    var rotCols = (rotY/(2*Math.PI))*sw;   /* rotation offset in source columns; wrap */
-    var k=0, o=0;
-    for(var i=0;i<GW*GH;i++,k+=2,o+=4){
-      var row=lut[k];
-      if(row<0){ out[o+3]=0; continue; }
-      var col0=lut[k+1] + rotCols;
-      col0 = col0 % sw; if(col0<0) col0+=sw;
-      var col=col0|0;
-      var si=(row*sw+col)*4;
-      var shf=lutShade[i];
-      /* lift + gentle gain so deep ocean reads as blue and land pops; clamp to 255 */
-      var rr=(sd[si]  *1.08+5)*shf;
-      var gg=(sd[si+1]*1.10+7)*shf;
-      var bb=(sd[si+2]*1.14+12)*shf;
-      out[o]   = rr>255?255:rr;
-      out[o+1] = gg>255?255:gg;
-      out[o+2] = bb>255?255:bb;
-      out[o+3] = 255;
-    }
-    gctx.putImageData(gImg,0,0);
-  }
-
-  /* ---- markers in view space ---- */
-  function siteView(s){
-    var ca=Math.cos(rotY), sa=Math.sin(rotY);
-    var x= s.ux*ca + s.uz*sa;
-    var z=-s.ux*sa + s.uz*ca;
-    var y= s.uy;
-    var ct=Math.cos(TILT), st=Math.sin(TILT);
-    var vy= y*ct - z*st;
-    var vz= y*st + z*ct;
-    return {x:x, y:vy, z:vz};
-  }
-  function paintMarkers(){
-    var hov=hover;
-    for(var i=0;i<SITES.length;i++){
-      var s=SITES[i], v=siteView(s);
-      if(v.z<=0.04){ s._sx=null; continue; }
-      var sx=cx + v.x*R, sy=cy - v.y*R;
-      s._sx=sx; s._sy=sy; s._z=v.z;
-      var edge=Math.min(1,(v.z-0.04)/0.20);
-      var a=0.30+0.65*edge;
-      var isH=(hov===i);
-      var rr=isH?4.4:3.1;
-      ctx.beginPath(); ctx.arc(sx,sy,rr+3.5,0,Math.PI*2);
-      ctx.fillStyle=rgba(ACC_RGB,0.16*a); ctx.fill();
-      ctx.beginPath(); ctx.arc(sx,sy,rr,0,Math.PI*2);
-      ctx.fillStyle=rgba(ACC_RGB,0.95*a); ctx.fill();
-      ctx.lineWidth=1; ctx.strokeStyle=rgba([255,255,255],0.55*a); ctx.stroke();
-      if(isH){
-        ctx.beginPath(); ctx.arc(sx,sy,rr+5.5,0,Math.PI*2);
-        ctx.strokeStyle=rgba(ACC_RGB,0.55*a); ctx.lineWidth=1.2; ctx.stroke();
-      }
-    }
-  }
-
-  /* ---- coord readout: lat/lon at globe center ---- */
-  function centerCoord(){
-    var st=Math.sin(TILT);
-    var lat=Math.asin(Math.max(-1,Math.min(1,st)))*180/Math.PI;
-    var lon=( (rotY*180/Math.PI) % 360 );
-    lon=((lon+180)%360+360)%360-180;
-    function fmt(v,pos,neg){var d=Math.abs(v).toFixed(1);return d+'° '+(v>=0?pos:neg);}
-    return fmt(lat,'N','S')+'  '+fmt(lon,'E','W');
-  }
-
-  /* ---- main draw ---- */
-  function drawFrame(){
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    ctx.clearRect(0,0,W,H);
-    paintAtmosphere();
-    renderGlobe();
-    if(ready){
-      ctx.save();
-      ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
-      ctx.imageSmoothingEnabled=true;
-      ctx.drawImage(gBuf, cx-R, cy-R, R*2, R*2);
-      /* day-side bloom (sun direction) lifts highlights */
-      var bg=ctx.createRadialGradient(cx-R*0.34,cy-R*0.30,R*0.05, cx-R*0.34,cy-R*0.30,R*1.15);
-      bg.addColorStop(0, rgba([190,212,255],0.16));
-      bg.addColorStop(0.45, rgba([120,150,230],0.04));
-      bg.addColorStop(1, rgba([120,150,230],0));
-      ctx.fillStyle=bg; ctx.fillRect(cx-R,cy-R,R*2,R*2);
-      /* gentle limb darkening for spherical depth (edge only) */
-      var lg=ctx.createRadialGradient(cx,cy,R*0.62, cx,cy,R*1.02);
-      lg.addColorStop(0, rgba([6,5,24],0));
-      lg.addColorStop(0.82, rgba([6,5,24],0));
-      lg.addColorStop(1, rgba([5,4,20],0.40));
-      ctx.fillStyle=lg; ctx.fillRect(cx-R,cy-R,R*2,R*2);
-      ctx.restore();
-    }
-    paintRim();
-    if(ready) paintMarkers();
-    if(coordEl) coordEl.textContent=centerCoord();
-    positionLabel();
-  }
-
-  /* ---- animation loop ---- */
-  var raf=0, running=false, visible=true;
-  function tick(){
-    if(!running) return;
-    if(!dragging){
-      rotY += auto + velY;
-      TILT += velT;
-      if(TILT>0.62) TILT=0.62; if(TILT<-0.62) TILT=-0.62;
-      velY*=0.94; velT*=0.90;
-      if(Math.abs(velY)<0.00002) velY=0;
-      if(Math.abs(velT)<0.00002) velT=0;
-      if(velT!==0 || pendingTiltLUT){ buildLUT(); pendingTiltLUT=false; }
-    }
-    if(rotY>Math.PI*4) rotY-=Math.PI*2;
-    if(rotY<-Math.PI*4) rotY+=Math.PI*2;
-    drawFrame();
-    raf=requestAnimationFrame(tick);
-  }
-  var pendingTiltLUT=false;
-  function start(){ if(running||reduce) return; running=true; raf=requestAnimationFrame(tick); }
-  function stop(){ running=false; if(raf) cancelAnimationFrame(raf); raf=0; }
-
-  /* ---- interaction ---- */
-  var hover=-1;
-  function pointAt(px,py){
-    var best=-1,bd=15*15;
-    for(var i=0;i<SITES.length;i++){
-      var s=SITES[i]; if(s._sx==null) continue;
-      var dx=px-s._sx, dy=py-s._sy, d=dx*dx+dy*dy;
-      if(d<bd){bd=d;best=i;}
-    }
-    return best;
-  }
-  function positionLabel(){
-    if(hover<0){ labelEl.classList.remove('egx-on'); return; }
-    var s=SITES[hover];
-    if(s._sx==null){ labelEl.classList.remove('egx-on'); return; }
-    labelEl.innerHTML='<b>'+s.name+'</b><span class="egx-sub">'+s.sub+'</span>';
-    labelEl.style.left=s._sx+'px';
-    labelEl.style.top=s._sy+'px';
-    labelEl.classList.add('egx-on');
-  }
-
-  function getXY(e){
-    var r=stage.getBoundingClientRect();
-    var t=e.touches&&e.touches[0]?e.touches[0]:e;
-    return {x:t.clientX-r.left, y:t.clientY-r.top};
-  }
-  function down(e){
-    dragging=true; moved=false; stage.classList.add('egx-dragging');
-    var p=getXY(e); lastX=p.x; lastY=p.y; lastT=performance.now();
-    velY=0; velT=0;
-    if(tipEl) tipEl.classList.add('egx-hide');
-    if(e.cancelable) e.preventDefault();
-  }
-  function move(e){
-    var p=getXY(e);
-    if(dragging){
-      var dx=p.x-lastX, dy=p.y-lastY;
-      if(Math.abs(dx)+Math.abs(dy)>2) moved=true;
-      var now=performance.now(), dt=Math.max(16,now-lastT);
-      var kY=0.0085*(360/Math.max(220,W));
-      var kT=0.0085*(360/Math.max(220,H));
-      rotY += dx*kY;
-      var nt=TILT - dy*kT;
-      if(nt>0.62) nt=0.62; if(nt<-0.62) nt=-0.62;
-      if(nt!==TILT){ TILT=nt; buildLUT(); }
-      velY=(dx*kY)/(dt/16);
-      velT=(-(dy*kT))/(dt/16);
-      lastX=p.x; lastY=p.y; lastT=now;
-      if(!running){ drawFrame(); }
-      if(e.cancelable) e.preventDefault();
-    } else {
-      var h=pointAt(p.x,p.y);
-      if(h!==hover){ hover=h; stage.style.cursor=h>=0?'pointer':'grab'; if(!running) drawFrame(); }
-    }
-  }
-  function up(e){
-    if(!dragging) return;
-    dragging=false; stage.classList.remove('egx-dragging');
-    velY=Math.max(-0.05,Math.min(0.05,velY));
-    velT=Math.max(-0.03,Math.min(0.03,velT));
-    if(velT!==0) pendingTiltLUT=true;
-    if(!reduce && visible && !running) start();
-    if(reduce){ drawFrame(); }
-  }
-
-  stage.addEventListener('mousedown',down);
-  window.addEventListener('mousemove',move);
-  window.addEventListener('mouseup',up);
-  stage.addEventListener('mousemove',function(e){ if(!dragging) move(e); });
-  stage.addEventListener('mouseleave',function(){ if(!dragging && hover>=0){hover=-1;positionLabel();if(!running)drawFrame();} });
-  stage.addEventListener('touchstart',down,{passive:false});
-  stage.addEventListener('touchmove',move,{passive:false});
-  stage.addEventListener('touchend',up);
-  stage.addEventListener('touchcancel',up);
-
-  /* ---- resize ---- */
-  var rt=0;
-  function onResize(){ clearTimeout(rt); rt=setTimeout(function(){ resize(); drawFrame(); },120); }
-  window.addEventListener('resize',onResize);
-
-  /* ---- accent live re-read (site picker recolors the globe) ---- */
-  try{
-    var mo=new MutationObserver(function(){
-      var a=accent(); if(a!==ACC){ ACC=a; ACC_RGB=hexRGB(a); if(!running) drawFrame(); }
-    });
-    mo.observe(document.documentElement,{attributes:true,attributeFilter:['style','data-theme','class']});
-  }catch(e){}
-
-  /* ---- visibility: pause/resume only ---- */
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(ents){
-      ents.forEach(function(en){
-        visible=en.isIntersecting;
-        if(visible){ if(!reduce && ready) start(); }
-        else stop();
-      });
-    },{threshold:0.05});
-    io.observe(stage);
-  }
-
-  /* ---- first build immediately (do not gate on IO) ---- */
-  resize();
-  drawFrame();
+  var raf=0;
+  // drag to spin
+  function rel(e){var r=cv.getBoundingClientRect();var t=e.touches?e.touches[0]:e;return [t.clientX-r.left,t.clientY-r.top];}
+  cv.addEventListener('pointerdown',function(e){draggingNow=true;moved=false;var p=rel(e);lastX=p[0];lastY=p[1];try{cv.setPointerCapture(e.pointerId);}catch(_){}});
+  cv.addEventListener('pointermove',function(e){var p=rel(e); if(draggingNow){var dx=p[0]-lastX,dy=p[1]-lastY; if(Math.abs(dx)+Math.abs(dy)>2)moved=true; spin+=dx*0.005; tilt=Math.max(-1.2,Math.min(1.2,tilt+dy*0.005)); vel=dx*0.0015; lastX=p[0];lastY=p[1];}  });
+  function up(e){draggingNow=false;} cv.addEventListener('pointerup',function(e){  up(e); }); cv.addEventListener('pointercancel',up); cv.addEventListener('pointerleave',function(){draggingNow=false;});
+  cv.style.cursor='grab';
+  
+  resize(); if(window.ResizeObserver){try{new ResizeObserver(resize).observe(root);}catch(e){}} window.addEventListener('resize',resize);
+  raf=requestAnimationFrame(frame);
 })();
 </script>
 </body></html>

@@ -43,18 +43,18 @@
       "collection": "earth-climate",
       "source": "NASA",
       "credit": "Data \u00b7 NASA Blue Marble (MODIS)",
-      "blurb": "A photoreal hero globe of the real NASA Blue Marble, slowly auto-rotating with atmospheric rim glow and day-side terminator shading, marked with NASA science and mission sites.",
-      "interaction": "Auto-rotates west-to-east on the real Blue Marble; drag (mouse or touch) to spin and tilt the globe with eased momentum, hover a glowing marker to reveal its site label, and the readout tracks the lat/lon at the globe's center.",
+      "blurb": "A photoreal hero globe of NASA's Blue Marble, rendered on the GPU so it spins smoothly, with SSAI / NASA ground-network sites pinned to their true coordinates.",
+      "interaction": "The globe auto-rotates west-to-east; drag to spin and tilt it. Ground-station markers track their real positions and the front-most one shows its label.",
       "real": true
     },
     {
       "slug": "earth-layers",
-      "title": "Earth data layers",
+      "title": "Earth Data Layers",
       "collection": "earth-climate",
       "source": "NASA",
       "credit": "Data \u00b7 NASA Blue Marble / Black Marble (MODIS \u00b7 VIIRS)",
-      "blurb": "Flagship hero: a bright, cinematic auto-rotating real Blue Marble globe that swaps between NASA satellite data layers (true color, night lights, vegetation, sea-surface temperature, aerosol) to demonstrate SSAI's 48 years of Earth-science data fluency.",
-      "interaction": "Drag the globe to spin it (with momentum); release to resume the slow auto-rotation. Tap a translucent chip along the bottom to switch the active NASA data layer; the corner HUD updates with the layer name, a one-line description, and the data-source credit.",
+      "blurb": "One smooth GPU globe, five ways to see Earth: switch between true colour, night lights, vegetation, sea-surface temperature and aerosols \\u2014 each a real NASA global dataset.",
+      "interaction": "Drag to spin and tilt the globe; pick a data layer to swap the whole planet between NASA Blue/Black Marble, NDVI vegetation, sea-surface temperature and aerosol optical depth.",
       "real": true
     },
     {
@@ -63,8 +63,8 @@
       "collection": "earth-climate",
       "source": "NASA",
       "credit": "Data \u00b7 NASA Blue Marble / Black Marble",
-      "blurb": "Shows Earth's real day/night terminator with NASA Blue Marble daylight and Black Marble city lights, swept by time-of-day and tilted by season.",
-      "interaction": "Drag the time-of-day slider to rotate the terminator and move the subsolar point; drag the season slider to tilt it toward polar day/night; press play to auto-advance time.",
+      "blurb": "Watch the day/night terminator sweep across a smooth GPU globe \\u2014 the daylit Blue Marble fading into the city-lit Black Marble exactly where the Sun sets.",
+      "interaction": "The Sun moves automatically (or scrub the time slider) so the terminator glides across Earth; drag to spin the globe and see which cities are in daylight versus night.",
       "real": true
     },
     {
