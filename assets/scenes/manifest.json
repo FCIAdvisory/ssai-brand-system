@@ -1,0 +1,102 @@
+{
+  "scenes": {
+    "agriculture": {
+      "name": "San Joaquin Valley cropland",
+      "region": "California, USA",
+      "sensor": "MODIS / Terra",
+      "date": "2023-07-28",
+      "bbox_WSEN": [
+        -120.1,
+        35.85,
+        -119.15,
+        36.78
+      ],
+      "size": [
+        1024,
+        1000
+      ]
+    },
+    "delta": {
+      "name": "Nile Delta",
+      "region": "Egypt",
+      "sensor": "MODIS / Terra",
+      "date": "2023-09-28",
+      "bbox_WSEN": [
+        30.0,
+        30.0,
+        32.3,
+        31.7
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    "urban": {
+      "name": "Phoenix metro",
+      "region": "Arizona, USA",
+      "sensor": "MODIS / Terra",
+      "date": "2023-05-10",
+      "bbox_WSEN": [
+        -112.5,
+        33.12,
+        -111.6,
+        33.82
+      ],
+      "size": [
+        1024,
+        820
+      ]
+    },
+    "wildfire": {
+      "name": "Dixie Fire burn scar",
+      "region": "Sierra Nevada, USA",
+      "sensor": "MODIS / Aqua",
+      "date": "2021-10-08",
+      "bbox_WSEN": [
+        -121.8,
+        39.5,
+        -120.7,
+        40.5
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    }
+  },
+  "bands": {
+    "rgb": {
+      "R": "Red 645nm (B1)",
+      "G": "Green 555nm (B4)",
+      "B": "Blue 469nm (B3)"
+    },
+    "ir": {
+      "R": "SWIR2 2130nm (B7)",
+      "G": "NIR 858nm (B2)",
+      "B": "Red 645nm (B1)"
+    },
+    "note": "NDVI = (ir.G - ir.B)/(ir.G + ir.B). Bands: Blue=rgb.B Green=rgb.G Red=rgb.R NIR=ir.G SWIR=ir.R"
+  },
+  "seasons": {
+    "region": "Western Kansas, USA (center-pivot irrigation)",
+    "bbox_WSEN": [
+      -101.05,
+      37.5,
+      -100.05,
+      38.28
+    ],
+    "dates": {
+      "winter": "2023-01-12",
+      "spring": "2023-05-26",
+      "summer": "2023-07-20",
+      "autumn": "2023-11-01"
+    },
+    "order": [
+      "winter",
+      "spring",
+      "summer",
+      "autumn"
+    ]
+  }
+}
