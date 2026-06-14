@@ -48,20 +48,26 @@ body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
 #kit-storm-tracker .st-frame{background:linear-gradient(180deg,#070518 0%,#050314 70%);border:1px solid var(--st-hair);border-radius:14px;padding:16px;overflow:hidden;position:relative;}
 #kit-storm-tracker .st-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
 #kit-storm-tracker .st-id{display:flex;flex-direction:column;gap:3px;min-width:0;}
-#kit-storm-tracker .st-id-tag{font-size:10px;letter-spacing:.22em;color:var(--st-muted);text-transform:uppercase;}
+#kit-storm-tracker .st-id-tag{font-size:10px;letter-spacing:.22em;color:var(--st-muted);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #kit-storm-tracker .st-name{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(16px,3.2vw,22px);color:var(--st-text);line-height:1;}
 #kit-storm-tracker .st-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:74px;padding:6px 10px;border-radius:10px;border:1px solid var(--cat-col,var(--st-accent));background:rgba(8,6,28,0.65);box-shadow:0 0 18px -6px var(--cat-col,var(--st-accent)) inset;}
 #kit-storm-tracker .st-badge-lbl{font-size:9px;letter-spacing:.28em;color:var(--st-muted);text-transform:uppercase;}
 #kit-storm-tracker .st-cat-num{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:30px;line-height:1;color:var(--cat-col,var(--st-accent));}
 #kit-storm-tracker .st-stage{position:relative;width:100%;aspect-ratio:16/10;min-height:240px;border-radius:10px;overflow:hidden;border:1px solid var(--st-hair);background:#040210;}
 #kit-storm-tracker .st-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
-#kit-storm-tracker .st-hud{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;padding:9px 11px;background:rgba(7,5,22,0.62);backdrop-filter:blur(3px);border:1px solid var(--st-hair);border-radius:8px;min-width:158px;}
+#kit-storm-tracker .st-hud{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;padding:9px 11px;background:rgba(7,5,22,0.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border:1px solid var(--st-hair);border-radius:8px;min-width:158px;}
 #kit-storm-tracker .st-hud-row{display:flex;align-items:baseline;justify-content:space-between;gap:14px;}
+#kit-storm-tracker .st-src-row{align-items:center;margin-bottom:1px;padding-bottom:5px;border-bottom:1px solid var(--st-hair);}
 #kit-storm-tracker .st-hud-k{font-size:9px;letter-spacing:.2em;color:var(--st-muted);text-transform:uppercase;}
 #kit-storm-tracker .st-hud-v,#kit-storm-tracker .st-coord,#kit-storm-tracker .st-cat-word{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.03em;color:var(--st-text);}
 #kit-storm-tracker .st-hud-v b{font-size:15px;color:var(--st-accent);font-style:italic;}
 #kit-storm-tracker .st-cat-word{color:var(--st-accent);font-size:12px;}
-#kit-storm-tracker .st-legend{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:9px;padding:6px 10px;background:rgba(7,5,22,0.62);backdrop-filter:blur(3px);border:1px solid var(--st-hair);border-radius:8px;}
+#kit-storm-tracker .st-src{display:inline-flex;align-items:center;gap:6px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.1em;color:var(--st-muted);}
+#kit-storm-tracker .st-src-dot{width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:none;flex:0 0 auto;}
+#kit-storm-tracker .st-src[data-live="1"]{color:#7be3a4;}
+#kit-storm-tracker .st-src[data-live="1"] .st-src-dot{background:#7be3a4;box-shadow:0 0 8px 0 #7be3a4;animation:st-pulse 1.8s ease-in-out infinite;}
+@keyframes st-pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+#kit-storm-tracker .st-legend{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:9px;padding:6px 10px;background:rgba(7,5,22,0.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border:1px solid var(--st-hair);border-radius:8px;}
 #kit-storm-tracker .st-leg-title{font-size:9px;letter-spacing:.18em;color:var(--st-muted);text-transform:uppercase;margin-right:2px;}
 #kit-storm-tracker .st-leg{display:flex;align-items:center;gap:4px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:11px;color:var(--st-text);}
 #kit-storm-tracker .st-sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
@@ -81,7 +87,7 @@ body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
 #kit-storm-tracker .st-axis{display:flex;justify-content:space-between;margin-top:6px;font-size:9px;letter-spacing:.16em;color:var(--st-muted);text-transform:uppercase;}
 #kit-storm-tracker .st-cap{margin:12px 0 2px;font-size:10px;line-height:1.5;color:var(--st-muted);letter-spacing:.01em;}
 @media (max-width:540px){#kit-storm-tracker .st-hud{min-width:0;padding:7px 9px;}#kit-storm-tracker .st-legend{gap:6px;padding:5px 8px;}#kit-storm-tracker .st-leg-title{display:none;}#kit-storm-tracker .st-controls{gap:10px;}#kit-storm-tracker .st-play{min-width:auto;padding:9px 12px;}}
-@media (prefers-reduced-motion:reduce){#kit-storm-tracker .st-play{transition:none;}}
+@media (prefers-reduced-motion:reduce){#kit-storm-tracker .st-play{transition:none;}#kit-storm-tracker .st-src[data-live="1"] .st-src-dot{animation:none;}}
 
 body.mb-embed #kit-storm-tracker{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-storm-tracker [class*='frame'],body.mb-embed #kit-storm-tracker [class*='shell'],body.mb-embed #kit-storm-tracker [class*='-inner'],body.mb-embed #kit-storm-tracker [class*='wrapper']{display:contents!important;}
@@ -105,11 +111,11 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-storm-tracker">
-  <div class="st-frame">
+<div class="st-frame">
     <div class="st-topbar">
       <div class="st-id">
-        <span class="st-id-tag">NHC&nbsp;/&nbsp;SSAI&nbsp;HURRICANE&nbsp;OBSERVATION</span>
-        <span class="st-name">HURRICANE&nbsp;ATLAS</span>
+        <span class="st-id-tag">NHC / SSAI HURRICANE OBSERVATION</span>
+        <span class="st-name">HURRICANE ATLAS</span>
       </div>
       <div class="st-badge" data-cat="0">
         <span class="st-badge-lbl">CAT</span>
@@ -120,6 +126,10 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
     <div class="st-stage">
       <canvas class="st-canvas"></canvas>
       <div class="st-hud">
+        <div class="st-hud-row st-src-row">
+          <span class="st-hud-k">SOURCE</span>
+          <span class="st-src" data-live="0"><i class="st-src-dot" aria-hidden="true"></i><span class="st-src-txt">MODELED</span></span>
+        </div>
         <div class="st-hud-row"><span class="st-hud-k">STATUS</span><span class="st-cat-word">TROPICAL STORM</span></div>
         <div class="st-hud-row"><span class="st-hud-k">MAX WIND</span><span class="st-hud-v"><b class="st-wind-val">40</b> MPH</span></div>
         <div class="st-hud-row"><span class="st-hud-k">MIN PRESS</span><span class="st-hud-v"><b class="st-press-val">1000</b> MB</span></div>
@@ -146,7 +156,7 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
       </div>
     </div>
 
-    <p class="st-cap">Basemap: NASA Earth Observatory — Saharan dust over the Atlantic (MODIS). Track and Saffir-Simpson intensity are a modeled demonstration. SSAI hurricane science.</p>
+    <p class="st-cap">Acquiring live tropical-cyclone data from NOAA NHC over NASA MODIS imagery…</p>
   </div>
 </div></div>
   <footer class="mb-credit">
@@ -204,26 +214,44 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
   "use strict";
   var root = document.getElementById('kit-storm-tracker');
   if(!root) return;
+
   var ACCENT = (function(){
     try{ var v = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); return v || '#3cc8ff'; }
     catch(e){ return '#3cc8ff'; }
   })();
 
-  var stage = root.querySelector('.st-stage');
-  var cv = root.querySelector('.st-canvas');
-  var ctx = cv.getContext('2d');
-  var elCat = root.querySelector('.st-cat-num');
+  var stage   = root.querySelector('.st-stage');
+  var cv      = root.querySelector('.st-canvas');
+  var ctx     = cv.getContext('2d');
+  var elCat   = root.querySelector('.st-cat-num');
   var elCatWord = root.querySelector('.st-cat-word');
-  var elWind = root.querySelector('.st-wind-val');
+  var elWind  = root.querySelector('.st-wind-val');
   var elCoord = root.querySelector('.st-coord');
   var elPress = root.querySelector('.st-press-val');
   var playBtn = root.querySelector('.st-play');
-  var scrub = root.querySelector('.st-scrub');
-  var badge = root.querySelector('.st-badge');
+  var scrub   = root.querySelector('.st-scrub');
+  var badge   = root.querySelector('.st-badge');
+  var elIdTag = root.querySelector('.st-id-tag');
+  var elCap   = root.querySelector('.st-cap');
+  var elSrc   = root.querySelector('.st-src');
+  var elSrcTxt= root.querySelector('.st-src-txt');
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var TRACK = [
+  /* ---------- Saffir-Simpson + category logic (preserved) ---------- */
+  function catFor(w){
+    if(w>=157) return 5;
+    if(w>=130) return 4;
+    if(w>=111) return 3;
+    if(w>=96)  return 2;
+    if(w>=74)  return 1;
+    return 0;
+  }
+  var CAT_WORDS = ['TROPICAL STORM','CATEGORY 1','CATEGORY 2','CATEGORY 3','CATEGORY 4','CATEGORY 5'];
+  function pressFor(w){ return Math.round(1010 - (w-30)*1.05); }
+
+  /* ---------- modeled fallback track (preserved) ---------- */
+  var MODEL_TRACK = [
     {x:0.86, y:0.30, lon:-42, lat:14, warm:1.00},
     {x:0.80, y:0.33, lon:-48, lat:15, warm:1.00},
     {x:0.74, y:0.36, lon:-54, lat:16, warm:1.00},
@@ -241,24 +269,31 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
     {x:0.57, y:0.21, lon:-72, lat:41, warm:0.45}
   ];
 
-  function catFor(w){
-    if(w>=157) return 5;
-    if(w>=130) return 4;
-    if(w>=111) return 3;
-    if(w>=96)  return 2;
-    if(w>=74)  return 1;
-    return 0;
-  }
-  var CAT_WORDS = ['TROPICAL STORM','CATEGORY 1','CATEGORY 2','CATEGORY 3','CATEGORY 4','CATEGORY 5'];
+  /* ---------- BBOX of basemap (S,W,N,E). Default Atlantic. ---------- */
+  var BBOX = {s:5, w:-95, n:45, e:-5};
+  var DEFAULT_BBOX = {s:5, w:-95, n:45, e:-5};
 
+  /* map lon/lat -> normalized 0..1 across the current BBOX (basemap is drawn cover-fit, see drawBase) */
+  function lon2nx(lon){ return (lon - BBOX.w) / (BBOX.e - BBOX.w); }
+  function lat2ny(lat){ return (BBOX.n - lat) / (BBOX.n - BBOX.s); }
+
+  /* ---------- Catmull-Rom spline (preserved) ---------- */
   var SAMPLES = 600;
-  var path = [];
   function catmull(p0,p1,p2,p3,t,k){
     var t2=t*t,t3=t2*t;
     return 0.5*((2*p1[k]) + (-p0[k]+p2[k])*t + (2*p0[k]-5*p1[k]+4*p2[k]-p3[k])*t2 + (-p0[k]+3*p1[k]-3*p2[k]+p3[k])*t3);
   }
-  (function buildPath(){
-    var n = TRACK.length, raw = [];
+
+  /* path holds resampled, per-point {x,y(normalized 0..1 in BBOX or model),lon,lat,wind,cat}.
+     For the modeled storm we keep the warm-water intensity model; for live storms we
+     interpolate the reported wind/pressure along the forecast points. */
+  var path = [];
+  var isLive = false;
+  var liveName = '';
+  var hasLivePress = false;
+
+  function buildModelPath(){
+    var TRACK = MODEL_TRACK, n = TRACK.length, raw = [];
     for(var s=0;s<SAMPLES;s++){
       var u = s/(SAMPLES-1)*(n-1);
       var i = Math.min(n-2, Math.floor(u));
@@ -280,19 +315,71 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
       wind += (target - wind)*rate;
       wind = Math.max(28, Math.min(175, wind));
       raw[j].wind = wind;
+      raw[j].press = pressFor(wind);
       raw[j].cat = catFor(wind);
     }
-    path = raw;
-  })();
+    return raw;
+  }
 
+  /* Build a spline path from real waypoints {lon,lat,wind(mph),press(mb)} using the SAME
+     Catmull-Rom + BBOX projection so the live track lands on real geography. */
+  function buildLivePath(wp){
+    if(wp.length===1){ wp = [wp[0], {lon:wp[0].lon, lat:wp[0].lat, wind:wp[0].wind, press:wp[0].press}]; }
+    var n = wp.length, raw = [];
+    var smp = Math.max(120, Math.min(SAMPLES, n*60));
+    for(var s=0;s<smp;s++){
+      var u = s/(smp-1)*(n-1);
+      var i = Math.min(n-2, Math.floor(u));
+      var t = u - i;
+      var p0=wp[Math.max(0,i-1)], p1=wp[i], p2=wp[i+1], p3=wp[Math.min(n-1,i+2)];
+      var lon = catmull(p0,p1,p2,p3,t,'lon');
+      var lat = catmull(p0,p1,p2,p3,t,'lat');
+      var wind = Math.max(20, catmull(p0,p1,p2,p3,t,'wind'));
+      var press = catmull(p0,p1,p2,p3,t,'press');
+      raw.push({
+        x: lon2nx(lon), y: lat2ny(lat),
+        lon: lon, lat: lat,
+        wind: wind, press: Math.round(press), cat: catFor(wind)
+      });
+    }
+    return raw;
+  }
+
+  /* ---------- basemap image (live NASA WVS + static fallback) ---------- */
   var img = new Image();
-  var imgReady = false;
+  var imgReady = false, triedFallback = false;
   function onImg(){ imgReady = true; render(); }
   img.onload = onImg;
-  img.onerror = function(){ imgReady = false; render(); };
-  img.src = '../assets/images/saharan-dust-atlantic.jpg';
-  if(img.complete && img.naturalWidth) onImg();
+  img.onerror = function(){
+    if(!triedFallback){
+      triedFallback = true;
+      imgReady = false;
+      try{ img.crossOrigin = 'anonymous'; }catch(e){}
+      img.src = '../assets/images/saharan-dust-atlantic.jpg';
+    }else{
+      imgReady = false; render();
+    }
+  };
 
+  function pad(n){ return n<10?('0'+n):(''+n); }
+  function wvsDate(){
+    var d = new Date(Date.now() - 2*86400000); // today-2
+    return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate());
+  }
+  function wvsURL(b){
+    return 'https://wvs.earthdata.nasa.gov/api/v1/snapshot?REQUEST=GetSnapshot'
+      + '&LAYERS=MODIS_Terra_CorrectedReflectance_TrueColor&CRS=EPSG:4326'
+      + '&BBOX=' + b.s + ',' + b.w + ',' + b.n + ',' + b.e
+      + '&WIDTH=1600&HEIGHT=1000&FORMAT=image/jpeg&TIME=' + wvsDate();
+  }
+  function loadBasemap(){
+    imgReady = false; triedFallback = false;
+    try{ img.crossOrigin = 'anonymous'; }catch(e){}
+    img.src = wvsURL(BBOX);
+    if(img.complete && img.naturalWidth) onImg();
+  }
+
+  /* ---------- sizing ---------- */
   var W=0,H=0,DPR=1;
   function resize(){
     DPR = Math.min(2, window.devicePixelRatio||1);
@@ -329,15 +416,15 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
   function px(p){return p.x*W;}
   function py(p){return p.y*H;}
 
+  /* ---------- drawing (basemap cover-fit so normalized coords line up) ---------- */
   function drawBase(){
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle = '#050314';
     ctx.fillRect(0,0,W,H);
     if(imgReady){
-      var iw=img.naturalWidth, ih=img.naturalHeight;
-      var scale = Math.max(W/iw, H/ih);
-      var dw=iw*scale, dh=ih*scale;
-      ctx.drawImage(img, (W-dw)/2,(H-dh)/2,dw,dh);
+      // WVS / fallback drawn to fill stage; our lon2nx/lat2ny map the active BBOX onto 0..1,
+      // so for live imagery the geography aligns with the BBOX edges (full-bleed).
+      ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, W, H);
     }
     ctx.fillStyle = 'rgba(22,20,95,0.30)';
     ctx.fillRect(0,0,W,H);
@@ -415,8 +502,9 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
     ctx.stroke();
     ctx.setLineDash([]);
 
-    for(var w=0; w<TRACK.length; w++){
-      var pi = idxAt(w/(TRACK.length-1));
+    var WP = wpCount();
+    for(var w=0; w<WP; w++){
+      var pi = idxAt(w/Math.max(1,(WP-1)));
       if(pi<=curIdx){
         var pp=path[pi];
         ctx.beginPath();
@@ -514,7 +602,9 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
     var ns = cur.lat>=0?'N':'S', ew = cur.lon>=0?'E':'W';
     return Math.abs(cur.lat).toFixed(1)+'°'+ns+' '+Math.abs(cur.lon).toFixed(1)+'°'+ew;
   }
-  function pressFor(w){ return Math.round(1010 - (w-30)*1.05); }
+
+  var _wpCount = MODEL_TRACK.length;
+  function wpCount(){ return _wpCount; }
 
   function updateHUD(cur){
     var c = cur.cat;
@@ -522,7 +612,7 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
     elCatWord.textContent = CAT_WORDS[c];
     elWind.textContent = Math.round(cur.wind);
     elCoord.textContent = fmtCoord(cur);
-    elPress.textContent = pressFor(cur.wind);
+    elPress.textContent = (cur.press!=null) ? cur.press : pressFor(cur.wind);
     badge.style.setProperty('--cat-col', catColor(c));
     badge.setAttribute('data-cat', String(c));
   }
@@ -540,6 +630,7 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
     }
   }
 
+  /* ---------- animation loop (rAF only drives spin/auto-advance; draws also fire on init/load/setTimeout) ---------- */
   var raf=null, visible=true;
   function tick(t){
     if(!lastT) lastT=t;
@@ -585,10 +676,176 @@ body.mb-embed #kit-storm-tracker [class*='stage'],body.mb-embed #kit-storm-track
     }, {threshold:0.01}).observe(root);
   }
 
+  /* ---------- caption / source labelling ---------- */
+  function setModeledCaption(noStorms){
+    isLive = false;
+    elSrc.setAttribute('data-live','0');
+    elSrcTxt.textContent = 'MODELED';
+    elIdTag.innerHTML = 'NHC / SSAI HURRICANE OBSERVATION';
+    elCap.textContent = noStorms
+      ? 'No active storms — modeled demonstration. Basemap: NASA MODIS Terra true-color (Atlantic). Track and Saffir-Simpson intensity are a modeled demonstration. SSAI hurricane science.'
+      : 'Basemap: NASA MODIS Terra true-color (Atlantic). Track and Saffir-Simpson intensity are a modeled demonstration. SSAI hurricane science.';
+  }
+  function setLiveCaption(name){
+    isLive = true;
+    elSrc.setAttribute('data-live','1');
+    elSrcTxt.textContent = 'LIVE · NOAA NHC';
+    elIdTag.textContent = name.toUpperCase();
+    elCap.textContent = 'LIVE · NOAA NHC — ' + name + '. Real current position and forecast track over NASA MODIS Terra true-color imagery; Saffir-Simpson intensity from reported maximum sustained winds. SSAI hurricane science.';
+  }
+
+  /* ---------- LIVE FETCH (NOAA NWS ArcGIS tropical forecast-track-points) ---------- */
+  var LIVE_URL = 'https://mapservices.weather.noaa.gov/tropical/rest/services/tropical/NHC_tropical_weather/MapServer/6/query?where=1%3D1&outFields=*&f=geojson&returnGeometry=true';
+
+  function num(v){ var n = parseFloat(v); return isFinite(n) ? n : null; }
+  function ktToMph(kt){ return kt*1.15078; }
+
+  function attrName(p){
+    return p.STORMNAME || p.stormname || p.STORM_NAME || p.NAME || p.name || p.STORMID || p.stormid || '';
+  }
+  function attrWindKt(p){
+    var v = p.MAXWIND!=null?p.MAXWIND:(p.maxwind!=null?p.maxwind:(p.INTENSITY!=null?p.INTENSITY:(p.intensity!=null?p.intensity:p.WINDSPEED)));
+    return num(v);
+  }
+  function attrPress(p){
+    var v = p.MSLP!=null?p.MSLP:(p.mslp!=null?p.mslp:(p.PRESSURE!=null?p.PRESSURE:(p.pressure!=null?p.pressure:p.MINPRESS)));
+    return num(v);
+  }
+  function attrOrder(p){
+    var v = p.FCSTPRD!=null?p.FCSTPRD:(p.fcstprd!=null?p.fcstprd:(p.TAU!=null?p.TAU:(p.tau!=null?p.tau:p.OBJECTID)));
+    return num(v);
+  }
+
+  function processLive(gj){
+    if(!gj || !gj.features || !gj.features.length) return false;
+    var groups = {};
+    gj.features.forEach(function(f){
+      if(!f.geometry || !f.geometry.coordinates) return;
+      var coords = f.geometry.coordinates;
+      if(typeof coords[0] !== 'number' || typeof coords[1] !== 'number') return;
+      var p = f.properties || {};
+      var name = (attrName(p)||'').toString().trim() || 'UNNAMED';
+      var lon = coords[0], lat = coords[1];
+      var windKt = attrWindKt(p);
+      var press = attrPress(p);
+      var ord = attrOrder(p);
+      if(!isFinite(lon)||!isFinite(lat)) return;
+      (groups[name] = groups[name] || []).push({
+        lon:lon, lat:lat,
+        wind: windKt!=null ? ktToMph(windKt) : null,
+        press: press,
+        ord: ord!=null ? ord : 0
+      });
+    });
+
+    var names = Object.keys(groups);
+    if(!names.length) return false;
+
+    // choose strongest storm by peak reported wind (ties -> most points)
+    var best=null, bestScore=-1;
+    names.forEach(function(nm){
+      var pts = groups[nm], peak=0;
+      pts.forEach(function(q){ if(q.wind!=null && q.wind>peak) peak=q.wind; });
+      var score = peak*100 + pts.length;
+      if(score>bestScore){ bestScore=score; best={name:nm, pts:pts, peak:peak}; }
+    });
+    if(!best) return false;
+
+    // order forecast points along time
+    best.pts.sort(function(a,b){ return a.ord - b.ord; });
+
+    // fill missing winds: forward/backfill from nearest known, default to a weak TS
+    var lastW = null;
+    best.pts.forEach(function(q){ if(q.wind!=null) lastW=q.wind; else q.wind = lastW!=null?lastW:40; });
+    for(var k=best.pts.length-1;k>=0;k--){ if(best.pts[k].wind==null){ best.pts[k].wind = best.pts[k+1]?best.pts[k+1].wind:40; } }
+    best.pts.forEach(function(q){ if(q.wind==null) q.wind=40; });
+    hasLivePress = best.pts.some(function(q){ return q.press!=null; });
+    best.pts.forEach(function(q){ if(q.press==null) q.press = pressFor(q.wind); });
+
+    if(best.pts.length < 1) return false;
+
+    // center BBOX on the storm's mean position (Atlantic-ish default span ~40°x40°)
+    var minLon=999,maxLon=-999,minLat=999,maxLat=-999;
+    best.pts.forEach(function(q){
+      if(q.lon<minLon)minLon=q.lon; if(q.lon>maxLon)maxLon=q.lon;
+      if(q.lat<minLat)minLat=q.lat; if(q.lat>maxLat)maxLat=q.lat;
+    });
+    var cLon=(minLon+maxLon)/2, cLat=(minLat+maxLat)/2;
+    var spanLon = Math.max(34, (maxLon-minLon)*1.8);
+    var spanLat = Math.max(22, (maxLat-minLat)*1.8);
+    // keep a ~16:10 aspect for the BBOX so geography isn't badly stretched
+    var aspect = 1.6;
+    if(spanLon/spanLat < aspect) spanLon = spanLat*aspect; else spanLat = spanLon/aspect;
+    BBOX = {
+      w: cLon - spanLon/2, e: cLon + spanLon/2,
+      s: cLat - spanLat/2, n: cLat + spanLat/2
+    };
+
+    _wpCount = best.pts.length;
+    liveName = best.name.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+    path = buildLivePath(best.pts.map(function(q){
+      return {lon:q.lon, lat:q.lat, wind:q.wind, press:q.press};
+    }));
+    return true;
+  }
+
+  function goModeled(noStorms){
+    BBOX = DEFAULT_BBOX;
+    _wpCount = MODEL_TRACK.length;
+    path = buildModelPath();
+    setModeledCaption(noStorms);
+    loadBasemap();
+    prog = 0;
+    scrub.value = '0';
+    resize();
+    render();
+  }
+
+  function goLive(){
+    setLiveCaption(liveName);
+    loadBasemap();          // BBOX now centered on the storm
+    prog = 0;
+    scrub.value = '0';
+    resize();
+    render();
+  }
+
+  function attemptLive(){
+    if(!window.fetch){ goModeled(false); return; }
+    var done = false;
+    var safety = setTimeout(function(){ if(!done){ done=true; goModeled(false); } }, 8000);
+    fetch(LIVE_URL, {cache:'no-store'})
+      .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
+      .then(function(gj){
+        if(done) return; done=true; clearTimeout(safety);
+        var ok=false;
+        try{ ok = processLive(gj); }catch(e){ ok=false; }
+        if(ok) goLive(); else goModeled(true);
+      })
+      .catch(function(){
+        if(done) return; done=true; clearTimeout(safety);
+        goModeled(false);
+      });
+  }
+
+  /* ---------- boot: start on modeled immediately, then upgrade to live if available ---------- */
+  // initial path so the very first paints (init + setTimeout cascade) have geometry
+  path = buildModelPath();
+  _wpCount = MODEL_TRACK.length;
+
+  loadBasemap();            // tries live WVS (default Atlantic BBOX), falls back to static
   resize();
   setPlay(!reduce);
+  render();
+
+  // scheduled draws so we never depend on rAF alone (headless throttles rAF)
+  [0,120,400,900,1800,3000].forEach(function(t){ setTimeout(render, t); });
+
   startLoop();
   if(reduce){ stopLoop(); render(); }
+
+  // kick the live fetch; on success it rebuilds path + recenters basemap + relabels
+  attemptLive();
 })();
 </script>
 </body></html>
