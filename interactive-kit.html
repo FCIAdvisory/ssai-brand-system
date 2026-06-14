@@ -126,10 +126,10 @@ footer.lib-foot a{color:var(--neb);}
   <div class="wrap">
     <div class="lib-eyebrow">SSAI · Interactive Library</div>
     <h1 class="lib-h1">THE <span class="grad">INSTRUMENT</span><br>LIBRARY.</h1>
-    <p class="lib-lede">Fifty-six live instruments across seven sciences — Earth, the Sun, satellites, the Solar System and the cosmos. The remote-sensing, Earth and climate tools run on <b style="color:var(--star);font-weight:500">real NASA data</b>. Pick one to open it full-screen.</p>
+    <p class="lib-lede">Fifty-six live instruments across seven sciences — Earth, the Sun, satellites, the Solar System and the cosmos. Twenty-eight run on <b style="color:var(--star);font-weight:500">real NASA, NOAA &amp; ESA data</b>, co-branded with the source. Pick one to open it full-screen.</p>
     <div class="lib-stats">
       <div class="lib-stat"><div class="n">56</div><div class="l">Instruments</div></div>
-      <div class="lib-stat"><div class="n"><b>17</b></div><div class="l">On real NASA data</div></div>
+      <div class="lib-stat"><div class="n"><b id="stat-real">28</b></div><div class="l">On real NASA data</div></div>
       <div class="lib-stat"><div class="n">7</div><div class="l">Science collections</div></div>
     </div>
   </div>
@@ -177,23 +177,8 @@ footer.lib-foot a{color:var(--neb);}
   rs();draw();window.addEventListener('resize',rs);
 })();
 
-/* posters: real NASA imagery where we have it (root-relative) */
-var POSTERS={
- 'earth-globe':'assets/images/blue-marble-world.jpg','earth-layers':'assets/images/blue-marble-world.jpg',
- 'day-night-terminator':'assets/images/black-marble-world.jpg','ground-track':'assets/images/blue-marble-world.jpg',
- 'swath-scanner':'assets/images/blue-marble-world.jpg','constellation-coverage':'assets/images/blue-marble-world.jpg',
- 'storm-tracker':'assets/images/saharan-dust-atlantic.jpg','wildfire-detect':'assets/scenes/wildfire/rgb.jpg',
- 'sea-level':'assets/scenes/delta/rgb.jpg','band-combiner':'assets/scenes/agriculture/rgb.jpg',
- 'ndvi-seasons':'assets/scenes/seasons/summer_rgb.jpg','pixel-drilldown':'assets/scenes/delta/rgb.jpg',
- 'resolution-explorer':'assets/scenes/urban/rgb.jpg','spectral-signatures':'assets/scenes/agriculture/rgb.jpg',
- 'sar-vs-optical':'assets/scenes/sar/sar.jpg',
- 'deep-field':'assets/images/webb-deep-field.jpg','nebula-viewer':'assets/images/cosmic-cliffs-carina.jpg',
- 'solar-disk':'assets/images/sun-flare-gold-sdo.jpg','space-weather':'assets/images/sun-flare-teal-sdo.jpg',
- 'cme-eruption':'assets/images/sun-flare-gold-sdo.jpg','aurora-ribbon':'assets/images/aurora-australis-limb.jpg',
- 'magnetosphere':'assets/images/aurora-iss-robotic-arm.jpg','starfield-hero':'assets/images/earth-night-limb-airglow.jpg',
- 'planet-viewer':'assets/images/mars-spirit-sunset.jpg','orbit-tracker':'assets/images/orbital-sunrise-limb.jpg',
- 'flow-field':'assets/images/sst-gulf-stream.jpg','atmos-sounding':'assets/images/saharan-dust-atlantic.jpg'
-};
+/* posters: every module has a dedicated, topically-correct real-NASA image in assets/posters/<slug>.jpg
+   (downloaded per-module from images.nasa.gov — no reuse). */
 var NASA_LOGO='assets/logo/nasa-logo.png';
 var LOGO_BY={NASA:'assets/logo/nasa-logo.png',ESA:'assets/logo/esa-logo.png',NOAA:'assets/logo/noaa-logo.png'};
 function srcLogo(src){src=src||'';if(/NOAA/.test(src))return LOGO_BY.NOAA;if(/ESA/.test(src)&&!/NASA/.test(src))return LOGO_BY.ESA;return LOGO_BY.NASA;}
@@ -206,9 +191,9 @@ function accentParam(){ var a=getComputedStyle(document.documentElement).getProp
 
 function esc(x){return (x||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function cardHTML(m){
-  var poster=POSTERS[m.slug];
-  var pcls=poster?'poster':'poster gen';
-  var pstyle=poster?(' style="background-image:url(\''+poster+'\')"'):'';
+  var poster='assets/posters/'+m.slug+'.jpg';
+  var pcls='poster';
+  var pstyle=' style="background-image:url(\''+poster+'\')"';
   var badge=m.real?('<div class="badge"><img src="'+srcLogo(m.source)+'" alt="data source"><span>Real data</span></div>'):
     ('<div class="openhint"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></div>');
   return '<div class="card '+(m.real?'real':'')+'" data-slug="'+m.slug+'" tabindex="0" role="button" aria-label="Open '+esc(m.title)+'">'
@@ -295,6 +280,7 @@ document.addEventListener('keydown',function(e){if(!document.getElementById('vie
 
 fetch('modules/manifest.json').then(function(r){return r.json();}).then(function(d){
   MANIFEST=d; FLAT=d.modules; buildPills(); render();
+  var rc=FLAT.filter(function(m){return m.real;}).length, re=document.getElementById('stat-real'); if(re) re.textContent=rc;
   var q=new URLSearchParams(location.search).get('m'); if(q && FLAT.some(function(m){return m.slug===q;})) openModule(q);
 }).catch(function(){document.getElementById('collections').innerHTML='<p style="color:var(--neb);padding:40px 0">Could not load the module manifest.</p>';});
 </script>

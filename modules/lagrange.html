@@ -33,6 +33,14 @@ body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
 body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
 body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
 @media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+/* ----- controls hide/show (immersive toggle) ----- */
+.mb-immersive-btn{position:fixed;right:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:7px;font:600 9.5px/1 'Inter',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--neb);background:rgba(8,6,26,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--hair);border-radius:999px;padding:9px 14px;cursor:pointer;transition:color .2s,border-color .2s,background .2s,opacity .35s;user-select:none;-webkit-user-select:none;}
+.mb-immersive-btn:hover{color:var(--star);border-color:rgba(var(--accent-rgb),.55);background:rgba(12,10,34,.85);}
+.mb-immersive-btn svg{width:13px;height:13px;display:block;flex:0 0 auto;}
+body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-immersive [class*='chip'],body.mb-immersive [class*='slider'],body.mb-immersive [class*='knob'],body.mb-immersive [class*='toolbar'],body.mb-immersive [class*='picker'],body.mb-immersive [class*='legend'],body.mb-immersive [class*='readout'],body.mb-immersive [class*='tabs'],body.mb-immersive [class*='switch'],body.mb-immersive [class*='-rail'],body.mb-immersive [class*='-side'],body.mb-immersive [class*='-deck'],body.mb-immersive [class*='-menu'],body.mb-immersive [class*='-opts'],body.mb-immersive [class*='-prov'],body.mb-immersive [class*='-ui'],body.mb-immersive [class*='-ctrl'],body.mb-immersive [data-controls],body.mb-immersive .mb-controls{opacity:0!important;pointer-events:none!important;transition:opacity .4s ease!important;}
+body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
+body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
+body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
 #kit-lagrange{ position:relative; width:100%; color:#f4f5ff; font-family:'Inter',system-ui,sans-serif; }
 #kit-lagrange .kfig-stage{ position:relative; width:100%; min-height:320px; border:1px solid rgba(166,171,230,0.16); border-radius:14px; background:radial-gradient(120% 90% at 50% 40%, #0a0726 0%, #050314 70%); overflow:hidden; }
 #kit-lagrange .kfig-canvas{ display:block; width:100%; touch-action:pan-y; }
@@ -97,6 +105,10 @@ body.mb-embed #kit-lagrange [class*='stage'],body.mb-embed #kit-lagrange [class*
     <span class="mb-c-int">Hover any L-point, planet, or spacecraft for a one-line label; toggle &quot;Pause orbit&quot; to freeze Earth and &quot;Lock frame&quot; to switch into the co-rotating reference frame where Earth and all five points stand still.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
+  <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+    <span class="mb-it-label">Hide controls</span>
+  </button>
 </div>
 <script>
 (function(){
@@ -107,6 +119,15 @@ body.mb-embed #kit-lagrange [class*='stage'],body.mb-embed #kit-lagrange [class*
       var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
     var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
     if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+  /* controls hide/show (immersive) toggle */
+  try{
+    var ib=document.querySelector('.mb-immersive-btn');
+    if(ib){ var lab=ib.querySelector('.mb-it-label');
+      var setImm=function(on){ document.body.classList.toggle('mb-immersive',on); ib.setAttribute('aria-pressed',on?'true':'false'); if(lab) lab.textContent=on?'Show controls':'Hide controls'; [60,460].forEach(function(t){setTimeout(function(){try{window.dispatchEvent(new Event('resize'));}catch(e){}},t);}); };
+      ib.addEventListener('click',function(){ setImm(!document.body.classList.contains('mb-immersive')); });
+      window.addEventListener('keydown',function(e){ var tn=(e.target&&e.target.tagName||''); if((e.key==='h'||e.key==='H')&&!/INPUT|TEXTAREA|SELECT/.test(tn)){ setImm(!document.body.classList.contains('mb-immersive')); } });
+    }
   }catch(e){}
   /* nudge a resize after layout settles so canvas modules that measured too early redraw at the right size */
   window.addEventListener('load',function(){ [120,420,1000].forEach(function(t){ setTimeout(function(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} },t); }); });
