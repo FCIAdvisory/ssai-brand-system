@@ -558,16 +558,6 @@
       "real": false
     },
     {
-      "slug": "lenses-switch",
-      "title": "The SSAI Lens \u2014 Sun \u00b7 Earth \u00b7 Universe",
-      "collection": "mission-tools",
-      "source": "",
-      "credit": "",
-      "blurb": "A brand-identity centrepiece for SSAI's Instrument Library that frames the company's three scientific domains \u2014 Heliophysics, Earth Science, and Astrophysics \u2014 as three real NASA images you switch between with elegant cinematic cross-fades. Each lens presents the genuine imagery full-bleed with slow, restrained motion, the domain name, and a single line describing the science SSAI advances there.",
-      "interaction": "Three quiet segmented tabs (Sun / Earth / Universe) cross-fade between full-bleed real NASA images. The active lens drifts and slowly zooms (a gentle Ken Burns parallax); the domain title and descriptor line settle into place on each switch. A small corner chip names the active science domain. Tabs respond to click, keyboard (arrow keys / Enter), and there is no clutter \u2014 the imagery leads.",
-      "real": false
-    },
-    {
       "slug": "missions-filter",
       "title": "Mission Constellation",
       "collection": "mission-tools",
@@ -586,26 +576,6 @@
       "blurb": "A cinematic horizontal timeline tracing nearly five decades of real NASA Earth- and space-science missions SSAI has supported \u2014 from the Voyager launches of 1977 through PACE in 2024 \u2014 as a luminous era track of glowing milestone nodes. Visitors drag a scrubber along the track; nearby missions swell with a fisheye proximity effect while the focused one resolves into a large editorial readout with its year, name, and a one-line description. It reframes a sparse list of dates into a living arc of institutional legacy.",
       "interaction": "Drag the glowing scrubber handle (or click/tap anywhere on the track) to glide focus along the timeline; the nearest mission node scales up via a fisheye falloff and its details animate into the large readout. Left/right arrow keys step between missions. At rest the focus drifts slowly and autonomously across the eras so the piece is always alive, and a faint starfield with parallax drift keeps the frame full. Use the era toggle to switch the era band labels on or off.",
       "real": true
-    },
-    {
-      "slug": "signal-pipeline",
-      "title": "Signal Pipeline",
-      "collection": "mission-tools",
-      "source": "",
-      "credit": "",
-      "blurb": "Visualizes SSAI's end-to-end value chain \u2014 Observe, Data, Model, Knowledge \u2014 as one continuous luminous stream that transforms raw photons into a single crisp insight. Used to communicate \"From observation to understanding\" with cinematic clarity.",
-      "interaction": "Alive on load: particles flow left to right and visibly change state at each of four glowing stations (scattered photons collapse into structured data points, fit to a model curve, then converge to one insight). Hovering or tapping a station gently focuses it and lifts its live metric. A single Flow Rate control overlays the speed of the stream; readout chips report throughput and signal yield. Everything self-heals to the canvas size.",
-      "real": false
-    },
-    {
-      "slug": "counter-cluster",
-      "title": "Animated stat counters",
-      "collection": "mission-tools",
-      "source": "",
-      "credit": "",
-      "blurb": "A row of four headline metrics that count up smoothly the first time the panel scrolls into view, anchoring SSAI's track record on a landing page or about section.",
-      "interaction": "Scroll the panel into view to trigger a one-time eased count-up (via IntersectionObserver); a faint sweep line crosses each stat as it settles. Reduced-motion shows final values instantly.",
-      "real": false
     }
   ]
 }

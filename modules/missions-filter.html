@@ -67,6 +67,25 @@ body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
 #kit-missions-filter .missions-filter-pill{padding:6px 13px;font-size:11.5px}
 }
 
+/* === signal-pipeline (real data) === */
+#kit-signal-pipeline{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eaf0ff;border-radius:inherit}
+#kit-signal-pipeline canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-signal-pipeline .signal-pipeline-caption{position:absolute;left:50%;bottom:5.5%;transform:translateX(-50%);z-index:4;font-size:clamp(13px,1.5vw,20px);font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,240,255,.82);text-shadow:0 2px 24px rgba(5,3,20,.9);white-space:nowrap;pointer-events:none}
+#kit-signal-pipeline .signal-pipeline-caption::before,#kit-signal-pipeline .signal-pipeline-caption::after{content:"";position:absolute;top:50%;width:clamp(22px,5vw,72px);height:1px;background:linear-gradient(90deg,transparent,var(--accent,#5ec8ff));opacity:.55}
+#kit-signal-pipeline .signal-pipeline-caption::before{right:calc(100% + 18px);transform:scaleX(-1)}
+#kit-signal-pipeline .signal-pipeline-caption::after{left:calc(100% + 18px)}
+#kit-signal-pipeline .signal-pipeline-chip{position:absolute;z-index:5;display:flex;flex-direction:column;gap:3px;padding:9px 14px;border-radius:12px;background:linear-gradient(160deg,rgba(18,16,42,.66),rgba(8,6,26,.42));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(120,150,220,.16);box-shadow:0 8px 30px rgba(0,0,0,.36);pointer-events:none}
+#kit-signal-pipeline .signal-pipeline-chip-tl{top:18px;left:18px}
+#kit-signal-pipeline .signal-pipeline-chip-tr{top:18px;right:18px;align-items:flex-end}
+#kit-signal-pipeline .signal-pipeline-chip-k{font-size:9.5px;font-weight:600;letter-spacing:.22em;color:rgba(170,190,235,.62)}
+#kit-signal-pipeline .signal-pipeline-chip-v{font-size:16px;font-weight:600;letter-spacing:.02em;color:#f3f7ff;font-variant-numeric:tabular-nums;text-shadow:0 0 16px rgba(94,200,255,.35)}
+#kit-signal-pipeline .signal-pipeline-controls{position:absolute;z-index:6;left:50%;top:18px;transform:translateX(-50%);display:flex;align-items:center;gap:13px;padding:9px 18px 9px 16px;border-radius:999px;background:linear-gradient(160deg,rgba(18,16,42,.62),rgba(8,6,26,.4));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(120,150,220,.18);box-shadow:0 10px 34px rgba(0,0,0,.4)}
+#kit-signal-pipeline .signal-pipeline-ctl-label{font-size:9.5px;font-weight:600;letter-spacing:.22em;color:rgba(170,190,235,.7);white-space:nowrap}
+#kit-signal-pipeline .signal-pipeline-slider{-webkit-appearance:none;appearance:none;width:clamp(90px,14vw,180px);height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent,#5ec8ff),rgba(120,150,220,.22));outline:none;cursor:pointer}
+#kit-signal-pipeline .signal-pipeline-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:15px;height:15px;border-radius:50%;background:#f3f7ff;border:2px solid var(--accent,#5ec8ff);box-shadow:0 0 14px rgba(94,200,255,.7);cursor:pointer}
+#kit-signal-pipeline .signal-pipeline-slider::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:#f3f7ff;border:2px solid var(--accent,#5ec8ff);box-shadow:0 0 14px rgba(94,200,255,.7);cursor:pointer}
+@media (max-width:560px){#kit-signal-pipeline .signal-pipeline-chip-v{font-size:13px}#kit-signal-pipeline .signal-pipeline-controls{top:14px;padding:7px 14px}}
+
 body.mb-embed #kit-missions-filter{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-missions-filter [class*='frame'],body.mb-embed #kit-missions-filter [class*='shell'],body.mb-embed #kit-missions-filter [class*='-inner'],body.mb-embed #kit-missions-filter [class*='wrapper']{display:contents!important;}
 body.mb-embed #kit-missions-filter [class*='stage'],body.mb-embed #kit-missions-filter [class*='scene'],body.mb-embed #kit-missions-filter [class*='map'],body.mb-embed #kit-missions-filter [class*='plot'],body.mb-embed #kit-missions-filter [class*='canvas'],body.mb-embed #kit-missions-filter [class*='globe'],body.mb-embed #kit-missions-filter canvas,body.mb-embed #kit-missions-filter svg{aspect-ratio:auto!important;max-height:none!important;max-width:none!important;min-height:0!important;}

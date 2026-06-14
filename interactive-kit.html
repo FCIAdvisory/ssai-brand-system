@@ -127,11 +127,11 @@ footer.lib-foot a{color:var(--neb);}
   <div class="wrap">
     <div class="lib-eyebrow">SSAI · Interactive Library</div>
     <h1 class="lib-h1">THE <span class="grad">INSTRUMENT</span><br>LIBRARY.</h1>
-    <p class="lib-lede">Fifty-six live instruments across seven sciences — Earth, the Sun, satellites, the Solar System and the cosmos. Twenty-eight run on <b style="color:var(--star);font-weight:500">real NASA, NOAA &amp; ESA data</b>, co-branded with the source. Pick one to open it full-screen.</p>
+    <p class="lib-lede">Live interactive instruments across seven sciences — Earth, the Sun, satellites, the Solar System and the cosmos. Most run on <b style="color:var(--star);font-weight:500">real NASA, NOAA &amp; ESA data</b>, co-branded with the source. Pick one to open it full-screen.</p>
     <div class="lib-stats">
-      <div class="lib-stat"><div class="n">56</div><div class="l">Instruments</div></div>
+      <div class="lib-stat"><div class="n" id="stat-count">54</div><div class="l">Instruments</div></div>
       <div class="lib-stat"><div class="n"><b id="stat-real">28</b></div><div class="l">On real NASA data</div></div>
-      <div class="lib-stat"><div class="n">7</div><div class="l">Science collections</div></div>
+      <div class="lib-stat"><div class="n" id="stat-colls">7</div><div class="l">Science collections</div></div>
     </div>
   </div>
 </section>
@@ -282,6 +282,8 @@ document.addEventListener('keydown',function(e){if(!document.getElementById('vie
 fetch('modules/manifest.json').then(function(r){return r.json();}).then(function(d){
   MANIFEST=d; FLAT=d.modules; buildPills(); render();
   var rc=FLAT.filter(function(m){return m.real;}).length, re=document.getElementById('stat-real'); if(re) re.textContent=rc;
+  var ic=document.getElementById('stat-count'); if(ic) ic.textContent=FLAT.length;
+  var cc=document.getElementById('stat-colls'); if(cc) cc.textContent=(MANIFEST.collections||[]).length;
   var q=new URLSearchParams(location.search).get('m'); if(q && FLAT.some(function(m){return m.slug===q;})) openModule(q);
 }).catch(function(){document.getElementById('collections').innerHTML='<p style="color:var(--neb);padding:40px 0">Could not load the module manifest.</p>';});
 </script>
