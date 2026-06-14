@@ -138,6 +138,16 @@
       "real": true
     },
     {
+      "slug": "earth-explorer",
+      "title": "Earth Explorer \u2014 live NASA map",
+      "collection": "earth-climate",
+      "source": "NASA",
+      "credit": "Live imagery \u00b7 NASA EOSDIS GIBS (Worldview)",
+      "blurb": "A real GIS-style slippy map of LIVE NASA satellite imagery \u2014 pan and zoom into true-colour and false-colour MODIS, sea-surface temperature and aerosols, stepping day by day, exactly like NASA Worldview.",
+      "interaction": "Drag to pan, scroll or use +/\u2212 to zoom into live NASA EOSDIS GIBS tiles; switch layers (True Color, Bands 7\u00b72\u00b71, Sea-Surface Temp, Aerosols), step the date, and read the live latitude/longitude under your cursor.",
+      "real": true
+    },
+    {
       "slug": "band-combiner",
       "title": "False-color composite",
       "collection": "remote-sensing",

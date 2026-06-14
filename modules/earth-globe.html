@@ -210,7 +210,7 @@ body.mb-embed #kit-earth-globe [class*='stage'],body.mb-embed #kit-earth-globe [
     GW=GH=0;           /* force LUT rebuild now that SRCW/SRCH are valid */
     resize();
     drawFrame();
-    if(!reduce && visible) start();
+    if(!reduce) start();
   }
   img.onload=onReady;
   img.onerror=function(){ if(loadEl) loadEl.textContent='Imagery unavailable'; };
@@ -248,6 +248,7 @@ body.mb-embed #kit-earth-globe [class*='stage'],body.mb-embed #kit-earth-globe [
        LUT depends on SRCW/SRCH, so only build once the source is ready. */
     var target=Math.min(BUF_MAX, Math.round(R*2*Math.min(DPR,1.5)));
     if(ready && (target!==GW || lutSrcW!==SRCW)){ GW=GH=target; gBuf.width=GW; gBuf.height=GH; buildLUT(); }
+    if(ready) drawFrame();
   }
 
   /* precompute orthographic disc -> base (lat,lon0) once per size + tilt.

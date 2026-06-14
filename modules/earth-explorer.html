@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earth Explorer — live NASA map · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+/* ----- embed (inside the library modal): full-bleed, fits the viewer, never scrolls ----- */
+html,body{height:100%;}
+body.mb-embed{overflow:hidden;}
+body.mb-embed .mb-wrap{height:100%;}
+body.mb-embed .mb-bar,body.mb-embed .mb-credit{display:none!important;}
+body.mb-embed .mb-stage{flex:1;min-height:0;padding:0!important;overflow:hidden;}
+body.mb-embed .mb-stage>.kfig{width:100%!important;height:100%!important;max-width:none!important;}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+/* ----- controls hide/show (immersive toggle) ----- */
+.mb-immersive-btn{position:fixed;right:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:7px;font:600 9.5px/1 'Inter',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--neb);background:rgba(8,6,26,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--hair);border-radius:999px;padding:9px 14px;cursor:pointer;transition:color .2s,border-color .2s,background .2s,opacity .35s;user-select:none;-webkit-user-select:none;}
+.mb-immersive-btn:hover{color:var(--star);border-color:rgba(var(--accent-rgb),.55);background:rgba(12,10,34,.85);}
+.mb-immersive-btn svg{width:13px;height:13px;display:block;flex:0 0 auto;}
+body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-immersive [class*='chip'],body.mb-immersive [class*='slider'],body.mb-immersive [class*='knob'],body.mb-immersive [class*='toolbar'],body.mb-immersive [class*='picker'],body.mb-immersive [class*='legend'],body.mb-immersive [class*='readout'],body.mb-immersive [class*='tabs'],body.mb-immersive [class*='switch'],body.mb-immersive [class*='-rail'],body.mb-immersive [class*='-side'],body.mb-immersive [class*='-deck'],body.mb-immersive [class*='-menu'],body.mb-immersive [class*='-opts'],body.mb-immersive [class*='-prov'],body.mb-immersive [class*='-ui'],body.mb-immersive [class*='-ctrl'],body.mb-immersive [data-controls],body.mb-immersive .mb-controls{opacity:0!important;pointer-events:none!important;transition:opacity .4s ease!important;}
+body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
+body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
+body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
+#kit-earth-explorer{position:relative;width:100%;height:100%;overflow:hidden;background:#05030f;font-family:'Inter',system-ui,-apple-system,sans-serif;color:#eef1ff;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#kit-earth-explorer .exq-map{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#kit-earth-explorer .exq-map:active{cursor:grabbing}
+#kit-earth-explorer .exq-vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(125% 120% at 50% 32%,transparent 58%,rgba(5,3,15,.5) 100%)}
+#kit-earth-explorer .exq-controls{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;background:rgba(8,6,24,.5);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:5px;backdrop-filter:blur(13px) saturate(130%);-webkit-backdrop-filter:blur(13px) saturate(130%);box-shadow:0 10px 36px -16px rgba(0,0,0,.8)}
+#kit-earth-explorer .exq-layers{left:16px;top:16px}
+#kit-earth-explorer .exq-layer{appearance:none;cursor:pointer;font:600 11.5px/1 'Inter',sans-serif;letter-spacing:.01em;color:rgba(228,236,255,.66);background:transparent;border:0;padding:8px 13px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s}
+#kit-earth-explorer .exq-layer:hover{color:#fff}
+#kit-earth-explorer .exq-layer.is-on{color:#04121c;background:var(--accent,#3cc8ff);box-shadow:0 2px 12px -2px var(--accent,#3cc8ff)}
+#kit-earth-explorer .exq-datebar{right:16px;top:16px;gap:10px;padding:5px 8px}
+#kit-earth-explorer .exq-date{font:600 12px/1 'Inter',sans-serif;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:.02em;min-width:92px;text-align:center}
+#kit-earth-explorer .exq-db,#kit-earth-explorer .exq-zb{appearance:none;cursor:pointer;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#eaf0ff;font:600 15px/1 'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s}
+#kit-earth-explorer .exq-db:hover,#kit-earth-explorer .exq-zb:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+#kit-earth-explorer .exq-zoom{right:16px;bottom:18px;flex-direction:column;gap:4px;padding:4px;border-radius:16px}
+#kit-earth-explorer .exq-hud{position:absolute;left:16px;bottom:18px;z-index:6;display:flex;flex-direction:column;gap:3px;padding:9px 13px;border-radius:13px;background:rgba(8,6,24,.46);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);pointer-events:none;max-width:62%}
+#kit-earth-explorer .exq-coord{font:600 13px/1.1 'Inter',sans-serif;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+#kit-earth-explorer .exq-desc{font-size:10.5px;letter-spacing:.04em;color:rgba(196,206,236,.62)}
+#kit-earth-explorer .exq-load{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:7;display:none;align-items:center;gap:9px;padding:10px 16px;border-radius:999px;background:rgba(8,6,24,.66);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:11.5px;letter-spacing:.06em;color:#dfe5ff}
+#kit-earth-explorer .exq-load.exq-on{display:flex}
+#kit-earth-explorer .exq-spin{width:13px;height:13px;border-radius:50%;border:2px solid rgba(166,171,230,.28);border-top-color:var(--accent,#3cc8ff);animation:exq-rot .9s linear infinite}
+@keyframes exq-rot{to{transform:rotate(360deg)}}
+@media (max-width:600px){#kit-earth-explorer .exq-layer{padding:7px 9px;font-size:10px}#kit-earth-explorer .exq-hud{max-width:54%}}
+
+body.mb-embed #kit-earth-explorer{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
+body.mb-embed #kit-earth-explorer [class*='frame'],body.mb-embed #kit-earth-explorer [class*='shell'],body.mb-embed #kit-earth-explorer [class*='-inner'],body.mb-embed #kit-earth-explorer [class*='wrapper']{display:contents!important;}
+body.mb-embed #kit-earth-explorer [class*='stage'],body.mb-embed #kit-earth-explorer [class*='scene'],body.mb-embed #kit-earth-explorer [class*='map'],body.mb-embed #kit-earth-explorer [class*='plot'],body.mb-embed #kit-earth-explorer [class*='canvas'],body.mb-embed #kit-earth-explorer [class*='globe'],body.mb-embed #kit-earth-explorer canvas,body.mb-embed #kit-earth-explorer svg{aspect-ratio:auto!important;max-height:none!important;max-width:none!important;min-height:0!important;}
+body.mb-embed #kit-earth-explorer [class*='wrap'],body.mb-embed #kit-earth-explorer [class*='-body'],body.mb-embed #kit-earth-explorer [class*='grid'],body.mb-embed #kit-earth-explorer [class*='layout'],body.mb-embed #kit-earth-explorer [class*='main'],body.mb-embed #kit-earth-explorer [class*='stagewrap']{height:100%!important;min-height:0!important;align-items:stretch!important;align-content:stretch!important;}
+body.mb-embed #kit-earth-explorer canvas{height:100%!important;width:100%!important;}
+body.mb-embed #kit-earth-explorer{display:flex!important;flex-direction:column!important;gap:clamp(6px,1vh,12px)!important;}
+body.mb-embed #kit-earth-explorer>*{flex:0 0 auto;min-height:0;}
+body.mb-embed #kit-earth-explorer [class*='stage'],body.mb-embed #kit-earth-explorer [class*='scene'],body.mb-embed #kit-earth-explorer [class*='map'],body.mb-embed #kit-earth-explorer [class*='plot'],body.mb-embed #kit-earth-explorer [class*='globe'],body.mb-embed #kit-earth-explorer [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
+
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Earth Explorer — live NASA map</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-earth-explorer">
+  <canvas class="exq-map" aria-label="Interactive map of live NASA satellite imagery"></canvas>
+  <div class="exq-vig"></div>
+  <div class="exq-controls exq-layers">
+    <button class="exq-layer is-on" type="button" data-l="0">True Color</button>
+    <button class="exq-layer" type="button" data-l="1">Bands 7·2·1</button>
+    <button class="exq-layer" type="button" data-l="2">Sea-Surface Temp</button>
+    <button class="exq-layer" type="button" data-l="3">Aerosols</button>
+  </div>
+  <div class="exq-controls exq-datebar">
+    <button class="exq-db" type="button" data-d="-1" aria-label="Previous day">&#8249;</button>
+    <span class="exq-date">&mdash;</span>
+    <button class="exq-db" type="button" data-d="1" aria-label="Next day">&#8250;</button>
+  </div>
+  <div class="exq-controls exq-zoom">
+    <button class="exq-zb" type="button" data-z="1" aria-label="Zoom in">+</button>
+    <button class="exq-zb" type="button" data-z="-1" aria-label="Zoom out">&minus;</button>
+  </div>
+  <div class="exq-hud">
+    <div class="exq-coord">&mdash;</div>
+    <div class="exq-desc">Natural colour, as the eye would see it</div>
+  </div>
+  <div class="exq-load exq-on"><span class="exq-spin"></span>Loading live imagery&hellip;</div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag to pan, scroll or use +/− to zoom into live NASA EOSDIS GIBS tiles; switch layers (True Color, Bands 7·2·1, Sea-Surface Temp, Aerosols), step the date, and read the live latitude/longitude under your cursor.</span>
+    <span class="mb-c-src">Live imagery · NASA EOSDIS GIBS (Worldview)</span>
+  </footer>
+  <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+    <span class="mb-it-label">Hide controls</span>
+  </button>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+  /* controls hide/show (immersive) toggle */
+  try{
+    var ib=document.querySelector('.mb-immersive-btn');
+    if(ib){ var lab=ib.querySelector('.mb-it-label');
+      var setImm=function(on){ document.body.classList.toggle('mb-immersive',on); ib.setAttribute('aria-pressed',on?'true':'false'); if(lab) lab.textContent=on?'Show controls':'Hide controls'; [60,460].forEach(function(t){setTimeout(function(){try{window.dispatchEvent(new Event('resize'));}catch(e){}},t);}); };
+      ib.addEventListener('click',function(){ setImm(!document.body.classList.contains('mb-immersive')); });
+      window.addEventListener('keydown',function(e){ var tn=(e.target&&e.target.tagName||''); if((e.key==='h'||e.key==='H')&&!/INPUT|TEXTAREA|SELECT/.test(tn)){ setImm(!document.body.classList.contains('mb-immersive')); } });
+    }
+  }catch(e){}
+  /* nudge a resize after layout settles so canvas modules that measured too early redraw at the right size */
+  (function(){
+    function fire(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} }
+    function settle(){
+      [0,80,200,420,800,1300,2000,2800].forEach(function(t){ setTimeout(fire,t); });
+      try{ requestAnimationFrame(function(){ requestAnimationFrame(fire); }); }catch(e){}
+      /* on-change watcher: fire whenever the stage box settles to a new size (~4s) */
+      var st=document.querySelector('.mb-stage')||document.documentElement, lw=-1, lh=-1, n=0;
+      var iv=setInterval(function(){ var w=st.clientWidth, h=st.clientHeight;
+        if(w!==lw||h!==lh){ lw=w; lh=h; fire(); } if(++n>40) clearInterval(iv); },100);
+    }
+    if(document.readyState==='complete') settle(); else window.addEventListener('load',settle);
+  })();
+  /* safety: some modules forget to hide their loading overlay after the image resolves */
+  window.addEventListener('load',function(){ setTimeout(function(){
+    var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
+    for(var i=0;i<ov.length;i++){ var el=ov[i], p=getComputedStyle(el).position;
+      if(p==='absolute'||p==='fixed'){ el.style.transition='opacity .45s ease'; el.style.opacity='0'; el.style.pointerEvents='none';
+        (function(e){setTimeout(function(){e.style.display='none';},500);})(el); } }
+  },1700); });
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-earth-explorer'); if(!root) return;
+  var canvas=root.querySelector('.exq-map'), ctx=canvas.getContext('2d');
+  var coordEl=root.querySelector('.exq-coord'), descEl=root.querySelector('.exq-desc');
+  var dateEl=root.querySelector('.exq-date'), loadEl=root.querySelector('.exq-load');
+  var TS=256;
+  var LAYERS=[
+    {id:'MODIS_Terra_CorrectedReflectance_TrueColor', ms:9, ext:'jpg', desc:'Natural colour, as the eye would see it'},
+    {id:'MODIS_Terra_CorrectedReflectance_Bands721', ms:9, ext:'jpg', desc:'False colour \u2014 burn scars red, vegetation green, water dark'},
+    {id:'GHRSST_L4_MUR_Sea_Surface_Temperature', ms:7, ext:'png', desc:'Sea-surface temperature \u2014 GHRSST MUR analysis'},
+    {id:'MODIS_Combined_Value_Added_AOD', ms:6, ext:'png', desc:'Aerosol optical depth \u2014 smoke, dust and haze'}
+  ];
+  var L=0;
+  function lay(){ return LAYERS[L]; }
+  function pad(n){ return (n<10?'0':'')+n; }
+  function fmt(d){ return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate()); }
+  var dayMs=86400000, date=new Date(Date.now()-2*dayMs), dateStr=fmt(date);
+  function setDate(){ dateStr=fmt(date); if(dateEl) dateEl.textContent=dateStr; }
+  // view: center lon/lat + fractional zoom
+  var lon=18, lat=8, zoom=2.6;
+  // tile cache
+  var cache={}, loading={}, inflight=0, MAXLOAD=10, firstLoaded=false;
+  function url(z,x,y){ var l=lay(); return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+l.id+'/default/'+dateStr+'/GoogleMapsCompatible_Level'+l.ms+'/'+z+'/'+y+'/'+x+'.'+l.ext; }
+  function key(z,x,y){ return lay().id+'|'+dateStr+'|'+z+'|'+x+'|'+y; }
+  function tile(z,x,y){
+    var n=Math.pow(2,z); if(y<0||y>=n) return null; x=((x%n)+n)%n;
+    var k=key(z,x,y); var c=cache[k]; if(c) return c;
+    if(loading[k]||inflight>=MAXLOAD) return null;
+    loading[k]=1; inflight++;
+    var im=new Image(); try{ im.crossOrigin='anonymous'; }catch(e){}
+    im.onload=function(){ cache[k]=im; delete loading[k]; inflight--; scheduleDraw(); if(!firstLoaded){firstLoaded=true; if(loadEl) loadEl.classList.remove('exq-on');} };
+    im.onerror=function(){ cache[k]='e'; delete loading[k]; inflight--; };
+    im.src=url(z,x,y);
+    return null;
+  }
+  // mercator projection (tile units at zoom z)
+  function lon2tx(lo,z){ return (lo+180)/360*Math.pow(2,z); }
+  function lat2ty(la,z){ var s=Math.sin(la*Math.PI/180); s=Math.max(-0.99999,Math.min(0.99999,s)); return (0.5 - Math.log((1+s)/(1-s))/(4*Math.PI))*Math.pow(2,z); }
+  function tx2lon(tx,z){ return tx/Math.pow(2,z)*360-180; }
+  function ty2lat(ty,z){ var k=Math.PI-2*Math.PI*ty/Math.pow(2,z); return 180/Math.PI*Math.atan(0.5*(Math.exp(k)-Math.exp(-k))); }
+  var W=1,H=1,DPR=1;
+  function resize(){
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    W=root.clientWidth||800; H=root.clientHeight||500;
+    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0); scheduleDraw();
+  }
+  function clamp(){ var mz=lay().ms; if(zoom>mz) zoom=mz; if(zoom<1.2) zoom=1.2; if(lat>83) lat=83; if(lat<-83) lat=-83; }
+  function drawParent(z,x,y,sx,sy,ts){
+    for(var dz=1;dz<=4;dz++){ var pz=z-dz; if(pz<0) break; var f=Math.pow(2,dz);
+      var px=Math.floor(x/f), py=Math.floor(y/f); var n=Math.pow(2,pz); var pk=lay().id+'|'+dateStr+'|'+pz+'|'+(((px%n)+n)%n)+'|'+py;
+      var pt=cache[pk]; if(pt && pt!=='e'){ var sub=1/f; ctx.drawImage(pt,(x-px*f)/f*256,(y-py*f)/f*256,256*sub,256*sub,sx,sy,ts+1,ts+1); return true; } }
+    ctx.fillStyle='rgba(16,18,42,.55)'; ctx.fillRect(sx,sy,ts+1,ts+1); return false;
+  }
+  function draw(){
+    clamp();
+    var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom)));
+    var scale=Math.pow(2,zoom-z), ts=TS*scale;
+    var cTx=lon2tx(lon,z), cTy=lat2ty(lat,z);
+    var ox=cTx-(W/2)/ts, oy=cTy-(H/2)/ts;
+    var n=Math.pow(2,z);
+    ctx.fillStyle='#05030f'; ctx.fillRect(0,0,W,H);
+    var x0=Math.floor(ox), x1=Math.floor(ox+W/ts), y0=Math.floor(oy), y1=Math.floor(oy+H/ts);
+    for(var ty=y0;ty<=y1;ty++){ if(ty<0||ty>=n) continue;
+      for(var tx=x0;tx<=x1;tx++){
+        var sx=(tx-ox)*ts, sy=(ty-oy)*ts;
+        var t=tile(z,tx,ty);
+        if(t && t!=='e'){ ctx.drawImage(t,sx,sy,ts+1,ts+1); }
+        else { drawParent(z,((tx%n)+n)%n,ty,sx,sy,ts); }
+      }
+    }
+    need=false;
+  }
+  function scheduleDraw(){ if(pending) return; pending=true; setTimeout(function(){ pending=false; draw(); },16); }
+  var pending=false;
+  // coordinate readout
+  function fmtCoord(la,lo){
+    var ns=la>=0?'N':'S', ew=lo>=0?'E':'W';
+    return Math.abs(la).toFixed(2)+'\u00b0'+ns+'  '+Math.abs(lo).toFixed(2)+'\u00b0'+ew+'   z'+zoom.toFixed(1);
+  }
+  function pxToGeo(px,py){
+    var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))), scale=Math.pow(2,zoom-z), ts=TS*scale;
+    var cTx=lon2tx(lon,z), cTy=lat2ty(lat,z);
+    var tx=cTx+(px-W/2)/ts, ty=cTy+(py-H/2)/ts;
+    return [ty2lat(ty,z), tx2lon(tx,z)];
+  }
+  function showCoord(px,py){ var g=(px==null)?[lat,lon]:pxToGeo(px,py); if(coordEl) coordEl.textContent=fmtCoord(g[0],g[1]); }
+  // interaction: drag pan
+  var drag=false, lpx=0, lpy=0;
+  function relXY(e){ var r=canvas.getBoundingClientRect(); var t=e.touches?e.touches[0]:e; return [t.clientX-r.left, t.clientY-r.top]; }
+  canvas.addEventListener('pointerdown',function(e){ drag=true; var p=relXY(e); lpx=p[0]; lpy=p[1]; try{canvas.setPointerCapture(e.pointerId);}catch(_){ } });
+  canvas.addEventListener('pointermove',function(e){
+    var p=relXY(e);
+    if(drag){
+      var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))), scale=Math.pow(2,zoom-z), ts=TS*scale, npow=Math.pow(2,z);
+      var cTx=lon2tx(lon,z)-(p[0]-lpx)/ts, cTy=lat2ty(lat,z)-(p[1]-lpy)/ts;
+      lon=tx2lon(cTx,z); lat=ty2lat(cTy,z); lpx=p[0]; lpy=p[1]; clamp(); scheduleDraw();
+    }
+    showCoord(p[0],p[1]);
+  });
+  function endDrag(){ drag=false; }
+  canvas.addEventListener('pointerup',endDrag); canvas.addEventListener('pointercancel',endDrag); canvas.addEventListener('pointerleave',function(){ drag=false; showCoord(null); });
+  // wheel zoom anchored at cursor
+  canvas.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var p=relXY(e); var g=pxToGeo(p[0],p[1]);
+    var dz=(-e.deltaY)*0.0016; zoom+=dz; clamp();
+    // keep geo point under cursor: recompute center so g maps back to p
+    var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))), scale=Math.pow(2,zoom-z), ts=TS*scale;
+    var gTx=lon2tx(g[1],z), gTy=lat2ty(g[0],z);
+    var cTx=gTx-(p[0]-W/2)/ts, cTy=gTy-(p[1]-H/2)/ts;
+    lon=tx2lon(cTx,z); lat=ty2lat(cTy,z); clamp(); scheduleDraw(); showCoord(p[0],p[1]);
+  },{passive:false});
+  // zoom buttons (anchored at center)
+  root.querySelectorAll('.exq-zb').forEach(function(b){ b.addEventListener('click',function(){ zoom+=(+b.dataset.z)*0.9; clamp(); scheduleDraw(); showCoord(null); }); });
+  // layer pills
+  root.querySelectorAll('.exq-layer').forEach(function(b){ b.addEventListener('click',function(){
+    L=+b.dataset.l; root.querySelectorAll('.exq-layer').forEach(function(x){ x.classList.toggle('is-on',x===b); });
+    if(descEl) descEl.textContent=lay().desc; clamp(); firstLoaded=true; scheduleDraw(); showCoord(null);
+  }); });
+  // date stepping
+  root.querySelectorAll('.exq-db').forEach(function(b){ b.addEventListener('click',function(){
+    date=new Date(date.getTime()+(+b.dataset.d)*dayMs);
+    var max=new Date(Date.now()-dayMs); if(date>max) date=max;
+    setDate(); scheduleDraw();
+  }); });
+  // init
+  setDate(); if(descEl) descEl.textContent=lay().desc; if(loadEl) loadEl.classList.add('exq-on');
+  resize(); showCoord(null);
+  if(window.ResizeObserver){ try{ new ResizeObserver(resize).observe(root); }catch(e){} }
+  window.addEventListener('resize',resize);
+  draw();
+  // safety: clear the loading chip even if some tiles are slow
+  setTimeout(function(){ if(loadEl) loadEl.classList.remove('exq-on'); },4000);
+})();
+</script>
+</body></html>
