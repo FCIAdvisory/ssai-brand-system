@@ -1646,51 +1646,7 @@ body{transition:background .5s ease,color .5s ease}
 @media (prefers-reduced-motion:reduce){
 #kit-atmos-sounding *{transition:none!important;}
 }
-/* storm-tracker */
-#kit-storm-tracker{--kst-bg:#050314;--kst-indigo:#16145f;--kst-text:#f4f5ff;--kst-muted:#a6abe6;--kst-line:rgba(166,171,230,0.16);position:relative;width:100%;color:var(--kst-text);font-family:'Inter',system-ui,sans-serif;box-sizing:border-box}
-#kit-storm-tracker *{box-sizing:border-box}
-#kit-storm-tracker .kst-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-#kit-storm-tracker .kst-wrap{display:grid;grid-template-columns:1fr 300px;gap:14px;background:radial-gradient(120% 120% at 100% 0%,#0a0726 0%,#050314 60%);border:1px solid var(--kst-line);border-radius:16px;padding:14px;min-height:480px}
-#kit-storm-tracker .kst-stage{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--kst-line);min-height:440px;background:#050314}
-#kit-storm-tracker .kst-canvas{display:block;width:100%;height:100%}
-#kit-storm-tracker .kst-overlay{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none}
-#kit-storm-tracker .kst-tag{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:11px;letter-spacing:.14em;color:var(--kst-muted);background:rgba(5,3,20,0.5);border:1px solid var(--kst-line);padding:4px 9px;border-radius:7px;text-transform:uppercase}
-#kit-storm-tracker .kst-clock{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:18px;letter-spacing:.06em;color:var(--kst-text);background:rgba(5,3,20,0.5);border:1px solid var(--kst-line);padding:3px 11px;border-radius:7px}
-#kit-storm-tracker .kst-panel{display:flex;flex-direction:column;gap:14px}
-#kit-storm-tracker .kst-cat-block{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--kst-line);border-radius:12px;background:linear-gradient(180deg,rgba(22,20,95,0.34),rgba(22,20,95,0.10))}
-#kit-storm-tracker .kst-cat-num{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:56px;line-height:.9;color:#ff6b5e;text-shadow:0 0 26px rgba(255,107,94,0.4);min-width:64px;text-align:center}
-#kit-storm-tracker .kst-cat-side{flex:1}
-#kit-storm-tracker .kst-cat-label{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:15px;letter-spacing:.08em;color:#ff6b5e;text-transform:uppercase;margin-bottom:10px}
-#kit-storm-tracker .kst-meter{display:flex;gap:4px}
-#kit-storm-tracker .kst-meter-seg{flex:1;height:7px;border-radius:3px;background:rgba(166,171,230,0.18);transition:background .35s ease,opacity .35s ease}
-#kit-storm-tracker .kst-stats{display:flex;flex-direction:column;gap:10px;padding:14px;border:1px solid var(--kst-line);border-radius:12px;background:rgba(5,3,20,0.4)}
-#kit-storm-tracker .kst-stat-k{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--kst-muted);margin-bottom:4px}
-#kit-storm-tracker .kst-wind{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:26px;letter-spacing:.02em;color:var(--kst-text)}
-#kit-storm-tracker .kst-gust{font-size:12px;color:var(--kst-muted);margin-top:2px}
-#kit-storm-tracker .kst-stat-row{display:flex;gap:10px}
-#kit-storm-tracker .kst-stat.sm{flex:1}
-#kit-storm-tracker .kst-pres,#kit-storm-tracker .kst-pos{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:15px;color:var(--kst-text)}
-#kit-storm-tracker .kst-advisory{display:flex;flex-direction:column;gap:3px;border-top:1px solid var(--kst-line);padding-top:9px;margin-top:2px}
-#kit-storm-tracker .kst-adv-tag{font-size:9px;letter-spacing:.16em;color:var(--kst-muted);text-transform:uppercase}
-#kit-storm-tracker .kst-adv{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:13px;letter-spacing:.03em;color:#ff6b5e;text-transform:uppercase}
-#kit-storm-tracker .kst-controls{display:flex;flex-direction:column;gap:13px;padding:14px;border:1px solid var(--kst-line);border-radius:12px;background:rgba(5,3,20,0.4);margin-top:auto}
-#kit-storm-tracker .kst-ctl{display:flex;flex-direction:column;gap:7px}
-#kit-storm-tracker .kst-ctl-k{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--kst-muted)}
-#kit-storm-tracker input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:3px;background:linear-gradient(90deg,var(--accent,#3cc8ff),rgba(166,171,230,0.22));outline:none;cursor:pointer}
-#kit-storm-tracker input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--kst-text);border:2px solid var(--accent,#3cc8ff);box-shadow:0 0 10px rgba(60,200,255,0.5);cursor:pointer;transition:transform .15s ease}
-#kit-storm-tracker input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.18)}
-#kit-storm-tracker input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--kst-text);border:2px solid var(--accent,#3cc8ff);cursor:pointer}
-#kit-storm-tracker .kst-btns{display:flex;gap:8px}
-#kit-storm-tracker .kst-btn{flex:1;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--kst-text);background:rgba(22,20,95,0.34);border:1px solid var(--kst-line);border-radius:9px;padding:9px 10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:border-color .2s ease,background .2s ease,transform .12s ease}
-#kit-storm-tracker .kst-btn:hover{border-color:var(--accent,#3cc8ff);background:rgba(22,20,95,0.6)}
-#kit-storm-tracker .kst-btn:active{transform:scale(0.97)}
-#kit-storm-tracker .kst-cone-toggle.kst-on{border-color:var(--accent,#3cc8ff);color:var(--accent,#3cc8ff);box-shadow:0 0 14px rgba(60,200,255,0.18) inset}
-#kit-storm-tracker .kst-play-i{font-size:11px;line-height:1}
-#kit-storm-tracker .kst-legend{display:flex;flex-wrap:wrap;gap:9px;border-top:1px solid var(--kst-line);padding-top:11px}
-#kit-storm-tracker .kst-lg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--kst-muted);letter-spacing:.04em}
-#kit-storm-tracker .kst-lg i{width:9px;height:9px;border-radius:2px;display:inline-block}
-@media (max-width:680px){#kit-storm-tracker .kst-wrap{grid-template-columns:1fr}#kit-storm-tracker .kst-stage{min-height:320px}}
-@media (prefers-reduced-motion:reduce){#kit-storm-tracker input[type=range]::-webkit-slider-thumb{transition:none}}
+/* storm-tracker :: replaced by real-data rebuild (see appended block) */
 /* keeling-co2 */
 #kit-keeling-co2{position:relative;width:100%;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;box-sizing:border-box}
 #kit-keeling-co2 *{box-sizing:border-box}
@@ -1722,35 +1678,7 @@ body{transition:background .5s ease,color .5s ease}
 #kit-keeling-co2 .kc-range:focus-visible{box-shadow:0 0 0 2px rgba(60,200,255,.40)}
 #kit-keeling-co2 .kc-foot{margin-top:11px;font-size:10.5px;line-height:1.5;color:#a6abe6;opacity:.7;letter-spacing:.01em}
 @media (max-width:520px){#kit-keeling-co2 .kc-readout{text-align:left;min-width:0}#kit-keeling-co2 .kc-r-ppm{font-size:26px}#kit-keeling-co2 .kc-stage{aspect-ratio:4/3}}
-/* sea-level */
-#kit-sea-level{position:relative;width:100%;box-sizing:border-box;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;background:radial-gradient(120% 90% at 80% -10%,rgba(22,20,95,0.55),transparent 60%),#050314;border:1px solid rgba(166,171,230,0.16);border-radius:16px;padding:20px 20px 22px;overflow:hidden;--sl-accent:#3cc8ff}
-#kit-sea-level *{box-sizing:border-box}
-#kit-sea-level .sl-head{margin-bottom:14px}
-#kit-sea-level .sl-eyebrow{display:inline-block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--sl-accent);font-weight:600;margin-bottom:6px}
-#kit-sea-level .sl-title{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(20px,3.4vw,30px);margin:0;color:#f4f5ff;line-height:1}
-#kit-sea-level .sl-sub{margin:7px 0 0;font-size:13px;color:#a6abe6;max-width:46ch;line-height:1.5}
-#kit-sea-level .sl-stage{position:relative;width:100%;aspect-ratio:16/9;min-height:240px;border-radius:12px;overflow:hidden;border:1px solid rgba(166,171,230,0.14);background:#060320}
-#kit-sea-level .sl-canvas{display:block;width:100%;height:100%}
-#kit-sea-level .sl-hud{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-#kit-sea-level .sl-stat{background:rgba(22,20,95,0.30);border:1px solid rgba(166,171,230,0.14);border-radius:10px;padding:10px 12px;min-width:0}
-#kit-sea-level .sl-main{border-color:rgba(60,200,255,0.0);box-shadow:inset 0 0 0 1px var(--sl-accent),0 0 22px -10px var(--sl-accent)}
-#kit-sea-level .sl-k{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#a6abe6;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#kit-sea-level .sl-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:clamp(15px,2.4vw,21px);color:#f4f5ff;letter-spacing:.01em;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#kit-sea-level .sl-main .sl-v{color:var(--sl-accent)}
-#kit-sea-level .sl-ctrl{display:flex;flex-direction:column;gap:12px}
-#kit-sea-level .sl-sw{padding:2px 2px 0}
-#kit-sea-level .sl-slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:6px;background:linear-gradient(90deg,var(--sl-accent),rgba(166,171,230,0.22));outline:none;cursor:pointer}
-#kit-sea-level .sl-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#f4f5ff;border:3px solid var(--sl-accent);box-shadow:0 0 14px -2px var(--sl-accent);cursor:pointer;transition:transform .15s ease}
-#kit-sea-level .sl-slider::-webkit-slider-thumb:hover{transform:scale(1.12)}
-#kit-sea-level .sl-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#f4f5ff;border:3px solid var(--sl-accent);box-shadow:0 0 14px -2px var(--sl-accent);cursor:pointer}
-#kit-sea-level .sl-scale{display:flex;justify-content:space-between;margin-top:7px;font-size:10.5px;letter-spacing:.06em;color:#6f74ad}
-#kit-sea-level .sl-pre{display:flex;flex-wrap:wrap;gap:7px}
-#kit-sea-level .sl-btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#a6abe6;background:rgba(22,20,95,0.30);border:1px solid rgba(166,171,230,0.16);border-radius:999px;padding:6px 13px;cursor:pointer;transition:color .18s ease,border-color .18s ease,background .18s ease,transform .12s ease}
-#kit-sea-level .sl-btn:hover{color:#f4f5ff;border-color:var(--sl-accent)}
-#kit-sea-level .sl-btn:active{transform:scale(0.96)}
-#kit-sea-level .sl-btn.on{color:#050314;background:var(--sl-accent);border-color:var(--sl-accent);font-weight:600}
-@media (max-width:520px){#kit-sea-level .sl-hud{grid-template-columns:1fr;gap:8px}#kit-sea-level .sl-stat{display:flex;align-items:baseline;justify-content:space-between}#kit-sea-level .sl-k{margin-bottom:0}}
-@media (prefers-reduced-motion:reduce){#kit-sea-level .sl-slider::-webkit-slider-thumb{transition:none}#kit-sea-level .sl-btn{transition:none}}
+/* sea-level :: replaced by real-data rebuild (see appended block) */
 /* exoplanet-transit */
 #kit-exoplanet-transit{
   --xt-accent:var(--accent,#3cc8ff);
@@ -3075,88 +3003,7 @@ body{transition:background .5s ease,color .5s ease}
 #kit-cme-eruption .kit-cme-eruption-status b{color:#f4f5ff;font-weight:600}
 @media (max-width:520px){#kit-cme-eruption{aspect-ratio:auto;min-height:480px}#kit-cme-eruption .kit-cme-eruption-row{gap:10px}}
 /* day-night-terminator :: replaced by real-data rebuild (see appended block) */
-/* === wildfire-detect === */
-#kit-wildfire-detect{
-  --kfd-space:#050314; --kfd-indigo:#16145f; --kfd-star:#f4f5ff; --kfd-muted:#a6abe6; --kfd-hair:rgba(166,171,230,0.16);
-  position:relative; width:100%; box-sizing:border-box;
-  background:var(--kfd-space);
-  border:1px solid var(--kfd-hair); border-radius:14px;
-  padding:16px 16px 14px; color:var(--kfd-star);
-  font-family:'Inter',system-ui,sans-serif;
-  overflow:hidden;
-}
-#kit-wildfire-detect *{box-sizing:border-box;}
-#kit-wildfire-detect .kfd-sr{
-  position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
-  clip:rect(0,0,0,0); white-space:nowrap; border:0;
-}
-#kit-wildfire-detect .kfd-head{
-  display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; flex-wrap:wrap;
-}
-#kit-wildfire-detect .kfd-title{
-  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase;
-  letter-spacing:0.06em; font-size:15px; line-height:1.1; margin:0; color:var(--kfd-star);
-}
-#kit-wildfire-detect .kfd-sub{
-  font-size:11.5px; color:var(--kfd-muted); margin-top:3px; letter-spacing:0.02em;
-}
-#kit-wildfire-detect .kfd-toggle{
-  display:inline-flex; border:1px solid var(--kfd-hair); border-radius:999px; padding:3px; gap:2px;
-  background:rgba(22,20,95,0.25);
-}
-#kit-wildfire-detect .kfd-band{
-  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase;
-  letter-spacing:0.05em; font-size:11px;
-  border:0; background:transparent; color:var(--kfd-muted);
-  padding:6px 13px; border-radius:999px; cursor:pointer;
-  transition:color .25s ease, background .25s ease, box-shadow .25s ease;
-}
-#kit-wildfire-detect .kfd-band:hover{ color:var(--kfd-star); }
-#kit-wildfire-detect .kfd-band.kfd-on{
-  color:var(--kfd-space); background:var(--accent,#3cc8ff);
-  box-shadow:0 0 14px -2px var(--accent,#3cc8ff);
-}
-#kit-wildfire-detect .kfd-stage{ position:relative; width:100%; }
-#kit-wildfire-detect .kfd-canvas{ display:block; width:100%; height:auto; border-radius:8px; }
-#kit-wildfire-detect .kfd-coord{
-  position:absolute; left:10px; bottom:9px; pointer-events:none;
-  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
-  font-size:11px; letter-spacing:0.06em; color:var(--kfd-muted);
-  background:rgba(5,3,20,0.55); padding:3px 8px; border-radius:6px; border:1px solid var(--kfd-hair);
-}
-#kit-wildfire-detect .kfd-hud{
-  display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;
-}
-#kit-wildfire-detect .kfd-stat{
-  flex:1 1 0; min-width:96px;
-  border:1px solid var(--kfd-hair); border-radius:10px; padding:9px 12px;
-  background:linear-gradient(180deg, rgba(22,20,95,0.30), rgba(22,20,95,0.10));
-}
-#kit-wildfire-detect .kfd-stat .kfd-k{
-  font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--kfd-muted);
-}
-#kit-wildfire-detect .kfd-stat .kfd-v{
-  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
-  font-size:22px; line-height:1.05; margin-top:3px; color:var(--kfd-star);
-  font-variant-numeric:tabular-nums;
-}
-#kit-wildfire-detect .kfd-stat.kfd-accent .kfd-v{ color:var(--accent,#3cc8ff); }
-#kit-wildfire-detect .kfd-legend{
-  display:flex; align-items:center; gap:14px; margin-top:10px; flex-wrap:wrap;
-  font-size:11px; color:var(--kfd-muted); letter-spacing:0.02em;
-}
-#kit-wildfire-detect .kfd-legend span{ display:inline-flex; align-items:center; gap:6px; }
-#kit-wildfire-detect .kfd-swatch{ width:9px; height:9px; border-radius:50%; display:inline-block; }
-#kit-wildfire-detect .kfd-sw-fire{ background:#ff6420; box-shadow:0 0 7px 1px rgba(255,100,32,0.8); }
-#kit-wildfire-detect .kfd-sw-scan{ background:var(--accent,#3cc8ff); box-shadow:0 0 7px 1px var(--accent,#3cc8ff); }
-#kit-wildfire-detect .kfd-sw-land{ background:#46529a; }
-@media (max-width:430px){
-  #kit-wildfire-detect .kfd-title{font-size:13.5px;}
-  #kit-wildfire-detect .kfd-stat .kfd-v{font-size:18px;}
-}
-@media (prefers-reduced-motion: reduce){
-  #kit-wildfire-detect .kfd-band{transition:none;}
-}
+/* wildfire-detect :: replaced by real-data rebuild (see appended block) */
 /* === reentry-heating === */
 #kit-reentry-heating{width:100%;max-width:760px;margin:0 auto;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 #kit-reentry-heating *{box-sizing:border-box}
@@ -4042,6 +3889,195 @@ body{transition:background .5s ease,color .5s ease}
 #kit-constellation-coverage .cc2-btn:active{transform:scale(.97)}
 #kit-constellation-coverage .cc2-btnico{font-size:14px;color:var(--cc2-acc);transition:color .4s ease}
 @media (max-width:640px){#kit-constellation-coverage{padding:16px}#kit-constellation-coverage .cc2-title h3{font-size:21px}#kit-constellation-coverage .cc2-pctval{font-size:42px}#kit-constellation-coverage .cc2-controls{gap:18px}#kit-constellation-coverage .cc2-side{align-items:flex-start;width:100%}#kit-constellation-coverage .cc2-stats{gap:16px;flex-wrap:wrap}}
+
+/* === storm-tracker (real data) === */
+#kit-storm-tracker{--st-bg:#050314;--st-indigo:#16145f;--st-text:#f4f5ff;--st-muted:#a6abe6;--st-hair:rgba(166,171,230,0.16);--st-accent:var(--accent,#3cc8ff);color:var(--st-text);font-family:'Inter',system-ui,-apple-system,sans-serif;width:100%;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+#kit-storm-tracker *,#kit-storm-tracker *::before,#kit-storm-tracker *::after{box-sizing:border-box;}
+#kit-storm-tracker .st-frame{background:linear-gradient(180deg,#070518 0%,#050314 70%);border:1px solid var(--st-hair);border-radius:14px;padding:16px;overflow:hidden;position:relative;}
+#kit-storm-tracker .st-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+#kit-storm-tracker .st-id{display:flex;flex-direction:column;gap:3px;min-width:0;}
+#kit-storm-tracker .st-id-tag{font-size:10px;letter-spacing:.22em;color:var(--st-muted);text-transform:uppercase;}
+#kit-storm-tracker .st-name{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(16px,3.2vw,22px);color:var(--st-text);line-height:1;}
+#kit-storm-tracker .st-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:74px;padding:6px 10px;border-radius:10px;border:1px solid var(--cat-col,var(--st-accent));background:rgba(8,6,28,0.65);box-shadow:0 0 18px -6px var(--cat-col,var(--st-accent)) inset;}
+#kit-storm-tracker .st-badge-lbl{font-size:9px;letter-spacing:.28em;color:var(--st-muted);text-transform:uppercase;}
+#kit-storm-tracker .st-cat-num{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:30px;line-height:1;color:var(--cat-col,var(--st-accent));}
+#kit-storm-tracker .st-stage{position:relative;width:100%;aspect-ratio:16/10;min-height:240px;border-radius:10px;overflow:hidden;border:1px solid var(--st-hair);background:#040210;}
+#kit-storm-tracker .st-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+#kit-storm-tracker .st-hud{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;padding:9px 11px;background:rgba(7,5,22,0.62);backdrop-filter:blur(3px);border:1px solid var(--st-hair);border-radius:8px;min-width:158px;}
+#kit-storm-tracker .st-hud-row{display:flex;align-items:baseline;justify-content:space-between;gap:14px;}
+#kit-storm-tracker .st-hud-k{font-size:9px;letter-spacing:.2em;color:var(--st-muted);text-transform:uppercase;}
+#kit-storm-tracker .st-hud-v,#kit-storm-tracker .st-coord,#kit-storm-tracker .st-cat-word{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.03em;color:var(--st-text);}
+#kit-storm-tracker .st-hud-v b{font-size:15px;color:var(--st-accent);font-style:italic;}
+#kit-storm-tracker .st-cat-word{color:var(--st-accent);font-size:12px;}
+#kit-storm-tracker .st-legend{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:9px;padding:6px 10px;background:rgba(7,5,22,0.62);backdrop-filter:blur(3px);border:1px solid var(--st-hair);border-radius:8px;}
+#kit-storm-tracker .st-leg-title{font-size:9px;letter-spacing:.18em;color:var(--st-muted);text-transform:uppercase;margin-right:2px;}
+#kit-storm-tracker .st-leg{display:flex;align-items:center;gap:4px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:11px;color:var(--st-text);}
+#kit-storm-tracker .st-sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
+#kit-storm-tracker .st-c1{background:var(--st-accent);}
+#kit-storm-tracker .st-c2{background:#ffd166;}
+#kit-storm-tracker .st-c3{background:#ffb14e;}
+#kit-storm-tracker .st-c4{background:#ffd2a6;}
+#kit-storm-tracker .st-c5{background:#ffffff;}
+#kit-storm-tracker .st-controls{display:flex;align-items:center;gap:14px;margin-top:14px;}
+#kit-storm-tracker .st-play{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:9px;border:1px solid var(--st-hair);background:rgba(22,20,95,0.34);color:var(--st-text);font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:12px;cursor:pointer;transition:border-color .18s,background .18s,box-shadow .18s;min-width:104px;justify-content:center;}
+#kit-storm-tracker .st-play:hover{border-color:var(--st-accent);background:rgba(22,20,95,0.55);box-shadow:0 0 16px -7px var(--st-accent);}
+#kit-storm-tracker .st-play-ico{color:var(--st-accent);font-size:11px;font-style:normal;line-height:1;}
+#kit-storm-tracker .st-track-wrap{flex:1 1 auto;min-width:0;}
+#kit-storm-tracker .st-scrub{width:100%;-webkit-appearance:none;appearance:none;height:4px;border-radius:3px;background:linear-gradient(90deg,var(--st-accent),rgba(166,171,230,0.18));outline:none;cursor:pointer;margin:0;}
+#kit-storm-tracker .st-scrub::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--st-text);border:2px solid var(--st-accent);box-shadow:0 0 10px -2px var(--st-accent);cursor:pointer;}
+#kit-storm-tracker .st-scrub::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--st-text);border:2px solid var(--st-accent);box-shadow:0 0 10px -2px var(--st-accent);cursor:pointer;}
+#kit-storm-tracker .st-axis{display:flex;justify-content:space-between;margin-top:6px;font-size:9px;letter-spacing:.16em;color:var(--st-muted);text-transform:uppercase;}
+#kit-storm-tracker .st-cap{margin:12px 0 2px;font-size:10px;line-height:1.5;color:var(--st-muted);letter-spacing:.01em;}
+@media (max-width:540px){#kit-storm-tracker .st-hud{min-width:0;padding:7px 9px;}#kit-storm-tracker .st-legend{gap:6px;padding:5px 8px;}#kit-storm-tracker .st-leg-title{display:none;}#kit-storm-tracker .st-controls{gap:10px;}#kit-storm-tracker .st-play{min-width:auto;padding:9px 12px;}}
+@media (prefers-reduced-motion:reduce){#kit-storm-tracker .st-play{transition:none;}}
+
+/* === wildfire-detect (real data) === */
+#kit-wildfire-detect{
+  --wfd2-space:#050314; --wfd2-indigo:#16145f; --wfd2-star:#f4f5ff; --wfd2-muted:#a6abe6; --wfd2-hair:rgba(166,171,230,0.16);
+  --wfd2-accent:#3cc8ff; --wfd2-accent-rgb:60,200,255;
+  position:relative; width:100%; box-sizing:border-box;
+  background:var(--wfd2-space);
+  border:1px solid var(--wfd2-hair); border-radius:14px;
+  padding:16px 16px 14px; color:var(--wfd2-star);
+  font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+#kit-wildfire-detect *{box-sizing:border-box;}
+#kit-wildfire-detect .wfd2-sr{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+#kit-wildfire-detect .wfd2-head{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; flex-wrap:wrap;
+}
+#kit-wildfire-detect .wfd2-title{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase;
+  letter-spacing:0.06em; font-size:15px; line-height:1.1; margin:0; color:var(--wfd2-star);
+}
+#kit-wildfire-detect .wfd2-sub{
+  font-size:11.5px; color:var(--wfd2-muted); margin-top:3px; letter-spacing:0.02em;
+}
+#kit-wildfire-detect .wfd2-toggle{
+  display:inline-flex; border:1px solid var(--wfd2-hair); border-radius:999px; padding:3px; gap:2px;
+  background:rgba(22,20,95,0.25);
+}
+#kit-wildfire-detect .wfd2-band{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase;
+  letter-spacing:0.05em; font-size:11px;
+  border:0; background:transparent; color:var(--wfd2-muted);
+  padding:6px 13px; border-radius:999px; cursor:pointer;
+  transition:color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+#kit-wildfire-detect .wfd2-band:hover{ color:var(--wfd2-star); }
+#kit-wildfire-detect .wfd2-band.wfd2-on{
+  color:var(--wfd2-space); background:var(--wfd2-accent);
+  box-shadow:0 0 14px -2px var(--wfd2-accent);
+}
+#kit-wildfire-detect .wfd2-stage{
+  position:relative; width:100%; border-radius:10px; overflow:hidden;
+  border:1px solid var(--wfd2-hair); background:#02010a;
+}
+#kit-wildfire-detect .wfd2-canvas{ display:block; width:100%; height:auto; }
+#kit-wildfire-detect .wfd2-load{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:11px;
+  background:rgba(5,3,20,0.86); color:var(--wfd2-muted);
+  font-size:12px; letter-spacing:0.06em; transition:opacity .4s ease; z-index:3;
+}
+#kit-wildfire-detect .wfd2-load.wfd2-hide{ opacity:0; pointer-events:none; }
+#kit-wildfire-detect .wfd2-load-ring{
+  width:16px; height:16px; border-radius:50%;
+  border:2px solid rgba(var(--wfd2-accent-rgb),0.25); border-top-color:var(--wfd2-accent);
+  animation:wfd2spin 0.9s linear infinite;
+}
+@keyframes wfd2spin{to{transform:rotate(360deg);}}
+#kit-wildfire-detect .wfd2-coord{
+  position:absolute; left:10px; top:10px; pointer-events:none; z-index:2;
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  font-size:11px; letter-spacing:0.06em; color:var(--wfd2-star);
+  background:rgba(5,3,20,0.6); padding:3px 8px; border-radius:6px; border:1px solid var(--wfd2-hair);
+}
+#kit-wildfire-detect .wfd2-cap{
+  position:absolute; right:10px; bottom:9px; left:10px; pointer-events:none; z-index:2; text-align:right;
+  font-size:10px; letter-spacing:0.04em; color:var(--wfd2-muted);
+  text-shadow:0 1px 4px rgba(0,0,0,0.85);
+}
+#kit-wildfire-detect .wfd2-hud{
+  display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;
+}
+#kit-wildfire-detect .wfd2-stat{
+  flex:1 1 0; min-width:88px;
+  border:1px solid var(--wfd2-hair); border-radius:10px; padding:9px 12px;
+  background:linear-gradient(180deg, rgba(22,20,95,0.30), rgba(22,20,95,0.10));
+}
+#kit-wildfire-detect .wfd2-k{
+  font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--wfd2-muted);
+}
+#kit-wildfire-detect .wfd2-v{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  font-size:22px; line-height:1.05; margin-top:3px; color:var(--wfd2-star);
+  font-variant-numeric:tabular-nums;
+}
+#kit-wildfire-detect .wfd2-stat.wfd2-accent .wfd2-v{ color:var(--wfd2-accent); }
+#kit-wildfire-detect .wfd2-legend{
+  display:flex; align-items:center; gap:14px; margin-top:10px; flex-wrap:wrap;
+  font-size:11px; color:var(--wfd2-muted); letter-spacing:0.02em;
+}
+#kit-wildfire-detect .wfd2-legend>span{ display:inline-flex; align-items:center; gap:6px; }
+#kit-wildfire-detect .wfd2-note{ font-style:italic; opacity:0.85; flex:1 1 200px; min-width:180px; }
+#kit-wildfire-detect .wfd2-swatch{ width:9px; height:9px; border-radius:50%; display:inline-block; flex:none; }
+#kit-wildfire-detect .wfd2-sw-fire{ background:#ff6420; box-shadow:0 0 7px 1px rgba(255,100,32,0.85); }
+#kit-wildfire-detect .wfd2-sw-scan{ background:var(--wfd2-accent); box-shadow:0 0 7px 1px var(--wfd2-accent); }
+@media (max-width:430px){
+  #kit-wildfire-detect .wfd2-title{font-size:13.5px;}
+  #kit-wildfire-detect .wfd2-v{font-size:18px;}
+  #kit-wildfire-detect .wfd2-stat{min-width:calc(50% - 5px);}
+}
+@media (prefers-reduced-motion: reduce){
+  #kit-wildfire-detect .wfd2-band{transition:none;}
+  #kit-wildfire-detect .wfd2-load-ring{animation:none;}
+}
+
+/* === sea-level (real data) === */
+#kit-sea-level{--sl-accent:#3cc8ff;position:relative;width:100%;box-sizing:border-box;color:#f4f5ff;font-family:'Inter',-apple-system,Helvetica,Arial,sans-serif;background:radial-gradient(120% 90% at 82% -12%,rgba(22,20,95,0.50),transparent 58%),#050314;border:1px solid rgba(166,171,230,0.16);border-radius:16px;padding:20px 20px 18px;overflow:hidden}
+#kit-sea-level *{box-sizing:border-box}
+#kit-sea-level .sl-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#kit-sea-level .sl-head{margin-bottom:14px}
+#kit-sea-level .sl-eyebrow{display:inline-block;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:11px;letter-spacing:.20em;text-transform:uppercase;color:var(--sl-accent);margin-bottom:8px}
+#kit-sea-level .sl-title{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(21px,3.6vw,32px);margin:0;color:#f4f5ff;line-height:.98}
+#kit-sea-level .sl-sub{margin:8px 0 0;font-size:13px;color:#a6abe6;max-width:52ch;line-height:1.55;font-weight:300}
+#kit-sea-level .sl-stage{position:relative;width:100%;aspect-ratio:652/760;max-height:560px;border-radius:12px;overflow:hidden;border:1px solid rgba(166,171,230,0.14);background:#060320}
+@media (min-width:560px){#kit-sea-level .sl-stage{aspect-ratio:16/11}}
+#kit-sea-level .sl-canvas{display:block;width:100%;height:100%}
+#kit-sea-level .sl-grain{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:radial-gradient(rgba(255,255,255,.7) .5px,transparent .5px);background-size:3px 3px}
+#kit-sea-level .sl-vig{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 80px 8px rgba(5,3,20,.55)}
+#kit-sea-level .sl-scenechip{position:absolute;top:11px;left:12px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.10em;font-size:10.5px;color:var(--sl-accent);padding:5px 10px;border-radius:999px;border:1px solid rgba(166,171,230,0.22);background:rgba(5,3,20,0.50);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#kit-sea-level .sl-prov{position:absolute;bottom:10px;left:12px;right:12px;font-size:10px;letter-spacing:.04em;color:rgba(166,171,230,.78);text-shadow:0 1px 3px rgba(5,3,20,.9)}
+#kit-sea-level .sl-load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:11px;background:#060320;color:#a6abe6;font-size:12px;letter-spacing:.04em;transition:opacity .5s ease}
+#kit-sea-level .sl-load.sl-hide{opacity:0;pointer-events:none}
+#kit-sea-level .sl-load-ring{width:16px;height:16px;border-radius:50%;border:2px solid rgba(166,171,230,.25);border-top-color:var(--sl-accent);animation:sl-spin .8s linear infinite}
+@keyframes sl-spin{to{transform:rotate(360deg)}}
+#kit-sea-level .sl-hud{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 6px}
+#kit-sea-level .sl-stat{background:rgba(22,20,95,0.30);border:1px solid rgba(166,171,230,0.14);border-radius:10px;padding:11px 13px;min-width:0}
+#kit-sea-level .sl-main{box-shadow:inset 0 0 0 1px var(--sl-accent),0 0 22px -10px var(--sl-accent)}
+#kit-sea-level .sl-k{display:block;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#a6abe6;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#kit-sea-level .sl-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:clamp(16px,2.5vw,22px);color:#f4f5ff;letter-spacing:.01em;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#kit-sea-level .sl-main .sl-v{color:var(--sl-accent)}
+#kit-sea-level .sl-ctrl{display:flex;flex-direction:column;gap:13px;margin-top:10px}
+#kit-sea-level .sl-sw{padding:2px 2px 0}
+#kit-sea-level .sl-slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:6px;background:linear-gradient(90deg,var(--sl-accent),rgba(166,171,230,0.22));outline:none;cursor:pointer}
+#kit-sea-level .sl-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#f4f5ff;border:3px solid var(--sl-accent);box-shadow:0 0 14px -2px var(--sl-accent);cursor:pointer;transition:transform .15s ease}
+#kit-sea-level .sl-slider::-webkit-slider-thumb:hover{transform:scale(1.12)}
+#kit-sea-level .sl-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#f4f5ff;border:3px solid var(--sl-accent);box-shadow:0 0 14px -2px var(--sl-accent);cursor:pointer}
+#kit-sea-level .sl-slider:focus-visible{box-shadow:0 0 0 4px rgba(166,171,230,.22)}
+#kit-sea-level .sl-scale{display:flex;justify-content:space-between;margin-top:7px;font-size:10px;letter-spacing:.05em;color:#6f74ad}
+#kit-sea-level .sl-pre{display:flex;flex-wrap:wrap;gap:7px}
+#kit-sea-level .sl-btn{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;color:#a6abe6;background:rgba(22,20,95,0.30);border:1px solid rgba(166,171,230,0.16);border-radius:999px;padding:6px 13px;cursor:pointer;transition:color .18s ease,border-color .18s ease,background .18s ease,transform .12s ease}
+#kit-sea-level .sl-btn:hover{color:#f4f5ff;border-color:var(--sl-accent)}
+#kit-sea-level .sl-btn:active{transform:scale(0.96)}
+#kit-sea-level .sl-btn.on{color:#050314;background:var(--sl-accent);border-color:var(--sl-accent);font-weight:600}
+#kit-sea-level .sl-cap{margin:14px 0 0;font-size:10.5px;line-height:1.5;color:#6f74ad;border-top:1px solid rgba(166,171,230,0.12);padding-top:11px}
+@media (max-width:520px){#kit-sea-level .sl-hud{grid-template-columns:1fr;gap:8px}#kit-sea-level .sl-stat{display:flex;align-items:baseline;justify-content:space-between}#kit-sea-level .sl-k{margin-bottom:0}}
+@media (prefers-reduced-motion:reduce){#kit-sea-level .sl-slider::-webkit-slider-thumb{transition:none}#kit-sea-level .sl-btn{transition:none}#kit-sea-level .sl-load-ring{animation:none}}
 </style></head><body><button class="theme-tog" id="themeTog" type="button" aria-label="Switch between light and dark mode"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.6v2.4M12 19v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.6 12h2.4M19 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7"></path></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><span class="lbl-light">Light</span><span class="lbl-dark">Dark</span></button><div class="kwrap">
 <header class="kit-hero"><p class="kit-eyebrow">SSAI · Modular interactive system</p><h1>The Interactive Kit</h1><p>A library of self-contained, reusable interactive modules in the SSAI style: a rotating dot-globe, a living Sun, a deep-field explorer, mission tools, data-as-art and more. Drop any module straight into the website or a deck. Every module is vanilla (no dependencies), responsive, and reduced-motion aware. The Earth is only one of many.</p></header>
 <section class="kit-group">
@@ -4817,82 +4853,51 @@ body{transition:background .5s ease,color .5s ease}
   </div>
 
   <p class="as-foot" id="as-foot">A nadir-sounding radiometer measures emission from many layers at once. Each channel peaks at a different height — the curves on the right are the weighting functions that turn raw radiances into a vertical temperature profile.</p>
-</div></div><p class="kit-int">Drag the altitude marker (or use the slider / keyboard) to read temperature, dew point and pressure at any height; toggle the dew-point curve and the satellite sounding weighting functions.</p></section><section class="kit-card wide"><div class="kit-head"><span class="kit-num">32</span><h2>Storm Tracker</h2><span class="kit-lens">Earth &amp; climate</span></div><p class="kit-use">Visualize a hurricane&#x27;s forecast track, intensity, and growing cone of uncertainty along a 5-day advisory.</p><div class="kit-stage"><div class="kfig" id="kit-storm-tracker">
-  <h2 class="kst-sr">Interactive hurricane forecast tracker showing an animated storm moving along a curved track with a growing cone of uncertainty and a Saffir-Simpson intensity readout.</h2>
-  <div class="kst-wrap">
-    <div class="kst-stage">
-      <canvas class="kst-canvas" role="img" aria-label="Map with an animated hurricane traveling a forecast track and a cone of uncertainty"></canvas>
-      <div class="kst-overlay">
-        <div class="kst-tag">SSAI · STORM TRACKER</div>
-        <div class="kst-clock">+36 H</div>
+</div></div><p class="kit-int">Drag the altitude marker (or use the slider / keyboard) to read temperature, dew point and pressure at any height; toggle the dew-point curve and the satellite sounding weighting functions.</p></section><section class="kit-card wide"><div class="kit-head"><span class="kit-num">32</span><h2>Storm Tracker</h2><span class="kit-lens">Earth &amp; climate</span></div><p class="kit-use">A live hurricane-tracking console rendering a recurving Atlantic storm — rotating spiral, clear eye, Saffir-Simpson category, past track and forecast cone — over a real NASA satellite view of the Atlantic Ocean.</p><div class="kit-stage"><div class="kfig" id="kit-storm-tracker">
+  <div class="st-frame">
+    <div class="st-topbar">
+      <div class="st-id">
+        <span class="st-id-tag">NHC&nbsp;/&nbsp;SSAI&nbsp;STORM&nbsp;CONSOLE</span>
+        <span class="st-name">HURRICANE&nbsp;ATLAS</span>
+      </div>
+      <div class="st-badge" data-cat="0">
+        <span class="st-badge-lbl">CAT</span>
+        <span class="st-cat-num">TS</span>
       </div>
     </div>
 
-    <aside class="kst-panel">
-      <div class="kst-cat-block">
-        <div class="kst-cat-num">4</div>
-        <div class="kst-cat-side">
-          <div class="kst-cat-label">CATEGORY 4</div>
-          <div class="kst-meter">
-            <span class="kst-meter-seg"></span><span class="kst-meter-seg"></span><span class="kst-meter-seg"></span><span class="kst-meter-seg"></span><span class="kst-meter-seg"></span>
-          </div>
-        </div>
+    <div class="st-stage">
+      <canvas class="st-canvas"></canvas>
+      <div class="st-hud">
+        <div class="st-hud-row"><span class="st-hud-k">STATUS</span><span class="st-cat-word">TROPICAL STORM</span></div>
+        <div class="st-hud-row"><span class="st-hud-k">MAX WIND</span><span class="st-hud-v"><b class="st-wind-val">40</b> MPH</span></div>
+        <div class="st-hud-row"><span class="st-hud-k">MIN PRESS</span><span class="st-hud-v"><b class="st-press-val">1000</b> MB</span></div>
+        <div class="st-hud-row"><span class="st-hud-k">CENTER</span><span class="st-coord">14.0°N 42.0°W</span></div>
       </div>
 
-      <div class="kst-stats">
-        <div class="kst-stat">
-          <div class="kst-stat-k">Max sustained wind</div>
-          <div class="kst-wind">231 km/h</div>
-          <div class="kst-gust">gusts 289 km/h</div>
-        </div>
-        <div class="kst-stat-row">
-          <div class="kst-stat sm">
-            <div class="kst-stat-k">Min. pressure</div>
-            <div class="kst-pres">922 hPa</div>
-          </div>
-          <div class="kst-stat sm">
-            <div class="kst-stat-k">Position</div>
-            <div class="kst-pos">29.0°N 50.0°W</div>
-          </div>
-        </div>
-        <div class="kst-advisory">
-          <span class="kst-adv-tag">ADVISORY</span>
-          <span class="kst-adv">MAJOR — devastating winds</span>
-        </div>
+      <div class="st-legend">
+        <span class="st-leg-title">SAFFIR-SIMPSON</span>
+        <span class="st-leg"><i class="st-sw st-c1"></i>1</span>
+        <span class="st-leg"><i class="st-sw st-c2"></i>2</span>
+        <span class="st-leg"><i class="st-sw st-c3"></i>3</span>
+        <span class="st-leg"><i class="st-sw st-c4"></i>4</span>
+        <span class="st-leg"><i class="st-sw st-c5"></i>5</span>
       </div>
+    </div>
 
-      <div class="kst-controls">
-        <label class="kst-ctl">
-          <span class="kst-ctl-k">FORECAST TIME · +0 to +120 H</span>
-          <input class="kst-scrub" type="range" min="0" max="1000" value="300" step="1" aria-label="Forecast time">
-        </label>
-        <label class="kst-ctl">
-          <span class="kst-ctl-k">INTENSITY SHIFT</span>
-          <input class="kst-catrange" type="range" min="-2" max="2" value="0" step="1" aria-label="Intensity shift">
-        </label>
-        <div class="kst-btns">
-          <button class="kst-btn kst-play" aria-pressed="true">
-            <span class="kst-play-i">❚❚</span><span class="kst-play-t">PAUSE</span>
-          </button>
-          <button class="kst-btn kst-cone-toggle kst-on" aria-pressed="true">CONE</button>
-        </div>
-        <div class="kst-legend">
-          <span class="kst-lg"><i style="background:#7be0a0"></i>C1</span>
-          <span class="kst-lg"><i style="background:#ffd34d"></i>C2</span>
-          <span class="kst-lg"><i style="background:#ff9f43"></i>C3</span>
-          <span class="kst-lg"><i style="background:#ff6b5e"></i>C4</span>
-          <span class="kst-lg"><i style="background:#ff4d8d"></i>C5</span>
-        </div>
+    <div class="st-controls">
+      <button class="st-play" type="button" aria-pressed="true" aria-label="Play or pause storm">
+        <span class="st-play-ico" aria-hidden="true">❚❚</span><span class="st-play-lbl">PAUSE</span>
+      </button>
+      <div class="st-track-wrap">
+        <input class="st-scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub storm timeline" />
+        <div class="st-axis"><span>GENESIS</span><span>RECURVE</span><span>DISSIPATION</span></div>
       </div>
-    </aside>
+    </div>
+
+    <p class="st-cap">Basemap: NASA Earth Observatory — Saharan dust over the Atlantic (MODIS). Track and Saffir-Simpson intensity are a modeled demonstration. SSAI hurricane science.</p>
   </div>
-</div></div><p class="kit-int">Scrub the forecast timeline, play/pause the storm, shift intensity to change category/eye/size, toggle the cone, and click track nodes to jump.</p></section><section class="kit-card wide"><div class="kit-head"><span class="kit-num">33</span><h2>The CO2 record</h2><span class="kit-lens">Earth &amp; climate</span></div><p class="kit-use">An animated, scrubbable Keeling curve of atmospheric CO2 (1960–2026) showing the rising trend and seasonal sawtooth in SSAI&#x27;s dark-cosmic style.</p><div class="kit-stage"><div class="kfig" id="kit-keeling-co2"></div></div><p class="kit-int">Hover/drag the chart or use the year slider to read year + ppm; toggle the seasonal cycle, replay the draw-on; live accent recolor.</p></section><section class="kit-card wide"><div class="kit-head"><span class="kit-num">34</span><h2>Sea level rise</h2><span class="kit-lens">Earth &amp; climate</span></div><p class="kit-use">A coastline cross-section that floods as you raise sea level, showing illustrative land and population lost.</p><div class="kit-stage"><div class="kfig" id="kit-sea-level">
-  <div class="sl-head">
-    <span class="sl-eyebrow">Earth &amp; climate</span>
-    <h3 class="sl-title">Sea level rise</h3>
-    <p class="sl-sub">Raise the ocean and watch a coastline go under. From observation to understanding.</p>
-  </div>
-</div></div><p class="kit-int">Drag the slider (or tap a preset like &quot;2100 RCP8.5&quot; / &quot;+2 m&quot;) to raise sea level from 0 to 3 m and watch the water rise over land and buildings while readouts update.</p></section></div></section>
+</div></div><p class="kit-int">Press Play to fly the storm along its recurving track as it intensifies over warm water and weakens over land, or drag the timeline to scrub to any point; the category badge, max wind, central pressure, coordinates, track and forecast cone all update live.</p></section><section class="kit-card wide"><div class="kit-head"><span class="kit-num">33</span><h2>The CO2 record</h2><span class="kit-lens">Earth &amp; climate</span></div><p class="kit-use">An animated, scrubbable Keeling curve of atmospheric CO2 (1960–2026) showing the rising trend and seasonal sawtooth in SSAI&#x27;s dark-cosmic style.</p><div class="kit-stage"><div class="kfig" id="kit-keeling-co2"></div></div><p class="kit-int">Hover/drag the chart or use the year slider to read year + ppm; toggle the seasonal cycle, replay the draw-on; live accent recolor.</p></section><section class="kit-card wide"><div class="kit-head"><span class="kit-num">34</span><h2>Sea-level rise — Nile Delta</h2><span class="kit-lens">Earth &amp; climate</span></div><p class="kit-use">A sobering, premium sea-level-rise visualizer built on the real NASA MODIS/Terra true-color scene of the Nile Delta — one of Earth&#x27;s most exposed low-lying coasts. A 0 to +2 m slider (with 2050/2100 low- vs high-emissions scenario presets and an ice-sheet-collapse tail) raises the Mediterranean, and a translucent ocean overlay encroaches inland, drowning the lowest ground first. Land elevation is approximated per-pixel from the real imagery — proximity to existing water (low NIR / NDVI&amp;lt;0), low brightness, and low NDVI — so the flood spreads from the coast and up the river channels realistically rather than as a flat clip line. Shows live sea-level rise, estimated affected-land %, and the active scenario, with an honest caption that the inundation is an illustrative elevation-proxy projection, not a surveyed flood model. Demonstrates SSAI&#x27;s Earth-observation and climate-monitoring credibility.</p><div class="kit-stage"><div class="kfig" id="kit-sea-level"></div></div><p class="kit-int">Loads the real Nile Delta scene and paints the true-color basemap immediately on init (no interaction or scroll gating). Drag the sea-level slider from 0 to +2.0 m, or tap a scenario preset (Today, 2050 Low/High, 2100 Low/High, +2.0 m), to raise the water: a translucent ocean-blue overlay floods inward from the existing coast and channels, deepening in color over the lowest ground, with an accent-colored waterline that shimmers along the advancing shoreline. The HUD updates live — sea-level rise in metres, estimated land inundated %, and the year/emissions scenario — and the matching preset and on-image scenario chip highlight. Animation (waterline shimmer) pauses when the module scrolls off-screen and is disabled entirely under prefers-reduced-motion (still fully interactive, repainting on each slider change). The accent color is read live from --accent and applied to the slider, eyebrow, chip, waterline and main stat.</p></section></div></section>
 <section class="kit-group"><h2 class="kit-group-label">Physics &amp; the cosmos</h2><div class="kit-grid"><section class="kit-card wide"><div class="kit-head"><span class="kit-num">35</span><h2>Exoplanet Transit</h2><span class="kit-lens">Physics &amp; the cosmos</span></div><p class="kit-use">Watch a planet cross its star and see the tiny brightness dip plotted live — the transit method NASA uses to discover exoplanets.</p><div class="kit-stage"><div class="kfig" id="kit-exoplanet-transit">
   <div class="xt-shell">
     <div class="xt-scene">
@@ -5514,33 +5519,36 @@ body{transition:background .5s ease,color .5s ease}
       </div>
     </div>
   </div>
-</div></div><p class="kit-int">Drag the time-of-day slider to rotate the terminator and move the subsolar point; drag the season slider to tilt it toward polar day/night; press play to auto-advance time.</p></section><section class="kit-card wide"><div class="kit-head"><span class="kit-num">55</span><h2>Thermal detection</h2><span class="kit-lens">Earth &amp; Sun</span></div><p class="kit-use">Shows how Earth-observing satellites detect active wildfires from orbit by sweeping a thermal-infrared scan line across dotted continents and igniting hotspot anomalies only the thermal band can see.</p><div class="kit-stage"><div class="kfig" id="kit-wildfire-detect">
-  <h2 class="kfd-sr">Satellite thermal-infrared scan sweeping a dotted-continent map and detecting active wildfire hotspots from orbit.</h2>
-  <div class="kfd-head">
+</div></div><p class="kit-int">Drag the time-of-day slider to rotate the terminator and move the subsolar point; drag the season slider to tilt it toward polar day/night; press play to auto-advance time.</p></section><section class="kit-card wide"><div class="kit-head"><span class="kit-num">55</span><h2>Thermal fire detection</h2><span class="kit-lens">Earth &amp; Sun</span></div><p class="kit-use">Runs a satellite active-fire detector across a real NASA MODIS scene of the 2021 Dixie Fire: a scan line sweeps the true-color image and ignites burn-scar hotspots wherever the actual shortwave-infrared band is high and vegetation index is low.</p><div class="kit-stage"><div class="kfig" id="kit-wildfire-detect">
+  <h2 class="wfd2-sr">Satellite thermal-infrared scan line sweeping a real NASA MODIS image of the 2021 Dixie Fire, detecting active-fire and burn-scar hotspots from the genuine shortwave-infrared and near-infrared bands.</h2>
+  <div class="wfd2-head">
     <div>
-      <p class="kfd-title">Thermal detection</p>
-      <div class="kfd-sub">VIIRS-style active-fire scan from orbit</div>
+      <p class="wfd2-title">Thermal fire detection</p>
+      <div class="wfd2-sub">Active-fire scan &middot; real SWIR + NDVI bands</div>
     </div>
-    <div class="kfd-toggle" role="group" aria-label="Spectral band">
-      <button class="kfd-band" data-band="optical" aria-pressed="false">Optical</button>
-      <button class="kfd-band kfd-on" data-band="thermal" aria-pressed="true">Thermal IR</button>
+    <div class="wfd2-toggle" role="group" aria-label="Spectral view">
+      <button class="wfd2-band wfd2-on" data-view="optical" type="button" aria-pressed="true">Optical</button>
+      <button class="wfd2-band" data-view="thermal" type="button" aria-pressed="false">Thermal SWIR</button>
     </div>
   </div>
-  <div class="kfd-stage">
-    <canvas class="kfd-canvas" aria-label="Satellite map sweeping for thermal hotspots"></canvas>
-    <div class="kfd-coord">&mdash; scanning &mdash;</div>
+  <div class="wfd2-stage">
+    <canvas class="wfd2-canvas" aria-label="Real NASA MODIS Dixie Fire scene with a sweeping thermal scan line detecting fire hotspots"></canvas>
+    <div class="wfd2-load" data-wfd2="load"><span class="wfd2-load-ring"></span><span class="wfd2-load-txt">Loading NASA imagery&hellip;</span></div>
+    <div class="wfd2-coord" data-wfd2="coord">&mdash; scanning &mdash;</div>
+    <div class="wfd2-cap">NASA MODIS / Aqua &middot; Dixie Fire, Sierra Nevada &middot; 2021-10-08</div>
   </div>
-  <div class="kfd-hud">
-    <div class="kfd-stat kfd-accent"><div class="kfd-k">Hotspots detected</div><div class="kfd-v kfd-count">0</div></div>
-    <div class="kfd-stat"><div class="kfd-k">Swath coverage</div><div class="kfd-v kfd-sweepval">0%</div></div>
-    <div class="kfd-stat"><div class="kfd-k">Orbit pass</div><div class="kfd-v kfd-passval">#1</div></div>
+  <div class="wfd2-hud">
+    <div class="wfd2-stat wfd2-accent"><div class="wfd2-k">Hotspots detected</div><div class="wfd2-v" data-wfd2="count">0</div></div>
+    <div class="wfd2-stat"><div class="wfd2-k">Swath scanned</div><div class="wfd2-v" data-wfd2="sweep">0%</div></div>
+    <div class="wfd2-stat"><div class="wfd2-k">Peak SWIR</div><div class="wfd2-v" data-wfd2="frp">&mdash;</div></div>
+    <div class="wfd2-stat"><div class="wfd2-k">Orbit pass</div><div class="wfd2-v" data-wfd2="pass">#1</div></div>
   </div>
-  <div class="kfd-legend">
-    <span><span class="kfd-swatch kfd-sw-scan"></span>Scan line</span>
-    <span><span class="kfd-swatch kfd-sw-fire"></span>Active fire</span>
-    <span><span class="kfd-swatch kfd-sw-land"></span>Landmass</span>
+  <div class="wfd2-legend">
+    <span><span class="wfd2-swatch wfd2-sw-scan"></span>Scan line</span>
+    <span><span class="wfd2-swatch wfd2-sw-fire"></span>Detected hotspot (high SWIR, low NDVI)</span>
+    <span class="wfd2-note" data-wfd2="why">In shortwave-IR, burn scars and active fire stay bright while green canopy goes dark.</span>
   </div>
-</div></div><p class="kit-int">Toggle Optical vs Thermal IR to watch fires vanish/appear, hover the map for a live lat/long readout, and watch the scan line sweep with a running detection count, swath-coverage %, and orbit-pass tally.</p></section><section class="kit-card"><div class="kit-head"><span class="kit-num">56</span><h2>Atmospheric reentry</h2><span class="kit-lens">Earth &amp; Sun</span></div><p class="kit-use">Fly a capsule into the atmosphere and find the narrow reentry corridor between skipping back to space and burning up.</p><div class="kit-stage"><div class="kfig" id="kit-reentry-heating" data-mode="safe">
+</div></div><p class="kit-int">Loads the real true-color MODIS scene and renders immediately; a scan line sweeps left-to-right and flags burn-scar / active-fire hotspots by reading the genuine SWIR (2130 nm) and NDVI bands from the image, lighting them as pulsing detections with a running count, swath-progress and peak-SWIR readout. Toggle Optical vs Thermal SWIR to recolor the same real pixels as a heat ramp and see why fire pops in shortwave-infrared; hover the scene for a live latitude/longitude readout.</p></section><section class="kit-card"><div class="kit-head"><span class="kit-num">56</span><h2>Atmospheric reentry</h2><span class="kit-lens">Earth &amp; Sun</span></div><p class="kit-use">Fly a capsule into the atmosphere and find the narrow reentry corridor between skipping back to space and burning up.</p><div class="kit-stage"><div class="kfig" id="kit-reentry-heating" data-mode="safe">
   <h2 class="kit-sr">Interactive atmospheric reentry simulator: set entry angle and speed to find the survivable corridor.</h2>
   <div class="kit-stage">
     <canvas class="kit-canvas"></canvas>
@@ -14307,363 +14315,394 @@ document.addEventListener('visibilitychange',function(){ if(document.visibilityS
 <script>
 /* storm-tracker */
 (function(){
+  "use strict";
   var root = document.getElementById('kit-storm-tracker');
   if(!root) return;
+  var ACCENT = (function(){
+    try{ var v = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); return v || '#3cc8ff'; }
+    catch(e){ return '#3cc8ff'; }
+  })();
+
+  var stage = root.querySelector('.st-stage');
+  var cv = root.querySelector('.st-canvas');
+  var ctx = cv.getContext('2d');
+  var elCat = root.querySelector('.st-cat-num');
+  var elCatWord = root.querySelector('.st-cat-word');
+  var elWind = root.querySelector('.st-wind-val');
+  var elCoord = root.querySelector('.st-coord');
+  var elPress = root.querySelector('.st-press-val');
+  var playBtn = root.querySelector('.st-play');
+  var scrub = root.querySelector('.st-scrub');
+  var badge = root.querySelector('.st-badge');
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var stage = root.querySelector('.kst-stage');
-  var canvas = root.querySelector('.kst-canvas');
-  var ctx = canvas.getContext('2d');
-
-  var elCat = root.querySelector('.kst-cat-num');
-  var elCatLabel = root.querySelector('.kst-cat-label');
-  var elWind = root.querySelector('.kst-wind');
-  var elGust = root.querySelector('.kst-gust');
-  var elPres = root.querySelector('.kst-pres');
-  var elPos = root.querySelector('.kst-pos');
-  var elAdv = root.querySelector('.kst-adv');
-  var elClock = root.querySelector('.kst-clock');
-
-  var scrub = root.querySelector('.kst-scrub');
-  var catRange = root.querySelector('.kst-catrange');
-  var playBtn = root.querySelector('.kst-play');
-  var coneToggle = root.querySelector('.kst-cone-toggle');
-
-  var accent = '#3cc8ff', accentRGB = '60,200,255';
-  function hexToRgb(h){
-    h = (''+h).replace('#','');
-    if(h.length===3){ h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2]; }
-    var n = parseInt(h,16);
-    if(isNaN(n)) return [60,200,255];
-    return [(n>>16)&255,(n>>8)&255,n&255];
-  }
-  function readAccent(){
-    var cs = getComputedStyle(document.documentElement);
-    var a = (cs.getPropertyValue('--accent')||'').trim();
-    if(a) accent = a;
-    var r = (cs.getPropertyValue('--accent-rgb')||'').trim();
-    if(r){ accentRGB = r; }
-    else { var c = hexToRgb(accent); accentRGB = c[0]+','+c[1]+','+c[2]; }
-  }
-  readAccent();
-
-  var W = 800, H = 480, dpr = 1;
-  function resize(){
-    var r = stage.getBoundingClientRect();
-    W = Math.max(280, r.width);
-    H = Math.max(300, r.height);
-    dpr = Math.min(window.devicePixelRatio||1, 2);
-    canvas.width = Math.round(W*dpr);
-    canvas.height = Math.round(H*dpr);
-    canvas.style.width = W+'px';
-    canvas.style.height = H+'px';
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    buildStars();
-  }
-
-  var nodes = [
-    {x:0.86, y:0.74, kt:70,  pres:986},
-    {x:0.74, y:0.66, kt:90,  pres:968},
-    {x:0.62, y:0.57, kt:105, pres:948},
-    {x:0.50, y:0.47, kt:125, pres:922},
-    {x:0.40, y:0.37, kt:140, pres:902},
-    {x:0.34, y:0.27, kt:120, pres:928},
-    {x:0.33, y:0.17, kt:88,  pres:966},
-    {x:0.36, y:0.08, kt:65,  pres:990}
+  var TRACK = [
+    {x:0.86, y:0.30, lon:-42, lat:14, warm:1.00},
+    {x:0.80, y:0.33, lon:-48, lat:15, warm:1.00},
+    {x:0.74, y:0.36, lon:-54, lat:16, warm:1.00},
+    {x:0.68, y:0.39, lon:-60, lat:17, warm:1.00},
+    {x:0.62, y:0.42, lon:-66, lat:18, warm:0.98},
+    {x:0.56, y:0.45, lon:-72, lat:19, warm:0.96},
+    {x:0.50, y:0.47, lon:-78, lat:21, warm:0.95},
+    {x:0.45, y:0.48, lon:-82, lat:23, warm:0.90},
+    {x:0.41, y:0.47, lon:-85, lat:25, warm:0.97},
+    {x:0.39, y:0.44, lon:-87, lat:27, warm:0.99},
+    {x:0.38, y:0.40, lon:-88, lat:29, warm:0.55},
+    {x:0.39, y:0.35, lon:-87, lat:32, warm:0.18},
+    {x:0.43, y:0.30, lon:-84, lat:35, warm:0.10},
+    {x:0.49, y:0.25, lon:-79, lat:38, warm:0.30},
+    {x:0.57, y:0.21, lon:-72, lat:41, warm:0.45}
   ];
 
-  function sample(p){
-    p = Math.max(0, Math.min(0.99999, p));
-    var seg = p*(nodes.length-1);
-    var i = Math.floor(seg);
-    var lt = seg - i;
-    var p0 = nodes[Math.max(0,i-1)];
-    var p1 = nodes[i];
-    var p2 = nodes[Math.min(nodes.length-1,i+1)];
-    var p3 = nodes[Math.min(nodes.length-1,i+2)];
-    function cr(a,b,c,d){
-      var t=lt, t2=t*t, t3=t2*t;
-      return 0.5*((2*b)+(-a+c)*t+(2*a-5*b+4*c-d)*t2+(-a+3*b-3*c+d)*t3);
+  function catFor(w){
+    if(w>=157) return 5;
+    if(w>=130) return 4;
+    if(w>=111) return 3;
+    if(w>=96)  return 2;
+    if(w>=74)  return 1;
+    return 0;
+  }
+  var CAT_WORDS = ['TROPICAL STORM','CATEGORY 1','CATEGORY 2','CATEGORY 3','CATEGORY 4','CATEGORY 5'];
+
+  var SAMPLES = 600;
+  var path = [];
+  function catmull(p0,p1,p2,p3,t,k){
+    var t2=t*t,t3=t2*t;
+    return 0.5*((2*p1[k]) + (-p0[k]+p2[k])*t + (2*p0[k]-5*p1[k]+4*p2[k]-p3[k])*t2 + (-p0[k]+3*p1[k]-3*p2[k]+p3[k])*t3);
+  }
+  (function buildPath(){
+    var n = TRACK.length, raw = [];
+    for(var s=0;s<SAMPLES;s++){
+      var u = s/(SAMPLES-1)*(n-1);
+      var i = Math.min(n-2, Math.floor(u));
+      var t = u - i;
+      var p0=TRACK[Math.max(0,i-1)], p1=TRACK[i], p2=TRACK[i+1], p3=TRACK[Math.min(n-1,i+2)];
+      raw.push({
+        x:catmull(p0,p1,p2,p3,t,'x'),
+        y:catmull(p0,p1,p2,p3,t,'y'),
+        lon:catmull(p0,p1,p2,p3,t,'lon'),
+        lat:catmull(p0,p1,p2,p3,t,'lat'),
+        warm:Math.max(0,Math.min(1,catmull(p0,p1,p2,p3,t,'warm')))
+      });
     }
-    return {x:cr(p0.x,p1.x,p2.x,p3.x), y:cr(p0.y,p1.y,p2.y,p3.y), kt:cr(p0.kt,p1.kt,p2.kt,p3.kt), pres:cr(p0.pres,p1.pres,p2.pres,p3.pres)};
+    var wind = 35;
+    for(var j=0;j<raw.length;j++){
+      var warm = raw[j].warm;
+      var target = 35 + warm*warm*135;
+      var rate = (target>wind) ? 0.020 + warm*0.018 : 0.10;
+      wind += (target - wind)*rate;
+      wind = Math.max(28, Math.min(175, wind));
+      raw[j].wind = wind;
+      raw[j].cat = catFor(wind);
+    }
+    path = raw;
+  })();
+
+  var img = new Image();
+  var imgReady = false;
+  function onImg(){ imgReady = true; render(); }
+  img.onload = onImg;
+  img.onerror = function(){ imgReady = false; render(); };
+  img.src = 'assets/images/saharan-dust-atlantic.jpg';
+  if(img.complete && img.naturalWidth) onImg();
+
+  var W=0,H=0,DPR=1;
+  function resize(){
+    DPR = Math.min(2, window.devicePixelRatio||1);
+    var r = stage.getBoundingClientRect();
+    W = Math.max(280, r.width);
+    H = Math.max(220, r.height);
+    cv.width = Math.round(W*DPR);
+    cv.height = Math.round(H*DPR);
+    cv.style.width = W+'px';
+    cv.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    render();
   }
 
-  function ktToCat(kt){
-    if(kt<64) return 0;
-    if(kt<83) return 1;
-    if(kt<96) return 2;
-    if(kt<113) return 3;
-    if(kt<137) return 4;
-    return 5;
-  }
+  var prog = 0, playing = !reduce, spin = 0, lastT = 0;
 
-  var catColors = {0:'#67e8c8',1:'#7be0a0',2:'#ffd34d',3:'#ff9f43',4:'#ff6b5e',5:'#ff4d8d'};
-  var catNames = {0:'TROP. STORM',1:'CATEGORY 1',2:'CATEGORY 2',3:'CATEGORY 3',4:'CATEGORY 4',5:'CATEGORY 5'};
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function hex2rgb(h){h=h.replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c;}).join('');var n=parseInt(h,16);return[(n>>16)&255,(n>>8)&255,n&255];}
+  var ACC = hex2rgb(ACCENT);
+  function acca(a){return 'rgba('+ACC[0]+','+ACC[1]+','+ACC[2]+','+a+')';}
 
-  var progress = 0.30;
-  var playing = !reduce;
-  var spin = 0;
-  var showCone = true;
-  var catBias = 0;
-
-  scrub.value = String(Math.round(progress*1000));
-  catRange.value = '0';
-
-  function px(nx){ return 28 + nx*(W-56); }
-  function py(ny){ return 24 + ny*(H-90); }
-
-  var stars = [];
-  function buildStars(){
-    stars = [];
-    var n = Math.round((W*H)/9000);
-    for(var i=0;i<n;i++){
-      stars.push({x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.1+0.2, a:Math.random()*0.5+0.15, tw:Math.random()*Math.PI*2});
+  function catColor(c){
+    switch(c){
+      case 5: return '#ffffff';
+      case 4: return '#ffd2a6';
+      case 3: return '#ffb14e';
+      case 2: return '#ffd166';
+      case 1: return acca(0.95);
+      default: return ACCENT;
     }
   }
 
-  function hexA(hex,a){ var c = hexToRgb(hex); return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')'; }
+  function idxAt(p){ return Math.max(0, Math.min(path.length-1, Math.round(p*(path.length-1)))); }
+  function px(p){return p.x*W;}
+  function py(p){return p.y*H;}
 
-  function drawBackdrop(t){
+  function drawBase(){
     ctx.clearRect(0,0,W,H);
-    var g = ctx.createLinearGradient(0,0,W,H);
-    g.addColorStop(0,'#070420'); g.addColorStop(0.55,'#050314'); g.addColorStop(1,'#08051c');
-    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
-    for(var i=0;i<stars.length;i++){
-      var s = stars[i];
-      var tw = reduce ? s.a : s.a*(0.6+0.4*Math.sin(t*0.0015+s.tw));
-      ctx.globalAlpha = tw; ctx.fillStyle = '#f4f5ff';
-      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#050314';
+    ctx.fillRect(0,0,W,H);
+    if(imgReady){
+      var iw=img.naturalWidth, ih=img.naturalHeight;
+      var scale = Math.max(W/iw, H/ih);
+      var dw=iw*scale, dh=ih*scale;
+      ctx.drawImage(img, (W-dw)/2,(H-dh)/2,dw,dh);
     }
-    ctx.globalAlpha = 1;
-    drawGraticule();
-    drawLandmass();
+    ctx.fillStyle = 'rgba(22,20,95,0.30)';
+    ctx.fillRect(0,0,W,H);
+    var g = ctx.createLinearGradient(0,0,W,0);
+    g.addColorStop(0, acca(0.05));
+    g.addColorStop(1, 'rgba(5,3,20,0.10)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+    var vg = ctx.createRadialGradient(W*0.5,H*0.5,Math.min(W,H)*0.25, W*0.5,H*0.5,Math.max(W,H)*0.72);
+    vg.addColorStop(0,'rgba(5,3,20,0)');
+    vg.addColorStop(1,'rgba(5,3,20,0.62)');
+    ctx.fillStyle = vg; ctx.fillRect(0,0,W,H);
   }
 
   function drawGraticule(){
     ctx.save();
-    ctx.strokeStyle = 'rgba(166,171,230,0.10)'; ctx.lineWidth = 1;
-    var cols = 7, rows = 5, i, j;
-    for(i=0;i<=cols;i++){ var x = px(i/cols); ctx.beginPath(); ctx.moveTo(x,py(0)); ctx.lineTo(x,py(1)); ctx.stroke(); }
-    for(j=0;j<=rows;j++){ var y = py(j/rows); ctx.beginPath(); ctx.moveTo(px(0),y); ctx.lineTo(px(1),y); ctx.stroke(); }
-    ctx.fillStyle = 'rgba(166,171,230,0.42)'; ctx.font = '10px Inter, sans-serif';
-    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-    for(var k=0;k<=cols;k++){ var lon = 90 - k*10; ctx.fillText(lon+'°W', px(k/cols)+2, py(1)+4); }
-    ctx.textAlign = 'right';
-    for(var m=0;m<=rows;m++){ var lat = 12 + (rows-m)*7; ctx.fillText(lat+'°N', px(0)-4, py(m/rows)-5); }
+    ctx.strokeStyle = 'rgba(166,171,230,0.10)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3,5]);
+    var cols=6, rows=4, i;
+    for(i=1;i<cols;i++){var x=W*i/cols; ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(i=1;i<rows;i++){var y=H*i/rows; ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
     ctx.restore();
   }
 
-  function drawLandmass(){
+  function drawConeAndTrack(curIdx){
     ctx.save();
-    var pts = [[0.0,0.0],[0.0,0.42],[0.10,0.40],[0.16,0.30],[0.13,0.20],[0.20,0.12],[0.28,0.14],[0.33,0.05],[0.30,0.0]];
-    ctx.beginPath();
-    for(var i=0;i<pts.length;i++){ var X = px(pts[i][0]), Y = py(pts[i][1]); if(i===0) ctx.moveTo(X,Y); else ctx.lineTo(X,Y); }
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(22,20,95,0.55)'; ctx.fill();
-    ctx.strokeStyle = 'rgba(166,171,230,0.28)'; ctx.lineWidth = 1.2; ctx.stroke();
-    ctx.restore();
-  }
-
-  function drawCone(curP){
-    if(!showCone) return;
-    var steps = 26, top = [], bot = [], i;
-    for(i=0;i<=steps;i++){
-      var p = curP + (1-curP)*(i/steps);
-      var s = sample(p);
-      var x = px(s.x), y = py(s.y);
-      var lead = (p-curP)/Math.max(0.0001,(1-curP));
-      var spread = (8 + lead*lead*90);
-      var s2 = sample(Math.min(0.9999,p+0.01));
-      var dx = px(s2.x)-x, dy = py(s2.y)-y;
-      var len = Math.hypot(dx,dy)||1;
-      var nx = -dy/len, ny = dx/len;
-      top.push([x+nx*spread, y+ny*spread]);
-      bot.push([x-nx*spread, y-ny*spread]);
-    }
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(top[0][0],top[0][1]);
-    for(var a=1;a<top.length;a++) ctx.lineTo(top[a][0],top[a][1]);
-    for(var b=bot.length-1;b>=0;b--) ctx.lineTo(bot[b][0],bot[b][1]);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba('+accentRGB+',0.10)'; ctx.fill();
-    ctx.setLineDash([5,5]);
-    ctx.strokeStyle = 'rgba('+accentRGB+',0.40)'; ctx.lineWidth = 1.2; ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.restore();
-  }
-
-  function drawTrack(curP){
-    ctx.save();
-    ctx.beginPath();
-    for(var i=0;i<=100;i++){ var s = sample(i/100); var x = px(s.x), y = py(s.y); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); }
-    ctx.strokeStyle = 'rgba(166,171,230,0.30)'; ctx.lineWidth = 1.4; ctx.setLineDash([2,4]); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.beginPath();
-    var seg = Math.max(1, Math.round(curP*100));
-    for(var j=0;j<=seg;j++){ var p = j/100; if(p>curP) p = curP; var s2 = sample(p); var x2 = px(s2.x), y2 = py(s2.y); if(j===0) ctx.moveTo(x2,y2); else ctx.lineTo(x2,y2); }
-    ctx.strokeStyle = 'rgba('+accentRGB+',0.85)'; ctx.lineWidth = 2.2; ctx.stroke();
-    for(var k=0;k<nodes.length;k++){
-      var nd = nodes[k]; var X = px(nd.x), Y = py(nd.y);
-      ctx.beginPath(); ctx.arc(X,Y,3.2,0,Math.PI*2);
-      ctx.fillStyle = catColors[ktToCat(nd.kt)]; ctx.globalAlpha = 0.9; ctx.fill(); ctx.globalAlpha = 1;
-      ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(5,3,20,0.8)'; ctx.stroke();
-    }
-    ctx.restore();
-  }
-
-  function drawStorm(cur, heading){
-    var x = px(cur.x), y = py(cur.y);
-    var cat = ktToCat(cur.kt);
-    var col = catColors[cat];
-    var base = Math.min(W,H)*0.5;
-    var R = (28 + (cur.kt-55)*0.95) * (base/240);
-    R = Math.max(20, R);
-    var eyeR = Math.max(2.5, R*(0.10 + (5-cat)*0.012));
-
-    ctx.save();
-    ctx.translate(x,y);
-    var glow = ctx.createRadialGradient(0,0,eyeR,0,0,R*1.25);
-    glow.addColorStop(0, hexA(col,0.0)); glow.addColorStop(0.5, hexA(col,0.18)); glow.addColorStop(1, hexA(col,0.0));
-    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(0,0,R*1.25,0,Math.PI*2); ctx.fill();
-
-    var arms = 5;
-    ctx.globalCompositeOperation = 'lighter';
-    for(var a=0;a<arms;a++){
-      ctx.beginPath();
-      var off = spin + a*(Math.PI*2/arms); var started=false;
-      for(var th=0; th<Math.PI*3.0; th+=0.12){
-        var rr = eyeR*1.05 + (R-eyeR)*(th/(Math.PI*3.0));
-        var ang = -th + off;
-        var bx = Math.cos(ang)*rr, by = Math.sin(ang)*rr;
-        if(!started){ ctx.moveTo(bx,by); started=true; } else ctx.lineTo(bx,by);
+    var coneStart = curIdx;
+    if(coneStart < path.length-2){
+      var left=[], right=[], total=path.length-1-coneStart;
+      for(var i=coneStart;i<path.length;i++){
+        var p=path[i];
+        var ahead = (i-coneStart)/Math.max(1,total);
+        var rad = lerp(8, 64, ahead) * (Math.min(W,H)/520);
+        var a=path[Math.max(coneStart,i-1)], b=path[Math.min(path.length-1,i+1)];
+        var dx=(b.x-a.x)*W, dy=(b.y-a.y)*H, len=Math.hypot(dx,dy)||1;
+        var nx=-dy/len, ny=dx/len;
+        left.push([px(p)+nx*rad, py(p)+ny*rad]);
+        right.push([px(p)-nx*rad, py(p)-ny*rad]);
       }
-      ctx.strokeStyle = hexA(col, 0.14 + cat*0.03);
-      ctx.lineWidth = Math.max(2, R*0.10); ctx.lineCap = 'round'; ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(left[0][0],left[0][1]);
+      for(var L=1;L<left.length;L++) ctx.lineTo(left[L][0],left[L][1]);
+      for(var R=right.length-1;R>=0;R--) ctx.lineTo(right[R][0],right[R][1]);
+      ctx.closePath();
+      ctx.fillStyle = acca(0.10);
+      ctx.fill();
+      ctx.setLineDash([4,4]);
+      ctx.lineWidth=1;
+      ctx.strokeStyle = acca(0.40);
+      ctx.stroke();
+      ctx.setLineDash([]);
     }
-    ctx.globalCompositeOperation = 'source-over';
 
-    ctx.beginPath(); ctx.arc(0,0,eyeR*1.7,0,Math.PI*2);
-    ctx.strokeStyle = hexA(col, 0.85); ctx.lineWidth = Math.max(2, R*0.10); ctx.stroke();
+    ctx.lineCap='round';
+    for(var s=1;s<=curIdx;s++){
+      var p1=path[s-1], p2=path[s];
+      ctx.beginPath();
+      ctx.moveTo(px(p1),py(p1));
+      ctx.lineTo(px(p2),py(p2));
+      ctx.lineWidth = 2.2;
+      ctx.strokeStyle = catColor(p2.cat);
+      ctx.globalAlpha = 0.92;
+      ctx.stroke();
+    }
+    ctx.globalAlpha=1;
 
-    ctx.beginPath(); ctx.arc(0,0,eyeR,0,Math.PI*2);
-    var eyeg = ctx.createRadialGradient(0,0,0,0,0,eyeR);
-    eyeg.addColorStop(0,'rgba(8,5,28,0.95)'); eyeg.addColorStop(1,'rgba(8,5,28,0.4)');
-    ctx.fillStyle = eyeg; ctx.fill();
-    ctx.strokeStyle = hexA(col,0.9); ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.beginPath();
+    ctx.setLineDash([2,6]);
+    ctx.lineWidth=1.4;
+    ctx.strokeStyle = acca(0.6);
+    for(var f=curIdx; f<path.length; f++){
+      var pf=path[f];
+      if(f===curIdx) ctx.moveTo(px(pf),py(pf)); else ctx.lineTo(px(pf),py(pf));
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
 
-    ctx.rotate(heading);
-    ctx.beginPath(); ctx.moveTo(R*1.05,0); ctx.lineTo(R*1.05-7,-5); ctx.lineTo(R*1.05-7,5); ctx.closePath();
-    ctx.fillStyle = 'rgba('+accentRGB+',0.9)'; ctx.fill();
+    for(var w=0; w<TRACK.length; w++){
+      var pi = idxAt(w/(TRACK.length-1));
+      if(pi<=curIdx){
+        var pp=path[pi];
+        ctx.beginPath();
+        ctx.arc(px(pp),py(pp),2.6,0,Math.PI*2);
+        ctx.fillStyle = catColor(pp.cat);
+        ctx.fill();
+        ctx.strokeStyle='rgba(5,3,20,0.7)';
+        ctx.lineWidth=1; ctx.stroke();
+      }
+    }
     ctx.restore();
   }
 
-  function lonlat(s){ return {lon:90 - s.x*70, lat:12 + (1-s.y)*35}; }
+  function drawStorm(cur, intensity, c){
+    var cx=px(cur), cy=py(cur), base = Math.min(W,H);
+    var rOuter = lerp(26, 78, intensity) * (base/520);
+    var rEye = lerp(8, 4.5, intensity) * (base/520);
+    var arms = (c>=1)?2:1, dir = -1;
 
-  function updatePanel(cur){
-    var cat = ktToCat(cur.kt);
-    var kmh = Math.round(cur.kt*1.852);
-    var gust = Math.round(kmh*1.25);
-    var col = catColors[cat];
-    elCat.textContent = cat===0 ? 'TS' : String(cat);
-    elCat.style.color = col;
-    elCatLabel.textContent = catNames[cat];
-    elCatLabel.style.color = col;
-    elWind.textContent = kmh + ' km/h';
-    elGust.textContent = 'gusts ' + gust + ' km/h';
-    elPres.textContent = Math.round(cur.pres) + ' hPa';
-    var ll = lonlat(cur);
-    elPos.textContent = ll.lat.toFixed(1)+'°N  '+ll.lon.toFixed(1)+'°W';
-    elClock.textContent = '+' + Math.round(progress*120) + ' H';
-    var adv;
-    if(cat>=4) adv = 'CATASTROPHIC — evacuate coast';
-    else if(cat===3) adv = 'MAJOR — devastating winds';
-    else if(cat>=1) adv = 'HURRICANE WARNING in effect';
-    else adv = 'TROPICAL STORM — monitor';
-    elAdv.textContent = adv;
-    elAdv.style.color = col;
-    var bars = root.querySelectorAll('.kst-meter-seg');
-    for(var i=0;i<bars.length;i++){
-      var lvl = i+1;
-      if(lvl<=cat){ bars[i].style.background = catColors[lvl]; bars[i].style.opacity='1'; }
-      else { bars[i].style.background = 'rgba(166,171,230,0.18)'; bars[i].style.opacity='0.6'; }
+    ctx.save();
+    ctx.translate(cx,cy);
+
+    var gg = ctx.createRadialGradient(0,0,rEye*0.5, 0,0,rOuter*1.15);
+    gg.addColorStop(0,'rgba(255,255,255,'+lerp(0.10,0.22,intensity)+')');
+    gg.addColorStop(0.5,'rgba(232,236,255,'+lerp(0.05,0.12,intensity)+')');
+    gg.addColorStop(1,'rgba(232,236,255,0)');
+    ctx.beginPath(); ctx.arc(0,0,rOuter*1.15,0,Math.PI*2); ctx.fillStyle=gg; ctx.fill();
+
+    ctx.rotate(spin*dir);
+    for(var bnd=0;bnd<arms;bnd++){
+      var off = (Math.PI*2/arms)*bnd;
+      ctx.beginPath();
+      var steps=160;
+      for(var i=0;i<=steps;i++){
+        var t=i/steps;
+        var ang = off + t*Math.PI*2*(1.4+intensity*0.9);
+        var rr = lerp(rEye*1.3, rOuter, Math.pow(t,0.85));
+        var x=Math.cos(ang)*rr, y=Math.sin(ang)*rr;
+        if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.lineWidth = lerp(2.4, 6.5, intensity);
+      ctx.strokeStyle = 'rgba(255,255,255,'+lerp(0.16,0.42,intensity)+')';
+      ctx.lineCap='round';
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.arc(0,0,rEye*2.2,0,Math.PI*2);
+    ctx.lineWidth = lerp(3,9,intensity);
+    ctx.strokeStyle='rgba(255,255,255,'+lerp(0.30,0.7,intensity)+')';
+    ctx.stroke();
+
+    ctx.rotate(-spin*dir);
+
+    ctx.beginPath();
+    ctx.arc(0,0,rEye,0,Math.PI*2);
+    var eg = ctx.createRadialGradient(0,0,0, 0,0,rEye);
+    eg.addColorStop(0, 'rgba(8,14,40,0.92)');
+    eg.addColorStop(1, 'rgba(20,28,70,0.30)');
+    ctx.fillStyle=eg; ctx.fill();
+    ctx.beginPath();
+    ctx.arc(0,0,rEye,0,Math.PI*2);
+    ctx.lineWidth=1.4;
+    ctx.strokeStyle=catColor(c);
+    ctx.globalAlpha = 0.9;
+    ctx.stroke();
+    ctx.globalAlpha=1;
+
+    ctx.beginPath();
+    ctx.arc(0,0,rOuter*1.18,0,Math.PI*2);
+    ctx.setLineDash([3,7]);
+    ctx.lineWidth=1;
+    ctx.strokeStyle=acca(0.5);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(cx,cy);
+    var nxt = path[Math.min(path.length-1, idxAt(prog)+8)];
+    var hx=(nxt.x-cur.x)*W, hy=(nxt.y-cur.y)*H;
+    ctx.rotate(Math.atan2(hy,hx));
+    ctx.beginPath();
+    ctx.moveTo(rOuter*1.18,0);
+    ctx.lineTo(rOuter*1.18+14,0);
+    ctx.lineTo(rOuter*1.18+8,-4);
+    ctx.moveTo(rOuter*1.18+14,0);
+    ctx.lineTo(rOuter*1.18+8,4);
+    ctx.strokeStyle=acca(0.85);
+    ctx.lineWidth=1.4;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function fmtCoord(cur){
+    var ns = cur.lat>=0?'N':'S', ew = cur.lon>=0?'E':'W';
+    return Math.abs(cur.lat).toFixed(1)+'°'+ns+' '+Math.abs(cur.lon).toFixed(1)+'°'+ew;
+  }
+  function pressFor(w){ return Math.round(1010 - (w-30)*1.05); }
+
+  function updateHUD(cur){
+    var c = cur.cat;
+    elCat.textContent = c>0? c : 'TS';
+    elCatWord.textContent = CAT_WORDS[c];
+    elWind.textContent = Math.round(cur.wind);
+    elCoord.textContent = fmtCoord(cur);
+    elPress.textContent = pressFor(cur.wind);
+    badge.style.setProperty('--cat-col', catColor(c));
+    badge.setAttribute('data-cat', String(c));
+  }
+
+  function render(){
+    if(!W||!H) return;
+    drawBase();
+    drawGraticule();
+    if(path.length){
+      var idx = idxAt(prog), cur = path[idx];
+      var intensity = Math.max(0, Math.min(1, (cur.wind-35)/(170-35)));
+      drawConeAndTrack(idx);
+      drawStorm(cur, intensity, cur.cat);
+      updateHUD(cur);
     }
   }
 
-  function render(ts){
-    var cur = sample(progress);
-    cur.kt = Math.max(35, Math.min(165, cur.kt + catBias*16));
-    cur.pres = Math.max(890, Math.min(1004, cur.pres - catBias*15));
-    var s2 = sample(Math.min(0.9999, progress+0.01));
-    var heading = Math.atan2(py(s2.y)-py(cur.y), px(s2.x)-px(cur.x));
-    drawBackdrop(ts);
-    drawCone(progress);
-    drawTrack(progress);
-    drawStorm(cur, heading);
-    updatePanel(cur);
-  }
-
-  var last = 0, raf = null;
-  function frame(ts){
-    if(!last) last = ts;
-    var dt = ts-last; last = ts;
-    readAccent();
-    if(playing && !reduce){
-      progress += dt*0.000045;
-      if(progress>=1){ progress = 0; }
-      scrub.value = String(Math.round(progress*1000));
+  var raf=null, visible=true;
+  function tick(t){
+    if(!lastT) lastT=t;
+    var dt=Math.min(50,t-lastT); lastT=t;
+    if(playing){
+      prog += dt*0.0000115;
+      if(prog>=1){ prog=1; playing=false; setPlay(false); }
+      scrub.value = String(Math.round(prog*1000));
     }
-    spin += dt*0.0016;
-    render(ts);
-    raf = requestAnimationFrame(frame);
+    spin += dt*0.0012;
+    render();
+    raf = visible ? requestAnimationFrame(tick) : null;
+  }
+  function startLoop(){ if(!raf){ lastT=0; raf=requestAnimationFrame(tick); } }
+  function stopLoop(){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+
+  function setPlay(on){
+    playing=on;
+    playBtn.setAttribute('aria-pressed', on?'true':'false');
+    playBtn.querySelector('.st-play-ico').textContent = on?'❚❚':'▶';
+    playBtn.querySelector('.st-play-lbl').textContent = on?'PAUSE':'PLAY';
   }
 
-  scrub.addEventListener('input', function(){ progress = (+scrub.value)/1000; if(reduce) render(performance.now()); });
-  catRange.addEventListener('input', function(){ catBias = +catRange.value; if(reduce) render(performance.now()); });
   playBtn.addEventListener('click', function(){
-    playing = !playing;
-    playBtn.setAttribute('aria-pressed', playing?'true':'false');
-    playBtn.querySelector('.kst-play-i').textContent = playing ? '❚❚' : '▶';
-    playBtn.querySelector('.kst-play-t').textContent = playing ? 'PAUSE' : 'PLAY';
+    if(prog>=1){ prog=0; }
+    setPlay(!playing);
   });
-  coneToggle.addEventListener('click', function(){
-    showCone = !showCone;
-    coneToggle.setAttribute('aria-pressed', showCone?'true':'false');
-    coneToggle.classList.toggle('kst-on', showCone);
-    if(reduce) render(performance.now());
-  });
-  canvas.addEventListener('click', function(e){
-    var r = canvas.getBoundingClientRect();
-    var mx = e.clientX-r.left, my = e.clientY-r.top, best=-1, bd=1e9;
-    for(var k=0;k<nodes.length;k++){
-      var X=px(nodes[k].x), Y=py(nodes[k].y), d=Math.hypot(mx-X,my-Y);
-      if(d<bd){bd=d;best=k;}
-    }
-    if(best>=0 && bd<26){
-      progress = best/(nodes.length-1);
-      scrub.value = String(Math.round(progress*1000));
-      playing = false;
-      playBtn.setAttribute('aria-pressed','false');
-      playBtn.querySelector('.kst-play-i').textContent='▶';
-      playBtn.querySelector('.kst-play-t').textContent='PLAY';
-      if(reduce) render(performance.now());
-    }
+  scrub.addEventListener('input', function(){
+    prog = Math.max(0,Math.min(1, scrub.value/1000));
+    setPlay(false);
+    render();
   });
 
-  var ro = (typeof ResizeObserver!=='undefined') ? new ResizeObserver(function(){ resize(); if(reduce) render(performance.now()); }) : null;
-  if(ro) ro.observe(stage);
-  window.addEventListener('resize', function(){ resize(); if(reduce) render(performance.now()); });
+  if(window.ResizeObserver){ new ResizeObserver(function(){resize();}).observe(stage); }
+  else { window.addEventListener('resize', resize); }
+
+  if(window.IntersectionObserver){
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        visible = e.isIntersecting;
+        if(visible) startLoop(); else stopLoop();
+      });
+    }, {threshold:0.01}).observe(root);
+  }
 
   resize();
-  if(reduce){
-    playBtn.querySelector('.kst-play-i').textContent='▶';
-    playBtn.querySelector('.kst-play-t').textContent='PLAY';
-    playBtn.setAttribute('aria-pressed','false');
-    render(performance.now());
-  } else {
-    raf = requestAnimationFrame(frame);
-  }
+  setPlay(!reduce);
+  startLoop();
+  if(reduce){ stopLoop(); render(); }
 })();
 </script>
 <script>
@@ -14800,95 +14839,323 @@ document.addEventListener('visibilitychange',function(){ if(document.visibilityS
 /* sea-level */
 (function(){
   var root=document.getElementById('kit-sea-level');
-  if(!root) return;
-  var reduce=false; try{reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  if(!root||root.getAttribute('data-sl-init'))return;
+  root.setAttribute('data-sl-init','1');
+  var q=function(s){return root.querySelector(s);};
 
-  function el(t,c){var e=document.createElement(t);if(c)e.className=c;return e;}
-
-  var stage=el('div','sl-stage');
-  var canvas=el('canvas','sl-canvas');
-  stage.appendChild(canvas);
-  root.appendChild(stage);
-
-  var hud=el('div','sl-hud');
-  hud.innerHTML=
-    '<div class="sl-stat sl-main"><span class="sl-k">Sea level rise</span><b class="sl-v" data-k="level">+0.00 m</b></div>'+
-    '<div class="sl-stat"><span class="sl-k">Land submerged</span><b class="sl-v" data-k="land">0 km&#178;</b></div>'+
-    '<div class="sl-stat"><span class="sl-k">People displaced</span><b class="sl-v" data-k="pop">0</b></div>';
-  root.appendChild(hud);
-
-  var ctrl=el('div','sl-ctrl');
-  var sw=el('div','sl-sw');
-  var slider=el('input');slider.type='range';slider.min='0';slider.max='300';slider.step='1';slider.value='0';slider.className='sl-slider';slider.setAttribute('aria-label','Sea level rise in centimeters');
-  sw.appendChild(slider);
-  var scale=el('div','sl-scale');
-  ['0','1 m','2 m','3 m'].forEach(function(t){var s=el('span');s.textContent=t;scale.appendChild(s);});
-  sw.appendChild(scale);
-  var pre=el('div','sl-pre');
-  [['0','Today'],['59','2100 RCP4.5'],['101','2100 RCP8.5'],['200','+2 m'],['300','+3 m']].forEach(function(p){
-    var b=el('button','sl-btn');b.type='button';b.textContent=p[1];b.setAttribute('data-v',p[0]);if(p[0]==='0')b.classList.add('on');pre.appendChild(b);
-  });
-  ctrl.appendChild(sw);ctrl.appendChild(pre);
-  root.appendChild(ctrl);
-
-  var accent='#3cc8ff',aRGB='60,200,255';
-  function hexRGB(h){h=h.replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];var n=parseInt(h,16);return (n>>16&255)+','+(n>>8&255)+','+(n&255);}
-  function readAccent(){try{var cs=getComputedStyle(document.documentElement);var a=cs.getPropertyValue('--accent').trim();if(a)accent=a;var r=cs.getPropertyValue('--accent-rgb').trim();if(r){aRGB=r;}else if(a&&a.charAt(0)==='#'){aRGB=hexRGB(a);}}catch(e){}}
-  readAccent();
-
-  var MAX_M=3.0,target=0,level=0;
-  function popBelow(m){return 1-Math.exp(-m/2.3);}
-  function landBelow(m){return 1-Math.exp(-m/3.1);}
-  var TPOP=267e6,TLAND=1.79e6;
-  function fmt(n){n=Math.round(n);if(n>=1e6)return (n/1e6).toFixed(n>=1e7?0:1)+' M';return n.toLocaleString('en-US');}
-
-  var W=0,H=0,dpr=1;
-  function resize(){var r=stage.getBoundingClientRect();W=Math.max(280,r.width);H=Math.max(240,r.height);dpr=Math.min(2,window.devicePixelRatio||1);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);canvas.style.width=W+'px';canvas.style.height=H+'px';}
-
-  function terrainY(x){var t=x/W;var base=0.64;var e=Math.sin(t*3.1+0.4)*0.05+Math.sin(t*7.0)*0.018+Math.sin(t*13.0)*0.006;var coast=0.12*Math.max(0,t-0.16);return (base-e-coast)*H;}
-
-  var bld=[];
-  function buildB(){bld=[];var s=1337;function rnd(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;}var x=W*0.30;while(x<W*0.97){var bw=12+rnd()*24;var bh=22+rnd()*Math.min(120,H*0.42);var gy=terrainY(x+bw/2);bld.push({x:x,w:bw,h:bh,gy:gy,lit:rnd()>0.4});x+=bw+7+rnd()*12;}}
-
-  var phase=0;
-  function render(){
-    var ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
-    var frac=level/MAX_M;var seaY0=terrainY(W*0.16);var waterY=seaY0-frac*(H*0.40);
-
-    var sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#060320');sky.addColorStop(1,'#0c0934');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
-    for(var i=0;i<46;i++){var sx=(i*97.3)%W,sy=(i*53.7)%(H*0.5);ctx.fillStyle='rgba(244,245,255,'+(0.12+(i%5)*0.05)+')';ctx.fillRect(sx,sy,1,1);}
-
-    ctx.beginPath();ctx.moveTo(0,H);for(var x=0;x<=W;x+=5)ctx.lineTo(x,terrainY(x));ctx.lineTo(W,H);ctx.closePath();
-    var lg=ctx.createLinearGradient(0,0,0,H);lg.addColorStop(0,'#22344a');lg.addColorStop(1,'#080d15');ctx.fillStyle=lg;ctx.fill();
-
-    for(var j=0;j<bld.length;j++){var b=bld[j];var fl=b.gy>=waterY;
-      ctx.fillStyle=fl?'rgba(38,52,72,0.92)':'rgba(74,96,128,0.96)';ctx.fillRect(b.x,b.gy-b.h,b.w,b.h);
-      if(!fl&&b.lit){ctx.fillStyle='rgba('+aRGB+',0.5)';for(var wy=b.gy-b.h+5;wy<b.gy-4;wy+=9){ctx.fillRect(b.x+3,wy,b.w-6,2);}}
-    }
-
-    ctx.save();ctx.beginPath();ctx.rect(0,waterY,W,H-waterY);ctx.clip();
-    var wg=ctx.createLinearGradient(0,waterY,0,H);wg.addColorStop(0,'rgba('+aRGB+',0.30)');wg.addColorStop(1,'rgba('+aRGB+',0.55)');ctx.fillStyle=wg;ctx.fillRect(0,waterY,W,H-waterY);
-    for(var k=0;k<bld.length;k++){var b2=bld[k];if(b2.gy<waterY){ctx.fillStyle='rgba(20,30,45,0.5)';var top=Math.max(waterY,b2.gy-b2.h);ctx.fillRect(b2.x,top,b2.w,b2.gy-top);}}
-    ctx.restore();
-
-    ctx.strokeStyle='rgba('+aRGB+',0.95)';ctx.lineWidth=2;ctx.beginPath();
-    for(var wx=0;wx<=W;wx+=4){var yy=waterY+Math.sin(wx*0.05+phase)*1.6;if(wx===0)ctx.moveTo(wx,yy);else ctx.lineTo(wx,yy);}ctx.stroke();
-    ctx.fillStyle='rgba('+aRGB+',0.18)';ctx.fillRect(0,waterY-1,W,2);
+  var ACCENT='#3cc8ff';
+  function readAccent(){
+    try{var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();if(a)ACCENT=a;}catch(e){}
+    root.style.setProperty('--sl-accent',ACCENT);
   }
 
-  function hudU(){hud.querySelector('[data-k=level]').textContent='+'+level.toFixed(2)+' m';hud.querySelector('[data-k=land]').textContent=fmt(landBelow(level)*TLAND)+' km²';hud.querySelector('[data-k=pop]').textContent=fmt(popBelow(level)*TPOP);root.style.setProperty('--sl-accent',accent);}
+  var BBOX=[30.0,30.0,32.3,31.7];
+  var SCENARIOS=[
+    {id:'now',label:'Today',m:0.00,yr:'2025',emis:'Baseline'},
+    {id:'low50',label:'2050 · Low',m:0.24,yr:'2050',emis:'Low emissions (SSP1-2.6)'},
+    {id:'high50',label:'2050 · High',m:0.34,yr:'2050',emis:'High emissions (SSP5-8.5)'},
+    {id:'low100',label:'2100 · Low',m:0.55,yr:'2100',emis:'Low emissions (SSP1-2.6)'},
+    {id:'high100',label:'2100 · High',m:1.01,yr:'2100',emis:'High emissions (SSP5-8.5)'},
+    {id:'tipping',label:'+2.0 m',m:2.00,yr:'Beyond 2100',emis:'Ice-sheet collapse tail'}
+  ];
 
-  function setT(cm){target=cm/100;}
-  slider.addEventListener('input',function(){setT(parseFloat(slider.value));[].forEach.call(pre.children,function(c){c.classList.remove('on');});if(reduce){level=target;render();hudU();}});
-  pre.addEventListener('click',function(e){var b=e.target.closest('.sl-btn');if(!b)return;var v=b.getAttribute('data-v');slider.value=v;setT(parseFloat(v));[].forEach.call(pre.children,function(c){c.classList.toggle('on',c===b);});if(reduce){level=target;render();hudU();}});
+  root.innerHTML=''
+    +'<h3 class="sl-sr">Sea-level rise visualizer on real NASA MODIS imagery of the Nile Delta. A slider from zero to plus two metres floods the lowest-lying coastal land with an encroaching ocean overlay, with an estimated affected-land readout.</h3>'
+    +'<div class="sl-head">'
+      +'<span class="sl-eyebrow">Earth science · Coastal exposure</span>'
+      +'<h2 class="sl-title">Sea-level rise — Nile Delta</h2>'
+      +'<p class="sl-sub">Raise the sea against a real low-lying, densely populated coast and watch the lowest ground go under first.</p>'
+    +'</div>'
+    +'<div class="sl-stage" data-sl="stage">'
+      +'<canvas class="sl-canvas" data-sl="canvas"></canvas>'
+      +'<div class="sl-grain"></div>'
+      +'<div class="sl-vig"></div>'
+      +'<div class="sl-scenechip" data-sl="scenechip">2025 · Baseline</div>'
+      +'<div class="sl-prov" data-sl="prov">NASA MODIS / Terra · 2023-09-28</div>'
+      +'<div class="sl-load" data-sl="load"><span class="sl-load-ring"></span><span class="sl-load-txt" data-sl="loadtxt">Loading NASA imagery…</span></div>'
+    +'</div>'
+    +'<div class="sl-hud">'
+      +'<div class="sl-stat sl-main"><span class="sl-k">Sea-level rise</span><span class="sl-v" data-sl="rise">+0.00 m</span></div>'
+      +'<div class="sl-stat"><span class="sl-k">Land inundated</span><span class="sl-v" data-sl="aff">0.0%</span></div>'
+      +'<div class="sl-stat"><span class="sl-k">Scenario</span><span class="sl-v" data-sl="scn">2025</span></div>'
+    +'</div>'
+    +'<div class="sl-ctrl">'
+      +'<div class="sl-sw">'
+        +'<input class="sl-slider" data-sl="slider" type="range" min="0" max="200" value="0" step="1" aria-label="Sea-level rise in centimetres">'
+        +'<div class="sl-scale"><span>0 m</span><span>+0.5</span><span>+1.0</span><span>+1.5</span><span>+2.0 m</span></div>'
+      +'</div>'
+      +'<div class="sl-pre" data-sl="pre" role="group" aria-label="Scenario presets"></div>'
+    +'</div>'
+    +'<p class="sl-cap">Real NASA MODIS/Terra true-color imagery (Nile Delta, 28 Sep 2023). Inundation is an illustrative elevation-proxy projection from image brightness, near-infrared and NDVI — not a surveyed flood model.</p>';
 
-  var last=0,acc=0;
-  function loop(ts){if(!last)last=ts;var dt=Math.min(0.05,(ts-last)/1000);last=ts;if(ts-acc>400){readAccent();acc=ts;}phase+=dt*2.2;level+=(target-level)*Math.min(1,dt*6);if(Math.abs(level-target)<0.0008)level=target;render();hudU();requestAnimationFrame(loop);}
+  var stage=q('[data-sl="stage"]'), canvas=q('[data-sl="canvas"]'), ctx=canvas.getContext('2d');
+  var loadEl=q('[data-sl="load"]'), loadTxt=q('[data-sl="loadtxt"]');
+  var riseEl=q('[data-sl="rise"]'), affEl=q('[data-sl="aff"]'), scnEl=q('[data-sl="scn"]');
+  var chipEl=q('[data-sl="scenechip"]');
+  var slider=q('[data-sl="slider"]'), preEl=q('[data-sl="pre"]');
 
-  function init(){resize();buildB();readAccent();render();hudU();}
-  window.addEventListener('resize',function(){resize();buildB();render();});
-  init();
-  if(!reduce)requestAnimationFrame(loop);
+  var dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+  var SRCW=0,SRCH=0;
+  var baseCanvas=document.createElement('canvas');
+  var baseCtx=baseCanvas.getContext('2d');
+
+  var GW=0,GH=0;
+  var gWater=null, gDist=null, gElev=null;
+  var landCount=0;
+  var ready=false;
+  var fldCanvas=document.createElement('canvas');
+  var fldCtx=fldCanvas.getContext('2d');
+  var fldImg=null;
+
+  var seaM=0;
+  var animActive=true, raf=null;
+
+  function buildPresets(){
+    preEl.innerHTML='';
+    SCENARIOS.forEach(function(s){
+      var b=document.createElement('button');
+      b.type='button'; b.className='sl-btn'; b.dataset.id=s.id;
+      b.textContent=s.label;
+      b.setAttribute('aria-pressed','false');
+      b.addEventListener('click',function(){ setSea(s.m); });
+      preEl.appendChild(b);
+    });
+  }
+
+  function loadImage(src){
+    return new Promise(function(res,rej){
+      var im=new Image(); var done=false;
+      im.onload=function(){ if(!done){done=true;res(im);} };
+      im.onerror=function(){ if(!done){done=true;rej(new Error('fail '+src));} };
+      im.src=src;
+      if(im.complete&&im.naturalWidth){ if(!done){done=true;res(im);} }
+    });
+  }
+
+  function buildProxy(rgbData,irData){
+    GW=Math.min(180,SRCW); GH=Math.round(GW*(SRCH/SRCW));
+    gWater=new Uint8Array(GW*GH);
+    gElev=new Float32Array(GW*GH);
+    gDist=new Float32Array(GW*GH);
+    var queue=new Int32Array(GW*GH); var qh=0,qt=0;
+    var INF=1e9;
+    for(var gy=0;gy<GH;gy++){
+      var sy=Math.min(SRCH-1,(gy*SRCH/GH)|0);
+      for(var gx=0;gx<GW;gx++){
+        var sx=Math.min(SRCW-1,(gx*SRCW/GW)|0);
+        var sp=(sy*SRCW+sx)<<2;
+        var r=rgbData[sp],g=rgbData[sp+1],b=rgbData[sp+2];
+        var N=irData[sp+1],Rr=irData[sp+2];
+        var bri=(r+g+b)/3;
+        var sum=N+Rr; var ndvi=sum>0?((N-Rr)/sum):0;
+        var gi=gy*GW+gx;
+        var isW=(N<55||ndvi<-0.02)?1:0;
+        gWater[gi]=isW;
+        var ev=0.45*(bri/255)+0.55*Math.max(0,Math.min(1,(ndvi+0.1)/0.9));
+        gElev[gi]=ev;
+        if(isW){ gDist[gi]=0; queue[qt++]=gi; } else { gDist[gi]=INF; }
+      }
+    }
+    while(qh<qt){
+      var ci=queue[qh++]; var cy=(ci/GW)|0, cx=ci-cy*GW; var cd=gDist[ci];
+      var ni;
+      if(cx+1<GW){ ni=ci+1; if(gDist[ni]>cd+1){gDist[ni]=cd+1;queue[qt++]=ni;} }
+      if(cx-1>=0){ ni=ci-1; if(gDist[ni]>cd+1){gDist[ni]=cd+1;queue[qt++]=ni;} }
+      if(cy+1<GH){ ni=ci+GW; if(gDist[ni]>cd+1){gDist[ni]=cd+1;queue[qt++]=ni;} }
+      if(cy-1>=0){ ni=ci-GW; if(gDist[ni]>cd+1){gDist[ni]=cd+1;queue[qt++]=ni;} }
+    }
+    landCount=0;
+    for(var i=0;i<gWater.length;i++){ if(!gWater[i]) landCount++; }
+  }
+
+  function floodMaskFor(sea){
+    var level=sea/2.0;
+    var reach=2+sea*22;
+    var thr=0.18+level*0.55;
+    var mask=new Uint8Array(GW*GH);
+    var aff=0;
+    for(var i=0;i<mask.length;i++){
+      if(gWater[i]){ mask[i]=2; continue; }
+      if(gDist[i]<=reach && gElev[i]<thr){ mask[i]=1; aff++; }
+    }
+    return {mask:mask,aff:landCount>0?(aff/landCount):0};
+  }
+
+  var curMask=null, curAff=0;
+  function recompute(){
+    if(!ready)return;
+    var r=floodMaskFor(seaM);
+    curMask=r.mask; curAff=r.aff;
+    buildFloodImg();
+    updateReadouts();
+  }
+
+  function buildFloodImg(){
+    if(fldCanvas.width!==GW||fldCanvas.height!==GH){ fldCanvas.width=GW; fldCanvas.height=GH; }
+    if(!fldImg||fldImg.width!==GW||fldImg.height!==GH){ fldImg=fldCtx.createImageData(GW,GH); }
+    var d=fldImg.data;
+    var deep=[16,58,128], mid=[34,112,190];
+    for(var gy=0;gy<GH;gy++){
+      for(var gx=0;gx<GW;gx++){
+        var gi=gy*GW+gx; var p=gi<<2;
+        if(curMask[gi]===1){
+          var depth=Math.max(0,Math.min(1,(seaM*0.5)-gElev[gi]+0.35));
+          var col=depth>0.55?deep:mid;
+          d[p]=col[0]; d[p+1]=col[1]; d[p+2]=col[2];
+          d[p+3]=Math.round((0.34+depth*0.40)*255);
+        } else { d[p]=0; d[p+1]=0; d[p+2]=0; d[p+3]=0; }
+      }
+    }
+    fldCtx.putImageData(fldImg,0,0);
+  }
+
+  function updateReadouts(){
+    riseEl.textContent='+'+seaM.toFixed(2)+' m';
+    affEl.textContent=(curAff*100).toFixed(1)+'%';
+    var sc=nearestScenario(seaM);
+    scnEl.textContent=sc.yr;
+    chipEl.textContent=sc.yr+' · '+sc.emis;
+    var btns=preEl.querySelectorAll('.sl-btn');
+    for(var i=0;i<btns.length;i++){
+      var on=Math.abs(SCENARIOS[i].m-seaM)<0.005;
+      btns[i].classList.toggle('on',on);
+      btns[i].setAttribute('aria-pressed',on?'true':'false');
+    }
+  }
+
+  function nearestScenario(sea){
+    var best=SCENARIOS[0],bd=1e9;
+    for(var i=0;i<SCENARIOS.length;i++){ var d=Math.abs(SCENARIOS[i].m-sea); if(d<bd){bd=d;best=SCENARIOS[i];} }
+    if(bd<0.06) return best;
+    return {yr:'+'+sea.toFixed(2)+' m',emis:'Interpolated projection'};
+  }
+
+  function setSea(m){
+    seaM=Math.max(0,Math.min(2,m));
+    slider.value=Math.round(seaM*100);
+    recompute();
+    if(!animActive) renderOnce();
+  }
+
+  function hexToRgb(h){
+    h=(h||'').replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16); if(isNaN(n))return[60,200,255];
+    return[(n>>16)&255,(n>>8)&255,n&255];
+  }
+
+  function sizeCanvas(){
+    if(!SRCW)return;
+    var cssW=stage.clientWidth||root.clientWidth||600;
+    var cssH=stage.clientHeight||Math.round(cssW*(SRCH/SRCW));
+    var pw=Math.round(cssW*dpr),ph=Math.round(cssH*dpr);
+    if(canvas.width!==pw||canvas.height!==ph){ canvas.width=pw; canvas.height=ph; }
+  }
+
+  function draw(time){
+    if(!ready){ raf=null; return; }
+    sizeCanvas();
+    var W=canvas.width,H=canvas.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(baseCanvas,0,0,SRCW,SRCH,0,0,W,H);
+
+    if(curMask){
+      var argb=hexToRgb(ACCENT);
+      var phase=animActive?(time*0.0010):0;
+      ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+      ctx.drawImage(fldCanvas,0,0,GW,GH,0,0,W,H);
+      drawShoreline(W,H,phase,argb);
+    }
+
+    if(animActive){ raf=requestAnimationFrame(draw); } else { raf=null; }
+  }
+
+  function drawShoreline(W,H,phase,argb){
+    var cw=W/GW, ch=H/GH;
+    ctx.save();
+    var rad=Math.max(1.4,cw*0.62);
+    var base='rgba('+argb[0]+','+argb[1]+','+argb[2]+',';
+    for(var gy=0;gy<GH;gy++){
+      for(var gx=0;gx<GW;gx++){
+        var gi=gy*GW+gx;
+        if(curMask[gi]!==1)continue;
+        var edge=false;
+        if(gx+1<GW && curMask[gi+1]===0)edge=true;
+        else if(gx-1>=0 && curMask[gi-1]===0)edge=true;
+        else if(gy+1<GH && curMask[gi+GW]===0)edge=true;
+        else if(gy-1>=0 && curMask[gi-GW]===0)edge=true;
+        if(!edge)continue;
+        var sh=0.5+0.5*Math.sin(phase*5+(gx*0.45-gy*0.35));
+        var a=0.22+0.34*sh;
+        ctx.fillStyle=base+a.toFixed(3)+')';
+        var px=(gx+0.5)*cw, py=(gy+0.5)*ch;
+        ctx.beginPath(); ctx.arc(px,py,rad,0,6.2832); ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+
+  function startLoop(){ if(!raf&&animActive&&ready){ raf=requestAnimationFrame(draw); } }
+  function stopLoop(){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+  function renderOnce(){ if(ready){ stopLoop(); requestAnimationFrame(function(t){ draw(t); }); } }
+
+  var prefersReduced=false;
+  try{ prefersReduced=window.matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
+  if(prefersReduced) animActive=false;
+
+  slider.addEventListener('input',function(){
+    seaM=(+slider.value)/100; recompute();
+    if(!animActive) renderOnce();
+  });
+
+  var resizePending=false;
+  window.addEventListener('resize',function(){
+    dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+    if(resizePending)return; resizePending=true;
+    requestAnimationFrame(function(){ resizePending=false; if(ready){ if(!animActive)renderOnce(); } });
+  });
+
+  try{
+    var mo=new MutationObserver(function(){ readAccent(); if(!animActive)renderOnce(); });
+    mo.observe(document.documentElement,{attributes:true,attributeFilter:['style','data-theme','class']});
+  }catch(e){}
+
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){ if(!prefersReduced){ animActive=true; startLoop(); } }
+        else { animActive=false; stopLoop(); }
+      });
+    },{threshold:0.05});
+    io.observe(root);
+  }catch(e){ }
+
+  readAccent();
+  buildPresets();
+  updateReadouts();
+
+  Promise.all([
+    loadImage('assets/scenes/delta/rgb.jpg'),
+    loadImage('assets/scenes/delta/ir.png')
+  ]).then(function(ims){
+    var rgbIm=ims[0], irIm=ims[1];
+    SRCW=rgbIm.naturalWidth; SRCH=rgbIm.naturalHeight;
+    baseCanvas.width=SRCW; baseCanvas.height=SRCH;
+    baseCtx.drawImage(rgbIm,0,0,SRCW,SRCH);
+    var rgbData=baseCtx.getImageData(0,0,SRCW,SRCH).data;
+    var off=document.createElement('canvas'); off.width=SRCW; off.height=SRCH;
+    var octx=off.getContext('2d',{willReadFrequently:true});
+    octx.drawImage(irIm,0,0,SRCW,SRCH);
+    var irData=octx.getImageData(0,0,SRCW,SRCH).data;
+    buildProxy(rgbData,irData);
+    ready=true;
+    loadEl.classList.add('sl-hide');
+    recompute();
+    if(animActive&&!prefersReduced) startLoop(); else renderOnce();
+  }).catch(function(){
+    loadTxt.textContent='Imagery unavailable';
+  });
 })();
 </script>
 <script>
@@ -21630,360 +21897,389 @@ if(reduce){
   var root=document.getElementById('kit-wildfire-detect');
   if(!root) return;
 
-  var canvas=root.querySelector('.kfd-canvas');
+  var canvas=root.querySelector('.wfd2-canvas');
   var ctx=canvas.getContext('2d');
-  var countEl=root.querySelector('.kfd-count');
-  var sweepEl=root.querySelector('.kfd-sweepval');
-  var passEl=root.querySelector('.kfd-passval');
-  var btnOptical=root.querySelector('[data-band="optical"]');
-  var btnThermal=root.querySelector('[data-band="thermal"]');
-  var coordEl=root.querySelector('.kfd-coord');
+  var loadEl=root.querySelector('[data-wfd2="load"]');
+  var countEl=root.querySelector('[data-wfd2="count"]');
+  var sweepEl=root.querySelector('[data-wfd2="sweep"]');
+  var frpEl=root.querySelector('[data-wfd2="frp"]');
+  var passEl=root.querySelector('[data-wfd2="pass"]');
+  var coordEl=root.querySelector('[data-wfd2="coord"]');
+  var whyEl=root.querySelector('[data-wfd2="why"]');
+  var btnOptical=root.querySelector('[data-view="optical"]');
+  var btnThermal=root.querySelector('[data-view="thermal"]');
 
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   var dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
-  var W=0,H=0;
-  var band='thermal';
-  var accent='#3cc8ff';
-  var accentRGB='60,200,255';
 
+  /* real provenance for the on-disk Dixie Fire MODIS scene */
+  var SCENE={ bbox:[-121.8,39.5,-120.7,40.5] }; /* W,S,E,N */
+
+  var accent='#3cc8ff', accentRGB='60,200,255';
+  function hexToRGB(h){ if(!h) return null; h=h.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2]; if(h.length!==6) return null; var n=parseInt(h,16); if(isNaN(n)) return null; return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255); }
   function readAccent(){
     try{
       var cs=getComputedStyle(document.documentElement);
       var a=cs.getPropertyValue('--accent').trim();
       if(a) accent=a;
-      var r=cs.getPropertyValue('--accent-rgb').trim();
-      if(r) accentRGB=r; else { var h=hexToRGB(accent); if(h) accentRGB=h; }
+      var rg=hexToRGB(accent); if(rg) accentRGB=rg;
     }catch(e){}
+    root.style.setProperty('--wfd2-accent',accent);
+    root.style.setProperty('--wfd2-accent-rgb',accentRGB);
   }
-  function hexToRGB(h){
-    if(!h) return null;
-    h=h.replace('#','');
-    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    if(h.length!==6) return null;
-    var n=parseInt(h,16);
-    if(isNaN(n)) return null;
-    return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);
+  readAccent();
+
+  /* ---- offscreen buffers: real pixel data ---- */
+  var IW=0, IH=0;                 /* native image dims */
+  var srcRGB=null, srcIR=null;    /* Uint8ClampedArray of real bands */
+  var opticalCanvas=null;         /* prepared true-color raster (native res) */
+  var thermalCanvas=null;         /* prepared SWIR heat-ramp raster */
+  var ready=false;
+
+  /* CSS display size (logical px) */
+  var W=0, H=0;
+  var view='optical';
+
+  /* detection grid: cluster real fire pixels into discrete hotspots */
+  var cells=null;                 /* per native pixel: 1 if burn/fire flagged */
+  var hotspots=[];                /* clustered detections in normalized coords */
+  var peakSwir=0;
+
+  /* ---- image loading (un-gated, starts immediately) ---- */
+  function loadImage(src){
+    return new Promise(function(res,rej){
+      var im=new Image(); var done=false;
+      im.onload=function(){ if(!done){done=true;res(im);} };
+      im.onerror=function(){ if(!done){done=true;rej(new Error('fail '+src));} };
+      im.src=src;
+      if(im.complete && im.naturalWidth){ if(!done){done=true;res(im);} }
+    });
   }
 
-  var blobs=[
-    {x:0.18,y:0.34,r:0.16,s:1.0},{x:0.27,y:0.30,r:0.10,s:0.8},{x:0.22,y:0.52,r:0.11,s:0.9},
-    {x:0.30,y:0.66,r:0.09,s:0.7},
-    {x:0.50,y:0.28,r:0.10,s:0.9},{x:0.55,y:0.42,r:0.13,s:1.0},{x:0.52,y:0.58,r:0.12,s:0.9},{x:0.58,y:0.72,r:0.07,s:0.6},
-    {x:0.70,y:0.30,r:0.12,s:1.0},{x:0.80,y:0.36,r:0.14,s:1.0},{x:0.86,y:0.55,r:0.08,s:0.7},
-    {x:0.78,y:0.68,r:0.07,s:0.7},{x:0.66,y:0.50,r:0.07,s:0.6},
-    {x:0.42,y:0.45,r:0.05,s:0.5}
-  ];
-  function landField(nx,ny){
-    var f=0;
-    for(var i=0;i<blobs.length;i++){
-      var b=blobs[i];
-      var dx=nx-b.x, dy=(ny-b.y)*1.05;
-      var d2=dx*dx+dy*dy;
-      var rr=b.r*b.r;
-      f+=b.s*rr/(d2+rr*0.35);
+  function decode(){
+    var base='assets/scenes/wildfire/';
+    return Promise.all([loadImage(base+'rgb.jpg'), loadImage(base+'ir.png')]).then(function(ims){
+      var rgbIm=ims[0], irIm=ims[1];
+      IW=rgbIm.naturalWidth; IH=rgbIm.naturalHeight;
+      var off=document.createElement('canvas'); off.width=IW; off.height=IH;
+      var octx=off.getContext('2d',{willReadFrequently:true});
+      octx.drawImage(rgbIm,0,0,IW,IH);
+      srcRGB=octx.getImageData(0,0,IW,IH).data;
+      octx.clearRect(0,0,IW,IH);
+      octx.drawImage(irIm,0,0,IW,IH);
+      srcIR=octx.getImageData(0,0,IW,IH).data;
+      buildViews();
+      detectFires();
+    });
+  }
+
+  /* prepare both rasters once at native resolution */
+  function buildViews(){
+    /* optical = the real true-color rgb.jpg, drawn straight */
+    opticalCanvas=document.createElement('canvas'); opticalCanvas.width=IW; opticalCanvas.height=IH;
+    var oc=opticalCanvas.getContext('2d');
+    var oimg=oc.createImageData(IW,IH); oimg.data.set(srcRGB); oc.putImageData(oimg,0,0);
+
+    /* thermal = SWIR2 (ir.R) mapped through a black->red->orange->white heat ramp */
+    thermalCanvas=document.createElement('canvas'); thermalCanvas.width=IW; thermalCanvas.height=IH;
+    var tc=thermalCanvas.getContext('2d');
+    var timg=tc.createImageData(IW,IH); var td=timg.data;
+    var n=IW*IH;
+    for(var i=0;i<n;i++){
+      var p=i<<2;
+      var s=srcIR[p]; /* SWIR2 2130nm */
+      var c=heat(s);
+      td[p]=c[0]; td[p+1]=c[1]; td[p+2]=c[2]; td[p+3]=255;
     }
-    return f;
+    tc.putImageData(timg,0,0);
   }
-  var LAND_THRESH=1.15;
-  function isLand(nx,ny){ return landField(nx,ny)>LAND_THRESH; }
 
-  var dots=[];
-  var fires=[];
-  var dotGrid=16;
-
-  function buildDots(){
-    dots=[];
-    var step=dotGrid;
-    for(var y=step*0.5;y<H;y+=step){
-      for(var x=step*0.5;x<W;x+=step){
-        var nx=x/W, ny=y/H;
-        if(isLand(nx,ny)){
-          var jx=((Math.sin(nx*97.1+ny*13.7))*0.5)*step*0.35;
-          var jy=((Math.cos(nx*41.3+ny*71.9))*0.5)*step*0.35;
-          dots.push({x:x+jx,y:y+jy,nx:(x+jx)/W,ny:(y+jy)/H});
-        }
+  /* perceptual heat ramp 0..255 -> deep indigo -> red -> orange -> white */
+  function heat(v){
+    var t=v/255;
+    if(t<0.0001) return [4,3,18];
+    var stops=[
+      [0.00, 6, 4, 26],
+      [0.30, 70, 14, 70],
+      [0.55, 190, 40, 30],
+      [0.78, 255, 120, 24],
+      [0.92, 255, 196, 80],
+      [1.00, 255, 250, 230]
+    ];
+    for(var i=1;i<stops.length;i++){
+      if(t<=stops[i][0]){
+        var a=stops[i-1], b=stops[i];
+        var f=(t-a[0])/(b[0]-a[0]);
+        return [ (a[1]+(b[1]-a[1])*f)|0, (a[2]+(b[2]-a[2])*f)|0, (a[3]+(b[3]-a[3])*f)|0 ];
       }
     }
+    return [255,250,230];
   }
 
-  function rngFromSeed(s){
-    var v=Math.sin(s*127.1+311.7)*43758.5453;
-    return v-Math.floor(v);
-  }
-  function buildFires(){
-    fires=[];
-    var target=14;
-    var tries=0;
-    var seed=7;
-    while(fires.length<target && tries<400){
-      tries++;
-      var nx=rngFromSeed(seed++)*0.86+0.07;
-      var ny=rngFromSeed(seed++)*0.78+0.11;
-      if(!isLand(nx,ny)) continue;
-      var ok=true;
-      for(var i=0;i<fires.length;i++){
-        var d=Math.hypot(fires[i].nx-nx,fires[i].ny-ny);
-        if(d<0.06){ok=false;break;}
+  /* read real bands, flag burn-scar / active-fire pixels, cluster to hotspots */
+  function detectFires(){
+    var n=IW*IH;
+    cells=new Uint8Array(n);
+    peakSwir=0;
+    /* thresholds validated against the real raster: high SWIR2 AND low NDVI */
+    var SWIR_MIN=150, NDVI_MAX=0.14;
+    var flagged=[];
+    for(var i=0;i<n;i++){
+      var p=i<<2;
+      var swir=srcIR[p];      /* ir.R = SWIR2 2130nm */
+      var nir=srcIR[p+1];     /* ir.G = NIR 858nm */
+      var red=srcIR[p+2];     /* ir.B = Red 645nm */
+      if(swir>peakSwir) peakSwir=swir;
+      var denom=nir+red;
+      var ndvi=denom>0?(nir-red)/denom:0;
+      if(swir>=SWIR_MIN && ndvi<NDVI_MAX){
+        cells[i]=1;
+        flagged.push(i);
       }
-      if(!ok) continue;
-      var inten=0.45+rngFromSeed(seed++)*0.55;
-      fires.push({
-        nx:nx,ny:ny,
-        intensity:inten,
-        frp:Math.round(8+inten*inten*340),
-        detected:false,
-        ignite:0,
-        pulse:rngFromSeed(seed++)*6.28
+    }
+    clusterHotspots(flagged);
+  }
+
+  /* coarse grid clustering so the running count reflects real fire clusters,
+     not per-pixel noise. Each non-empty grid cell with enough flagged pixels
+     becomes one detection, positioned at its real centroid. */
+  function clusterHotspots(flagged){
+    hotspots=[];
+    if(!flagged.length) return;
+    var GX=9, GY=Math.max(8,Math.round(9*IH/IW));
+    var cellW=IW/GX, cellH=IH/GY;
+    var acc={}; /* key -> {sx,sy,c,maxSwir} */
+    for(var k=0;k<flagged.length;k++){
+      var idx=flagged[k];
+      var x=idx%IW, y=(idx/IW)|0;
+      var gx=Math.min(GX-1,(x/cellW)|0), gy=Math.min(GY-1,(y/cellH)|0);
+      var key=gy*GX+gx;
+      var a=acc[key]; if(!a){ a=acc[key]={sx:0,sy:0,c:0,ms:0}; }
+      a.sx+=x; a.sy+=y; a.c++;
+      var sw=srcIR[idx<<2]; if(sw>a.ms) a.ms=sw;
+    }
+    var minPix=Math.max(6, Math.round(cellW*cellH*0.10));
+    for(var key2 in acc){
+      var g=acc[key2];
+      if(g.c<minPix) continue;
+      var cx=g.sx/g.c, cy=g.sy/g.c;
+      var nx=cx/IW, ny=cy/IH;
+      var inten=Math.min(1,(g.ms-150)/105);            /* 150..255 -> 0..1 */
+      var size=Math.min(1,g.c/(cellW*cellH));
+      hotspots.push({
+        nx:nx, ny:ny,
+        intensity:0.35+inten*0.65,
+        swir:g.ms,
+        frp:Math.round(8+inten*inten*420),
+        detected:false, ignite:0,
+        pulse:(nx*97.1+ny*51.7)%6.283
       });
     }
+    /* sort left-to-right so the sweep reveals them in order */
+    hotspots.sort(function(a,b){ return a.nx-b.nx; });
   }
 
-  var sweepX=0;
-  var sweepSpeed=0.085;
-  var orbitPass=1;
-  var detectedCount=0;
-  var lastT=0;
-
-  function resetPass(){
-    for(var i=0;i<fires.length;i++){ fires[i].detected=false; fires[i].ignite=0; }
-    detectedCount=0;
-  }
-
+  /* ---- sizing ---- */
   function resize(){
     var rect=root.getBoundingClientRect();
-    var avail=rect.width - 32;
-    W=Math.max(280,avail);
-    H=Math.max(220,Math.round(W*0.56));
+    var avail=Math.max(280, rect.width - 32);
+    W=avail;
+    if(IW && IH){ H=Math.round(W*(IH/IW)); }
+    else { H=Math.round(W*0.62); }
     canvas.style.height=H+'px';
     canvas.width=Math.round(W*dpr);
     canvas.height=Math.round(H*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    buildDots();
-    if(!fires.length) buildFires();
   }
 
-  var stars=[];
-  function buildStars(){
-    stars=[];
-    for(var i=0;i<70;i++){
-      stars.push({x:Math.random(),y:Math.random(),s:Math.random()*1.2+0.3,tw:Math.random()*6.28,sp:0.4+Math.random()*1.2});
+  /* ---- animation state ---- */
+  var sweepX=0;            /* 0..1 normalized x of scan line */
+  var sweepSpeed=0.14;     /* per second */
+  var orbitPass=1;
+  var detectedCount=0;
+  var lastT=0, running=false, visible=false, rafId=0;
+
+  function resetPass(){
+    for(var i=0;i<hotspots.length;i++){ hotspots[i].detected=false; hotspots[i].ignite=0; }
+    detectedCount=0;
+  }
+
+  function setView(v){
+    view=v;
+    var optical=(v==='optical');
+    btnOptical.classList.toggle('wfd2-on',optical);
+    btnThermal.classList.toggle('wfd2-on',!optical);
+    btnOptical.setAttribute('aria-pressed',optical?'true':'false');
+    btnThermal.setAttribute('aria-pressed',(!optical)?'true':'false');
+    if(whyEl){
+      whyEl.textContent = optical
+        ? 'In true color the burn scar is muted; the detector still reads the hidden SWIR + NDVI bands.'
+        : 'Shortwave-IR (2130 nm): burn scars and active fire stay bright while green canopy goes dark.';
     }
+    if(ready) render(performance.now(),true);
   }
-  buildStars();
 
-  function draw(t){
-    var dt=lastT?Math.min(0.05,(t-lastT)/1000):0.016;
-    lastT=t;
+  /* draw the base scene + scan + detections */
+  function render(t,forceStatic){
+    if(!ready) return;
     readAccent();
+    var dt = (lastT && !forceStatic) ? Math.min(0.05,(t-lastT)/1000) : 0;
+    lastT=t;
 
-    ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='#050314';
-    ctx.fillRect(0,0,W,H);
-
-    for(var s=0;s<stars.length;s++){
-      var st=stars[s];
-      var a=0.25+0.5*(0.5+0.5*Math.sin(t*0.001*st.sp+st.tw));
-      ctx.globalAlpha=a*0.5;
-      ctx.fillStyle='#f4f5ff';
-      ctx.beginPath();ctx.arc(st.x*W,st.y*H,st.s,0,6.2832);ctx.fill();
+    /* advance sweep */
+    if(running && !reduce && !forceStatic){
+      sweepX += sweepSpeed*dt;
+      if(sweepX>1.06){ sweepX=-0.02; orbitPass++; resetPass(); }
     }
-    ctx.globalAlpha=1;
+    if(reduce){ sweepX=1.06; } /* show everything detected, no motion */
 
-    if(!reduce){
-      sweepX+=sweepSpeed*dt;
-      if(sweepX>1.08){ sweepX=-0.08; orbitPass++; resetPass(); }
-    }
     var scanPx=sweepX*W;
 
-    var optical=(band==='optical');
-    var landBase = optical ? '150,178,232' : '92,104,178';
-    for(var i=0;i<dots.length;i++){
-      var d=dots[i];
-      var dxs=d.x-scanPx;
-      var glow=0;
-      if(dxs<0 && dxs>-70){ glow=(1-(-dxs/70)); }
-      var baseA = optical?0.62:0.46;
-      var alpha=baseA + glow*0.45;
-      ctx.globalAlpha=Math.min(1,alpha);
-      ctx.fillStyle='rgb('+landBase+')';
-      var rad= optical?1.7:1.55;
-      ctx.beginPath();ctx.arc(d.x,d.y,rad+glow*0.9,0,6.2832);ctx.fill();
+    ctx.clearRect(0,0,W,H);
+    /* base imagery */
+    var base = (view==='optical')?opticalCanvas:thermalCanvas;
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(base,0,0,IW,IH,0,0,W,H);
+
+    /* subtle scientific darken on the unscanned side to read the sweep */
+    if(!reduce && sweepX>-0.02 && sweepX<1.06){
+      ctx.save();
+      ctx.fillStyle='rgba(5,3,20,0.16)';
+      ctx.fillRect(scanPx,0,W-scanPx,H);
+      ctx.restore();
     }
-    ctx.globalAlpha=1;
 
-    var rgb=accentRGB;
-    for(var f=0;f<fires.length;f++){
-      var fr=fires[f];
+    /* detections (read real clusters) */
+    for(var f=0;f<hotspots.length;f++){
+      var fr=hotspots[f];
       var fx=fr.nx*W, fy=fr.ny*H;
-
-      if(!fr.detected && scanPx>=fx-2){
-        fr.detected=true;
-        detectedCount++;
+      if(!fr.detected && (reduce || scanPx>=fx)){
+        fr.detected=true; detectedCount++;
       }
-      var targetIg = fr.detected?1:0;
-      if(reduce) fr.ignite=targetIg;
-      else fr.ignite += (targetIg-fr.ignite)*Math.min(1,dt*4);
+      var target = fr.detected?1:0;
+      if(reduce||forceStatic) fr.ignite=target;
+      else fr.ignite += (target-fr.ignite)*Math.min(1,dt*5);
+      if(fr.ignite<=0.002) continue;
 
-      if(fr.ignite<=0.001) continue;
-      fr.pulse+=dt*(2.2+fr.intensity*2.0);
+      if(running && !reduce && !forceStatic) fr.pulse += dt*(2.0+fr.intensity*2.2);
       var pulse=0.78+0.22*Math.sin(fr.pulse);
       var ig=fr.ignite;
+      var coreR=(2.6+fr.intensity*4.2)*ig;
+      var haloR=coreR*(3.2+pulse*1.1);
 
-      if(optical){
-        ctx.globalAlpha=0.18*ig;
-        ctx.fillStyle='rgb(150,150,160)';
-        ctx.beginPath();ctx.arc(fx,fy,1.6,0,6.2832);ctx.fill();
-        ctx.globalAlpha=1;
-        continue;
-      }
-
-      var coreR=(3.2+fr.intensity*4.5)*ig;
-      var haloR=coreR*(3.4+pulse*1.2);
-
+      /* halo */
       var g=ctx.createRadialGradient(fx,fy,0,fx,fy,haloR);
-      g.addColorStop(0,'rgba(255,170,40,'+(0.55*ig*pulse)+')');
-      g.addColorStop(0.35,'rgba(255,90,20,'+(0.34*ig*pulse)+')');
-      g.addColorStop(0.7,'rgba(210,30,20,'+(0.16*ig)+')');
-      g.addColorStop(1,'rgba(180,10,10,0)');
+      g.addColorStop(0,'rgba(255,150,40,'+(0.55*ig)+')');
+      g.addColorStop(0.4,'rgba(255,96,32,'+(0.30*ig*pulse)+')');
+      g.addColorStop(1,'rgba(255,60,20,0)');
       ctx.fillStyle=g;
-      ctx.beginPath();ctx.arc(fx,fy,haloR,0,6.2832);ctx.fill();
+      ctx.beginPath(); ctx.arc(fx,fy,haloR,0,6.2832); ctx.fill();
 
-      var cg=ctx.createRadialGradient(fx,fy,0,fx,fy,coreR);
-      cg.addColorStop(0,'rgba(255,250,225,'+(0.95*ig)+')');
-      cg.addColorStop(0.5,'rgba(255,200,90,'+(0.9*ig)+')');
-      cg.addColorStop(1,'rgba(255,120,30,0)');
-      ctx.fillStyle=cg;
-      ctx.beginPath();ctx.arc(fx,fy,coreR,0,6.2832);ctx.fill();
-
-      if(fr.detected){
-        ctx.globalAlpha=0.85*ig;
-        ctx.strokeStyle='rgba('+rgb+',1)';
-        ctx.lineWidth=1;
-        var bx=haloR+5;
-        ctx.beginPath();
-        ctx.moveTo(fx-bx,fy-bx+5);ctx.lineTo(fx-bx,fy-bx);ctx.lineTo(fx-bx+5,fy-bx);
-        ctx.moveTo(fx+bx-5,fy-bx);ctx.lineTo(fx+bx,fy-bx);ctx.lineTo(fx+bx,fy-bx+5);
-        ctx.moveTo(fx+bx,fy+bx-5);ctx.lineTo(fx+bx,fy+bx);ctx.lineTo(fx+bx-5,fy+bx);
-        ctx.moveTo(fx-bx+5,fy+bx);ctx.lineTo(fx-bx,fy+bx);ctx.lineTo(fx-bx,fy+bx-5);
-        ctx.stroke();
-        ctx.globalAlpha=1;
-      }
-    }
-    ctx.globalAlpha=1;
-
-    if(scanPx>=-2 && scanPx<=W+2){
-      var swathW=70;
-      var sg=ctx.createLinearGradient(scanPx-swathW,0,scanPx,0);
-      sg.addColorStop(0,'rgba('+rgb+',0)');
-      sg.addColorStop(1,'rgba('+rgb+',0.14)');
-      ctx.fillStyle=sg;
-      ctx.fillRect(scanPx-swathW,0,swathW,H);
-
-      ctx.strokeStyle='rgba('+rgb+',0.9)';
-      ctx.lineWidth=1.4;
-      ctx.beginPath();ctx.moveTo(scanPx,0);ctx.lineTo(scanPx,H);ctx.stroke();
-
-      var lg=ctx.createLinearGradient(scanPx-1,0,scanPx+8,0);
-      lg.addColorStop(0,'rgba('+rgb+',0.5)');
-      lg.addColorStop(1,'rgba('+rgb+',0)');
-      ctx.fillStyle=lg;
-      ctx.fillRect(scanPx,0,8,H);
-
-      var satY=8;
-      ctx.fillStyle='rgba('+rgb+',1)';
-      ctx.beginPath();ctx.arc(scanPx,satY,3,0,6.2832);ctx.fill();
-      ctx.globalAlpha=0.5;
-      ctx.beginPath();ctx.arc(scanPx,satY,6,0,6.2832);ctx.fill();
+      /* core */
+      ctx.globalAlpha=ig;
+      ctx.fillStyle='#fff2d6';
+      ctx.beginPath(); ctx.arc(fx,fy,coreR*0.55,0,6.2832); ctx.fill();
+      ctx.fillStyle='#ff7b28';
+      ctx.beginPath(); ctx.arc(fx,fy,coreR,0,6.2832); ctx.fill();
       ctx.globalAlpha=1;
-      ctx.strokeStyle='rgba('+rgb+',0.8)';ctx.lineWidth=1;
-      ctx.beginPath();ctx.moveTo(scanPx-9,satY);ctx.lineTo(scanPx-4,satY);ctx.moveTo(scanPx+4,satY);ctx.lineTo(scanPx+9,satY);ctx.stroke();
+
+      /* detection reticle for freshly found hotspots */
+      if(ig>0.15 && ig<0.97){
+        ctx.strokeStyle='rgba('+accentRGB+','+(0.9*(1-ig))+')';
+        ctx.lineWidth=1.2;
+        var rr=coreR+10*(1-ig)+6;
+        ctx.strokeRect(fx-rr,fy-rr,rr*2,rr*2);
+      }
     }
 
-    ctx.strokeStyle='rgba(166,171,230,0.16)';
-    ctx.lineWidth=1;
-    ctx.strokeRect(0.5,0.5,W-1,H-1);
+    /* scan line */
+    if(!reduce && scanPx>-2 && scanPx<W+2){
+      var lead=Math.max(0,scanPx-26);
+      var lg=ctx.createLinearGradient(lead,0,scanPx,0);
+      lg.addColorStop(0,'rgba('+accentRGB+',0)');
+      lg.addColorStop(1,'rgba('+accentRGB+',0.22)');
+      ctx.fillStyle=lg;
+      ctx.fillRect(lead,0,scanPx-lead,H);
 
+      ctx.strokeStyle='rgba('+accentRGB+',0.95)';
+      ctx.lineWidth=2;
+      ctx.shadowColor='rgba('+accentRGB+',0.9)';
+      ctx.shadowBlur=14;
+      ctx.beginPath(); ctx.moveTo(scanPx,0); ctx.lineTo(scanPx,H); ctx.stroke();
+      ctx.shadowBlur=0;
+    }
+
+    /* HUD readouts */
     countEl.textContent=detectedCount;
-    sweepEl.textContent=Math.max(0,Math.min(100,Math.round(((sweepX+0.08)/1.16)*100)))+'%';
+    var sw=Math.max(0,Math.min(1,sweepX));
+    sweepEl.textContent=Math.round(sw*100)+'%';
+    frpEl.textContent=peakSwir?peakSwir:'—';
     passEl.textContent='#'+orbitPass;
-
-    if(running) raf=requestAnimationFrame(draw);
   }
 
-  function renderStatic(){
-    if(reduce){
-      sweepX=0.62;
-      var scanPx=sweepX*W;
-      detectedCount=0;
-      for(var f=0;f<fires.length;f++){
-        fires[f].detected = (fires[f].nx*W)<=scanPx;
-        fires[f].ignite=fires[f].detected?1:0;
-        if(fires[f].detected) detectedCount++;
-      }
-    }
-    lastT=0;
-    draw(performance.now());
-    if(reduce && raf){ cancelAnimationFrame(raf); raf=null; running=false; }
+  function frame(t){ if(!running) return; render(t,false); rafId=requestAnimationFrame(frame); }
+  function start(){ if(running||!ready||reduce) return; running=true; lastT=0; rafId=requestAnimationFrame(frame); }
+  function stop(){ running=false; if(rafId) cancelAnimationFrame(rafId); rafId=0; }
+
+  /* hover -> live lat/lon from real scene bbox */
+  function showCoord(clientX,clientY){
+    var r=canvas.getBoundingClientRect();
+    var fx=(clientX-r.left)/r.width, fy=(clientY-r.top)/r.height;
+    if(fx<0||fx>1||fy<0||fy>1){ coordEl.textContent='— scanning —'; return; }
+    var bb=SCENE.bbox;
+    var lon=bb[0]+fx*(bb[2]-bb[0]);
+    var lat=bb[3]-fy*(bb[3]-bb[1]);
+    coordEl.textContent=Math.abs(lat).toFixed(2)+'°'+(lat>=0?'N':'S')+'  '+Math.abs(lon).toFixed(2)+'°'+(lon>=0?'E':'W');
   }
 
-  function setBand(b){
-    band=b;
-    btnOptical.classList.toggle('kfd-on',b==='optical');
-    btnThermal.classList.toggle('kfd-on',b==='thermal');
-    btnOptical.setAttribute('aria-pressed',b==='optical');
-    btnThermal.setAttribute('aria-pressed',b==='thermal');
-    if(reduce){ renderStatic(); }
-  }
-  btnOptical.addEventListener('click',function(){setBand('optical');});
-  btnThermal.addEventListener('click',function(){setBand('thermal');});
-
-  canvas.addEventListener('pointermove',function(e){
-    var rect=canvas.getBoundingClientRect();
-    var x=(e.clientX-rect.left)/rect.width;
-    var y=(e.clientY-rect.top)/rect.height;
-    var lat=Math.round((0.5-y)*160);
-    var lon=Math.round((x-0.5)*360);
-    coordEl.textContent=(lat>=0?lat+'°N':(-lat)+'°S')+'  '+(lon>=0?lon+'°E':(-lon)+'°W');
-  });
-  canvas.addEventListener('pointerleave',function(){ coordEl.textContent='— scanning —'; });
-
-  var raf=null, running=false, visible=false;
-  function start(){
-    if(running||reduce) return;
-    running=true; lastT=0; raf=requestAnimationFrame(draw);
-  }
-  function stop(){
-    running=false;
-    if(raf){cancelAnimationFrame(raf);raf=null;}
-  }
-
-  var io=new IntersectionObserver(function(entries){
-    for(var i=0;i<entries.length;i++){
-      visible=entries[i].isIntersecting;
-      if(visible){
-        if(reduce) renderStatic(); else start();
-      } else {
-        stop();
-      }
-    }
-  },{threshold:0.05});
-  io.observe(root);
+  /* ---- wire up ---- */
+  btnOptical.addEventListener('click',function(){ setView('optical'); });
+  btnThermal.addEventListener('click',function(){ setView('thermal'); });
+  canvas.addEventListener('mousemove',function(e){ showCoord(e.clientX,e.clientY); });
+  canvas.addEventListener('mouseleave',function(){ coordEl.textContent='— scanning —'; });
+  canvas.addEventListener('touchstart',function(e){ if(e.touches[0]) showCoord(e.touches[0].clientX,e.touches[0].clientY); },{passive:true});
+  canvas.addEventListener('touchmove',function(e){ if(e.touches[0]) showCoord(e.touches[0].clientX,e.touches[0].clientY); },{passive:true});
 
   var rt=null;
   function onResize(){
+    dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
     if(rt) clearTimeout(rt);
     rt=setTimeout(function(){
       resize();
-      if(reduce){ renderStatic(); }
-      else if(!running && visible){ start(); }
+      if(ready) render(performance.now(),true);
     },120);
   }
   window.addEventListener('resize',onResize);
 
-  readAccent();
+  /* pause/resume animation only (never gates first paint) */
+  var io=new IntersectionObserver(function(entries){
+    for(var i=0;i<entries.length;i++){
+      visible=entries[i].isIntersecting;
+      if(visible){ if(!reduce) start(); }
+      else stop();
+    }
+  },{threshold:0.04});
+  io.observe(root);
+
+  try{
+    var mo=new MutationObserver(function(){ readAccent(); });
+    mo.observe(document.documentElement,{attributes:true,attributeFilter:['style','data-theme','class']});
+  }catch(e){}
+
+  /* ---- INIT: build UI + first frame immediately, un-gated ---- */
+  setView('optical');
   resize();
-  if(reduce){ renderStatic(); }
+  decode().then(function(){
+    ready=true;
+    resize();                       /* now that native dims are known */
+    loadEl.classList.add('wfd2-hide');
+    render(performance.now(),true);  /* first real frame, un-gated */
+    if(!reduce && visible) start();
+    else if(!reduce){ /* will start when scrolled into view */ }
+  }).catch(function(){
+    var txt=loadEl.querySelector('.wfd2-load-txt');
+    if(txt) txt.textContent='Imagery unavailable';
+  });
 })();
 </script>
 <script>
