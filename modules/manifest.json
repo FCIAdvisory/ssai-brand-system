@@ -189,12 +189,12 @@
     },
     {
       "slug": "sar-vs-optical",
-      "title": "Radar vs Optical",
+      "title": "Radar vs. Optical",
       "collection": "remote-sensing",
       "source": "NASA / ESA",
       "credit": "Optical \u00b7 NASA MODIS   \u00b7   SAR \u00b7 ESA Copernicus Sentinel-1 (CC BY-SA 4.0)",
-      "blurb": "Side-by-side comparison of real MODIS optical and Sentinel-1 SAR imagery showing why all-weather radar complements daylight-only optical sensing.",
-      "interaction": "Drag the cloud-cover slider to roll cloud across the optical scene until it goes blind while the radar stays clear; toggle day/night to dim the optical panel; toggle the radar signature pins to read water, structure and terrain returns.",
+      "blurb": "Demonstrates why Earth-observation missions fly both sensors: as cloud cover rises it blinds the optical view while the radar image stays perfectly crisp.",
+      "interaction": "Drag the CLOUD COVER slider \u2014 drifting cloud rolls in and whites out the optical (left) half while the SAR (right) half stays sharp.",
       "real": true
     },
     {
@@ -233,18 +233,18 @@
       "collection": "satellites-orbits",
       "source": "",
       "credit": "",
-      "blurb": "Reshape a single satellite orbit live with altitude, inclination, and eccentricity sliders and watch apogee, perigee, and Keplerian period update in real time.",
-      "interaction": "Drag the three sliders to morph the orbital ellipse and tilt the plane; the satellite revolves at true Kepler speed (faster at perigee) while readouts recompute apogee, perigee, and period.",
+      "blurb": "Lets you shape a real satellite orbit around a Blue-Marble Earth and read its geometry \u2014 apogee, perigee, period, inclination and orbit class \u2014 updating live as you drag.",
+      "interaction": "Drag the three sliders (apogee, perigee, inclination) to reshape the glowing orbit; the satellite always travels at true Kepler speed and the corner chips recompute period and orbit class instantly.",
       "real": false
     },
     {
       "slug": "swath-scanner",
-      "title": "Observation swath",
+      "title": "Swath Scanner",
       "collection": "satellites-orbits",
       "source": "NASA",
       "credit": "Basemap \u00b7 NASA Blue Marble",
-      "blurb": "Shows how an orbiting imager builds global coverage by painting its sensor swath across the real NASA Blue Marble pass after pass.",
-      "interaction": "Play/pause and reset the scan, toggle a wide imager vs a narrow high-res sensor, and drag swath-width and speed sliders while coverage % climbs live.",
+      "blurb": "Shows how a polar-orbiting satellite sweeps an imaging swath along an inclined ground track and accumulates global coverage pass by pass as the Earth rotates beneath it.",
+      "interaction": "Drag the single slider to widen or narrow the imaging swath; the painted coverage band, revisit time, and coverage percentage respond live as the satellite scans continuously.",
       "real": true
     },
     {
@@ -309,22 +309,22 @@
     },
     {
       "slug": "space-weather",
-      "title": "Space weather console \u2014 Gannon G5 superstorm",
+      "title": "Space Weather Console",
       "collection": "sun-space-weather",
       "source": "NOAA",
       "credit": "Scales & data \u00b7 NOAA SWPC",
-      "blurb": "An immersive, scrubbable space-weather console replaying the real May 2024 \"Gannon\" geomagnetic superstorm (Kp 9 / G5) with a live Kp dial, solar-wind readouts, and an expanding aurora oval over Earth.",
-      "interaction": "Drag the timeline scrubber (or press play) to move through the storm; the Kp dial, NOAA G-scale, solar-wind speed/density/Bz readouts, and the aurora oval over Earth all respond in real time. Click anywhere on the timeline to jump to a moment.",
+      "blurb": "Shows the live Sun-to-Earth connection \u2014 solar wind, magnetosphere response, auroral oval and the real NOAA G-scale / Kp index \u2014 so viewers feel how solar activity drives geomagnetic storms.",
+      "interaction": "Drag the single slider to raise or lower solar-wind speed; the wind stream, auroral oval, Kp readout and NOAA G-scale all respond, and the scene keeps breathing on its own at rest.",
       "real": true
     },
     {
       "slug": "cme-eruption",
-      "title": "Solar storm",
+      "title": "Coronal Mass Ejection",
       "collection": "sun-space-weather",
       "source": "",
       "credit": "",
-      "blurb": "Watch a coronal mass ejection erupt from the Sun, race across space, and slam into Earth's magnetosphere \u2014 flaring the aurora and spiking the Kp geomagnetic-storm index.",
-      "interaction": "Set the shock speed (which scales the real 1\u20133 day Sun-to-Earth transit), press ERUPT, and watch the plasma cloud travel, compress the magnetosphere, ignite the poles, and drive the Kp gauge.",
+      "blurb": "Shows a coronal mass ejection erupting from the Sun and propagating across interplanetary space to compress Earth's magnetosphere and ignite a geomagnetic storm.",
+      "interaction": "Drag the SHOCK SPEED slider to set the plasma front's velocity (which changes the Earth-arrival ETA), or press ERUPT to launch a CME on demand \u2014 it also auto-loops on its own.",
       "real": false
     },
     {
@@ -459,12 +459,12 @@
     },
     {
       "slug": "hyperspace-warp",
-      "title": "Lightspeed",
+      "title": "Hyperspace Warp",
       "collection": "cosmos",
       "source": "",
       "credit": "",
-      "blurb": "Fly first-person through a starfield and watch relativistic optics warp the sky as you push toward the speed of light.",
-      "interaction": "Drag the speed slider from gentle cruise to near-lightspeed: stars stretch into streaks, blue-shift, and bunch toward the vanishing point as relativistic aberration intensifies.",
+      "blurb": "Shows the geometry of approaching light speed \u2014 how stars stretch into streaks, crowd toward the forward direction through relativistic aberration, and Doppler-shift blue ahead and red behind as velocity climbs toward c.",
+      "interaction": "Drag the SPEED slider to set beta (v/c) from 0 to 0.999 and watch the starfield stretch, concentrate forward, and Doppler-tint; leave it alone and it breathes gently on its own.",
       "real": false
     },
     {

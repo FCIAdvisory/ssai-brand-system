@@ -189,7 +189,18 @@ body.mb-embed #kit-constellation-coverage [class*='stage'],body.mb-embed #kit-co
     }
   }catch(e){}
   /* nudge a resize after layout settles so canvas modules that measured too early redraw at the right size */
-  window.addEventListener('load',function(){ [120,420,1000].forEach(function(t){ setTimeout(function(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} },t); }); });
+  (function(){
+    function fire(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} }
+    function settle(){
+      [0,80,200,420,800,1300,2000,2800].forEach(function(t){ setTimeout(fire,t); });
+      try{ requestAnimationFrame(function(){ requestAnimationFrame(fire); }); }catch(e){}
+      /* on-change watcher: fire whenever the stage box settles to a new size (~4s) */
+      var st=document.querySelector('.mb-stage')||document.documentElement, lw=-1, lh=-1, n=0;
+      var iv=setInterval(function(){ var w=st.clientWidth, h=st.clientHeight;
+        if(w!==lw||h!==lh){ lw=w; lh=h; fire(); } if(++n>40) clearInterval(iv); },100);
+    }
+    if(document.readyState==='complete') settle(); else window.addEventListener('load',settle);
+  })();
   /* safety: some modules forget to hide their loading overlay after the image resolves */
   window.addEventListener('load',function(){ setTimeout(function(){
     var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');

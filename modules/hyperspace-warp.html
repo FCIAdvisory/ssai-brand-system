@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lightspeed · SSAI</title>
+<title>Hyperspace Warp · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,115 +41,27 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-hyperspace-warp{
-  --kit-accent:#3cc8ff;
-  --kit-accent-rgb:60,200,255;
-  width:100%;
-  box-sizing:border-box;
-  font-family:'Inter',system-ui,sans-serif;
-  color:#f4f5ff;
-  -webkit-font-smoothing:antialiased;
-}
-#kit-hyperspace-warp *,#kit-hyperspace-warp *::before,#kit-hyperspace-warp *::after{box-sizing:border-box;}
-#kit-hyperspace-warp .kit-sr{
-  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
-  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
-}
-#kit-hyperspace-warp .kit-stage{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  min-height:280px;
-  border-radius:16px;
-  overflow:hidden;
-  background:#050314;
-  border:1px solid rgba(166,171,230,0.16);
-  box-shadow:0 0 0 1px rgba(var(--kit-accent-rgb),0.04), 0 24px 60px -28px rgba(5,3,20,0.9);
-}
-#kit-hyperspace-warp .kit-canvas{
-  position:absolute;inset:0;width:100%;height:100%;display:block;
-}
-#kit-hyperspace-warp .kit-vignette{
-  position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 62% 62% at 50% 50%, rgba(5,3,20,0) 38%, rgba(5,3,20,0.55) 100%);
-  mix-blend-mode:multiply;
-}
-#kit-hyperspace-warp .kit-hud{
-  position:absolute;top:14px;left:16px;
-  display:flex;flex-direction:column;gap:3px;
-  pointer-events:none;
-  text-shadow:0 1px 10px rgba(5,3,20,0.9);
-}
-#kit-hyperspace-warp .kit-hud-row{display:flex;align-items:baseline;gap:10px;}
-#kit-hyperspace-warp .kit-hud-label{
-  font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
-  color:#a6abe6;font-weight:600;
-}
-#kit-hyperspace-warp .kit-beta{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;font-weight:700;font-size:19px;letter-spacing:0.02em;
-  text-transform:uppercase;color:var(--kit-accent);
-  transition:color .25s ease;
-}
-#kit-hyperspace-warp .kit-hud-sub{gap:14px;}
-#kit-hyperspace-warp .kit-gamma,#kit-hyperspace-warp .kit-shift{
-  font-size:11px;color:#a6abe6;font-weight:500;letter-spacing:0.04em;
-}
-#kit-hyperspace-warp .kit-shift{color:var(--kit-accent);transition:color .25s ease;}
-#kit-hyperspace-warp .kit-controls{
-  margin-top:16px;
-  padding:0 2px;
-}
-#kit-hyperspace-warp .kit-ctrl-main{
-  display:flex;align-items:center;gap:14px;
-}
-#kit-hyperspace-warp .kit-ctrl-label{
-  font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
-  color:#a6abe6;font-weight:600;min-width:46px;
-}
-#kit-hyperspace-warp .kit-slider{
-  -webkit-appearance:none;appearance:none;
-  flex:1;height:4px;border-radius:999px;
-  background:linear-gradient(90deg,
-    var(--kit-accent) 0%, var(--kit-accent) var(--kit-fill,10%),
-    rgba(166,171,230,0.18) var(--kit-fill,10%), rgba(166,171,230,0.18) 100%);
-  outline:none;cursor:pointer;margin:0;
-}
-#kit-hyperspace-warp .kit-slider::-webkit-slider-thumb{
-  -webkit-appearance:none;appearance:none;
-  width:18px;height:18px;border-radius:50%;
-  background:#f4f5ff;border:2px solid var(--kit-accent);
-  box-shadow:0 0 0 4px rgba(var(--kit-accent-rgb),0.18), 0 0 14px rgba(var(--kit-accent-rgb),0.55);
-  cursor:pointer;transition:transform .12s ease, box-shadow .25s ease;
-}
-#kit-hyperspace-warp .kit-slider::-webkit-slider-thumb:hover{transform:scale(1.12);}
-#kit-hyperspace-warp .kit-slider:active::-webkit-slider-thumb{transform:scale(0.94);}
-#kit-hyperspace-warp .kit-slider::-moz-range-thumb{
-  width:18px;height:18px;border-radius:50%;
-  background:#f4f5ff;border:2px solid var(--kit-accent);
-  box-shadow:0 0 0 4px rgba(var(--kit-accent-rgb),0.18), 0 0 14px rgba(var(--kit-accent-rgb),0.55);
-  cursor:pointer;
-}
-#kit-hyperspace-warp .kit-slider::-moz-range-track{height:4px;border-radius:999px;background:transparent;}
-#kit-hyperspace-warp .kit-slider:focus-visible{box-shadow:0 0 0 3px rgba(var(--kit-accent-rgb),0.35);}
-#kit-hyperspace-warp .kit-speed-out{
-  font-family:'Chakra Petch','Inter',sans-serif;
-  font-style:italic;font-weight:700;font-size:16px;
-  text-transform:uppercase;letter-spacing:0.02em;
-  color:#f4f5ff;min-width:78px;text-align:right;font-variant-numeric:tabular-nums;
-}
-#kit-hyperspace-warp .kit-ticks{
-  display:flex;justify-content:space-between;
-  margin-top:9px;padding-left:60px;
-  font-size:9px;letter-spacing:0.16em;text-transform:uppercase;
-  color:rgba(166,171,230,0.5);font-weight:600;
-}
-#kit-hyperspace-warp .kit-ticks span:nth-child(2){margin-left:-4%;}
-#kit-hyperspace-warp .kit-ticks span:last-child{color:var(--kit-accent);transition:color .25s ease;}
-@media (max-width:520px){
-  #kit-hyperspace-warp .kit-ctrl-label{display:none;}
-  #kit-hyperspace-warp .kit-ticks{padding-left:0;font-size:8px;}
-}
+#kit-hyperspace-warp{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;color:#eef1ff;border-radius:inherit;user-select:none;-webkit-user-select:none}
+#kit-hyperspace-warp .hw-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-hyperspace-warp .hw-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 50%,rgba(5,3,20,0) 38%,rgba(5,3,20,0.35) 74%,rgba(3,2,12,0.82) 100%)}
+#kit-hyperspace-warp .hw-hud{position:absolute;top:18px;display:flex;flex-direction:column;gap:9px;pointer-events:none;z-index:3}
+#kit-hyperspace-warp .hw-hud-tl{left:20px;align-items:flex-start}
+#kit-hyperspace-warp .hw-hud-tr{right:20px;align-items:flex-end}
+#kit-hyperspace-warp .hw-chip{display:flex;align-items:baseline;gap:8px;padding:7px 13px;border-radius:11px;background:rgba(10,8,32,0.46);border:1px solid rgba(150,160,230,0.16);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);box-shadow:0 2px 18px rgba(0,0,0,0.32)}
+#kit-hyperspace-warp .hw-chip-k{font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:rgba(196,202,238,0.62)}
+#kit-hyperspace-warp .hw-chip-v{font-size:18px;font-weight:600;letter-spacing:0.01em;color:#f3f5ff;font-variant-numeric:tabular-nums;line-height:1}
+#kit-hyperspace-warp .hw-chip-u{font-size:10.5px;font-weight:400;letter-spacing:0.05em;color:rgba(170,178,222,0.5)}
+#kit-hyperspace-warp .hw-chip-blue{border-color:rgba(120,170,255,0.34)}
+#kit-hyperspace-warp .hw-chip-blue .hw-chip-v{color:#bcd6ff}
+#kit-hyperspace-warp .hw-controls{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:16px;padding:12px 20px;border-radius:16px;background:rgba(9,7,28,0.5);border:1px solid rgba(150,160,230,0.16);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 6px 30px rgba(0,0,0,0.4);z-index:4;width:min(440px,72%);transition:opacity .5s ease}
+#kit-hyperspace-warp .hw-ctl-label{font-size:11px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:rgba(198,204,240,0.66);flex-shrink:0}
+#kit-hyperspace-warp .hw-ctl-val{font-size:13px;font-weight:600;letter-spacing:0.02em;color:#dfe6ff;font-variant-numeric:tabular-nums;flex-shrink:0;min-width:52px;text-align:right}
+#kit-hyperspace-warp .hw-slider{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:4px;background:linear-gradient(90deg,rgba(120,170,255,0.85) 0%,rgba(120,170,255,0.85) var(--hw-fill,25%),rgba(150,160,230,0.18) var(--hw-fill,25%),rgba(150,160,230,0.18) 100%);outline:none;cursor:pointer;margin:0}
+#kit-hyperspace-warp .hw-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,#cfe0ff 60%,#9fc0ff);border:none;box-shadow:0 0 0 4px rgba(120,170,255,0.18),0 0 14px rgba(120,170,255,0.7);cursor:pointer;transition:box-shadow .2s}
+#kit-hyperspace-warp .hw-slider::-webkit-slider-thumb:hover{box-shadow:0 0 0 6px rgba(120,170,255,0.24),0 0 18px rgba(120,170,255,0.9)}
+#kit-hyperspace-warp .hw-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,#cfe0ff 60%,#9fc0ff);border:none;box-shadow:0 0 0 4px rgba(120,170,255,0.18),0 0 14px rgba(120,170,255,0.7);cursor:pointer}
+#kit-hyperspace-warp .hw-slider::-moz-range-track{height:4px;border-radius:4px;background:transparent}
+@media (max-width:560px){#kit-hyperspace-warp .hw-controls{width:84%;gap:11px;padding:10px 15px}#kit-hyperspace-warp .hw-chip-v{font-size:16px}#kit-hyperspace-warp .hw-hud-tl{left:14px}#kit-hyperspace-warp .hw-hud-tr{right:14px}}
 
 body.mb-embed #kit-hyperspace-warp{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
 body.mb-embed #kit-hyperspace-warp [class*='frame'],body.mb-embed #kit-hyperspace-warp [class*='shell'],body.mb-embed #kit-hyperspace-warp [class*='-inner'],body.mb-embed #kit-hyperspace-warp [class*='wrapper']{display:contents!important;}
@@ -166,39 +78,28 @@ body.mb-embed #kit-hyperspace-warp [class*='stage'],body.mb-embed #kit-hyperspac
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Lightspeed</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Hyperspace Warp</div></div>
     </div>
     
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-hyperspace-warp">
-  <h2 class="kit-sr">Interactive first-person star-warp: fly through space at adjustable speed and watch stars streak and blue-shift as you approach lightspeed.</h2>
-  <div class="kit-stage">
-    <canvas class="kit-canvas"></canvas>
-    <div class="kit-hud">
-      <div class="kit-hud-row">
-        <span class="kit-hud-label">Velocity</span>
-        <span class="kit-beta">&beta; 0.10</span>
-      </div>
-      <div class="kit-hud-row kit-hud-sub">
-        <span class="kit-gamma">&gamma; 1.005</span>
-        <span class="kit-shift">+0.5% blue</span>
-      </div>
-    </div>
-    <div class="kit-vignette" aria-hidden="true"></div>
+  <canvas class="hw-canvas" aria-hidden="true"></canvas>
+  <div class="hw-vignette" aria-hidden="true"></div>
+  <div class="hw-hud hw-hud-tl" aria-hidden="true">
+    <div class="hw-chip"><span class="hw-chip-k">&beta;</span><span class="hw-chip-v" data-hw="beta">0.250</span><span class="hw-chip-u">v/c</span></div>
+    <div class="hw-chip"><span class="hw-chip-k">&gamma;</span><span class="hw-chip-v" data-hw="gamma">1.033</span><span class="hw-chip-u">Lorentz</span></div>
   </div>
-  <div class="kit-controls">
-    <div class="kit-ctrl-main">
-      <label class="kit-ctrl-label" for="kit-hyperspace-warp-speed">Speed</label>
-      <input class="kit-slider" id="kit-hyperspace-warp-speed" type="range" min="1" max="999" value="100" step="1" aria-label="Warp speed as fraction of lightspeed" />
-      <span class="kit-speed-out">0.100&#8201;c</span>
-    </div>
-    <div class="kit-ticks" aria-hidden="true">
-      <span>cruise</span><span>warp</span><span>relativistic</span><span>lightspeed</span>
-    </div>
+  <div class="hw-hud hw-hud-tr" aria-hidden="true">
+    <div class="hw-chip hw-chip-blue"><span class="hw-chip-k">forward blueshift</span><span class="hw-chip-v" data-hw="blue">15</span><span class="hw-chip-u">%</span></div>
+  </div>
+  <div class="hw-controls">
+    <span class="hw-ctl-label">Speed</span>
+    <input class="hw-slider" type="range" min="0" max="999" value="250" step="1" aria-label="Speed as a fraction of the speed of light" />
+    <span class="hw-ctl-val" data-hw="betalabel">0.250&#8201;c</span>
   </div>
 </div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Drag the speed slider from gentle cruise to near-lightspeed: stars stretch into streaks, blue-shift, and bunch toward the vanishing point as relativistic aberration intensifies.</span>
+    <span class="mb-c-int">Drag the SPEED slider to set beta (v/c) from 0 to 0.999 and watch the starfield stretch, concentrate forward, and Doppler-tint; leave it alone and it breathes gently on its own.</span>
     <span class="mb-c-src">Concept · SSAI</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -226,7 +127,18 @@ body.mb-embed #kit-hyperspace-warp [class*='stage'],body.mb-embed #kit-hyperspac
     }
   }catch(e){}
   /* nudge a resize after layout settles so canvas modules that measured too early redraw at the right size */
-  window.addEventListener('load',function(){ [120,420,1000].forEach(function(t){ setTimeout(function(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} },t); }); });
+  (function(){
+    function fire(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} }
+    function settle(){
+      [0,80,200,420,800,1300,2000,2800].forEach(function(t){ setTimeout(fire,t); });
+      try{ requestAnimationFrame(function(){ requestAnimationFrame(fire); }); }catch(e){}
+      /* on-change watcher: fire whenever the stage box settles to a new size (~4s) */
+      var st=document.querySelector('.mb-stage')||document.documentElement, lw=-1, lh=-1, n=0;
+      var iv=setInterval(function(){ var w=st.clientWidth, h=st.clientHeight;
+        if(w!==lw||h!==lh){ lw=w; lh=h; fire(); } if(++n>40) clearInterval(iv); },100);
+    }
+    if(document.readyState==='complete') settle(); else window.addEventListener('load',settle);
+  })();
   /* safety: some modules forget to hide their loading overlay after the image resolves */
   window.addEventListener('load',function(){ setTimeout(function(){
     var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
@@ -239,307 +151,255 @@ body.mb-embed #kit-hyperspace-warp [class*='stage'],body.mb-embed #kit-hyperspac
 <script>
 (function(){
   var root=document.getElementById('kit-hyperspace-warp');
-  if(!root) return;
-  var canvas=root.querySelector('.kit-canvas');
+  if(!root||root.dataset.hwInit)return;root.dataset.hwInit='1';
+  var canvas=root.querySelector('.hw-canvas');
   var ctx=canvas.getContext('2d',{alpha:false});
-  var slider=root.querySelector('.kit-slider');
-  var speedOut=root.querySelector('.kit-speed-out');
-  var betaEl=root.querySelector('.kit-beta');
-  var gammaEl=root.querySelector('.kit-gamma');
-  var shiftEl=root.querySelector('.kit-shift');
+  var slider=root.querySelector('.hw-slider');
+  var elBeta=root.querySelector('[data-hw="beta"]');
+  var elGamma=root.querySelector('[data-hw="gamma"]');
+  var elBlue=root.querySelector('[data-hw="blue"]');
+  var elBetaLabel=root.querySelector('[data-hw="betalabel"]');
 
-  var reduce=false;
-  try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  var accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#7aa8ff';
 
-  var accent='#3cc8ff', accentRGB=[60,200,255];
   function hexToRgb(h){
     h=(h||'').trim();
-    if(h.charAt(0)==='#') h=h.slice(1);
-    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    var n=parseInt(h,16);
-    if(isNaN(n)||h.length<6) return null;
-    return [(n>>16)&255,(n>>8)&255,n&255];
+    var m=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h);
+    if(m)return[parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)];
+    var s=/^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec(h);
+    if(s)return[parseInt(s[1]+s[1],16),parseInt(s[2]+s[2],16),parseInt(s[3]+s[3],16)];
+    var rg=/rgba?\(([^)]+)\)/i.exec(h);
+    if(rg){var p=rg[1].split(',');return[+p[0]||0,+p[1]||0,+p[2]||0];}
+    return[122,168,255];
   }
-  function readAccent(){
-    var cs=getComputedStyle(document.documentElement);
-    var a=cs.getPropertyValue('--accent').trim();
-    if(a){accent=a;}
-    var rgbVar=cs.getPropertyValue('--accent-rgb').trim();
-    var rgb=null;
-    if(rgbVar){
-      var p=rgbVar.split(',').map(function(x){return parseInt(x,10);});
-      if(p.length===3 && !p.some(isNaN)) rgb=p;
-    }
-    if(!rgb) rgb=hexToRgb(accent);
-    if(rgb){
-      accentRGB=rgb;
-      root.style.setProperty('--kit-accent',accent||'#3cc8ff');
-      root.style.setProperty('--kit-accent-rgb',rgb.join(','));
-    }
-  }
-  readAccent();
+  var accRGB=hexToRgb(accent);
 
-  var DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2));
-  var W=0,H=0,cx=0,cy=0;
-  function resize(){
-    var r=canvas.getBoundingClientRect();
-    if(r.width<2||r.height<2) return;
-    DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2));
-    W=Math.round(r.width); H=Math.round(r.height);
-    canvas.width=Math.round(W*DPR);
-    canvas.height=Math.round(H*DPR);
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    cx=W/2; cy=H/2;
-  }
+  var W=0,H=0,DPR=1,CX=0,CY=0,maxR=1;
 
-  // Star field in 3D. Each star has x,y in a centered plane and z depth.
-  var STAR_COUNT=0;
+  var STAR_TARGET=580;
   var stars=[];
-  var maxDepth=1400;
-  function spread(){ return (Math.random()*2-1); }
-  function recycle(s,fresh){
-    var spreadW=Math.max(W,H)*1.4 + 200;
-    s.x=spread()*spreadW;
-    s.y=spread()*spreadW;
-    s.z=fresh?(Math.random()*maxDepth):maxDepth;
-    s.pz=s.z;
-    // intrinsic stellar color temperature: bias toward warm/white at rest
-    s.t=Math.random();            // 0..1 -> cool red to hot blue baseline
-    s.mag=0.45+Math.random()*0.55; // brightness
+  function rand(a,b){return a+Math.random()*(b-a);}
+  function makeStar(){
+    return{
+      x:rand(-1,1),
+      y:rand(-1,1),
+      z:rand(0.06,1),
+      seed:Math.random(),
+      baseSize:rand(0.55,1.7),
+      tw:rand(0,Math.PI*2),
+      twSpd:rand(0.6,2.0),
+      hue:rand(0,1)
+    };
   }
-  function buildStars(){
-    var area=W*H;
-    STAR_COUNT=Math.max(260,Math.min(900,Math.round(area/1500)));
-    stars=new Array(STAR_COUNT);
-    for(var i=0;i<STAR_COUNT;i++){
-      stars[i]={x:0,y:0,z:0,pz:0,t:0,mag:0};
-      recycle(stars[i],true);
-    }
+  function seedStars(){stars.length=0;for(var i=0;i<STAR_TARGET;i++)stars.push(makeStar());}
+  seedStars();
+
+  function resize(){
+    var r=root.getBoundingClientRect();
+    var cw=Math.max(1,Math.round(r.width));
+    var ch=Math.max(1,Math.round(r.height));
+    DPR=Math.min(window.devicePixelRatio||1,2.5);
+    canvas.width=Math.round(cw*DPR);
+    canvas.height=Math.round(ch*DPR);
+    canvas.style.width=cw+'px';canvas.style.height=ch+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    W=cw;H=ch;CX=W*0.5;CY=H*0.5;
+    maxR=Math.sqrt(CX*CX+CY*CY);
   }
 
-  // Blackbody-ish color from temperature param + blueshift factor (0..1 strong)
-  function starColor(tBase,blue,bright){
-    // map tBase (0 cool .. 1 hot) to RGB
-    var r,g,b;
-    var t=tBase;
-    // base spectral ramp: red-orange -> white -> blue-white
-    if(t<0.5){
-      var k=t/0.5;
-      r=255; g=160+k*80; b=90+k*150;
+  var ro=new ResizeObserver(function(){resize();});
+  ro.observe(root);
+  window.addEventListener('resize',resize);
+  resize();
+
+  var beta=0.25;
+  var userBeta=null;
+  var lastInteract=-1e9;
+  var breatheActive=true;
+
+  function readSlider(){
+    var v=+slider.value/1000;
+    if(v>0.999)v=0.999;
+    return v;
+  }
+  function setSliderFill(b){
+    slider.style.setProperty('--hw-fill',(b*100).toFixed(1)+'%');
+  }
+  slider.addEventListener('input',function(){
+    userBeta=readSlider();
+    lastInteract=performance.now();
+    breatheActive=false;
+    setSliderFill(userBeta);
+  });
+
+  setSliderFill(beta);
+
+  var bgGrad=null,bgKey='';
+  function ensureBg(){
+    var k=W+'x'+H;
+    if(k===bgKey&&bgGrad)return;
+    bgKey=k;
+    bgGrad=ctx.createRadialGradient(CX,CY,0,CX,CY,maxR);
+    bgGrad.addColorStop(0,'#0a0726');
+    bgGrad.addColorStop(0.45,'#070420');
+    bgGrad.addColorStop(1,'#040210');
+  }
+
+  function clamp(v,a,b){return v<a?a:v>b?b:v;}
+  function lerp(a,b,t){return a+(b-a)*t;}
+
+  var t0=performance.now();
+  var driftZ=0;
+
+  function frame(now){
+    var dt=Math.min(0.05,(now-(frame._last||now))/1000);
+    frame._last=now;
+    var t=(now-t0)/1000;
+
+    if(breatheActive){
+      beta=0.25+0.14*Math.sin(t*0.22)+0.05*Math.sin(t*0.071+1.3);
+      beta=clamp(beta,0.02,0.999);
+      slider.value=Math.round(beta*1000);
+      setSliderFill(beta);
     }else{
-      var k2=(t-0.5)/0.5;
-      r=255-k2*70; g=240-k2*20; b=240+k2*15;
+      beta+=(userBeta-beta)*Math.min(1,dt*7);
+      if(now-lastInteract>9000){breatheActive=true;}
     }
-    // relativistic blueshift: push hue toward blue/violet, brighten
-    if(blue>0){
-      r=r+(150-r)*blue*0.9;
-      g=g+(200-g)*blue*0.6;
-      b=b+(255-b)*blue;
-    }
-    var m=Math.min(1,bright);
-    r=Math.round(Math.min(255,r)); g=Math.round(Math.min(255,g)); b=Math.round(Math.min(255,b));
-    return 'rgba('+r+','+g+','+b+','+m.toFixed(3)+')';
-  }
 
-  // velocity model: slider 1..999 -> beta 0.01 .. 0.999
-  var sliderVal=parseInt(slider.value,10)||100;
-  var beta=0.1;          // current displayed beta
-  var betaTarget=0.1;
-  function computeBeta(v){
-    // ease so low end is gentle cruise, top approaches lightspeed
-    var f=v/999;                       // 0..1
-    var b=0.01 + Math.pow(f,1.6)*0.989; // 0.01 .. 0.999
-    return Math.min(0.999,b);
-  }
-  function syncSlider(){
-    sliderVal=parseInt(slider.value,10)||1;
-    betaTarget=computeBeta(sliderVal);
-    var pct=((sliderVal-1)/998)*100;
-    root.style.setProperty('--kit-fill',pct.toFixed(1)+'%');
-  }
+    var gamma=1/Math.sqrt(Math.max(1e-6,1-beta*beta));
+    var bluePct=Math.round((Math.sqrt((1+beta)/(1-beta))-1)*100);
 
-  function updateHUD(){
-    var g=1/Math.sqrt(Math.max(1e-6,1-beta*beta));
-    speedOut.textContent=beta.toFixed(3)+' c';
-    betaEl.textContent='β '+beta.toFixed(3);
-    gammaEl.textContent='γ '+(g>99?g.toFixed(0):g.toFixed(g<10?3:1));
-    // forward Doppler blueshift fraction: factor = sqrt((1+b)/(1-b)) - 1
-    var dop=Math.sqrt((1+beta)/(1-beta));
-    var pctBlue=Math.round((dop-1)*100);
-    shiftEl.textContent=(pctBlue>=1000?(pctBlue/100).toFixed(0)+'×':'+'+pctBlue+'%')+' blue';
-  }
+    elBeta.textContent=beta.toFixed(3);
+    elGamma.textContent=gamma.toFixed(gamma<10?3:1);
+    elBlue.textContent=bluePct;
+    elBetaLabel.textContent=beta.toFixed(3)+' c';
 
-  // relativistic aberration: bunch stars toward forward direction (center)
-  // We compress the angular radius from center by an aberration factor.
-  function render(){
-    if(W<2||H<2) return;
-    // velocity-dependent travel speed & visual params
-    var travel=(0.6 + beta*beta*46);          // depth units per frame
-    var blue=Math.pow(beta,2.2);              // 0..~1 blueshift strength
-    var bright=1+beta*0.6;                    // overall brightening forward
-    var aberr=beta;                            // aberration strength 0..1
-    var maxStreak=4 + beta*beta*220;          // px cap on streak length
+    var travel=(0.10+beta*beta*1.7)*dt;
+    driftZ+=travel*0.4;
 
-    // background: deep space, slight forward glow that grows with speed
-    ctx.fillStyle='#050314';
+    ensureBg();
+
+    ctx.globalCompositeOperation='source-over';
+    ctx.fillStyle=bgGrad;
     ctx.fillRect(0,0,W,H);
-    if(beta>0.25){
-      var gl=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*0.5);
-      var ga=(beta-0.25)*0.16;
-      gl.addColorStop(0,'rgba('+accentRGB[0]+','+accentRGB[1]+','+accentRGB[2]+','+ga.toFixed(3)+')');
-      gl.addColorStop(0.5,'rgba('+accentRGB[0]+','+accentRGB[1]+','+accentRGB[2]+','+(ga*0.25).toFixed(3)+')');
-      gl.addColorStop(1,'rgba(5,3,20,0)');
-      ctx.fillStyle=gl;
-      ctx.fillRect(0,0,W,H);
-    }
 
-    ctx.lineCap='round';
-    var fov=Math.min(W,H)*0.92;
+    var nebA=0.05+0.04*Math.sin(t*0.15);
+    var ng=ctx.createRadialGradient(CX+Math.cos(t*0.05)*W*0.12,CY+Math.sin(t*0.07)*H*0.1,0,CX,CY,maxR*0.85);
+    ng.addColorStop(0,'rgba('+accRGB[0]+','+accRGB[1]+','+accRGB[2]+','+(nebA*1.1).toFixed(3)+')');
+    ng.addColorStop(0.5,'rgba('+Math.round(accRGB[0]*0.5)+','+Math.round(accRGB[1]*0.4)+',120,'+(nebA*0.5).toFixed(3)+')');
+    ng.addColorStop(1,'rgba(5,3,20,0)');
+    ctx.fillStyle=ng;
+    ctx.fillRect(0,0,W,H);
 
-    for(var i=0;i<STAR_COUNT;i++){
+    var fov=Math.min(W,H)*0.62;
+
+    var aber=beta;
+    var streakK=beta*beta;
+
+    ctx.globalCompositeOperation='lighter';
+
+    for(var i=0;i<stars.length;i++){
       var s=stars[i];
-      s.pz=s.z;
-      if(!reduce){
-        s.z-=travel;
-        if(s.z<=1){ recycle(s,false); s.pz=s.z; continue; }
+      s.z-=travel*(0.35+s.z*0.5);
+      if(s.z<=0.02){
+        s.x=rand(-1,1);s.y=rand(-1,1);s.z=rand(0.85,1.05);
+        s.seed=Math.random();s.baseSize=rand(0.55,1.7);
+        s.tw=rand(0,Math.PI*2);s.twSpd=rand(0.6,2.0);s.hue=rand(0,1);
       }
 
-      // project current
-      var k=fov/s.z;
-      var sx=s.x*k, sy=s.y*k;
+      var ang=Math.atan2(s.y,s.x);
+      var rad=Math.sqrt(s.x*s.x+s.y*s.y);
+      var radA=Math.pow(rad,1+aber*1.35);
+      var px=Math.cos(ang)*radA;
+      var py=Math.sin(ang)*radA;
 
-      // relativistic aberration: pull toward center.
-      // angle compression: r' = r * (1-aberr*depthFactor)
-      if(aberr>0){
-        var ab=1 - aberr*0.55*(1 - s.z/maxDepth*0.4);
-        sx*=ab; sy*=ab;
-      }
-      var px=cx+sx, py=cy+sy;
+      var invz=1/s.z;
+      var sx=CX+px*fov*invz;
+      var sy=CY+py*fov*invz;
 
-      // project previous depth -> tail
-      var kp=fov/s.pz;
-      var spx=s.x*kp, spy=s.y*kp;
-      if(aberr>0){
-        var abp=1 - aberr*0.55*(1 - s.pz/maxDepth*0.4);
-        spx*=abp; spy*=abp;
-      }
-      var tx=cx+spx, ty=cy+spy;
+      var dx=sx-CX,dy=sy-CY;
+      var dist=Math.sqrt(dx*dx+dy*dy)||0.0001;
+      var distN=dist/maxR;
 
-      // cull
-      if(px< -40||px>W+40||py< -40||py>H+40){ if(s.z<travel*1.2) recycle(s,false); continue; }
+      var depthFade=clamp((1.05-s.z)*1.3,0,1);
+      var twk=0.7+0.3*Math.sin(s.tw+t*s.twSpd);
+      var bright=depthFade*twk*invz*0.55;
+      bright=clamp(bright,0,1);
 
-      // depth-based size & brightness
-      var depthF=1 - s.z/maxDepth;          // 0 far .. 1 near
-      var size=(0.5 + depthF*1.9) * s.mag;
-      var alpha=Math.min(1,(0.15 + depthF*1.05) * s.mag);
+      var size=s.baseSize*invz*(0.7+depthFade*0.6);
+      size=clamp(size,0.35,3.4);
 
-      var col=starColor(s.t,blue, alpha*bright);
+      var dirx=dx/dist,diry=dy/dist;
+      var streakLen=streakK*invz*Math.pow(distN,0.65)*Math.min(W,H)*0.9;
+      streakLen=clamp(streakLen,0,maxR*1.25);
 
-      // streak length from movement, capped
-      var dx=px-tx, dy=py-ty;
-      var len=Math.sqrt(dx*dx+dy*dy);
-
-      if(len>1.5 && beta>0.04 && !reduce){
-        if(len>maxStreak){
-          var sc=maxStreak/len;
-          tx=px-dx*sc; ty=py-dy*sc;
-        }
-        ctx.strokeStyle=col;
-        ctx.lineWidth=Math.max(0.6,size*(0.7+beta*0.8));
-        ctx.beginPath();
-        ctx.moveTo(tx,ty);
-        ctx.lineTo(px,py);
-        ctx.stroke();
-        // bright head
-        if(depthF>0.55){
-          ctx.fillStyle=col;
-          ctx.beginPath();
-          ctx.arc(px,py,size*0.9,0,6.283);
-          ctx.fill();
-        }
+      var fwd=clamp(1-distN,0,1);
+      var dop=fwd*beta;
+      var r,g,b;
+      var warm=s.hue;
+      if(dop>0.001){
+        var blu=clamp(dop*2.0,0,1);
+        r=lerp(lerp(255,205,warm*0.4),150,blu);
+        g=lerp(lerp(230,225,warm*0.3),200,blu*0.6);
+        b=lerp(lerp(210,180,warm),255,blu);
       }else{
-        ctx.fillStyle=col;
+        var redAmt=clamp((distN-0.55)*1.6,0,1)*beta;
+        r=lerp(255,255,1);
+        g=lerp(238,150,redAmt);
+        b=lerp(225,120,redAmt);
+      }
+
+      if(streakLen>1.2){
+        var ex=sx,ey=sy;
+        var bx=sx-dirx*streakLen,by=sy-diry*streakLen;
+        var lg=ctx.createLinearGradient(bx,by,ex,ey);
+        var aHead=bright*(0.45+0.5*streakK);
+        lg.addColorStop(0,'rgba('+(r|0)+','+(g|0)+','+(b|0)+',0)');
+        lg.addColorStop(0.65,'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+(aHead*0.4).toFixed(3)+')');
+        lg.addColorStop(1,'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+aHead.toFixed(3)+')');
+        ctx.strokeStyle=lg;
+        ctx.lineWidth=clamp(size*0.85,0.5,2.6);
+        ctx.lineCap='round';
         ctx.beginPath();
-        ctx.arc(px,py,Math.max(0.5,size),0,6.283);
+        ctx.moveTo(bx,by);
+        ctx.lineTo(ex,ey);
+        ctx.stroke();
+      }
+
+      var glowA=bright*(1-0.55*streakK);
+      if(glowA>0.01){
+        var gr=size*2.6;
+        var rg2=ctx.createRadialGradient(sx,sy,0,sx,sy,gr);
+        rg2.addColorStop(0,'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+clamp(glowA,0,1).toFixed(3)+')');
+        rg2.addColorStop(0.4,'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+(glowA*0.35).toFixed(3)+')');
+        rg2.addColorStop(1,'rgba('+(r|0)+','+(g|0)+','+(b|0)+',0)');
+        ctx.fillStyle=rg2;
+        ctx.beginPath();
+        ctx.arc(sx,sy,gr,0,Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle='rgba('+Math.min(255,r+30|0)+','+Math.min(255,g+30|0)+','+Math.min(255,b+30|0)+','+clamp(glowA*1.1,0,1).toFixed(3)+')';
+        ctx.beginPath();
+        ctx.arc(sx,sy,Math.max(0.4,size*0.5),0,Math.PI*2);
         ctx.fill();
       }
     }
-  }
 
-  var running=false, rafId=0, accentTick=0;
-  function frame(){
-    if(!running) return;
-    // ease beta toward target for smooth slider feel
-    beta+=(betaTarget-beta)*0.08;
-    if(Math.abs(betaTarget-beta)<0.0005) beta=betaTarget;
-    if(++accentTick%6===0) readAccent();
-    render();
-    updateHUD();
-    rafId=requestAnimationFrame(frame);
-  }
-  function start(){
-    if(running) return;
-    if(W<2||H<2) resize();
-    running=true;
-    if(reduce){
-      // static-but-interactive: snap beta, draw once
-      beta=betaTarget; readAccent(); render(); updateHUD();
-      running=false;
-      return;
-    }
-    rafId=requestAnimationFrame(frame);
-  }
-  function stop(){
-    running=false;
-    if(rafId) cancelAnimationFrame(rafId);
-    rafId=0;
-  }
+    var coreA=0.10+streakK*0.5;
+    var cr=Math.min(W,H)*(0.04+streakK*0.16);
+    var cg=ctx.createRadialGradient(CX,CY,0,CX,CY,cr);
+    cg.addColorStop(0,'rgba(220,232,255,'+clamp(coreA,0,0.7).toFixed(3)+')');
+    cg.addColorStop(0.4,'rgba('+accRGB[0]+','+accRGB[1]+','+accRGB[2]+','+(coreA*0.5).toFixed(3)+')');
+    cg.addColorStop(1,'rgba(5,3,20,0)');
+    ctx.fillStyle=cg;
+    ctx.beginPath();
+    ctx.arc(CX,CY,cr,0,Math.PI*2);
+    ctx.fill();
 
-  // reduced-motion: redraw on interaction
-  function staticRedraw(){
-    if(!reduce) return;
-    beta=betaTarget; readAccent(); render(); updateHUD();
+    ctx.globalCompositeOperation='source-over';
+    requestAnimationFrame(frame);
   }
-
-  slider.addEventListener('input',function(){
-    syncSlider();
-    if(reduce){ staticRedraw(); }
-  });
-
-  var resizeRAF=0;
-  window.addEventListener('resize',function(){
-    if(resizeRAF) cancelAnimationFrame(resizeRAF);
-    resizeRAF=requestAnimationFrame(function(){
-      resize(); buildStars();
-      if(reduce) staticRedraw();
-    });
-  });
-
-  // IntersectionObserver: pause when off-screen
-  var io=null;
-  if('IntersectionObserver' in window){
-    io=new IntersectionObserver(function(entries){
-      for(var i=0;i<entries.length;i++){
-        if(entries[i].isIntersecting){ start(); }
-        else{ stop(); }
-      }
-    },{threshold:0.01});
-    io.observe(root);
-  }
-
-  // init
-  syncSlider();
-  // wait a tick for layout
-  requestAnimationFrame(function(){
-    resize(); buildStars(); updateHUD();
-    if(io){
-      var r=root.getBoundingClientRect();
-      var vis=r.bottom>0 && r.top<(window.innerHeight||document.documentElement.clientHeight);
-      if(vis) start(); else { render(); }
-    }else{
-      start();
-    }
-  });
+  requestAnimationFrame(frame);
 })();
 </script>
 </body></html>

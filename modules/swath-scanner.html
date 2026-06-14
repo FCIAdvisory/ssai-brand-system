@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Observation swath · SSAI</title>
+<title>Swath Scanner · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,120 +41,33 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-swath-scanner{
-  --obsw-bg:#050314; --obsw-indigo:#16145f; --obsw-text:#f4f5ff; --obsw-muted:#a6abe6;
-  --obsw-line:rgba(166,171,230,0.16);
-  width:100%; box-sizing:border-box; color:var(--obsw-text);
-  font-family:'Inter',system-ui,sans-serif; position:relative;
-  background:radial-gradient(120% 140% at 50% -20%, #0a0828 0%, #050314 62%);
-  border:1px solid var(--obsw-line); border-radius:16px; padding:16px;
-  display:flex; flex-direction:column; gap:14px; overflow:hidden;
-}
-#kit-swath-scanner *{box-sizing:border-box;}
-#kit-swath-scanner .obsw-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
-#kit-swath-scanner .obsw-stage{
-  position:relative; width:100%; min-height:240px;
-  border-radius:14px; overflow:hidden;
-  background:#050314;
-}
-#kit-swath-scanner .obsw-canvas{position:absolute; inset:0; display:block; width:100%; height:100%;}
-#kit-swath-scanner .obsw-hud{
-  position:absolute; top:12px; left:14px; right:14px;
-  display:flex; justify-content:space-between; align-items:flex-start;
-  pointer-events:none; gap:10px; flex-wrap:wrap; z-index:2;
-}
-#kit-swath-scanner .obsw-cov{display:flex; align-items:baseline; gap:6px;}
-#kit-swath-scanner .obsw-cov-num{
-  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
-  font-size:clamp(26px,4.6vw,40px); line-height:1; letter-spacing:0.5px;
-  color:var(--obsw-text); text-shadow:0 0 18px rgba(var(--accent-rgb,60,200,255),0.5);
-}
-#kit-swath-scanner .obsw-cov-unit{font-size:12px; color:var(--obsw-muted); text-transform:uppercase; letter-spacing:0.12em;}
-#kit-swath-scanner .obsw-meta{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;}
-#kit-swath-scanner .obsw-chip{
-  display:inline-flex; align-items:baseline; gap:6px;
-  background:rgba(10,8,40,0.55); border:1px solid var(--obsw-line); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
-  border-radius:999px; padding:5px 11px; font-size:12px; color:var(--obsw-muted);
-}
-#kit-swath-scanner .obsw-chip i{font-style:normal; font-size:10px; letter-spacing:0.14em; opacity:0.72; text-transform:uppercase;}
-#kit-swath-scanner .obsw-chip b{
-  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
-  color:var(--obsw-text); font-size:13px;
-}
-#kit-swath-scanner .obsw-prov{
-  position:absolute; left:14px; bottom:11px; z-index:2; pointer-events:none;
-  font-size:10.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--obsw-muted);
-  opacity:0.78; text-shadow:0 1px 6px rgba(0,0,0,0.7);
-}
-#kit-swath-scanner .obsw-load{
-  position:absolute; inset:0; z-index:3; display:flex; align-items:center; justify-content:center;
-  gap:10px; flex-direction:column; color:var(--obsw-muted); font-size:12px; letter-spacing:0.08em;
-  background:radial-gradient(60% 60% at 50% 50%, rgba(10,8,40,0.4), rgba(5,3,20,0.0));
-}
-#kit-swath-scanner .obsw-load-ring{
-  width:26px; height:26px; border-radius:50%;
-  border:2px solid var(--obsw-line); border-top-color:var(--accent,#3cc8ff);
-  animation:obsw-spin 0.9s linear infinite;
-}
-@keyframes obsw-spin{to{transform:rotate(360deg);}}
-#kit-swath-scanner .obsw-load-txt{text-transform:uppercase;}
+#kit-swath-scanner{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;color:#eaf0ff;border-radius:inherit}
+#kit-swath-scanner .ss-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
-#kit-swath-scanner .obsw-ctrls{display:flex; flex-direction:column; gap:12px;}
-#kit-swath-scanner .obsw-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
-#kit-swath-scanner .obsw-btn{
-  font-family:'Inter',sans-serif; font-size:13px; color:var(--obsw-text);
-  background:rgba(22,20,95,0.42); border:1px solid var(--obsw-line); border-radius:10px;
-  padding:8px 14px; cursor:pointer; transition:transform .14s ease,border-color .2s ease,background .2s ease;
-}
-#kit-swath-scanner .obsw-btn:hover{border-color:rgba(var(--accent-rgb,60,200,255),0.55); background:rgba(22,20,95,0.7);}
-#kit-swath-scanner .obsw-btn:active{transform:scale(0.97);}
-#kit-swath-scanner .obsw-play{
-  display:inline-flex; align-items:center; gap:8px; min-width:92px;
-  border-color:rgba(var(--accent-rgb,60,200,255),0.6);
-  background:rgba(var(--accent-rgb,60,200,255),0.14);
-}
-#kit-swath-scanner .obsw-pi{
-  width:0; height:0; border-style:solid; border-width:6px 0 6px 9px;
-  border-color:transparent transparent transparent var(--accent,#3cc8ff); display:inline-block;
-}
-#kit-swath-scanner .obsw-play:not(.is-paused) .obsw-pi{
-  width:9px; height:11px; border:none; border-left:3px solid var(--accent,#3cc8ff);
-  border-right:3px solid var(--accent,#3cc8ff); background:transparent;
-}
-#kit-swath-scanner .obsw-seg{display:inline-flex; border:1px solid var(--obsw-line); border-radius:10px; overflow:hidden; margin-left:auto;}
-#kit-swath-scanner .obsw-seg-b{
-  font-family:'Inter',sans-serif; font-size:12px; color:var(--obsw-muted);
-  background:transparent; border:none; padding:8px 14px; cursor:pointer; transition:color .2s,background .2s;
-}
-#kit-swath-scanner .obsw-seg-b:hover{color:var(--obsw-text);}
-#kit-swath-scanner .obsw-seg-b.is-on{
-  color:#050314; font-weight:600;
-  background:var(--accent,#3cc8ff);
-}
-#kit-swath-scanner .obsw-sliders{gap:18px;}
-#kit-swath-scanner .obsw-sl{display:flex; flex-direction:column; gap:6px; flex:1; min-width:180px;}
-#kit-swath-scanner .obsw-sl > span{font-size:12px; color:var(--obsw-muted); letter-spacing:0.03em;}
-#kit-swath-scanner .obsw-sl b{
-  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; color:var(--obsw-text); font-size:13px;
-}
-#kit-swath-scanner input[type=range]{
-  -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:4px;
-  background:linear-gradient(90deg, rgba(var(--accent-rgb,60,200,255),0.7), rgba(166,171,230,0.18));
-  outline:none; cursor:pointer;
-}
-#kit-swath-scanner input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%;
-  background:var(--accent,#3cc8ff); border:2px solid #050314;
-  box-shadow:0 0 10px rgba(var(--accent-rgb,60,200,255),0.7); cursor:pointer;
-}
-#kit-swath-scanner input[type=range]::-moz-range-thumb{
-  width:16px; height:16px; border-radius:50%; background:var(--accent,#3cc8ff);
-  border:2px solid #050314; box-shadow:0 0 10px rgba(var(--accent-rgb,60,200,255),0.7); cursor:pointer;
-}
-#kit-swath-scanner input[type=range]:focus-visible{box-shadow:0 0 0 3px rgba(var(--accent-rgb,60,200,255),0.3);}
-@media (max-width:520px){
-  #kit-swath-scanner .obsw-seg{margin-left:0;}
-  #kit-swath-scanner .obsw-hud{top:10px;}
+#kit-swath-scanner .ss-hud{position:absolute;z-index:3;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+#kit-swath-scanner .ss-hud-tl{top:18px;left:18px;align-items:flex-start}
+#kit-swath-scanner .ss-hud-tr{top:18px;right:18px;align-items:flex-end}
+
+#kit-swath-scanner .ss-chip{display:flex;flex-direction:column;gap:2px;padding:9px 13px;border-radius:12px;background:rgba(8,8,24,0.42);border:1px solid rgba(255,255,255,0.10);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px);box-shadow:0 6px 22px rgba(0,0,0,0.34)}
+#kit-swath-scanner .ss-chip-accent{border-color:color-mix(in srgb, var(--accent, #4ea1ff) 48%, transparent);background:color-mix(in srgb, var(--accent, #4ea1ff) 14%, rgba(8,8,24,0.42))}
+#kit-swath-scanner .ss-chip-label{font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(220,228,255,0.62);font-weight:500;white-space:nowrap}
+#kit-swath-scanner .ss-chip-value{font-size:18px;font-weight:600;letter-spacing:0.01em;line-height:1.05;font-variant-numeric:tabular-nums;color:#f4f7ff}
+#kit-swath-scanner .ss-chip-accent .ss-chip-value{color:var(--accent, #4ea1ff)}
+
+#kit-swath-scanner .ss-controls{position:absolute;z-index:4;left:50%;bottom:22px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:11px 18px;border-radius:16px;background:rgba(8,8,24,0.40);border:1px solid rgba(255,255,255,0.10);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);box-shadow:0 10px 32px rgba(0,0,0,0.40);transition:opacity .4s ease;max-width:calc(100% - 36px)}
+#kit-swath-scanner .ss-slider-label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(220,228,255,0.66);font-weight:500;white-space:nowrap}
+#kit-swath-scanner .ss-slider-readout{font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent, #4ea1ff);min-width:62px;text-align:right;white-space:nowrap}
+
+#kit-swath-scanner .ss-slider{-webkit-appearance:none;appearance:none;width:190px;max-width:42vw;height:4px;border-radius:4px;background:linear-gradient(90deg, color-mix(in srgb, var(--accent,#4ea1ff) 70%, transparent), rgba(255,255,255,0.16));outline:none;cursor:pointer}
+#kit-swath-scanner .ss-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--accent,#4ea1ff);box-shadow:0 0 0 4px color-mix(in srgb, var(--accent,#4ea1ff) 26%, transparent),0 2px 8px rgba(0,0,0,0.4);cursor:pointer;transition:transform .15s ease}
+#kit-swath-scanner .ss-slider::-webkit-slider-thumb:hover{transform:scale(1.12)}
+#kit-swath-scanner .ss-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--accent,#4ea1ff);box-shadow:0 0 0 4px color-mix(in srgb, var(--accent,#4ea1ff) 26%, transparent);cursor:pointer}
+#kit-swath-scanner .ss-slider::-moz-range-track{height:4px;border-radius:4px;background:transparent}
+
+@media (max-width:540px){
+  #kit-swath-scanner .ss-chip-value{font-size:15px}
+  #kit-swath-scanner .ss-slider-label{display:none}
+  #kit-swath-scanner .ss-controls{gap:10px;padding:9px 14px}
 }
 
 body.mb-embed #kit-swath-scanner{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -172,13 +85,39 @@ body.mb-embed #kit-swath-scanner [class*='stage'],body.mb-embed #kit-swath-scann
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Observation swath</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Swath Scanner</div></div>
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
-  <div class="mb-stage"><div class="kfig" id="kit-swath-scanner"></div></div>
+  <div class="mb-stage"><div class="kfig" id="kit-swath-scanner">
+  <canvas class="ss-canvas" aria-label="Polar-orbiting satellite swath coverage map"></canvas>
+
+  <div class="ss-hud ss-hud-tl">
+    <div class="ss-chip">
+      <span class="ss-chip-label">Swath width</span>
+      <span class="ss-chip-value" data-ss="swath">—</span>
+    </div>
+    <div class="ss-chip">
+      <span class="ss-chip-label">Revisit time</span>
+      <span class="ss-chip-value" data-ss="revisit">—</span>
+    </div>
+  </div>
+
+  <div class="ss-hud ss-hud-tr">
+    <div class="ss-chip ss-chip-accent">
+      <span class="ss-chip-label">Global coverage</span>
+      <span class="ss-chip-value" data-ss="coverage">—</span>
+    </div>
+  </div>
+
+  <div class="ss-controls">
+    <label class="ss-slider-label" for="ss-swath-input">Swath width</label>
+    <input id="ss-swath-input" class="ss-slider" type="range" min="400" max="2800" step="50" value="1600" aria-label="Swath width in kilometres" />
+    <span class="ss-slider-readout" data-ss="swath-mini">1600 km</span>
+  </div>
+</div></div>
   <footer class="mb-credit">
-    <span class="mb-c-int">Play/pause and reset the scan, toggle a wide imager vs a narrow high-res sensor, and drag swath-width and speed sliders while coverage % climbs live.</span>
+    <span class="mb-c-int">Drag the single slider to widen or narrow the imaging swath; the painted coverage band, revisit time, and coverage percentage respond live as the satellite scans continuously.</span>
     <span class="mb-c-src">Basemap · NASA Blue Marble</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
@@ -206,7 +145,18 @@ body.mb-embed #kit-swath-scanner [class*='stage'],body.mb-embed #kit-swath-scann
     }
   }catch(e){}
   /* nudge a resize after layout settles so canvas modules that measured too early redraw at the right size */
-  window.addEventListener('load',function(){ [120,420,1000].forEach(function(t){ setTimeout(function(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} },t); }); });
+  (function(){
+    function fire(){ try{window.dispatchEvent(new Event('resize'));}catch(e){} }
+    function settle(){
+      [0,80,200,420,800,1300,2000,2800].forEach(function(t){ setTimeout(fire,t); });
+      try{ requestAnimationFrame(function(){ requestAnimationFrame(fire); }); }catch(e){}
+      /* on-change watcher: fire whenever the stage box settles to a new size (~4s) */
+      var st=document.querySelector('.mb-stage')||document.documentElement, lw=-1, lh=-1, n=0;
+      var iv=setInterval(function(){ var w=st.clientWidth, h=st.clientHeight;
+        if(w!==lw||h!==lh){ lw=w; lh=h; fire(); } if(++n>40) clearInterval(iv); },100);
+    }
+    if(document.readyState==='complete') settle(); else window.addEventListener('load',settle);
+  })();
   /* safety: some modules forget to hide their loading overlay after the image resolves */
   window.addEventListener('load',function(){ setTimeout(function(){
     var ov=document.querySelectorAll('.kfig [class*="loader"],.kfig [class*="loading"],.kfig [data-df-loader]');
@@ -218,559 +168,396 @@ body.mb-embed #kit-swath-scanner [class*='stage'],body.mb-embed #kit-swath-scann
 </script>
 <script>
 (function(){
-  var root=document.getElementById('kit-swath-scanner');
+  var root = document.getElementById('kit-swath-scanner');
   if(!root) return;
-  root.innerHTML='';
+  var canvas = root.querySelector('.ss-canvas');
+  var ctx = canvas.getContext('2d');
+  var slider = root.querySelector('#ss-swath-input');
+  var elSwath = root.querySelector('[data-ss="swath"]');
+  var elRevisit = root.querySelector('[data-ss="revisit"]');
+  var elCoverage = root.querySelector('[data-ss="coverage"]');
+  var elMini = root.querySelector('[data-ss="swath-mini"]');
 
-  var REDUCED = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-
-  // ---- shell ----
-  var sr=document.createElement('h3'); sr.className='obsw-sr';
-  sr.textContent='An imaging satellite on an inclined orbit paints its sensor swath across a real NASA Blue Marble world map, building global coverage pass after pass; toggle a wide imager versus a narrow high-resolution sensor to see coverage fill faster or slower.';
-  root.appendChild(sr);
-
-  var stage=document.createElement('div'); stage.className='obsw-stage';
-  var canvas=document.createElement('canvas'); canvas.className='obsw-canvas';
-  stage.appendChild(canvas);
-
-  var hud=document.createElement('div'); hud.className='obsw-hud';
-  hud.innerHTML=''+
-    '<div class="obsw-cov"><span class="obsw-cov-num" data-cov>0.0</span><span class="obsw-cov-unit">% global coverage</span></div>'+
-    '<div class="obsw-meta">'+
-      '<span class="obsw-chip"><i>SENSOR</i><b data-sensor>Wide imager</b></span>'+
-      '<span class="obsw-chip"><i>SWATH</i><b data-sw>2330</b> km</span>'+
-      '<span class="obsw-chip"><i>REVISIT</i><b data-rev>1.0</b> d</span>'+
-      '<span class="obsw-chip"><i>ORBIT</i><b data-pass>1</b></span>'+
-    '</div>';
-  stage.appendChild(hud);
-
-  var prov=document.createElement('div'); prov.className='obsw-prov';
-  prov.textContent='NASA Blue Marble · sun-synchronous imaging swath';
-  stage.appendChild(prov);
-
-  var loadEl=document.createElement('div'); loadEl.className='obsw-load';
-  loadEl.innerHTML='<span class="obsw-load-ring"></span><span class="obsw-load-txt">Loading NASA Blue Marble…</span>';
-  stage.appendChild(loadEl);
-
-  root.appendChild(stage);
-
-  var ctrls=document.createElement('div'); ctrls.className='obsw-ctrls';
-  ctrls.innerHTML=''+
-    '<div class="obsw-row">'+
-      '<button class="obsw-btn obsw-play" data-play type="button" aria-pressed="true"><span class="obsw-pi" data-pi></span><span data-playlabel>Pause</span></button>'+
-      '<button class="obsw-btn" data-reset type="button">Reset coverage</button>'+
-      '<div class="obsw-seg" role="group" aria-label="Sensor">'+
-        '<button class="obsw-seg-b is-on" data-sensor-btn="wide" type="button">Wide imager</button>'+
-        '<button class="obsw-seg-b" data-sensor-btn="narrow" type="button">High-res</button>'+
-      '</div>'+
-    '</div>'+
-    '<div class="obsw-row obsw-sliders">'+
-      '<label class="obsw-sl"><span>Swath width <b data-swl>2330</b> km</span>'+
-        '<input type="range" min="120" max="2900" step="10" value="2330" data-swath aria-label="Swath width in kilometres"></label>'+
-      '<label class="obsw-sl"><span>Scan speed <b data-spl>1.0</b>&times;</span>'+
-        '<input type="range" min="0.2" max="4" step="0.1" value="1" data-speed aria-label="Scan speed"></label>'+
-    '</div>';
-  root.appendChild(ctrls);
-
-  // ---- accent ----
-  var accent='#3cc8ff', accentRGB='60,200,255';
-  function hexToRgb(h){h=(h||'').replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];var n=parseInt(h,16);if(isNaN(n))return '60,200,255';return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}
-  function readAccent(){
-    try{
-      var cs=getComputedStyle(document.documentElement);
-      var a=cs.getPropertyValue('--accent').trim(); if(a) accent=a; else accent='#3cc8ff';
-      var r=cs.getPropertyValue('--accent-rgb').trim();
-      accentRGB = r ? r : hexToRgb(accent);
-    }catch(e){accent='#3cc8ff';accentRGB='60,200,255';}
+  function accent(){
+    var a = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return a || '#4ea1ff';
   }
-  readAccent();
+  var AC = accent();
+  function hexToRgb(h){
+    h = (h||'').replace('#','');
+    if(h.length===3) h = h.split('').map(function(c){return c+c;}).join('');
+    if(h.length<6) return {r:78,g:161,b:255};
+    return {r:parseInt(h.slice(0,2),16),g:parseInt(h.slice(2,4),16),b:parseInt(h.slice(4,6),16)};
+  }
+  var rgb = hexToRgb(AC);
+  function rgba(a){ return 'rgba('+rgb.r+','+rgb.g+','+rgb.b+','+a+')'; }
 
-  // ---- refs ----
-  function q(s){return root.querySelector(s);}
-  var covEl=q('[data-cov]'), sensorEl=q('[data-sensor]'), swEl=q('[data-sw]'),
-      revEl=q('[data-rev]'), passEl=q('[data-pass]'),
-      swlEl=q('[data-swl]'), splEl=q('[data-spl]'),
-      playBtn=q('[data-play]'), playLabel=q('[data-playlabel]'),
-      resetBtn=q('[data-reset]'),
-      swathInput=q('[data-swath]'), speedInput=q('[data-speed]');
+  // ---- Base map sprite ----
+  var img = new Image();
+  var imgReady = false;
+  img.onload = function(){ imgReady = true; };
+  img.onerror = function(){ imgReady = false; };
+  img.src = '../assets/images/blue-marble-world.jpg';
 
-  var ctx=canvas.getContext('2d');
-  var dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+  // ---- Coverage accumulation buffer (in map-fraction space, low-res) ----
+  // We track painted coverage on an offscreen low-res mask sized to the equirectangular map.
+  var MAP_W = 360, MAP_H = 180; // 1deg cells
+  var mask = new Uint8Array(MAP_W*MAP_H); // 0..255 paint intensity
+  var coverageFrac = 0;
 
-  // ---- offscreen buffers ----
-  // base = pre-rendered Blue Marble (full-res map rect), at css map pixel resolution
-  var baseCv=document.createElement('canvas'), baseCtx=baseCv.getContext('2d');
-  // dim = darkened/desaturated version used as the "not yet imaged" Earth
-  var dimCv=document.createElement('canvas'), dimCtx=dimCv.getContext('2d');
-  // cov = accumulating coverage mask (alpha grows where imaged)
-  var covCv=document.createElement('canvas'), covCtx=covCv.getContext('2d');
-  var imgEl=null, imgReady=false;
+  var coverBuf = document.createElement('canvas');
+  coverBuf.width = MAP_W; coverBuf.height = MAP_H;
+  var coverCtx = coverBuf.getContext('2d');
 
-  // ---- map geometry (in css px) ----
-  var MAP={x:0,y:0,w:0,h:0};
+  // ---- Geometry / sim state ----
+  var INCL = 0.78;            // orbital inclination factor (sine amplitude as fraction of half-height)
+  var ORBITS_VISIBLE = 2.15;  // sine cycles across the map width
+  var passLon = 0;            // current pass descending-node longitude offset (fraction 0..1), drifts west
+  var trackX = 0;             // ground-track sweep position (fraction 0..1) within current pass
+  var passShift = 0;          // accumulated westward shift across passes (fraction)
+  var revisitDays = 8;
+  var swathKm = parseFloat(slider.value);
 
-  // ---- sensors ----
-  var SENSORS={
-    wide:  {name:'Wide imager', swath:2330, def:2330, alt:705},
-    narrow:{name:'High-res',     swath:185,  def:185,  alt:705}
-  };
-  var sensorKey='wide';
+  var W=0,H=0,DPR=1;
 
-  // ---- orbit / sim state ----
-  var INC=98.2;                 // inclination (deg) -> sun-synchronous-ish
-  var theta=Math.PI*0.5;        // along-track angle (rad), advances
-  var ascNode=10;               // longitude of ascending node (deg), regresses each pass
-  var passCount=1;
-  var haveLast=false;
-  var swathKm=2330;             // current swath width
-  var targetSwathKm=2330;
-  var speed=1.0;
-  var playing=!REDUCED;
-  var coveragePct=0;
-
-  // Earth constants
-  var R_EARTH=6371;             // km
-  var ORBIT_PERIOD_S=98.8*60;   // ~98.8 min for 705 km SSO
-  // ground-track nodal regression per orbit so coverage drifts west (Earth turns under)
-  // one orbit ~98.8 min => Earth turns ~24.7 deg eastward => track shifts ~ -24.7 deg in lon each pass
-  var DLON_PER_PASS = -(ORBIT_PERIOD_S/86400)*360; // ~ -24.7 deg
-
-  // satellite advances along orbit; one half-revolution takes a few seconds at 1x
-  var SIM_RATE = (2*Math.PI) / 5.4; // rad of theta per real second at speed 1
-
-  // ---- helpers ----
-  function kmToDegLat(km){ return km/ (Math.PI*R_EARTH/180); } // km -> deg of latitude
-  function lonToX(lon){ return MAP.x + (lon+180)/360*MAP.w; }
-  function latToY(lat){ return MAP.y + (90-lat)/180*MAP.h; }
-
-  // sub-satellite point for a circular inclined orbit
-  // theta = argument of latitude. lat = asin(sin i * sin theta)
-  // dlon from node = atan2(cos i * sin theta, cos theta)
-  function subPoint(th, node){
-    var i=INC*Math.PI/180;
-    var sLat=Math.sin(i)*Math.sin(th);
-    if(sLat>1)sLat=1; if(sLat<-1)sLat=-1;
-    var lat=Math.asin(sLat)*180/Math.PI;
-    var dlon=Math.atan2(Math.cos(i)*Math.sin(th), Math.cos(th))*180/Math.PI;
-    var lon=node+dlon;
-    lon=((lon+180)%360+360)%360-180;
-    return {lat:lat,lon:lon};
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio||1, 2.5);
+    var r = root.getBoundingClientRect();
+    W = Math.max(2, r.width); H = Math.max(2, r.height);
+    canvas.width = Math.round(W*DPR);
+    canvas.height = Math.round(H*DPR);
+    canvas.style.width = W+'px'; canvas.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
   }
 
-  // ---- revisit estimate (days to ~full coverage) ----
-  // Equatorial track spacing ~2750 km/orbit; a wide MODIS-class swath (2330 km) tiles the
-  // globe in ~1 day, a narrow Landsat-class swath (185 km) in ~16 days. Scales inversely.
-  function revisitDays(km){
-    return Math.max(0.5, 2330/Math.max(40,km));
+  function fmt(n){ return n.toLocaleString('en-US'); }
+
+  function computeDerived(){
+    // swath width fraction of Earth circumference (~40075 km equatorial)
+    var swathFrac = swathKm/40075;
+    // revisit: narrower swath -> more passes to cover globe -> longer revisit.
+    // model: full coverage needs ~ (1/swathFrac) passes; ~14.5 passes/day for LEO sun-sync.
+    var passesNeeded = 1/swathFrac;
+    var passesPerDay = 14.5;
+    revisitDays = passesNeeded/passesPerDay;
+    return swathFrac;
   }
 
-  // ---- build base raster from the loaded image ----
-  function buildBase(){
-    if(!imgReady) return;
-    var w=Math.max(2,Math.round(MAP.w)), h=Math.max(2,Math.round(MAP.h));
-    if(baseCv.width!==w){ baseCv.width=w; baseCv.height=h; dimCv.width=w; dimCv.height=h; covCv.width=w; covCv.height=h; }
-    else { baseCv.height=h; dimCv.height=h; covCv.height=h; }
-    // draw blue marble to fill map rect
-    baseCtx.clearRect(0,0,w,h);
-    baseCtx.drawImage(imgEl,0,0,imgEl.naturalWidth,imgEl.naturalHeight,0,0,w,h);
-    // subtle indigo wash for brand
-    baseCtx.globalCompositeOperation='multiply';
-    baseCtx.fillStyle='rgba(22,20,95,0.30)';
-    baseCtx.fillRect(0,0,w,h);
-    baseCtx.globalCompositeOperation='source-over';
-    // gentle blue lift in shadows for cinematic cool tone
-    baseCtx.globalCompositeOperation='soft-light';
-    baseCtx.fillStyle='rgba(40,60,140,0.22)';
-    baseCtx.fillRect(0,0,w,h);
-    baseCtx.globalCompositeOperation='source-over';
-
-    // dim version: the "unimaged" Earth — much darker
-    dimCtx.clearRect(0,0,w,h);
-    dimCtx.drawImage(baseCv,0,0);
-    dimCtx.fillStyle='rgba(5,3,20,0.72)';
-    dimCtx.fillRect(0,0,w,h);
+  function updateHUD(){
+    elSwath.textContent = fmt(Math.round(swathKm/10)*10) + ' km';
+    elMini.textContent = fmt(Math.round(swathKm/10)*10) + ' km';
+    var d = revisitDays;
+    var rTxt = d < 1 ? (Math.round(d*24)) + ' h' : (d.toFixed(1)) + ' d';
+    elRevisit.textContent = rTxt;
+    elCoverage.textContent = Math.round(coverageFrac*100) + '%';
   }
 
-  function clearCoverage(){
-    if(covCv.width) covCtx.clearRect(0,0,covCv.width,covCv.height);
-    coveragePct=0; passCount=1; theta=Math.PI*0.5; ascNode=10; haveLast=false;
+  // map-space y for a given x (fraction) of a pass, given a longitude phase
+  function trackYFrac(xFrac){
+    // sine wave: inclined ground track. one descending+ascending visible scaled by ORBITS_VISIBLE
+    var phase = xFrac*ORBITS_VISIBLE*Math.PI*2;
+    return 0.5 + Math.sin(phase)* (INCL*0.5);
   }
 
-  // ---- sizing ----
-  function sizeCanvas(){
-    var cssW=stage.clientWidth||root.clientWidth||640;
-    // 2:1 equirectangular aspect, framed in space
-    var cssH=Math.round(cssW*0.5);
-    var minH=240, maxH=460;
-    if(cssH<minH)cssH=minH; if(cssH>maxH)cssH=maxH;
-    stage.style.height=cssH+'px';
-    var pw=Math.round(cssW*dpr), ph=Math.round(cssH*dpr);
-    if(canvas.width!==pw){canvas.width=pw;} if(canvas.height!==ph){canvas.height=ph;}
-    canvas.style.width=cssW+'px'; canvas.style.height=cssH+'px';
-
-    // map rect: leave a thin space frame; preserve 2:1
-    var pad=Math.round(cssW*0.02);
-    var availW=cssW-pad*2, availH=cssH-pad*2;
-    var mw=availW, mh=mw*0.5;
-    if(mh>availH){ mh=availH; mw=mh*2; }
-    MAP.w=mw; MAP.h=mh;
-    MAP.x=Math.round((cssW-mw)/2);
-    MAP.y=Math.round((cssH-mh)/2);
-    buildBase();
-  }
-
-  // ---- paint the swath footprint into the coverage buffer ----
-  function paintSwath(p, halfDegLat){
-    if(!covCv.width) return;
-    var sx=lonToX(p.lon)-MAP.x, sy=latToY(p.lat)-MAP.y;
-    // swath half-width is a ground distance -> constant px on the equirectangular vertical scale
-    var halfPxLat=halfDegLat/180*MAP.h;
-    // longitudes converge toward the poles: a fixed ground width spans more degrees of lon,
-    // so the footprint must be stretched horizontally by 1/cos(lat) on the map.
-    var coslat=Math.max(0.16,Math.cos(p.lat*Math.PI/180));
-    var halfPxLon=halfPxLat/coslat;
-    covCtx.globalCompositeOperation='lighter';
-    // soft-edged footprint: a few concentric fills approximate a feathered edge
-    var steps=3;
-    for(var s=0;s<steps;s++){
-      var f=1-(s/steps)*0.5;
-      var a=(s===0?0.55:0.30);
-      covCtx.fillStyle='rgba('+accentRGB+','+a+')';
-      covCtx.beginPath();
-      covCtx.ellipse(sx,sy, halfPxLon*f, halfPxLat*f, 0, 0, Math.PI*2);
-      covCtx.fill();
-    }
-    covCtx.globalCompositeOperation='source-over';
-  }
-
-  // ---- coverage % estimate (cheap, no per-frame getImageData) ----
-  // Coarse cos(lat)-weighted occupancy grid avoids double-counting and area distortion.
-  var GW=360, GH=180, grid=new Uint8Array(GW*GH), gridWeightTotal=0, gridWeightHit=0;
-  function initGrid(){
-    grid=new Uint8Array(GW*GH); gridWeightTotal=0; gridWeightHit=0;
-    for(var gy=0;gy<GH;gy++){
-      var lat=90-(gy+0.5)/GH*180;
-      var w=Math.cos(lat*Math.PI/180);
-      for(var gx=0;gx<GW;gx++){ gridWeightTotal+=w; }
-    }
-  }
-  function markGrid(lon,lat,halfDegLat){
-    var halfLat=halfDegLat;
-    var coslat=Math.max(0.2,Math.cos(lat*Math.PI/180));
-    var halfLon=halfDegLat/coslat;
-    var gy0=Math.floor((90-(lat+halfLat))/180*GH), gy1=Math.ceil((90-(lat-halfLat))/180*GH);
-    var gxC=( (lon+180)/360*GW );
-    var spanX=halfLon/360*GW;
-    if(gy0<0)gy0=0; if(gy1>GH)gy1=GH;
-    for(var gy=gy0;gy<gy1;gy++){
-      var clat=90-(gy+0.5)/GH*180;
-      var w=Math.cos(clat*Math.PI/180);
-      var gx0=Math.floor(gxC-spanX), gx1=Math.ceil(gxC+spanX);
-      for(var gx=gx0;gx<=gx1;gx++){
-        var wx=((gx%GW)+GW)%GW;
-        var idx=gy*GW+wx;
-        if(!grid[idx]){ grid[idx]=1; gridWeightHit+=w; }
+  // Paint coverage into mask around the current track point
+  function paintMask(centerXFrac, centerYFrac, swathFrac){
+    // swath band perpendicular-ish; we approximate by painting a vertical extent in map cells.
+    var halfH = Math.max(1, swathFrac*MAP_H*0.5*1.6);
+    var cx = ((centerXFrac % 1)+1)%1;
+    var cyCell = centerYFrac*MAP_H;
+    var cxCell = cx*MAP_W;
+    var spread = halfH;
+    var xR = Math.max(1, swathFrac*MAP_W*0.12);
+    for(var dx=-xR; dx<=xR; dx++){
+      var xc = Math.floor(cxCell+dx);
+      xc = ((xc%MAP_W)+MAP_W)%MAP_W;
+      for(var dy=-spread; dy<=spread; dy++){
+        var yc = Math.floor(cyCell+dy);
+        if(yc<0||yc>=MAP_H) continue;
+        var idx = yc*MAP_W+xc;
+        var falloff = 1 - Math.min(1, Math.abs(dy)/spread);
+        var add = 90 + falloff*120;
+        if(mask[idx] < 255){
+          mask[idx] = Math.min(255, mask[idx] + add*0.5);
+        }
       }
     }
-    coveragePct=Math.min(100, gridWeightHit/gridWeightTotal*100);
   }
 
-  // ---- main step ----
-  function advance(dt){
-    if(!imgReady) return;
-    // ease swath toward target
-    if(Math.abs(targetSwathKm-swathKm)>0.5){ swathKm+=(targetSwathKm-swathKm)*Math.min(1,dt*6); }
-    else swathKm=targetSwathKm;
+  function rebuildCoverImage(){
+    var imgd = coverCtx.createImageData(MAP_W, MAP_H);
+    var d = imgd.data;
+    var covered = 0;
+    for(var i=0;i<mask.length;i++){
+      var v = mask[i];
+      if(v>40) covered++;
+      var a = Math.min(1, v/255);
+      var p = i*4;
+      d[p] = rgb.r; d[p+1] = rgb.g; d[p+2] = rgb.b;
+      d[p+3] = Math.round(a*150);
+    }
+    coverCtx.putImageData(imgd,0,0);
+    coverageFrac = covered/mask.length;
+  }
 
-    var dth=SIM_RATE*speed*dt;
-    var halfDegLat=kmToDegLat(swathKm/2);
-    // sub-step so the footprint stamps overlap into a continuous ribbon. Narrow swaths
-    // (small footprint) need finer steps than wide ones to avoid gaps along the track.
-    var halfRad=(halfDegLat*Math.PI/180);                 // footprint half-extent in orbit-angle
-    var sub=Math.max(1,Math.min(24,Math.ceil(Math.abs(dth)/Math.max(0.012,halfRad*0.8))));
-    for(var s=0;s<sub;s++){
-      theta+=dth/sub;
-      // pass boundary: each full revolution the node regresses westward as Earth turns under
-      while(theta>=Math.PI*2){ theta-=Math.PI*2; ascNode+=DLON_PER_PASS; passCount++; }
-      var p=subPoint(theta, ascNode);
-      paintSwath(p, halfDegLat);
-      markGrid(p.lon,p.lat,halfDegLat);
-      haveLast=true;
+  function resetSweep(){
+    mask = new Uint8Array(MAP_W*MAP_H);
+    coverageFrac = 0;
+    passShift = 0;
+    passLon = 0;
+    trackX = 0;
+  }
+
+  // ---- Map drawing region (full-bleed, cover-fit equirectangular) ----
+  var mapRect = {x:0,y:0,w:0,h:0};
+  function computeMapRect(){
+    // equirectangular is 2:1; cover-fit into frame
+    var targetAR = 2; // w/h
+    var frameAR = W/H;
+    var mw, mh, mx, my;
+    if(frameAR > targetAR){
+      mw = W; mh = W/targetAR; mx = 0; my = (H-mh)/2;
+    } else {
+      mh = H; mw = H*targetAR; my = 0; mx = (W-mw)/2;
+    }
+    mapRect = {x:mx,y:my,w:mw,h:mh};
+  }
+
+  function mapToScreen(xFrac,yFrac){
+    return {x: mapRect.x + xFrac*mapRect.w, y: mapRect.y + yFrac*mapRect.h};
+  }
+
+  // gentle stars for any letterbox gutters (avoid dead black)
+  var stars = [];
+  function seedStars(){
+    stars = [];
+    var n = 120;
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.3+0.2,tw:Math.random()*Math.PI*2,sp:0.5+Math.random()});
+    }
+  }
+  seedStars();
+
+  function drawBackdrop(t){
+    // deep space gradient base
+    var g = ctx.createRadialGradient(W*0.5,H*0.45,0,W*0.5,H*0.5,Math.max(W,H)*0.75);
+    g.addColorStop(0,'#0a0828');
+    g.addColorStop(0.55,'#070518');
+    g.addColorStop(1,'#040210');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,W,H);
+    // stars
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      var a = 0.25 + 0.55*(0.5+0.5*Math.sin(t*0.0011*s.sp + s.tw));
+      ctx.beginPath();
+      ctx.arc(s.x*W, s.y*H, s.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(200,214,255,'+(a*0.5)+')';
+      ctx.fill();
     }
   }
 
-  // ---- render ----
-  function render(){
-    var W=canvas.width, H=canvas.height;
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    var cw=W/dpr, ch=H/dpr;
-    // deep space bg
-    ctx.clearRect(0,0,cw,ch);
-    ctx.fillStyle='#050314';
-    ctx.fillRect(0,0,cw,ch);
-    drawStars(cw,ch);
-
-    if(!imgReady){ return; }
-
+  function drawMap(){
+    if(imgReady){
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(mapRect.x,mapRect.y,mapRect.w,mapRect.h);
+      ctx.clip();
+      ctx.drawImage(img, mapRect.x, mapRect.y, mapRect.w, mapRect.h);
+      // subtle vignette to seat it
+      var vg = ctx.createLinearGradient(0,mapRect.y,0,mapRect.y+mapRect.h);
+      vg.addColorStop(0,'rgba(5,3,20,0.30)');
+      vg.addColorStop(0.5,'rgba(5,3,20,0.0)');
+      vg.addColorStop(1,'rgba(5,3,20,0.34)');
+      ctx.fillStyle = vg; ctx.fillRect(mapRect.x,mapRect.y,mapRect.w,mapRect.h);
+      ctx.restore();
+    } else {
+      // graceful fallback: stylized ocean+grid until sprite loads
+      ctx.save();
+      var og = ctx.createLinearGradient(mapRect.x,0,mapRect.x+mapRect.w,0);
+      og.addColorStop(0,'#0b2748'); og.addColorStop(0.5,'#0e3a63'); og.addColorStop(1,'#0b2748');
+      ctx.fillStyle = og;
+      ctx.fillRect(mapRect.x,mapRect.y,mapRect.w,mapRect.h);
+      ctx.restore();
+    }
+    // graticule
     ctx.save();
+    ctx.beginPath(); ctx.rect(mapRect.x,mapRect.y,mapRect.w,mapRect.h); ctx.clip();
+    ctx.strokeStyle = 'rgba(180,200,255,0.10)';
+    ctx.lineWidth = 1;
+    for(var lon=0;lon<=12;lon++){
+      var xx = mapRect.x + (lon/12)*mapRect.w;
+      ctx.beginPath(); ctx.moveTo(xx,mapRect.y); ctx.lineTo(xx,mapRect.y+mapRect.h); ctx.stroke();
+    }
+    for(var lat=0;lat<=6;lat++){
+      var yy = mapRect.y + (lat/6)*mapRect.h;
+      ctx.beginPath(); ctx.moveTo(mapRect.x,yy); ctx.lineTo(mapRect.x+mapRect.w,yy); ctx.stroke();
+    }
+    // equator emphasis
+    ctx.strokeStyle = 'rgba(255,255,255,0.16)';
     ctx.beginPath();
-    roundRect(ctx,MAP.x-1,MAP.y-1,MAP.w+2,MAP.h+2,4);
-    ctx.clip();
-
-    // 1) dim (unimaged) Earth
-    ctx.drawImage(dimCv,MAP.x,MAP.y,MAP.w,MAP.h);
-
-    // 2) reveal imaged Earth: mask the bright base by the accumulated coverage
-    var tmp=getTmp(MAP.w,MAP.h);
-    tmp.ctx.setTransform(1,0,0,1,0,0);
-    tmp.ctx.clearRect(0,0,tmp.cv.width,tmp.cv.height);
-    tmp.ctx.drawImage(baseCv,0,0);
-    tmp.ctx.globalCompositeOperation='destination-in';
-    tmp.ctx.drawImage(covCv,0,0);
-    tmp.ctx.globalCompositeOperation='source-over';
-    ctx.drawImage(tmp.cv,MAP.x,MAP.y,MAP.w,MAP.h);
-
-    // 3) accent tint glow over coverage
-    ctx.globalCompositeOperation='screen';
-    ctx.globalAlpha=0.38;
-    ctx.drawImage(covCv,MAP.x,MAP.y,MAP.w,MAP.h);
-    ctx.globalAlpha=1;
-    ctx.globalCompositeOperation='source-over';
-
-    // 4) graticule
-    drawGraticule();
-
-    // 5) live track + satellite + swath ribbon
-    drawTrack();
-
-    ctx.restore();
-
-    // map border hairline
-    ctx.strokeStyle='rgba('+accentRGB+',0.28)';
-    ctx.lineWidth=1;
-    roundRect(ctx,MAP.x-0.5,MAP.y-0.5,MAP.w+1,MAP.h+1,4); ctx.stroke();
-    // vignette
-    var vg=ctx.createRadialGradient(MAP.x+MAP.w/2,MAP.y+MAP.h/2,MAP.h*0.3, MAP.x+MAP.w/2,MAP.y+MAP.h/2,MAP.w*0.62);
-    vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(5,3,20,0.45)');
-    ctx.save(); roundRect(ctx,MAP.x,MAP.y,MAP.w,MAP.h,4); ctx.clip();
-    ctx.fillStyle=vg; ctx.fillRect(MAP.x,MAP.y,MAP.w,MAP.h); ctx.restore();
-  }
-
-  function roundRect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
-
-  // temp canvas pool
-  var _tmp={cv:document.createElement('canvas'),ctx:null};
-  _tmp.ctx=_tmp.cv.getContext('2d');
-  function getTmp(w,h){var W=Math.max(2,Math.round(w)),H=Math.max(2,Math.round(h));if(_tmp.cv.width!==W){_tmp.cv.width=W;}if(_tmp.cv.height!==H){_tmp.cv.height=H;}return _tmp;}
-
-  // starfield baked once
-  var starCv=null;
-  function drawStars(cw,ch){
-    if(!starCv){
-      starCv=document.createElement('canvas'); starCv.width=Math.max(2,Math.round(cw)); starCv.height=Math.max(2,Math.round(ch));
-      var sc=starCv.getContext('2d');
-      sc.fillStyle='#050314'; sc.fillRect(0,0,starCv.width,starCv.height);
-      for(var i=0;i<90;i++){
-        var x=Math.random()*starCv.width, y=Math.random()*starCv.height, r=Math.random()*1.1+0.2;
-        var a=Math.random()*0.5+0.1;
-        sc.fillStyle='rgba(244,245,255,'+a+')';
-        sc.beginPath(); sc.arc(x,y,r,0,Math.PI*2); sc.fill();
-      }
-    } else if(Math.abs(starCv.width-cw)>40||Math.abs(starCv.height-ch)>40){ starCv=null; return drawStars(cw,ch); }
-    ctx.drawImage(starCv,0,0,starCv.width,starCv.height,0,0,cw,ch);
-  }
-
-  function drawGraticule(){
-    ctx.save();
-    ctx.strokeStyle='rgba(166,171,230,0.10)';
-    ctx.lineWidth=1;
-    for(var lon=-150;lon<=150;lon+=30){ var x=lonToX(lon); ctx.beginPath(); ctx.moveTo(x,MAP.y); ctx.lineTo(x,MAP.y+MAP.h); ctx.stroke(); }
-    for(var lat=-60;lat<=60;lat+=30){ var y=latToY(lat); ctx.beginPath(); ctx.moveTo(MAP.x,y); ctx.lineTo(MAP.x+MAP.w,y); ctx.stroke(); }
-    ctx.strokeStyle='rgba(166,171,230,0.18)'; ctx.beginPath(); var ye=latToY(0); ctx.moveTo(MAP.x,ye); ctx.lineTo(MAP.x+MAP.w,ye); ctx.stroke();
+    var eqy = mapRect.y + 0.5*mapRect.h;
+    ctx.moveTo(mapRect.x,eqy); ctx.lineTo(mapRect.x+mapRect.w,eqy); ctx.stroke();
     ctx.restore();
   }
 
-  function drawTrack(){
-    if(!haveLast) return;
-    var halfDegLat=kmToDegLat(swathKm/2);
-    var pts=[];
-    var span=Math.PI*1.05;
-    var n=90;
-    for(var i=0;i<=n;i++){
-      var th=theta-span*(1-i/n);
-      pts.push(subPoint(th,ascNode));
-    }
+  function drawCoverage(){
+    // draw accumulated mask, scaled to map rect, slightly smoothed
     ctx.save();
-    // swath ribbon for the live pass
-    drawRibbon(pts, halfDegLat);
-    // center line (split on antimeridian wrap)
+    ctx.beginPath(); ctx.rect(mapRect.x,mapRect.y,mapRect.w,mapRect.h); ctx.clip();
+    ctx.imageSmoothingEnabled = true;
+    ctx.globalCompositeOperation = 'screen';
+    ctx.drawImage(coverBuf, mapRect.x, mapRect.y, mapRect.w, mapRect.h);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.restore();
+  }
+
+  function drawTrackAndSat(swathFrac, t){
+    ctx.save();
+    ctx.beginPath(); ctx.rect(mapRect.x,mapRect.y,mapRect.w,mapRect.h); ctx.clip();
+
+    var lonOff = passShift; // current westward offset
+    var headX = trackX;
+
+    // --- live swath band (leading edge glow) under the active scan, painted as soft gradient ahead of head ---
+    var swPx = swathFrac*mapRect.h*1.6; // approx visual height of band
+
+    // draw the full ground-track polyline for current pass (faint), and a bright leading segment
+    ctx.lineWidth = 1.4;
+    ctx.strokeStyle = rgba(0.30);
     ctx.beginPath();
-    var started=false, prevx=null;
-    for(var j=0;j<pts.length;j++){
-      var x=lonToX(pts[j].lon), y=latToY(pts[j].lat);
-      if(prevx!==null && Math.abs(x-prevx)>MAP.w*0.5){ ctx.stroke(); ctx.beginPath(); started=false; }
-      if(!started){ ctx.moveTo(x,y); started=true; } else ctx.lineTo(x,y);
-      prevx=x;
+    var started=false;
+    for(var f=0; f<=1.0001; f+=0.01){
+      var xf = ((f - lonOff)%1+1)%1;
+      var yf = trackYFrac(f);
+      var p = mapToScreen(xf,yf);
+      // avoid wrap lines: only draw near continuity
+      if(!started){ ctx.moveTo(p.x,p.y); started=true; }
+      else {
+        // detect wrap
+        ctx.lineTo(p.x,p.y);
+      }
     }
-    ctx.strokeStyle='rgba('+accentRGB+',0.85)';
-    ctx.lineWidth=1.4;
-    ctx.shadowColor='rgba('+accentRGB+',0.8)'; ctx.shadowBlur=6;
     ctx.stroke();
-    ctx.shadowBlur=0;
-    ctx.restore();
 
-    // satellite marker at the leading sub-point
-    var sp=subPoint(theta,ascNode);
-    var sx=lonToX(sp.lon), sy=latToY(sp.lat);
-    ctx.save();
-    var g=ctx.createRadialGradient(sx,sy,0,sx,sy,12);
-    g.addColorStop(0,'rgba('+accentRGB+',0.9)'); g.addColorStop(1,'rgba('+accentRGB+',0)');
-    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,12,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#f4f5ff';
-    ctx.beginPath(); ctx.arc(sx,sy,2.6,0,Math.PI*2); ctx.fill();
-    ctx.strokeStyle=accent; ctx.lineWidth=1.2; ctx.beginPath(); ctx.arc(sx,sy,5.2,0,Math.PI*2); ctx.stroke();
-    ctx.restore();
-  }
+    // active swath band: soft accent rectangle following head, vertical extent = swath
+    var hxf = ((headX - lonOff)%1+1)%1;
+    var hyf = trackYFrac(headX);
+    var hp = mapToScreen(hxf,hyf);
 
-  function drawRibbon(pts, halfDegLat){
-    var top=[], bot=[];
-    var halfPxLat=halfDegLat/180*MAP.h;
-    for(var i=0;i<pts.length;i++){
-      var a=pts[Math.max(0,i-1)], b=pts[Math.min(pts.length-1,i+1)];
-      var dLon=b.lon-a.lon; if(dLon>180)dLon-=360; if(dLon<-180)dLon+=360;
-      var dLat=b.lat-a.lat;
-      var tx=dLon/360*MAP.w, ty=(-dLat)/180*MAP.h;
-      var tl=Math.hypot(tx,ty)||1; tx/=tl; ty/=tl;
-      var px=-ty, py=tx;
-      var coslat=Math.max(0.18,Math.cos(pts[i].lat*Math.PI/180));
-      var hx=px*halfPxLat/coslat, hy=py*halfPxLat;
-      var cx=lonToX(pts[i].lon), cy=latToY(pts[i].lat);
-      top.push([cx+hx,cy+hy]); bot.push([cx-hx,cy-hy]);
-    }
-    // soft band; break the path on antimeridian wrap so it doesn't streak across
+    var bandGrad = ctx.createLinearGradient(hp.x-2, hp.y-swPx, hp.x-2, hp.y+swPx);
+    bandGrad.addColorStop(0, rgba(0.0));
+    bandGrad.addColorStop(0.5, rgba(0.30));
+    bandGrad.addColorStop(1, rgba(0.0));
+    ctx.fillStyle = bandGrad;
+    var bandW = Math.max(10, mapRect.w*0.05);
+    ctx.fillRect(hp.x-bandW, hp.y-swPx, bandW, swPx*2);
+
+    // leading scan line
+    ctx.strokeStyle = rgba(0.9);
+    ctx.lineWidth = 2;
+    ctx.shadowColor = rgba(0.8);
+    ctx.shadowBlur = 14;
     ctx.beginPath();
-    ctx.moveTo(top[0][0],top[0][1]);
-    for(var t=1;t<top.length;t++){ if(Math.abs(top[t][0]-top[t-1][0])<MAP.w*0.5) ctx.lineTo(top[t][0],top[t][1]); else ctx.moveTo(top[t][0],top[t][1]); }
-    for(var bk=bot.length-1;bk>=0;bk--){ if(bk===bot.length-1||Math.abs(bot[bk][0]-bot[bk+1][0])<MAP.w*0.5) ctx.lineTo(bot[bk][0],bot[bk][1]); else ctx.moveTo(bot[bk][0],bot[bk][1]); }
-    ctx.closePath();
-    ctx.fillStyle='rgba('+accentRGB+',0.10)';
+    ctx.moveTo(hp.x, hp.y-swPx);
+    ctx.lineTo(hp.x, hp.y+swPx);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // satellite glyph
+    var pulse = 0.6+0.4*Math.sin(t*0.005);
+    ctx.beginPath();
+    ctx.arc(hp.x, hp.y, 4.5, 0, Math.PI*2);
+    ctx.fillStyle = '#ffffff';
+    ctx.shadowColor = rgba(1);
+    ctx.shadowBlur = 16*pulse+6;
     ctx.fill();
-    ctx.strokeStyle='rgba('+accentRGB+',0.32)'; ctx.lineWidth=1; ctx.stroke();
+    ctx.shadowBlur = 0;
+    // halo ring
+    ctx.beginPath();
+    ctx.arc(hp.x, hp.y, 9+pulse*3, 0, Math.PI*2);
+    ctx.strokeStyle = rgba(0.5);
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.restore();
   }
 
-  // ---- HUD sync ----
-  function syncHud(){
-    covEl.textContent=coveragePct.toFixed(1);
-    sensorEl.textContent=SENSORS[sensorKey].name;
-    swEl.textContent=Math.round(swathKm);               // HUD chip: live, eased width
-    var rv=revisitDays(targetSwathKm);                  // revisit keyed to the selected width
-    revEl.textContent=rv>=10?Math.round(rv):rv.toFixed(1);
-    passEl.textContent=passCount;
-    swlEl.textContent=Math.round(targetSwathKm);        // slider readout: matches the thumb
-    splEl.textContent=speed.toFixed(1);
+  // ---- Sim step ----
+  var lastT = performance.now();
+  function step(dt){
+    var swathFrac = computeDerived();
+    var pulseLast = trackX;
+
+    // sweep speed: complete a pass in ~5.5s, modulated lightly
+    trackX += dt*0.00019;
+
+    // paint along the path between previous and current head (a few samples for smoothness)
+    var samples = 5;
+    for(var k=1;k<=samples;k++){
+      var f = pulseLast + (trackX-pulseLast)*(k/samples);
+      if(f>1) f = ((f%1)+1)%1;
+      var xf = ((f - passShift)%1+1)%1;
+      var yf = trackYFrac(f);
+      paintMask(xf, yf, swathFrac);
+    }
+
+    if(trackX >= 1){
+      trackX -= 1;
+      // next pass: shift westward (Earth rotation). shift proportional to swath so coverage builds.
+      passShift += swathFrac*1.15;
+      if(passShift > 1) passShift -= 1;
+    }
+
+    rebuildCoverImage();
+
+    // reset when essentially fully covered
+    if(coverageFrac > 0.985){
+      // brief hold then reset handled by fade; simplest: reset
+      resetSweep();
+    }
   }
 
-  // ---- loop ----
-  // A single persistent rAF while visible (cheap) drives animation + the live marker.
-  var last=0, raf=null, visible=true;
-  function loop(ts){
-    raf=requestAnimationFrame(loop);
-    if(!visible){ last=0; return; }
-    if(!last)last=ts;
-    var dt=Math.min(0.05,(ts-last)/1000); last=ts;
-    if(playing && imgReady) advance(dt);
-    render();
-    syncHud();
-  }
-  function startLoop(){ if(raf)return; last=0; raf=requestAnimationFrame(loop); }
+  var frame=0;
+  function render(now){
+    var dt = Math.min(60, now-lastT);
+    lastT = now;
+    frame++;
 
-  // ---- controls ----
-  function setPlaying(p){
-    playing=p;
-    playBtn.setAttribute('aria-pressed',p?'true':'false');
-    playLabel.textContent=p?'Pause':'Play';
-    playBtn.classList.toggle('is-paused',!p);
-  }
-  playBtn.addEventListener('click',function(){ setPlaying(!playing); });
-  resetBtn.addEventListener('click',function(){ clearCoverage(); initGrid(); render(); syncHud(); });
+    step(dt);
 
-  root.querySelectorAll('[data-sensor-btn]').forEach(function(b){
-    b.addEventListener('click',function(){
-      sensorKey=b.getAttribute('data-sensor-btn');
-      root.querySelectorAll('[data-sensor-btn]').forEach(function(o){var on=o===b;o.classList.toggle('is-on',on);o.setAttribute('aria-pressed',on?'true':'false');});
-      targetSwathKm=SENSORS[sensorKey].def;
-      swathInput.value=String(SENSORS[sensorKey].def);
-      swlEl.textContent=SENSORS[sensorKey].def;
-      syncHud();
-    });
+    computeMapRect();
+    drawBackdrop(now);
+    drawMap();
+    drawCoverage();
+    var swathFrac = swathKm/40075;
+    drawTrackAndSat(swathFrac, now);
+
+    if(frame % 4 === 0) updateHUD();
+
+    requestAnimationFrame(render);
+  }
+
+  // ---- Controls ----
+  slider.addEventListener('input', function(){
+    swathKm = parseFloat(slider.value);
+    computeDerived();
+    updateHUD();
   });
 
-  swathInput.addEventListener('input',function(){
-    targetSwathKm=parseFloat(swathInput.value)||targetSwathKm;
-    swlEl.textContent=Math.round(targetSwathKm);
-    // sync the segmented sensor pick to the width band
-    var k = targetSwathKm>=900 ? 'wide':'narrow';
-    if(k!==sensorKey){ sensorKey=k; root.querySelectorAll('[data-sensor-btn]').forEach(function(o){var on=o.getAttribute('data-sensor-btn')===k;o.classList.toggle('is-on',on);o.setAttribute('aria-pressed',on?'true':'false');}); }
-    syncHud();
-  });
-  speedInput.addEventListener('input',function(){
-    speed=parseFloat(speedInput.value)||1; splEl.textContent=speed.toFixed(1); syncHud();
-  });
+  // ---- Observers ----
+  var ro = new ResizeObserver(function(){ resize(); computeMapRect(); });
+  ro.observe(root);
+  window.addEventListener('resize', function(){ resize(); computeMapRect(); });
 
-  // accent live re-read so the site picker recolors us
-  try{
-    var mo=new MutationObserver(function(){ readAccent(); starCv=null; render(); });
-    mo.observe(document.documentElement,{attributes:true,attributeFilter:['style','data-theme','class']});
-  }catch(e){}
-
-  // resize: rebuild base + rescale coverage to the new map resolution
-  var rPend=false;
-  window.addEventListener('resize',function(){
-    dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
-    if(rPend)return; rPend=true;
-    requestAnimationFrame(function(){ rPend=false; starCv=null;
-      var oldW=covCv.width, oldH=covCv.height;
-      var oldCov=null;
-      if(oldW){ oldCov=document.createElement('canvas'); oldCov.width=oldW; oldCov.height=oldH; oldCov.getContext('2d').drawImage(covCv,0,0); }
-      sizeCanvas();
-      if(oldCov && covCv.width){ covCtx.clearRect(0,0,covCv.width,covCv.height); covCtx.drawImage(oldCov,0,0,oldW,oldH,0,0,covCv.width,covCv.height); }
-      render();
-    });
-  });
-
-  // IntersectionObserver: ONLY pauses/resumes the loop (perf). Everything works without it.
-  try{
-    var io=new IntersectionObserver(function(es){ es.forEach(function(en){ visible=en.isIntersecting; }); },{threshold:0.01});
-    io.observe(root);
-  }catch(e){ visible=true; }
-
-  // ---- boot ----
-  function boot(){
-    sizeCanvas();
-    initGrid();
-    setPlaying(!REDUCED);
-    syncHud();
-    render(); // space + loading shown immediately
-    startLoop();
-  }
-
-  function onImg(){
-    imgReady=true;
-    loadEl.style.display='none';
-    sizeCanvas();      // rebuild base now that the image is ready
-    render();
-  }
-  function onErr(){
-    loadEl.querySelector('.obsw-load-txt').textContent='Imagery unavailable';
-  }
-
-  imgEl=new Image();
-  imgEl.onload=onImg;
-  imgEl.onerror=onErr;
-  imgEl.src='../assets/images/blue-marble-world.jpg';
-  if(imgEl.complete && imgEl.naturalWidth){ onImg(); }
-
-  boot();
+  // ---- Init: draw first frame immediately ----
+  resize();
+  computeMapRect();
+  computeDerived();
+  updateHUD();
+  drawBackdrop(performance.now());
+  drawMap();
+  requestAnimationFrame(render);
 })();
 </script>
 </body></html>
