@@ -1,0 +1,564 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star types: the OBAFGKM sequence · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-star-classify{
+  --sc-bg:#050314; --sc-indigo:#16145f; --sc-star:#f4f5ff; --sc-mut:#a6abe6;
+  --sc-line:rgba(166,171,230,0.16); --sc-acc:#3cc8ff;
+  position:relative; width:100%; box-sizing:border-box;
+  font-family:'Inter',system-ui,sans-serif; color:var(--sc-star);
+  background:radial-gradient(120% 90% at 50% 0%, #0a0726 0%, #050314 60%, #030210 100%);
+  border:1px solid var(--sc-line); border-radius:18px; overflow:hidden;
+  padding:clamp(14px,2.2vw,26px); display:flex; flex-direction:column; gap:clamp(12px,1.8vw,20px);
+}
+#kit-star-classify *{box-sizing:border-box;}
+#kit-star-classify .sc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+#kit-star-classify .sc-stage{
+  position:relative; width:100%; aspect-ratio:16/8.2; min-height:230px;
+  border-radius:14px; overflow:hidden;
+}
+#kit-star-classify .sc-star-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+
+#kit-star-classify .sc-readout{
+  position:absolute; left:clamp(10px,2.4vw,26px); top:clamp(10px,2.4vw,24px);
+  z-index:2; pointer-events:none; max-width:62%;
+}
+#kit-star-classify .sc-class-wrap{display:flex; align-items:baseline; gap:.55em;}
+#kit-star-classify .sc-class{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  font-size:clamp(46px,9vw,92px); line-height:.86; letter-spacing:.01em;
+  color:var(--sc-acc); text-transform:uppercase;
+  text-shadow:0 0 26px color-mix(in srgb,var(--sc-acc) 45%,transparent);
+  transition:color .25s ease, text-shadow .25s ease;
+}
+#kit-star-classify .sc-classname{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  text-transform:uppercase; letter-spacing:.06em;
+  font-size:clamp(11px,1.5vw,15px); color:var(--sc-mut);
+}
+#kit-star-classify .sc-starname{
+  margin-top:.35em; font-size:clamp(11px,1.4vw,14px); color:var(--sc-star); opacity:.78;
+}
+
+#kit-star-classify .sc-hud{
+  position:absolute; right:clamp(10px,2.4vw,26px); top:clamp(10px,2.4vw,24px);
+  z-index:2; pointer-events:none; display:flex; flex-direction:column; gap:6px;
+  background:linear-gradient(180deg, rgba(22,20,95,.42), rgba(8,6,32,.42));
+  border:1px solid var(--sc-line); border-radius:11px;
+  padding:clamp(8px,1.4vw,13px) clamp(10px,1.6vw,15px); min-width:128px;
+  backdrop-filter:blur(7px); -webkit-backdrop-filter:blur(7px);
+}
+#kit-star-classify .sc-hud-row{display:flex; justify-content:space-between; align-items:baseline; gap:14px;}
+#kit-star-classify .sc-hud-k{
+  font-size:10px; letter-spacing:.13em; text-transform:uppercase; color:var(--sc-mut);
+}
+#kit-star-classify .sc-hud-v{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  font-size:clamp(12px,1.5vw,15px); color:var(--sc-star); font-variant-numeric:tabular-nums;
+}
+
+#kit-star-classify .sc-hr{
+  position:relative; width:100%; aspect-ratio:16/5.1; min-height:118px;
+  border:1px solid var(--sc-line); border-radius:12px; overflow:hidden;
+  background:linear-gradient(180deg, rgba(22,20,95,.16), rgba(5,3,20,.16));
+}
+#kit-star-classify .sc-hr-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+
+#kit-star-classify .sc-controls{display:flex; flex-direction:column; gap:11px;}
+#kit-star-classify .sc-slider-head{display:flex; justify-content:space-between; align-items:baseline;}
+#kit-star-classify .sc-slider-label{
+  font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:var(--sc-mut);
+}
+#kit-star-classify .sc-slider-val{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  font-size:clamp(14px,1.9vw,18px); color:var(--sc-acc); font-variant-numeric:tabular-nums;
+  transition:color .25s ease;
+}
+
+#kit-star-classify .sc-slider{
+  -webkit-appearance:none; appearance:none; width:100%; height:6px; border-radius:6px; margin:2px 0;
+  background:linear-gradient(90deg,#9a2f2f 0%,#cf5a2a 14%,#d8a64a 28%,#f4f0d8 46%,#f4f5ff 56%,#bcd0ff 72%,#7da6ff 86%,#5a78ff 100%);
+  outline:none; cursor:pointer;
+  box-shadow:0 0 0 1px var(--sc-line), 0 0 14px rgba(124,154,255,.18);
+}
+#kit-star-classify .sc-slider::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:20px; height:20px; border-radius:50%;
+  background:var(--sc-star); border:3px solid var(--sc-acc); cursor:grab;
+  box-shadow:0 0 16px color-mix(in srgb,var(--sc-acc) 60%,transparent); transition:border-color .25s ease;
+}
+#kit-star-classify .sc-slider::-webkit-slider-thumb:active{cursor:grabbing;}
+#kit-star-classify .sc-slider::-moz-range-thumb{
+  width:18px; height:18px; border-radius:50%;
+  background:var(--sc-star); border:3px solid var(--sc-acc); cursor:grab;
+  box-shadow:0 0 16px color-mix(in srgb,var(--sc-acc) 60%,transparent);
+}
+#kit-star-classify .sc-slider::-moz-range-track{height:6px;border-radius:6px;background:transparent;}
+#kit-star-classify .sc-slider:focus-visible{box-shadow:0 0 0 2px var(--sc-acc), 0 0 14px rgba(124,154,255,.18);}
+
+#kit-star-classify .sc-seq{display:grid; grid-template-columns:repeat(7,1fr); gap:6px;}
+#kit-star-classify .sc-chip{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  font-size:clamp(13px,1.8vw,16px); text-transform:uppercase;
+  color:var(--sc-mut); background:rgba(22,20,95,.30);
+  border:1px solid var(--sc-line); border-radius:9px; padding:8px 0; cursor:pointer;
+  transition:color .2s ease, border-color .2s ease, background .2s ease, transform .12s ease;
+}
+#kit-star-classify .sc-chip:hover{color:var(--sc-star); border-color:rgba(166,171,230,.4); transform:translateY(-1px);}
+#kit-star-classify .sc-chip.sc-on{
+  color:var(--sc-bg); background:var(--sc-acc); border-color:var(--sc-acc);
+  box-shadow:0 0 16px color-mix(in srgb,var(--sc-acc) 50%,transparent);
+}
+#kit-star-classify .sc-chip:focus-visible{outline:2px solid var(--sc-acc); outline-offset:2px;}
+
+@media (max-width:520px){
+  #kit-star-classify .sc-hud{min-width:108px; gap:4px;}
+  #kit-star-classify .sc-readout{max-width:54%;}
+}
+@media (prefers-reduced-motion:reduce){
+  #kit-star-classify .sc-class,#kit-star-classify .sc-chip{transition:none;}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Star types: the OBAFGKM sequence</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-star-classify">
+  <h2 class="sc-sr">Interactive OBAFGKM spectral sequence: a temperature slider recolors a central star using blackbody physics and moves a dot along a Hertzsprung-Russell diagram.</h2>
+  <div class="sc-stage">
+    <canvas class="sc-star-canvas"></canvas>
+    <div class="sc-readout">
+      <div class="sc-class-wrap">
+        <span class="sc-class">G</span>
+        <span class="sc-classname">Yellow dwarf</span>
+      </div>
+      <div class="sc-starname">like the Sun</div>
+    </div>
+    <div class="sc-hud">
+      <div class="sc-hud-row"><span class="sc-hud-k">Temp</span><span class="sc-hud-v sc-temp">5,772 K</span></div>
+      <div class="sc-hud-row"><span class="sc-hud-k">Mass</span><span class="sc-hud-v sc-mass">1.0 M&#9737;</span></div>
+      <div class="sc-hud-row"><span class="sc-hud-k">Lum</span><span class="sc-hud-v sc-lum">1.0 L&#9737;</span></div>
+      <div class="sc-hud-row"><span class="sc-hud-k">Radius</span><span class="sc-hud-v sc-rad">1.0 R&#9737;</span></div>
+    </div>
+  </div>
+
+  <div class="sc-hr">
+    <canvas class="sc-hr-canvas"></canvas>
+  </div>
+
+  <div class="sc-controls">
+    <div class="sc-slider-head">
+      <span class="sc-slider-label">Surface temperature</span>
+      <span class="sc-slider-val sc-temp2">5,772 K</span>
+    </div>
+    <input class="sc-slider" type="range" min="2800" max="42000" step="50" value="5772" aria-label="Star surface temperature in kelvin" />
+    <div class="sc-seq" role="group" aria-label="Spectral classes">
+      <button class="sc-chip" data-t="38000" data-c="O">O</button>
+      <button class="sc-chip" data-t="18000" data-c="B">B</button>
+      <button class="sc-chip" data-t="9000"  data-c="A">A</button>
+      <button class="sc-chip" data-t="6700"  data-c="F">F</button>
+      <button class="sc-chip" data-t="5772"  data-c="G">G</button>
+      <button class="sc-chip" data-t="4400"  data-c="K">K</button>
+      <button class="sc-chip" data-t="3300"  data-c="M">M</button>
+    </div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the surface-temperature slider (2,800-42,000 K) or tap an O/B/A/F/G/K/M class chip; the central star recolors and resizes by blackbody physics while the HUD and the dot on the H-R strip track live.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-star-classify'); if(!root) return;
+
+  var starCv=root.querySelector('.sc-star-canvas');
+  var hrCv=root.querySelector('.sc-hr-canvas');
+  var sCtx=starCv.getContext('2d');
+  var hCtx=hrCv.getContext('2d');
+  var slider=root.querySelector('.sc-slider');
+  var chips=Array.prototype.slice.call(root.querySelectorAll('.sc-chip'));
+
+  var elClass=root.querySelector('.sc-class');
+  var elClassName=root.querySelector('.sc-classname');
+  var elStarName=root.querySelector('.sc-starname');
+  var elTemp=root.querySelector('.sc-temp');
+  var elTemp2=root.querySelector('.sc-temp2');
+  var elMass=root.querySelector('.sc-mass');
+  var elLum=root.querySelector('.sc-lum');
+  var elRad=root.querySelector('.sc-rad');
+
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  function accent(){
+    var c=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return c||'#3cc8ff';
+  }
+
+  // ---- blackbody color (Planckian locus, Tanner Helland approximation) ----
+  function planck(t){
+    t=t/100; var r,g,b;
+    if(t<=66){ r=255; } else { r=329.698727446*Math.pow(t-60,-0.1332047592); }
+    if(t<=66){ g=99.4708025861*Math.log(t)-161.1195681661; }
+    else { g=288.1221695283*Math.pow(t-60,-0.0755148492); }
+    if(t>=66){ b=255; }
+    else if(t<=19){ b=0; }
+    else { b=138.5177312231*Math.log(t-10)-305.0447927307; }
+    return [clamp8(r),clamp8(g),clamp8(b)];
+  }
+  function clamp8(x){return Math.max(0,Math.min(255,Math.round(x)));}
+  function rgbStr(a,al){return 'rgba('+a[0]+','+a[1]+','+a[2]+','+(al==null?1:al)+')';}
+
+  // ---- spectral classification & stellar parameters ----
+  function classify(t){
+    if(t>=30000) return {c:'O',name:'Blue giant',star:'like Mintaka'};
+    if(t>=10000) return {c:'B',name:'Blue-white star',star:'like Rigel'};
+    if(t>=7500)  return {c:'A',name:'White star',star:'like Sirius A'};
+    if(t>=6000)  return {c:'F',name:'Yellow-white star',star:'like Procyon'};
+    if(t>=5200)  return {c:'G',name:'Yellow dwarf',star:'like the Sun'};
+    if(t>=3700)  return {c:'K',name:'Orange dwarf',star:'like Aldebaran'};
+    return {c:'M',name:'Red dwarf',star:'like Proxima Centauri'};
+  }
+  // main-sequence mass from temperature (interpolated, log-log)
+  var MS=[[2800,0.10],[3300,0.20],[3700,0.45],[4400,0.70],[5200,0.85],[5772,1.0],[6000,1.1],[7500,1.6],[9000,2.1],[10000,2.9],[18000,6.5],[30000,16],[38000,30],[42000,45]];
+  function massFromT(t){
+    if(t<=MS[0][0]) return MS[0][1];
+    if(t>=MS[MS.length-1][0]) return MS[MS.length-1][1];
+    for(var i=0;i<MS.length-1;i++){
+      var a=MS[i],b=MS[i+1];
+      if(t>=a[0]&&t<=b[0]){
+        var f=(Math.log(t)-Math.log(a[0]))/(Math.log(b[0])-Math.log(a[0]));
+        return Math.exp(Math.log(a[1])+f*(Math.log(b[1])-Math.log(a[1])));
+      }
+    }
+    return 1;
+  }
+  function fmt(v){
+    if(v>=100) return Math.round(v).toLocaleString('en-US');
+    if(v>=10) return v.toFixed(0);
+    if(v>=1) return v.toFixed(1);
+    if(v>=0.01) return v.toFixed(2);
+    if(v>=0.0001) return v.toFixed(4);
+    return v.toExponential(1);
+  }
+
+  // ---- starfield ----
+  var stars=[];
+  function buildStars(w,h){
+    stars=[]; var n=Math.round(w*h/5200);
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.1+0.25,
+        b:Math.random()*0.5+0.25,tw:Math.random()*Math.PI*2,sp:Math.random()*0.9+0.3});
+    }
+  }
+
+  var dpr=1, SW=0,SH=0, HW=0,HH=0;
+  function size(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    var sr=starCv.getBoundingClientRect();
+    SW=sr.width; SH=sr.height;
+    starCv.width=Math.max(1,Math.round(SW*dpr)); starCv.height=Math.max(1,Math.round(SH*dpr));
+    sCtx.setTransform(dpr,0,0,dpr,0,0);
+    var hr=hrCv.getBoundingClientRect();
+    HW=hr.width; HH=hr.height;
+    hrCv.width=Math.max(1,Math.round(HW*dpr)); hrCv.height=Math.max(1,Math.round(HH*dpr));
+    hCtx.setTransform(dpr,0,0,dpr,0,0);
+    buildStars(SW,SH);
+    drawHR(true);
+  }
+
+  // ---- main star draw ----
+  function drawStar(time){
+    var t=parseFloat(slider.value);
+    var col=planck(t);
+    sCtx.clearRect(0,0,SW,SH);
+
+    // background nebular wash
+    var bg=sCtx.createLinearGradient(0,0,0,SH);
+    bg.addColorStop(0,'rgba(10,7,38,0.0)'); bg.addColorStop(1,'rgba(3,2,16,0.0)');
+    sCtx.fillStyle=bg; sCtx.fillRect(0,0,SW,SH);
+
+    // starfield
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      var tw=reduce?1:(0.6+0.4*Math.sin(s.tw+time*0.001*s.sp));
+      sCtx.globalAlpha=s.b*tw;
+      sCtx.fillStyle='#f4f5ff';
+      sCtx.beginPath(); sCtx.arc(s.x,s.y,s.r,0,Math.PI*2); sCtx.fill();
+    }
+    sCtx.globalAlpha=1;
+
+    var cx=SW*0.5, cy=SH*0.5;
+    // radius scales with mass-ish across sequence (visual, clamped)
+    var tn=(t-2800)/(42000-2800);
+    var baseR=Math.min(SW,SH);
+    var rad=baseR*(0.13+0.135*Math.pow(tn,0.55));
+
+    // outer corona glow
+    var pulse=reduce?1:(1+0.022*Math.sin(time*0.0016));
+    var gR=rad*3.2*pulse;
+    var glow=sCtx.createRadialGradient(cx,cy,rad*0.4,cx,cy,gR);
+    glow.addColorStop(0,rgbStr(col,0.55));
+    glow.addColorStop(0.25,rgbStr(col,0.22));
+    glow.addColorStop(0.6,rgbStr(col,0.07));
+    glow.addColorStop(1,rgbStr(col,0));
+    sCtx.fillStyle=glow;
+    sCtx.beginPath(); sCtx.arc(cx,cy,gR,0,Math.PI*2); sCtx.fill();
+
+    // chromosphere ring (slight rim of hot color)
+    var rim=sCtx.createRadialGradient(cx,cy,rad*0.7,cx,cy,rad*1.18);
+    rim.addColorStop(0,rgbStr(col,0));
+    rim.addColorStop(0.78,rgbStr(col,0.0));
+    rim.addColorStop(0.92,rgbStr([Math.min(255,col[0]+30),Math.min(255,col[1]+30),Math.min(255,col[2]+30)],0.5));
+    rim.addColorStop(1,rgbStr(col,0));
+    sCtx.fillStyle=rim;
+    sCtx.beginPath(); sCtx.arc(cx,cy,rad*1.18,0,Math.PI*2); sCtx.fill();
+
+    // photosphere body (hot white core -> color edge)
+    var body=sCtx.createRadialGradient(cx-rad*0.22,cy-rad*0.22,rad*0.06,cx,cy,rad);
+    var hot=[Math.min(255,col[0]+60),Math.min(255,col[1]+55),Math.min(255,col[2]+50)];
+    body.addColorStop(0,rgbStr([Math.min(255,hot[0]+25),Math.min(255,hot[1]+25),Math.min(255,hot[2]+25)],1));
+    body.addColorStop(0.55,rgbStr(hot,1));
+    body.addColorStop(1,rgbStr(col,1));
+    sCtx.fillStyle=body;
+    sCtx.beginPath(); sCtx.arc(cx,cy,rad,0,Math.PI*2); sCtx.fill();
+
+    // granulation / limb darkening texture
+    sCtx.save();
+    sCtx.beginPath(); sCtx.arc(cx,cy,rad,0,Math.PI*2); sCtx.clip();
+    sCtx.globalAlpha=0.10;
+    for(var g=0;g<10;g++){
+      var ga=(g/10)*Math.PI*2+(reduce?0:time*0.0002);
+      var gx=cx+Math.cos(ga)*rad*0.5, gy=cy+Math.sin(ga)*rad*0.5;
+      var gr=sCtx.createRadialGradient(gx,gy,0,gx,gy,rad*0.42);
+      gr.addColorStop(0,rgbStr(hot,1)); gr.addColorStop(1,rgbStr(col,0));
+      sCtx.fillStyle=gr; sCtx.beginPath(); sCtx.arc(gx,gy,rad*0.42,0,Math.PI*2); sCtx.fill();
+    }
+    // limb darkening
+    var ld=sCtx.createRadialGradient(cx,cy,rad*0.55,cx,cy,rad);
+    ld.addColorStop(0,'rgba(0,0,0,0)'); ld.addColorStop(1,'rgba(0,0,0,0.28)');
+    sCtx.globalAlpha=1; sCtx.fillStyle=ld; sCtx.fillRect(cx-rad,cy-rad,rad*2,rad*2);
+    sCtx.restore();
+  }
+
+  // ---- HR diagram strip ----
+  // x = temperature (reversed, hot->left), y = luminosity log
+  var HR_TMIN=2500, HR_TMAX=45000, HR_LMIN=-4, HR_LMAX=6.2;
+  function hrX(t){
+    var f=(Math.log(t)-Math.log(HR_TMIN))/(Math.log(HR_TMAX)-Math.log(HR_TMIN));
+    return padL + (1-f)*(HW-padL-padR);
+  }
+  function hrY(logL){
+    var f=(logL-HR_LMIN)/(HR_LMAX-HR_LMIN);
+    return (HH-padB) - f*(HH-padT-padB);
+  }
+  var padL=34, padR=12, padT=12, padB=18;
+
+  function logLfromT(t){
+    // main-sequence: log L vs log T fit anchored at Sun
+    var m=massFromT(t);
+    // L ~ M^3.5 (rough MS)
+    return 3.5*Math.log10(m);
+  }
+
+  function drawHR(staticOnly){
+    var acc=accent();
+    hCtx.clearRect(0,0,HW,HH);
+    padL=34; padR=12; padT=12; padB=18;
+
+    // grid lines (luminosity decades)
+    hCtx.strokeStyle='rgba(166,171,230,0.10)'; hCtx.lineWidth=1;
+    hCtx.fillStyle='rgba(166,171,230,0.55)'; hCtx.font='9px Inter, sans-serif';
+    for(var l=HR_LMIN+1;l<HR_LMAX;l+=2){
+      var y=hrY(l);
+      hCtx.beginPath(); hCtx.moveTo(padL,y); hCtx.lineTo(HW-padR,y); hCtx.stroke();
+    }
+    // luminosity axis labels
+    hCtx.textAlign='right'; hCtx.textBaseline='middle';
+    hCtx.fillText('10⁶', padL-5, hrY(6));
+    hCtx.fillText('1', padL-5, hrY(0));
+    hCtx.fillText('10⁻³', padL-5, hrY(-3));
+    hCtx.save();
+    hCtx.translate(9,HH/2); hCtx.rotate(-Math.PI/2);
+    hCtx.textAlign='center'; hCtx.fillStyle='rgba(166,171,230,0.5)'; hCtx.font='8px Inter, sans-serif';
+    hCtx.fillText('LUMINOSITY (L☉)',0,0);
+    hCtx.restore();
+
+    // class band labels along bottom
+    var bands=[['O',38000],['B',18000],['A',9000],['F',6700],['G',5772],['K',4400],['M',3300]];
+    hCtx.textAlign='center'; hCtx.textBaseline='alphabetic';
+    for(var i=0;i<bands.length;i++){
+      var bx=hrX(bands[i][1]); var bc=planck(bands[i][1]);
+      hCtx.fillStyle=rgbStr(bc,0.85); hCtx.font='italic 700 11px "Chakra Petch", sans-serif';
+      hCtx.fillText(bands[i][0], bx, HH-5);
+    }
+
+    // main sequence band (colored gradient curve)
+    var grad=hCtx.createLinearGradient(hrX(HR_TMAX),0,hrX(HR_TMIN),0);
+    for(var gp=0; gp<=10; gp++){
+      var tt=Math.exp(Math.log(HR_TMAX)+(gp/10)*(Math.log(HR_TMIN)-Math.log(HR_TMAX)));
+      grad.addColorStop(gp/10, rgbStr(planck(tt),1));
+    }
+    hCtx.lineWidth=3.2; hCtx.lineCap='round'; hCtx.strokeStyle=grad;
+    hCtx.globalAlpha=0.85;
+    hCtx.beginPath();
+    var first=true;
+    for(var tk=HR_TMIN; tk<=HR_TMAX; tk*=1.04){
+      var X=hrX(tk), Y=hrY(logLfromT(tk));
+      if(first){hCtx.moveTo(X,Y); first=false;} else hCtx.lineTo(X,Y);
+    }
+    hCtx.stroke(); hCtx.globalAlpha=1;
+
+    // marker for current star
+    if(!staticOnly || true){
+      var t=parseFloat(slider.value);
+      var mx=hrX(t), my=hrY(logLfromT(t));
+      var mc=planck(t);
+      // halo
+      var hg=hCtx.createRadialGradient(mx,my,0,mx,my,16);
+      hg.addColorStop(0,rgbStr(mc,0.6)); hg.addColorStop(1,rgbStr(mc,0));
+      hCtx.fillStyle=hg; hCtx.beginPath(); hCtx.arc(mx,my,16,0,Math.PI*2); hCtx.fill();
+      // ring (accent)
+      hCtx.strokeStyle=acc; hCtx.lineWidth=2;
+      hCtx.beginPath(); hCtx.arc(mx,my,7,0,Math.PI*2); hCtx.stroke();
+      // dot
+      hCtx.fillStyle=rgbStr(mc,1);
+      hCtx.beginPath(); hCtx.arc(mx,my,4.2,0,Math.PI*2); hCtx.fill();
+    }
+  }
+
+  // ---- update readouts ----
+  function updateInfo(){
+    var t=parseFloat(slider.value);
+    var acc=accent();
+    var info=classify(t);
+    var col=planck(t);
+    var colCss='rgb('+col[0]+','+col[1]+','+col[2]+')';
+
+    elClass.textContent=info.c;
+    elClassName.textContent=info.name;
+    elStarName.textContent=info.star;
+    var tStr=Math.round(t).toLocaleString('en-US')+' K';
+    elTemp.textContent=tStr; elTemp2.textContent=tStr;
+
+    var m=massFromT(t);
+    var L=Math.pow(m,3.5);
+    var R=Math.pow(L,0.5)/Math.pow(t/5772,2); // R from L,T: L=R^2 T^4 -> R=sqrt(L)/(T/Tsun)^2
+    elMass.innerHTML=fmt(m)+' M☉';
+    elLum.innerHTML=fmt(L)+' L☉';
+    elRad.innerHTML=fmt(R)+' R☉';
+
+    // accent-tinted class letter blends true star color w/ site accent for cohesion
+    elClass.style.color=colCss;
+    elClass.style.textShadow='0 0 26px '+colCss;
+
+    // chips active state
+    chips.forEach(function(ch){
+      ch.classList.toggle('sc-on', info.c===ch.getAttribute('data-c'));
+      ch.style.color=''; // reset; .sc-on handles styling
+    });
+
+    // recolor accent-driven elements live
+    root.style.setProperty('--sc-acc', acc);
+  }
+
+  // ---- loop ----
+  var raf=null, running=false;
+  function frame(ts){
+    if(!running) return;
+    drawStar(ts);
+    drawHR(false);
+    raf=requestAnimationFrame(frame);
+  }
+  function start(){
+    if(running) return; running=true;
+    if(reduce){ drawStar(0); drawHR(false); running=false; return; }
+    raf=requestAnimationFrame(frame);
+  }
+  function stop(){
+    running=false;
+    if(raf){ cancelAnimationFrame(raf); raf=null; }
+  }
+
+  function onInput(){
+    updateInfo();
+    if(reduce){ drawStar(0); drawHR(false); }
+  }
+  slider.addEventListener('input',onInput);
+
+  chips.forEach(function(ch){
+    ch.addEventListener('click',function(){
+      slider.value=ch.getAttribute('data-t');
+      onInput();
+    });
+  });
+
+  // ---- visibility observer ----
+  var io=null;
+  if('IntersectionObserver' in window){
+    io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting) start(); else stop();
+      });
+    },{threshold:0.01});
+    io.observe(root);
+  } else { start(); }
+
+  // ---- resize ----
+  var rt=null;
+  function onResize(){
+    if(rt) clearTimeout(rt);
+    rt=setTimeout(function(){ size(); updateInfo(); if(reduce){drawStar(0);drawHR(false);} },120);
+  }
+  window.addEventListener('resize',onResize);
+
+  // init
+  size();
+  updateInfo();
+  if(reduce){ drawStar(0); drawHR(false); }
+})();
+</script>
+</body></html>

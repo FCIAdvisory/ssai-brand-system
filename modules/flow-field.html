@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data flow-field · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-flow-field{position:relative;width:100%;min-height:340px;aspect-ratio:16/10;border-radius:14px;overflow:hidden;background:radial-gradient(120% 120% at 30% 0%,#0a0726 0%,#050314 60%,#040210 100%);box-shadow:inset 0 0 0 1px rgba(166,171,230,0.16);font-family:'Inter',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;isolation:isolate}
+#kit-flow-field .kff-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#kit-flow-field .kff-overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(14px,3.2%,26px);z-index:2}
+#kit-flow-field .kff-tag{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;padding:7px 13px;border-radius:999px;background:rgba(5,3,20,0.42);border:1px solid rgba(166,171,230,0.16);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+#kit-flow-field .kff-dot{width:7px;height:7px;border-radius:50%;background:#2fd9c3;box-shadow:0 0 9px rgba(47,217,195,0.85);animation:kit-flow-field-pulse 3.4s ease-in-out infinite}
+#kit-flow-field .kff-tag-label{font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:#a6abe6;font-weight:500}
+#kit-flow-field .kff-caption{align-self:flex-end;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:clamp(13px,2.4vw,19px);color:#f4f5ff;text-shadow:0 1px 18px rgba(5,3,20,0.9);opacity:0.92;line-height:1.1;text-align:right}
+#kit-flow-field .kff-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+@keyframes kit-flow-field-pulse{0%,100%{opacity:0.45;transform:scale(0.85)}50%{opacity:1;transform:scale(1.15)}}
+@media (prefers-reduced-motion:reduce){#kit-flow-field .kff-dot{animation:none}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Data flow-field</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-flow-field">
+  <canvas class="kff-canvas" aria-hidden="true"></canvas>
+  <div class="kff-overlay">
+    <div class="kff-tag">
+      <span class="kff-dot"></span>
+      <span class="kff-tag-label">Earth · Flow field</span>
+    </div>
+    <div class="kff-caption">From observation to understanding</div>
+  </div>
+  <p class="kff-sr">An animated particle flow-field representing Earth observation data advecting along smooth ocean-current-like vectors, colored from plasma violet through aurora teal to solar amber.</p>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Move the pointer (or touch) to inject a gentle swirling current the particles bend around; otherwise it flows on its own. Honors prefers-reduced-motion by rendering a single static frame.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-flow-field');
+  if(!root) return;
+  var canvas=root.querySelector('.kff-canvas');
+  if(!canvas) return;
+  var ctx=canvas.getContext('2d');
+  if(!ctx) return;
+
+  var reduce=false;
+  try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+
+  var W=0,H=0,dpr=1;
+  var COUNT=1500;
+  var particles=[];
+  var t=0;
+  var raf=0;
+
+  // Pointer-injected current
+  var ptr={x:-1,y:-1,active:false,str:0};
+
+  // Spectrum stops: plasma violet -> aurora teal -> solar amber
+  var stops=[
+    {r:138,g:92,b:255},   // #8a5cff plasma violet
+    {r:60,g:123,b:224},   // #3c7be0 orbit blue (bridge)
+    {r:47,g:217,b:195},   // #2fd9c3 aurora teal
+    {r:127,g:217,b:87},   // #7fd957 biosphere green (bridge)
+    {r:242,g:180,b:60}    // #f2b43c solar amber
+  ];
+  function ramp(p){
+    if(p<=0) return stops[0];
+    if(p>=1) return stops[stops.length-1];
+    var seg=p*(stops.length-1);
+    var i=Math.floor(seg);
+    var f=seg-i;
+    var a=stops[i],b=stops[i+1];
+    return {
+      r:Math.round(a.r+(b.r-a.r)*f),
+      g:Math.round(a.g+(b.g-a.g)*f),
+      b:Math.round(a.b+(b.b-a.b)*f)
+    };
+  }
+
+  // --- lightweight value-ish noise via layered sin/cos (no libs) ---
+  function field(x,y,time){
+    // x,y normalized 0..1-ish scaled; returns angle in radians
+    var nx=x*0.0042, ny=y*0.0042;
+    var a=Math.sin(nx*1.7+time*0.18)+Math.cos(ny*1.9-time*0.15);
+    var b=Math.sin((nx+ny)*1.3-time*0.11)+Math.cos((nx-ny)*2.2+time*0.09);
+    var c=Math.sin(nx*3.1*Math.cos(time*0.05)+ny*2.4+time*0.07);
+    var v=(a*0.55+b*0.32+c*0.28);
+    return v*1.45; // angle
+  }
+
+  function rand(a,b){return a+Math.random()*(b-a);}
+
+  function makeParticle(p){
+    p=p||{};
+    p.x=rand(0,W);
+    p.y=rand(0,H);
+    p.px=p.x;p.py=p.y;
+    p.speed=rand(0.55,1.45);
+    p.life=rand(0,1);
+    p.maxlife=rand(110,300);
+    p.age=Math.random()*p.maxlife;
+    p.col=Math.random(); // position on spectrum (varies a touch over life)
+    return p;
+  }
+
+  function resetParticle(p){
+    p.x=rand(0,W);p.y=rand(0,H);
+    p.px=p.x;p.py=p.y;
+    p.age=0;p.maxlife=rand(110,300);
+    p.speed=rand(0.55,1.45);
+    p.col=Math.random();
+  }
+
+  function resize(){
+    var cw=root.clientWidth||640;
+    var ch=root.clientHeight||Math.round(cw*0.625);
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=cw;H=ch;
+    canvas.width=Math.max(1,Math.round(cw*dpr));
+    canvas.height=Math.max(1,Math.round(ch*dpr));
+    canvas.style.width=cw+'px';
+    canvas.style.height=ch+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    // clear to deep space
+    ctx.fillStyle='#050314';
+    ctx.fillRect(0,0,W,H);
+    if(particles.length!==COUNT){
+      particles=[];
+      for(var i=0;i<COUNT;i++) particles.push(makeParticle());
+    }
+  }
+
+  function step(){
+    // faint trailing: paint a translucent dark veil instead of clearing
+    ctx.globalCompositeOperation='source-over';
+    ctx.fillStyle='rgba(5,3,20,0.082)';
+    ctx.fillRect(0,0,W,H);
+
+    // pointer current decay
+    if(!ptr.active && ptr.str>0){ptr.str*=0.94;if(ptr.str<0.01)ptr.str=0;}
+
+    ctx.globalCompositeOperation='lighter';
+    ctx.lineWidth=1.05;
+
+    for(var i=0;i<particles.length;i++){
+      var p=particles[i];
+      var ang=field(p.x,p.y,t);
+      var vx=Math.cos(ang),vy=Math.sin(ang);
+
+      // pointer swirl: rotate flow around pointer, falls off with distance
+      if(ptr.str>0.01){
+        var dx=p.x-ptr.x, dy=p.y-ptr.y;
+        var d2=dx*dx+dy*dy;
+        var R=Math.min(W,H)*0.34;
+        var inf=Math.exp(-d2/(2*R*R))*ptr.str;
+        if(inf>0.002){
+          // tangential (swirl) + slight outward push
+          var d=Math.sqrt(d2)||1;
+          vx+=(-dy/d)*inf*2.4+(dx/d)*inf*0.5;
+          vy+=( dx/d)*inf*2.4+(dy/d)*inf*0.5;
+        }
+      }
+
+      var vm=Math.sqrt(vx*vx+vy*vy)||1;
+      vx/=vm;vy/=vm;
+
+      p.px=p.x;p.py=p.y;
+      var sp=p.speed*1.35;
+      p.x+=vx*sp;
+      p.y+=vy*sp;
+      p.age++;
+
+      // color: blend its base hue with a flow-aligned drift along the ramp
+      var cpos=p.col*0.62+((ang/Math.PI)*0.5+0.5)*0.38;
+      if(cpos<0)cpos=0;if(cpos>1)cpos=1;
+      var c=ramp(cpos);
+
+      // fade in/out across life
+      var lifeFrac=p.age/p.maxlife;
+      var alpha;
+      if(lifeFrac<0.12) alpha=lifeFrac/0.12;
+      else if(lifeFrac>0.82) alpha=(1-lifeFrac)/0.18;
+      else alpha=1;
+      alpha=Math.max(0,Math.min(1,alpha))*0.5;
+
+      ctx.strokeStyle='rgba('+c.r+','+c.g+','+c.b+','+alpha.toFixed(3)+')';
+      ctx.beginPath();
+      ctx.moveTo(p.px,p.py);
+      ctx.lineTo(p.x,p.y);
+      ctx.stroke();
+
+      // respawn on death or off-canvas
+      if(p.age>=p.maxlife || p.x<-4||p.x>W+4||p.y<-4||p.y>H+4){
+        resetParticle(p);
+      }
+    }
+    ctx.globalCompositeOperation='source-over';
+    t+=0.06;
+  }
+
+  function staticFrame(){
+    // advance the field a number of times without veil so a rich still image forms
+    ctx.fillStyle='#050314';
+    ctx.fillRect(0,0,W,H);
+    ctx.globalCompositeOperation='lighter';
+    ctx.lineWidth=1.0;
+    for(var f=0;f<260;f++){
+      var time=f*0.06;
+      for(var i=0;i<particles.length;i++){
+        var p=particles[i];
+        var ang=field(p.x,p.y,time);
+        var vx=Math.cos(ang),vy=Math.sin(ang);
+        p.px=p.x;p.py=p.y;
+        var sp=p.speed*1.35;
+        p.x+=vx*sp;p.y+=vy*sp;p.age++;
+        var cpos=p.col*0.62+((ang/Math.PI)*0.5+0.5)*0.38;
+        if(cpos<0)cpos=0;if(cpos>1)cpos=1;
+        var c=ramp(cpos);
+        ctx.strokeStyle='rgba('+c.r+','+c.g+','+c.b+',0.10)';
+        ctx.beginPath();ctx.moveTo(p.px,p.py);ctx.lineTo(p.x,p.y);ctx.stroke();
+        if(p.x<-4||p.x>W+4||p.y<-4||p.y>H+4){resetParticle(p);}
+      }
+    }
+    ctx.globalCompositeOperation='source-over';
+  }
+
+  function loop(){
+    step();
+    raf=requestAnimationFrame(loop);
+  }
+
+  // pointer handlers
+  function localPt(e){
+    var r=canvas.getBoundingClientRect();
+    var cx,cy;
+    if(e.touches&&e.touches.length){cx=e.touches[0].clientX;cy=e.touches[0].clientY;}
+    else{cx=e.clientX;cy=e.clientY;}
+    return {x:cx-r.left,y:cy-r.top};
+  }
+  function onMove(e){
+    var pt=localPt(e);
+    ptr.x=pt.x;ptr.y=pt.y;ptr.active=true;
+    ptr.str=Math.min(1,ptr.str+0.12);
+  }
+  function onLeave(){ptr.active=false;}
+
+  if(!reduce){
+    canvas.addEventListener('pointermove',onMove,{passive:true});
+    canvas.addEventListener('pointerdown',onMove,{passive:true});
+    canvas.addEventListener('pointerleave',onLeave,{passive:true});
+    canvas.addEventListener('pointercancel',onLeave,{passive:true});
+  }
+
+  var rt=null;
+  function onResize(){
+    if(rt)clearTimeout(rt);
+    rt=setTimeout(function(){
+      if(raf)cancelAnimationFrame(raf);
+      resize();
+      if(reduce){staticFrame();}
+      else{raf=requestAnimationFrame(loop);}
+    },120);
+  }
+  window.addEventListener('resize',onResize);
+
+  resize();
+  if(reduce){
+    staticFrame();
+  }else{
+    raf=requestAnimationFrame(loop);
+  }
+})();
+</script>
+</body></html>

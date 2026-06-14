@@ -1,0 +1,357 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Tides A Day · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-tides{position:relative;width:100%;min-height:420px;aspect-ratio:16/10;border-radius:16px;overflow:hidden;background:radial-gradient(120% 140% at 30% 20%,#0a0730 0%,#050314 60%,#03020c 100%);color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-user-select:none;user-select:none;border:1px solid rgba(166,171,230,0.16)}
+#kit-tides .kt-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#kit-tides .kt-canvas:active{cursor:grabbing}
+#kit-tides .kt-head{position:absolute;left:18px;top:14px;z-index:3;pointer-events:none;max-width:60%}
+#kit-tides .kt-title{margin:0;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(15px,2.4vw,22px);letter-spacing:.04em;color:#f4f5ff;line-height:1.05}
+#kit-tides .kt-sub{margin:6px 0 0;font-size:clamp(11px,1.3vw,13px);color:#a6abe6;line-height:1.4;max-width:34ch}
+#kit-tides .kt-readwrap{position:absolute;left:18px;bottom:16px;z-index:3;pointer-events:none}
+#kit-tides .kt-tideval{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(16px,2.6vw,26px);letter-spacing:.03em;color:#a6abe6;line-height:1}
+#kit-tides .kt-numrow{margin-top:4px;font-size:11px;color:#a6abe6;letter-spacing:.02em}
+#kit-tides .kt-num{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;color:#f4f5ff}
+#kit-tides .kt-controls{position:absolute;right:16px;bottom:14px;z-index:3;display:flex;align-items:center;gap:14px}
+#kit-tides .kt-play{appearance:none;cursor:pointer;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:12px;color:#f4f5ff;background:rgba(22,20,95,0.55);border:1px solid rgba(166,171,230,0.28);border-radius:10px;padding:7px 16px;transition:background .2s ease,border-color .2s ease}
+#kit-tides .kt-play:hover{background:rgba(22,20,95,0.85);border-color:var(--accent,#3cc8ff)}
+#kit-tides .kt-spdwrap{display:flex;align-items:center;gap:8px}
+#kit-tides .kt-spdlab{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#a6abe6}
+#kit-tides .kt-speed{-webkit-appearance:none;appearance:none;width:96px;height:4px;border-radius:3px;background:rgba(166,171,230,0.22);outline:none;cursor:pointer}
+#kit-tides .kt-speed::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent,#3cc8ff);border:2px solid #050314;cursor:pointer}
+#kit-tides .kt-speed::-moz-range-thumb{width:15px;height:15px;border:2px solid #050314;border-radius:50%;background:var(--accent,#3cc8ff);cursor:pointer}
+#kit-tides .kt-hint{position:absolute;right:16px;top:14px;z-index:3;pointer-events:none;font-size:11px;color:#a6abe6;letter-spacing:.02em;display:flex;align-items:center;gap:6px;opacity:.9}
+#kit-tides .kt-dot{width:7px;height:7px;border-radius:50%;background:var(--accent,#3cc8ff);box-shadow:0 0 10px var(--accent,#3cc8ff)}
+#kit-tides .kt-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media (max-width:520px){#kit-tides .kt-hint{display:none}#kit-tides .kt-sub{display:none}}
+@media (prefers-reduced-motion: reduce){#kit-tides .kt-dot{box-shadow:none}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Two Tides A Day</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-tides">
+  <span class="kt-sr">Interactive model of Earth's tides: the Moon orbits Earth and raises two ocean bulges, one facing the Moon and one on the far side. A coastal gauge shows two high tides per orbit. Drag the Moon to control it.</span>
+  <canvas class="kt-canvas" aria-hidden="true"></canvas>
+  <div class="kt-head">
+    <h3 class="kt-title">Two Tides A Day</h3>
+    <p class="kt-sub">The Moon's gravity stretches Earth's oceans into two bulges. A coastline sweeps through both every orbit.</p>
+  </div>
+  <div class="kt-hint"><span class="kt-dot"></span>Drag the Moon</div>
+  <div class="kt-readwrap">
+    <div class="kt-tideval">MID TIDE</div>
+    <div class="kt-numrow">Coastal level&nbsp;<span class="kt-num">+0.00</span></div>
+  </div>
+  <div class="kt-controls">
+    <div class="kt-spdwrap">
+      <span class="kt-spdlab">Speed</span>
+      <input class="kt-speed" type="range" min="0.05" max="0.9" step="0.01" value="0.30" aria-label="Orbit speed">
+    </div>
+    <button class="kt-play" type="button" aria-pressed="true">Pause</button>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the Moon around its orbit (or let it auto-orbit and tune the Speed slider / Pause); the two tidal bulges track the Moon and the coastal tide gauge rises and falls twice per orbit.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-tides'); if(!root) return;
+  var canvas=root.querySelector('.kt-canvas');
+  if(!canvas) return;
+  var ctx=canvas.getContext('2d');
+  var prm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function accent(){
+    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return v||'#3cc8ff';
+  }
+  function accentRGB(){
+    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim();
+    if(v) return v;
+    var hex=accent().replace('#','');
+    if(hex.length===3) hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    var n=parseInt(hex,16);
+    if(isNaN(n)) return '60,200,255';
+    return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);
+  }
+
+  var W=0,H=0,DPR=1,cx=0,cy=0,scale=1,stageW=0;
+  function resize(){
+    var r=canvas.getBoundingClientRect();
+    W=Math.max(1,r.width); H=Math.max(1,r.height);
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(W*DPR);
+    canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    stageW=W*0.70;
+    cx=stageW*0.52; cy=H*0.5;
+    scale=Math.min(stageW,H);
+    makeStars();
+  }
+
+  var moonAngle=-0.7;
+  var orbitR=0.40;
+  var dragging=false;
+  var autoSpeed=0.30;
+  var lastT=0;
+  var cityLocalAngle=0;
+
+  function moonPos(){
+    var R=scale*orbitR;
+    return { x:cx+Math.cos(moonAngle)*R, y:cy+Math.sin(moonAngle)*R };
+  }
+  function pointer(e){
+    var r=canvas.getBoundingClientRect();
+    var t=e.touches&&e.touches[0]?e.touches[0]:e;
+    return {x:t.clientX-r.left, y:t.clientY-r.top};
+  }
+  function near(p){
+    var m=moonPos();
+    return Math.hypot(p.x-m.x,p.y-m.y) < Math.max(40, scale*0.11);
+  }
+  function setFromPointer(p){ moonAngle=Math.atan2(p.y-cy,p.x-cx); }
+
+  canvas.addEventListener('mousedown',function(e){ var p=pointer(e); if(near(p)){ dragging=true; setFromPointer(p); kick(); e.preventDefault(); }});
+  window.addEventListener('mousemove',function(e){ if(dragging){ setFromPointer(pointer(e)); kick(); }});
+  window.addEventListener('mouseup',function(){ dragging=false; });
+  canvas.addEventListener('touchstart',function(e){ var p=pointer(e); if(near(p)){ dragging=true; setFromPointer(p); kick(); e.preventDefault(); }},{passive:false});
+  canvas.addEventListener('touchmove',function(e){ if(dragging){ setFromPointer(pointer(e)); kick(); e.preventDefault(); }},{passive:false});
+  window.addEventListener('touchend',function(){ dragging=false; });
+
+  var playing=!prm;
+  var btn=root.querySelector('.kt-play');
+  function kick(){ if(visible && (!playing || prm)){ once(); } }
+  if(btn){
+    btn.textContent=playing?'Pause':'Play';
+    btn.addEventListener('click',function(){
+      playing=!playing;
+      btn.textContent=playing?'Pause':'Play';
+      btn.setAttribute('aria-pressed', playing?'true':'false');
+      if(playing && visible){ lastT=0; loop(); } else if(visible){ once(); }
+    });
+  }
+  var slider=root.querySelector('.kt-speed');
+  if(slider){
+    autoSpeed=parseFloat(slider.value);
+    slider.addEventListener('input',function(){ autoSpeed=parseFloat(slider.value); if(prm&&visible) once(); });
+  }
+
+  function tidalHeight(localAngle){ return Math.cos(2*localAngle); }
+
+  var stars=[];
+  function makeStars(){
+    stars=[];
+    var n=Math.round(W*H/9000); if(n<40)n=40; if(n>140)n=140;
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.3,tw:Math.random()*6.283});
+    }
+  }
+
+  var gaugeHistory=[];
+  var GH=90;
+
+  function fmt(v,d){ return v.toFixed(d); }
+
+  function draw(t){
+    var ac=accent(), arr=accentRGB();
+    ctx.clearRect(0,0,W,H);
+
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      ctx.globalAlpha=0.3+0.55*Math.abs(Math.sin(s.tw+t*0.0011));
+      ctx.fillStyle='#f4f5ff';
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.283); ctx.fill();
+    }
+    ctx.globalAlpha=1;
+
+    var R=scale*orbitR;
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,6.283);
+    ctx.strokeStyle='rgba(166,171,230,0.16)'; ctx.lineWidth=1; ctx.stroke();
+
+    var earthR=scale*0.135;
+    var oceanBase=earthR*1.12;
+    var bulge=earthR*0.20;
+
+    var m=moonPos();
+    var dirToMoon=Math.atan2(m.y-cy,m.x-cx);
+
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(dirToMoon)*oceanBase,cy+Math.sin(dirToMoon)*oceanBase);
+    ctx.lineTo(cx-Math.cos(dirToMoon)*oceanBase,cy-Math.sin(dirToMoon)*oceanBase);
+    ctx.strokeStyle='rgba('+arr+',0.18)';
+    ctx.lineWidth=1; ctx.setLineDash([4,5]); ctx.stroke(); ctx.setLineDash([]);
+
+    ctx.beginPath();
+    var N=140;
+    for(var k=0;k<=N;k++){
+      var ang=k/N*6.283;
+      var rr=oceanBase+bulge*tidalHeight(ang-dirToMoon);
+      var px=cx+Math.cos(ang)*rr, py=cy+Math.sin(ang)*rr;
+      if(k===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+    }
+    ctx.closePath();
+    ctx.fillStyle='rgba('+arr+',0.20)';
+    ctx.fill();
+    ctx.strokeStyle='rgba('+arr+',0.9)';
+    ctx.lineWidth=1.6; ctx.stroke();
+
+    ctx.beginPath(); ctx.arc(cx,cy,earthR,0,6.283);
+    ctx.fillStyle='#16145f'; ctx.fill();
+    ctx.strokeStyle='rgba(166,171,230,0.32)'; ctx.lineWidth=1; ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(cx-earthR*0.28,cy-earthR*0.28,earthR*0.55,0,6.283);
+    ctx.fillStyle='rgba(244,245,255,0.05)'; ctx.fill();
+
+    if(!dragging){ cityLocalAngle+=autoSpeed*((t-(draw._lt||t))/1000); }
+    draw._lt=t;
+    var cityAng=cityLocalAngle;
+    var crr=oceanBase+bulge*tidalHeight(cityAng-dirToMoon);
+    var sx=cx+Math.cos(cityAng)*earthR, sy=cy+Math.sin(cityAng)*earthR;
+    var ox=cx+Math.cos(cityAng)*crr, oy=cy+Math.sin(cityAng)*crr;
+    ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(ox,oy);
+    ctx.strokeStyle='rgba(244,245,255,0.5)'; ctx.lineWidth=2; ctx.stroke();
+    ctx.beginPath(); ctx.arc(sx,sy,4,0,6.283);
+    ctx.fillStyle='#f4f5ff'; ctx.fill();
+
+    var mr=Math.max(8, scale*0.030);
+    ctx.beginPath(); ctx.arc(m.x,m.y,mr+(dragging?6:0),0,6.283);
+    ctx.fillStyle='rgba('+arr+','+(dragging?0.22:0.12)+')'; ctx.fill();
+    ctx.beginPath(); ctx.arc(m.x,m.y,mr,0,6.283);
+    ctx.fillStyle='#cdd2ff'; ctx.fill();
+    ctx.strokeStyle=ac; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.beginPath(); ctx.arc(m.x-mr*0.3,m.y-mr*0.2,mr*0.28,0,6.283);
+    ctx.fillStyle='rgba(80,80,120,0.35)'; ctx.fill();
+
+    var tide=tidalHeight(cityAng-dirToMoon);
+    drawGauge(tide, ac, arr);
+
+    var readout=root.querySelector('.kt-tideval');
+    if(readout){
+      var label = tide>0.6?'HIGH TIDE': tide<-0.6?'LOW TIDE':'MID TIDE';
+      readout.textContent=label;
+      readout.style.color = tide>0.6? ac : '#a6abe6';
+    }
+    var num=root.querySelector('.kt-num');
+    if(num){ num.textContent=(tide>=0?'+':'')+fmt(tide,2); }
+  }
+
+  function drawGauge(tide, ac, arr){
+    var gw=W*0.26, gx=W-gw-W*0.02, gy=H*0.10, gh=H*0.80;
+    ctx.fillStyle='rgba(22,20,95,0.35)';
+    rr(gx,gy,gw,gh,8); ctx.fill();
+    ctx.strokeStyle='rgba(166,171,230,0.16)'; ctx.lineWidth=1; rr(gx,gy,gw,gh,8); ctx.stroke();
+
+    var pad=14, ix=gx+pad, iw=gw-pad*2, iy=gy+34, ih=gh-pad-44;
+    for(var j=0;j<=4;j++){
+      var ly=iy+ih*j/4;
+      ctx.beginPath(); ctx.moveTo(ix,ly); ctx.lineTo(ix+iw,ly);
+      ctx.strokeStyle='rgba(166,171,230,0.12)'; ctx.lineWidth=1; ctx.stroke();
+    }
+    var midY=iy+ih/2;
+    var level=midY - tide*(ih/2)*0.9;
+    ctx.fillStyle='rgba('+arr+',0.18)';
+    ctx.fillRect(ix, level, iw, (iy+ih)-level);
+    ctx.beginPath(); ctx.moveTo(ix,level); ctx.lineTo(ix+iw,level);
+    ctx.strokeStyle=ac; ctx.lineWidth=2; ctx.stroke();
+
+    gaugeHistory.push(tide); if(gaugeHistory.length>GH) gaugeHistory.shift();
+    ctx.beginPath();
+    for(var p=0;p<gaugeHistory.length;p++){
+      var hx=ix+iw*p/(GH-1);
+      var hy=midY-gaugeHistory[p]*(ih/2)*0.9;
+      if(p===0) ctx.moveTo(hx,hy); else ctx.lineTo(hx,hy);
+    }
+    ctx.strokeStyle='rgba('+arr+',0.55)'; ctx.lineWidth=1.5; ctx.stroke();
+
+    ctx.fillStyle='#a6abe6'; ctx.font='italic 700 11px "Chakra Petch", sans-serif';
+    ctx.textAlign='left'; ctx.fillText('TIDE GAUGE', ix, gy+20);
+    ctx.textAlign='right';
+    ctx.fillStyle='rgba(166,171,230,0.7)'; ctx.font='10px Inter, sans-serif';
+    ctx.fillText('HIGH', ix+iw, iy+10);
+    ctx.fillText('LOW', ix+iw, iy+ih-2);
+    ctx.textAlign='left';
+  }
+  function rr(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+  }
+
+  var raf=null, visible=false;
+  function loop(){
+    if(!visible||!playing||prm){ return; }
+    raf=requestAnimationFrame(function(ts){
+      if(!lastT) lastT=ts;
+      var dt=(ts-lastT)/1000; lastT=ts;
+      if(dt>0.1) dt=0.1;
+      if(!dragging){ moonAngle+=autoSpeed*dt; }
+      draw(ts);
+      loop();
+    });
+  }
+  function once(){ draw(performance.now()); }
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      visible=en.isIntersecting;
+      if(visible){
+        resize();
+        if(playing && !prm){ lastT=0; loop(); } else { once(); }
+      } else {
+        if(raf) cancelAnimationFrame(raf); raf=null;
+      }
+    });
+  },{threshold:0.04});
+  io.observe(root);
+
+  window.addEventListener('resize',function(){ resize(); if(!playing||!visible||prm) once(); });
+  resize(); once();
+})();
+</script>
+</body></html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atmospheric profile · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-atmos-sounding{--as-acc:#3cc8ff;--as-acc-rgb:60,200,255;--as-temp:#ff8a5c;--as-temp-rgb:255,138,92;--as-dew:#5dd6b0;--as-dew-rgb:93,214,176;position:relative;width:100%;box-sizing:border-box;padding:20px;border:1px solid rgba(166,171,230,.16);border-radius:18px;background:radial-gradient(120% 140% at 78% -10%,rgba(22,20,95,.55),rgba(5,3,20,0) 60%),#050314;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased;}
+#kit-atmos-sounding *{box-sizing:border-box;}
+#kit-atmos-sounding .as-head{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+#kit-atmos-sounding .as-title{min-width:240px;flex:1 1 280px;}
+#kit-atmos-sounding .as-kicker{display:inline-block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--as-acc);font-weight:600;margin-bottom:7px;opacity:.9;}
+#kit-atmos-sounding h3{margin:0;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(20px,2.6vw,28px);line-height:1.02;color:#f4f5ff;}
+#kit-atmos-sounding .as-sub{margin:6px 0 0;font-size:12.5px;line-height:1.5;color:#a6abe6;max-width:46ch;}
+#kit-atmos-sounding .as-readout{display:grid;grid-template-columns:repeat(2,minmax(96px,1fr));gap:8px 14px;align-content:start;padding:12px 14px;border:1px solid rgba(166,171,230,.16);border-radius:12px;background:rgba(22,20,95,.28);min-width:210px;}
+#kit-atmos-sounding .as-ro-item{display:flex;flex-direction:column;gap:1px;}
+#kit-atmos-sounding .as-ro-lbl{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#a6abe6;}
+#kit-atmos-sounding .as-ro-val{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:18px;line-height:1.05;color:#f4f5ff;letter-spacing:.01em;}
+#kit-atmos-sounding .as-ro-val i{font-style:normal;font-family:'Inter',sans-serif;font-weight:500;font-size:10.5px;color:#a6abe6;margin-left:3px;}
+#kit-atmos-sounding .as-c-temp{color:var(--as-temp);}
+#kit-atmos-sounding .as-c-dew{color:var(--as-dew);}
+#kit-atmos-sounding .as-ro-layer{font-size:13px;color:var(--as-acc);}
+#kit-atmos-sounding .as-stage{position:relative;width:100%;aspect-ratio:16/9;min-height:340px;display:flex;}
+#kit-atmos-sounding .as-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;border-radius:12px;}
+#kit-atmos-sounding .as-vslider{position:absolute;appearance:none;-webkit-appearance:none;background:transparent;margin:0;padding:0;cursor:ns-resize;z-index:3;width:18px;writing-mode:vertical-lr;direction:rtl;}
+#kit-atmos-sounding .as-vslider:focus-visible{outline:2px solid var(--as-acc);outline-offset:3px;border-radius:10px;}
+#kit-atmos-sounding .as-vslider::-webkit-slider-runnable-track{background:transparent;width:2px;}
+#kit-atmos-sounding .as-vslider::-moz-range-track{background:transparent;width:2px;}
+#kit-atmos-sounding .as-vslider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--as-acc);border:2px solid #050314;box-shadow:0 0 0 4px rgba(var(--as-acc-rgb),.22);}
+#kit-atmos-sounding .as-vslider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--as-acc);border:2px solid #050314;box-shadow:0 0 0 4px rgba(var(--as-acc-rgb),.22);}
+#kit-atmos-sounding .as-controls{display:flex;flex-wrap:wrap;gap:14px 22px;justify-content:space-between;align-items:center;margin-top:14px;}
+#kit-atmos-sounding .as-toggles,#kit-atmos-sounding .as-presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+#kit-atmos-sounding .as-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;letter-spacing:.02em;color:#a6abe6;background:rgba(22,20,95,.32);border:1px solid rgba(166,171,230,.16);border-radius:9px;padding:7px 11px;cursor:pointer;transition:color .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;}
+#kit-atmos-sounding .as-btn:hover{color:#f4f5ff;border-color:rgba(166,171,230,.34);}
+#kit-atmos-sounding .as-btn.as-on{color:#f4f5ff;border-color:rgba(var(--as-acc-rgb),.55);background:rgba(var(--as-acc-rgb),.12);box-shadow:0 0 14px rgba(var(--as-acc-rgb),.14) inset;}
+#kit-atmos-sounding .as-btn:focus-visible{outline:2px solid var(--as-acc);outline-offset:2px;}
+#kit-atmos-sounding .as-swatch{width:18px;height:3px;border-radius:2px;background:#a6abe6;flex:none;}
+#kit-atmos-sounding .as-sw-dew{background:var(--as-dew);}
+#kit-atmos-sounding .as-sw-sound{height:9px;width:13px;border-radius:2px;background:rgba(var(--as-acc-rgb),.5);}
+#kit-atmos-sounding .as-sw-band{height:9px;width:13px;border-radius:2px;background:rgba(166,171,230,.28);}
+#kit-atmos-sounding .as-presets-lbl{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#a6abe6;margin-right:2px;}
+#kit-atmos-sounding .as-chip{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;color:#a6abe6;background:transparent;border:1px solid rgba(166,171,230,.16);border-radius:20px;padding:6px 13px;cursor:pointer;transition:color .2s ease,border-color .2s ease,background .2s ease;}
+#kit-atmos-sounding .as-chip:hover{color:#f4f5ff;border-color:rgba(166,171,230,.34);}
+#kit-atmos-sounding .as-chip.as-on{color:#050314;background:var(--as-acc);border-color:var(--as-acc);font-weight:600;}
+#kit-atmos-sounding .as-chip:focus-visible{outline:2px solid var(--as-acc);outline-offset:2px;}
+#kit-atmos-sounding .as-foot{margin:13px 0 0;font-size:11.5px;line-height:1.55;color:#a6abe6;max-width:78ch;}
+@media (max-width:560px){
+#kit-atmos-sounding .as-readout{grid-template-columns:repeat(3,1fr);width:100%;}
+#kit-atmos-sounding .as-stage{aspect-ratio:auto;min-height:380px;}
+#kit-atmos-sounding .as-controls{flex-direction:column;align-items:flex-start;}
+}
+@media (prefers-reduced-motion:reduce){
+#kit-atmos-sounding *{transition:none!important;}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Atmospheric profile</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-atmos-sounding">
+  <div class="as-head">
+    <div class="as-title">
+      <span class="as-kicker">Earth &amp; climate</span>
+      <h3>Atmospheric profile</h3>
+      <p class="as-sub">Temperature, humidity &amp; pressure from the surface to the stratosphere — and how satellites read them from orbit.</p>
+    </div>
+    <div class="as-readout" role="status" aria-live="polite">
+      <div class="as-ro-item">
+        <span class="as-ro-lbl">Altitude</span>
+        <span class="as-ro-val" id="as-ro-alt">0.0<i>km</i></span>
+      </div>
+      <div class="as-ro-item">
+        <span class="as-ro-lbl">Temperature</span>
+        <span class="as-ro-val as-c-temp" id="as-ro-temp">15.0<i>&deg;C</i></span>
+      </div>
+      <div class="as-ro-item">
+        <span class="as-ro-lbl">Dew point</span>
+        <span class="as-ro-val as-c-dew" id="as-ro-dew">9.0<i>&deg;C</i></span>
+      </div>
+      <div class="as-ro-item">
+        <span class="as-ro-lbl">Pressure</span>
+        <span class="as-ro-val" id="as-ro-pres">1013<i>hPa</i></span>
+      </div>
+      <div class="as-ro-item">
+        <span class="as-ro-lbl">Layer</span>
+        <span class="as-ro-val as-ro-layer" id="as-ro-layer">Troposphere</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="as-stage">
+    <canvas class="as-canvas" id="as-canvas"></canvas>
+    <input class="as-vslider" id="as-slider" type="range" min="0" max="30" step="0.1" value="0"
+           aria-label="Altitude in kilometres" orient="vertical" />
+  </div>
+
+  <div class="as-controls">
+    <div class="as-toggles">
+      <button class="as-btn as-on" id="as-tg-dew" type="button" aria-pressed="true">
+        <span class="as-swatch as-sw-dew"></span>Dew point
+      </button>
+      <button class="as-btn" id="as-tg-sound" type="button" aria-pressed="false">
+        <span class="as-swatch as-sw-sound"></span>Satellite sounding
+      </button>
+      <button class="as-btn" id="as-tg-bands" type="button" aria-pressed="true">
+        <span class="as-swatch as-sw-band"></span>Layer bands
+      </button>
+    </div>
+    <div class="as-presets">
+      <span class="as-presets-lbl">Air mass</span>
+      <button class="as-chip as-on" id="as-pr-std" type="button">Standard</button>
+      <button class="as-chip" id="as-pr-trop" type="button">Tropical</button>
+      <button class="as-chip" id="as-pr-polar" type="button">Polar</button>
+    </div>
+  </div>
+
+  <p class="as-foot" id="as-foot">A nadir-sounding radiometer measures emission from many layers at once. Each channel peaks at a different height — the curves on the right are the weighting functions that turn raw radiances into a vertical temperature profile.</p>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the altitude marker (or use the slider / keyboard) to read temperature, dew point and pressure at any height; toggle the dew-point curve and the satellite sounding weighting functions.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-atmos-sounding');
+  if(!root) return;
+  var canvas=root.querySelector('#as-canvas');
+  var ctx=canvas.getContext('2d');
+  var slider=root.querySelector('#as-slider');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  var HMAX=30;
+  var show={dew:true,sound:false,bands:true};
+  var alt=0;
+  var targetAlt=0;
+
+  var profiles={
+    std:{tSurf:15,lapse:6.5,tTrop:-56.5,dewDep:6,dewDepTop:32,pSurf:1013},
+    trop:{tSurf:28,lapse:6.0,tTrop:-78,dewDep:3,dewDepTop:34,pSurf:1009},
+    polar:{tSurf:-14,lapse:5.2,tTrop:-52,dewDep:4,dewDepTop:26,pSurf:1016}
+  };
+  var prof=profiles.std;
+
+  function tempAt(h,p){
+    if(h<=11) return p.tSurf - p.lapse*h;
+    var tTropTop=p.tSurf - p.lapse*11;
+    if(h<=20) return tTropTop;
+    if(h<=32) return tTropTop + 1.0*(h-20);
+    return tTropTop + 12 + 2.8*(h-32);
+  }
+  function dewAt(h,p){
+    var t=tempAt(h,p);
+    var frac=Math.min(h/12,1);
+    var dep=p.dewDep + (p.dewDepTop-p.dewDep)*Math.pow(frac,0.75);
+    return t-dep;
+  }
+  function presAt(h,p){
+    var g=9.80665,M=0.0289644,R=8.31447;
+    var scale=p.pSurf/1013.25;
+    var Pb,Tb,Lb,hb;
+    if(h<=11){Pb=1013.25;Tb=288.15;Lb=-0.0065;hb=0;}
+    else if(h<=20){Pb=226.32;Tb=216.65;Lb=0;hb=11;}
+    else {Pb=54.749;Tb=216.65;Lb=0.001;hb=20;}
+    var hm=h*1000,hbm=hb*1000,P;
+    if(Lb===0){P=Pb*Math.exp(-g*M*(hm-hbm)/(R*Tb));}
+    else {P=Pb*Math.pow(Tb/(Tb+Lb*(hm-hbm)),g*M/(R*Lb));}
+    return P*scale;
+  }
+  function layerName(h){
+    if(h<11) return 'Troposphere';
+    if(h<20) return 'Tropopause';
+    return 'Stratosphere';
+  }
+
+  var soundCh=[
+    {h:2,w:3.4},{h:6,w:3.0},{h:11,w:2.6},{h:16,w:2.4},{h:22,w:2.6},{h:27,w:3.0}
+  ];
+
+  var accent='#3cc8ff', accentRGB='60,200,255';
+  function readAccent(){
+    var cs=getComputedStyle(document.documentElement);
+    var a=cs.getPropertyValue('--accent').trim();
+    if(a){accent=a;}
+    var r=cs.getPropertyValue('--accent-rgb').trim();
+    accentRGB=r||hexToRgb(accent)||'60,200,255';
+    root.style.setProperty('--as-acc',accent);
+    root.style.setProperty('--as-acc-rgb',accentRGB);
+  }
+  function hexToRgb(h){
+    h=(h||'').replace('#','');
+    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    if(h.length<6) return null;
+    var n=parseInt(h,16);
+    return ((n>>16)&255)+','+((n>>8)&255)+'&'.replace('&','')+(n&255);
+  }
+  function rgb(h){
+    h=(h||'').replace('#','');
+    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16);
+    return [(n>>16)&255,(n>>8)&255,n&255];
+  }
+
+  var W=0,H=0,dpr=1;
+  var pad={l:54,r:170,t:18,b:34};
+  function resize(){
+    var rect=canvas.getBoundingClientRect();
+    dpr=Math.max(1,Math.min(window.devicePixelRatio||1,2.5));
+    W=Math.max(40,rect.width); H=Math.max(40,rect.height);
+    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    pad.r = W<520 ? 92 : 170;
+    pad.l = W<520 ? 44 : 54;
+    positionSlider();
+  }
+  function plot(){
+    return {x0:pad.l,x1:W-pad.r,y0:pad.t,y1:H-pad.b};
+  }
+  function tMin(){return Math.min(prof.tTrop,-85)-2;}
+  function tRange(){var lo=Math.min(prof.tSurf,prof.tTrop,-90)-3;var hi=Math.max(prof.tSurf,40);return [lo,hi];}
+  function xT(t){var p=plot();var r=tRange();return p.x0+(t-r[0])/(r[1]-r[0])*(p.x1-p.x0);}
+  function yH(h){var p=plot();return p.y1-(h/HMAX)*(p.y1-p.y0);}
+
+  function positionSlider(){
+    var p=plot();
+    slider.style.left=(p.x1-7)+'px';
+    slider.style.top=p.y0+'px';
+    slider.style.height=(p.y1-p.y0)+'px';
+  }
+
+  function bands(){
+    return [
+      {a:0,b:11,name:'Troposphere',note:'weather, clouds, lapse rate'},
+      {a:11,b:20,name:'Tropopause',note:'near-isothermal cap'},
+      {a:20,b:30,name:'Stratosphere',note:'warms — ozone absorbs UV'}
+    ];
+  }
+
+  function draw(){
+    var p=plot(), argb=rgb(accent);
+    var A=accent, Argb=argb.join(',');
+    ctx.clearRect(0,0,W,H);
+
+    if(show.bands){
+      var bs=bands();
+      for(var i=0;i<bs.length;i++){
+        var b=bs[i];
+        var yt=yH(b.b), yb=yH(b.a);
+        ctx.fillStyle=i===1?'rgba(166,171,230,0.075)':(i===2?'rgba('+Argb+',0.06)':'rgba(22,20,95,0.30)');
+        ctx.fillRect(p.x0,yt,p.x1-p.x0,yb-yt);
+        ctx.strokeStyle='rgba(166,171,230,0.14)';
+        ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(p.x0,yt+0.5);ctx.lineTo(p.x1,yt+0.5);ctx.stroke();
+        ctx.save();
+        ctx.fillStyle='rgba(244,245,255,0.78)';
+        ctx.font='italic 700 11px "Chakra Petch","Inter",sans-serif';
+        ctx.textAlign='left';ctx.textBaseline='top';
+        ctx.fillText(b.name.toUpperCase(),p.x0+8,yt+6);
+        if(W>=440){
+          ctx.fillStyle='rgba(166,171,230,0.65)';
+          ctx.font='400 9.5px "Inter",sans-serif';
+          ctx.fillText(b.note,p.x0+8,yt+20);
+        }
+        ctx.restore();
+      }
+    }
+
+    ctx.strokeStyle='rgba(166,171,230,0.10)';ctx.lineWidth=1;
+    ctx.fillStyle='rgba(166,171,230,0.55)';
+    ctx.font='400 9.5px "Inter",sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='top';
+    var tk=[-80,-60,-40,-20,0,20,40];
+    for(var k=0;k<tk.length;k++){
+      var tv=tk[k];var x=xT(tv);
+      if(x<p.x0-1||x>p.x1+1) continue;
+      ctx.beginPath();ctx.moveTo(x,p.y0);ctx.lineTo(x,p.y1);
+      ctx.strokeStyle='rgba(166,171,230,0.07)';ctx.stroke();
+      ctx.fillStyle='rgba(166,171,230,0.55)';
+      ctx.fillText((tv>0?'+':'')+tv,x,p.y1+6);
+    }
+    ctx.save();
+    ctx.fillStyle='rgba(166,171,230,0.7)';
+    ctx.font='600 9px "Inter",sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('TEMPERATURE  (°C)',(p.x0+p.x1)/2,p.y1+18);
+    ctx.restore();
+
+    ctx.textAlign='right';ctx.textBaseline='middle';
+    ctx.font='400 9.5px "Inter",sans-serif';
+    for(var hh=0;hh<=HMAX;hh+=5){
+      var y=yH(hh);
+      ctx.fillStyle='rgba(166,171,230,0.55)';
+      ctx.fillText(hh+'',p.x0-8,y);
+    }
+    ctx.save();
+    ctx.translate(14,(p.y0+p.y1)/2);ctx.rotate(-Math.PI/2);
+    ctx.fillStyle='rgba(166,171,230,0.7)';ctx.font='600 9px "Inter",sans-serif';
+    ctx.textAlign='center';ctx.fillText('ALTITUDE  (KM)',0,0);
+    ctx.restore();
+
+    if(show.sound){
+      ctx.save();
+      for(var c=0;c<soundCh.length;c++){
+        var ch=soundCh[c];
+        ctx.beginPath();
+        var first=true;
+        for(var s=0;s<=60;s++){
+          var hv=s/60*HMAX;
+          var z=(hv-ch.h)/ch.w;
+          var wgt=Math.exp(-0.5*z*z);
+          var xw=p.x1 - 6 - wgt*(W<520?70:128);
+          var yw=yH(hv);
+          if(first){ctx.moveTo(xw,yw);first=false;}else{ctx.lineTo(xw,yw);}
+        }
+        ctx.strokeStyle='rgba('+Argb+',0.55)';
+        ctx.lineWidth=1.4;
+        ctx.stroke();
+        var pk=yH(ch.h);
+        ctx.fillStyle='rgba('+Argb+',0.9)';
+        ctx.beginPath();ctx.arc(p.x1-6-(W<520?70:128),pk,2.4,0,6.2832);ctx.fill();
+      }
+      ctx.fillStyle='rgba('+Argb+',0.85)';
+      ctx.font='italic 700 9.5px "Chakra Petch","Inter",sans-serif';
+      ctx.textAlign='right';ctx.textBaseline='top';
+      ctx.fillText('SOUNDING CHANNELS',p.x1-4,p.y0+2);
+      ctx.fillStyle='rgba(166,171,230,0.6)';
+      ctx.font='400 9px "Inter",sans-serif';
+      if(W>=440) ctx.fillText('weighting functions → T(z)',p.x1-4,p.y0+16);
+      ctx.restore();
+    }
+
+    drawCurve(function(h){return dewAt(h,prof);}, show.dew?'rgba(93,214,176,0.95)':null,1.8,[]);
+    drawCurve(function(h){return tempAt(h,prof);}, 'rgba(255,138,92,0.98)',2.4,[]);
+
+    if(show.dew){
+      labelCurve('Dew point',dewAt(0,prof),'rgba(93,214,176,0.95)',10);
+    }
+    labelCurve('Temperature',tempAt(0,prof),'rgba(255,138,92,0.98)',-6);
+
+    var my=yH(alt);
+    var mt=tempAt(alt,prof), md=dewAt(alt,prof);
+    var mx=xT(mt);
+    ctx.strokeStyle='rgba('+Argb+',0.85)';
+    ctx.lineWidth=1.2;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(p.x0,my);ctx.lineTo(p.x1,my);ctx.stroke();
+    ctx.setLineDash([]);
+
+    if(show.dew){
+      var dx=xT(md);
+      ctx.fillStyle='rgba(93,214,176,0.95)';
+      ctx.beginPath();ctx.arc(dx,my,3.6,0,6.2832);ctx.fill();
+      ctx.strokeStyle='#050314';ctx.lineWidth=1.4;ctx.stroke();
+    }
+    var pulse=reduce?0:(0.5+0.5*Math.sin(Date.now()/520));
+    ctx.beginPath();ctx.arc(mx,my,8+pulse*3,0,6.2832);
+    ctx.fillStyle='rgba('+Argb+','+(0.10+pulse*0.10)+')';ctx.fill();
+    ctx.beginPath();ctx.arc(mx,my,5,0,6.2832);
+    ctx.fillStyle=accent;ctx.fill();
+    ctx.strokeStyle='#050314';ctx.lineWidth=1.6;ctx.stroke();
+
+    ctx.save();
+    var tag=mt.toFixed(1)+'°C';
+    ctx.font='italic 700 11px "Chakra Petch","Inter",sans-serif';
+    var tw=ctx.measureText(tag).width+14;
+    var tagx=Math.min(mx+12,p.x1-tw-2);
+    var tagy=Math.max(p.y0+2,Math.min(my-10,p.y1-22));
+    ctx.fillStyle='rgba(5,3,20,0.85)';
+    roundRect(tagx,tagy,tw,18,5);ctx.fill();
+    ctx.strokeStyle='rgba('+Argb+',0.5)';ctx.lineWidth=1;
+    roundRect(tagx,tagy,tw,18,5);ctx.stroke();
+    ctx.fillStyle=accent;ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.fillText(tag,tagx+7,tagy+10);
+    ctx.restore();
+  }
+
+  function drawCurve(fn,color,lw,dash){
+    if(!color) return;
+    var p=plot();
+    ctx.save();
+    ctx.beginPath();
+    var first=true;
+    for(var s=0;s<=120;s++){
+      var h=s/120*HMAX;
+      var x=xT(fn(h)),y=yH(h);
+      if(first){ctx.moveTo(x,y);first=false;}else{ctx.lineTo(x,y);}
+    }
+    ctx.strokeStyle=color;ctx.lineWidth=lw;
+    ctx.lineJoin='round';ctx.lineCap='round';
+    if(dash&&dash.length)ctx.setLineDash(dash);
+    ctx.shadowColor=color;ctx.shadowBlur=reduce?0:6;
+    ctx.stroke();
+    ctx.restore();
+  }
+  function labelCurve(txt,t0,color,dy){
+    var p=plot();var x=xT(t0),y=yH(0);
+    ctx.save();
+    ctx.fillStyle=color;
+    ctx.font='italic 700 9.5px "Chakra Petch","Inter",sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='bottom';
+    ctx.fillText(txt.toUpperCase(),Math.max(p.x0+24,Math.min(x,p.x1-24)),y+dy);
+    ctx.restore();
+  }
+  function roundRect(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+  }
+
+  function updateReadout(){
+    var t=tempAt(alt,prof),d=dewAt(alt,prof),pr=presAt(alt,prof);
+    root.querySelector('#as-ro-alt').innerHTML=alt.toFixed(1)+'<i>km</i>';
+    root.querySelector('#as-ro-temp').innerHTML=t.toFixed(1)+'<i>°C</i>';
+    root.querySelector('#as-ro-dew').innerHTML=d.toFixed(1)+'<i>°C</i>';
+    root.querySelector('#as-ro-pres').innerHTML=Math.round(pr)+'<i>hPa</i>';
+    root.querySelector('#as-ro-layer').textContent=layerName(alt);
+  }
+
+  function setAlt(a,instant){
+    targetAlt=Math.max(0,Math.min(HMAX,a));
+    if(instant||reduce){alt=targetAlt;}
+    slider.value=targetAlt;
+    updateReadout();
+  }
+
+  function pointerToAlt(clientY){
+    var rect=canvas.getBoundingClientRect();
+    var y=clientY-rect.top;
+    var p=plot();
+    var frac=(p.y1-y)/(p.y1-p.y0);
+    return frac*HMAX;
+  }
+
+  var dragging=false;
+  canvas.addEventListener('pointerdown',function(e){
+    dragging=true;canvas.setPointerCapture(e.pointerId);
+    setAlt(pointerToAlt(e.clientY));e.preventDefault();
+  });
+  canvas.addEventListener('pointermove',function(e){
+    if(!dragging) return;
+    setAlt(pointerToAlt(e.clientY));
+  });
+  canvas.addEventListener('pointerup',function(){dragging=false;});
+  canvas.addEventListener('pointercancel',function(){dragging=false;});
+
+  slider.addEventListener('input',function(){setAlt(parseFloat(slider.value));});
+
+  function toggle(btn,key){
+    btn.addEventListener('click',function(){
+      show[key]=!show[key];
+      btn.classList.toggle('as-on',show[key]);
+      btn.setAttribute('aria-pressed',show[key]?'true':'false');
+      if(reduce) draw();
+    });
+  }
+  toggle(root.querySelector('#as-tg-dew'),'dew');
+  toggle(root.querySelector('#as-tg-sound'),'sound');
+  toggle(root.querySelector('#as-tg-bands'),'bands');
+
+  var prChips={std:root.querySelector('#as-pr-std'),trop:root.querySelector('#as-pr-trop'),polar:root.querySelector('#as-pr-polar')};
+  Object.keys(prChips).forEach(function(key){
+    prChips[key].addEventListener('click',function(){
+      prof=profiles[key];
+      Object.keys(prChips).forEach(function(k){prChips[k].classList.toggle('as-on',k===key);});
+      updateReadout();
+      if(reduce) draw();
+    });
+  });
+
+  var ro=new ResizeObserver(function(){resize();if(reduce)draw();});
+  ro.observe(canvas);
+  window.addEventListener('resize',function(){resize();if(reduce)draw();});
+
+  var lastAcc=0;
+  function frame(ts){
+    if(ts-lastAcc>400){readAccent();lastAcc=ts;}
+    if(!reduce){
+      alt+=(targetAlt-alt)*0.18;
+      if(Math.abs(targetAlt-alt)<0.005) alt=targetAlt;
+    }
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  readAccent();
+  resize();
+  setAlt(0,true);
+  if(reduce){
+    draw();
+    setInterval(readAccent,500);
+    var rd=root.querySelector('#as-tg-dew');
+  }else{
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
+</body></html>

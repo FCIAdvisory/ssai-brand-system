@@ -1,0 +1,731 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observation swath · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-swath-scanner{
+  --obsw-bg:#050314; --obsw-indigo:#16145f; --obsw-text:#f4f5ff; --obsw-muted:#a6abe6;
+  --obsw-line:rgba(166,171,230,0.16);
+  width:100%; box-sizing:border-box; color:var(--obsw-text);
+  font-family:'Inter',system-ui,sans-serif; position:relative;
+  background:radial-gradient(120% 140% at 50% -20%, #0a0828 0%, #050314 62%);
+  border:1px solid var(--obsw-line); border-radius:16px; padding:16px;
+  display:flex; flex-direction:column; gap:14px; overflow:hidden;
+}
+#kit-swath-scanner *{box-sizing:border-box;}
+#kit-swath-scanner .obsw-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+#kit-swath-scanner .obsw-stage{
+  position:relative; width:100%; min-height:240px;
+  border-radius:14px; overflow:hidden;
+  background:#050314;
+}
+#kit-swath-scanner .obsw-canvas{position:absolute; inset:0; display:block; width:100%; height:100%;}
+#kit-swath-scanner .obsw-hud{
+  position:absolute; top:12px; left:14px; right:14px;
+  display:flex; justify-content:space-between; align-items:flex-start;
+  pointer-events:none; gap:10px; flex-wrap:wrap; z-index:2;
+}
+#kit-swath-scanner .obsw-cov{display:flex; align-items:baseline; gap:6px;}
+#kit-swath-scanner .obsw-cov-num{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  font-size:clamp(26px,4.6vw,40px); line-height:1; letter-spacing:0.5px;
+  color:var(--obsw-text); text-shadow:0 0 18px rgba(var(--accent-rgb,60,200,255),0.5);
+}
+#kit-swath-scanner .obsw-cov-unit{font-size:12px; color:var(--obsw-muted); text-transform:uppercase; letter-spacing:0.12em;}
+#kit-swath-scanner .obsw-meta{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+#kit-swath-scanner .obsw-chip{
+  display:inline-flex; align-items:baseline; gap:6px;
+  background:rgba(10,8,40,0.55); border:1px solid var(--obsw-line); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  border-radius:999px; padding:5px 11px; font-size:12px; color:var(--obsw-muted);
+}
+#kit-swath-scanner .obsw-chip i{font-style:normal; font-size:10px; letter-spacing:0.14em; opacity:0.72; text-transform:uppercase;}
+#kit-swath-scanner .obsw-chip b{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  color:var(--obsw-text); font-size:13px;
+}
+#kit-swath-scanner .obsw-prov{
+  position:absolute; left:14px; bottom:11px; z-index:2; pointer-events:none;
+  font-size:10.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--obsw-muted);
+  opacity:0.78; text-shadow:0 1px 6px rgba(0,0,0,0.7);
+}
+#kit-swath-scanner .obsw-load{
+  position:absolute; inset:0; z-index:3; display:flex; align-items:center; justify-content:center;
+  gap:10px; flex-direction:column; color:var(--obsw-muted); font-size:12px; letter-spacing:0.08em;
+  background:radial-gradient(60% 60% at 50% 50%, rgba(10,8,40,0.4), rgba(5,3,20,0.0));
+}
+#kit-swath-scanner .obsw-load-ring{
+  width:26px; height:26px; border-radius:50%;
+  border:2px solid var(--obsw-line); border-top-color:var(--accent,#3cc8ff);
+  animation:obsw-spin 0.9s linear infinite;
+}
+@keyframes obsw-spin{to{transform:rotate(360deg);}}
+#kit-swath-scanner .obsw-load-txt{text-transform:uppercase;}
+
+#kit-swath-scanner .obsw-ctrls{display:flex; flex-direction:column; gap:12px;}
+#kit-swath-scanner .obsw-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+#kit-swath-scanner .obsw-btn{
+  font-family:'Inter',sans-serif; font-size:13px; color:var(--obsw-text);
+  background:rgba(22,20,95,0.42); border:1px solid var(--obsw-line); border-radius:10px;
+  padding:8px 14px; cursor:pointer; transition:transform .14s ease,border-color .2s ease,background .2s ease;
+}
+#kit-swath-scanner .obsw-btn:hover{border-color:rgba(var(--accent-rgb,60,200,255),0.55); background:rgba(22,20,95,0.7);}
+#kit-swath-scanner .obsw-btn:active{transform:scale(0.97);}
+#kit-swath-scanner .obsw-play{
+  display:inline-flex; align-items:center; gap:8px; min-width:92px;
+  border-color:rgba(var(--accent-rgb,60,200,255),0.6);
+  background:rgba(var(--accent-rgb,60,200,255),0.14);
+}
+#kit-swath-scanner .obsw-pi{
+  width:0; height:0; border-style:solid; border-width:6px 0 6px 9px;
+  border-color:transparent transparent transparent var(--accent,#3cc8ff); display:inline-block;
+}
+#kit-swath-scanner .obsw-play:not(.is-paused) .obsw-pi{
+  width:9px; height:11px; border:none; border-left:3px solid var(--accent,#3cc8ff);
+  border-right:3px solid var(--accent,#3cc8ff); background:transparent;
+}
+#kit-swath-scanner .obsw-seg{display:inline-flex; border:1px solid var(--obsw-line); border-radius:10px; overflow:hidden; margin-left:auto;}
+#kit-swath-scanner .obsw-seg-b{
+  font-family:'Inter',sans-serif; font-size:12px; color:var(--obsw-muted);
+  background:transparent; border:none; padding:8px 14px; cursor:pointer; transition:color .2s,background .2s;
+}
+#kit-swath-scanner .obsw-seg-b:hover{color:var(--obsw-text);}
+#kit-swath-scanner .obsw-seg-b.is-on{
+  color:#050314; font-weight:600;
+  background:var(--accent,#3cc8ff);
+}
+#kit-swath-scanner .obsw-sliders{gap:18px;}
+#kit-swath-scanner .obsw-sl{display:flex; flex-direction:column; gap:6px; flex:1; min-width:180px;}
+#kit-swath-scanner .obsw-sl > span{font-size:12px; color:var(--obsw-muted); letter-spacing:0.03em;}
+#kit-swath-scanner .obsw-sl b{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700; color:var(--obsw-text); font-size:13px;
+}
+#kit-swath-scanner input[type=range]{
+  -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:4px;
+  background:linear-gradient(90deg, rgba(var(--accent-rgb,60,200,255),0.7), rgba(166,171,230,0.18));
+  outline:none; cursor:pointer;
+}
+#kit-swath-scanner input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%;
+  background:var(--accent,#3cc8ff); border:2px solid #050314;
+  box-shadow:0 0 10px rgba(var(--accent-rgb,60,200,255),0.7); cursor:pointer;
+}
+#kit-swath-scanner input[type=range]::-moz-range-thumb{
+  width:16px; height:16px; border-radius:50%; background:var(--accent,#3cc8ff);
+  border:2px solid #050314; box-shadow:0 0 10px rgba(var(--accent-rgb,60,200,255),0.7); cursor:pointer;
+}
+#kit-swath-scanner input[type=range]:focus-visible{box-shadow:0 0 0 3px rgba(var(--accent-rgb,60,200,255),0.3);}
+@media (max-width:520px){
+  #kit-swath-scanner .obsw-seg{margin-left:0;}
+  #kit-swath-scanner .obsw-hud{top:10px;}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Observation swath</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-swath-scanner"></div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Play/pause and reset the scan, toggle a wide imager vs a narrow high-res sensor, and drag swath-width and speed sliders while coverage % climbs live.</span>
+    <span class="mb-c-src">Basemap · NASA Blue Marble</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-swath-scanner');
+  if(!root) return;
+  root.innerHTML='';
+
+  var REDUCED = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  // ---- shell ----
+  var sr=document.createElement('h3'); sr.className='obsw-sr';
+  sr.textContent='An imaging satellite on an inclined orbit paints its sensor swath across a real NASA Blue Marble world map, building global coverage pass after pass; toggle a wide imager versus a narrow high-resolution sensor to see coverage fill faster or slower.';
+  root.appendChild(sr);
+
+  var stage=document.createElement('div'); stage.className='obsw-stage';
+  var canvas=document.createElement('canvas'); canvas.className='obsw-canvas';
+  stage.appendChild(canvas);
+
+  var hud=document.createElement('div'); hud.className='obsw-hud';
+  hud.innerHTML=''+
+    '<div class="obsw-cov"><span class="obsw-cov-num" data-cov>0.0</span><span class="obsw-cov-unit">% global coverage</span></div>'+
+    '<div class="obsw-meta">'+
+      '<span class="obsw-chip"><i>SENSOR</i><b data-sensor>Wide imager</b></span>'+
+      '<span class="obsw-chip"><i>SWATH</i><b data-sw>2330</b> km</span>'+
+      '<span class="obsw-chip"><i>REVISIT</i><b data-rev>1.0</b> d</span>'+
+      '<span class="obsw-chip"><i>ORBIT</i><b data-pass>1</b></span>'+
+    '</div>';
+  stage.appendChild(hud);
+
+  var prov=document.createElement('div'); prov.className='obsw-prov';
+  prov.textContent='NASA Blue Marble · sun-synchronous imaging swath';
+  stage.appendChild(prov);
+
+  var loadEl=document.createElement('div'); loadEl.className='obsw-load';
+  loadEl.innerHTML='<span class="obsw-load-ring"></span><span class="obsw-load-txt">Loading NASA Blue Marble…</span>';
+  stage.appendChild(loadEl);
+
+  root.appendChild(stage);
+
+  var ctrls=document.createElement('div'); ctrls.className='obsw-ctrls';
+  ctrls.innerHTML=''+
+    '<div class="obsw-row">'+
+      '<button class="obsw-btn obsw-play" data-play type="button" aria-pressed="true"><span class="obsw-pi" data-pi></span><span data-playlabel>Pause</span></button>'+
+      '<button class="obsw-btn" data-reset type="button">Reset coverage</button>'+
+      '<div class="obsw-seg" role="group" aria-label="Sensor">'+
+        '<button class="obsw-seg-b is-on" data-sensor-btn="wide" type="button">Wide imager</button>'+
+        '<button class="obsw-seg-b" data-sensor-btn="narrow" type="button">High-res</button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="obsw-row obsw-sliders">'+
+      '<label class="obsw-sl"><span>Swath width <b data-swl>2330</b> km</span>'+
+        '<input type="range" min="120" max="2900" step="10" value="2330" data-swath aria-label="Swath width in kilometres"></label>'+
+      '<label class="obsw-sl"><span>Scan speed <b data-spl>1.0</b>&times;</span>'+
+        '<input type="range" min="0.2" max="4" step="0.1" value="1" data-speed aria-label="Scan speed"></label>'+
+    '</div>';
+  root.appendChild(ctrls);
+
+  // ---- accent ----
+  var accent='#3cc8ff', accentRGB='60,200,255';
+  function hexToRgb(h){h=(h||'').replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];var n=parseInt(h,16);if(isNaN(n))return '60,200,255';return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}
+  function readAccent(){
+    try{
+      var cs=getComputedStyle(document.documentElement);
+      var a=cs.getPropertyValue('--accent').trim(); if(a) accent=a; else accent='#3cc8ff';
+      var r=cs.getPropertyValue('--accent-rgb').trim();
+      accentRGB = r ? r : hexToRgb(accent);
+    }catch(e){accent='#3cc8ff';accentRGB='60,200,255';}
+  }
+  readAccent();
+
+  // ---- refs ----
+  function q(s){return root.querySelector(s);}
+  var covEl=q('[data-cov]'), sensorEl=q('[data-sensor]'), swEl=q('[data-sw]'),
+      revEl=q('[data-rev]'), passEl=q('[data-pass]'),
+      swlEl=q('[data-swl]'), splEl=q('[data-spl]'),
+      playBtn=q('[data-play]'), playLabel=q('[data-playlabel]'),
+      resetBtn=q('[data-reset]'),
+      swathInput=q('[data-swath]'), speedInput=q('[data-speed]');
+
+  var ctx=canvas.getContext('2d');
+  var dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+
+  // ---- offscreen buffers ----
+  // base = pre-rendered Blue Marble (full-res map rect), at css map pixel resolution
+  var baseCv=document.createElement('canvas'), baseCtx=baseCv.getContext('2d');
+  // dim = darkened/desaturated version used as the "not yet imaged" Earth
+  var dimCv=document.createElement('canvas'), dimCtx=dimCv.getContext('2d');
+  // cov = accumulating coverage mask (alpha grows where imaged)
+  var covCv=document.createElement('canvas'), covCtx=covCv.getContext('2d');
+  var imgEl=null, imgReady=false;
+
+  // ---- map geometry (in css px) ----
+  var MAP={x:0,y:0,w:0,h:0};
+
+  // ---- sensors ----
+  var SENSORS={
+    wide:  {name:'Wide imager', swath:2330, def:2330, alt:705},
+    narrow:{name:'High-res',     swath:185,  def:185,  alt:705}
+  };
+  var sensorKey='wide';
+
+  // ---- orbit / sim state ----
+  var INC=98.2;                 // inclination (deg) -> sun-synchronous-ish
+  var theta=Math.PI*0.5;        // along-track angle (rad), advances
+  var ascNode=10;               // longitude of ascending node (deg), regresses each pass
+  var passCount=1;
+  var haveLast=false;
+  var swathKm=2330;             // current swath width
+  var targetSwathKm=2330;
+  var speed=1.0;
+  var playing=!REDUCED;
+  var coveragePct=0;
+
+  // Earth constants
+  var R_EARTH=6371;             // km
+  var ORBIT_PERIOD_S=98.8*60;   // ~98.8 min for 705 km SSO
+  // ground-track nodal regression per orbit so coverage drifts west (Earth turns under)
+  // one orbit ~98.8 min => Earth turns ~24.7 deg eastward => track shifts ~ -24.7 deg in lon each pass
+  var DLON_PER_PASS = -(ORBIT_PERIOD_S/86400)*360; // ~ -24.7 deg
+
+  // satellite advances along orbit; one half-revolution takes a few seconds at 1x
+  var SIM_RATE = (2*Math.PI) / 5.4; // rad of theta per real second at speed 1
+
+  // ---- helpers ----
+  function kmToDegLat(km){ return km/ (Math.PI*R_EARTH/180); } // km -> deg of latitude
+  function lonToX(lon){ return MAP.x + (lon+180)/360*MAP.w; }
+  function latToY(lat){ return MAP.y + (90-lat)/180*MAP.h; }
+
+  // sub-satellite point for a circular inclined orbit
+  // theta = argument of latitude. lat = asin(sin i * sin theta)
+  // dlon from node = atan2(cos i * sin theta, cos theta)
+  function subPoint(th, node){
+    var i=INC*Math.PI/180;
+    var sLat=Math.sin(i)*Math.sin(th);
+    if(sLat>1)sLat=1; if(sLat<-1)sLat=-1;
+    var lat=Math.asin(sLat)*180/Math.PI;
+    var dlon=Math.atan2(Math.cos(i)*Math.sin(th), Math.cos(th))*180/Math.PI;
+    var lon=node+dlon;
+    lon=((lon+180)%360+360)%360-180;
+    return {lat:lat,lon:lon};
+  }
+
+  // ---- revisit estimate (days to ~full coverage) ----
+  // Equatorial track spacing ~2750 km/orbit; a wide MODIS-class swath (2330 km) tiles the
+  // globe in ~1 day, a narrow Landsat-class swath (185 km) in ~16 days. Scales inversely.
+  function revisitDays(km){
+    return Math.max(0.5, 2330/Math.max(40,km));
+  }
+
+  // ---- build base raster from the loaded image ----
+  function buildBase(){
+    if(!imgReady) return;
+    var w=Math.max(2,Math.round(MAP.w)), h=Math.max(2,Math.round(MAP.h));
+    if(baseCv.width!==w){ baseCv.width=w; baseCv.height=h; dimCv.width=w; dimCv.height=h; covCv.width=w; covCv.height=h; }
+    else { baseCv.height=h; dimCv.height=h; covCv.height=h; }
+    // draw blue marble to fill map rect
+    baseCtx.clearRect(0,0,w,h);
+    baseCtx.drawImage(imgEl,0,0,imgEl.naturalWidth,imgEl.naturalHeight,0,0,w,h);
+    // subtle indigo wash for brand
+    baseCtx.globalCompositeOperation='multiply';
+    baseCtx.fillStyle='rgba(22,20,95,0.30)';
+    baseCtx.fillRect(0,0,w,h);
+    baseCtx.globalCompositeOperation='source-over';
+    // gentle blue lift in shadows for cinematic cool tone
+    baseCtx.globalCompositeOperation='soft-light';
+    baseCtx.fillStyle='rgba(40,60,140,0.22)';
+    baseCtx.fillRect(0,0,w,h);
+    baseCtx.globalCompositeOperation='source-over';
+
+    // dim version: the "unimaged" Earth — much darker
+    dimCtx.clearRect(0,0,w,h);
+    dimCtx.drawImage(baseCv,0,0);
+    dimCtx.fillStyle='rgba(5,3,20,0.72)';
+    dimCtx.fillRect(0,0,w,h);
+  }
+
+  function clearCoverage(){
+    if(covCv.width) covCtx.clearRect(0,0,covCv.width,covCv.height);
+    coveragePct=0; passCount=1; theta=Math.PI*0.5; ascNode=10; haveLast=false;
+  }
+
+  // ---- sizing ----
+  function sizeCanvas(){
+    var cssW=stage.clientWidth||root.clientWidth||640;
+    // 2:1 equirectangular aspect, framed in space
+    var cssH=Math.round(cssW*0.5);
+    var minH=240, maxH=460;
+    if(cssH<minH)cssH=minH; if(cssH>maxH)cssH=maxH;
+    stage.style.height=cssH+'px';
+    var pw=Math.round(cssW*dpr), ph=Math.round(cssH*dpr);
+    if(canvas.width!==pw){canvas.width=pw;} if(canvas.height!==ph){canvas.height=ph;}
+    canvas.style.width=cssW+'px'; canvas.style.height=cssH+'px';
+
+    // map rect: leave a thin space frame; preserve 2:1
+    var pad=Math.round(cssW*0.02);
+    var availW=cssW-pad*2, availH=cssH-pad*2;
+    var mw=availW, mh=mw*0.5;
+    if(mh>availH){ mh=availH; mw=mh*2; }
+    MAP.w=mw; MAP.h=mh;
+    MAP.x=Math.round((cssW-mw)/2);
+    MAP.y=Math.round((cssH-mh)/2);
+    buildBase();
+  }
+
+  // ---- paint the swath footprint into the coverage buffer ----
+  function paintSwath(p, halfDegLat){
+    if(!covCv.width) return;
+    var sx=lonToX(p.lon)-MAP.x, sy=latToY(p.lat)-MAP.y;
+    // swath half-width is a ground distance -> constant px on the equirectangular vertical scale
+    var halfPxLat=halfDegLat/180*MAP.h;
+    // longitudes converge toward the poles: a fixed ground width spans more degrees of lon,
+    // so the footprint must be stretched horizontally by 1/cos(lat) on the map.
+    var coslat=Math.max(0.16,Math.cos(p.lat*Math.PI/180));
+    var halfPxLon=halfPxLat/coslat;
+    covCtx.globalCompositeOperation='lighter';
+    // soft-edged footprint: a few concentric fills approximate a feathered edge
+    var steps=3;
+    for(var s=0;s<steps;s++){
+      var f=1-(s/steps)*0.5;
+      var a=(s===0?0.55:0.30);
+      covCtx.fillStyle='rgba('+accentRGB+','+a+')';
+      covCtx.beginPath();
+      covCtx.ellipse(sx,sy, halfPxLon*f, halfPxLat*f, 0, 0, Math.PI*2);
+      covCtx.fill();
+    }
+    covCtx.globalCompositeOperation='source-over';
+  }
+
+  // ---- coverage % estimate (cheap, no per-frame getImageData) ----
+  // Coarse cos(lat)-weighted occupancy grid avoids double-counting and area distortion.
+  var GW=360, GH=180, grid=new Uint8Array(GW*GH), gridWeightTotal=0, gridWeightHit=0;
+  function initGrid(){
+    grid=new Uint8Array(GW*GH); gridWeightTotal=0; gridWeightHit=0;
+    for(var gy=0;gy<GH;gy++){
+      var lat=90-(gy+0.5)/GH*180;
+      var w=Math.cos(lat*Math.PI/180);
+      for(var gx=0;gx<GW;gx++){ gridWeightTotal+=w; }
+    }
+  }
+  function markGrid(lon,lat,halfDegLat){
+    var halfLat=halfDegLat;
+    var coslat=Math.max(0.2,Math.cos(lat*Math.PI/180));
+    var halfLon=halfDegLat/coslat;
+    var gy0=Math.floor((90-(lat+halfLat))/180*GH), gy1=Math.ceil((90-(lat-halfLat))/180*GH);
+    var gxC=( (lon+180)/360*GW );
+    var spanX=halfLon/360*GW;
+    if(gy0<0)gy0=0; if(gy1>GH)gy1=GH;
+    for(var gy=gy0;gy<gy1;gy++){
+      var clat=90-(gy+0.5)/GH*180;
+      var w=Math.cos(clat*Math.PI/180);
+      var gx0=Math.floor(gxC-spanX), gx1=Math.ceil(gxC+spanX);
+      for(var gx=gx0;gx<=gx1;gx++){
+        var wx=((gx%GW)+GW)%GW;
+        var idx=gy*GW+wx;
+        if(!grid[idx]){ grid[idx]=1; gridWeightHit+=w; }
+      }
+    }
+    coveragePct=Math.min(100, gridWeightHit/gridWeightTotal*100);
+  }
+
+  // ---- main step ----
+  function advance(dt){
+    if(!imgReady) return;
+    // ease swath toward target
+    if(Math.abs(targetSwathKm-swathKm)>0.5){ swathKm+=(targetSwathKm-swathKm)*Math.min(1,dt*6); }
+    else swathKm=targetSwathKm;
+
+    var dth=SIM_RATE*speed*dt;
+    var halfDegLat=kmToDegLat(swathKm/2);
+    // sub-step so the footprint stamps overlap into a continuous ribbon. Narrow swaths
+    // (small footprint) need finer steps than wide ones to avoid gaps along the track.
+    var halfRad=(halfDegLat*Math.PI/180);                 // footprint half-extent in orbit-angle
+    var sub=Math.max(1,Math.min(24,Math.ceil(Math.abs(dth)/Math.max(0.012,halfRad*0.8))));
+    for(var s=0;s<sub;s++){
+      theta+=dth/sub;
+      // pass boundary: each full revolution the node regresses westward as Earth turns under
+      while(theta>=Math.PI*2){ theta-=Math.PI*2; ascNode+=DLON_PER_PASS; passCount++; }
+      var p=subPoint(theta, ascNode);
+      paintSwath(p, halfDegLat);
+      markGrid(p.lon,p.lat,halfDegLat);
+      haveLast=true;
+    }
+  }
+
+  // ---- render ----
+  function render(){
+    var W=canvas.width, H=canvas.height;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var cw=W/dpr, ch=H/dpr;
+    // deep space bg
+    ctx.clearRect(0,0,cw,ch);
+    ctx.fillStyle='#050314';
+    ctx.fillRect(0,0,cw,ch);
+    drawStars(cw,ch);
+
+    if(!imgReady){ return; }
+
+    ctx.save();
+    ctx.beginPath();
+    roundRect(ctx,MAP.x-1,MAP.y-1,MAP.w+2,MAP.h+2,4);
+    ctx.clip();
+
+    // 1) dim (unimaged) Earth
+    ctx.drawImage(dimCv,MAP.x,MAP.y,MAP.w,MAP.h);
+
+    // 2) reveal imaged Earth: mask the bright base by the accumulated coverage
+    var tmp=getTmp(MAP.w,MAP.h);
+    tmp.ctx.setTransform(1,0,0,1,0,0);
+    tmp.ctx.clearRect(0,0,tmp.cv.width,tmp.cv.height);
+    tmp.ctx.drawImage(baseCv,0,0);
+    tmp.ctx.globalCompositeOperation='destination-in';
+    tmp.ctx.drawImage(covCv,0,0);
+    tmp.ctx.globalCompositeOperation='source-over';
+    ctx.drawImage(tmp.cv,MAP.x,MAP.y,MAP.w,MAP.h);
+
+    // 3) accent tint glow over coverage
+    ctx.globalCompositeOperation='screen';
+    ctx.globalAlpha=0.38;
+    ctx.drawImage(covCv,MAP.x,MAP.y,MAP.w,MAP.h);
+    ctx.globalAlpha=1;
+    ctx.globalCompositeOperation='source-over';
+
+    // 4) graticule
+    drawGraticule();
+
+    // 5) live track + satellite + swath ribbon
+    drawTrack();
+
+    ctx.restore();
+
+    // map border hairline
+    ctx.strokeStyle='rgba('+accentRGB+',0.28)';
+    ctx.lineWidth=1;
+    roundRect(ctx,MAP.x-0.5,MAP.y-0.5,MAP.w+1,MAP.h+1,4); ctx.stroke();
+    // vignette
+    var vg=ctx.createRadialGradient(MAP.x+MAP.w/2,MAP.y+MAP.h/2,MAP.h*0.3, MAP.x+MAP.w/2,MAP.y+MAP.h/2,MAP.w*0.62);
+    vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(5,3,20,0.45)');
+    ctx.save(); roundRect(ctx,MAP.x,MAP.y,MAP.w,MAP.h,4); ctx.clip();
+    ctx.fillStyle=vg; ctx.fillRect(MAP.x,MAP.y,MAP.w,MAP.h); ctx.restore();
+  }
+
+  function roundRect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+
+  // temp canvas pool
+  var _tmp={cv:document.createElement('canvas'),ctx:null};
+  _tmp.ctx=_tmp.cv.getContext('2d');
+  function getTmp(w,h){var W=Math.max(2,Math.round(w)),H=Math.max(2,Math.round(h));if(_tmp.cv.width!==W){_tmp.cv.width=W;}if(_tmp.cv.height!==H){_tmp.cv.height=H;}return _tmp;}
+
+  // starfield baked once
+  var starCv=null;
+  function drawStars(cw,ch){
+    if(!starCv){
+      starCv=document.createElement('canvas'); starCv.width=Math.max(2,Math.round(cw)); starCv.height=Math.max(2,Math.round(ch));
+      var sc=starCv.getContext('2d');
+      sc.fillStyle='#050314'; sc.fillRect(0,0,starCv.width,starCv.height);
+      for(var i=0;i<90;i++){
+        var x=Math.random()*starCv.width, y=Math.random()*starCv.height, r=Math.random()*1.1+0.2;
+        var a=Math.random()*0.5+0.1;
+        sc.fillStyle='rgba(244,245,255,'+a+')';
+        sc.beginPath(); sc.arc(x,y,r,0,Math.PI*2); sc.fill();
+      }
+    } else if(Math.abs(starCv.width-cw)>40||Math.abs(starCv.height-ch)>40){ starCv=null; return drawStars(cw,ch); }
+    ctx.drawImage(starCv,0,0,starCv.width,starCv.height,0,0,cw,ch);
+  }
+
+  function drawGraticule(){
+    ctx.save();
+    ctx.strokeStyle='rgba(166,171,230,0.10)';
+    ctx.lineWidth=1;
+    for(var lon=-150;lon<=150;lon+=30){ var x=lonToX(lon); ctx.beginPath(); ctx.moveTo(x,MAP.y); ctx.lineTo(x,MAP.y+MAP.h); ctx.stroke(); }
+    for(var lat=-60;lat<=60;lat+=30){ var y=latToY(lat); ctx.beginPath(); ctx.moveTo(MAP.x,y); ctx.lineTo(MAP.x+MAP.w,y); ctx.stroke(); }
+    ctx.strokeStyle='rgba(166,171,230,0.18)'; ctx.beginPath(); var ye=latToY(0); ctx.moveTo(MAP.x,ye); ctx.lineTo(MAP.x+MAP.w,ye); ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawTrack(){
+    if(!haveLast) return;
+    var halfDegLat=kmToDegLat(swathKm/2);
+    var pts=[];
+    var span=Math.PI*1.05;
+    var n=90;
+    for(var i=0;i<=n;i++){
+      var th=theta-span*(1-i/n);
+      pts.push(subPoint(th,ascNode));
+    }
+    ctx.save();
+    // swath ribbon for the live pass
+    drawRibbon(pts, halfDegLat);
+    // center line (split on antimeridian wrap)
+    ctx.beginPath();
+    var started=false, prevx=null;
+    for(var j=0;j<pts.length;j++){
+      var x=lonToX(pts[j].lon), y=latToY(pts[j].lat);
+      if(prevx!==null && Math.abs(x-prevx)>MAP.w*0.5){ ctx.stroke(); ctx.beginPath(); started=false; }
+      if(!started){ ctx.moveTo(x,y); started=true; } else ctx.lineTo(x,y);
+      prevx=x;
+    }
+    ctx.strokeStyle='rgba('+accentRGB+',0.85)';
+    ctx.lineWidth=1.4;
+    ctx.shadowColor='rgba('+accentRGB+',0.8)'; ctx.shadowBlur=6;
+    ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.restore();
+
+    // satellite marker at the leading sub-point
+    var sp=subPoint(theta,ascNode);
+    var sx=lonToX(sp.lon), sy=latToY(sp.lat);
+    ctx.save();
+    var g=ctx.createRadialGradient(sx,sy,0,sx,sy,12);
+    g.addColorStop(0,'rgba('+accentRGB+',0.9)'); g.addColorStop(1,'rgba('+accentRGB+',0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(sx,sy,12,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#f4f5ff';
+    ctx.beginPath(); ctx.arc(sx,sy,2.6,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle=accent; ctx.lineWidth=1.2; ctx.beginPath(); ctx.arc(sx,sy,5.2,0,Math.PI*2); ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawRibbon(pts, halfDegLat){
+    var top=[], bot=[];
+    var halfPxLat=halfDegLat/180*MAP.h;
+    for(var i=0;i<pts.length;i++){
+      var a=pts[Math.max(0,i-1)], b=pts[Math.min(pts.length-1,i+1)];
+      var dLon=b.lon-a.lon; if(dLon>180)dLon-=360; if(dLon<-180)dLon+=360;
+      var dLat=b.lat-a.lat;
+      var tx=dLon/360*MAP.w, ty=(-dLat)/180*MAP.h;
+      var tl=Math.hypot(tx,ty)||1; tx/=tl; ty/=tl;
+      var px=-ty, py=tx;
+      var coslat=Math.max(0.18,Math.cos(pts[i].lat*Math.PI/180));
+      var hx=px*halfPxLat/coslat, hy=py*halfPxLat;
+      var cx=lonToX(pts[i].lon), cy=latToY(pts[i].lat);
+      top.push([cx+hx,cy+hy]); bot.push([cx-hx,cy-hy]);
+    }
+    // soft band; break the path on antimeridian wrap so it doesn't streak across
+    ctx.beginPath();
+    ctx.moveTo(top[0][0],top[0][1]);
+    for(var t=1;t<top.length;t++){ if(Math.abs(top[t][0]-top[t-1][0])<MAP.w*0.5) ctx.lineTo(top[t][0],top[t][1]); else ctx.moveTo(top[t][0],top[t][1]); }
+    for(var bk=bot.length-1;bk>=0;bk--){ if(bk===bot.length-1||Math.abs(bot[bk][0]-bot[bk+1][0])<MAP.w*0.5) ctx.lineTo(bot[bk][0],bot[bk][1]); else ctx.moveTo(bot[bk][0],bot[bk][1]); }
+    ctx.closePath();
+    ctx.fillStyle='rgba('+accentRGB+',0.10)';
+    ctx.fill();
+    ctx.strokeStyle='rgba('+accentRGB+',0.32)'; ctx.lineWidth=1; ctx.stroke();
+  }
+
+  // ---- HUD sync ----
+  function syncHud(){
+    covEl.textContent=coveragePct.toFixed(1);
+    sensorEl.textContent=SENSORS[sensorKey].name;
+    swEl.textContent=Math.round(swathKm);               // HUD chip: live, eased width
+    var rv=revisitDays(targetSwathKm);                  // revisit keyed to the selected width
+    revEl.textContent=rv>=10?Math.round(rv):rv.toFixed(1);
+    passEl.textContent=passCount;
+    swlEl.textContent=Math.round(targetSwathKm);        // slider readout: matches the thumb
+    splEl.textContent=speed.toFixed(1);
+  }
+
+  // ---- loop ----
+  // A single persistent rAF while visible (cheap) drives animation + the live marker.
+  var last=0, raf=null, visible=true;
+  function loop(ts){
+    raf=requestAnimationFrame(loop);
+    if(!visible){ last=0; return; }
+    if(!last)last=ts;
+    var dt=Math.min(0.05,(ts-last)/1000); last=ts;
+    if(playing && imgReady) advance(dt);
+    render();
+    syncHud();
+  }
+  function startLoop(){ if(raf)return; last=0; raf=requestAnimationFrame(loop); }
+
+  // ---- controls ----
+  function setPlaying(p){
+    playing=p;
+    playBtn.setAttribute('aria-pressed',p?'true':'false');
+    playLabel.textContent=p?'Pause':'Play';
+    playBtn.classList.toggle('is-paused',!p);
+  }
+  playBtn.addEventListener('click',function(){ setPlaying(!playing); });
+  resetBtn.addEventListener('click',function(){ clearCoverage(); initGrid(); render(); syncHud(); });
+
+  root.querySelectorAll('[data-sensor-btn]').forEach(function(b){
+    b.addEventListener('click',function(){
+      sensorKey=b.getAttribute('data-sensor-btn');
+      root.querySelectorAll('[data-sensor-btn]').forEach(function(o){var on=o===b;o.classList.toggle('is-on',on);o.setAttribute('aria-pressed',on?'true':'false');});
+      targetSwathKm=SENSORS[sensorKey].def;
+      swathInput.value=String(SENSORS[sensorKey].def);
+      swlEl.textContent=SENSORS[sensorKey].def;
+      syncHud();
+    });
+  });
+
+  swathInput.addEventListener('input',function(){
+    targetSwathKm=parseFloat(swathInput.value)||targetSwathKm;
+    swlEl.textContent=Math.round(targetSwathKm);
+    // sync the segmented sensor pick to the width band
+    var k = targetSwathKm>=900 ? 'wide':'narrow';
+    if(k!==sensorKey){ sensorKey=k; root.querySelectorAll('[data-sensor-btn]').forEach(function(o){var on=o.getAttribute('data-sensor-btn')===k;o.classList.toggle('is-on',on);o.setAttribute('aria-pressed',on?'true':'false');}); }
+    syncHud();
+  });
+  speedInput.addEventListener('input',function(){
+    speed=parseFloat(speedInput.value)||1; splEl.textContent=speed.toFixed(1); syncHud();
+  });
+
+  // accent live re-read so the site picker recolors us
+  try{
+    var mo=new MutationObserver(function(){ readAccent(); starCv=null; render(); });
+    mo.observe(document.documentElement,{attributes:true,attributeFilter:['style','data-theme','class']});
+  }catch(e){}
+
+  // resize: rebuild base + rescale coverage to the new map resolution
+  var rPend=false;
+  window.addEventListener('resize',function(){
+    dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+    if(rPend)return; rPend=true;
+    requestAnimationFrame(function(){ rPend=false; starCv=null;
+      var oldW=covCv.width, oldH=covCv.height;
+      var oldCov=null;
+      if(oldW){ oldCov=document.createElement('canvas'); oldCov.width=oldW; oldCov.height=oldH; oldCov.getContext('2d').drawImage(covCv,0,0); }
+      sizeCanvas();
+      if(oldCov && covCv.width){ covCtx.clearRect(0,0,covCv.width,covCv.height); covCtx.drawImage(oldCov,0,0,oldW,oldH,0,0,covCv.width,covCv.height); }
+      render();
+    });
+  });
+
+  // IntersectionObserver: ONLY pauses/resumes the loop (perf). Everything works without it.
+  try{
+    var io=new IntersectionObserver(function(es){ es.forEach(function(en){ visible=en.isIntersecting; }); },{threshold:0.01});
+    io.observe(root);
+  }catch(e){ visible=true; }
+
+  // ---- boot ----
+  function boot(){
+    sizeCanvas();
+    initGrid();
+    setPlaying(!REDUCED);
+    syncHud();
+    render(); // space + loading shown immediately
+    startLoop();
+  }
+
+  function onImg(){
+    imgReady=true;
+    loadEl.style.display='none';
+    sizeCanvas();      // rebuild base now that the image is ready
+    render();
+  }
+  function onErr(){
+    loadEl.querySelector('.obsw-load-txt').textContent='Imagery unavailable';
+  }
+
+  imgEl=new Image();
+  imgEl.onload=onImg;
+  imgEl.onerror=onErr;
+  imgEl.src='../assets/images/blue-marble-world.jpg';
+  if(imgEl.complete && imgEl.naturalWidth){ onImg(); }
+
+  boot();
+})();
+</script>
+</body></html>

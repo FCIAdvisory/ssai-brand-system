@@ -1,0 +1,466 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The living Sun · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-solar-disk{
+  position:relative;
+  width:100%;
+  aspect-ratio:1 / 1;
+  min-height:260px;
+  max-height:520px;
+  margin:0 auto;
+  overflow:hidden;
+  background:transparent;
+  border-radius:14px;
+  -webkit-user-select:none;
+  user-select:none;
+}
+#kit-solar-disk .kit-solar-disk-stage{
+  display:block;
+  width:100%;
+  height:100%;
+}
+#kit-solar-disk .kit-solar-disk-label{
+  position:absolute;
+  left:16px;
+  bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(5,3,20,0.42);
+  border:1px solid rgba(166,171,230,0.16);
+  -webkit-backdrop-filter:blur(6px);
+  backdrop-filter:blur(6px);
+  pointer-events:none;
+}
+#kit-solar-disk .kit-solar-disk-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#f2b43c;
+  box-shadow:0 0 8px 1px rgba(242,180,60,0.9);
+  animation:kit-solar-disk-pulse 3.2s ease-in-out infinite;
+}
+#kit-solar-disk .kit-solar-disk-name{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  font-size:12px;
+  color:#f4f5ff;
+}
+#kit-solar-disk .kit-solar-disk-sep{
+  color:#a6abe6;
+  font-size:12px;
+  opacity:0.7;
+}
+#kit-solar-disk .kit-solar-disk-tag{
+  font-family:'Inter',sans-serif;
+  font-weight:400;
+  font-size:11.5px;
+  letter-spacing:0.04em;
+  color:#a6abe6;
+}
+@keyframes kit-solar-disk-pulse{
+  0%,100%{ transform:scale(1); opacity:1; box-shadow:0 0 8px 1px rgba(242,180,60,0.9); }
+  50%{ transform:scale(1.35); opacity:0.78; box-shadow:0 0 13px 2px rgba(242,180,60,0.6); }
+}
+@media (prefers-reduced-motion: reduce){
+  #kit-solar-disk .kit-solar-disk-dot{ animation:none; }
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">The living Sun</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-solar-disk">
+  <canvas class="kit-solar-disk-stage" aria-hidden="true"></canvas>
+  <div class="kit-solar-disk-label">
+    <span class="kit-solar-disk-dot"></span>
+    <span class="kit-solar-disk-name">The Sun</span>
+    <span class="kit-solar-disk-sep">·</span>
+    <span class="kit-solar-disk-tag">heliophysics</span>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Ambient and self-running: granulation drifts continuously and a flare arc erupts off the limb every few seconds; honors prefers-reduced-motion by rendering a single static frame.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root = document.getElementById('kit-solar-disk');
+  if(!root) return;
+  var canvas = root.querySelector('.kit-solar-disk-stage');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  if(!ctx) return;
+
+  var reduce = false;
+  try{ reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
+  var W = 0, H = 0, dpr = 1;
+  var cx = 0, cy = 0, R = 0;
+
+  // --- offscreen granulation texture (procedural cellular noise) ---
+  var gran = document.createElement('canvas');
+  var gctx = gran.getContext('2d');
+  var GRES = 150;              // granulation field resolution
+  var cells = [];             // seed points for cellular pattern
+  var phases = [];            // per-cell flicker phase
+  var NCELL = 150;
+
+  // value-noise lattice for slow large-scale turbulence
+  var NL = 9;
+  var lattice = new Float32Array(NL * NL);
+
+  function rand(){ return Math.random(); }
+
+  function buildFields(){
+    cells.length = 0; phases.length = 0;
+    for(var i=0;i<NCELL;i++){
+      cells.push([rand(), rand()]);
+      phases.push(rand()*Math.PI*2);
+    }
+    for(var k=0;k<lattice.length;k++){ lattice[k] = rand(); }
+  }
+
+  function smooth(t){ return t*t*(3-2*t); }
+  function latticeAt(x, y){
+    // x,y in [0,1) -> bilinear smoothed value noise
+    var fx = x*(NL-1), fy = y*(NL-1);
+    var ix = Math.floor(fx), iy = Math.floor(fy);
+    var tx = smooth(fx-ix), ty = smooth(fy-iy);
+    var ix1 = Math.min(ix+1, NL-1), iy1 = Math.min(iy+1, NL-1);
+    var a = lattice[iy*NL+ix],  b = lattice[iy*NL+ix1];
+    var c = lattice[iy1*NL+ix], d = lattice[iy1*NL+ix1];
+    var ab = a + (b-a)*tx, cd = c + (d-c)*tx;
+    return ab + (cd-ab)*ty;
+  }
+
+  // render granulation into a small offscreen buffer; tDrift slowly advances
+  function renderGranulation(tDrift, flick){
+    gctx.clearRect(0,0,GRES,GRES);
+    var img = gctx.createImageData(GRES, GRES);
+    var data = img.data;
+    var drift = tDrift * 0.018;
+    var idx = 0;
+    for(var y=0;y<GRES;y++){
+      for(var x=0;x<GRES;x++){
+        var nx = x/GRES, ny = y/GRES;
+        // cellular: distance to nearest two drifting seed points
+        var d1 = 9, d2 = 9;
+        for(var c=0;c<NCELL;c++){
+          var sx = cells[c][0] + Math.sin(drift + phases[c])*0.012;
+          var sy = cells[c][1] + Math.cos(drift*0.9 + phases[c])*0.012;
+          var ddx = nx - sx, ddy = ny - sy;
+          var dd = ddx*ddx + ddy*ddy;
+          if(dd < d1){ d2 = d1; d1 = dd; }
+          else if(dd < d2){ d2 = dd; }
+        }
+        var edge = Math.sqrt(d2) - Math.sqrt(d1);   // ridge between cells = cool lanes
+        var cellVal = Math.min(1, edge*7.5);         // bright grains, dark intergranular lanes
+        // large-scale slow turbulence overlay
+        var turb = latticeAt((nx+drift*0.05)%1, (ny+drift*0.03)%1);
+        var bright = cellVal*0.72 + turb*0.28;
+        // gentle global flicker
+        bright *= (0.92 + 0.08*flick);
+
+        // amber/gold mapping: dark lanes -> deep ember, grains -> bright gold
+        var t = bright;
+        var r = 150 + t*105;     // 150..255
+        var g = 70  + t*135;     // 70..205
+        var b = 18  + t*70;      // 18..88
+        data[idx]   = r;
+        data[idx+1] = g;
+        data[idx+2] = b;
+        data[idx+3] = 255;
+        idx += 4;
+      }
+    }
+    gctx.putImageData(img, 0, 0);
+  }
+
+  // --- flares ---
+  var flares = [];
+  function spawnFlare(now){
+    var ang = rand()*Math.PI*2;
+    flares.push({
+      ang: ang,
+      // arc loop geometry
+      spread: 0.16 + rand()*0.16,    // angular width of the loop footpoints
+      height: 0.18 + rand()*0.26,    // loop apex height as fraction of R
+      born: now,
+      life: 2600 + rand()*2200,
+      hue: rand() < 0.35 ? 'coral' : 'amber'
+    });
+  }
+
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var rect = root.getBoundingClientRect();
+    W = Math.max(1, Math.round(rect.width));
+    H = Math.max(1, Math.round(rect.height));
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = W * 0.5;
+    cy = H * 0.5;
+    R = Math.min(W, H) * 0.30;
+    // size granulation buffer relative to disc, capped for perf
+    GRES = Math.max(90, Math.min(190, Math.round(R*2.2)));
+    gran.width = GRES; gran.height = GRES;
+    buildFields();
+  }
+
+  // draw the corona halo (soft radial glow) — uses gradients (off the hot loop, fine)
+  function drawCorona(){
+    var g1 = ctx.createRadialGradient(cx, cy, R*0.92, cx, cy, R*2.35);
+    g1.addColorStop(0, 'rgba(242,180,60,0.30)');
+    g1.addColorStop(0.28, 'rgba(242,150,60,0.14)');
+    g1.addColorStop(0.6, 'rgba(138,92,80,0.05)');
+    g1.addColorStop(1, 'rgba(5,3,20,0)');
+    ctx.fillStyle = g1;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R*2.35, 0, Math.PI*2);
+    ctx.fill();
+
+    // inner hot rim glow
+    var g2 = ctx.createRadialGradient(cx, cy, R*0.7, cx, cy, R*1.18);
+    g2.addColorStop(0, 'rgba(255,210,120,0)');
+    g2.addColorStop(0.82, 'rgba(255,196,96,0.0)');
+    g2.addColorStop(0.93, 'rgba(255,214,130,0.45)');
+    g2.addColorStop(1, 'rgba(255,170,70,0)');
+    ctx.fillStyle = g2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R*1.18, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  function drawDisc(rot){
+    ctx.save();
+    // clip to disc
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI*2);
+    ctx.closePath();
+    ctx.clip();
+
+    // base granulation texture, slightly oversized + slow rotation for life
+    var sz = R*2.12;
+    ctx.translate(cx, cy);
+    ctx.rotate(rot);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(gran, -sz/2, -sz/2, sz, sz);
+    ctx.rotate(-rot);
+    ctx.translate(-cx, -cy);
+
+    // limb darkening: darken toward edge
+    var ld = ctx.createRadialGradient(cx, cy, R*0.15, cx, cy, R);
+    ld.addColorStop(0, 'rgba(255,230,150,0.18)');
+    ld.addColorStop(0.55, 'rgba(255,190,90,0.0)');
+    ld.addColorStop(0.82, 'rgba(120,52,12,0.30)');
+    ld.addColorStop(1, 'rgba(60,22,6,0.78)');
+    ctx.fillStyle = ld;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI*2);
+    ctx.fill();
+
+    // subtle bright core bloom
+    var core = ctx.createRadialGradient(cx-R*0.12, cy-R*0.12, 0, cx, cy, R*0.85);
+    core.addColorStop(0, 'rgba(255,238,180,0.22)');
+    core.addColorStop(1, 'rgba(255,238,180,0)');
+    ctx.fillStyle = core;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI*2);
+    ctx.fill();
+
+    ctx.restore();
+
+    // crisp hot rim line on top of disc edge
+    ctx.lineWidth = Math.max(1, R*0.012);
+    ctx.strokeStyle = 'rgba(255,212,128,0.55)';
+    ctx.beginPath();
+    ctx.arc(cx, cy, R*0.997, 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  function drawFlares(now){
+    for(var i=flares.length-1;i>=0;i--){
+      var f = flares[i];
+      var age = now - f.born;
+      var p = age / f.life;
+      if(p >= 1){ flares.splice(i,1); continue; }
+
+      // envelope: quick rise, slow fade
+      var env = p < 0.22 ? (p/0.22) : (1 - (p-0.22)/0.78);
+      env = Math.max(0, env);
+      env = env*env*(3-2*env);
+
+      var a1 = f.ang - f.spread*0.5;
+      var a2 = f.ang + f.spread*0.5;
+      var foot1x = cx + Math.cos(a1)*R*0.985;
+      var foot1y = cy + Math.sin(a1)*R*0.985;
+      var foot2x = cx + Math.cos(a2)*R*0.985;
+      var foot2y = cy + Math.sin(a2)*R*0.985;
+      // apex pushed radially outward
+      var apexR = R*(1 + f.height*env);
+      var apx = cx + Math.cos(f.ang)*apexR;
+      var apy = cy + Math.sin(f.ang)*apexR;
+
+      var col = f.hue === 'coral'
+        ? ['rgba(255,150,90,', 'rgba(242,103,60,']
+        : ['rgba(255,214,120,', 'rgba(242,180,60,'];
+
+      // outer soft halo of the loop
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(foot1x, foot1y);
+      ctx.quadraticCurveTo(apx, apy, foot2x, foot2y);
+      ctx.lineWidth = Math.max(2, R*0.07)*env + 1;
+      ctx.strokeStyle = col[1] + (0.16*env) + ')';
+      ctx.stroke();
+
+      // bright core of the loop
+      ctx.beginPath();
+      ctx.moveTo(foot1x, foot1y);
+      ctx.quadraticCurveTo(apx, apy, foot2x, foot2y);
+      ctx.lineWidth = Math.max(1.2, R*0.02)*env + 0.6;
+      ctx.strokeStyle = col[0] + (0.85*env) + ')';
+      ctx.stroke();
+
+      // ejected sparks rising from apex
+      var sparkN = 5;
+      for(var s=0;s<sparkN;s++){
+        var sp = ((age*0.0006) + s/sparkN) % 1;
+        var sr = apexR + sp*R*0.5*env;
+        var jitter = Math.sin(s*12.9 + f.ang*7.0)*f.spread*0.5;
+        var sa = f.ang + jitter*(1-sp);
+        var sx = cx + Math.cos(sa)*sr;
+        var sy = cy + Math.sin(sa)*sr;
+        var sAlpha = env*(1-sp)*0.7;
+        if(sAlpha <= 0.01) continue;
+        ctx.beginPath();
+        ctx.arc(sx, sy, Math.max(0.6, R*0.012)*(1-sp*0.5), 0, Math.PI*2);
+        ctx.fillStyle = col[0] + sAlpha + ')';
+        ctx.fill();
+      }
+
+      // footpoint glints
+      var fpA = env*0.6;
+      ctx.fillStyle = col[0] + fpA + ')';
+      ctx.beginPath();
+      ctx.arc(foot1x, foot1y, R*0.03*env+0.5, 0, Math.PI*2);
+      ctx.arc(foot2x, foot2y, R*0.03*env+0.5, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+
+  function frame(now, animated){
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation = 'lighter';
+    drawCorona();
+    ctx.globalCompositeOperation = 'source-over';
+
+    var drift = animated ? now*0.06 : 1000;
+    var flick = animated ? (0.5 + 0.5*Math.sin(now*0.0011)) : 0.6;
+    renderGranulation(drift, flick);
+
+    var rot = animated ? now*0.000018 : 0.2;
+    drawDisc(rot);
+
+    ctx.globalCompositeOperation = 'lighter';
+    if(animated) drawFlares(now);
+    else {
+      // one representative static flare
+      flares.length = 0;
+      spawnFlare(now);
+      flares[0].born = now - flares[0].life*0.22;
+      drawFlares(now);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  var raf = 0;
+  var nextFlare = 0;
+  var start = 0;
+  function loop(ts){
+    if(!start){ start = ts; nextFlare = ts + 600 + rand()*1200; }
+    if(ts >= nextFlare && flares.length < 3){
+      spawnFlare(ts);
+      nextFlare = ts + 2600 + rand()*3200;
+    }
+    frame(ts, true);
+    raf = requestAnimationFrame(loop);
+  }
+
+  function init(){
+    resize();
+    if(reduce){
+      frame(performance.now ? performance.now() : Date.now(), false);
+    } else {
+      raf = requestAnimationFrame(loop);
+    }
+  }
+
+  var rt = 0;
+  function onResize(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      resize();
+      if(reduce) frame(performance.now ? performance.now() : Date.now(), false);
+    }, 120);
+  }
+  window.addEventListener('resize', onResize);
+
+  init();
+})();
+</script>
+</body></html>

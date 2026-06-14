@@ -1,0 +1,313 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goldilocks Zone · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-habitable-zone{--ac:var(--accent,#3cc8ff);width:100%;box-sizing:border-box;background:transparent;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;border:1px solid rgba(166,171,230,0.16);border-radius:18px;padding:20px 20px 22px;background:radial-gradient(120% 140% at 20% 0%,rgba(22,20,95,0.55),rgba(5,3,20,0.92));overflow:hidden}
+#kit-habitable-zone *{box-sizing:border-box}
+#kit-habitable-zone .kfig-head{margin-bottom:14px}
+#kit-habitable-zone .kfig-title{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(20px,3.4vw,28px);line-height:1;background:linear-gradient(90deg,#f4f5ff,var(--accent,#3cc8ff));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#kit-habitable-zone .kfig-sub{color:#a6abe6;font-size:13px;margin-top:6px}
+#kit-habitable-zone .kfig-stage{position:relative;width:100%;border-radius:14px;overflow:hidden;background:radial-gradient(140% 120% at 30% 50%,#0a0726,#050314);border:1px solid rgba(166,171,230,0.12)}
+#kit-habitable-zone .kfig-canvas{display:block;width:100%;height:auto;cursor:grab;touch-action:none}
+#kit-habitable-zone .kfig-canvas:active{cursor:grabbing}
+#kit-habitable-zone .kfig-verdict{position:absolute;top:12px;left:12px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:15px;padding:7px 14px;border-radius:10px;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.14);transition:color .25s,background .25s,box-shadow .25s}
+#kit-habitable-zone .kfig-verdict.just{color:#7af0b0;background:rgba(20,60,42,0.5);box-shadow:0 0 22px rgba(80,230,160,0.35)}
+#kit-habitable-zone .kfig-verdict.hot{color:#ffb27a;background:rgba(70,26,12,0.5);box-shadow:0 0 22px rgba(232,100,42,0.35)}
+#kit-habitable-zone .kfig-verdict.cold{color:#bcd8ff;background:rgba(22,38,66,0.5);box-shadow:0 0 22px rgba(143,182,224,0.3)}
+#kit-habitable-zone .kfig-legend{position:absolute;bottom:10px;right:12px;display:flex;gap:14px;font-size:11px;color:#a6abe6;background:rgba(5,3,20,0.4);padding:5px 10px;border-radius:8px;backdrop-filter:blur(4px)}
+#kit-habitable-zone .kfig-legend span{display:flex;align-items:center;gap:5px}
+#kit-habitable-zone .kfig-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+#kit-habitable-zone .kfig-dot-hot{background:#e8642a}
+#kit-habitable-zone .kfig-dot-hz{background:#50e6a0}
+#kit-habitable-zone .kfig-dot-cold{background:#8fb6e0}
+#kit-habitable-zone .kfig-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+#kit-habitable-zone .kfig-stat{background:rgba(22,20,95,0.32);border:1px solid rgba(166,171,230,0.14);border-radius:11px;padding:10px 12px}
+#kit-habitable-zone .kfig-k{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:#a6abe6;margin-bottom:5px}
+#kit-habitable-zone .kfig-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:15px;color:#f4f5ff;white-space:nowrap}
+#kit-habitable-zone .kfig-controls{margin-top:16px}
+#kit-habitable-zone .kfig-clabel{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#a6abe6;margin-bottom:8px}
+#kit-habitable-zone .kfig-temp{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;outline:none;background:linear-gradient(90deg,#ff6a3c,#ffd9a0 28%,#fffaf0 50%,#cfe0ff 70%,#7aa6ff);cursor:pointer}
+#kit-habitable-zone .kfig-temp::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--accent,#3cc8ff);box-shadow:0 0 14px var(--accent,#3cc8ff);cursor:grab}
+#kit-habitable-zone .kfig-temp::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--accent,#3cc8ff);box-shadow:0 0 14px var(--accent,#3cc8ff);cursor:grab}
+#kit-habitable-zone .kfig-scale{display:flex;justify-content:space-between;font-size:10.5px;color:#a6abe6;margin-top:6px}
+#kit-habitable-zone .kfig-presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+#kit-habitable-zone .kfig-presets button{font-family:'Inter',sans-serif;font-size:12px;color:#dcdefb;background:rgba(22,20,95,0.4);border:1px solid rgba(166,171,230,0.22);border-radius:9px;padding:7px 12px;cursor:pointer;transition:border-color .2s,background .2s,transform .1s}
+#kit-habitable-zone .kfig-presets button:hover{border-color:var(--accent,#3cc8ff);background:rgba(22,20,95,0.7);color:#fff}
+#kit-habitable-zone .kfig-presets button:active{transform:scale(.96)}
+#kit-habitable-zone .kfig-hint{margin-top:12px;font-size:11.5px;color:#a6abe6;text-align:center;opacity:.85}
+@media (max-width:560px){#kit-habitable-zone .kfig-stats{grid-template-columns:repeat(2,1fr)}#kit-habitable-zone .kfig-legend{position:static;margin:0 12px 10px;justify-content:center}}
+@media (prefers-reduced-motion:reduce){#kit-habitable-zone .kfig-verdict{transition:none}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Goldilocks Zone</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-habitable-zone">
+  <div class="kfig-head">
+    <div class="kfig-title">Goldilocks Zone</div>
+    <div class="kfig-sub">The band around a star where water stays liquid</div>
+  </div>
+  <div class="kfig-stage">
+    <canvas class="kfig-canvas"></canvas>
+    <div class="kfig-verdict just">Just right</div>
+    <div class="kfig-legend">
+      <span><i class="kfig-dot kfig-dot-hot"></i>Too hot</span>
+      <span><i class="kfig-dot kfig-dot-hz"></i>Liquid water</span>
+      <span><i class="kfig-dot kfig-dot-cold"></i>Too cold</span>
+    </div>
+  </div>
+  <div class="kfig-stats">
+    <div class="kfig-stat"><div class="kfig-k">Star</div><div class="kfig-v"><span class="kfig-spec">G</span> · <span class="kfig-tval">5,772 K</span></div></div>
+    <div class="kfig-stat"><div class="kfig-k">Luminosity</div><div class="kfig-v kfig-lum">1.00 L☉</div></div>
+    <div class="kfig-stat"><div class="kfig-k">Water band</div><div class="kfig-v kfig-band">0.75–1.77 AU</div></div>
+    <div class="kfig-stat"><div class="kfig-k">Planet</div><div class="kfig-v"><span class="kfig-dist">1.00 AU</span> · <span class="kfig-teq">255 K</span></div></div>
+  </div>
+  <div class="kfig-controls">
+    <label class="kfig-clabel">Star temperature</label>
+    <input type="range" class="kfig-temp" min="2600" max="12000" step="50" value="5772" aria-label="Star temperature in kelvin">
+    <div class="kfig-scale"><span>Cool · red dwarf</span><span>Hot · blue star</span></div>
+    <div class="kfig-presets">
+      <button data-t="3200" data-au="0.06">Red dwarf</button>
+      <button data-t="5772" data-au="1.0">Sun</button>
+      <button data-t="4500" data-au="0.5">Orange K</button>
+      <button data-t="9000" data-au="3.0">Blue-white A</button>
+    </div>
+    <div class="kfig-hint">Drag the planet in or out across the orbit</div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the star&#x27;s temperature slider to reshape the green habitable ring, then drag the planet in or out to see it turn scorched, ocean-blue, or ice-white with a live verdict.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-habitable-zone'); if(!root) return;
+  var canvas=root.querySelector('.kfig-canvas'); var ctx=canvas.getContext('2d');
+  var slider=root.querySelector('.kfig-temp');
+  var presetWrap=root.querySelector('.kfig-presets');
+  var rdo=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var TSUN=5772, Rsun=6.957e8, AU=1.496e11;
+  var TMIN=2600, TMAX=12000;
+  var ALBEDO=0.30;
+
+  var RV=[1.776,2.136e-4,2.533e-8,-1.332e-11,-3.097e-15];
+  var EM=[0.32,5.547e-5,1.526e-9,-2.874e-12,-5.011e-16];
+
+  var state={T:5772,Rstar:1.0,planetAU:1.0,dragging:false,accent:'#3cc8ff',accentRGB:'60,200,255'};
+
+  function clampT(t){return Math.max(2600,Math.min(7200,t));}
+  function lum(R,T){return R*R*Math.pow(T/TSUN,4);}
+  function sFlux(T,c){var ts=clampT(T)-TSUN;return c[0]+c[1]*ts+c[2]*ts*ts+c[3]*Math.pow(ts,3)+c[4]*Math.pow(ts,4);}
+  function hzInner(R,T){return Math.sqrt(lum(R,T)/sFlux(T,RV));}
+  function hzOuter(R,T){return Math.sqrt(lum(R,T)/sFlux(T,EM));}
+  function radiusFromT(T){var f=(T-TMIN)/(TMAX-TMIN);return 0.30+f*f*2.6;}
+  function teq(R,T,d){return T*Math.pow(1-ALBEDO,0.25)*Math.sqrt(R*Rsun/(2*Math.max(d,1e-4)*AU));}
+  function bb(t){
+    t=t/100; var r,g,b;
+    if(t<=66){r=255;}else{r=329.698727446*Math.pow(t-60,-0.1332047592);}
+    if(t<=66){g=99.4708025861*Math.log(t)-161.1195681661;}else{g=288.1221695283*Math.pow(t-60,-0.0755148492);}
+    if(t>=66){b=255;}else if(t<=19){b=0;}else{b=138.5177312231*Math.log(t-10)-305.0447927307;}
+    function c(x){return Math.max(0,Math.min(255,Math.round(x)));}
+    return [c(r),c(g),c(b)];
+  }
+  function specClass(T){if(T>=10000)return'B';if(T>=7500)return'A';if(T>=6000)return'F';if(T>=5200)return'G';if(T>=3700)return'K';return'M';}
+
+  var W=0,H=0,dpr=1;
+  function resize(){
+    var r=root.getBoundingClientRect();
+    W=Math.max(300,r.width-40); H=Math.max(300,Math.min(W*0.60,420));
+    dpr=Math.min(2,window.devicePixelRatio||1);
+    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
+    canvas.style.width='100%'; canvas.style.height=H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var rect=canvas.getBoundingClientRect(); W=rect.width;
+    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  function readAccent(){
+    var cs=getComputedStyle(document.documentElement);
+    var a=cs.getPropertyValue('--accent').trim(); if(a) state.accent=a;
+    var ar=cs.getPropertyValue('--accent-rgb').trim();
+    if(ar){state.accentRGB=ar;}
+    else{
+      var m=state.accent.replace('#','');
+      if(m.length===3)m=m[0]+m[0]+m[1]+m[1]+m[2]+m[2];
+      if(m.length===6){var n=parseInt(m,16);state.accentRGB=((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}
+    }
+  }
+
+  var maxAU=2.6;
+  function scaleAU(){var outer=hzOuter(state.Rstar,state.T);maxAU=Math.max(outer*1.45,state.planetAU*1.12,1.0);}
+  function cx(){return W*0.16;}
+  function cy(){return H*0.5;}
+  function auToPx(au){var pad=W*0.07;var avail=W-cx()-pad;return cx()+(au/maxAU)*avail;}
+  function pxToAU(px){var pad=W*0.07;var avail=W-cx()-pad;return (px-cx())/avail*maxAU;}
+
+  var t0=performance.now();
+  function drawStars(){
+    if(!drawStars.cache){var arr=[];for(var i=0;i<70;i++){arr.push([Math.random(),Math.random(),Math.random()*1.1+0.2,Math.random()*6.28]);}drawStars.cache=arr;}
+    var now=(performance.now()-t0)/1000;
+    ctx.save();
+    for(var i=0;i<drawStars.cache.length;i++){
+      var s=drawStars.cache[i];
+      var tw=rdo?0.6:(0.45+0.55*Math.abs(Math.sin(now*1.3+s[3])));
+      ctx.globalAlpha=0.55*tw; ctx.fillStyle='#cfd3ff';
+      ctx.beginPath();ctx.arc(s[0]*W,s[1]*H,s[2],0,6.2832);ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function draw(){
+    readAccent(); scaleAU();
+    var argb=state.accentRGB;
+    ctx.clearRect(0,0,W,H);
+    drawStars();
+    var inner=hzInner(state.Rstar,state.T), outer=hzOuter(state.Rstar,state.T);
+    var X=cx(), Y=cy(), rIn=auToPx(inner), rOut=auToPx(outer);
+
+    ctx.save();
+    var g=ctx.createRadialGradient(X,Y,Math.max(1,rIn*0.96),X,Y,rOut*1.02);
+    g.addColorStop(0,'rgba(60,210,140,0.0)');g.addColorStop(0.12,'rgba(60,210,140,0.20)');
+    g.addColorStop(0.5,'rgba(80,230,160,0.30)');g.addColorStop(0.88,'rgba(60,210,140,0.20)');
+    g.addColorStop(1,'rgba(60,210,140,0.0)');
+    ctx.fillStyle=g; ctx.beginPath();
+    ctx.arc(X,Y,rOut*1.02,0,6.2832); ctx.arc(X,Y,Math.max(0.5,rIn*0.96),0,6.2832,true);
+    ctx.fill('evenodd');
+    ctx.lineWidth=1; ctx.strokeStyle='rgba(120,240,180,0.55)';
+    ctx.beginPath();ctx.arc(X,Y,rIn,0,6.2832);ctx.stroke();
+    ctx.beginPath();ctx.arc(X,Y,rOut,0,6.2832);ctx.stroke();
+    ctx.restore();
+
+    ctx.save(); ctx.lineWidth=1; ctx.setLineDash([3,5]);
+    ctx.strokeStyle='rgba('+argb+',0.30)';
+    ctx.beginPath();ctx.arc(X,Y,auToPx(state.planetAU),0,6.2832);ctx.stroke();
+    ctx.restore();
+
+    var col=bb(state.T);
+    var srPx=Math.max(13,Math.min(W*0.10,10+radiusFromT(state.T)*8));
+    var pulse=rdo?1:(1+0.018*Math.sin((performance.now()-t0)/600));
+    srPx*=pulse;
+    var cg=ctx.createRadialGradient(X,Y,srPx*0.4,X,Y,srPx*3.4);
+    cg.addColorStop(0,'rgba('+col[0]+','+col[1]+','+col[2]+',0.55)');
+    cg.addColorStop(0.4,'rgba('+col[0]+','+col[1]+','+col[2]+',0.16)');
+    cg.addColorStop(1,'rgba('+col[0]+','+col[1]+','+col[2]+',0)');
+    ctx.fillStyle=cg; ctx.beginPath();ctx.arc(X,Y,srPx*3.4,0,6.2832);ctx.fill();
+    var sbg=ctx.createRadialGradient(X-srPx*0.3,Y-srPx*0.3,srPx*0.2,X,Y,srPx);
+    sbg.addColorStop(0,'rgb('+Math.min(255,col[0]+20)+','+Math.min(255,col[1]+20)+','+Math.min(255,col[2]+20)+')');
+    sbg.addColorStop(1,'rgb('+col[0]+','+col[1]+','+col[2]+')');
+    ctx.fillStyle=sbg; ctx.beginPath();ctx.arc(X,Y,srPx,0,6.2832);ctx.fill();
+
+    var pAU=state.planetAU, px=auToPx(pAU), py=Y;
+    var T=teq(state.Rstar,state.T,pAU);
+    var verdict = pAU<inner?'hot':(pAU>outer?'cold':'just');
+    var pr=Math.max(7,Math.min(13,W*0.020));
+    var pg=ctx.createRadialGradient(px-pr*0.4,py-pr*0.4,pr*0.15,px,py,pr);
+    if(verdict==='hot'){pg.addColorStop(0,'#ffd9a0');pg.addColorStop(0.4,'#e8642a');pg.addColorStop(1,'#7a1605');}
+    else if(verdict==='cold'){pg.addColorStop(0,'#ffffff');pg.addColorStop(0.5,'#cfe6ff');pg.addColorStop(1,'#8fb6e0');}
+    else{pg.addColorStop(0,'#bfe9ff');pg.addColorStop(0.45,'#2f86d8');pg.addColorStop(1,'#123e7a');}
+    ctx.save(); ctx.strokeStyle='rgba('+argb+',0.9)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(px,py,pr+5,0,6.2832);ctx.stroke(); ctx.restore();
+    ctx.fillStyle=pg; ctx.beginPath();ctx.arc(px,py,pr,0,6.2832);ctx.fill();
+    ctx.save(); ctx.beginPath();ctx.arc(px,py,pr,0,6.2832);ctx.clip();
+    var sg=ctx.createRadialGradient(px-pr*0.6,py,pr*0.2,px+pr*0.5,py,pr*1.6);
+    sg.addColorStop(0,'rgba(0,0,0,0)');sg.addColorStop(1,'rgba(2,1,16,0.78)');
+    ctx.fillStyle=sg; ctx.fillRect(px-pr,py-pr,pr*2,pr*2); ctx.restore();
+
+    setReadouts(verdict,T,inner,outer);
+  }
+
+  var elVerdict=root.querySelector('.kfig-verdict'),elTeq=root.querySelector('.kfig-teq'),
+      elDist=root.querySelector('.kfig-dist'),elBand=root.querySelector('.kfig-band'),
+      elSpec=root.querySelector('.kfig-spec'),elTval=root.querySelector('.kfig-tval'),
+      elLum=root.querySelector('.kfig-lum');
+
+  function setReadouts(v,T,inner,outer){
+    var txt = v==='hot'?'Too hot':(v==='cold'?'Too cold':'Just right');
+    if(elVerdict.textContent!==txt)elVerdict.textContent=txt;
+    elVerdict.className='kfig-verdict '+v;
+    elTeq.textContent=Math.round(T)+' K';
+    elDist.textContent=state.planetAU.toFixed(2)+' AU';
+    elBand.textContent=inner.toFixed(2)+'–'+outer.toFixed(2)+' AU';
+    elSpec.textContent=specClass(state.T);
+    elTval.textContent=Math.round(state.T).toLocaleString()+' K';
+    var L=lum(state.Rstar,state.T);
+    elLum.textContent=(L<10?L.toFixed(2):L.toFixed(1))+' L☉';
+  }
+
+  var raf=null, running=false;
+  function loop(){ if(!running)return; draw(); raf=requestAnimationFrame(loop); }
+  function start(){ if(running)return; running=true; if(rdo){draw();running=false;}else{raf=requestAnimationFrame(loop);} }
+  function stop(){ running=false; if(raf)cancelAnimationFrame(raf); raf=null; }
+
+  function evtX(e){var r=canvas.getBoundingClientRect();return (e.touches?e.touches[0].clientX:e.clientX)-r.left;}
+  function setPlanetFromX(x){var au=pxToAU(x);au=Math.max(0.03,Math.min(maxAU*0.99,au));state.planetAU=au;if(rdo)draw();}
+  canvas.addEventListener('mousedown',function(e){state.dragging=true;setPlanetFromX(evtX(e));});
+  window.addEventListener('mousemove',function(e){if(state.dragging)setPlanetFromX(evtX(e));});
+  window.addEventListener('mouseup',function(){state.dragging=false;});
+  canvas.addEventListener('touchstart',function(e){state.dragging=true;setPlanetFromX(evtX(e));e.preventDefault();},{passive:false});
+  canvas.addEventListener('touchmove',function(e){if(state.dragging){setPlanetFromX(evtX(e));e.preventDefault();}},{passive:false});
+  window.addEventListener('touchend',function(){state.dragging=false;});
+
+  slider.addEventListener('input',function(){state.T=parseInt(slider.value,10);state.Rstar=radiusFromT(state.T);if(rdo)draw();});
+  presetWrap.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-t]'); if(!b)return;
+    state.T=parseInt(b.getAttribute('data-t'),10); state.Rstar=radiusFromT(state.T); slider.value=state.T;
+    var pa=b.getAttribute('data-au'); if(pa)state.planetAU=parseFloat(pa);
+    if(rdo)draw();
+  });
+
+  window.addEventListener('resize',function(){resize();if(!running)draw();});
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){start();}else{stop();}});},{threshold:0.04});
+  io.observe(root);
+
+  state.Rstar=radiusFromT(state.T);
+  resize(); draw();
+})();
+</script>
+</body></html>

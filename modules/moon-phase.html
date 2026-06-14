@@ -1,0 +1,509 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moon phase · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-moon-phase{
+  --star:#f4f5ff; --muted:#a6abe6; --hair:rgba(166,171,230,0.16);
+  --indigo:#16145f; --orbit:#3c7be0; --violet:#8a5cff;
+  position:relative; width:100%; box-sizing:border-box;
+  color:var(--star);
+  font-family:'Inter',system-ui,sans-serif;
+  padding:8px 2px 4px;
+  -webkit-user-select:none; user-select:none;
+}
+#kit-moon-phase *{ box-sizing:border-box; }
+
+#kit-moon-phase .kmoon-head{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:12px; margin:0 4px 10px; flex-wrap:wrap;
+}
+#kit-moon-phase .kmoon-eyebrow{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.16em; font-size:11px;
+  color:var(--violet);
+}
+#kit-moon-phase .kmoon-illumwrap{
+  display:flex; align-items:baseline; gap:6px;
+  font-size:12px; color:var(--muted); letter-spacing:0.02em;
+}
+#kit-moon-phase .kmoon-illum{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  font-size:14px; color:var(--star);
+}
+
+#kit-moon-phase .kmoon-stage{
+  position:relative; width:100%;
+  aspect-ratio:1.55 / 1; min-height:230px;
+  display:block;
+  cursor:grab;
+  touch-action:pan-y;
+}
+#kit-moon-phase .kmoon-stage.kmoon-grabbing{ cursor:grabbing; }
+#kit-moon-phase .kmoon-canvas{
+  position:absolute; inset:0; width:100%; height:100%;
+  display:block;
+}
+
+#kit-moon-phase .kmoon-name{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.05em;
+  font-size:clamp(20px,4.4vw,30px); line-height:1;
+  text-align:center; margin:6px 0 2px;
+  color:var(--star);
+}
+#kit-moon-phase .kmoon-hint{
+  text-align:center; font-size:12px; color:var(--muted);
+  margin:0 0 12px; letter-spacing:0.02em;
+}
+
+#kit-moon-phase .kmoon-controls{ padding:0 6px; }
+
+#kit-moon-phase .kmoon-slider{
+  -webkit-appearance:none; appearance:none;
+  width:100%; height:26px; background:transparent; cursor:pointer; margin:2px 0 14px;
+}
+#kit-moon-phase .kmoon-slider:focus{ outline:none; }
+#kit-moon-phase .kmoon-slider::-webkit-slider-runnable-track{
+  height:3px; border-radius:3px;
+  background:linear-gradient(90deg, rgba(166,171,230,0.18), rgba(138,92,255,0.55), rgba(166,171,230,0.18));
+}
+#kit-moon-phase .kmoon-slider::-moz-range-track{
+  height:3px; border-radius:3px;
+  background:linear-gradient(90deg, rgba(166,171,230,0.18), rgba(138,92,255,0.55), rgba(166,171,230,0.18));
+}
+#kit-moon-phase .kmoon-slider::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  width:18px; height:18px; margin-top:-7.5px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #ffffff, #d8dcff 55%, #8a5cff 130%);
+  border:1px solid rgba(244,245,255,0.85);
+  box-shadow:0 0 0 4px rgba(138,92,255,0.14), 0 2px 8px rgba(5,3,20,0.6);
+  transition:box-shadow .2s ease, transform .12s ease;
+}
+#kit-moon-phase .kmoon-slider:hover::-webkit-slider-thumb{ box-shadow:0 0 0 6px rgba(138,92,255,0.20), 0 2px 8px rgba(5,3,20,0.6); }
+#kit-moon-phase .kmoon-slider:active::-webkit-slider-thumb{ transform:scale(0.94); }
+#kit-moon-phase .kmoon-slider::-moz-range-thumb{
+  width:18px; height:18px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #ffffff, #d8dcff 55%, #8a5cff 130%);
+  border:1px solid rgba(244,245,255,0.85);
+  box-shadow:0 0 0 4px rgba(138,92,255,0.14), 0 2px 8px rgba(5,3,20,0.6);
+}
+
+#kit-moon-phase .kmoon-chips{
+  display:flex; flex-wrap:wrap; gap:7px; justify-content:center;
+}
+#kit-moon-phase .kmoon-chip{
+  font-family:'Inter',sans-serif; font-size:11.5px; font-weight:500;
+  letter-spacing:0.03em; color:var(--muted);
+  background:rgba(166,171,230,0.05);
+  border:1px solid var(--hair); border-radius:999px;
+  padding:5px 12px; cursor:pointer;
+  transition:color .2s ease, border-color .2s ease, background .2s ease, transform .12s ease;
+}
+#kit-moon-phase .kmoon-chip:hover{
+  color:var(--star); border-color:rgba(138,92,255,0.5);
+  background:rgba(138,92,255,0.10);
+}
+#kit-moon-phase .kmoon-chip:active{ transform:translateY(1px); }
+#kit-moon-phase .kmoon-chip:focus-visible{
+  outline:none; border-color:rgba(138,92,255,0.7);
+  box-shadow:0 0 0 3px rgba(138,92,255,0.18);
+}
+
+#kit-moon-phase .kmoon-sr{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Moon phase</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-moon-phase">
+  <h2 class="kmoon-sr">Interactive Moon: drag the disc or move the slider to step the lunar phase from new to full and read its name and illuminated percentage.</h2>
+  <div class="kmoon-head">
+    <span class="kmoon-eyebrow">Universe &middot; Lunar phase</span>
+    <span class="kmoon-illumwrap">Illuminated <span class="kmoon-illum">50%</span></span>
+  </div>
+  <div class="kmoon-stage">
+    <canvas class="kmoon-canvas"></canvas>
+  </div>
+  <div class="kmoon-name">First quarter</div>
+  <div class="kmoon-hint">Drag the Moon or use the slider</div>
+  <div class="kmoon-controls">
+    <input class="kmoon-slider" type="range" min="0" max="1000" step="1" value="500" aria-label="Lunar phase from new moon to next new moon" />
+    <div class="kmoon-chips">
+      <button class="kmoon-chip" data-phase="0" type="button">New</button>
+      <button class="kmoon-chip" data-phase="0.25" type="button">First quarter</button>
+      <button class="kmoon-chip" data-phase="0.5" type="button">Full</button>
+      <button class="kmoon-chip" data-phase="0.75" type="button">Last quarter</button>
+    </div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the Moon left/right (or move the slider) to scrub the full synodic cycle; tap New / First quarter / Full / Last quarter chips for a smooth eased jump. The terminator, phase name, and illumination readout update live.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root = document.getElementById('kit-moon-phase');
+  if (!root) return;
+
+  var reduce = false;
+  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+
+  var canvas = root.querySelector('.kmoon-canvas');
+  var ctx = canvas.getContext('2d');
+  var slider = root.querySelector('.kmoon-slider');
+  var nameEl = root.querySelector('.kmoon-name');
+  var illumEl = root.querySelector('.kmoon-illum');
+  var stage = root.querySelector('.kmoon-stage');
+
+  var PHASE_NAMES = [
+    'New moon','Waxing crescent','First quarter','Waxing gibbous',
+    'Full moon','Waning gibbous','Last quarter','Waning crescent'
+  ];
+
+  // phase in [0,1): 0 = new, 0.25 = first quarter, 0.5 = full, 0.75 = last quarter
+  var phase = 0.5;
+
+  // ---- procedural crater field (generated once, in unit disc coords) ----
+  function rng(seed){
+    var s = seed >>> 0;
+    return function(){
+      s = (s * 1664525 + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
+  var craters = [];
+  var maria = [];
+  (function buildTexture(){
+    var r = rng(20260612);
+    var i, a, rad, x, y, ok, j;
+    // large dark maria (seas)
+    for (i=0;i<9;i++){
+      a = r()*Math.PI*2; rad = Math.pow(r(),0.6)*0.78;
+      maria.push({ x: Math.cos(a)*rad, y: Math.sin(a)*rad, r: 0.12+r()*0.26, a: 0.10+r()*0.10 });
+    }
+    // craters of varied size, rejection-sampled within the disc
+    var count = 150;
+    for (i=0;i<count;i++){
+      for (j=0;j<8;j++){
+        x = r()*2-1; y = r()*2-1;
+        if (x*x+y*y < 0.94){ ok=true; break; } else ok=false;
+      }
+      if (!ok) continue;
+      var size = Math.pow(r(), 2.4);
+      rad = 0.012 + size*0.085;
+      craters.push({ x:x, y:y, r:rad, depth: 0.4+r()*0.6, bright: r()<0.12 });
+    }
+    craters.sort(function(p,q){ return q.r - p.r; });
+  })();
+
+  // ---- sizing ----
+  var dpr = Math.max(1, Math.min(window.devicePixelRatio||1, 2.5));
+  var cssW = 0, cssH = 0;
+  function resize(){
+    dpr = Math.max(1, Math.min(window.devicePixelRatio||1, 2.5));
+    cssW = stage.clientWidth;
+    cssH = stage.clientHeight;
+    if (cssW<=0||cssH<=0) return;
+    canvas.style.width = cssW+'px';
+    canvas.style.height = cssH+'px';
+    canvas.width = Math.round(cssW*dpr);
+    canvas.height = Math.round(cssH*dpr);
+    draw();
+  }
+
+  function draw(){
+    if (cssW<=0||cssH<=0) return;
+    var W = canvas.width, H = canvas.height;
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.clearRect(0,0,W,H);
+
+    var cx = W/2, cy = H/2;
+    var R = Math.min(W,H)*0.40;
+
+    // ---- soft outer halo (earthshine glow), drawn very subtly ----
+    var halo = ctx.createRadialGradient(cx,cy,R*0.9, cx,cy,R*1.55);
+    halo.addColorStop(0,'rgba(244,245,255,0.07)');
+    halo.addColorStop(1,'rgba(244,245,255,0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath(); ctx.arc(cx,cy,R*1.55,0,Math.PI*2); ctx.fill();
+
+    // clip to the lunar disc for all surface drawing
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
+
+    // base sphere shading: spherical falloff so the disc reads as a globe.
+    // light from upper-left -> brightest toward that quadrant, silvery-cream.
+    var sphere = ctx.createRadialGradient(cx-R*0.30,cy-R*0.32,R*0.08, cx,cy,R*1.14);
+    sphere.addColorStop(0,'#f6f4f0');
+    sphere.addColorStop(0.45,'#e2e2e6');
+    sphere.addColorStop(0.75,'#c7c9d6');
+    sphere.addColorStop(1,'#9aa0bd');
+    ctx.fillStyle = sphere;
+    ctx.fillRect(cx-R,cy-R,R*2,R*2);
+
+    // maria (dark seas) — soft radial blobs
+    var m,i;
+    for (i=0;i<maria.length;i++){
+      m = maria[i];
+      var mx = cx + m.x*R, my = cy + m.y*R, mr = m.r*R;
+      var g = ctx.createRadialGradient(mx,my,mr*0.1, mx,my,mr);
+      g.addColorStop(0,'rgba(58,62,92,'+m.a+')');
+      g.addColorStop(1,'rgba(58,62,92,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(mx,my,mr,0,Math.PI*2); ctx.fill();
+    }
+
+    // craters — lit rim + shadowed interior, light from upper-left
+    var lx = -0.55, ly = -0.62; // light direction (unit-ish)
+    var c, k;
+    for (k=0;k<craters.length;k++){
+      c = craters[k];
+      var px = cx + c.x*R, py = cy + c.y*R, pr = c.r*R;
+      if (pr < 0.6) continue;
+      if (c.bright){
+        // bright ejecta speck
+        var bg = ctx.createRadialGradient(px,py,0, px,py,pr*1.4);
+        bg.addColorStop(0,'rgba(255,255,255,0.35)');
+        bg.addColorStop(1,'rgba(255,255,255,0)');
+        ctx.fillStyle = bg;
+        ctx.beginPath(); ctx.arc(px,py,pr*1.4,0,Math.PI*2); ctx.fill();
+        continue;
+      }
+      // shadow on the side away from light, highlight on the lit rim
+      var off = pr*0.34*c.depth;
+      var sh = ctx.createRadialGradient(px - lx*off, py - ly*off, pr*0.1, px, py, pr);
+      sh.addColorStop(0,'rgba(30,32,52,'+(0.30*c.depth)+')');
+      sh.addColorStop(0.7,'rgba(30,32,52,'+(0.10*c.depth)+')');
+      sh.addColorStop(1,'rgba(30,32,52,0)');
+      ctx.fillStyle = sh;
+      ctx.beginPath(); ctx.arc(px,py,pr,0,Math.PI*2); ctx.fill();
+
+      var hl = ctx.createRadialGradient(px + lx*off, py + ly*off, pr*0.05, px, py, pr*0.95);
+      hl.addColorStop(0,'rgba(255,255,255,'+(0.22*c.depth)+')');
+      hl.addColorStop(0.8,'rgba(255,255,255,0)');
+      ctx.fillStyle = hl;
+      ctx.beginPath(); ctx.arc(px,py,pr*0.95,0,Math.PI*2); ctx.fill();
+    }
+
+    // limb darkening — gentle edge falloff to enhance the spherical read
+    var limb = ctx.createRadialGradient(cx,cy,R*0.78, cx,cy,R);
+    limb.addColorStop(0,'rgba(12,10,34,0)');
+    limb.addColorStop(0.82,'rgba(12,10,34,0.06)');
+    limb.addColorStop(1,'rgba(12,10,34,0.30)');
+    ctx.fillStyle = limb;
+    ctx.fillRect(cx-R,cy-R,R*2,R*2);
+
+    // ---- terminator: the night side in shadow ----
+    // angle around the synodic cycle: 0 = new, pi = full
+    var ang = phase*Math.PI*2;
+    var illum = (1 - Math.cos(ang))/2; // 0 at new, 1 at full
+    var cosA = Math.cos(ang);          // +1 at new, -1 at full
+    // waxing (0..0.5) lit on the RIGHT; waning (0.5..1) lit on the LEFT
+    var waxing = phase < 0.5;
+
+    drawShadow(ctx, cx, cy, R, cosA, waxing);
+
+    ctx.restore(); // unclip
+
+    // crisp rim ring
+    ctx.lineWidth = Math.max(1, R*0.012);
+    ctx.strokeStyle = 'rgba(166,171,230,0.22)';
+    ctx.beginPath(); ctx.arc(cx,cy,R*0.995,0,Math.PI*2); ctx.stroke();
+
+    // update readouts
+    var idx = Math.round(phase*8) % 8;
+    nameEl.textContent = PHASE_NAMES[idx];
+    illumEl.textContent = Math.round(illum*100) + '%';
+  }
+
+  function drawShadow(ctx, cx, cy, R, cosA, waxing){
+    // Night region lies between the dark limb (a semicircle) and the
+    // terminator (a half-ellipse of horizontal radius R*|cosA|).
+    // dark side: waxing -> left dark (sign -1); waning -> right dark (sign +1).
+    var sign = waxing ? -1 : 1;
+    var steps = 110;
+    var i, t, x, y;
+
+    ctx.beginPath();
+    // dark limb, top -> bottom
+    for (i=0;i<=steps;i++){
+      t = -Math.PI/2 + (i/steps)*Math.PI;
+      x = cx + sign*Math.cos(t)*R;
+      y = cy + Math.sin(t)*R;
+      if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    // terminator, bottom -> top.  termX = cx - sign*cosA*cos(t)*R
+    for (i=0;i<=steps;i++){
+      t = Math.PI/2 - (i/steps)*Math.PI;
+      x = cx - sign*cosA*Math.cos(t)*R;
+      y = cy + Math.sin(t)*R;
+      ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+
+    // shadow fill: deep night at the dark limb, softening toward the terminator
+    // so the terminator edge reads as a gentle gradient, not a hard cut.
+    var grad = ctx.createLinearGradient(cx + sign*R, cy, cx - sign*R, cy);
+    grad.addColorStop(0.00,'rgba(5,3,20,0.97)');
+    grad.addColorStop(0.50,'rgba(6,4,24,0.96)');
+    grad.addColorStop(0.86,'rgba(8,6,30,0.93)');
+    grad.addColorStop(0.97,'rgba(10,8,36,0.72)');
+    grad.addColorStop(1.00,'rgba(12,10,42,0.0)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // faint earthshine on the night side so it isn't a dead void
+    ctx.save();
+    ctx.clip();
+    var es = ctx.createRadialGradient(
+      cx + sign*R*0.45, cy - R*0.1, R*0.05,
+      cx + sign*R*0.45, cy - R*0.1, R*1.05
+    );
+    es.addColorStop(0,'rgba(60,123,224,0.055)');
+    es.addColorStop(0.6,'rgba(60,123,224,0.018)');
+    es.addColorStop(1,'rgba(60,123,224,0)');
+    ctx.fillStyle = es;
+    ctx.fillRect(cx-R,cy-R,R*2,R*2);
+    ctx.restore();
+  }
+
+  // ---- interaction ----
+  var animRAF = null;
+  function setPhase(p){
+    phase = ((p%1)+1)%1;
+    draw();
+  }
+
+  slider.addEventListener('input', function(){
+    if (animRAF){ cancelAnimationFrame(animRAF); animRAF = null; }
+    setPhase(parseFloat(slider.value)/1000);
+  });
+
+  // drag on the moon to rotate the phase (horizontal drag)
+  var dragging = false, dragStartX = 0, dragStartPhase = 0;
+  function pointerDown(e){
+    if (animRAF){ cancelAnimationFrame(animRAF); animRAF = null; }
+    dragging = true;
+    dragStartX = (e.touches?e.touches[0].clientX:e.clientX);
+    dragStartPhase = phase;
+    stage.classList.add('kmoon-grabbing');
+    e.preventDefault();
+  }
+  function pointerMove(e){
+    if (!dragging) return;
+    var x = (e.touches?e.touches[0].clientX:e.clientX);
+    var dx = x - dragStartX;
+    var dp = dx / (stage.clientWidth*0.85); // full sweep across the stage
+    var np = ((dragStartPhase + dp)%1+1)%1;
+    slider.value = Math.round(np*1000);
+    setPhase(np);
+    e.preventDefault();
+  }
+  function pointerUp(){
+    dragging = false;
+    stage.classList.remove('kmoon-grabbing');
+  }
+  stage.addEventListener('mousedown', pointerDown);
+  window.addEventListener('mousemove', pointerMove);
+  window.addEventListener('mouseup', pointerUp);
+  stage.addEventListener('touchstart', pointerDown, {passive:false});
+  window.addEventListener('touchmove', pointerMove, {passive:false});
+  window.addEventListener('touchend', pointerUp);
+
+  // quick-jump chips
+  var chips = root.querySelectorAll('.kmoon-chip');
+  Array.prototype.forEach.call(chips, function(chip){
+    chip.addEventListener('click', function(){
+      var p = parseFloat(chip.getAttribute('data-phase'));
+      animateTo(p);
+    });
+  });
+
+  // smooth animated transition for chip jumps
+  function animateTo(p){
+    if (reduce){ slider.value=Math.round(p*1000); setPhase(p); return; }
+    var from = phase;
+    // choose shortest direction around the cycle
+    var diff = p - from;
+    if (diff > 0.5) diff -= 1; else if (diff < -0.5) diff += 1;
+    var start = performance.now();
+    var dur = 700;
+    if (animRAF) cancelAnimationFrame(animRAF);
+    function step(now){
+      var t = Math.min(1,(now-start)/dur);
+      var e = t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; // easeInOutCubic
+      var cur = from + diff*e;
+      var np = ((cur%1)+1)%1;
+      phase = np;
+      slider.value = Math.round(np*1000);
+      draw();
+      if (t<1) animRAF = requestAnimationFrame(step);
+    }
+    animRAF = requestAnimationFrame(step);
+  }
+
+  // resize handling
+  var ro;
+  if (window.ResizeObserver){
+    ro = new ResizeObserver(function(){ resize(); });
+    ro.observe(stage);
+  } else {
+    window.addEventListener('resize', resize);
+  }
+
+  // initial
+  slider.value = Math.round(phase*1000);
+  resize();
+  // a couple of deferred resizes in case fonts/layout settle late
+  requestAnimationFrame(resize);
+  setTimeout(resize, 200);
+})();
+</script>
+</body></html>

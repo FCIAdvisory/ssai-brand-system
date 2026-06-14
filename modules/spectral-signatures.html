@@ -1,0 +1,686 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spectral Signature Explorer · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-spectral-signatures{
+  --ssx-bg:#050314;
+  --ssx-indigo:#16145f;
+  --ssx-text:#f4f5ff;
+  --ssx-muted:#a6abe6;
+  --ssx-hair:rgba(166,171,230,0.16);
+  --ssx-hair-strong:rgba(166,171,230,0.30);
+  --ssx-panel:rgba(22,20,95,0.28);
+  --ssx-panel-2:rgba(22,20,95,0.16);
+  --ssx-accent:var(--accent,#3cc8ff);
+  color:var(--ssx-text);
+  background:
+    radial-gradient(120% 90% at 82% -8%, rgba(22,20,95,0.55), transparent 60%),
+    radial-gradient(140% 120% at -8% 110%, rgba(22,20,95,0.35), transparent 55%),
+    var(--ssx-bg);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  border:1px solid var(--ssx-hair);
+  border-radius:18px;
+  padding:clamp(16px,2.4vw,30px);
+  box-sizing:border-box;
+  width:100%;
+  -webkit-font-smoothing:antialiased;
+}
+#kit-spectral-signatures *,#kit-spectral-signatures *::before,#kit-spectral-signatures *::after{box-sizing:border-box;}
+
+#kit-spectral-signatures .ssx-shell{display:flex;flex-direction:column;gap:clamp(14px,2vw,22px);}
+
+/* ---- header ---- */
+#kit-spectral-signatures .ssx-head{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;
+}
+#kit-spectral-signatures .ssx-eyebrow{
+  margin:0 0 8px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ssx-muted);font-weight:600;
+}
+#kit-spectral-signatures .ssx-title{
+  margin:0;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.01em;line-height:1.02;
+  font-size:clamp(22px,3.4vw,38px);
+  background:linear-gradient(96deg,var(--ssx-text) 30%,var(--ssx-accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+#kit-spectral-signatures .ssx-sub{
+  margin:8px 0 0;color:var(--ssx-muted);font-size:clamp(12px,1.4vw,14px);max-width:46ch;line-height:1.45;
+}
+#kit-spectral-signatures .ssx-status{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--ssx-hair);background:var(--ssx-panel-2);
+  border-radius:999px;padding:7px 13px;font-size:11.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ssx-muted);white-space:nowrap;
+}
+#kit-spectral-signatures .ssx-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--ssx-accent);
+  box-shadow:0 0 0 0 var(--ssx-accent);animation:ssx-pulse 1.6s infinite ease-out;
+}
+#kit-spectral-signatures .ssx-status.is-ready .ssx-dot{animation:none;box-shadow:0 0 10px var(--ssx-accent);}
+@keyframes ssx-pulse{0%{box-shadow:0 0 0 0 rgba(60,200,255,.55);}70%{box-shadow:0 0 0 8px rgba(60,200,255,0);}100%{box-shadow:0 0 0 0 rgba(60,200,255,0);}}
+
+/* ---- body layout ---- */
+#kit-spectral-signatures .ssx-body{
+  display:grid;grid-template-columns:minmax(0,1fr) 232px;gap:clamp(14px,1.8vw,22px);align-items:stretch;
+}
+#kit-spectral-signatures .ssx-plotwrap{
+  position:relative;border:1px solid var(--ssx-hair);border-radius:14px;
+  background:
+    linear-gradient(180deg,rgba(22,20,95,0.22),rgba(5,3,20,0.55)),
+    var(--ssx-bg);
+  overflow:hidden;min-height:300px;
+}
+#kit-spectral-signatures .ssx-canvas{display:block;width:100%;height:clamp(300px,42vh,440px);touch-action:none;}
+
+#kit-spectral-signatures .ssx-readout{
+  position:absolute;top:12px;left:12px;pointer-events:none;
+  background:rgba(5,3,20,0.86);border:1px solid var(--ssx-hair-strong);
+  border-radius:10px;padding:9px 11px;min-width:120px;
+  font-size:11.5px;line-height:1.5;backdrop-filter:blur(7px);
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+#kit-spectral-signatures .ssx-readout .ro-wl{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;font-size:12px;letter-spacing:.04em;color:var(--ssx-accent);
+  margin-bottom:5px;display:block;
+}
+#kit-spectral-signatures .ssx-readout .ro-row{display:flex;align-items:center;gap:7px;color:var(--ssx-text);}
+#kit-spectral-signatures .ssx-readout .ro-sw{width:9px;height:9px;border-radius:2px;flex:0 0 auto;}
+#kit-spectral-signatures .ssx-readout .ro-val{
+  margin-left:auto;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  letter-spacing:.02em;color:var(--ssx-muted);
+}
+
+/* ---- side / chips ---- */
+#kit-spectral-signatures .ssx-side{display:flex;flex-direction:column;gap:14px;}
+#kit-spectral-signatures .ssx-chips{display:flex;flex-direction:column;gap:9px;}
+#kit-spectral-signatures .ssx-chip{
+  display:flex;align-items:center;gap:10px;width:100%;cursor:pointer;text-align:left;
+  border:1px solid var(--ssx-hair);background:var(--ssx-panel-2);
+  border-radius:11px;padding:10px 12px;color:var(--ssx-text);
+  font-family:inherit;font-size:12.5px;transition:border-color .2s,background .2s,opacity .2s,transform .12s;
+}
+#kit-spectral-signatures .ssx-chip:hover{border-color:var(--ssx-hair-strong);transform:translateY(-1px);}
+#kit-spectral-signatures .ssx-chip:focus-visible{outline:2px solid var(--ssx-accent);outline-offset:2px;}
+#kit-spectral-signatures .ssx-chip[aria-pressed="false"]{opacity:.42;}
+#kit-spectral-signatures .ssx-chip .ssx-swatch{
+  width:13px;height:13px;border-radius:4px;flex:0 0 auto;
+  box-shadow:0 0 0 1px rgba(255,255,255,.18) inset;
+}
+#kit-spectral-signatures .ssx-chip .ssx-key{
+  width:18px;height:3px;border-radius:2px;flex:0 0 auto;
+}
+#kit-spectral-signatures .ssx-chip .ssx-name{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.03em;font-size:12px;flex:1;line-height:1.1;
+}
+#kit-spectral-signatures .ssx-chip .ssx-n{
+  font-size:10px;color:var(--ssx-muted);letter-spacing:.04em;white-space:nowrap;
+}
+#kit-spectral-signatures .ssx-caption{
+  margin:0;font-size:11px;line-height:1.55;color:var(--ssx-muted);
+  border-top:1px solid var(--ssx-hair);padding-top:12px;
+}
+
+/* ---- detail cards ---- */
+#kit-spectral-signatures .ssx-cards{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;
+}
+#kit-spectral-signatures .ssx-card{
+  border:1px solid var(--ssx-hair);border-radius:12px;
+  background:linear-gradient(180deg,var(--ssx-panel),var(--ssx-panel-2));
+  padding:12px 12px 11px;transition:opacity .25s,border-color .25s;
+  position:relative;overflow:hidden;
+}
+#kit-spectral-signatures .ssx-card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cc,var(--ssx-accent));
+}
+#kit-spectral-signatures .ssx-card.is-off{opacity:.38;}
+#kit-spectral-signatures .ssx-card-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+#kit-spectral-signatures .ssx-card-sw{
+  width:16px;height:16px;border-radius:4px;flex:0 0 auto;
+  box-shadow:0 0 0 1px rgba(255,255,255,.16) inset;
+}
+#kit-spectral-signatures .ssx-card-name{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.02em;font-size:11.5px;line-height:1.05;
+}
+#kit-spectral-signatures .ssx-card-scene{
+  font-size:9.5px;color:var(--ssx-muted);letter-spacing:.05em;text-transform:uppercase;
+  margin:0 0 10px;line-height:1.3;
+}
+#kit-spectral-signatures .ssx-bandrow{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:10.5px;padding:2.5px 0;border-bottom:1px dotted var(--ssx-hair);
+}
+#kit-spectral-signatures .ssx-bandrow:last-child{border-bottom:none;}
+#kit-spectral-signatures .ssx-bandrow .b-lab{color:var(--ssx-muted);letter-spacing:.03em;}
+#kit-spectral-signatures .ssx-bandrow .b-val{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:11px;letter-spacing:.02em;color:var(--ssx-text);
+}
+#kit-spectral-signatures .ssx-card-foot{
+  margin-top:9px;padding-top:8px;border-top:1px solid var(--ssx-hair);
+  display:flex;justify-content:space-between;font-size:9.5px;color:var(--ssx-muted);letter-spacing:.04em;
+}
+#kit-spectral-signatures .ssx-card-foot .cf-n{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;color:var(--ssx-accent);
+}
+
+/* ---- footer ---- */
+#kit-spectral-signatures .ssx-foot{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ssx-muted);
+  border-top:1px solid var(--ssx-hair);padding-top:13px;
+}
+#kit-spectral-signatures .ssx-foot .ssx-bands{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;color:var(--ssx-text);opacity:.85;
+}
+
+/* ---- responsive ---- */
+@media (max-width:780px){
+  #kit-spectral-signatures .ssx-body{grid-template-columns:1fr;}
+  #kit-spectral-signatures .ssx-side{flex-direction:column;}
+  #kit-spectral-signatures .ssx-chips{flex-direction:row;flex-wrap:wrap;}
+  #kit-spectral-signatures .ssx-chip{width:auto;flex:1 1 140px;}
+  #kit-spectral-signatures .ssx-cards{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:440px){
+  #kit-spectral-signatures .ssx-cards{grid-template-columns:1fr;}
+  #kit-spectral-signatures .ssx-chip{flex:1 1 100%;}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Spectral Signature Explorer</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-spectral-signatures">
+  <div class="ssx-shell">
+    <header class="ssx-head">
+      <div class="ssx-titles">
+        <p class="ssx-eyebrow">SSAI · Remote Sensing</p>
+        <h2 class="ssx-title">Spectral Signature Explorer</h2>
+        <p class="ssx-sub">Five-band surface reflectance, computed live from real NASA MODIS scenes</p>
+      </div>
+      <div class="ssx-status" data-role="status">
+        <span class="ssx-dot" aria-hidden="true"></span>
+        <span data-role="status-text">Loading MODIS scenes…</span>
+      </div>
+    </header>
+
+    <div class="ssx-body">
+      <div class="ssx-plotwrap">
+        <canvas data-role="canvas" class="ssx-canvas"></canvas>
+        <div class="ssx-readout" data-role="readout" hidden></div>
+      </div>
+
+      <aside class="ssx-side">
+        <div class="ssx-chips" data-role="chips"></div>
+        <p class="ssx-caption">
+          Curves are averaged over real MODIS surface-reflectance pixels sampled at runtime — not illustrations.
+          NDVI&nbsp;=&nbsp;(NIR−Red)/(NIR+Red).
+        </p>
+      </aside>
+    </div>
+
+    <div class="ssx-cards" data-role="cards"></div>
+
+    <footer class="ssx-foot">
+      <span class="ssx-src">Source: NASA MODIS / Terra · Aqua surface reflectance</span>
+      <span class="ssx-bands">469 · 555 · 645 · 858 · 2130 nm</span>
+    </footer>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Toggle any of the five surface-class chips to add or remove its signature curve from the plot; the curves animate in and the y-axis story rebalances live. Hover or move along the chart (mouse or touch) to drop a wavelength scrubber that reads out each active class&#x27;s exact reflectance at that band. Each class card shows its real per-band values, live sample count, the source MODIS scene, and a representative real-pixel color swatch computed from the actual imagery. Everything renders on init from the loaded scenes; animation pauses when scrolled out of view and respects reduced-motion.</span>
+    <span class="mb-c-src">Data · NASA MODIS surface reflectance</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-spectral-signatures');
+  if(!root||root.dataset.ssxInit)return;root.dataset.ssxInit='1';
+
+  var canvas=root.querySelector('[data-role="canvas"]');
+  var ctx=canvas.getContext('2d');
+  var statusEl=root.querySelector('[data-role="status"]');
+  var statusTxt=root.querySelector('[data-role="status-text"]');
+  var chipsEl=root.querySelector('[data-role="chips"]');
+  var cardsEl=root.querySelector('[data-role="cards"]');
+  var readout=root.querySelector('[data-role="readout"]');
+
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function accent(){
+    var v='';try{v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();}catch(e){}
+    return v||'#3cc8ff';
+  }
+
+  // wavelengths (nm) for the 5 bands
+  var BANDS=[
+    {key:'B',  wl:469, lab:'B 469'},
+    {key:'G',  wl:555, lab:'G 555'},
+    {key:'R',  wl:645, lab:'R 645'},
+    {key:'NIR',wl:858, lab:'NIR 858'},
+    {key:'SW', wl:2130,lab:'SWIR 2130'}
+  ];
+  var WLMIN=400, WLMAX=2300;
+
+  // class definitions: color (curve), the scene(s) sampled, predicate, label
+  var CLASSES=[
+    {id:'veg', name:'Vegetation', col:'#5fe39b', scenes:['agriculture','delta'],
+     pred:function(p){return p.ndvi>0.5;}, sceneLabel:'Cropland · Nile Delta'},
+    {id:'water', name:'Water', col:'#4aa8ff', scenes:['delta'],
+     pred:function(p){return p.ndvi<0.0 && p.NIR<0.18;}, sceneLabel:'Nile Delta, Egypt'},
+    {id:'soil', name:'Bare Soil', col:'#e0a35a', scenes:['urban'],
+     pred:function(p){return p.ndvi>0.08 && p.ndvi<0.24 && p.NIR<0.62 && p.SW>0.30;}, sceneLabel:'Phoenix metro, AZ'},
+    {id:'urban', name:'Built-up', col:'#c98bff', scenes:['urban'],
+     pred:function(p){return p.SW>0.45 && p.ndvi<0.18 && p.NIR>0.6;}, sceneLabel:'Phoenix metro, AZ'},
+    {id:'burn', name:'Burn Scar', col:'#ff6b5e', scenes:['wildfire'],
+     pred:function(p){return p.SW>0.42 && p.ndvi>0.0 && p.ndvi<0.30 && p.SW>=p.NIR;}, sceneLabel:'Dixie Fire, CA'}
+  ];
+
+  var SCENE_NAMES={agriculture:'San Joaquin cropland',delta:'Nile Delta',urban:'Phoenix metro',wildfire:'Dixie burn scar'};
+
+  // ---- image loading (un-gated, immediate) ----
+  function loadImage(src){
+    return new Promise(function(res,rej){
+      var img=new Image();
+      img.onload=function(){res(img);};
+      img.onerror=function(){rej(new Error('fail '+src));};
+      img.src=src;
+      if(img.complete && img.naturalWidth>0){res(img);}
+    });
+  }
+  function imageData(img){
+    var w=img.naturalWidth,h=img.naturalHeight;
+    var c=document.createElement('canvas');c.width=w;c.height=h;
+    var cx=c.getContext('2d');cx.drawImage(img,0,0);
+    return cx.getImageData(0,0,w,h);
+  }
+
+  var sceneCache={}; // scene -> {rgb:ImageData, ir:ImageData, w,h}
+  function getScene(scene){
+    if(sceneCache[scene])return Promise.resolve(sceneCache[scene]);
+    var base='../assets/scenes/'+scene+'/';
+    return Promise.all([loadImage(base+'rgb.jpg'),loadImage(base+'ir.png')]).then(function(r){
+      var rgb=imageData(r[0]), ir=imageData(r[1]);
+      var w=Math.min(rgb.width,ir.width), h=Math.min(rgb.height,ir.height);
+      var o={rgb:rgb,ir:ir,w:w,h:h};
+      sceneCache[scene]=o;return o;
+    });
+  }
+
+  // accumulate signature for a class across its scenes
+  function computeClass(cls){
+    var acc=[0,0,0,0,0], n=0, sw=[0,0,0];
+    var step=4;
+    var pending=cls.scenes.map(function(scene){return getScene(scene);});
+    return Promise.all(pending).then(function(scs){
+      for(var s=0;s<scs.length;s++){
+        var sc=scs[s], w=sc.w, h=sc.h;
+        var rd=sc.rgb.data, id=sc.ir.data, rw=sc.rgb.width, iw=sc.ir.width;
+        for(var y=0;y<h;y+=step){
+          for(var x=0;x<w;x+=step){
+            var ri=(y*rw+x)*4, ii=(y*iw+x)*4;
+            var R=rd[ri]/255, G=rd[ri+1]/255, B=rd[ri+2]/255;
+            var SW=id[ii]/255, NIR=id[ii+1]/255, Red2=id[ii+2]/255;
+            var den=NIR+Red2;
+            var ndvi=den>1e-6?(NIR-Red2)/den:0;
+            var p={B:B,G:G,R:R,NIR:NIR,SW:SW,ndvi:ndvi};
+            if(cls.pred(p)){
+              acc[0]+=B;acc[1]+=G;acc[2]+=R;acc[3]+=NIR;acc[4]+=SW;
+              sw[0]+=rd[ri];sw[1]+=rd[ri+1];sw[2]+=rd[ri+2];
+              n++;
+            }
+          }
+        }
+      }
+      if(n===0){return {sig:[0,0,0,0,0],n:0,swatch:'#222'};}
+      var sig=acc.map(function(v){return v/n;});
+      var swr=Math.round(sw[0]/n),swg=Math.round(sw[1]/n),swb=Math.round(sw[2]/n);
+      // brighten swatch slightly for visibility while staying representative
+      function bn(c){return Math.min(255,Math.round(c*1.35+18));}
+      var swatch='rgb('+bn(swr)+','+bn(swg)+','+bn(swb)+')';
+      return {sig:sig,n:n,swatch:swatch};
+    });
+  }
+
+  // ---- state ----
+  var data={};          // id -> {sig,n,swatch}
+  var active={};        // id -> bool
+  CLASSES.forEach(function(c){active[c.id]=true;});
+  var anim={};          // id -> 0..1 progress
+  CLASSES.forEach(function(c){anim[c.id]=reduce?1:0;});
+  var ready=false, running=true, hoverWL=null;
+
+  // ---- geometry ----
+  var DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2.5));
+  var W=0,H=0,PAD={l:46,r:16,t:18,b:34};
+  function resize(){
+    var rect=canvas.getBoundingClientRect();
+    W=Math.max(260,rect.width);H=Math.max(220,rect.height);
+    DPR=Math.max(1,Math.min(window.devicePixelRatio||1,2.5));
+    canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    draw();
+  }
+
+  // wavelength -> x using a piecewise mapping so the 5 bands are reasonably spaced
+  // (linear in nm would crowd 469/555/645; use sqrt-ish spacing for legibility)
+  function wlToX(wl){
+    var f=(Math.sqrt(wl)-Math.sqrt(WLMIN))/(Math.sqrt(WLMAX)-Math.sqrt(WLMIN));
+    return PAD.l+f*(W-PAD.l-PAD.r);
+  }
+  function xToWL(x){
+    var f=(x-PAD.l)/(W-PAD.l-PAD.r);f=Math.max(0,Math.min(1,f));
+    var s=Math.sqrt(WLMIN)+f*(Math.sqrt(WLMAX)-Math.sqrt(WLMIN));
+    return s*s;
+  }
+  function valToY(v){
+    var top=PAD.t, bot=H-PAD.b;
+    return bot-Math.max(0,Math.min(1,v))*(bot-top);
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var AC=accent();
+    var top=PAD.t, bot=H-PAD.b, left=PAD.l, right=W-PAD.r;
+
+    // y gridlines
+    ctx.lineWidth=1;ctx.font='10px Inter, sans-serif';ctx.textBaseline='middle';
+    for(var g=0;g<=5;g++){
+      var v=g/5, yy=valToY(v);
+      ctx.strokeStyle='rgba(166,171,230,'+(g===0?0.30:0.10)+')';
+      ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(right,yy);ctx.stroke();
+      ctx.fillStyle='rgba(166,171,230,0.65)';ctx.textAlign='right';
+      ctx.fillText(v.toFixed(1),left-8,yy);
+    }
+    // y axis label
+    ctx.save();ctx.translate(13,(top+bot)/2);ctx.rotate(-Math.PI/2);
+    ctx.textAlign='center';ctx.fillStyle='rgba(166,171,230,0.8)';
+    ctx.font='italic 700 10px "Chakra Petch", sans-serif';
+    ctx.fillText('REFLECTANCE',0,0);ctx.restore();
+
+    // band x markers + labels + vertical guides
+    ctx.textBaseline='alphabetic';
+    BANDS.forEach(function(b){
+      var x=wlToX(b.wl);
+      ctx.strokeStyle='rgba(166,171,230,0.12)';
+      ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,bot);ctx.stroke();
+      ctx.fillStyle='rgba(166,171,230,0.85)';
+      ctx.font='italic 700 9.5px "Chakra Petch", sans-serif';
+      ctx.textAlign='center';
+      ctx.fillText(b.lab.toUpperCase(),x,bot+15);
+    });
+    // x axis caption
+    ctx.fillStyle='rgba(166,171,230,0.5)';ctx.font='9px Inter, sans-serif';
+    ctx.textAlign='center';ctx.fillText('WAVELENGTH (nm) — visible → near-IR → short-wave IR',(left+right)/2,bot+29);
+
+    // spectral band tint strip along bottom of plot for context
+    var stripY=bot-3;
+    function tintAt(wl){
+      if(wl<500)return 'rgba(74,168,255,0.0)';
+      return null;
+    }
+
+    if(!ready){
+      ctx.fillStyle='rgba(166,171,230,0.55)';ctx.font='italic 700 12px "Chakra Petch", sans-serif';
+      ctx.textAlign='center';ctx.fillText('SAMPLING MODIS PIXELS…',(left+right)/2,(top+bot)/2);
+    }
+
+    // draw curves
+    CLASSES.forEach(function(cls){
+      var d=data[cls.id];if(!d)return;
+      var a=anim[cls.id];if(a<=0.001)return;
+      var on=active[cls.id];
+      var pts=BANDS.map(function(b,i){return {x:wlToX(b.wl),y:valToY(d.sig[i])};});
+
+      // animated reveal: scale curve up from baseline + fade
+      var alpha=on?(0.92*a):0;
+      if(alpha<=0.001)return;
+
+      // glow line
+      ctx.lineJoin='round';ctx.lineCap='round';
+      ctx.strokeStyle=hexA(cls.col,0.18*a);ctx.lineWidth=6;
+      strokePath(pts);
+      ctx.strokeStyle=hexA(cls.col,alpha);ctx.lineWidth=2.2;
+      strokePath(pts);
+
+      // points
+      pts.forEach(function(p){
+        ctx.fillStyle=hexA(cls.col,alpha);
+        ctx.beginPath();ctx.arc(p.x,p.y,3.1,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle=hexA('#050314',Math.min(1,alpha));
+        ctx.beginPath();ctx.arc(p.x,p.y,1.2,0,Math.PI*2);ctx.fill();
+      });
+    });
+
+    // hover scrubber
+    if(hoverWL!=null && ready){
+      var hx=wlToX(hoverWL);
+      if(hx>=left-1 && hx<=right+1){
+        ctx.strokeStyle=hexA(AC,0.55);ctx.lineWidth=1;ctx.setLineDash([4,4]);
+        ctx.beginPath();ctx.moveTo(hx,top);ctx.lineTo(hx,bot);ctx.stroke();ctx.setLineDash([]);
+      }
+    }
+
+    function strokePath(pts){
+      ctx.beginPath();
+      for(var i=0;i<pts.length;i++){i?ctx.lineTo(pts[i].x,pts[i].y):ctx.moveTo(pts[i].x,pts[i].y);}
+      ctx.stroke();
+    }
+  }
+
+  function hexA(c,a){
+    if(c.indexOf('rgb')===0){
+      return c.replace('rgb(','rgba(').replace(')',','+a.toFixed(3)+')');
+    }
+    var h=c.replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);
+    return 'rgba('+r+','+g+','+b+','+a.toFixed(3)+')';
+  }
+
+  // nearest band to a wavelength
+  function nearestBand(wl){
+    var best=0,bd=1e9;
+    BANDS.forEach(function(b,i){var dd=Math.abs(b.wl-wl);if(dd<bd){bd=dd;best=i;}});
+    return best;
+  }
+
+  // ---- chips ----
+  function buildChips(){
+    chipsEl.innerHTML='';
+    CLASSES.forEach(function(cls){
+      var btn=document.createElement('button');
+      btn.className='ssx-chip';btn.type='button';
+      btn.setAttribute('aria-pressed',active[cls.id]?'true':'false');
+      btn.innerHTML=''
+        +'<span class="ssx-key" style="background:'+cls.col+'"></span>'
+        +'<span class="ssx-name">'+cls.name+'</span>'
+        +'<span class="ssx-n" data-n>—</span>';
+      btn.addEventListener('click',function(){
+        active[cls.id]=!active[cls.id];
+        btn.setAttribute('aria-pressed',active[cls.id]?'true':'false');
+        var card=cardsEl.querySelector('[data-card="'+cls.id+'"]');
+        if(card)card.classList.toggle('is-off',!active[cls.id]);
+        draw();
+      });
+      cls._chip=btn;
+      chipsEl.appendChild(btn);
+    });
+  }
+
+  // ---- cards ----
+  function buildCards(){
+    cardsEl.innerHTML='';
+    CLASSES.forEach(function(cls){
+      var card=document.createElement('div');
+      card.className='ssx-card'+(active[cls.id]?'':' is-off');
+      card.setAttribute('data-card',cls.id);
+      card.style.setProperty('--cc',cls.col);
+      var bandRows=BANDS.map(function(b){
+        return '<div class="ssx-bandrow"><span class="b-lab">'+b.lab+'</span><span class="b-val" data-b="'+b.key+'">—</span></div>';
+      }).join('');
+      card.innerHTML=''
+        +'<div class="ssx-card-top">'
+          +'<span class="ssx-card-sw" data-sw style="background:'+cls.col+'"></span>'
+          +'<span class="ssx-card-name">'+cls.name+'</span>'
+        +'</div>'
+        +'<p class="ssx-card-scene">'+cls.sceneLabel+'</p>'
+        +bandRows
+        +'<div class="ssx-card-foot"><span>samples</span><span class="cf-n" data-cn>—</span></div>';
+      cls._card=card;
+      cardsEl.appendChild(card);
+    });
+  }
+
+  function fillClass(cls){
+    var d=data[cls.id];if(!d)return;
+    // chip count
+    var ne=cls._chip.querySelector('[data-n]');
+    if(ne)ne.textContent='n='+fmtN(d.n);
+    // card
+    var card=cls._card;
+    BANDS.forEach(function(b,i){
+      var el=card.querySelector('[data-b="'+b.key+'"]');
+      if(el)el.textContent=d.sig[i].toFixed(3);
+    });
+    var cn=card.querySelector('[data-cn]');if(cn)cn.textContent=fmtN(d.n);
+    var sw=card.querySelector('[data-sw]');if(sw)sw.style.background=d.swatch;
+    // chip key already class color; leave key as curve color
+  }
+  function fmtN(n){return n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':String(n);}
+
+  // ---- pointer ----
+  function onMove(e){
+    if(!ready)return;
+    var rect=canvas.getBoundingClientRect();
+    var cx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+    var cy=(e.touches?e.touches[0].clientY:e.clientY)-rect.top;
+    if(cx<PAD.l-6||cx>W-PAD.r+6||cy<0||cy>H){clearHover();return;}
+    var wl=xToWL(cx);
+    var bi=nearestBand(wl);
+    hoverWL=BANDS[bi].wl; // snap to band
+    showReadout(bi);
+    draw();
+  }
+  function clearHover(){hoverWL=null;readout.hidden=true;draw();}
+  function showReadout(bi){
+    var b=BANDS[bi];
+    var rows='<span class="ro-wl">'+b.lab.toUpperCase()+' nm</span>';
+    var any=false;
+    CLASSES.forEach(function(cls){
+      if(!active[cls.id])return;var d=data[cls.id];if(!d)return;any=true;
+      rows+='<div class="ro-row"><span class="ro-sw" style="background:'+cls.col+'"></span>'
+        +'<span>'+cls.name+'</span><span class="ro-val">'+d.sig[bi].toFixed(3)+'</span></div>';
+    });
+    if(!any)rows+='<div class="ro-row"><span>No class active</span></div>';
+    readout.innerHTML=rows;readout.hidden=false;
+  }
+  canvas.addEventListener('mousemove',onMove);
+  canvas.addEventListener('mouseleave',clearHover);
+  canvas.addEventListener('touchstart',function(e){onMove(e);},{passive:true});
+  canvas.addEventListener('touchmove',function(e){onMove(e);},{passive:true});
+  canvas.addEventListener('touchend',clearHover);
+
+  // ---- animation loop ----
+  function tick(){
+    if(running){
+      var need=false;
+      CLASSES.forEach(function(c){
+        var target=1;
+        if(anim[c.id]<target){anim[c.id]=Math.min(target,anim[c.id]+0.06);need=true;}
+      });
+      if(need)draw();
+    }
+    raf=requestAnimationFrame(tick);
+  }
+  var raf=null;
+
+  // pause animation offscreen (does NOT gate first paint)
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(ents){
+      ents.forEach(function(en){running=en.isIntersecting;});
+    },{threshold:0.05});
+    io.observe(root);
+  }
+
+  // resize
+  var ro;
+  if('ResizeObserver' in window){ro=new ResizeObserver(function(){resize();});ro.observe(canvas);}
+  window.addEventListener('resize',resize);
+
+  // ---- INIT: build UI + first paint immediately, then load + compute ----
+  buildChips();
+  buildCards();
+  resize();            // first frame (un-gated, shows axes + sampling state)
+  if(!reduce)raf=requestAnimationFrame(tick);
+
+  // load & compute sequentially-ish (parallel promises, render as each lands)
+  var done=0;
+  CLASSES.forEach(function(cls){
+    computeClass(cls).then(function(res){
+      data[cls.id]=res;
+      anim[cls.id]=reduce?1:anim[cls.id];
+      fillClass(cls);
+      done++;
+      if(!ready){ready=true;statusEl.classList.add('is-ready');}
+      statusTxt.textContent=done>=CLASSES.length?'5 surface classes · live':'Computing signatures… '+done+'/'+CLASSES.length;
+      draw();
+    }).catch(function(err){
+      done++;
+      statusTxt.textContent='Scene unavailable ('+cls.name+')';
+      // keep going; mark ready so UI is usable
+      if(done>=1){ready=true;statusEl.classList.add('is-ready');}
+      draw();
+    });
+  });
+
+})();
+</script>
+</body></html>

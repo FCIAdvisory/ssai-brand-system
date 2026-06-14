@@ -1,0 +1,747 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar vs Optical · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-sar-vs-optical{
+  --svo-bg:#050314;
+  --svo-indigo:#16145f;
+  --svo-text:#f4f5ff;
+  --svo-muted:#a6abe6;
+  --svo-hair:rgba(166,171,230,0.16);
+  --svo-hair2:rgba(166,171,230,0.30);
+  --svo-accent:#3cc8ff;
+  --svo-panel-bg:#08061c;
+  color:var(--svo-text);
+  background:
+    radial-gradient(120% 90% at 80% -10%, rgba(22,20,95,0.55), transparent 60%),
+    var(--svo-bg);
+  font-family:'Inter',system-ui,sans-serif;
+  padding:clamp(16px,2.6vw,30px);
+  border:1px solid var(--svo-hair);
+  border-radius:16px;
+  box-sizing:border-box;
+  width:100%;
+  -webkit-font-smoothing:antialiased;
+}
+#kit-sar-vs-optical *,#kit-sar-vs-optical *::before,#kit-sar-vs-optical *::after{box-sizing:border-box;}
+#kit-sar-vs-optical .svo-shell{display:flex;flex-direction:column;gap:clamp(14px,2vw,20px);}
+
+/* HEAD */
+#kit-sar-vs-optical .svo-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;}
+#kit-sar-vs-optical .svo-title{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.04em;line-height:1;
+  font-size:clamp(22px,3.4vw,38px);margin:0;
+}
+#kit-sar-vs-optical .svo-vs{color:var(--svo-muted);font-size:.62em;font-style:italic;text-transform:lowercase;letter-spacing:0;}
+#kit-sar-vs-optical .svo-sub{margin:.55em 0 0;color:var(--svo-muted);font-size:clamp(12px,1.4vw,14px);max-width:46ch;line-height:1.45;}
+#kit-sar-vs-optical .svo-status{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:8px 14px;border:1px solid var(--svo-hair2);border-radius:999px;
+  background:rgba(8,6,28,0.6);white-space:nowrap;
+}
+#kit-sar-vs-optical .svo-status-dot{width:9px;height:9px;border-radius:50%;background:var(--svo-accent);box-shadow:0 0 10px var(--svo-accent);transition:background .3s,box-shadow .3s;}
+#kit-sar-vs-optical .svo-status-dot[data-state="blind"]{background:#ff5f6d;box-shadow:0 0 10px #ff5f6d;}
+#kit-sar-vs-optical .svo-status-txt{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;font-size:12px;color:var(--svo-text);
+}
+
+/* STAGE */
+#kit-sar-vs-optical .svo-stage{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.6vw,18px);
+}
+#kit-sar-vs-optical .svo-panel{margin:0;display:flex;flex-direction:column;min-width:0;}
+#kit-sar-vs-optical .svo-panel-tag{
+  display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  padding:9px 12px;border:1px solid var(--svo-hair);border-bottom:none;
+  border-radius:10px 10px 0 0;background:rgba(22,20,95,0.22);flex-wrap:wrap;
+}
+#kit-sar-vs-optical .svo-tag-k{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;font-size:clamp(13px,1.7vw,17px);
+}
+#kit-sar-vs-optical .svo-panel--sar .svo-tag-k{color:var(--svo-accent);}
+#kit-sar-vs-optical .svo-tag-meta{color:var(--svo-muted);font-size:11px;letter-spacing:.02em;}
+
+#kit-sar-vs-optical .svo-canvas-wrap{
+  position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;
+  border:1px solid var(--svo-hair);background:var(--svo-panel-bg);
+}
+#kit-sar-vs-optical .svo-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+
+/* optical day/night dimming handled in JS via filter on its canvas */
+#kit-sar-vs-optical .svo-blind[hidden]{display:none!important;}
+#kit-sar-vs-optical .svo-blind{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;text-align:center;background:rgba(5,3,20,0.45);backdrop-filter:blur(1px);
+  pointer-events:none;
+}
+#kit-sar-vs-optical .svo-blind-k{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;font-size:clamp(13px,1.8vw,16px);color:#ffd3d6;
+}
+#kit-sar-vs-optical .svo-blind-s{font-size:11px;color:var(--svo-muted);max-width:24ch;line-height:1.4;}
+
+#kit-sar-vs-optical .svo-pins{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+#kit-sar-vs-optical .svo-pin-line{stroke:var(--svo-accent);stroke-width:.4;opacity:.85;vector-effect:non-scaling-stroke;}
+#kit-sar-vs-optical .svo-imaging{
+  position:absolute;left:10px;bottom:10px;display:inline-flex;align-items:center;gap:7px;
+  padding:5px 10px;border:1px solid var(--svo-hair2);border-radius:999px;
+  background:rgba(5,3,20,0.66);
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;font-size:10px;color:var(--svo-accent);
+}
+#kit-sar-vs-optical .svo-imaging-pulse{width:7px;height:7px;border-radius:50%;background:var(--svo-accent);box-shadow:0 0 8px var(--svo-accent);animation:svo-pulse 1.8s ease-in-out infinite;}
+@keyframes svo-pulse{0%,100%{opacity:.35;transform:scale(.8);}50%{opacity:1;transform:scale(1.15);}}
+
+#kit-sar-vs-optical .svo-cap{
+  padding:7px 12px;border:1px solid var(--svo-hair);border-top:none;
+  border-radius:0 0 10px 10px;background:rgba(8,6,28,0.5);
+}
+#kit-sar-vs-optical .svo-cap-prov{font-size:10.5px;color:var(--svo-muted);letter-spacing:.02em;}
+
+#kit-sar-vs-optical .svo-honest{
+  margin:-4px 0 0;text-align:center;color:var(--svo-muted);font-size:11px;
+  font-style:italic;opacity:.85;line-height:1.4;
+}
+
+/* CONTROLS */
+#kit-sar-vs-optical .svo-controls{
+  display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(12px,2vw,20px);align-items:stretch;
+}
+#kit-sar-vs-optical .svo-ctrl{
+  border:1px solid var(--svo-hair);border-radius:12px;background:rgba(22,20,95,0.16);
+  padding:clamp(12px,1.8vw,16px);display:flex;flex-direction:column;justify-content:center;gap:10px;
+}
+#kit-sar-vs-optical .svo-ctrl-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+#kit-sar-vs-optical .svo-ctrl-lab{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;font-size:13px;
+}
+#kit-sar-vs-optical .svo-ctrl-val{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:18px;color:var(--svo-accent);min-width:3.5ch;text-align:right;
+}
+#kit-sar-vs-optical .svo-ctrl-hint{margin:0;font-size:11px;color:var(--svo-muted);line-height:1.4;}
+
+#kit-sar-vs-optical .svo-range{
+  -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:999px;
+  background:linear-gradient(90deg,var(--svo-accent) 0%,var(--svo-accent) var(--svo-fill,0%),rgba(166,171,230,0.18) var(--svo-fill,0%),rgba(166,171,230,0.18) 100%);
+  outline:none;cursor:pointer;margin:0;
+}
+#kit-sar-vs-optical .svo-range::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--svo-text);border:3px solid var(--svo-accent);
+  box-shadow:0 0 0 4px rgba(60,200,255,0.18),0 2px 6px rgba(0,0,0,0.5);cursor:pointer;
+}
+#kit-sar-vs-optical .svo-range::-moz-range-thumb{
+  width:18px;height:18px;border-radius:50%;background:var(--svo-text);
+  border:3px solid var(--svo-accent);box-shadow:0 0 0 4px rgba(60,200,255,0.18);cursor:pointer;
+}
+#kit-sar-vs-optical .svo-range:focus-visible{box-shadow:0 0 0 3px rgba(60,200,255,0.4);}
+
+#kit-sar-vs-optical .svo-ctrl--toggles{flex-direction:row;gap:10px;}
+#kit-sar-vs-optical .svo-toggle{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  padding:12px 6px;border:1px solid var(--svo-hair2);border-radius:10px;
+  background:rgba(8,6,28,0.5);color:var(--svo-text);cursor:pointer;
+  transition:border-color .2s,background .2s,box-shadow .2s;
+  font-family:inherit;
+}
+#kit-sar-vs-optical .svo-toggle:hover{border-color:var(--svo-accent);}
+#kit-sar-vs-optical .svo-toggle:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(60,200,255,0.4);}
+#kit-sar-vs-optical .svo-toggle[aria-pressed="true"]{
+  border-color:var(--svo-accent);background:rgba(60,200,255,0.12);
+  box-shadow:inset 0 0 0 1px rgba(60,200,255,0.3);
+}
+#kit-sar-vs-optical .svo-toggle-ico{font-size:18px;line-height:1;}
+#kit-sar-vs-optical .svo-toggle-lab{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;font-size:11px;
+}
+
+/* LEGEND */
+#kit-sar-vs-optical .svo-legend{
+  border:1px solid var(--svo-hair);border-radius:12px;background:rgba(8,6,28,0.4);
+  padding:clamp(12px,1.8vw,16px);transition:opacity .25s;
+}
+#kit-sar-vs-optical .svo-legend[data-hidden="true"]{opacity:.34;}
+#kit-sar-vs-optical .svo-legend-title{
+  display:block;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--svo-accent);margin-bottom:10px;
+}
+#kit-sar-vs-optical .svo-legend-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+#kit-sar-vs-optical .svo-legend-item{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;color:var(--svo-muted);line-height:1.45;}
+#kit-sar-vs-optical .svo-legend-item b{color:var(--svo-text);font-weight:600;}
+#kit-sar-vs-optical .svo-legend-item em{font-style:normal;color:var(--svo-accent);}
+#kit-sar-vs-optical .svo-sw{flex:none;width:14px;height:14px;border-radius:3px;margin-top:1px;border:1px solid var(--svo-hair2);}
+#kit-sar-vs-optical .svo-sw--dark{background:#0a0c12;}
+#kit-sar-vs-optical .svo-sw--bright{background:#eef2ff;}
+#kit-sar-vs-optical .svo-sw--mid{background:repeating-linear-gradient(45deg,#5a5f72,#5a5f72 2px,#787e93 2px,#787e93 4px);}
+
+/* MATRIX */
+#kit-sar-vs-optical .svo-matrix{
+  border:1px solid var(--svo-hair);border-radius:12px;overflow:hidden;background:rgba(8,6,28,0.35);
+}
+#kit-sar-vs-optical .svo-mrow{display:grid;grid-template-columns:1.4fr 1fr 1fr;}
+#kit-sar-vs-optical .svo-mrow+.svo-mrow{border-top:1px solid var(--svo-hair);}
+#kit-sar-vs-optical .svo-mcell{padding:10px clamp(10px,1.4vw,16px);font-size:12.5px;display:flex;align-items:center;}
+#kit-sar-vs-optical .svo-mcell:not(:last-child){border-right:1px solid var(--svo-hair);}
+#kit-sar-vs-optical .svo-mrow--head{background:rgba(22,20,95,0.3);}
+#kit-sar-vs-optical .svo-mrow--head .svo-mcell{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--svo-text);
+}
+#kit-sar-vs-optical .svo-mrow--head .svo-mcell:last-child{color:var(--svo-accent);}
+#kit-sar-vs-optical .svo-mcell--lab{color:var(--svo-muted);}
+#kit-sar-vs-optical .svo-yes{color:#7df0c0;font-weight:600;}
+#kit-sar-vs-optical .svo-no{color:#9aa0c8;}
+
+/* RESPONSIVE */
+@media (max-width:720px){
+  #kit-sar-vs-optical .svo-stage{grid-template-columns:1fr;}
+  #kit-sar-vs-optical .svo-canvas-wrap{aspect-ratio:4/3;}
+  #kit-sar-vs-optical .svo-controls{grid-template-columns:1fr;}
+  #kit-sar-vs-optical .svo-legend-list{grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion:reduce){
+  #kit-sar-vs-optical .svo-imaging-pulse{animation:none;}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Radar vs Optical</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"><img src="../assets/logo/esa-logo.png" alt="ESA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-sar-vs-optical">
+  <div class="svo-shell">
+    <header class="svo-head">
+      <div class="svo-head-titles">
+        <h2 class="svo-title">RADAR <span class="svo-vs">vs</span> OPTICAL</h2>
+        <p class="svo-sub">Two sensing modes, one decision. Why Earth-observation missions fly both.</p>
+      </div>
+      <div class="svo-status" role="status" aria-live="polite">
+        <span class="svo-status-dot" data-svo-statusdot></span>
+        <span class="svo-status-txt" data-svo-statustxt>CLEAR SKY · DAY</span>
+      </div>
+    </header>
+
+    <div class="svo-stage">
+      <!-- OPTICAL PANEL -->
+      <figure class="svo-panel svo-panel--opt" data-svo-panel="opt">
+        <div class="svo-panel-tag">
+          <span class="svo-tag-k">OPTICAL</span>
+          <span class="svo-tag-meta">NASA MODIS / Terra · true colour</span>
+        </div>
+        <div class="svo-canvas-wrap" data-svo-wrap="opt">
+          <canvas class="svo-canvas" data-svo-canvas="opt"></canvas>
+          <div class="svo-blind" data-svo-blind hidden>
+            <span class="svo-blind-k">NO USABLE DATA</span>
+            <span class="svo-blind-s">cloud / darkness blocks the visible spectrum</span>
+          </div>
+        </div>
+        <figcaption class="svo-cap">
+          <span class="svo-cap-prov">Nile Delta · MODIS R/G/B 645·555·469 nm</span>
+        </figcaption>
+      </figure>
+
+      <!-- SAR PANEL -->
+      <figure class="svo-panel svo-panel--sar" data-svo-panel="sar">
+        <div class="svo-panel-tag">
+          <span class="svo-tag-k">SAR</span>
+          <span class="svo-tag-meta">Copernicus Sentinel-1 · C-band radar</span>
+        </div>
+        <div class="svo-canvas-wrap" data-svo-wrap="sar">
+          <canvas class="svo-canvas" data-svo-canvas="sar"></canvas>
+          <svg class="svo-pins" data-svo-pins viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div class="svo-imaging" data-svo-imaging>
+            <span class="svo-imaging-pulse"></span>ACTIVELY IMAGING
+          </div>
+        </div>
+        <figcaption class="svo-cap">
+          <span class="svo-cap-prov">Sentinel-1 VV/VH · ESA · CC BY-SA 4.0</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="svo-honest">Two different real scenes, shown to compare sensor capability — not a co-registered pair.</p>
+
+    <!-- CONTROLS -->
+    <div class="svo-controls">
+      <div class="svo-ctrl svo-ctrl--slider">
+        <div class="svo-ctrl-row">
+          <label class="svo-ctrl-lab" for="svo-cloud">CLOUD COVER</label>
+          <output class="svo-ctrl-val" data-svo-cloudval>0%</output>
+        </div>
+        <input class="svo-range" type="range" id="svo-cloud" min="0" max="100" value="0" step="1" aria-describedby="svo-cloud-hint">
+        <p class="svo-ctrl-hint" id="svo-cloud-hint">Optical goes blind. Radar sees through it.</p>
+      </div>
+
+      <div class="svo-ctrl svo-ctrl--toggles">
+        <button class="svo-toggle" type="button" data-svo-toggle="time" aria-pressed="false">
+          <span class="svo-toggle-ico" data-svo-timeico>☀</span>
+          <span class="svo-toggle-lab" data-svo-timelab>DAY</span>
+        </button>
+        <button class="svo-toggle" type="button" data-svo-toggle="pins" aria-pressed="true">
+          <span class="svo-toggle-ico">◎</span>
+          <span class="svo-toggle-lab">SIGNATURES</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SIGNATURE LEGEND -->
+    <div class="svo-legend" data-svo-legend>
+      <span class="svo-legend-title">RADAR SIGNATURES</span>
+      <ul class="svo-legend-list">
+        <li class="svo-legend-item"><span class="svo-sw svo-sw--dark"></span><b>Smooth water</b> — specular, reflects away → <em>dark</em></li>
+        <li class="svo-legend-item"><span class="svo-sw svo-sw--bright"></span><b>Buildings / structure</b> — double-bounce → <em>bright</em></li>
+        <li class="svo-legend-item"><span class="svo-sw svo-sw--mid"></span><b>Vegetation / terrain</b> — volume scatter → <em>textured grey</em></li>
+      </ul>
+    </div>
+
+    <!-- CAPABILITY MATRIX -->
+    <div class="svo-matrix" role="table" aria-label="Sensor capability comparison">
+      <div class="svo-mrow svo-mrow--head" role="row">
+        <span role="columnheader" class="svo-mcell svo-mcell--lab">CAPABILITY</span>
+        <span role="columnheader" class="svo-mcell">OPTICAL</span>
+        <span role="columnheader" class="svo-mcell">SAR</span>
+      </div>
+      <div class="svo-mrow" role="row">
+        <span role="cell" class="svo-mcell svo-mcell--lab">Through cloud</span>
+        <span role="cell" class="svo-mcell svo-no">No</span>
+        <span role="cell" class="svo-mcell svo-yes">Yes</span>
+      </div>
+      <div class="svo-mrow" role="row">
+        <span role="cell" class="svo-mcell svo-mcell--lab">Day &amp; night</span>
+        <span role="cell" class="svo-mcell svo-no">Day only</span>
+        <span role="cell" class="svo-mcell svo-yes">Yes</span>
+      </div>
+      <div class="svo-mrow" role="row">
+        <span role="cell" class="svo-mcell svo-mcell--lab">True colour</span>
+        <span role="cell" class="svo-mcell svo-yes">Yes</span>
+        <span role="cell" class="svo-mcell svo-no">No</span>
+      </div>
+      <div class="svo-mrow" role="row">
+        <span role="cell" class="svo-mcell svo-mcell--lab">Spectral bands</span>
+        <span role="cell" class="svo-mcell svo-yes">Many</span>
+        <span role="cell" class="svo-mcell svo-no">—</span>
+      </div>
+      <div class="svo-mrow" role="row">
+        <span role="cell" class="svo-mcell svo-mcell--lab">Structure / moisture</span>
+        <span role="cell" class="svo-mcell svo-no">Limited</span>
+        <span role="cell" class="svo-mcell svo-yes">Yes</span>
+      </div>
+    </div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the cloud-cover slider to roll cloud across the optical scene until it goes blind while the radar stays clear; toggle day/night to dim the optical panel; toggle the radar signature pins to read water, structure and terrain returns.</span>
+    <span class="mb-c-src">Optical · NASA MODIS   ·   SAR · ESA Copernicus Sentinel-1 (CC BY-SA 4.0)</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-sar-vs-optical');
+  if(!root)return;
+
+  var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  function accent(){
+    try{
+      var a=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+      if(a)return a;
+    }catch(e){}
+    return '#3cc8ff';
+  }
+  var ACCENT=accent();
+  root.style.setProperty('--svo-accent',ACCENT);
+
+  // ---- elements ----
+  var optCanvas=root.querySelector('[data-svo-canvas="opt"]');
+  var sarCanvas=root.querySelector('[data-svo-canvas="sar"]');
+  var optWrap=root.querySelector('[data-svo-wrap="opt"]');
+  var sarWrap=root.querySelector('[data-svo-wrap="sar"]');
+  var blind=root.querySelector('[data-svo-blind]');
+  var pinsSvg=root.querySelector('[data-svo-pins]');
+  var imaging=root.querySelector('[data-svo-imaging]');
+  var cloudRange=root.querySelector('#svo-cloud');
+  var cloudVal=root.querySelector('[data-svo-cloudval]');
+  var timeBtn=root.querySelector('[data-svo-toggle="time"]');
+  var pinsBtn=root.querySelector('[data-svo-toggle="pins"]');
+  var timeIco=root.querySelector('[data-svo-timeico]');
+  var timeLab=root.querySelector('[data-svo-timelab]');
+  var legend=root.querySelector('[data-svo-legend]');
+  var statusDot=root.querySelector('[data-svo-statusdot]');
+  var statusTxt=root.querySelector('[data-svo-statustxt]');
+
+  var optCtx=optCanvas.getContext('2d');
+  var sarCtx=sarCanvas.getContext('2d');
+
+  // ---- state ----
+  var state={cloud:0,night:false,pins:true};
+  var dpr=Math.max(1,Math.min(window.devicePixelRatio||1,2));
+
+  // image holders
+  var optImg=null,sarImg=null;
+  var optReady=false,sarReady=false;
+
+  function loadImage(src,cb){
+    var img=new Image();
+    img.onload=function(){cb(img);};
+    img.onerror=function(){cb(null);};
+    img.src=src;
+    if(img.complete&&img.naturalWidth){cb(img);}
+  }
+
+  // ---- canvas sizing ----
+  function sizeCanvas(canvas,wrap){
+    var r=wrap.getBoundingClientRect();
+    var w=Math.max(1,Math.round(r.width));
+    var h=Math.max(1,Math.round(r.height));
+    canvas.width=Math.round(w*dpr);
+    canvas.height=Math.round(h*dpr);
+    return {w:w,h:h};
+  }
+
+  // draw an image with cover behaviour into ctx (ctx already scaled to css px)
+  function drawCover(ctx,img,cw,ch){
+    var iw=img.naturalWidth,ih=img.naturalHeight;
+    var scale=Math.max(cw/iw,ch/ih);
+    var dw=iw*scale,dh=ih*scale;
+    var dx=(cw-dw)/2,dy=(ch-dh)/2;
+    ctx.drawImage(img,dx,dy,dw,dh);
+  }
+
+  // ---- value-noise cloud field (procedural, animated drift) ----
+  // small permutation-based hash, smooth interpolation -> fbm
+  var perm=new Uint8Array(512);
+  (function(){
+    var p=new Uint8Array(256);
+    for(var i=0;i<256;i++)p[i]=i;
+    var seed=1337;
+    function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}
+    for(var j=255;j>0;j--){var k=(rnd()*(j+1))|0;var t=p[j];p[j]=p[k];p[k]=t;}
+    for(var m=0;m<512;m++)perm[m]=p[m&255];
+  })();
+  function fade(t){return t*t*t*(t*(t*6-15)+10);}
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function vnoise(x,y){
+    var xi=Math.floor(x)&255,yi=Math.floor(y)&255;
+    var xf=x-Math.floor(x),yf=y-Math.floor(y);
+    var aa=perm[perm[xi]+yi],ab=perm[perm[xi]+yi+1];
+    var ba=perm[perm[xi+1]+yi],bb=perm[perm[xi+1]+yi+1];
+    var u=fade(xf),v=fade(yf);
+    var x1=lerp(aa,ba,u),x2=lerp(ab,bb,u);
+    return lerp(x1,x2,v)/255; // 0..1
+  }
+  function fbm(x,y){
+    var amp=0.5,freq=1,sum=0,norm=0;
+    for(var o=0;o<4;o++){sum+=vnoise(x*freq,y*freq)*amp;norm+=amp;amp*=0.5;freq*=2;}
+    return sum/norm;
+  }
+
+  // cloud rendered to a low-res offscreen, scaled up for performance & softness
+  var cloudOff=document.createElement('canvas');
+  var cloudCtx=cloudOff.getContext('2d');
+  var CLOUD_W=120,CLOUD_H=160;
+  cloudOff.width=CLOUD_W;cloudOff.height=CLOUD_H;
+  var cloudData=cloudCtx.createImageData(CLOUD_W,CLOUD_H);
+
+  function renderCloud(t){
+    var cover=state.cloud/100; // 0..1
+    // threshold lowers as cover rises -> more of field becomes opaque cloud
+    // at cover=0 nothing; at cover=1 fully opaque
+    var dx=t*0.012, dy=t*0.005;
+    var d=cloudData.data;
+    var idx=0;
+    for(var y=0;y<CLOUD_H;y++){
+      for(var x=0;x<CLOUD_W;x++){
+        var n=fbm((x*0.045)+dx,(y*0.045)+dy);
+        // map cover into an alpha. Use cover both as threshold push and gain.
+        // cloudiness mass
+        var v=n+ (cover-0.5)*1.4; // shift distribution
+        var a=v*1.6-0.45;
+        if(a<0)a=0;else if(a>1)a=1;
+        a*=Math.pow(cover,0.55); // overall ramp so 0 cover => 0
+        // brightness of cloud: warm-white, slightly cool at night
+        var bright= state.night?200:236;
+        d[idx]=bright;
+        d[idx+1]=bright;
+        d[idx+2]= state.night?215:240;
+        d[idx+3]=Math.round(a*255);
+        idx+=4;
+      }
+    }
+    cloudCtx.putImageData(cloudData,0,0);
+  }
+
+  // ---- optical render ----
+  function renderOptical(t){
+    var sz=optSize;
+    if(!sz)return;
+    optCtx.setTransform(dpr,0,0,dpr,0,0);
+    optCtx.clearRect(0,0,sz.w,sz.h);
+    // base scene
+    if(optReady&&optImg){
+      // day/night dimming via globalAlpha-composited overlay after image
+      drawCover(optCtx,optImg,sz.w,sz.h);
+    }else{
+      optCtx.fillStyle='#08061c';optCtx.fillRect(0,0,sz.w,sz.h);
+    }
+    // night tint: darken toward deep blue (optical needs sunlight)
+    if(state.night){
+      optCtx.fillStyle='rgba(3,4,22,0.74)';
+      optCtx.fillRect(0,0,sz.w,sz.h);
+      optCtx.fillStyle='rgba(10,14,46,0.30)';
+      optCtx.fillRect(0,0,sz.w,sz.h);
+    }
+    // clouds on top, scaled with smoothing
+    if(state.cloud>0){
+      renderCloud(t);
+      optCtx.imageSmoothingEnabled=true;
+      optCtx.drawImage(cloudOff,0,0,CLOUD_W,CLOUD_H,0,0,sz.w,sz.h);
+    }
+    updateBlind();
+  }
+
+  function updateBlind(){
+    var blindNow=(state.cloud>=92)||(state.night&&state.cloud>=55);
+    if(blindNow){
+      blind.hidden=false;
+      blind.querySelector('.svo-blind-s').textContent=
+        state.night && state.cloud<92 ? 'darkness + cloud block the visible spectrum'
+        : 'cloud blocks the visible spectrum';
+    }else{
+      blind.hidden=true;
+    }
+  }
+
+  // ---- SAR render (always perfectly clear; cloud & night do NOT affect it) ----
+  function renderSar(){
+    var sz=sarSize;
+    if(!sz)return;
+    sarCtx.setTransform(dpr,0,0,dpr,0,0);
+    sarCtx.clearRect(0,0,sz.w,sz.h);
+    if(sarReady&&sarImg){
+      drawCover(sarCtx,sarImg,sz.w,sz.h);
+      // faint accent scan tint for "active sensor" feel, very subtle
+      sarCtx.fillStyle='rgba(60,200,255,0.04)';
+      sarCtx.fillRect(0,0,sz.w,sz.h);
+    }else{
+      sarCtx.fillStyle='#0a0c12';sarCtx.fillRect(0,0,sz.w,sz.h);
+    }
+  }
+
+  // ---- SAR annotation pins ----
+  // positions in 0..100 viewBox space (preserveAspectRatio none -> matches cover-ish)
+  var PINS=[
+    {x:30,y:24,k:'SMOOTH WATER → DARK',sub:'specular reflection'},
+    {x:68,y:52,k:'STRUCTURE → BRIGHT',sub:'double-bounce'},
+    {x:42,y:80,k:'TERRAIN → TEXTURED',sub:'volume scatter'}
+  ];
+  var SVGNS='http://www.w3.org/2000/svg';
+  function buildPins(){
+    pinsSvg.innerHTML='';
+    PINS.forEach(function(p){
+      var g=document.createElementNS(SVGNS,'g');
+      // marker ring
+      var ring=document.createElementNS(SVGNS,'circle');
+      ring.setAttribute('cx',p.x);ring.setAttribute('cy',p.y);ring.setAttribute('r','1.7');
+      ring.setAttribute('fill','none');ring.setAttribute('stroke',ACCENT);
+      ring.setAttribute('stroke-width','0.5');ring.setAttribute('vector-effect','non-scaling-stroke');
+      var dot=document.createElementNS(SVGNS,'circle');
+      dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);dot.setAttribute('r','0.6');
+      dot.setAttribute('fill',ACCENT);
+      g.appendChild(ring);g.appendChild(dot);
+      pinsSvg.appendChild(g);
+    });
+    layoutLabels();
+  }
+  // HTML labels overlaid (so text isn't stretched by preserveAspectRatio none)
+  var labelLayer=null;
+  function ensureLabelLayer(){
+    if(labelLayer)return;
+    labelLayer=document.createElement('div');
+    labelLayer.style.cssText='position:absolute;inset:0;pointer-events:none;';
+    sarWrap.appendChild(labelLayer);
+  }
+  function layoutLabels(){
+    ensureLabelLayer();
+    labelLayer.innerHTML='';
+    PINS.forEach(function(p){
+      var el=document.createElement('div');
+      var leftSide=p.x>55;
+      el.style.cssText='position:absolute;max-width:42%;'+
+        'left:'+p.x+'%;top:'+p.y+'%;transform:translate(-50%,-50%);';
+      var card=document.createElement('div');
+      var anchorRight=leftSide;
+      card.style.cssText='position:absolute;'+(anchorRight?'right:10px;':'left:10px;')+'top:-14px;'+
+        'white-space:nowrap;padding:4px 7px;border:1px solid var(--svo-hair2);'+
+        'border-radius:6px;background:rgba(5,3,20,0.78);'+
+        'font-family:Chakra Petch,sans-serif;font-style:italic;font-weight:700;'+
+        'letter-spacing:.06em;font-size:9.5px;line-height:1.25;color:var(--svo-text);';
+      card.innerHTML='<span style="color:'+ACCENT+'">'+p.k+'</span><br><span style="font-style:normal;font-family:Inter,sans-serif;font-weight:400;letter-spacing:.02em;color:var(--svo-muted);text-transform:none;font-size:9px;">'+p.sub+'</span>';
+      el.appendChild(card);
+      labelLayer.appendChild(el);
+    });
+    updatePinsVis();
+  }
+  function updatePinsVis(){
+    var vis=state.pins;
+    pinsSvg.style.opacity=vis?'1':'0';
+    if(labelLayer)labelLayer.style.opacity=vis?'1':'0';
+    legend.setAttribute('data-hidden',vis?'false':'true');
+  }
+
+  // ---- status line ----
+  function updateStatus(){
+    var sky=state.cloud>=92?'OVERCAST':(state.cloud>=45?'PARTLY CLOUDY':'CLEAR SKY');
+    var tod=state.night?'NIGHT':'DAY';
+    statusTxt.textContent=sky+' · '+tod;
+    var blindNow=(state.cloud>=92)||(state.night&&state.cloud>=55);
+    statusDot.setAttribute('data-state',blindNow?'blind':'clear');
+  }
+
+  // ---- range fill ----
+  function updateRangeFill(){
+    cloudRange.style.setProperty('--svo-fill',state.cloud+'%');
+  }
+
+  // ---- animation loop ----
+  var raf=null,running=false,startT=performance.now();
+  function frame(now){
+    var t=(now-startT)/1000;
+    // optical needs redraw when clouds present (drift) OR always cheap base; keep light
+    renderOptical(t);
+    // SAR static unless first paint -> only redraw on resize, but pulse handled by CSS
+    raf=requestAnimationFrame(frame);
+  }
+  function start(){
+    if(running)return;running=true;
+    if(reduceMotion){
+      // single optical frame, no drift loop
+      renderOptical(0);
+      return;
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  function stop(){
+    running=false;
+    if(raf){cancelAnimationFrame(raf);raf=null;}
+  }
+
+  // ---- full resize / first paint ----
+  var optSize=null,sarSize=null;
+  function resizeAll(){
+    dpr=Math.max(1,Math.min(window.devicePixelRatio||1,2));
+    optSize=sizeCanvas(optCanvas,optWrap);
+    sarSize=sizeCanvas(sarCanvas,sarWrap);
+    renderOptical(reduceMotion?0:(performance.now()-startT)/1000);
+    renderSar();
+    layoutLabels();
+  }
+
+  // ---- events ----
+  cloudRange.addEventListener('input',function(){
+    state.cloud=parseInt(cloudRange.value,10)||0;
+    cloudVal.textContent=state.cloud+'%';
+    updateRangeFill();updateStatus();
+    if(reduceMotion){renderOptical(0);} // ensure redraw when paused
+  });
+
+  timeBtn.addEventListener('click',function(){
+    state.night=!state.night;
+    timeBtn.setAttribute('aria-pressed',state.night?'true':'false');
+    timeIco.textContent=state.night?'☾':'☀';
+    timeLab.textContent=state.night?'NIGHT':'DAY';
+    updateStatus();
+    if(reduceMotion){renderOptical(0);}
+    else if(!running){renderOptical((performance.now()-startT)/1000);}
+  });
+
+  pinsBtn.addEventListener('click',function(){
+    state.pins=!state.pins;
+    pinsBtn.setAttribute('aria-pressed',state.pins?'true':'false');
+    updatePinsVis();
+  });
+
+  var resizeRaf=null;
+  window.addEventListener('resize',function(){
+    if(resizeRaf)cancelAnimationFrame(resizeRaf);
+    resizeRaf=requestAnimationFrame(resizeAll);
+  });
+
+  // ---- IntersectionObserver: ONLY pause/resume animation ----
+  if('IntersectionObserver' in window && !reduceMotion){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting)start();else stop();
+      });
+    },{threshold:0.01});
+    io.observe(root);
+  }
+
+  // ---- INIT: build everything & first paint immediately (un-gated) ----
+  cloudVal.textContent='0%';
+  updateRangeFill();
+  updateStatus();
+  buildPins();
+  resizeAll();          // first paint with placeholder bg
+  start();              // begin drift loop (IO may pause later)
+
+  // load imagery immediately; render as soon as available
+  loadImage('../assets/scenes/delta/rgb.jpg',function(img){
+    if(img){optImg=img;optReady=true;}
+    resizeAll();
+  });
+  loadImage('../assets/scenes/sar/sar.jpg',function(img){
+    if(img){sarImg=img;sarReady=true;}
+    renderSar();
+  });
+
+})();
+</script>
+</body></html>

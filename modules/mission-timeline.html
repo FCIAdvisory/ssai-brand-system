@@ -1,0 +1,391 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission timeline · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-mission-timeline{position:relative;width:100%;box-sizing:border-box;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;user-select:none;padding:4px 2px;}
+#kit-mission-timeline *{box-sizing:border-box;}
+#kit-mission-timeline .mt-head{display:flex;flex-direction:column;gap:14px;margin-bottom:22px;}
+#kit-mission-timeline .mt-eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a6abe6;font-weight:500;opacity:.8;}
+#kit-mission-timeline .mt-yearwrap{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;}
+#kit-mission-timeline .mt-year{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:clamp(54px,11vw,104px);line-height:.86;letter-spacing:.01em;color:#f4f5ff;font-variant-numeric:tabular-nums;text-shadow:0 0 38px rgba(60,123,224,.28);transition:text-shadow .4s ease;}
+#kit-mission-timeline .mt-meta{display:flex;flex-direction:column;gap:4px;padding-bottom:8px;min-width:0;}
+#kit-mission-timeline .mt-mission{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(13px,1.7vw,17px);letter-spacing:.04em;color:#f4f5ff;line-height:1.15;transition:color .35s ease;}
+#kit-mission-timeline .mt-domain{font-size:12px;letter-spacing:.04em;color:#a6abe6;transition:color .35s ease;}
+#kit-mission-timeline .mt-stage{position:relative;width:100%;height:170px;margin:0 0 14px;touch-action:none;}
+#kit-mission-timeline canvas{position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:14px;cursor:crosshair;}
+#kit-mission-timeline .mt-scrubber{position:absolute;top:0;left:0;width:30px;height:100%;transform:translateX(-50%);cursor:grab;z-index:3;display:flex;justify-content:center;}
+#kit-mission-timeline .mt-scrubber:active{cursor:grabbing;}
+#kit-mission-timeline .mt-scrubber:focus{outline:none;}
+#kit-mission-timeline .mt-scrub-flag{position:absolute;top:-2px;transform:translateY(-100%);padding:3px 9px;border-radius:7px;background:rgba(22,20,95,.92);border:1px solid rgba(60,123,224,.55);font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:12px;letter-spacing:.03em;color:#f4f5ff;white-space:nowrap;font-variant-numeric:tabular-nums;box-shadow:0 0 18px rgba(60,123,224,.35);pointer-events:none;opacity:0;transition:opacity .25s ease;}
+#kit-mission-timeline .mt-scrubber:hover .mt-scrub-flag,
+#kit-mission-timeline .mt-scrubber:focus-visible .mt-scrub-flag,
+#kit-mission-timeline .mt-stage.is-active .mt-scrub-flag{opacity:1;}
+#kit-mission-timeline .mt-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#a6abe6;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;}
+#kit-mission-timeline .mt-hint{font-family:'Inter',sans-serif;font-style:normal;font-weight:400;letter-spacing:.02em;text-transform:none;font-size:11px;color:#a6abe6;opacity:.66;text-align:center;}
+@media (max-width:560px){
+  #kit-mission-timeline .mt-hint{display:none;}
+  #kit-mission-timeline .mt-stage{height:150px;}
+}
+@media (prefers-reduced-motion:reduce){
+  #kit-mission-timeline .mt-year{text-shadow:none;}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Mission timeline</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-mission-timeline">
+  <div class="mt-head">
+    <div class="mt-eyebrow">FROM OBSERVATION TO UNDERSTANDING</div>
+    <div class="mt-yearwrap">
+      <div class="mt-year" data-year>1977</div>
+      <div class="mt-meta">
+        <div class="mt-mission" data-mission>VOYAGER PROGRAM</div>
+        <div class="mt-domain" data-domain>The Universe</div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-stage" data-stage>
+    <canvas data-canvas></canvas>
+    <div class="mt-scrubber" data-scrubber role="slider" tabindex="0"
+         aria-label="Mission timeline scrubber" aria-valuemin="1977" aria-valuemax="2026" aria-valuenow="1977">
+      <span class="mt-scrub-flag" data-flag>1977</span>
+    </div>
+  </div>
+  <div class="mt-foot">
+    <span class="mt-foot-a">1977</span>
+    <span class="mt-hint">Drag the scrubber or click a mission</span>
+    <span class="mt-foot-b">2026</span>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the scrubber (or click any mission marker / use arrow keys) to scrub the year; the large year, mission name, domain accent, progress rail and nearby markers all update live.</span>
+    <span class="mb-c-src">Real NASA mission milestones</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-mission-timeline');
+  if(!root) return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var C={ space:'#050314', indigo:'#16145f', orbit:'#3c7be0', star:'#f4f5ff',
+          muted:'#a6abe6', amber:'#f2b43c', teal:'#2fd9c3', violet:'#8a5cff' };
+  var DOMAIN={ sun:{c:C.amber,label:'The Sun'}, earth:{c:C.teal,label:'The Earth'}, uni:{c:C.violet,label:'The Universe'} };
+
+  var YEAR_MIN=1977, YEAR_MAX=2026, SPAN=YEAR_MAX-YEAR_MIN;
+
+  var MISSIONS=[
+    {year:1977, name:'VOYAGER PROGRAM', d:'uni'},
+    {year:1983, name:'INFRARED SURVEY', d:'uni'},
+    {year:1990, name:'ORBITAL OBSERVATORY', d:'uni'},
+    {year:1995, name:'SOLAR HELIOSPHERE', d:'sun'},
+    {year:1999, name:'EARTH RADIATION', d:'earth'},
+    {year:2004, name:'AURORA DYNAMICS', d:'earth'},
+    {year:2010, name:'SOLAR DYNAMICS', d:'sun'},
+    {year:2015, name:'OCEAN COLOR', d:'earth'},
+    {year:2018, name:'CORONAL PROBE', d:'sun'},
+    {year:2024, name:'DEEP FIELD SURVEY', d:'uni'}
+  ];
+
+  var stage=root.querySelector('[data-stage]');
+  var canvas=root.querySelector('[data-canvas]');
+  var ctx=canvas.getContext('2d');
+  var scrubEl=root.querySelector('[data-scrubber]');
+  var flagEl=root.querySelector('[data-flag]');
+  var yearEl=root.querySelector('[data-year]');
+  var missionEl=root.querySelector('[data-mission]');
+  var domainEl=root.querySelector('[data-domain]');
+
+  var W=0,H=0,dpr=1;
+  var PADX=14;
+  var t=0;
+  var pos=0;
+  var target=0;
+  var stars=[];
+  var dragging=false;
+  var raf=null;
+
+  function lerp(a,b,k){return a+(b-a)*k;}
+  function hexA(hex,a){
+    var n=parseInt(hex.slice(1),16);
+    return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';
+  }
+  function yearToX(y){ return PADX+((y-YEAR_MIN)/SPAN)*(W-2*PADX); }
+  function posToX(p){ return PADX+p*(W-2*PADX); }
+  function xToPos(x){ return Math.max(0,Math.min(1,(x-PADX)/(W-2*PADX))); }
+  function curYear(){ return YEAR_MIN+pos*SPAN; }
+
+  function buildStars(){
+    stars=[];
+    var n=Math.round(W/9);
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.0+0.25,
+        a:Math.random()*0.5+0.12, tw:Math.random()*Math.PI*2, sp:Math.random()*1.6+0.4});
+    }
+  }
+
+  function resize(){
+    W=root.clientWidth;
+    H=stage.clientHeight||170;
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(W*dpr);
+    canvas.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    buildStars();
+  }
+
+  function updateText(){
+    var y=Math.round(curYear());
+    yearEl.textContent=y;
+    flagEl.textContent=y;
+    scrubEl.setAttribute('aria-valuenow',y);
+    var best=MISSIONS[0],bd=1e9;
+    for(var i=0;i<MISSIONS.length;i++){
+      var dd=Math.abs(MISSIONS[i].year-curYear());
+      if(dd<bd){bd=dd;best=MISSIONS[i];}
+    }
+    var dom=DOMAIN[best.d];
+    missionEl.textContent=best.name;
+    domainEl.textContent=dom.label;
+    domainEl.style.color=dom.c;
+    yearEl.style.textShadow=reduce?'none':('0 0 40px '+hexA(dom.c,.30));
+  }
+
+  function setPos(p,instant){
+    target=Math.max(0,Math.min(1,p));
+    if(instant){pos=target;}
+    updateText();
+    layoutScrubber();
+  }
+
+  function layoutScrubber(){
+    scrubEl.style.left=posToX(pos)+'px';
+  }
+
+  var trackY;
+
+  function draw(){
+    trackY=H*0.62;
+    ctx.clearRect(0,0,W,H);
+
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      var tw=reduce?1:(0.55+0.45*Math.sin(t*s.sp+s.tw));
+      ctx.beginPath();
+      ctx.arc(s.x*W,s.y*(trackY-18),s.r,0,Math.PI*2);
+      ctx.fillStyle=hexA(C.star,s.a*tw);
+      ctx.fill();
+    }
+
+    var x0=PADX, x1=W-PADX, headX=posToX(pos);
+
+    ctx.beginPath();
+    ctx.moveTo(x0,trackY); ctx.lineTo(x1,trackY);
+    ctx.lineWidth=2; ctx.strokeStyle=hexA(C.muted,.18); ctx.stroke();
+
+    for(var yr=1980; yr<=2020; yr+=10){
+      var tx=yearToX(yr);
+      ctx.beginPath();
+      ctx.moveTo(tx,trackY-5); ctx.lineTo(tx,trackY+5);
+      ctx.lineWidth=1; ctx.strokeStyle=hexA(C.muted,.28); ctx.stroke();
+      ctx.font="400 9px Inter, sans-serif";
+      ctx.fillStyle=hexA(C.muted,.42);
+      ctx.textAlign='center'; ctx.textBaseline='top';
+      ctx.fillText(yr,tx,trackY+9);
+    }
+
+    var nearest=null,nd=1e9;
+    for(var m=0;m<MISSIONS.length;m++){
+      var d2=Math.abs(MISSIONS[m].year-curYear());
+      if(d2<nd){nd=d2;nearest=MISSIONS[m];}
+    }
+    var accent=DOMAIN[nearest.d].c;
+
+    var grad=ctx.createLinearGradient(x0,0,headX,0);
+    grad.addColorStop(0,hexA(C.orbit,.30));
+    grad.addColorStop(1,hexA(accent,.95));
+    ctx.beginPath();
+    ctx.moveTo(x0,trackY); ctx.lineTo(headX,trackY);
+    ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.strokeStyle=grad; ctx.stroke();
+
+    for(var j=0;j<MISSIONS.length;j++){
+      var mi=MISSIONS[j];
+      var mx=yearToX(mi.year);
+      var col=DOMAIN[mi.d].c;
+      var dist=Math.abs(mi.year-curYear());
+      var act=Math.max(0,1-dist/4.2);
+      var passed=mi.year<=curYear()+0.001;
+
+      ctx.beginPath();
+      ctx.moveTo(mx,trackY); ctx.lineTo(mx,trackY-18-act*10);
+      ctx.lineWidth=1; ctx.strokeStyle=hexA(col,passed?(.30+act*.5):.16); ctx.stroke();
+
+      var ny=trackY-18-act*10;
+      if(act>0.02 && !reduce){
+        ctx.beginPath();
+        ctx.arc(mx,ny,5+act*9,0,Math.PI*2);
+        ctx.fillStyle=hexA(col,.12*act);
+        ctx.fill();
+      }
+      var rr=2.4+act*2.6;
+      ctx.beginPath();
+      ctx.arc(mx,ny,rr,0,Math.PI*2);
+      ctx.fillStyle=passed?col:hexA(col,.34);
+      ctx.globalAlpha=passed?1:.8;
+      ctx.fill();
+      ctx.globalAlpha=1;
+      if(act>0.5){
+        ctx.beginPath();
+        ctx.arc(mx,ny,rr+2.2,0,Math.PI*2);
+        ctx.lineWidth=1; ctx.strokeStyle=hexA(col,(act-0.5)*1.4); ctx.stroke();
+      }
+
+      if(act>0.18){
+        var la=Math.min(1,(act-0.18)/0.5);
+        ctx.font="700 9.5px 'Chakra Petch', sans-serif";
+        ctx.fillStyle=hexA(C.star,.55+.45*la);
+        ctx.textBaseline='bottom';
+        var lw=ctx.measureText(mi.name).width, half=lw/2, lx=mx;
+        if(lx-half<PADX) lx=PADX+half;
+        if(lx+half>W-PADX) lx=W-PADX-half;
+        ctx.textAlign='center';
+        ctx.fillText(mi.name, lx, ny-9-act*3);
+      }
+    }
+
+    var beamTop=24, beamBot=H-22;
+    var bg=ctx.createLinearGradient(0,beamTop,0,beamBot);
+    bg.addColorStop(0,hexA(accent,0));
+    bg.addColorStop(.5,hexA(accent,reduce?.5:.6));
+    bg.addColorStop(1,hexA(accent,0));
+    ctx.beginPath();
+    ctx.moveTo(headX,beamTop); ctx.lineTo(headX,beamBot);
+    ctx.lineWidth=1.4; ctx.strokeStyle=bg; ctx.stroke();
+
+    var pulse=reduce?0:(0.5+0.5*Math.sin(t*2.2));
+    ctx.beginPath();
+    ctx.arc(headX,trackY,8+pulse*5,0,Math.PI*2);
+    ctx.fillStyle=hexA(accent,.10+pulse*.10);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(headX,trackY,5.5,0,Math.PI*2);
+    ctx.fillStyle=accent; ctx.fill();
+    ctx.beginPath();
+    ctx.arc(headX,trackY,5.5,0,Math.PI*2);
+    ctx.lineWidth=1.5; ctx.strokeStyle=hexA(C.star,.85); ctx.stroke();
+  }
+
+  function frame(){
+    t+=0.016;
+    if(Math.abs(target-pos)>0.0002){
+      pos=lerp(pos,target,0.18);
+      updateText();
+      layoutScrubber();
+    } else if(pos!==target){
+      pos=target; layoutScrubber();
+    }
+    draw();
+    raf=requestAnimationFrame(frame);
+  }
+
+  function clientToPos(clientX){
+    var r=canvas.getBoundingClientRect();
+    return xToPos(clientX-r.left);
+  }
+  function startDrag(e){
+    dragging=true; stage.classList.add('is-active');
+    if(e.target===canvas){ setPos(clientToPos(e.clientX)); }
+    if(scrubEl.setPointerCapture && e.pointerId!=null){ try{scrubEl.setPointerCapture(e.pointerId);}catch(_){} }
+    window.addEventListener('pointermove',moveDrag);
+    window.addEventListener('pointerup',endDrag);
+    e.preventDefault();
+  }
+  function moveDrag(e){ if(!dragging)return; setPos(clientToPos(e.clientX)); e.preventDefault(); }
+  function endDrag(){ dragging=false; stage.classList.remove('is-active');
+    window.removeEventListener('pointermove',moveDrag);
+    window.removeEventListener('pointerup',endDrag);
+  }
+
+  scrubEl.addEventListener('pointerdown',startDrag);
+  canvas.addEventListener('pointerdown',function(e){
+    var p=clientToPos(e.clientX);
+    var yr=YEAR_MIN+p*SPAN;
+    var best=null,bd=2.0;
+    for(var i=0;i<MISSIONS.length;i++){
+      var dd=Math.abs(MISSIONS[i].year-yr);
+      if(dd<bd){bd=dd;best=MISSIONS[i];}
+    }
+    if(best){ setPos((best.year-YEAR_MIN)/SPAN); }
+    else { startDrag(e); }
+  });
+
+  scrubEl.addEventListener('keydown',function(e){
+    var step=1/SPAN, big=5/SPAN, handled=true;
+    if(e.key==='ArrowRight'||e.key==='ArrowUp') setPos(target+step);
+    else if(e.key==='ArrowLeft'||e.key==='ArrowDown') setPos(target-step);
+    else if(e.key==='PageUp') setPos(target+big);
+    else if(e.key==='PageDown') setPos(target-big);
+    else if(e.key==='Home') setPos(0);
+    else if(e.key==='End') setPos(1);
+    else handled=false;
+    if(handled){ stage.classList.add('is-active'); e.preventDefault();
+      clearTimeout(scrubEl._kt); scrubEl._kt=setTimeout(function(){stage.classList.remove('is-active');},1200);
+    }
+  });
+
+  var rT=null;
+  window.addEventListener('resize',function(){
+    clearTimeout(rT); rT=setTimeout(function(){ resize(); layoutScrubber(); if(reduce)draw(); },120);
+  });
+
+  resize();
+  setPos(0,true);
+  if(reduce){ draw(); }
+  else { raf=requestAnimationFrame(frame); }
+})();
+</script>
+</body></html>

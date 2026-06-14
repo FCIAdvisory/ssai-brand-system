@@ -1,0 +1,582 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thermal fire detection · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-wildfire-detect{
+  --wfd2-space:#050314; --wfd2-indigo:#16145f; --wfd2-star:#f4f5ff; --wfd2-muted:#a6abe6; --wfd2-hair:rgba(166,171,230,0.16);
+  --wfd2-accent:#3cc8ff; --wfd2-accent-rgb:60,200,255;
+  position:relative; width:100%; box-sizing:border-box;
+  background:var(--wfd2-space);
+  border:1px solid var(--wfd2-hair); border-radius:14px;
+  padding:16px 16px 14px; color:var(--wfd2-star);
+  font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+#kit-wildfire-detect *{box-sizing:border-box;}
+#kit-wildfire-detect .wfd2-sr{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+#kit-wildfire-detect .wfd2-head{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; flex-wrap:wrap;
+}
+#kit-wildfire-detect .wfd2-title{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase;
+  letter-spacing:0.06em; font-size:15px; line-height:1.1; margin:0; color:var(--wfd2-star);
+}
+#kit-wildfire-detect .wfd2-sub{
+  font-size:11.5px; color:var(--wfd2-muted); margin-top:3px; letter-spacing:0.02em;
+}
+#kit-wildfire-detect .wfd2-toggle{
+  display:inline-flex; border:1px solid var(--wfd2-hair); border-radius:999px; padding:3px; gap:2px;
+  background:rgba(22,20,95,0.25);
+}
+#kit-wildfire-detect .wfd2-band{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700; text-transform:uppercase;
+  letter-spacing:0.05em; font-size:11px;
+  border:0; background:transparent; color:var(--wfd2-muted);
+  padding:6px 13px; border-radius:999px; cursor:pointer;
+  transition:color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+#kit-wildfire-detect .wfd2-band:hover{ color:var(--wfd2-star); }
+#kit-wildfire-detect .wfd2-band.wfd2-on{
+  color:var(--wfd2-space); background:var(--wfd2-accent);
+  box-shadow:0 0 14px -2px var(--wfd2-accent);
+}
+#kit-wildfire-detect .wfd2-stage{
+  position:relative; width:100%; border-radius:10px; overflow:hidden;
+  border:1px solid var(--wfd2-hair); background:#02010a;
+}
+#kit-wildfire-detect .wfd2-canvas{ display:block; width:100%; height:auto; }
+#kit-wildfire-detect .wfd2-load{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:11px;
+  background:rgba(5,3,20,0.86); color:var(--wfd2-muted);
+  font-size:12px; letter-spacing:0.06em; transition:opacity .4s ease; z-index:3;
+}
+#kit-wildfire-detect .wfd2-load.wfd2-hide{ opacity:0; pointer-events:none; }
+#kit-wildfire-detect .wfd2-load-ring{
+  width:16px; height:16px; border-radius:50%;
+  border:2px solid rgba(var(--wfd2-accent-rgb),0.25); border-top-color:var(--wfd2-accent);
+  animation:wfd2spin 0.9s linear infinite;
+}
+@keyframes wfd2spin{to{transform:rotate(360deg);}}
+#kit-wildfire-detect .wfd2-coord{
+  position:absolute; left:10px; top:10px; pointer-events:none; z-index:2;
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  font-size:11px; letter-spacing:0.06em; color:var(--wfd2-star);
+  background:rgba(5,3,20,0.6); padding:3px 8px; border-radius:6px; border:1px solid var(--wfd2-hair);
+}
+#kit-wildfire-detect .wfd2-cap{
+  position:absolute; right:10px; bottom:9px; left:10px; pointer-events:none; z-index:2; text-align:right;
+  font-size:10px; letter-spacing:0.04em; color:var(--wfd2-muted);
+  text-shadow:0 1px 4px rgba(0,0,0,0.85);
+}
+#kit-wildfire-detect .wfd2-hud{
+  display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;
+}
+#kit-wildfire-detect .wfd2-stat{
+  flex:1 1 0; min-width:88px;
+  border:1px solid var(--wfd2-hair); border-radius:10px; padding:9px 12px;
+  background:linear-gradient(180deg, rgba(22,20,95,0.30), rgba(22,20,95,0.10));
+}
+#kit-wildfire-detect .wfd2-k{
+  font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--wfd2-muted);
+}
+#kit-wildfire-detect .wfd2-v{
+  font-family:'Chakra Petch','Inter',sans-serif; font-style:italic; font-weight:700;
+  font-size:22px; line-height:1.05; margin-top:3px; color:var(--wfd2-star);
+  font-variant-numeric:tabular-nums;
+}
+#kit-wildfire-detect .wfd2-stat.wfd2-accent .wfd2-v{ color:var(--wfd2-accent); }
+#kit-wildfire-detect .wfd2-legend{
+  display:flex; align-items:center; gap:14px; margin-top:10px; flex-wrap:wrap;
+  font-size:11px; color:var(--wfd2-muted); letter-spacing:0.02em;
+}
+#kit-wildfire-detect .wfd2-legend>span{ display:inline-flex; align-items:center; gap:6px; }
+#kit-wildfire-detect .wfd2-note{ font-style:italic; opacity:0.85; flex:1 1 200px; min-width:180px; }
+#kit-wildfire-detect .wfd2-swatch{ width:9px; height:9px; border-radius:50%; display:inline-block; flex:none; }
+#kit-wildfire-detect .wfd2-sw-fire{ background:#ff6420; box-shadow:0 0 7px 1px rgba(255,100,32,0.85); }
+#kit-wildfire-detect .wfd2-sw-scan{ background:var(--wfd2-accent); box-shadow:0 0 7px 1px var(--wfd2-accent); }
+@media (max-width:430px){
+  #kit-wildfire-detect .wfd2-title{font-size:13.5px;}
+  #kit-wildfire-detect .wfd2-v{font-size:18px;}
+  #kit-wildfire-detect .wfd2-stat{min-width:calc(50% - 5px);}
+}
+@media (prefers-reduced-motion: reduce){
+  #kit-wildfire-detect .wfd2-band{transition:none;}
+  #kit-wildfire-detect .wfd2-load-ring{animation:none;}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Thermal fire detection</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-wildfire-detect">
+  <h2 class="wfd2-sr">Satellite thermal-infrared scan line sweeping a real NASA MODIS image of the 2021 Dixie Fire, detecting active-fire and burn-scar hotspots from the genuine shortwave-infrared and near-infrared bands.</h2>
+  <div class="wfd2-head">
+    <div>
+      <p class="wfd2-title">Thermal fire detection</p>
+      <div class="wfd2-sub">Active-fire scan &middot; real SWIR + NDVI bands</div>
+    </div>
+    <div class="wfd2-toggle" role="group" aria-label="Spectral view">
+      <button class="wfd2-band wfd2-on" data-view="optical" type="button" aria-pressed="true">Optical</button>
+      <button class="wfd2-band" data-view="thermal" type="button" aria-pressed="false">Thermal SWIR</button>
+    </div>
+  </div>
+  <div class="wfd2-stage">
+    <canvas class="wfd2-canvas" aria-label="Real NASA MODIS Dixie Fire scene with a sweeping thermal scan line detecting fire hotspots"></canvas>
+    <div class="wfd2-load" data-wfd2="load"><span class="wfd2-load-ring"></span><span class="wfd2-load-txt">Loading NASA imagery&hellip;</span></div>
+    <div class="wfd2-coord" data-wfd2="coord">&mdash; scanning &mdash;</div>
+    <div class="wfd2-cap">NASA MODIS / Aqua &middot; Dixie Fire, Sierra Nevada &middot; 2021-10-08</div>
+  </div>
+  <div class="wfd2-hud">
+    <div class="wfd2-stat wfd2-accent"><div class="wfd2-k">Hotspots detected</div><div class="wfd2-v" data-wfd2="count">0</div></div>
+    <div class="wfd2-stat"><div class="wfd2-k">Swath scanned</div><div class="wfd2-v" data-wfd2="sweep">0%</div></div>
+    <div class="wfd2-stat"><div class="wfd2-k">Peak SWIR</div><div class="wfd2-v" data-wfd2="frp">&mdash;</div></div>
+    <div class="wfd2-stat"><div class="wfd2-k">Orbit pass</div><div class="wfd2-v" data-wfd2="pass">#1</div></div>
+  </div>
+  <div class="wfd2-legend">
+    <span><span class="wfd2-swatch wfd2-sw-scan"></span>Scan line</span>
+    <span><span class="wfd2-swatch wfd2-sw-fire"></span>Detected hotspot (high SWIR, low NDVI)</span>
+    <span class="wfd2-note" data-wfd2="why">In shortwave-IR, burn scars and active fire stay bright while green canopy goes dark.</span>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Loads the real true-color MODIS scene and renders immediately; a scan line sweeps left-to-right and flags burn-scar / active-fire hotspots by reading the genuine SWIR (2130 nm) and NDVI bands from the image, lighting them as pulsing detections with a running count, swath-progress and peak-SWIR readout. Toggle Optical vs Thermal SWIR to recolor the same real pixels as a heat ramp and see why fire pops in shortwave-infrared; hover the scene for a live latitude/longitude readout.</span>
+    <span class="mb-c-src">Data · NASA MODIS — Dixie Fire, 2021</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-wildfire-detect');
+  if(!root) return;
+
+  var canvas=root.querySelector('.wfd2-canvas');
+  var ctx=canvas.getContext('2d');
+  var loadEl=root.querySelector('[data-wfd2="load"]');
+  var countEl=root.querySelector('[data-wfd2="count"]');
+  var sweepEl=root.querySelector('[data-wfd2="sweep"]');
+  var frpEl=root.querySelector('[data-wfd2="frp"]');
+  var passEl=root.querySelector('[data-wfd2="pass"]');
+  var coordEl=root.querySelector('[data-wfd2="coord"]');
+  var whyEl=root.querySelector('[data-wfd2="why"]');
+  var btnOptical=root.querySelector('[data-view="optical"]');
+  var btnThermal=root.querySelector('[data-view="thermal"]');
+
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+
+  /* real provenance for the on-disk Dixie Fire MODIS scene */
+  var SCENE={ bbox:[-121.8,39.5,-120.7,40.5] }; /* W,S,E,N */
+
+  var accent='#3cc8ff', accentRGB='60,200,255';
+  function hexToRGB(h){ if(!h) return null; h=h.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2]; if(h.length!==6) return null; var n=parseInt(h,16); if(isNaN(n)) return null; return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255); }
+  function readAccent(){
+    try{
+      var cs=getComputedStyle(document.documentElement);
+      var a=cs.getPropertyValue('--accent').trim();
+      if(a) accent=a;
+      var rg=hexToRGB(accent); if(rg) accentRGB=rg;
+    }catch(e){}
+    root.style.setProperty('--wfd2-accent',accent);
+    root.style.setProperty('--wfd2-accent-rgb',accentRGB);
+  }
+  readAccent();
+
+  /* ---- offscreen buffers: real pixel data ---- */
+  var IW=0, IH=0;                 /* native image dims */
+  var srcRGB=null, srcIR=null;    /* Uint8ClampedArray of real bands */
+  var opticalCanvas=null;         /* prepared true-color raster (native res) */
+  var thermalCanvas=null;         /* prepared SWIR heat-ramp raster */
+  var ready=false;
+
+  /* CSS display size (logical px) */
+  var W=0, H=0;
+  var view='optical';
+
+  /* detection grid: cluster real fire pixels into discrete hotspots */
+  var cells=null;                 /* per native pixel: 1 if burn/fire flagged */
+  var hotspots=[];                /* clustered detections in normalized coords */
+  var peakSwir=0;
+
+  /* ---- image loading (un-gated, starts immediately) ---- */
+  function loadImage(src){
+    return new Promise(function(res,rej){
+      var im=new Image(); var done=false;
+      im.onload=function(){ if(!done){done=true;res(im);} };
+      im.onerror=function(){ if(!done){done=true;rej(new Error('fail '+src));} };
+      im.src=src;
+      if(im.complete && im.naturalWidth){ if(!done){done=true;res(im);} }
+    });
+  }
+
+  function decode(){
+    var base='../assets/scenes/wildfire/';
+    return Promise.all([loadImage(base+'rgb.jpg'), loadImage(base+'ir.png')]).then(function(ims){
+      var rgbIm=ims[0], irIm=ims[1];
+      IW=rgbIm.naturalWidth; IH=rgbIm.naturalHeight;
+      var off=document.createElement('canvas'); off.width=IW; off.height=IH;
+      var octx=off.getContext('2d',{willReadFrequently:true});
+      octx.drawImage(rgbIm,0,0,IW,IH);
+      srcRGB=octx.getImageData(0,0,IW,IH).data;
+      octx.clearRect(0,0,IW,IH);
+      octx.drawImage(irIm,0,0,IW,IH);
+      srcIR=octx.getImageData(0,0,IW,IH).data;
+      buildViews();
+      detectFires();
+    });
+  }
+
+  /* prepare both rasters once at native resolution */
+  function buildViews(){
+    /* optical = the real true-color rgb.jpg, drawn straight */
+    opticalCanvas=document.createElement('canvas'); opticalCanvas.width=IW; opticalCanvas.height=IH;
+    var oc=opticalCanvas.getContext('2d');
+    var oimg=oc.createImageData(IW,IH); oimg.data.set(srcRGB); oc.putImageData(oimg,0,0);
+
+    /* thermal = SWIR2 (ir.R) mapped through a black->red->orange->white heat ramp */
+    thermalCanvas=document.createElement('canvas'); thermalCanvas.width=IW; thermalCanvas.height=IH;
+    var tc=thermalCanvas.getContext('2d');
+    var timg=tc.createImageData(IW,IH); var td=timg.data;
+    var n=IW*IH;
+    for(var i=0;i<n;i++){
+      var p=i<<2;
+      var s=srcIR[p]; /* SWIR2 2130nm */
+      var c=heat(s);
+      td[p]=c[0]; td[p+1]=c[1]; td[p+2]=c[2]; td[p+3]=255;
+    }
+    tc.putImageData(timg,0,0);
+  }
+
+  /* perceptual heat ramp 0..255 -> deep indigo -> red -> orange -> white */
+  function heat(v){
+    var t=v/255;
+    if(t<0.0001) return [4,3,18];
+    var stops=[
+      [0.00, 6, 4, 26],
+      [0.30, 70, 14, 70],
+      [0.55, 190, 40, 30],
+      [0.78, 255, 120, 24],
+      [0.92, 255, 196, 80],
+      [1.00, 255, 250, 230]
+    ];
+    for(var i=1;i<stops.length;i++){
+      if(t<=stops[i][0]){
+        var a=stops[i-1], b=stops[i];
+        var f=(t-a[0])/(b[0]-a[0]);
+        return [ (a[1]+(b[1]-a[1])*f)|0, (a[2]+(b[2]-a[2])*f)|0, (a[3]+(b[3]-a[3])*f)|0 ];
+      }
+    }
+    return [255,250,230];
+  }
+
+  /* read real bands, flag burn-scar / active-fire pixels, cluster to hotspots */
+  function detectFires(){
+    var n=IW*IH;
+    cells=new Uint8Array(n);
+    peakSwir=0;
+    /* thresholds validated against the real raster: high SWIR2 AND low NDVI */
+    var SWIR_MIN=150, NDVI_MAX=0.14;
+    var flagged=[];
+    for(var i=0;i<n;i++){
+      var p=i<<2;
+      var swir=srcIR[p];      /* ir.R = SWIR2 2130nm */
+      var nir=srcIR[p+1];     /* ir.G = NIR 858nm */
+      var red=srcIR[p+2];     /* ir.B = Red 645nm */
+      if(swir>peakSwir) peakSwir=swir;
+      var denom=nir+red;
+      var ndvi=denom>0?(nir-red)/denom:0;
+      if(swir>=SWIR_MIN && ndvi<NDVI_MAX){
+        cells[i]=1;
+        flagged.push(i);
+      }
+    }
+    clusterHotspots(flagged);
+  }
+
+  /* coarse grid clustering so the running count reflects real fire clusters,
+     not per-pixel noise. Each non-empty grid cell with enough flagged pixels
+     becomes one detection, positioned at its real centroid. */
+  function clusterHotspots(flagged){
+    hotspots=[];
+    if(!flagged.length) return;
+    var GX=9, GY=Math.max(8,Math.round(9*IH/IW));
+    var cellW=IW/GX, cellH=IH/GY;
+    var acc={}; /* key -> {sx,sy,c,maxSwir} */
+    for(var k=0;k<flagged.length;k++){
+      var idx=flagged[k];
+      var x=idx%IW, y=(idx/IW)|0;
+      var gx=Math.min(GX-1,(x/cellW)|0), gy=Math.min(GY-1,(y/cellH)|0);
+      var key=gy*GX+gx;
+      var a=acc[key]; if(!a){ a=acc[key]={sx:0,sy:0,c:0,ms:0}; }
+      a.sx+=x; a.sy+=y; a.c++;
+      var sw=srcIR[idx<<2]; if(sw>a.ms) a.ms=sw;
+    }
+    var minPix=Math.max(6, Math.round(cellW*cellH*0.10));
+    for(var key2 in acc){
+      var g=acc[key2];
+      if(g.c<minPix) continue;
+      var cx=g.sx/g.c, cy=g.sy/g.c;
+      var nx=cx/IW, ny=cy/IH;
+      var inten=Math.min(1,(g.ms-150)/105);            /* 150..255 -> 0..1 */
+      var size=Math.min(1,g.c/(cellW*cellH));
+      hotspots.push({
+        nx:nx, ny:ny,
+        intensity:0.35+inten*0.65,
+        swir:g.ms,
+        frp:Math.round(8+inten*inten*420),
+        detected:false, ignite:0,
+        pulse:(nx*97.1+ny*51.7)%6.283
+      });
+    }
+    /* sort left-to-right so the sweep reveals them in order */
+    hotspots.sort(function(a,b){ return a.nx-b.nx; });
+  }
+
+  /* ---- sizing ---- */
+  function resize(){
+    var rect=root.getBoundingClientRect();
+    var avail=Math.max(280, rect.width - 32);
+    W=avail;
+    if(IW && IH){ H=Math.round(W*(IH/IW)); }
+    else { H=Math.round(W*0.62); }
+    canvas.style.height=H+'px';
+    canvas.width=Math.round(W*dpr);
+    canvas.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  /* ---- animation state ---- */
+  var sweepX=0;            /* 0..1 normalized x of scan line */
+  var sweepSpeed=0.14;     /* per second */
+  var orbitPass=1;
+  var detectedCount=0;
+  var lastT=0, running=false, visible=false, rafId=0;
+
+  function resetPass(){
+    for(var i=0;i<hotspots.length;i++){ hotspots[i].detected=false; hotspots[i].ignite=0; }
+    detectedCount=0;
+  }
+
+  function setView(v){
+    view=v;
+    var optical=(v==='optical');
+    btnOptical.classList.toggle('wfd2-on',optical);
+    btnThermal.classList.toggle('wfd2-on',!optical);
+    btnOptical.setAttribute('aria-pressed',optical?'true':'false');
+    btnThermal.setAttribute('aria-pressed',(!optical)?'true':'false');
+    if(whyEl){
+      whyEl.textContent = optical
+        ? 'In true color the burn scar is muted; the detector still reads the hidden SWIR + NDVI bands.'
+        : 'Shortwave-IR (2130 nm): burn scars and active fire stay bright while green canopy goes dark.';
+    }
+    if(ready) render(performance.now(),true);
+  }
+
+  /* draw the base scene + scan + detections */
+  function render(t,forceStatic){
+    if(!ready) return;
+    readAccent();
+    var dt = (lastT && !forceStatic) ? Math.min(0.05,(t-lastT)/1000) : 0;
+    lastT=t;
+
+    /* advance sweep */
+    if(running && !reduce && !forceStatic){
+      sweepX += sweepSpeed*dt;
+      if(sweepX>1.06){ sweepX=-0.02; orbitPass++; resetPass(); }
+    }
+    if(reduce){ sweepX=1.06; } /* show everything detected, no motion */
+
+    var scanPx=sweepX*W;
+
+    ctx.clearRect(0,0,W,H);
+    /* base imagery */
+    var base = (view==='optical')?opticalCanvas:thermalCanvas;
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(base,0,0,IW,IH,0,0,W,H);
+
+    /* subtle scientific darken on the unscanned side to read the sweep */
+    if(!reduce && sweepX>-0.02 && sweepX<1.06){
+      ctx.save();
+      ctx.fillStyle='rgba(5,3,20,0.16)';
+      ctx.fillRect(scanPx,0,W-scanPx,H);
+      ctx.restore();
+    }
+
+    /* detections (read real clusters) */
+    for(var f=0;f<hotspots.length;f++){
+      var fr=hotspots[f];
+      var fx=fr.nx*W, fy=fr.ny*H;
+      if(!fr.detected && (reduce || scanPx>=fx)){
+        fr.detected=true; detectedCount++;
+      }
+      var target = fr.detected?1:0;
+      if(reduce||forceStatic) fr.ignite=target;
+      else fr.ignite += (target-fr.ignite)*Math.min(1,dt*5);
+      if(fr.ignite<=0.002) continue;
+
+      if(running && !reduce && !forceStatic) fr.pulse += dt*(2.0+fr.intensity*2.2);
+      var pulse=0.78+0.22*Math.sin(fr.pulse);
+      var ig=fr.ignite;
+      var coreR=(2.6+fr.intensity*4.2)*ig;
+      var haloR=coreR*(3.2+pulse*1.1);
+
+      /* halo */
+      var g=ctx.createRadialGradient(fx,fy,0,fx,fy,haloR);
+      g.addColorStop(0,'rgba(255,150,40,'+(0.55*ig)+')');
+      g.addColorStop(0.4,'rgba(255,96,32,'+(0.30*ig*pulse)+')');
+      g.addColorStop(1,'rgba(255,60,20,0)');
+      ctx.fillStyle=g;
+      ctx.beginPath(); ctx.arc(fx,fy,haloR,0,6.2832); ctx.fill();
+
+      /* core */
+      ctx.globalAlpha=ig;
+      ctx.fillStyle='#fff2d6';
+      ctx.beginPath(); ctx.arc(fx,fy,coreR*0.55,0,6.2832); ctx.fill();
+      ctx.fillStyle='#ff7b28';
+      ctx.beginPath(); ctx.arc(fx,fy,coreR,0,6.2832); ctx.fill();
+      ctx.globalAlpha=1;
+
+      /* detection reticle for freshly found hotspots */
+      if(ig>0.15 && ig<0.97){
+        ctx.strokeStyle='rgba('+accentRGB+','+(0.9*(1-ig))+')';
+        ctx.lineWidth=1.2;
+        var rr=coreR+10*(1-ig)+6;
+        ctx.strokeRect(fx-rr,fy-rr,rr*2,rr*2);
+      }
+    }
+
+    /* scan line */
+    if(!reduce && scanPx>-2 && scanPx<W+2){
+      var lead=Math.max(0,scanPx-26);
+      var lg=ctx.createLinearGradient(lead,0,scanPx,0);
+      lg.addColorStop(0,'rgba('+accentRGB+',0)');
+      lg.addColorStop(1,'rgba('+accentRGB+',0.22)');
+      ctx.fillStyle=lg;
+      ctx.fillRect(lead,0,scanPx-lead,H);
+
+      ctx.strokeStyle='rgba('+accentRGB+',0.95)';
+      ctx.lineWidth=2;
+      ctx.shadowColor='rgba('+accentRGB+',0.9)';
+      ctx.shadowBlur=14;
+      ctx.beginPath(); ctx.moveTo(scanPx,0); ctx.lineTo(scanPx,H); ctx.stroke();
+      ctx.shadowBlur=0;
+    }
+
+    /* HUD readouts */
+    countEl.textContent=detectedCount;
+    var sw=Math.max(0,Math.min(1,sweepX));
+    sweepEl.textContent=Math.round(sw*100)+'%';
+    frpEl.textContent=peakSwir?peakSwir:'—';
+    passEl.textContent='#'+orbitPass;
+  }
+
+  function frame(t){ if(!running) return; render(t,false); rafId=requestAnimationFrame(frame); }
+  function start(){ if(running||!ready||reduce) return; running=true; lastT=0; rafId=requestAnimationFrame(frame); }
+  function stop(){ running=false; if(rafId) cancelAnimationFrame(rafId); rafId=0; }
+
+  /* hover -> live lat/lon from real scene bbox */
+  function showCoord(clientX,clientY){
+    var r=canvas.getBoundingClientRect();
+    var fx=(clientX-r.left)/r.width, fy=(clientY-r.top)/r.height;
+    if(fx<0||fx>1||fy<0||fy>1){ coordEl.textContent='— scanning —'; return; }
+    var bb=SCENE.bbox;
+    var lon=bb[0]+fx*(bb[2]-bb[0]);
+    var lat=bb[3]-fy*(bb[3]-bb[1]);
+    coordEl.textContent=Math.abs(lat).toFixed(2)+'°'+(lat>=0?'N':'S')+'  '+Math.abs(lon).toFixed(2)+'°'+(lon>=0?'E':'W');
+  }
+
+  /* ---- wire up ---- */
+  btnOptical.addEventListener('click',function(){ setView('optical'); });
+  btnThermal.addEventListener('click',function(){ setView('thermal'); });
+  canvas.addEventListener('mousemove',function(e){ showCoord(e.clientX,e.clientY); });
+  canvas.addEventListener('mouseleave',function(){ coordEl.textContent='— scanning —'; });
+  canvas.addEventListener('touchstart',function(e){ if(e.touches[0]) showCoord(e.touches[0].clientX,e.touches[0].clientY); },{passive:true});
+  canvas.addEventListener('touchmove',function(e){ if(e.touches[0]) showCoord(e.touches[0].clientX,e.touches[0].clientY); },{passive:true});
+
+  var rt=null;
+  function onResize(){
+    dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+    if(rt) clearTimeout(rt);
+    rt=setTimeout(function(){
+      resize();
+      if(ready) render(performance.now(),true);
+    },120);
+  }
+  window.addEventListener('resize',onResize);
+
+  /* pause/resume animation only (never gates first paint) */
+  var io=new IntersectionObserver(function(entries){
+    for(var i=0;i<entries.length;i++){
+      visible=entries[i].isIntersecting;
+      if(visible){ if(!reduce) start(); }
+      else stop();
+    }
+  },{threshold:0.04});
+  io.observe(root);
+
+  try{
+    var mo=new MutationObserver(function(){ readAccent(); });
+    mo.observe(document.documentElement,{attributes:true,attributeFilter:['style','data-theme','class']});
+  }catch(e){}
+
+  /* ---- INIT: build UI + first frame immediately, un-gated ---- */
+  setView('optical');
+  resize();
+  decode().then(function(){
+    ready=true;
+    resize();                       /* now that native dims are known */
+    loadEl.classList.add('wfd2-hide');
+    render(performance.now(),true);  /* first real frame, un-gated */
+    if(!reduce && visible) start();
+    else if(!reduce){ /* will start when scrolled into view */ }
+  }).catch(function(){
+    var txt=loadEl.querySelector('.wfd2-load-txt');
+    if(txt) txt.textContent='Imagery unavailable';
+  });
+})();
+</script>
+</body></html>

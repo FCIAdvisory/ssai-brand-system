@@ -1,0 +1,667 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day &amp; Night · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-day-night-terminator{--dnt-bg:#050314;--dnt-indigo:#16145f;--dnt-star:#f4f5ff;--dnt-muted:#a6abe6;--dnt-hair:rgba(166,171,230,0.16);--dnt-accent:#3cc8ff;--dnt-accent-rgb:60,200,255;font-family:'Inter',-apple-system,Helvetica,Arial,sans-serif;color:var(--dnt-star);width:100%;box-sizing:border-box}
+#kit-day-night-terminator *{box-sizing:border-box}
+#kit-day-night-terminator .dnt-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#kit-day-night-terminator .dnt-shell{position:relative;width:100%;background:radial-gradient(120% 120% at 50% 0%,#0a0726 0%,var(--dnt-bg) 62%);border:1px solid var(--dnt-hair);border-radius:16px;overflow:hidden}
+#kit-day-night-terminator .dnt-stage{position:relative;width:100%;aspect-ratio:16/10;min-height:300px;overflow:hidden;background:#02010a}
+#kit-day-night-terminator .dnt-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-day-night-terminator .dnt-hud{position:absolute;z-index:3;pointer-events:none;display:flex;flex-direction:column;gap:5px;text-shadow:0 1px 14px rgba(2,1,10,0.85)}
+#kit-day-night-terminator .dnt-hud-tl{top:18px;left:20px}
+#kit-day-night-terminator .dnt-hud-tr{top:18px;right:20px;align-items:flex-end;text-align:right}
+#kit-day-night-terminator .dnt-hud-bl{bottom:46px;left:20px}
+#kit-day-night-terminator .dnt-eyebrow{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.22em;font-size:10px;color:var(--dnt-accent)}
+#kit-day-night-terminator .dnt-title{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;font-size:clamp(22px,4.4vw,34px);line-height:0.92;color:var(--dnt-star)}
+#kit-day-night-terminator .dnt-clock{display:flex;align-items:baseline;gap:6px}
+#kit-day-night-terminator .dnt-clock-time{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:clamp(26px,5vw,40px);line-height:0.9;color:var(--dnt-star);font-variant-numeric:tabular-nums;letter-spacing:0.01em}
+#kit-day-night-terminator .dnt-clock-zone{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:0.14em;color:var(--dnt-muted)}
+#kit-day-night-terminator .dnt-readline{display:flex;align-items:center;gap:7px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-size:10.5px;color:var(--dnt-muted)}
+#kit-day-night-terminator .dnt-readline-sub{font-style:normal;font-family:'Inter',sans-serif;font-weight:500;letter-spacing:0.04em;font-size:12px;color:var(--dnt-star);text-transform:none}
+#kit-day-night-terminator .dnt-dot{width:8px;height:8px;border-radius:50%;flex:none}
+#kit-day-night-terminator .dnt-dot-sun{background:var(--dnt-accent);box-shadow:0 0 10px 1px rgba(var(--dnt-accent-rgb),0.85)}
+#kit-day-night-terminator .dnt-stat{display:flex;flex-direction:column;gap:1px;margin-bottom:8px}
+#kit-day-night-terminator .dnt-stat-k{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:9.5px;color:var(--dnt-muted)}
+#kit-day-night-terminator .dnt-stat-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:15px;color:var(--dnt-star);letter-spacing:0.02em;font-variant-numeric:tabular-nums}
+#kit-day-night-terminator .dnt-cap{position:absolute;z-index:3;bottom:14px;right:20px;font-family:'Inter',sans-serif;font-weight:500;font-size:10.5px;letter-spacing:0.05em;color:var(--dnt-muted);opacity:0.82;text-shadow:0 1px 10px rgba(2,1,10,0.9);pointer-events:none}
+#kit-day-night-terminator .dnt-controls{position:relative;z-index:4;padding:18px 22px 22px;display:flex;flex-direction:column;gap:16px;background:linear-gradient(180deg,rgba(5,3,20,0) 0%,rgba(5,3,20,0.5) 30%,rgba(8,6,30,0.78) 100%);border-top:1px solid var(--dnt-hair)}
+#kit-day-night-terminator .dnt-ctrl-row{display:flex;align-items:flex-end;gap:16px}
+#kit-day-night-terminator .dnt-ctrl{flex:1;min-width:0;display:flex;flex-direction:column;gap:9px}
+#kit-day-night-terminator .dnt-ctrl-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+#kit-day-night-terminator .dnt-ctrl-label{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;font-size:11px;color:var(--dnt-muted)}
+#kit-day-night-terminator .dnt-ctrl-val{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:13px;color:var(--dnt-accent);letter-spacing:0.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+#kit-day-night-terminator .dnt-range{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:3px;background:linear-gradient(90deg,rgba(var(--dnt-accent-rgb),0.7),rgba(166,171,230,0.18));outline:none;cursor:pointer;margin:0}
+#kit-day-night-terminator .dnt-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:17px;height:17px;border-radius:50%;background:var(--dnt-accent);border:2px solid #050314;box-shadow:0 0 11px rgba(var(--dnt-accent-rgb),0.7);cursor:pointer;transition:transform .14s ease}
+#kit-day-night-terminator .dnt-range::-webkit-slider-thumb:hover{transform:scale(1.12)}
+#kit-day-night-terminator .dnt-range::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--dnt-accent);border:2px solid #050314;box-shadow:0 0 11px rgba(var(--dnt-accent-rgb),0.7);cursor:pointer}
+#kit-day-night-terminator .dnt-range:focus-visible{box-shadow:0 0 0 3px rgba(var(--dnt-accent-rgb),0.3)}
+#kit-day-night-terminator .dnt-ticks{display:flex;justify-content:space-between;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:9px;color:var(--dnt-muted);opacity:0.7;margin-top:-2px}
+#kit-day-night-terminator .dnt-play{flex:none;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:10px;border:1px solid var(--dnt-hair);background:rgba(22,20,95,0.42);color:var(--dnt-star);font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-size:11px;cursor:pointer;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);transition:border-color .25s ease,background .25s ease,box-shadow .25s ease,transform .12s ease}
+#kit-day-night-terminator .dnt-play:hover{border-color:rgba(var(--dnt-accent-rgb),0.55);background:rgba(22,20,95,0.62)}
+#kit-day-night-terminator .dnt-play:active{transform:scale(0.97)}
+#kit-day-night-terminator .dnt-play.is-on{border-color:var(--dnt-accent);color:var(--dnt-accent);box-shadow:0 0 0 1px rgba(var(--dnt-accent-rgb),0.5),0 0 16px rgba(var(--dnt-accent-rgb),0.22)}
+#kit-day-night-terminator .dnt-play-ico{width:0;height:0;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent currentColor;transition:opacity .2s ease}
+#kit-day-night-terminator .dnt-play.is-on .dnt-play-ico{width:9px;height:11px;border:none;border-left:3px solid currentColor;border-right:3px solid currentColor}
+#kit-day-night-terminator .dnt-play:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(var(--dnt-accent-rgb),0.32)}
+@media(max-width:560px){#kit-day-night-terminator .dnt-stage{aspect-ratio:4/5}#kit-day-night-terminator .dnt-ctrl-row{flex-wrap:wrap}#kit-day-night-terminator .dnt-play{width:100%;justify-content:center}#kit-day-night-terminator .dnt-hud-bl{bottom:40px}}
+@media(prefers-reduced-motion:reduce){#kit-day-night-terminator .dnt-range::-webkit-slider-thumb{transition:none}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Day &amp; Night</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-day-night-terminator">
+  <h2 class="dnt-sr">Rotating real-Earth globe blending NASA Blue Marble daylight with NASA Black Marble city lights across the day and night terminator, with time-of-day and season controls.</h2>
+  <div class="dnt-shell">
+    <div class="dnt-stage">
+      <canvas class="dnt-canvas" aria-hidden="true"></canvas>
+      <div class="dnt-hud dnt-hud-tl">
+        <span class="dnt-eyebrow">SSAI &middot; Earth Observation</span>
+        <span class="dnt-title">Day &amp; Night</span>
+      </div>
+      <div class="dnt-hud dnt-hud-tr">
+        <div class="dnt-clock">
+          <span class="dnt-clock-time" data-time>12:00</span>
+          <span class="dnt-clock-zone">UTC</span>
+        </div>
+        <div class="dnt-readline"><span class="dnt-dot dnt-dot-sun"></span><span data-phase>Subsolar point</span></div>
+        <div class="dnt-readline dnt-readline-sub"><span data-subsolar>0.0&deg;N &middot; 0.0&deg;E</span></div>
+      </div>
+      <div class="dnt-hud dnt-hud-bl">
+        <div class="dnt-stat"><span class="dnt-stat-k">Season</span><span class="dnt-stat-v" data-season>Equinox</span></div>
+        <div class="dnt-stat"><span class="dnt-stat-k">Declination</span><span class="dnt-stat-v" data-decl>+0.0&deg;</span></div>
+      </div>
+      <div class="dnt-cap">NASA Blue Marble &middot; NASA Black Marble (VIIRS)</div>
+    </div>
+
+    <div class="dnt-controls">
+      <div class="dnt-ctrl-row">
+        <div class="dnt-ctrl">
+          <div class="dnt-ctrl-head"><span class="dnt-ctrl-label">Time of day</span><span class="dnt-ctrl-val" data-time-val>12:00 UTC</span></div>
+          <input type="range" class="dnt-range" data-time-range min="0" max="1440" value="720" step="5" aria-label="Time of day in minutes UTC">
+        </div>
+        <button class="dnt-play" data-play aria-label="Play time-lapse"><span class="dnt-play-ico"></span><span class="dnt-play-txt">Play</span></button>
+      </div>
+      <div class="dnt-ctrl">
+        <div class="dnt-ctrl-head"><span class="dnt-ctrl-label">Season</span><span class="dnt-ctrl-val" data-season-val>Equinox &middot; +0.0&deg;</span></div>
+        <input type="range" class="dnt-range" data-season-range min="-100" max="100" value="0" step="1" aria-label="Season, solar declination">
+        <div class="dnt-ticks"><span>Dec solstice</span><span>Equinox</span><span>Jun solstice</span></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the time-of-day slider to rotate the terminator and move the subsolar point; drag the season slider to tilt it toward polar day/night; press play to auto-advance time.</span>
+    <span class="mb-c-src">Data · NASA Blue Marble / Black Marble</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-day-night-terminator');
+  if(!root)return;
+  var stage=root.querySelector('.dnt-stage');
+  var canvas=root.querySelector('.dnt-canvas');
+  var ctx=canvas.getContext('2d');
+  var timeRange=root.querySelector('[data-time-range]');
+  var seasonRange=root.querySelector('[data-season-range]');
+  var playBtn=root.querySelector('[data-play]');
+  var timeEl=root.querySelector('[data-time]');
+  var timeValEl=root.querySelector('[data-time-val]');
+  var subsolarEl=root.querySelector('[data-subsolar]');
+  var seasonEl=root.querySelector('[data-season]');
+  var seasonValEl=root.querySelector('[data-season-val]');
+  var declEl=root.querySelector('[data-decl]');
+  var phaseEl=root.querySelector('[data-phase]');
+
+  var D2R=Math.PI/180, R2D=180/Math.PI;
+  var SRCW=2048, SRCH=1024;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  function accent(){
+    var v='';try{v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();}catch(e){}
+    return v||'#3cc8ff';
+  }
+  function hexToRgb(h){
+    h=h.replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16);
+    if(isNaN(n))return[60,200,255];
+    return[(n>>16)&255,(n>>8)&255,n&255];
+  }
+
+  var blueData=null, blackData=null, ready=false;
+  var lutLat=null, lutLon=null, lutSrc=null, lutShade=null, lutValid=null;
+  var bufW=0, bufH=0, buf=null, bufData=null;
+  var globe={cx:0,cy:0,R:0};
+  var dpr=Math.min(window.devicePixelRatio||1,2);
+
+  var state={minutes:720, decl:0};
+  var playing=false, rafId=null, lastTs=0, dirty=true, sized=false;
+
+  function loadImg(src,cb){
+    var img=new Image();
+    img.onload=function(){cb(img);};
+    img.onerror=function(){cb(null);};
+    img.src=src;
+    if(img.complete&&img.naturalWidth){cb(img);}
+  }
+
+  function sampleData(img){
+    var off=document.createElement('canvas');
+    off.width=SRCW;off.height=SRCH;
+    var o=off.getContext('2d',{willReadFrequently:true});
+    o.drawImage(img,0,0,SRCW,SRCH);
+    return o.getImageData(0,0,SRCW,SRCH).data;
+  }
+
+  var loadedCount=0, gotErr=false;
+  function onOne(){loadedCount++;if(loadedCount>=2){if(!gotErr)finishLoad();}}
+
+  var blueImg=null, blackImg=null;
+  function finishLoad(){
+    try{
+      blueData=sampleData(blueImg);
+      blackData=sampleData(blackImg);
+      ready=true;
+      buildLUT();
+      dirty=true;
+      render();
+    }catch(e){ready=false;}
+  }
+
+  loadImg('../assets/images/blue-marble-world.jpg',function(img){
+    if(!img){gotErr=true;onOne();return;}
+    blueImg=img;onOne();
+  });
+  loadImg('../assets/images/black-marble-world.jpg',function(img){
+    if(!img){gotErr=true;onOne();return;}
+    blackImg=img;onOne();
+  });
+
+  function buildLUT(){
+    var W=stage.clientWidth||640, H=stage.clientHeight||400;
+    if(W<=0||H<=0)return;
+    var target=Math.min(W,H);
+    var bw=Math.round(Math.min(460,Math.max(300,target*0.95))*Math.min(dpr,1.6));
+    var bh=bw;
+    bufW=bw;bufH=bh;
+    var R=bw*0.46, cx=bw/2, cy=bh/2;
+    globe.R=R;globe.cx=cx;globe.cy=cy;
+
+    buf=document.createElement('canvas');
+    buf.width=bw;buf.height=bh;
+    var bctx=buf.getContext('2d');
+    bufData=bctx.createImageData(bw,bh);
+
+    var N=bw*bh;
+    lutValid=new Uint8Array(N);
+    lutSrc=new Int32Array(N);
+    lutLat=new Float32Array(N);
+    lutLon=new Float32Array(N);
+
+    var lat0=18*D2R;
+    var sinLat0=Math.sin(lat0), cosLat0=Math.cos(lat0);
+
+    for(var y=0;y<bh;y++){
+      for(var x=0;x<bw;x++){
+        var i=y*bw+x;
+        var dx=(x+0.5-cx)/R;
+        var dy=(y+0.5-cy)/R;
+        var p=dx*dx+dy*dy;
+        if(p>1){lutValid[i]=0;continue;}
+        var pz=Math.sqrt(1-p);
+        var ny=-dy;
+        var la=Math.asin(pz*sinLat0+ny*cosLat0);
+        var lo=Math.atan2(dx, pz*cosLat0-ny*sinLat0);
+        var latDeg=la*R2D;
+        var lonBase=lo*R2D;
+        lutValid[i]=1;
+        lutLat[i]=latDeg;
+        lutLon[i]=lonBase;
+        var sy=(90-latDeg)/180*SRCH;
+        sy=sy<0?0:(sy>SRCH-1?SRCH-1:sy);
+        lutSrc[i]=(Math.floor(sy)*SRCW)|0;
+      }
+    }
+  }
+
+  function subsolar(){
+    var lon=-((state.minutes/60)-12)*15;
+    lon=((lon+180)%360+360)%360-180;
+    return {lat:state.decl, lon:lon};
+  }
+
+  function render(){
+    if(!ready||!buf||!bufData)return;
+    var W=bufW,H=bufH;
+    var od=bufData.data;
+    var ss=subsolar();
+    var subLat=ss.lat*D2R, subLon=ss.lon;
+    var sinSub=Math.sin(subLat), cosSub=Math.cos(subLat);
+    var rotOffset=subLon;
+
+    var acc=hexToRgb(accent());
+    var ar=acc[0],ag=acc[1],ab=acc[2];
+
+    var band=0.16;
+    var twiBand=0.34;
+    var bd=blueData, nd=blackData;
+    var cx=globe.cx, cy=globe.cy, Rr=globe.R;
+
+    for(var y=0;y<H;y++){
+      for(var x=0;x<W;x++){
+        var i=y*W+x;
+        var o=i*4;
+        if(!lutValid[i]){od[o]=0;od[o+1]=0;od[o+2]=0;od[o+3]=0;continue;}
+        var latDeg=lutLat[i];
+        var lonDeg=lutLon[i]+rotOffset;
+        var sx=((lonDeg+180)%360+360)%360/360*SRCW;
+        if(sx>=SRCW)sx-=SRCW;
+        var si=(lutSrc[i]+(sx|0))*4;
+
+        var latR=latDeg*D2R;
+        var cosc=Math.sin(latR)*sinSub+Math.cos(latR)*cosSub*Math.cos((lonDeg-subLon)*D2R);
+
+        var t;
+        if(cosc>=band)t=1;
+        else if(cosc<=-band)t=0;
+        else t=(cosc+band)/(2*band);
+        t=t*t*(3-2*t);
+
+        var r,g,b;
+        var br=bd[si],bg=bd[si+1],bb=bd[si+2];
+        var nr=nd[si],ng2=nd[si+1],nb=nd[si+2];
+
+        var nlum=(nr*0.5+ng2*0.42+nb*0.30);
+        var glow=nlum>26?(nlum-26)/229:0;
+        if(glow<0)glow=0;if(glow>1)glow=1;
+        glow=glow*glow;
+        var nightFac=(1-t);
+        var lr=nr*1.35+ar*glow*1.4*nightFac;
+        var lg=ng2*1.25+ag*glow*1.2*nightFac;
+        var lb=nb*1.15+ab*glow*1.7*nightFac;
+        var ambR=6+nightFac*5, ambG=7+nightFac*7, ambB=16+nightFac*16;
+        lr=lr<ambR?ambR:lr;lg=lg<ambG?ambG:lg;lb=lb<ambB?ambB:lb;
+
+        var dr=br, dg=bg, db=bb;
+        var sun=cosc>0?cosc:0;
+        var shade=0.55+0.55*Math.sqrt(sun);
+        if(shade>1.18)shade=1.18;
+        dr*=shade;dg*=shade;db*=shade;
+
+        var twi=0;
+        if(cosc>-twiBand&&cosc<twiBand){
+          var d=cosc/twiBand;
+          twi=Math.exp(-d*d*3.2);
+        }
+        r=dr*t+lr*(1-t);
+        g=dg*t+lg*(1-t);
+        b=db*t+lb*(1-t);
+        if(twi>0){
+          r=r+(255*0.42)*twi*0.5+ar*twi*0.10;
+          g=g+(150*0.42)*twi*0.5+ag*twi*0.10;
+          b=b+(120*0.42)*twi*0.4+ab*twi*0.18;
+        }
+
+        var dxp=(x+0.5-cx)/Rr, dyp=(y+0.5-cy)/Rr;
+        var pp=dxp*dxp+dyp*dyp;
+        var rim=pp>0.62?(pp-0.62)/0.38:0;
+        if(rim>0){
+          rim=rim*rim;
+          var atmDay=t;
+          r=r+(ar*0.55+30)*rim*(0.35+atmDay*0.65);
+          g=g+(ag*0.55+45)*rim*(0.35+atmDay*0.65);
+          b=b+(ab*0.7+70)*rim*(0.5+atmDay*0.5);
+        }
+
+        od[o]=r>255?255:(r<0?0:r);
+        od[o+1]=g>255?255:(g<0?0:g);
+        od[o+2]=b>255?255:(b<0?0:b);
+        od[o+3]=255;
+      }
+    }
+    buf.getContext('2d').putImageData(bufData,0,0);
+    paint(ss);
+  }
+
+  function paint(ss){
+    var W=canvas.width, H=canvas.height;
+    ctx.clearRect(0,0,W,H);
+
+    var cssW=stage.clientWidth, cssH=stage.clientHeight;
+    var scale=Math.min(cssW,cssH)/bufW*0.94;
+    var drawW=bufW*scale, drawH=bufH*scale;
+    var ox=(cssW-drawW)/2, oy=(cssH-drawH)/2;
+
+    ctx.save();
+    ctx.scale(dpr,dpr);
+
+    var g=ctx.createRadialGradient(cssW*0.5,cssH*0.42,0,cssW*0.5,cssH*0.5,Math.max(cssW,cssH)*0.7);
+    g.addColorStop(0,'rgba(14,11,40,0.0)');
+    g.addColorStop(1,'rgba(2,1,10,0.55)');
+    ctx.fillStyle=g;
+    ctx.fillRect(0,0,cssW,cssH);
+
+    drawStars(cssW,cssH);
+
+    var gcx=ox+drawW/2, gcy=oy+drawH/2, gR=globe.R*scale;
+    var glowG=ctx.createRadialGradient(gcx,gcy,gR*0.92,gcx,gcy,gR*1.20);
+    var acc=accent();
+    glowG.addColorStop(0,'rgba(0,0,0,0)');
+    glowG.addColorStop(0.55,toRGBA(acc,0.16));
+    glowG.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=glowG;
+    ctx.beginPath();ctx.arc(gcx,gcy,gR*1.22,0,Math.PI*2);ctx.fill();
+
+    ctx.imageSmoothingEnabled=true;
+    ctx.imageSmoothingQuality='high';
+    ctx.drawImage(buf,ox,oy,drawW,drawH);
+
+    drawSubsolar(ss,gcx,gcy,gR);
+
+    ctx.restore();
+  }
+
+  var starCache=null, starKey='';
+  function drawStars(w,h){
+    var key=Math.round(w)+'x'+Math.round(h);
+    if(starKey!==key){
+      starKey=key;starCache=[];
+      var seed=20240611;
+      function rnd(){seed=(seed*1664525+1013904223)&0x7fffffff;return seed/0x7fffffff;}
+      var n=Math.round((w*h)/9000);
+      for(var k=0;k<n;k++){
+        starCache.push({x:rnd()*w,y:rnd()*h,r:rnd()*0.9+0.2,a:rnd()*0.5+0.12});
+      }
+    }
+    for(var k=0;k<starCache.length;k++){
+      var s=starCache[k];
+      ctx.fillStyle='rgba(244,245,255,'+s.a.toFixed(3)+')';
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    }
+  }
+
+  function drawSubsolar(ss,gcx,gcy,gR){
+    var lat0=18*D2R, sinLat0=Math.sin(lat0), cosLat0=Math.cos(lat0);
+    var la=ss.lat*D2R, lo=0;
+    var cosc=Math.sin(la)*sinLat0+Math.cos(la)*cosLat0*Math.cos(lo);
+    if(cosc<=0.02)return;
+    var px=Math.cos(la)*Math.sin(lo);
+    var py=Math.cos(lat0)*Math.sin(la)-Math.sin(lat0)*Math.cos(la)*Math.cos(lo);
+    var sx=gcx+px*gR;
+    var sy=gcy-py*gR;
+    var acc=accent();
+    var ringG=ctx.createRadialGradient(sx,sy,0,sx,sy,gR*0.22);
+    ringG.addColorStop(0,toRGBA(acc,0.55));
+    ringG.addColorStop(0.4,toRGBA(acc,0.12));
+    ringG.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=ringG;
+    ctx.beginPath();ctx.arc(sx,sy,gR*0.22,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(sx,sy,4.2,0,Math.PI*2);
+    ctx.fillStyle=acc;ctx.fill();
+    ctx.lineWidth=1.4;ctx.strokeStyle='rgba(244,245,255,0.9)';
+    ctx.beginPath();ctx.arc(sx,sy,7,0,Math.PI*2);ctx.stroke();
+  }
+
+  function toRGBA(hex,a){
+    var c=hexToRgb(hex);
+    return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';
+  }
+
+  function fmtTime(min){
+    var h=Math.floor(min/60)%24, m=Math.round(min%60);
+    if(m===60){m=0;h=(h+1)%24;}
+    return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
+  }
+  function fmtLat(v){var s=v>=0?'N':'S';return Math.abs(v).toFixed(1)+'°'+s;}
+  function fmtLon(v){var s=v>=0?'E':'W';return Math.abs(v).toFixed(1)+'°'+s;}
+
+  function seasonName(decl){
+    if(decl>20.5)return 'June solstice';
+    if(decl<-20.5)return 'Dec solstice';
+    if(decl>8)return 'Boreal summer';
+    if(decl<-8)return 'Boreal winter';
+    if(Math.abs(decl)<2)return 'Equinox';
+    return decl>0?'Northern spring':'Southern spring';
+  }
+
+  function syncReadouts(){
+    var ss=subsolar();
+    var tstr=fmtTime(state.minutes);
+    timeEl.textContent=tstr;
+    timeValEl.textContent=tstr+' UTC';
+    subsolarEl.textContent=fmtLat(ss.lat)+' · '+fmtLon(ss.lon);
+    var nm=seasonName(state.decl);
+    seasonEl.textContent=nm;
+    var ds=(state.decl>=0?'+':'')+state.decl.toFixed(1)+'°';
+    declEl.textContent=ds;
+    seasonValEl.textContent=nm+' · '+ds;
+    var h=state.minutes/60;
+    phaseEl.textContent=(h>=5&&h<11)?'Morning terminator':(h>=11&&h<16)?'Subsolar overhead':(h>=16&&h<21)?'Evening terminator':'Night side';
+  }
+
+  function setSize(){
+    var cssW=stage.clientWidth, cssH=stage.clientHeight;
+    if(cssW<=0||cssH<=0)return false;
+    canvas.width=Math.round(cssW*dpr);
+    canvas.height=Math.round(cssH*dpr);
+    canvas.style.width=cssW+'px';
+    canvas.style.height=cssH+'px';
+    return true;
+  }
+
+  function render(){
+    if(!ready||!buf||!bufData){
+      paintLoading();
+      return;
+    }
+    renderGlobe();
+  }
+
+  function paintLoading(){
+    var cssW=stage.clientWidth, cssH=stage.clientHeight;
+    ctx.save();ctx.scale(dpr,dpr);
+    ctx.clearRect(0,0,cssW,cssH);
+    drawStars(cssW,cssH);
+    var acc=accent();
+    ctx.fillStyle=toRGBA(acc,0.5);
+    ctx.font='italic 700 11px "Chakra Petch", sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('ACQUIRING NASA BASEMAP…',cssW/2,cssH/2);
+    ctx.restore();
+  }
+
+  var renderGlobe=null;
+  (function(){
+    renderGlobe=function(){
+      var W=bufW,H=bufH;
+      var od=bufData.data;
+      var ss=subsolar();
+      var subLat=ss.lat*D2R, subLon=ss.lon;
+      var sinSub=Math.sin(subLat), cosSub=Math.cos(subLat);
+      var rotOffset=subLon;
+      var acc=hexToRgb(accent());
+      var ar=acc[0],ag=acc[1],ab=acc[2];
+      var band=0.16, twiBand=0.34;
+      var bd=blueData, nd=blackData;
+      var cx=globe.cx, cy=globe.cy, Rr=globe.R;
+
+      for(var y=0;y<H;y++){
+        for(var x=0;x<W;x++){
+          var i=y*W+x;
+          var o=i*4;
+          if(!lutValid[i]){od[o+3]=0;continue;}
+          var latDeg=lutLat[i];
+          var lonDeg=lutLon[i]+rotOffset;
+          var sxn=((lonDeg+180)%360+360)%360/360*SRCW;
+          if(sxn>=SRCW)sxn-=SRCW;
+          var si=(lutSrc[i]+(sxn|0))*4;
+          var latR=latDeg*D2R;
+          var cosc=Math.sin(latR)*sinSub+Math.cos(latR)*cosSub*Math.cos((lonDeg-subLon)*D2R);
+          var t;
+          if(cosc>=band)t=1;else if(cosc<=-band)t=0;else t=(cosc+band)/(2*band);
+          t=t*t*(3-2*t);
+          var br=bd[si],bg=bd[si+1],bb=bd[si+2];
+          var nr=nd[si],ng2=nd[si+1],nb=nd[si+2];
+          var nlum=(nr*0.5+ng2*0.42+nb*0.30);
+          var glow=nlum>26?(nlum-26)/229:0;
+          if(glow<0)glow=0;if(glow>1)glow=1;glow=glow*glow;
+          var nightFac=(1-t);
+          var lr=nr*1.35+ar*glow*1.4*nightFac;
+          var lg=ng2*1.25+ag*glow*1.2*nightFac;
+          var lb=nb*1.15+ab*glow*1.7*nightFac;
+          var ambR=6+nightFac*5, ambG=7+nightFac*7, ambB=16+nightFac*16;
+          if(lr<ambR)lr=ambR;if(lg<ambG)lg=ambG;if(lb<ambB)lb=ambB;
+          var dr=br,dg=bg,db=bb;
+          var sun=cosc>0?cosc:0;
+          var shade=0.55+0.55*Math.sqrt(sun);
+          if(shade>1.18)shade=1.18;
+          dr*=shade;dg*=shade;db*=shade;
+          var twi=0;
+          if(cosc>-twiBand&&cosc<twiBand){var d=cosc/twiBand;twi=Math.exp(-d*d*3.2);}
+          var r=dr*t+lr*(1-t);
+          var g=dg*t+lg*(1-t);
+          var b=db*t+lb*(1-t);
+          if(twi>0){
+            r=r+53*twi+ar*twi*0.10;
+            g=g+32*twi+ag*twi*0.10;
+            b=b+20*twi+ab*twi*0.18;
+          }
+          var dxp=(x+0.5-cx)/Rr, dyp=(y+0.5-cy)/Rr;
+          var pp=dxp*dxp+dyp*dyp;
+          var rim=pp>0.62?(pp-0.62)/0.38:0;
+          if(rim>0){
+            rim=rim*rim;
+            var atmDay=t;
+            r=r+(ar*0.55+30)*rim*(0.35+atmDay*0.65);
+            g=g+(ag*0.55+45)*rim*(0.35+atmDay*0.65);
+            b=b+(ab*0.7+70)*rim*(0.5+atmDay*0.5);
+          }
+          od[o]=r>255?255:r;
+          od[o+1]=g>255?255:g;
+          od[o+2]=b>255?255:b;
+          od[o+3]=255;
+        }
+      }
+      buf.getContext('2d').putImageData(bufData,0,0);
+      paint(ss);
+    };
+  })();
+
+  function tick(ts){
+    if(!playing){rafId=null;return;}
+    if(!lastTs)lastTs=ts;
+    var dt=(ts-lastTs)/1000;
+    lastTs=ts;
+    state.minutes=(state.minutes+dt*120)%1440;
+    timeRange.value=Math.round(state.minutes);
+    syncReadouts();
+    render();
+    rafId=requestAnimationFrame(tick);
+  }
+
+  function startPlay(){
+    if(reduce)return;
+    playing=true;lastTs=0;
+    playBtn.classList.add('is-on');
+    playBtn.querySelector('.dnt-play-txt').textContent='Pause';
+    if(!rafId)rafId=requestAnimationFrame(tick);
+  }
+  function stopPlay(){
+    playing=false;
+    playBtn.classList.remove('is-on');
+    playBtn.querySelector('.dnt-play-txt').textContent='Play';
+    if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+  }
+
+  playBtn.addEventListener('click',function(){playing?stopPlay():startPlay();});
+
+  timeRange.addEventListener('input',function(){
+    state.minutes=parseFloat(timeRange.value);
+    syncReadouts();render();
+  });
+  seasonRange.addEventListener('input',function(){
+    state.decl=parseFloat(seasonRange.value)/100*23.44;
+    syncReadouts();render();
+  });
+
+  var resizeT=null;
+  function doResize(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    if(!setSize())return;
+    buildLUT();
+    syncReadouts();
+    render();
+  }
+  window.addEventListener('resize',function(){
+    if(resizeT)clearTimeout(resizeT);
+    resizeT=setTimeout(doResize,140);
+  });
+
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          if(playing&&!rafId){lastTs=0;rafId=requestAnimationFrame(tick);}
+        }else{
+          if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+        }
+      });
+    },{threshold:0.05});
+    io.observe(root);
+  }
+
+  function init(){
+    if(!setSize()){requestAnimationFrame(init);return;}
+    sized=true;
+    syncReadouts();
+    render();
+  }
+  init();
+})();
+</script>
+</body></html>

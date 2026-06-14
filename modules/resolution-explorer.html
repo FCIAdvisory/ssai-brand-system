@@ -1,0 +1,454 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resolution · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-resolution-explorer{--rex-bg:#050314;--rex-indigo:#16145f;--rex-text:#f4f5ff;--rex-muted:#a6abe6;--rex-hair:rgba(166,171,230,0.16);--rex-accent:#3cc8ff;width:100%;box-sizing:border-box;color:var(--rex-text);font-family:'Inter',system-ui,sans-serif;background:radial-gradient(120% 140% at 12% -10%,#0b0840 0%,#050314 58%);border:1px solid var(--rex-hair);border-radius:16px;padding:22px;min-height:440px;-webkit-font-smoothing:antialiased}
+#kit-resolution-explorer *{box-sizing:border-box}
+#kit-resolution-explorer .rex-shell{display:flex;flex-direction:column;gap:18px}
+#kit-resolution-explorer .rex-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+#kit-resolution-explorer .rex-eyebrow{font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--rex-muted);font-weight:600;margin-bottom:5px}
+#kit-resolution-explorer .rex-title{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:30px;line-height:.9;letter-spacing:.01em;margin:0;color:var(--rex-text)}
+#kit-resolution-explorer .rex-scenebar{display:flex;gap:6px;background:rgba(22,20,95,.42);border:1px solid var(--rex-hair);border-radius:10px;padding:4px}
+#kit-resolution-explorer .rex-scene{appearance:none;background:transparent;border:0;color:var(--rex-muted);font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:11.5px;letter-spacing:.06em;padding:7px 13px;border-radius:7px;cursor:pointer;transition:color .25s ease,background .25s ease}
+#kit-resolution-explorer .rex-scene:hover{color:var(--rex-text)}
+#kit-resolution-explorer .rex-scene.is-on{color:#050314;background:var(--rex-accent)}
+#kit-resolution-explorer .rex-stage{display:grid;grid-template-columns:1fr 224px;gap:18px;align-items:stretch}
+#kit-resolution-explorer .rex-canvas-wrap{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--rex-hair);background:#03020c;aspect-ratio:1024/900;min-height:260px}
+#kit-resolution-explorer .rex-canvas{display:block;width:100%;height:100%}
+#kit-resolution-explorer .rex-grid-hint{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s ease;background-image:linear-gradient(var(--rex-accent) 1px,transparent 1px),linear-gradient(90deg,var(--rex-accent) 1px,transparent 1px);mix-blend-mode:screen}
+#kit-resolution-explorer .rex-canvas-wrap.show-grid .rex-grid-hint{opacity:.16}
+#kit-resolution-explorer .rex-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--rex-muted);background:#03020c;transition:opacity .5s ease}
+#kit-resolution-explorer .rex-canvas-wrap.ready .rex-loading{opacity:0;pointer-events:none}
+#kit-resolution-explorer .rex-prov{position:absolute;left:11px;bottom:10px;display:flex;flex-direction:column;gap:1px;padding:7px 11px;background:rgba(5,3,20,.62);backdrop-filter:blur(8px);border:1px solid var(--rex-hair);border-radius:8px;pointer-events:none}
+#kit-resolution-explorer .rex-prov-name{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.05em;color:var(--rex-text)}
+#kit-resolution-explorer .rex-prov-meta{font-size:10px;letter-spacing:.06em;color:var(--rex-muted)}
+#kit-resolution-explorer .rex-panel{display:flex;flex-direction:column;gap:16px}
+#kit-resolution-explorer .rex-readout{background:rgba(22,20,95,.34);border:1px solid var(--rex-hair);border-radius:12px;padding:15px 16px 14px}
+#kit-resolution-explorer .rex-gsd-row{display:flex;align-items:baseline;gap:5px}
+#kit-resolution-explorer .rex-gsd-num{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:46px;line-height:.85;letter-spacing:-.01em;color:var(--rex-accent);font-variant-numeric:tabular-nums}
+#kit-resolution-explorer .rex-gsd-unit{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:18px;color:var(--rex-muted)}
+#kit-resolution-explorer .rex-sensor{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:14px;letter-spacing:.07em;color:var(--rex-text);margin-top:7px}
+#kit-resolution-explorer .rex-samples{font-size:11.5px;color:var(--rex-muted);margin-top:5px;letter-spacing:.02em}
+#kit-resolution-explorer .rex-samples-n{color:var(--rex-text);font-weight:600;font-variant-numeric:tabular-nums}
+#kit-resolution-explorer .rex-legend{display:flex;flex-direction:column;gap:1px;background:rgba(22,20,95,.22);border:1px solid var(--rex-hair);border-radius:12px;padding:6px}
+#kit-resolution-explorer .rex-leg{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;transition:background .3s ease}
+#kit-resolution-explorer .rex-leg.is-live{background:rgba(60,200,255,.07)}
+#kit-resolution-explorer .rex-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto;background:var(--rex-hair);transition:background .3s ease,box-shadow .3s ease}
+#kit-resolution-explorer .rex-leg.is-live .rex-dot{background:var(--rex-accent);box-shadow:0 0 9px 1px var(--rex-accent)}
+#kit-resolution-explorer .rex-leg-t{flex:1;font-size:12px;color:var(--rex-muted);transition:color .3s ease}
+#kit-resolution-explorer .rex-leg.is-live .rex-leg-t{color:var(--rex-text)}
+#kit-resolution-explorer .rex-leg-v{font-size:10.5px;color:var(--rex-muted);font-variant-numeric:tabular-nums;letter-spacing:.02em;opacity:.7}
+#kit-resolution-explorer .rex-leg.is-live .rex-leg-v{opacity:1;color:var(--rex-accent)}
+#kit-resolution-explorer .rex-controls{display:flex;flex-direction:column;gap:13px}
+#kit-resolution-explorer .rex-slider-row{display:flex;align-items:center;gap:13px}
+#kit-resolution-explorer .rex-slider-cap{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.12em;color:var(--rex-muted);flex:0 0 auto}
+#kit-resolution-explorer .rex-slider{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--rex-accent) 0%,var(--rex-accent) var(--rex-fill,0%),var(--rex-hair) var(--rex-fill,0%),var(--rex-hair) 100%);outline:none;cursor:pointer}
+#kit-resolution-explorer .rex-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--rex-text);border:2px solid var(--rex-accent);cursor:pointer;box-shadow:0 0 10px rgba(60,200,255,.5);transition:transform .15s ease}
+#kit-resolution-explorer .rex-slider::-webkit-slider-thumb:hover{transform:scale(1.12)}
+#kit-resolution-explorer .rex-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--rex-text);border:2px solid var(--rex-accent);cursor:pointer;box-shadow:0 0 10px rgba(60,200,255,.5)}
+#kit-resolution-explorer .rex-presets{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+#kit-resolution-explorer .rex-preset{appearance:none;display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(22,20,95,.34);border:1px solid var(--rex-hair);border-radius:9px;color:var(--rex-muted);font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:10.5px;letter-spacing:.03em;padding:9px 6px;cursor:pointer;transition:color .22s ease,border-color .22s ease,background .22s ease}
+#kit-resolution-explorer .rex-preset small{font-family:'Inter',sans-serif;font-style:normal;font-weight:500;font-size:10px;letter-spacing:0;color:var(--rex-muted);text-transform:none;transition:color .22s ease}
+#kit-resolution-explorer .rex-preset:hover{color:var(--rex-text);border-color:rgba(166,171,230,.34)}
+#kit-resolution-explorer .rex-preset:hover small{color:var(--rex-muted)}
+#kit-resolution-explorer .rex-preset.is-on{color:var(--rex-text);border-color:var(--rex-accent);background:rgba(60,200,255,.1)}
+#kit-resolution-explorer .rex-preset.is-on small{color:var(--rex-accent)}
+#kit-resolution-explorer .rex-note{margin:0;font-size:10.5px;line-height:1.55;color:var(--rex-muted);opacity:.82;letter-spacing:.01em}
+@media (max-width:640px){
+#kit-resolution-explorer{padding:16px}
+#kit-resolution-explorer .rex-stage{grid-template-columns:1fr}
+#kit-resolution-explorer .rex-presets{grid-template-columns:repeat(3,1fr)}
+#kit-resolution-explorer .rex-title{font-size:25px}
+#kit-resolution-explorer .rex-gsd-num{font-size:40px}
+}
+@media (prefers-reduced-motion:reduce){
+#kit-resolution-explorer *{transition:none!important}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Resolution</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-resolution-explorer">
+  <div class="rex-shell">
+    <header class="rex-head">
+      <div class="rex-head-l">
+        <div class="rex-eyebrow">Ground Sample Distance</div>
+        <h3 class="rex-title">Resolution</h3>
+      </div>
+      <div class="rex-scenebar" role="tablist" aria-label="Scene selection">
+        <button class="rex-scene is-on" data-scene="agriculture" role="tab" aria-selected="true">Cropland</button>
+        <button class="rex-scene" data-scene="urban" role="tab" aria-selected="false">Metro</button>
+      </div>
+    </header>
+
+    <div class="rex-stage">
+      <div class="rex-canvas-wrap">
+        <canvas class="rex-canvas" aria-label="Resampled NASA satellite scene"></canvas>
+        <div class="rex-loading">Loading NASA imagery&hellip;</div>
+        <div class="rex-grid-hint" aria-hidden="true"></div>
+        <figcaption class="rex-prov"><span class="rex-prov-name">San Joaquin Valley cropland</span><span class="rex-prov-meta">MODIS / Terra &middot; 2023-07-28</span></figcaption>
+      </div>
+
+      <aside class="rex-panel">
+        <div class="rex-readout">
+          <div class="rex-gsd-row">
+            <span class="rex-gsd-num">250</span><span class="rex-gsd-unit">m</span>
+          </div>
+          <div class="rex-sensor">MODIS</div>
+          <div class="rex-samples"><span class="rex-samples-n">340</span> samples across scene</div>
+        </div>
+
+        <div class="rex-legend" role="list" aria-label="Resolvable features">
+          <div class="rex-leg" role="listitem" data-thr="300"><span class="rex-dot"></span><span class="rex-leg-t">Field patchwork</span><span class="rex-leg-v">300 m</span></div>
+          <div class="rex-leg" role="listitem" data-thr="70"><span class="rex-dot"></span><span class="rex-leg-t">River &amp; forest edge</span><span class="rex-leg-v">70 m</span></div>
+          <div class="rex-leg" role="listitem" data-thr="12"><span class="rex-dot"></span><span class="rex-leg-t">Road network</span><span class="rex-leg-v">12 m</span></div>
+          <div class="rex-leg" role="listitem" data-thr="7"><span class="rex-dot"></span><span class="rex-leg-t">Buildings</span><span class="rex-leg-v">7 m</span></div>
+          <div class="rex-leg" role="listitem" data-thr="3"><span class="rex-dot"></span><span class="rex-leg-t">Single trees</span><span class="rex-leg-v">3 m</span></div>
+          <div class="rex-leg" role="listitem" data-thr="2.3"><span class="rex-dot"></span><span class="rex-leg-t">Vehicles</span><span class="rex-leg-v">2.3 m</span></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="rex-controls">
+      <div class="rex-slider-row">
+        <span class="rex-slider-cap rex-cap-coarse">Coarse</span>
+        <input class="rex-slider" type="range" min="0" max="1000" value="0" step="1" aria-label="Ground sample distance, coarse to fine" />
+        <span class="rex-slider-cap rex-cap-fine">Fine</span>
+      </div>
+      <div class="rex-presets" role="group" aria-label="Sensor presets">
+        <button class="rex-preset is-on" data-gsd="250">MODIS<small>250 m</small></button>
+        <button class="rex-preset" data-gsd="30">Landsat 8/9<small>30 m</small></button>
+        <button class="rex-preset" data-gsd="10">Sentinel-2<small>10 m</small></button>
+        <button class="rex-preset" data-gsd="3">PlanetScope<small>3 m</small></button>
+        <button class="rex-preset" data-gsd="0.5">Commercial<small>0.5 m</small></button>
+      </div>
+    </div>
+
+    <p class="rex-note">Each output pixel is the true mean of every source pixel inside one ground sample. Base imagery is MODIS at ~250&ndash;500&nbsp;m; finer steps are illustrative resampling.</p>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the GSD slider or tap a sensor preset (MODIS 250m to Commercial 0.5m); the scene re-samples in real time, the GSD readout and sample count update, and the feature legend lights up each detail as it becomes resolvable.</span>
+    <span class="mb-c-src">Data · NASA MODIS</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-resolution-explorer');
+  if(!root) return;
+
+  var FALL={
+    agriculture:{name:'San Joaquin Valley cropland',sensor:'MODIS / Terra',date:'2023-07-28',bbox:[-120.1,35.85,-119.15,36.78]},
+    urban:{name:'Phoenix metro',sensor:'MODIS / Terra',date:'2023-05-10',bbox:[-112.5,33.12,-111.6,33.82]}
+  };
+  var BASE='../assets/scenes/';
+
+  var canvas=root.querySelector('.rex-canvas');
+  var ctx=canvas.getContext('2d');
+  var wrap=root.querySelector('.rex-canvas-wrap');
+  var provName=root.querySelector('.rex-prov-name');
+  var provMeta=root.querySelector('.rex-prov-meta');
+  var gsdNum=root.querySelector('.rex-gsd-num');
+  var sensorEl=root.querySelector('.rex-sensor');
+  var samplesN=root.querySelector('.rex-samples-n');
+  var slider=root.querySelector('.rex-slider');
+  var presets=Array.prototype.slice.call(root.querySelectorAll('.rex-preset'));
+  var sceneBtns=Array.prototype.slice.call(root.querySelectorAll('.rex-scene'));
+  var legs=Array.prototype.slice.call(root.querySelectorAll('.rex-leg'));
+
+  // GSD<->name mapping for sensor label
+  var SENSORS=[
+    {max:9999,min:120,name:'MODIS'},
+    {max:120,min:18,name:'Landsat 8/9'},
+    {max:18,min:6,name:'Sentinel-2'},
+    {max:6,min:1.5,name:'PlanetScope'},
+    {max:1.5,min:0,name:'Commercial'}
+  ];
+
+  // GSD range mapped across slider 0..1000 (log scale, coarse->fine)
+  var GSD_MAX=500, GSD_MIN=0.5;
+  var lnMax=Math.log(GSD_MAX), lnMin=Math.log(GSD_MIN);
+  function sliderToGsd(t){ // t 0..1000, 0=coarse(big GSD), 1000=fine(small GSD)
+    var f=t/1000;
+    return Math.exp(lnMax+(lnMin-lnMax)*f);
+  }
+  function gsdToSlider(g){
+    g=Math.max(GSD_MIN,Math.min(GSD_MAX,g));
+    var f=(Math.log(g)-lnMax)/(lnMin-lnMax);
+    return Math.round(f*1000);
+  }
+  function sensorName(g){
+    for(var i=0;i<SENSORS.length;i++){ if(g>SENSORS[i].min) return SENSORS[i].name; }
+    return SENSORS[SENSORS.length-1].name;
+  }
+
+  var scene='agriculture';
+  var imgData=null;       // cached source RGB ImageData.data
+  var srcW=0, srcH=0;
+  var metersPerPx=136;    // recomputed per scene
+  var groundW=85000;      // scene ground width in meters
+  var work=document.createElement('canvas');
+  var wctx=work.getContext('2d');
+  var loading=false, ready=false, onScreen=true, pending=null;
+  var dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+
+  function groundWidthMeters(bbox){
+    var W=bbox[0],S=bbox[1],E=bbox[2],N=bbox[3];
+    var latMid=(S+N)/2*Math.PI/180;
+    return Math.abs(E-W)*111320*Math.cos(latMid);
+  }
+
+  function setSizes(){
+    var r=wrap.getBoundingClientRect();
+    if(r.width<2) return;
+    canvas.width=Math.round(r.width*dpr);
+    canvas.height=Math.round(r.height*dpr);
+  }
+
+  function loadScene(name){
+    loading=true; ready=false;
+    wrap.classList.remove('ready');
+    var meta=FALL[name]||FALL.agriculture;
+    var rgb=new Image(), ir=new Image();
+    var done=0, failed=false;
+    function fail(){ if(failed) return; failed=true; loading=false; /* keep loading caption */ }
+    function both(){
+      if(failed) return;
+      srcW=rgb.naturalWidth; srcH=rgb.naturalHeight;
+      if(!srcW||!srcH){ fail(); return; }
+      // draw rgb once, cache pixels
+      var oc=document.createElement('canvas');
+      oc.width=srcW; oc.height=srcH;
+      var octx=oc.getContext('2d');
+      octx.drawImage(rgb,0,0);
+      try{ imgData=octx.getImageData(0,0,srcW,srcH).data; }
+      catch(e){ fail(); return; }
+      work.width=srcW; work.height=srcH;
+      groundW=groundWidthMeters(meta.bbox);
+      metersPerPx=groundW/srcW;
+      wrap.style.aspectRatio=srcW+'/'+srcH;
+      provName.textContent=meta.name;
+      provMeta.textContent=meta.sensor+' · '+meta.date;
+      loading=false; ready=true;
+      wrap.classList.add('ready');
+      setSizes();
+      render();
+    }
+    rgb.onload=function(){ if(++done===2) both(); };
+    ir.onload=function(){ if(++done===2) both(); };
+    rgb.onerror=fail; ir.onerror=fail;
+    rgb.src=BASE+name+'/rgb.jpg';
+    ir.src=BASE+name+'/ir.png';
+  }
+
+  function readAccent(){
+    var v='';
+    try{ v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); }catch(e){}
+    if(!v) v='#3cc8ff';
+    root.style.setProperty('--rex-accent',v);
+  }
+
+  function currentGsd(){ return sliderToGsd(parseFloat(slider.value)); }
+
+  function fmtGsd(g){
+    if(g>=10) return Math.round(g).toString();
+    if(g>=1) return g.toFixed(1);
+    return g.toFixed(1);
+  }
+
+  function updateLegend(g){
+    for(var i=0;i<legs.length;i++){
+      var thr=parseFloat(legs[i].getAttribute('data-thr'));
+      // feature resolvable when sample size <= its threshold
+      if(g<=thr) legs[i].classList.add('is-live');
+      else legs[i].classList.remove('is-live');
+    }
+  }
+
+  function updatePresetActive(g){
+    var best=null,bd=1e9;
+    for(var i=0;i<presets.length;i++){
+      var pg=parseFloat(presets[i].getAttribute('data-gsd'));
+      var d=Math.abs(Math.log(pg)-Math.log(g));
+      presets[i].classList.remove('is-on');
+      if(d<bd){bd=d;best=presets[i];}
+    }
+    if(best && bd<0.06) best.classList.add('is-on'); // only exact-ish matches glow
+  }
+
+  // Core: block-average real source into samples of 'samplePx' source pixels, draw scaled.
+  function render(){
+    if(!ready||!imgData) return;
+    var g=currentGsd();
+    var fill=(parseFloat(slider.value)/1000*100);
+    slider.style.setProperty('--rex-fill',fill+'%');
+
+    gsdNum.textContent=fmtGsd(g);
+    sensorEl.textContent=sensorName(g);
+    // samples across the scene at this GSD
+    var nAcross=Math.max(1,Math.round(groundW/g));
+    samplesN.textContent=nAcross.toLocaleString();
+    updateLegend(g);
+    updatePresetActive(g);
+
+    // source pixels per ground sample (honest: clamp avg to >=1 src px)
+    var samplePxF=g/metersPerPx;
+    var block=Math.max(1,Math.round(samplePxF)); // px averaged per output sample
+    // number of output samples along each axis of the source grid
+    var outW=Math.max(1,Math.ceil(srcW/block));
+    var outH=Math.max(1,Math.ceil(srcH/block));
+
+    var out=wctx.createImageData(srcW,srcH);
+    var od=out.data, sd=imgData;
+
+    for(var by=0;by<srcH;by+=block){
+      var y1=Math.min(srcH,by+block);
+      for(var bx=0;bx<srcW;bx+=block){
+        var x1=Math.min(srcW,bx+block);
+        var r=0,gg=0,b=0,n=0;
+        for(var y=by;y<y1;y++){
+          var rowOff=y*srcW*4;
+          for(var x=bx;x<x1;x++){
+            var o=rowOff+x*4;
+            r+=sd[o]; gg+=sd[o+1]; b+=sd[o+2]; n++;
+          }
+        }
+        r=r/n; gg=gg/n; b=b/n;
+        for(var yy=by;yy<y1;yy++){
+          var ro=yy*srcW*4;
+          for(var xx=bx;xx<x1;xx++){
+            var oo=ro+xx*4;
+            od[oo]=r; od[oo+1]=gg; od[oo+2]=b; od[oo+3]=255;
+          }
+        }
+      }
+    }
+    wctx.putImageData(out,0,0);
+
+    // draw scaled to visible canvas, DPR-aware
+    if(canvas.width<2) setSizes();
+    var smooth=block<=2; // crisp blocks when coarse, smooth when near native
+    ctx.imageSmoothingEnabled=smooth;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(work,0,0,srcW,srcH,0,0,canvas.width,canvas.height);
+
+    // grid hint overlay sized to the sample blocks (only when blocks are large enough to read)
+    var cssBlock=(block/srcW)*wrap.getBoundingClientRect().width;
+    if(cssBlock>=10 && cssBlock<=120){
+      wrap.classList.add('show-grid');
+      wrap.querySelector('.rex-grid-hint').style.backgroundSize=cssBlock+'px '+cssBlock+'px,'+cssBlock+'px '+cssBlock+'px';
+    } else {
+      wrap.classList.remove('show-grid');
+    }
+  }
+
+  function schedule(){
+    if(!onScreen) return;
+    if(pending) return;
+    pending=requestAnimationFrame(function(){ pending=null; readAccent(); render(); });
+  }
+
+  // events
+  slider.addEventListener('input',function(){
+    schedule();
+  });
+  presets.forEach(function(p){
+    p.addEventListener('click',function(){
+      var g=parseFloat(p.getAttribute('data-gsd'));
+      slider.value=gsdToSlider(g);
+      schedule();
+    });
+  });
+  sceneBtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.classList.contains('is-on')) return;
+      sceneBtns.forEach(function(o){o.classList.remove('is-on');o.setAttribute('aria-selected','false');});
+      b.classList.add('is-on'); b.setAttribute('aria-selected','true');
+      scene=b.getAttribute('data-scene');
+      loadScene(scene);
+    });
+  });
+
+  var rzT=null;
+  window.addEventListener('resize',function(){
+    dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+    if(rzT) clearTimeout(rzT);
+    rzT=setTimeout(function(){ setSizes(); render(); },120);
+  });
+
+  // pause work offscreen
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        onScreen=e.isIntersecting;
+        if(onScreen){ if(!ready && !loading) loadScene(scene); else schedule(); }
+      });
+    },{threshold:0.04});
+    io.observe(root);
+  }
+
+  // init
+  slider.value=gsdToSlider(250);
+  readAccent();
+  // try manifest for provenance, then load
+  (function(){
+    var p=fetch(BASE+'manifest.json').then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
+    p.then(function(m){
+      if(m&&m.scenes){
+        for(var k in FALL){
+          if(m.scenes[k]){
+            var s=m.scenes[k];
+            FALL[k]={name:s.name,sensor:s.sensor,date:s.date,bbox:s.bbox_WSEN};
+          }
+        }
+      }
+      loadScene(scene);
+    });
+  })();
+})();
+</script>
+</body></html>

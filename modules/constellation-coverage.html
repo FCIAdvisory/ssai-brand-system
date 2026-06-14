@@ -1,0 +1,534 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a constellation · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-constellation-coverage{--cc2-bg:#050314;--cc2-indigo:#16145f;--cc2-text:#f4f5ff;--cc2-muted:#a6abe6;--cc2-line:rgba(166,171,230,0.16);--cc2-acc:#3cc8ff;--cc2-acc-rgb:60,200,255;position:relative;width:100%;box-sizing:border-box;padding:22px;border-radius:18px;background:radial-gradient(120% 140% at 80% -10%,rgba(22,20,95,0.55),rgba(5,3,20,0) 60%),var(--cc2-bg);border:1px solid var(--cc2-line);color:var(--cc2-text);font-family:'Inter',system-ui,sans-serif;overflow:hidden}
+#kit-constellation-coverage *{box-sizing:border-box}
+#kit-constellation-coverage .cc2-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+#kit-constellation-coverage .cc2-head{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+#kit-constellation-coverage .cc2-kicker{display:inline-block;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--cc2-acc);margin-bottom:8px;transition:color .4s ease}
+#kit-constellation-coverage .cc2-title{flex:1 1 320px}
+#kit-constellation-coverage .cc2-title h3{margin:0;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:26px;line-height:1.02;color:var(--cc2-text)}
+#kit-constellation-coverage .cc2-title p{margin:6px 0 0;font-size:13px;line-height:1.5;color:var(--cc2-muted);max-width:46ch}
+#kit-constellation-coverage .cc2-readout{text-align:right;min-width:150px;flex:0 0 auto}
+#kit-constellation-coverage .cc2-pct{display:flex;align-items:baseline;justify-content:flex-end;gap:2px;line-height:1}
+#kit-constellation-coverage .cc2-pctval{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:56px;letter-spacing:-.01em;color:var(--cc2-acc);text-shadow:0 0 26px rgba(var(--cc2-acc-rgb),0.45);font-variant-numeric:tabular-nums;transition:color .4s ease}
+#kit-constellation-coverage .cc2-pctsign{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:24px;color:var(--cc2-acc);transition:color .4s ease}
+#kit-constellation-coverage .cc2-pctlabel{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--cc2-muted);margin-top:2px}
+#kit-constellation-coverage .cc2-stage{position:relative;width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--cc2-line);background:#03020d;aspect-ratio:2 / 1;min-height:220px}
+#kit-constellation-coverage .cc2-canvas{display:block;width:100%;height:100%}
+#kit-constellation-coverage .cc2-legend{position:absolute;left:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:14px;padding:8px 12px;border-radius:10px;background:rgba(5,3,20,0.55);border:1px solid var(--cc2-line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#kit-constellation-coverage .cc2-lg{display:inline-flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.04em;color:var(--cc2-muted)}
+#kit-constellation-coverage .cc2-lg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+#kit-constellation-coverage .cc2-lg-acc i{background:rgba(var(--cc2-acc-rgb),0.35);border:1px solid var(--cc2-acc);box-shadow:0 0 10px rgba(var(--cc2-acc-rgb),0.5);transition:border-color .4s ease,box-shadow .4s ease}
+#kit-constellation-coverage .cc2-lg-sat i{width:9px;height:9px;border-radius:50%;background:var(--cc2-text);box-shadow:0 0 8px rgba(244,245,255,0.7)}
+#kit-constellation-coverage .cc2-lg-src{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:9.5px;color:var(--cc2-muted);opacity:.8;margin-left:auto}
+#kit-constellation-coverage .cc2-controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:26px;margin-top:18px}
+#kit-constellation-coverage .cc2-sliders{flex:1 1 420px;min-width:260px;display:flex;flex-direction:column;gap:16px}
+#kit-constellation-coverage .cc2-sliderwrap{display:flex;flex-direction:column}
+#kit-constellation-coverage .cc2-slabel{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--cc2-muted);margin-bottom:9px}
+#kit-constellation-coverage .cc2-sval{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;letter-spacing:0;text-transform:none;font-size:15px;color:var(--cc2-text);font-variant-numeric:tabular-nums}
+#kit-constellation-coverage .cc2-range{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--cc2-acc) 0%,var(--cc2-acc) var(--cc2-fill,18%),rgba(166,171,230,0.18) var(--cc2-fill,18%),rgba(166,171,230,0.18) 100%);outline:none;cursor:pointer;transition:background .12s linear}
+#kit-constellation-coverage .cc2-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--cc2-text);border:3px solid var(--cc2-acc);box-shadow:0 0 0 4px rgba(var(--cc2-acc-rgb),0.18),0 0 14px rgba(var(--cc2-acc-rgb),0.5);cursor:pointer;transition:transform .12s ease}
+#kit-constellation-coverage .cc2-range::-webkit-slider-thumb:hover{transform:scale(1.12)}
+#kit-constellation-coverage .cc2-range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--cc2-text);border:3px solid var(--cc2-acc);box-shadow:0 0 14px rgba(var(--cc2-acc-rgb),0.5);cursor:pointer}
+#kit-constellation-coverage .cc2-range:focus-visible{box-shadow:0 0 0 3px rgba(var(--cc2-acc-rgb),0.35)}
+#kit-constellation-coverage .cc2-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+#kit-constellation-coverage .cc2-chip{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.04em;padding:6px 11px;border-radius:8px;border:1px solid var(--cc2-line);background:rgba(22,20,95,0.28);color:var(--cc2-muted);cursor:pointer;transition:border-color .2s ease,background .2s ease,color .2s ease}
+#kit-constellation-coverage .cc2-chip:hover{border-color:rgba(var(--cc2-acc-rgb),0.5);color:var(--cc2-text)}
+#kit-constellation-coverage .cc2-chip.cc2-on{border-color:var(--cc2-acc);background:rgba(var(--cc2-acc-rgb),0.16);color:var(--cc2-text);box-shadow:0 0 12px rgba(var(--cc2-acc-rgb),0.25)}
+#kit-constellation-coverage .cc2-side{flex:0 0 auto;display:flex;flex-direction:column;gap:16px;align-items:flex-end}
+#kit-constellation-coverage .cc2-stats{display:flex;gap:22px}
+#kit-constellation-coverage .cc2-stat{display:flex;flex-direction:column;gap:3px;min-width:64px;text-align:left}
+#kit-constellation-coverage .cc2-snum{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:19px;color:var(--cc2-text);font-variant-numeric:tabular-nums}
+#kit-constellation-coverage .cc2-slab{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--cc2-muted);line-height:1.2}
+#kit-constellation-coverage .cc2-btn{align-self:flex-end;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;border:1px solid var(--cc2-line);background:rgba(22,20,95,0.35);color:var(--cc2-text);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:border-color .25s ease,background .25s ease,transform .1s ease}
+#kit-constellation-coverage .cc2-btn:hover{border-color:rgba(var(--cc2-acc-rgb),0.55);background:rgba(22,20,95,0.6)}
+#kit-constellation-coverage .cc2-btn:active{transform:scale(.97)}
+#kit-constellation-coverage .cc2-btnico{font-size:14px;color:var(--cc2-acc);transition:color .4s ease}
+@media (max-width:640px){#kit-constellation-coverage{padding:16px}#kit-constellation-coverage .cc2-title h3{font-size:21px}#kit-constellation-coverage .cc2-pctval{font-size:42px}#kit-constellation-coverage .cc2-controls{gap:18px}#kit-constellation-coverage .cc2-side{align-items:flex-start;width:100%}#kit-constellation-coverage .cc2-stats{gap:16px;flex-wrap:wrap}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Build a constellation</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-constellation-coverage">
+  <h2 class="cc2-sr">Interactive map over NASA Blue Marble imagery: build a low-Earth-orbit imaging constellation by setting the number of satellites, altitude, and inclination; circular ground footprints tile across the real Earth and a live global coverage percentage and revisit estimate update as the fleet grows.</h2>
+  <div class="cc2-head">
+    <div class="cc2-title">
+      <span class="cc2-kicker">Satellites &amp; orbits</span>
+      <h3>Build a constellation</h3>
+      <p>Set fleet size, altitude and inclination — watch real ground footprints tile NASA Blue Marble and global coverage climb.</p>
+    </div>
+    <div class="cc2-readout">
+      <div class="cc2-pct"><span class="cc2-pctval" data-cc2-pct>66</span><span class="cc2-pctsign">%</span></div>
+      <div class="cc2-pctlabel">global coverage / day</div>
+    </div>
+  </div>
+
+  <div class="cc2-stage">
+    <canvas class="cc2-canvas" data-cc2-canvas></canvas>
+    <div class="cc2-legend">
+      <span class="cc2-lg cc2-lg-acc"><i></i>Imaged footprint</span>
+      <span class="cc2-lg cc2-lg-sat"><i></i>Satellite</span>
+      <span class="cc2-lg cc2-lg-src">NASA Blue Marble</span>
+    </div>
+  </div>
+
+  <div class="cc2-controls">
+    <div class="cc2-sliders">
+      <div class="cc2-sliderwrap">
+        <label class="cc2-slabel" for="cc2-n">Satellites <span class="cc2-sval"><span data-cc2-count>6</span></span></label>
+        <input id="cc2-n" class="cc2-range" type="range" min="1" max="40" step="1" value="6" data-cc2-n aria-label="Number of satellites in the constellation" />
+      </div>
+      <div class="cc2-sliderwrap">
+        <label class="cc2-slabel" for="cc2-alt">Altitude <span class="cc2-sval"><span data-cc2-altval>550</span> km</span></label>
+        <input id="cc2-alt" class="cc2-range" type="range" min="400" max="1200" step="25" value="550" data-cc2-alt aria-label="Orbital altitude in kilometres" />
+      </div>
+      <div class="cc2-sliderwrap">
+        <label class="cc2-slabel" for="cc2-inc">Inclination <span class="cc2-sval"><span data-cc2-incval>98</span>&deg;</span></label>
+        <input id="cc2-inc" class="cc2-range" type="range" min="0" max="98" step="1" value="98" data-cc2-inc aria-label="Orbital inclination in degrees" />
+        <div class="cc2-chips" role="group" aria-label="Inclination presets">
+          <button type="button" class="cc2-chip" data-cc2-chip="98">SSO 98&deg;</button>
+          <button type="button" class="cc2-chip" data-cc2-chip="90">Polar 90&deg;</button>
+          <button type="button" class="cc2-chip" data-cc2-chip="51">Mid 51&deg;</button>
+          <button type="button" class="cc2-chip" data-cc2-chip="0">Equatorial 0&deg;</button>
+        </div>
+      </div>
+    </div>
+    <div class="cc2-side">
+      <div class="cc2-stats">
+        <div class="cc2-stat"><span class="cc2-snum" data-cc2-revisit>0.6</span><span class="cc2-slab">avg revisit (hr)</span></div>
+        <div class="cc2-stat"><span class="cc2-snum" data-cc2-passes>90</span><span class="cc2-slab">passes / day</span></div>
+        <div class="cc2-stat"><span class="cc2-snum" data-cc2-foot>2,435</span><span class="cc2-slab">km swath</span></div>
+      </div>
+      <button class="cc2-btn" type="button" data-cc2-reset><span class="cc2-btnico">&#8635;</span> Reset fleet</button>
+    </div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag three sliders -- satellites (1-40), altitude (400-1200 km) and inclination (0-98 deg, or tap an SSO/Polar/Mid/Equatorial preset) -- and circular ground footprints tile across the real Earth while global coverage %, average revisit and passes/day update live; Reset restores the default fleet.</span>
+    <span class="mb-c-src">Basemap · NASA Blue Marble</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-constellation-coverage');
+  if(!root||root.getAttribute('data-cc2-init'))return;
+  root.setAttribute('data-cc2-init','1');
+
+  var DEG=Math.PI/180, R_EARTH=6371;
+  var FALLBACK_ACC='#3cc8ff';
+
+  // ---- elements ----
+  var canvas=root.querySelector('[data-cc2-canvas]');
+  var ctx=canvas.getContext('2d');
+  var pctEl=root.querySelector('[data-cc2-pct]');
+  var countEl=root.querySelector('[data-cc2-count]');
+  var revisitEl=root.querySelector('[data-cc2-revisit]');
+  var passesEl=root.querySelector('[data-cc2-passes]');
+  var footEl=root.querySelector('[data-cc2-foot]');
+  var rangeN=root.querySelector('[data-cc2-n]');
+  var rangeAlt=root.querySelector('[data-cc2-alt]');
+  var rangeInc=root.querySelector('[data-cc2-inc]');
+  var altVal=root.querySelector('[data-cc2-altval]');
+  var incVal=root.querySelector('[data-cc2-incval]');
+  var incChips=Array.prototype.slice.call(root.querySelectorAll('[data-cc2-chip]'));
+  var resetBtn=root.querySelector('[data-cc2-reset]');
+
+  var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- accent (re-read live) ----
+  function accent(){
+    var v='';
+    try{v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();}catch(e){}
+    return v||FALLBACK_ACC;
+  }
+  function hexToRgb(h){
+    h=(h||'').replace('#','');
+    if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16);
+    if(isNaN(n)||h.length<6)return{r:60,g:200,b:255};
+    return{r:(n>>16)&255,g:(n>>8)&255,b:n&255};
+  }
+
+  // ---- basemap (declared here; loading started at the bottom, after all state/functions exist) ----
+  var basemap=new Image();
+  var baseReady=false, baseFailed=false;
+  function onBase(){ if(baseReady)return; baseReady=true; computeAndDraw(true); }
+
+  // ---- state ----
+  var state={ n:6, alt:550, inc:98, dayPhase:0 };
+
+  // sync from controls
+  function readControls(){
+    state.n=parseInt(rangeN.value,10);
+    state.alt=parseInt(rangeAlt.value,10);
+    state.inc=parseInt(rangeInc.value,10);
+  }
+
+  // instrument footprint half-angle (deg). Horizon-limited cap; realistic imager grows modestly with altitude.
+  function footDeg(altKm){
+    var ele=5*DEG, sinRho=R_EARTH/(R_EARTH+altKm), rho=Math.asin(sinRho);
+    var eta=Math.asin(Math.cos(ele)*sinRho);
+    var horizon=(Math.PI/2-ele-eta)/DEG;
+    return Math.min(horizon, 6 + altKm/1000*9);
+  }
+  function footKm(deg){ return Math.round(deg*DEG*R_EARTH*2); } // diameter
+
+  // great-circle distance (deg)
+  function gc(la1,lo1,la2,lo2){
+    var p1=la1*DEG,p2=la2*DEG,dl=(lo2-lo1)*DEG;
+    var c=Math.sin(p1)*Math.sin(p2)+Math.cos(p1)*Math.cos(p2)*Math.cos(dl);
+    return Math.acos(Math.max(-1,Math.min(1,c)))/DEG;
+  }
+
+  // sub-satellite point for sat s at along-track param u (deg)
+  function subSat(s,u,n,inc){
+    var raan=360*s/n;
+    var lat=Math.asin(Math.sin(inc*DEG)*Math.sin(u*DEG))/DEG;
+    var lon=raan + Math.atan2(Math.cos(inc*DEG)*Math.sin(u*DEG),Math.cos(u*DEG))/DEG;
+    lon=((lon+540)%360)-180;
+    return{lat:lat,lon:lon};
+  }
+
+  // ---- coverage model over an equal-area-weighted grid ----
+  var NLAT=72, NLON=144;
+  var seen=new Uint8Array(NLAT*NLON);
+  var coveragePct=0, revisitHr=0, passesDay=0;
+  function computeCoverage(){
+    var n=state.n, alt=state.alt, inc=state.inc, fp=footDeg(alt);
+    for(var i=0;i<seen.length;i++)seen[i]=0;
+    var steps=Math.max(160, Math.round(220*(1+(state.dayPhase))));
+    var frac=state.dayPhase; // 0..1 of the simulated day already accumulated
+    var nu=Math.max(8,Math.round(steps*frac));
+    for(var s=0;s<n;s++){
+      for(var t=0;t<nu;t++){
+        var u=360*t/steps + s*37.3;
+        var p=subSat(s,u,n,inc);
+        var iyc=Math.max(0,Math.min(NLAT-1,Math.floor((90-p.lat)/180*NLAT)));
+        var span=Math.ceil((fp+3)/180*NLAT);
+        for(var iy=Math.max(0,iyc-span);iy<Math.min(NLAT,iyc+span+1);iy++){
+          var gla=90-(iy+0.5)/NLAT*180;
+          if(Math.abs(gla-p.lat)>fp+3)continue;
+          for(var ix=0;ix<NLON;ix++){
+            var glo=-180+(ix+0.5)/NLON*360;
+            if(seen[iy*NLON+ix])continue;
+            if(gc(p.lat,p.lon,gla,glo)<=fp) seen[iy*NLON+ix]=1;
+          }
+        }
+      }
+    }
+    var num=0,den=0;
+    for(var jy=0;jy<NLAT;jy++){var w=Math.cos((90-(jy+0.5)/NLAT*180)*DEG);for(var jx=0;jx<NLON;jx++){den+=w;if(seen[jy*NLON+jx])num+=w;}}
+    coveragePct=den>0?100*num/den:0;
+    // orbital period (Kepler) for LEO
+    var a=R_EARTH+alt;
+    var period=2*Math.PI*Math.sqrt(Math.pow(a*1000,3)/3.986004418e14)/60; // minutes
+    passesDay=Math.round(n*1440/period);
+    // revisit ~ time for footprints to re-image a point; coarse estimate
+    var inst=coveragePct/100;
+    revisitHr=inst>0.001? Math.max(0.3, (24/passesDay)/Math.max(0.05,inst)*1.6) : 24;
+    if(revisitHr>72)revisitHr=72;
+  }
+
+  // ---- map rect (letterbox the 2:1 basemap inside canvas) ----
+  var mapRect={x:0,y:0,w:0,h:0};
+  function layoutMap(W,H){
+    var ar=2; // 2:1
+    var w=W,h=W/ar;
+    if(h>H){h=H;w=H*ar;}
+    mapRect.x=(W-w)/2; mapRect.y=(H-h)/2; mapRect.w=w; mapRect.h=h;
+  }
+  function lon2x(lon){ return mapRect.x+(lon+180)/360*mapRect.w; }
+  function lat2y(lat){ return mapRect.y+(90-lat)/180*mapRect.h; }
+
+  // ---- render ----
+  var dpr=1, cw=0, ch=0;
+  function resize(){
+    var r=canvas.getBoundingClientRect();
+    var W=Math.max(40,Math.round(r.width)), H=Math.max(20,Math.round(r.height));
+    dpr=Math.min(2,window.devicePixelRatio||1);
+    if(canvas.width!==W*dpr||canvas.height!==H*dpr){
+      canvas.width=W*dpr; canvas.height=H*dpr;
+    }
+    cw=W; ch=H;
+    layoutMap(W,H);
+  }
+
+  function drawBase(){
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,cw,ch);
+    // deep space backdrop
+    ctx.fillStyle='#03020d';
+    ctx.fillRect(0,0,cw,ch);
+    if(baseReady&&!baseFailed){
+      ctx.drawImage(basemap,mapRect.x,mapRect.y,mapRect.w,mapRect.h);
+      // indigo multiply wash for brand
+      ctx.save();
+      ctx.globalCompositeOperation='multiply';
+      var wash=ctx.createLinearGradient(mapRect.x,mapRect.y,mapRect.x,mapRect.y+mapRect.h);
+      wash.addColorStop(0,'rgba(22,20,95,0.42)');
+      wash.addColorStop(0.5,'rgba(22,20,95,0.20)');
+      wash.addColorStop(1,'rgba(8,6,40,0.50)');
+      ctx.fillStyle=wash; ctx.fillRect(mapRect.x,mapRect.y,mapRect.w,mapRect.h);
+      ctx.restore();
+      // subtle vignette
+      ctx.save();
+      var vg=ctx.createRadialGradient(mapRect.x+mapRect.w/2,mapRect.y+mapRect.h/2,mapRect.h*0.2,mapRect.x+mapRect.w/2,mapRect.y+mapRect.h/2,mapRect.w*0.62);
+      vg.addColorStop(0,'rgba(0,0,0,0)');
+      vg.addColorStop(1,'rgba(2,1,10,0.55)');
+      ctx.fillStyle=vg; ctx.fillRect(mapRect.x,mapRect.y,mapRect.w,mapRect.h);
+      ctx.restore();
+    }else{
+      ctx.fillStyle='#0a0826';
+      ctx.fillRect(mapRect.x,mapRect.y,mapRect.w,mapRect.h);
+    }
+  }
+
+  // draw a footprint disc in equirectangular (sampling the great-circle boundary so it distorts correctly)
+  function drawFootprint(lat,lon,fp,acc,rgb,fill){
+    var pts=[],N=48;
+    for(var i=0;i<=N;i++){
+      var az=i/N*360*DEG;
+      // destination point given start, bearing az, angular distance fp
+      var la1=lat*DEG, lo1=lon*DEG, d=fp*DEG;
+      var la2=Math.asin(Math.sin(la1)*Math.cos(d)+Math.cos(la1)*Math.sin(d)*Math.cos(az));
+      var lo2=lo1+Math.atan2(Math.sin(az)*Math.sin(d)*Math.cos(la1),Math.cos(d)-Math.sin(la1)*Math.sin(la2));
+      pts.push({lat:la2/DEG,lon:((lo2/DEG+540)%360)-180});
+    }
+    // split into segments at antimeridian wraps
+    var seg=[],cur=[pts[0]];
+    for(var k=1;k<pts.length;k++){
+      if(Math.abs(pts[k].lon-pts[k-1].lon)>180){ seg.push(cur); cur=[pts[k]]; }
+      else cur.push(pts[k]);
+    }
+    seg.push(cur);
+    for(var sIdx=0;sIdx<seg.length;sIdx++){
+      var sp=seg[sIdx]; if(sp.length<2)continue;
+      ctx.beginPath();
+      ctx.moveTo(lon2x(sp[0].lon),lat2y(sp[0].lat));
+      for(var m=1;m<sp.length;m++)ctx.lineTo(lon2x(sp[m].lon),lat2y(sp[m].lat));
+      if(fill){
+        ctx.fillStyle='rgba('+rgb.r+','+rgb.g+','+rgb.b+',0.16)';
+        ctx.fill();
+      }
+      ctx.lineWidth=1.1;
+      ctx.strokeStyle='rgba('+rgb.r+','+rgb.g+','+rgb.b+',0.55)';
+      ctx.stroke();
+    }
+  }
+
+  function drawCoverageFill(rgb){
+    // paint accumulated grid cells as a soft accent overlay (additive glow)
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    var cellW=mapRect.w/NLON, cellH=mapRect.h/NLAT;
+    for(var iy=0;iy<NLAT;iy++){
+      for(var ix=0;ix<NLON;ix++){
+        if(!seen[iy*NLON+ix])continue;
+        var x=mapRect.x+ix*cellW, y=mapRect.y+iy*cellH;
+        ctx.fillStyle='rgba('+rgb.r+','+rgb.g+','+rgb.b+',0.14)';
+        ctx.fillRect(x,y,cellW+0.6,cellH+0.6);
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawGraticule(){
+    ctx.save();
+    ctx.lineWidth=0.6;
+    ctx.strokeStyle='rgba(166,171,230,0.10)';
+    for(var la=-60;la<=60;la+=30){ ctx.beginPath();ctx.moveTo(mapRect.x,lat2y(la));ctx.lineTo(mapRect.x+mapRect.w,lat2y(la));ctx.stroke(); }
+    for(var lo=-120;lo<=120;lo+=60){ ctx.beginPath();ctx.moveTo(lon2x(lo),mapRect.y);ctx.lineTo(lon2x(lo),mapRect.y+mapRect.h);ctx.stroke(); }
+    // equator emphasized
+    ctx.strokeStyle='rgba(166,171,230,0.18)';
+    ctx.beginPath();ctx.moveTo(mapRect.x,lat2y(0));ctx.lineTo(mapRect.x+mapRect.w,lat2y(0));ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawSats(acc,rgb){
+    var n=state.n, alt=state.alt, inc=state.inc, fp=footDeg(alt);
+    for(var s=0;s<n;s++){
+      var u=state.satAngle + s*(360/n) + s*37.3;
+      var p=subSat(s,u,n,inc);
+      // current live footprint
+      drawFootprint(p.lat,p.lon,fp,acc,rgb,true);
+      var x=lon2x(p.lon), y=lat2y(p.lat);
+      // sat dot
+      ctx.save();
+      ctx.shadowColor='rgba('+rgb.r+','+rgb.g+','+rgb.b+',0.9)';
+      ctx.shadowBlur=10;
+      ctx.fillStyle='#f4f5ff';
+      ctx.beginPath();ctx.arc(x,y,2.6,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+      ctx.fillStyle='rgba('+rgb.r+','+rgb.g+','+rgb.b+',0.9)';
+      ctx.beginPath();ctx.arc(x,y,1.2,0,Math.PI*2);ctx.fill();
+    }
+  }
+
+  function drawFrame(){
+    if(mapRect.w<2||mapRect.h<2)return;
+    var acc=accent(), rgb=hexToRgb(acc);
+    drawBase();
+    drawGraticule();
+    drawCoverageFill(rgb);
+    drawSats(acc,rgb);
+    // provenance caption
+    ctx.save();
+    ctx.font='600 10px Inter, system-ui, sans-serif';
+    ctx.textAlign='right';
+    ctx.fillStyle='rgba(166,171,230,0.7)';
+    ctx.fillText(baseFailed?'BASEMAP UNAVAILABLE':'NASA Blue Marble',mapRect.x+mapRect.w-10,mapRect.y+mapRect.h-9);
+    ctx.restore();
+  }
+
+  // ---- readouts ----
+  function updateReadouts(){
+    if(pctEl)pctEl.textContent=Math.round(coveragePct);
+    if(countEl)countEl.textContent=state.n;
+    if(revisitEl)revisitEl.textContent=revisitHr<10?revisitHr.toFixed(1):Math.round(revisitHr);
+    if(passesEl)passesEl.textContent=passesDay;
+    if(footEl)footEl.textContent=footKm(footDeg(state.alt)).toLocaleString();
+    if(altVal)altVal.textContent=state.alt;
+    if(incVal)incVal.textContent=state.inc;
+    // slider fills
+    setFill(rangeN); setFill(rangeAlt); setFill(rangeInc);
+    // accent recolor of accent css var so glows track picker
+    var acc=accent();
+    root.style.setProperty('--cc2-acc',acc);
+    var rgb=hexToRgb(acc);
+    root.style.setProperty('--cc2-acc-rgb',rgb.r+','+rgb.g+','+rgb.b);
+    // chip active state
+    incChips.forEach(function(c){ c.classList.toggle('cc2-on', parseInt(c.getAttribute('data-cc2-chip'),10)===state.inc); });
+  }
+  function setFill(el){
+    if(!el)return;
+    var mn=+el.min,mx=+el.max,v=+el.value;
+    el.style.setProperty('--cc2-fill',((v-mn)/(mx-mn)*100)+'%');
+  }
+
+  function computeAndDraw(force){
+    readControls();
+    computeCoverage();
+    updateReadouts();
+    resize();
+    drawFrame();
+  }
+
+  // ---- animation ----
+  var running=false, raf=0, last=0;
+  state.satAngle=0; state.dayPhase=1; // by default show full-day accumulated coverage
+  function loop(ts){
+    if(!running)return;
+    if(!last)last=ts;
+    var dt=Math.min(0.05,(ts-last)/1000); last=ts;
+    state.satAngle=(state.satAngle+dt*22)%360;
+    drawFrame();
+    raf=requestAnimationFrame(loop);
+  }
+  function start(){ if(running||reduceMotion)return; running=true; last=0; raf=requestAnimationFrame(loop); }
+  function stop(){ running=false; if(raf)cancelAnimationFrame(raf); raf=0; }
+
+  // ---- interactions ----
+  function onParamChange(){ computeAndDraw(); }
+  rangeN.addEventListener('input',onParamChange);
+  rangeAlt.addEventListener('input',onParamChange);
+  rangeInc.addEventListener('input',onParamChange);
+  incChips.forEach(function(c){
+    c.addEventListener('click',function(){
+      rangeInc.value=c.getAttribute('data-cc2-chip');
+      computeAndDraw();
+    });
+  });
+  resetBtn.addEventListener('click',function(){
+    rangeN.value=6; rangeAlt.value=550; rangeInc.value=98;
+    state.satAngle=0;
+    computeAndDraw();
+  });
+
+  // resize
+  var rt=0;
+  function reflow(){ resize(); drawFrame(); }
+  window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(reflow,120); });
+
+  // ResizeObserver: when the stage finally gets (or changes) layout, size + redraw
+  var lastW=0,lastH=0;
+  if('ResizeObserver'in window){
+    var ro=new ResizeObserver(function(){
+      var r=canvas.getBoundingClientRect();
+      var W=Math.round(r.width),H=Math.round(r.height);
+      if(W>1&&H>1&&(W!==lastW||H!==lastH)){ lastW=W;lastH=H; reflow(); }
+    });
+    ro.observe(canvas);
+  }
+
+  // first render immediately (no gating) — draws framing/graticule even before the basemap arrives
+  computeAndDraw(true);
+  // deferred sizing passes to catch dimensions that arrive after first layout/paint
+  requestAnimationFrame(function(){ reflow(); requestAnimationFrame(reflow); });
+
+  // start basemap loading NOW that state + all functions are defined.
+  // (onBase may fire synchronously below if the image is already cached — safe at this point.)
+  basemap.onload=onBase;
+  basemap.onerror=function(){ baseFailed=true; computeAndDraw(true); };
+  basemap.src='../assets/images/blue-marble-world.jpg';
+  if(basemap.complete&&basemap.naturalWidth){ onBase(); }
+
+  // IO only pauses/resumes animation
+  if('IntersectionObserver'in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting)start(); else stop(); });
+    },{threshold:0.05});
+    io.observe(root);
+  }else{
+    start();
+  }
+  // re-read accent periodically so site picker recolors live
+  setInterval(updateReadouts, reduceMotion?2000:1200);
+})();
+</script>
+</body></html>

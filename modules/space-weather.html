@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space weather · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-space-weather{width:100%;color:#f4f5ff;font-family:'Inter',sans-serif;}
+#kit-space-weather .sw-head{display:flex;flex-direction:column;gap:3px;margin-bottom:2px;}
+#kit-space-weather .sw-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:clamp(15px,4.4vw,19px);color:#f4f5ff;line-height:1;}
+#kit-space-weather .sw-sub{font-size:11.5px;color:#a6abe6;letter-spacing:0.04em;}
+#kit-space-weather .sw-stage{position:relative;width:100%;aspect-ratio:2/1.18;min-height:150px;}
+#kit-space-weather .sw-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+#kit-space-weather .sw-readout{display:flex;align-items:flex-end;justify-content:space-between;margin-top:2px;}
+#kit-space-weather .sw-level{display:flex;align-items:center;gap:9px;}
+#kit-space-weather .sw-dot{width:9px;height:9px;border-radius:50%;background:#2fd9c3;box-shadow:0 0 10px rgba(47,217,195,0.65);transition:background .6s ease,box-shadow .6s ease;}
+#kit-space-weather .sw-word{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:clamp(18px,5.6vw,24px);color:#f4f5ff;line-height:1;transition:color .6s ease;}
+#kit-space-weather .sw-kp{display:flex;align-items:baseline;gap:6px;}
+#kit-space-weather .sw-kp-num{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:clamp(20px,6vw,27px);color:#f4f5ff;line-height:1;font-variant-numeric:tabular-nums;}
+#kit-space-weather .sw-kp-label{font-family:'Chakra Petch',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;font-size:11px;color:#a6abe6;}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Space weather</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-space-weather">
+  <div class="sw-head">
+    <div class="sw-title">Space weather</div>
+    <div class="sw-sub">Geomagnetic activity index</div>
+  </div>
+  <div class="sw-stage" aria-hidden="true"></div>
+  <div class="sw-readout">
+    <div class="sw-level">
+      <span class="sw-dot"></span>
+      <span class="sw-word">Quiet</span>
+    </div>
+    <div class="sw-kp">
+      <span class="sw-kp-num">2.4</span>
+      <span class="sw-kp-label">Kp</span>
+    </div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Passive/ambient: the needle eases continuously toward re-rolling targets (a damped spring with subtle breathing), so the gauge feels alive without user input; the word, status dot, needle color and Kp readout all update in sync. Honors prefers-reduced-motion by rendering one static frame.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-space-weather');
+  if(!root) return;
+  var stage=root.querySelector('.sw-stage');
+  var wordEl=root.querySelector('.sw-word');
+  var dotEl=root.querySelector('.sw-dot');
+  var kpEl=root.querySelector('.sw-kp-num');
+  if(!stage) return;
+
+  var cv=document.createElement('canvas');
+  stage.appendChild(cv);
+  var ctx=cv.getContext('2d');
+
+  var reduce=false;
+  try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+
+  var START=Math.PI*0.875;
+  var END=Math.PI*2.125;
+  var SPAN=END-START;
+
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function hex(c){return [parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16)];}
+  var TEAL=hex('#2fd9c3'), AMBER=hex('#f2b43c'), CORAL=hex('#f2673c');
+  function mix(a,b,t){return 'rgb('+Math.round(lerp(a[0],b[0],t))+','+Math.round(lerp(a[1],b[1],t))+','+Math.round(lerp(a[2],b[2],t))+')';}
+  function colorAt(t){
+    if(t<0.5) return mix(TEAL,AMBER,t/0.5);
+    return mix(AMBER,CORAL,(t-0.5)/0.5);
+  }
+
+  var BANDS=[
+    {name:'Quiet',  col:'#2fd9c3'},
+    {name:'Active', col:'#9ed26a'},
+    {name:'Storm',  col:'#f2b43c'},
+    {name:'Severe', col:'#f2673c'}
+  ];
+  function bandFor(t){
+    if(t<0.30) return BANDS[0];
+    if(t<0.58) return BANDS[1];
+    if(t<0.84) return BANDS[2];
+    return BANDS[3];
+  }
+
+  var W=0,H=0,cx=0,cy=0,R=0,dpr=1;
+  function resize(){
+    var rect=stage.getBoundingClientRect();
+    W=Math.max(1,rect.width);
+    H=Math.max(1,rect.height);
+    dpr=Math.min(window.devicePixelRatio||1,2.5);
+    cv.width=Math.round(W*dpr);
+    cv.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    cx=W*0.5;
+    var dip=Math.sin(START);
+    var rByW=(W*0.5)/1.06;
+    var rByH=(H*0.92)/(1+dip);
+    R=Math.min(rByW,rByH);
+    cy=H*0.50 + R*dip*0.5;
+  }
+
+  function angleFor(t){ return START + t*SPAN; }
+
+  function drawArc(){
+    var lw=Math.max(7,R*0.085);
+    var rArc=R;
+    var segs=80;
+    ctx.lineCap='butt';
+    for(var i=0;i<segs;i++){
+      var t0=i/segs, t1=(i+1)/segs;
+      var a0=angleFor(t0), a1=angleFor(t1);
+      ctx.beginPath();
+      ctx.arc(cx,cy,rArc,a0,a1+0.004,false);
+      ctx.strokeStyle=colorAt((t0+t1)/2);
+      ctx.lineWidth=lw;
+      ctx.globalAlpha=0.92;
+      ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+
+    ctx.beginPath();
+    ctx.arc(cx,cy,rArc-lw*0.5-Math.max(3,R*0.045),START,END,false);
+    ctx.strokeStyle='rgba(166,171,230,0.14)';
+    ctx.lineWidth=1.2;
+    ctx.stroke();
+
+    var bounds=[0.30,0.58,0.84];
+    ctx.strokeStyle='rgba(5,3,20,0.85)';
+    ctx.lineWidth=Math.max(2,R*0.018);
+    for(var b=0;b<bounds.length;b++){
+      var a=angleFor(bounds[b]);
+      var ro=rArc+lw*0.5;
+      var ri=rArc-lw*0.5;
+      ctx.beginPath();
+      ctx.moveTo(cx+Math.cos(a)*ri,cy+Math.sin(a)*ri);
+      ctx.lineTo(cx+Math.cos(a)*ro,cy+Math.sin(a)*ro);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle='rgba(166,171,230,0.30)';
+    ctx.lineWidth=1;
+    for(var g=0;g<=20;g++){
+      var tt=g/20;
+      var ag=angleFor(tt);
+      var major=(g%5===0);
+      var r1=rArc+lw*0.5+Math.max(4,R*0.05);
+      var r2=r1+(major?Math.max(7,R*0.075):Math.max(4,R*0.04));
+      ctx.globalAlpha=major?0.6:0.32;
+      ctx.beginPath();
+      ctx.moveTo(cx+Math.cos(ag)*r1,cy+Math.sin(ag)*r1);
+      ctx.lineTo(cx+Math.cos(ag)*r2,cy+Math.sin(ag)*r2);
+      ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+  }
+
+  function hex2rgb(c){
+    if(c[0]==='#'){var h=hex(c);return h[0]+','+h[1]+','+h[2];}
+    var m=c.match(/(\d+),\s*(\d+),\s*(\d+)/);
+    return m?(m[1]+','+m[2]+','+m[3]):'255,255,255';
+  }
+
+  function drawNeedle(t){
+    var a=angleFor(t);
+    var col=colorAt(t);
+    var len=R-Math.max(7,R*0.085)*0.5-Math.max(4,R*0.04);
+    var tail=R*0.14;
+
+    var grd=ctx.createRadialGradient(cx,cy,0,cx,cy,R*0.42);
+    grd.addColorStop(0,'rgba('+hex2rgb(col)+',0.22)');
+    grd.addColorStop(1,'rgba('+hex2rgb(col)+',0)');
+    ctx.fillStyle=grd;
+    ctx.beginPath();ctx.arc(cx,cy,R*0.42,0,Math.PI*2);ctx.fill();
+
+    var nx=cx+Math.cos(a)*len, ny=cy+Math.sin(a)*len;
+    var perp=a+Math.PI/2;
+    var base=Math.max(2.6,R*0.028);
+    var bx=Math.cos(perp)*base, by=Math.sin(perp)*base;
+    var tx=cx-Math.cos(a)*tail, ty=cy-Math.sin(a)*tail;
+
+    ctx.beginPath();
+    ctx.moveTo(nx,ny);
+    ctx.lineTo(cx+bx,cy+by);
+    ctx.lineTo(tx,ty);
+    ctx.lineTo(cx-bx,cy-by);
+    ctx.closePath();
+    ctx.fillStyle=col;
+    ctx.shadowColor='rgba('+hex2rgb(col)+',0.55)';
+    ctx.shadowBlur=Math.max(6,R*0.10);
+    ctx.fill();
+    ctx.shadowBlur=0;
+
+    ctx.beginPath();ctx.arc(cx,cy,Math.max(7,R*0.085),0,Math.PI*2);
+    ctx.fillStyle='#0b0926';ctx.fill();
+    ctx.lineWidth=Math.max(1.4,R*0.016);ctx.strokeStyle=col;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy,Math.max(2.6,R*0.03),0,Math.PI*2);
+    ctx.fillStyle=col;ctx.fill();
+  }
+
+  function render(t){
+    ctx.clearRect(0,0,W,H);
+    drawArc();
+    drawNeedle(t);
+  }
+
+  var lastWord='';
+  function updateReadout(t){
+    var band=bandFor(t);
+    var kp=(t*9).toFixed(1);
+    if(kpEl) kpEl.textContent=kp;
+    if(band.name!==lastWord){
+      lastWord=band.name;
+      if(wordEl){wordEl.textContent=band.name;wordEl.style.color=band.col;}
+      if(dotEl){dotEl.style.background=band.col;dotEl.style.boxShadow='0 0 10px '+band.col;}
+    }
+  }
+
+  var val=0.18, tgt=0.18, vel=0;
+  var nextRoll=0;
+  function newTarget(now){
+    var r=Math.random();
+    var base;
+    if(r<0.55) base=0.10+Math.random()*0.28;
+    else if(r<0.85) base=0.40+Math.random()*0.30;
+    else base=0.70+Math.random()*0.28;
+    tgt=Math.max(0.04,Math.min(0.97,base));
+    nextRoll=now+(4000+Math.random()*5000);
+  }
+
+  var raf=0, last=0;
+  function loop(now){
+    var dt=Math.min(0.05,(now-last)/1000)||0.016;
+    last=now;
+    if(now>=nextRoll) newTarget(now);
+
+    var k=2.6, d=2.0;
+    var noise=Math.sin(now*0.0011)*0.012 + Math.sin(now*0.0029)*0.006;
+    var aim=tgt+noise;
+    var acc=(aim-val)*k - vel*d;
+    vel+=acc*dt;
+    val+=vel*dt;
+    if(val<0)val=0; if(val>1)val=1;
+
+    render(val);
+    updateReadout(val);
+    raf=requestAnimationFrame(loop);
+  }
+
+  function staticFrame(){
+    val=0.22;tgt=0.22;
+    render(val);updateReadout(val);
+  }
+
+  var booted=false;
+  function start(){
+    if(booted) return;
+    booted=true;
+    resize();
+    if(reduce){staticFrame();return;}
+    newTarget(performance.now());
+    last=performance.now();
+    raf=requestAnimationFrame(loop);
+  }
+
+  var rt;
+  window.addEventListener('resize',function(){
+    clearTimeout(rt);
+    rt=setTimeout(function(){
+      resize();
+      if(reduce){staticFrame();}else{render(val);updateReadout(val);}
+    },120);
+  });
+
+  if(document.readyState==='complete') start();
+  else window.addEventListener('load',start);
+  setTimeout(start,80);
+})();
+</script>
+</body></html>

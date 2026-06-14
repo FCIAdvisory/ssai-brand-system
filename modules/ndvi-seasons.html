@@ -1,0 +1,376 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vegetation index (NDVI) · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-ndvi-seasons{--nsx-accent:#3cc8ff;width:100%;font-family:var(--body,'Inter',Arial,sans-serif);color:var(--star,#f4f5ff);box-sizing:border-box}
+#kit-ndvi-seasons *{box-sizing:border-box}
+#kit-ndvi-seasons .nsx-wrap{display:grid;grid-template-columns:1.45fr .95fr;gap:18px;align-items:stretch;width:100%}
+#kit-ndvi-seasons .nsx-stage{position:relative;grid-column:1;grid-row:1;border:1px solid var(--hair,rgba(166,171,230,.16));border-radius:14px;overflow:hidden;background:#070418;min-height:300px;aspect-ratio:1/1}
+#kit-ndvi-seasons .nsx-cv{display:block;width:100%;height:100%;position:absolute;inset:0}
+#kit-ndvi-seasons .nsx-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--muted,#7e84bf);background:radial-gradient(120% 120% at 50% 40%,rgba(22,20,95,.5),#070418)}
+#kit-ndvi-seasons .nsx-cap{position:absolute;left:0;right:0;bottom:0;padding:9px 12px;font-size:10.5px;letter-spacing:.05em;color:var(--neb,#a6abe6);background:linear-gradient(to top,rgba(5,3,20,.82),rgba(5,3,20,0));text-transform:uppercase;font-weight:500}
+#kit-ndvi-seasons .nsx-mode{position:absolute;top:10px;right:10px;z-index:2;font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:10.5px;color:var(--star,#f4f5ff);background:rgba(7,4,24,.62);border:1px solid var(--hair,rgba(166,171,230,.22));border-radius:8px;padding:6px 11px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:border-color .25s,background .25s,color .25s}
+#kit-ndvi-seasons .nsx-mode:hover{border-color:var(--nsx-accent);color:var(--nsx-accent)}
+#kit-ndvi-seasons .nsx-mode.on{color:var(--nsx-accent);border-color:color-mix(in srgb,var(--nsx-accent) 60%,transparent);box-shadow:0 0 16px -6px var(--nsx-accent)}
+#kit-ndvi-seasons .nsx-panel{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:16px;padding:18px 18px 16px;border:1px solid var(--hair,rgba(166,171,230,.16));border-radius:14px;background:linear-gradient(180deg,rgba(22,20,95,.18),rgba(7,4,24,.32))}
+#kit-ndvi-seasons .nsx-k{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:10.5px;color:var(--muted,#7e84bf)}
+#kit-ndvi-seasons .nsx-valrow{display:flex;align-items:baseline;gap:10px;margin-top:4px;flex-wrap:wrap}
+#kit-ndvi-seasons .nsx-num{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;font-size:clamp(34px,6vw,46px);line-height:.92;color:var(--star,#f4f5ff);letter-spacing:-.01em;font-variant-numeric:tabular-nums;text-shadow:0 0 24px -8px var(--nsx-accent)}
+#kit-ndvi-seasons .nsx-cls{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--nsx-accent);padding:3px 9px;border:1px solid color-mix(in srgb,var(--nsx-accent) 45%,transparent);border-radius:7px}
+#kit-ndvi-seasons .nsx-date{margin-top:7px;font-size:11px;letter-spacing:.05em;color:var(--neb,#a6abe6);text-transform:uppercase;font-weight:500}
+#kit-ndvi-seasons .nsx-bands{display:flex;flex-direction:column;gap:9px}
+#kit-ndvi-seasons .nsx-band{display:flex;align-items:center;gap:9px}
+#kit-ndvi-seasons .nsx-bk{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:9.5px;color:var(--muted,#7e84bf);width:54px;flex:none}
+#kit-ndvi-seasons .nsx-bar{position:relative;flex:1;height:6px;border-radius:5px;background:rgba(166,171,230,.12);overflow:hidden}
+#kit-ndvi-seasons .nsx-fill{position:absolute;left:0;top:0;bottom:0;width:2%;border-radius:5px;transition:width .35s cubic-bezier(.4,0,.2,1)}
+#kit-ndvi-seasons .nsx-fill[data-b="nir"]{background:linear-gradient(90deg,#2a7d63,#5dcaa5)}
+#kit-ndvi-seasons .nsx-fill[data-b="red"]{background:linear-gradient(90deg,#7a2f24,#e06a52)}
+#kit-ndvi-seasons .nsx-bv{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;font-size:11px;color:var(--star,#f4f5ff);width:30px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
+#kit-ndvi-seasons .nsx-cbwrap{position:relative;margin-top:2px}
+#kit-ndvi-seasons .nsx-cb{display:block;width:100%;height:12px;border-radius:6px;border:1px solid var(--hair,rgba(166,171,230,.2))}
+#kit-ndvi-seasons .nsx-marker{position:absolute;top:-4px;bottom:-4px;width:2px;left:0;background:var(--star,#f4f5ff);box-shadow:0 0 9px var(--star,#f4f5ff);transform:translateX(-1px);transition:left .35s cubic-bezier(.4,0,.2,1);border-radius:2px}
+#kit-ndvi-seasons .nsx-marker:before{content:'';position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--star,#f4f5ff)}
+#kit-ndvi-seasons .nsx-ticks{display:flex;justify-content:space-between;margin-top:5px;font-family:var(--disp,system-ui);font-style:italic;font-weight:700;font-size:9.5px;color:var(--muted,#7e84bf);font-variant-numeric:tabular-nums}
+#kit-ndvi-seasons .nsx-ctr{grid-column:1/3;grid-row:2;display:flex;align-items:center;gap:12px;margin-top:2px;flex-wrap:wrap}
+#kit-ndvi-seasons .nsx-play{display:inline-flex;align-items:center;gap:8px;font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--star,#f4f5ff);background:rgba(22,20,95,.5);border:1px solid var(--hair,rgba(166,171,230,.24));border-radius:9px;padding:9px 15px;cursor:pointer;transition:border-color .25s,background .25s,color .25s}
+#kit-ndvi-seasons .nsx-play:hover{border-color:var(--nsx-accent);color:var(--nsx-accent)}
+#kit-ndvi-seasons .nsx-play.on{color:var(--nsx-accent);border-color:color-mix(in srgb,var(--nsx-accent) 60%,transparent);box-shadow:0 0 18px -7px var(--nsx-accent)}
+#kit-ndvi-seasons .nsx-pi{font-size:10px;font-style:normal}
+#kit-ndvi-seasons .nsx-seg{display:inline-flex;border:1px solid var(--hair,rgba(166,171,230,.2));border-radius:9px;overflow:hidden;background:rgba(7,4,24,.4)}
+#kit-ndvi-seasons .nsx-segb{font-family:var(--disp,system-ui);font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;color:var(--muted,#7e84bf);background:transparent;border:none;border-right:1px solid var(--hair,rgba(166,171,230,.14));padding:9px 13px;cursor:pointer;transition:color .25s,background .25s}
+#kit-ndvi-seasons .nsx-segb:last-child{border-right:none}
+#kit-ndvi-seasons .nsx-segb:hover{color:var(--star,#f4f5ff)}
+#kit-ndvi-seasons .nsx-segb.on{color:var(--space,#050314);background:var(--nsx-accent)}
+#kit-ndvi-seasons .nsx-slwrap{grid-column:1/3;grid-row:3;margin-top:2px}
+#kit-ndvi-seasons .nsx-slider{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:linear-gradient(90deg,rgba(166,171,230,.18),rgba(166,171,230,.3));outline:none;cursor:pointer}
+#kit-ndvi-seasons .nsx-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--nsx-accent);border:3px solid var(--space,#050314);box-shadow:0 0 12px -2px var(--nsx-accent);cursor:pointer;transition:transform .15s}
+#kit-ndvi-seasons .nsx-slider::-webkit-slider-thumb:hover{transform:scale(1.12)}
+#kit-ndvi-seasons .nsx-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--nsx-accent);border:3px solid var(--space,#050314);box-shadow:0 0 12px -2px var(--nsx-accent);cursor:pointer}
+@media(max-width:620px){#kit-ndvi-seasons .nsx-wrap{grid-template-columns:1fr}#kit-ndvi-seasons .nsx-stage{grid-column:1;grid-row:1}#kit-ndvi-seasons .nsx-panel{grid-column:1;grid-row:2}#kit-ndvi-seasons .nsx-ctr{grid-column:1;grid-row:3}#kit-ndvi-seasons .nsx-slwrap{grid-column:1;grid-row:4}}
+@media(prefers-reduced-motion:reduce){#kit-ndvi-seasons .nsx-fill,#kit-ndvi-seasons .nsx-marker{transition:none}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Vegetation index (NDVI)</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-ndvi-seasons"></div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Tap winter/spring/summer/autumn or drag the year slider (or press Play) to crossfade the real per-pixel NDVI raster; toggle True color to compare against the natural-color MODIS scene. The mean NDVI, vegetation class, NIR/Red band bars, date and colorbar marker all update live.</span>
+    <span class="mb-c-src">Data · NASA MODIS — W. Kansas</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-ndvi-seasons'); if(!root) return;
+
+  var SEASONS=['winter','spring','summer','autumn'];
+  var FALLBACK={
+    region:'Western Kansas, USA (center-pivot irrigation)',
+    sensor:'MODIS / Terra',
+    bbox:[-101.05,37.5,-100.05,38.28],
+    dates:{winter:'2023-01-12',spring:'2023-05-26',summer:'2023-07-20',autumn:'2023-11-01'}
+  };
+  var meta=JSON.parse(JSON.stringify(FALLBACK));
+
+  function accent(){
+    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return v||'#3cc8ff';
+  }
+
+  var NDVI_STOPS=[
+    {t:-0.20, c:[34,28,56]},
+    {t:-0.05, c:[120,96,72]},
+    {t: 0.05, c:[156,120,78]},
+    {t: 0.15, c:[198,170,106]},
+    {t: 0.28, c:[226,216,122]},
+    {t: 0.42, c:[150,190,84]},
+    {t: 0.58, c:[78,150,58]},
+    {t: 0.80, c:[26,96,40]},
+    {t: 1.01, c:[14,64,28]}
+  ];
+  function ndviColor(v){
+    var s=NDVI_STOPS, i;
+    if(v<=s[0].t) return s[0].c;
+    for(i=0;i<s.length-1;i++){
+      if(v<=s[i+1].t){
+        var a=s[i], b=s[i+1], f=(v-a.t)/(b.t-a.t);
+        return [a.c[0]+(b.c[0]-a.c[0])*f, a.c[1]+(b.c[1]-a.c[1])*f, a.c[2]+(b.c[2]-a.c[2])*f];
+      }
+    }
+    return s[s.length-1].c;
+  }
+  function classify(m){
+    if(m<0.1) return 'Barren';
+    if(m<0.25) return 'Sparse';
+    if(m<0.45) return 'Moderate';
+    return 'Dense';
+  }
+  function cap1(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+  function lerp(a,b,f){return a+(b-a)*f;}
+
+  var data={}, loaded=false, current=0, target=0, anim=0, playing=false, compare=false;
+  var visible=true, reduced=false, ndviCache={};
+
+  function el(tag,cls){var e=document.createElement(tag); if(cls)e.className=cls; return e;}
+
+  function buildScaffold(){
+    root.innerHTML='';
+    var w=el('div','nsx-wrap');
+
+    var stage=el('div','nsx-stage');
+    var cv=el('canvas','nsx-cv'); stage.appendChild(cv);
+    var load=el('div','nsx-loading'); load.textContent='Loading NASA imagery…'; stage.appendChild(load);
+    var modeBtn=el('button','nsx-mode'); modeBtn.type='button'; modeBtn.textContent='True color'; stage.appendChild(modeBtn);
+    var cap=el('div','nsx-cap'); stage.appendChild(cap);
+    w.appendChild(stage);
+
+    var panel=el('div','nsx-panel');
+    var read=el('div','nsx-read');
+    var rk=el('div','nsx-k'); rk.textContent='Scene mean NDVI'; read.appendChild(rk);
+    var rv=el('div','nsx-valrow');
+    var num=el('span','nsx-num'); num.textContent='—';
+    var cls=el('span','nsx-cls'); cls.textContent='';
+    rv.appendChild(num); rv.appendChild(cls); read.appendChild(rv);
+    var dateEl=el('div','nsx-date'); read.appendChild(dateEl);
+    panel.appendChild(read);
+
+    var bands=el('div','nsx-bands');
+    function band(label){
+      var b=el('div','nsx-band');
+      var k=el('span','nsx-bk'); k.textContent=label;
+      var bar=el('span','nsx-bar'); var fill=el('span','nsx-fill'); bar.appendChild(fill);
+      var v=el('span','nsx-bv');
+      b.appendChild(k); b.appendChild(bar); b.appendChild(v);
+      return {row:b,fill:fill,val:v};
+    }
+    var nirB=band('NIR 858'); nirB.fill.setAttribute('data-b','nir');
+    var redB=band('Red 645'); redB.fill.setAttribute('data-b','red');
+    bands.appendChild(nirB.row); bands.appendChild(redB.row);
+    panel.appendChild(bands);
+
+    var cbWrap=el('div','nsx-cbwrap');
+    var cb=el('canvas','nsx-cb'); cbWrap.appendChild(cb);
+    var marker=el('div','nsx-marker'); cbWrap.appendChild(marker);
+    panel.appendChild(cbWrap);
+    var ticks=el('div','nsx-ticks');
+    ['-0.1','0.2','0.5','0.8'].forEach(function(t){var s=el('span'); s.textContent=t; ticks.appendChild(s);});
+    panel.appendChild(ticks);
+    w.appendChild(panel);
+
+    var ctr=el('div','nsx-ctr');
+    var play=el('button','nsx-play'); play.type='button';
+    play.innerHTML='<span class="nsx-pi">▶</span><span class="nsx-pl">Play year</span>';
+    ctr.appendChild(play);
+
+    var seg=el('div','nsx-seg'); seg.setAttribute('role','tablist');
+    var segBtns=[];
+    SEASONS.forEach(function(s,i){
+      var b=el('button','nsx-segb'); b.type='button';
+      b.textContent=cap1(s); b.setAttribute('data-i',i);
+      seg.appendChild(b); segBtns.push(b);
+    });
+    ctr.appendChild(seg);
+    w.appendChild(ctr);
+
+    var sl=el('div','nsx-slwrap');
+    var slider=el('input'); slider.type='range'; slider.className='nsx-slider';
+    slider.min='0'; slider.max='300'; slider.step='1'; slider.value='0';
+    slider.setAttribute('aria-label','Scrub season of the year');
+    sl.appendChild(slider);
+    w.appendChild(sl);
+
+    root.appendChild(w);
+    return {cv:cv,load:load,cap:cap,modeBtn:modeBtn,num:num,cls:cls,dateEl:dateEl,
+      nirFill:nirB.fill,nirVal:nirB.val,redFill:redB.fill,redVal:redB.val,
+      cb:cb,marker:marker,play:play,segBtns:segBtns,slider:slider};
+  }
+
+  var ui=buildScaffold();
+  reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function loadImg(src){return new Promise(function(res,rej){var im=new Image(); im.onload=function(){res(im);}; im.onerror=function(){rej(src);}; im.src=src;});}
+  function readData(img){var W=img.naturalWidth,H=img.naturalHeight;var c=el('canvas');c.width=W;c.height=H;var x=c.getContext('2d');x.drawImage(img,0,0);return {W:W,H:H,data:x.getImageData(0,0,W,H).data};}
+
+  function processSeason(s,rgbImg,irImg){
+    var rgb=readData(rgbImg), ir=readData(irImg);
+    var W=ir.W,H=ir.H,n=W*H;
+    var ndvi=new Float32Array(n), valid=new Uint8Array(n);
+    var sum=0,cnt=0,nirSum=0,redSum=0,d=ir.data;
+    for(var p=0;p<n;p++){
+      var k=p*4, nir=d[k+1], red=d[k+2], den=nir+red;
+      var v=den>0?(nir-red)/den:0; ndvi[p]=v;
+      if(nir+red>14){valid[p]=1;sum+=v;cnt++;nirSum+=nir;redSum+=red;}
+    }
+    var rc=el('canvas'); rc.width=rgb.W; rc.height=rgb.H;
+    rc.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(rgb.data),rgb.W,rgb.H),0,0);
+    data[s]={W:W,H:H,ndvi:ndvi,valid:valid,mean:cnt?sum/cnt:0,nir:cnt?nirSum/cnt:0,red:cnt?redSum/cnt:0,rgb:rc};
+  }
+
+  function tryManifest(){
+    return fetch('../assets/scenes/manifest.json').then(function(r){return r.json();}).then(function(j){
+      if(j&&j.seasons){meta.region=j.seasons.region||meta.region; meta.bbox=j.seasons.bbox_WSEN||meta.bbox; if(j.seasons.dates)meta.dates=j.seasons.dates;}
+      if(j&&j.scenes&&j.scenes.agriculture&&j.scenes.agriculture.sensor)meta.sensor=j.scenes.agriculture.sensor;
+    }).catch(function(){});
+  }
+
+  function loadAll(){
+    var jobs=[];
+    SEASONS.forEach(function(s){
+      jobs.push(Promise.all([loadImg('../assets/scenes/seasons/'+s+'_rgb.jpg'),loadImg('../assets/scenes/seasons/'+s+'_ir.png')]).then(function(pair){processSeason(s,pair[0],pair[1]);}));
+    });
+    tryManifest().then(function(){return Promise.all(jobs);}).then(function(){
+      loaded=true; ui.load.style.display='none'; drawColorbar(); render(0);
+    }).catch(function(){ui.load.textContent='NASA imagery unavailable';});
+  }
+
+  var work=el('canvas');
+  function paintNDVI(s){
+    var D=data[s]; if(!D) return null;
+    work.width=D.W; work.height=D.H;
+    var img=new ImageData(D.W,D.H), o=img.data, ndvi=D.ndvi, valid=D.valid, n=D.W*D.H;
+    for(var p=0;p<n;p++){var k=p*4,c; if(!valid[p])c=[26,22,48]; else c=ndviColor(ndvi[p]); o[k]=c[0]|0;o[k+1]=c[1]|0;o[k+2]=c[2]|0;o[k+3]=255;}
+    work.getContext('2d').putImageData(img,0,0); return work;
+  }
+  function getLayer(s){
+    if(!ndviCache[s]){var c=paintNDVI(s); var out=el('canvas'); out.width=c.width; out.height=c.height; out.getContext('2d').drawImage(c,0,0); ndviCache[s]=out;}
+    return ndviCache[s];
+  }
+
+  function blendTo(A,B,f){
+    var cv=ui.cv, rect=cv.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+    var cw=Math.max(2,Math.round(rect.width*dpr)), ch=Math.max(2,Math.round(rect.height*dpr));
+    if(cv.width!==cw||cv.height!==ch){cv.width=cw;cv.height=ch;}
+    var g=cv.getContext('2d'); g.clearRect(0,0,cw,ch); g.imageSmoothingEnabled=true; g.globalAlpha=1;
+    g.drawImage(A,0,0,cw,ch);
+    if(B&&f>0){g.globalAlpha=f; g.drawImage(B,0,0,cw,ch); g.globalAlpha=1;}
+  }
+
+  function render(pos){
+    if(!loaded) return;
+    var i0=Math.floor(pos), i1=Math.min(SEASONS.length-1,i0+1), f=pos-i0;
+    var sA=SEASONS[i0], sB=SEASONS[i1], DA=data[sA], DB=data[sB];
+    if(compare) blendTo(DA.rgb, f>0?DB.rgb:null, f);
+    else blendTo(getLayer(sA), f>0?getLayer(sB):null, f);
+
+    var mean=lerp(DA.mean,DB.mean,f), nir=lerp(DA.nir,DB.nir,f), red=lerp(DA.red,DB.red,f);
+    ui.num.textContent=(mean>=0?'+':'')+mean.toFixed(3);
+    ui.cls.textContent=classify(mean);
+    ui.nirFill.style.width=Math.max(2,Math.min(100,nir/255*100)).toFixed(1)+'%';
+    ui.redFill.style.width=Math.max(2,Math.min(100,red/255*100)).toFixed(1)+'%';
+    ui.nirVal.textContent=Math.round(nir);
+    ui.redVal.textContent=Math.round(red);
+
+    var mn=-0.1,mx=0.8,t=Math.max(0,Math.min(1,(mean-mn)/(mx-mn)));
+    ui.marker.style.left=(t*100).toFixed(1)+'%';
+
+    var near=f<0.5?sA:sB, dlabel=meta.dates[near]||'';
+    ui.dateEl.textContent=cap1(near)+' · '+dlabel;
+    ui.cap.textContent=meta.region+'  ·  '+meta.sensor+'  ·  '+dlabel;
+
+    var act=Math.round(pos);
+    ui.segBtns.forEach(function(b,bi){b.classList.toggle('on',bi===act);});
+    var sv=Math.round(pos/(SEASONS.length-1)*300);
+    if(parseInt(ui.slider.value,10)!==sv) ui.slider.value=String(sv);
+  }
+
+  function drawColorbar(){
+    var cb=ui.cb, rect=cb.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+    var w=Math.max(40,Math.round(rect.width*dpr)), h=Math.max(8,Math.round(rect.height*dpr));
+    cb.width=w; cb.height=h;
+    var g=cb.getContext('2d'), mn=-0.1, mx=0.8;
+    for(var x=0;x<w;x++){var v=mn+(x/(w-1))*(mx-mn),c=ndviColor(v); g.fillStyle='rgb('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+')'; g.fillRect(x,0,1,h);}
+  }
+
+  function step(){
+    if(!playing) return;
+    target+=reduced?0.02:0.011;
+    if(target>=SEASONS.length-1){target=SEASONS.length-1; current=target; render(current); stopPlay(); return;}
+    current=target; render(current); anim=requestAnimationFrame(step);
+  }
+  function startPlay(){
+    if(playing) return;
+    if(current>=SEASONS.length-1){current=0;target=0;render(0);}
+    playing=true; ui.play.classList.add('on');
+    ui.play.querySelector('.nsx-pi').textContent='❚❚';
+    ui.play.querySelector('.nsx-pl').textContent='Pause';
+    target=current; anim=requestAnimationFrame(step);
+  }
+  function stopPlay(){
+    playing=false; cancelAnimationFrame(anim); ui.play.classList.remove('on');
+    ui.play.querySelector('.nsx-pi').textContent='▶';
+    ui.play.querySelector('.nsx-pl').textContent='Play year';
+  }
+  function seekTo(i){stopPlay(); current=i; target=i; if(loaded)render(i);}
+
+  ui.play.addEventListener('click',function(){playing?stopPlay():startPlay();});
+  ui.segBtns.forEach(function(b){b.addEventListener('click',function(){seekTo(parseInt(b.getAttribute('data-i'),10));});});
+  ui.modeBtn.addEventListener('click',function(){
+    compare=!compare; ui.modeBtn.textContent=compare?'NDVI':'True color';
+    ui.modeBtn.classList.toggle('on',compare); if(loaded)render(current);
+  });
+  ui.slider.addEventListener('input',function(){
+    stopPlay();
+    var p=parseInt(ui.slider.value,10)/300*(SEASONS.length-1);
+    current=p; target=p; if(loaded)render(p);
+  });
+
+  var rT;
+  function onResize(){clearTimeout(rT); rT=setTimeout(function(){if(loaded){drawColorbar();render(current);}},120);}
+  window.addEventListener('resize',onResize);
+
+  function applyAccent(){root.style.setProperty('--nsx-accent',accent());}
+  applyAccent();
+  setInterval(applyAccent,800);
+
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){visible=e.isIntersecting; if(!visible&&playing)stopPlay();});},{threshold:0.05});
+    io.observe(root);
+  }
+
+  loadAll();
+})();
+</script>
+</body></html>

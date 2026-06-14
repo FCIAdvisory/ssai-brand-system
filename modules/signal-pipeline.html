@@ -1,0 +1,517 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observation to understanding · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-signal-pipeline{
+  position:relative;
+  width:100%;
+  box-sizing:border-box;
+  color:#f4f5ff;
+  font-family:'Inter',system-ui,sans-serif;
+  padding:8px 4px 4px;
+}
+#kit-signal-pipeline *{box-sizing:border-box;}
+
+#kit-signal-pipeline .sp-stage{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/7;
+  min-height:240px;
+}
+
+#kit-signal-pipeline .sp-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+#kit-signal-pipeline .sp-nodes{
+  position:absolute;
+  inset:0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  align-items:center;
+}
+
+#kit-signal-pipeline .sp-node{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:14px;
+  background:transparent;
+  border:0;
+  padding:0;
+  margin:0;
+  cursor:pointer;
+  font-family:inherit;
+  color:inherit;
+  height:100%;
+  justify-content:center;
+  -webkit-tap-highlight-color:transparent;
+}
+#kit-signal-pipeline .sp-node:focus{outline:none;}
+
+#kit-signal-pipeline .sp-ring{
+  position:relative;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(60,123,224,0.18), rgba(22,20,95,0.42) 70%),
+    #0a0826;
+  border:1px solid rgba(166,171,230,0.22);
+  transition:transform .5s cubic-bezier(.22,.61,.36,1),
+             border-color .5s ease,
+             box-shadow .5s ease;
+  box-shadow:0 0 0 0 rgba(60,123,224,0);
+}
+
+#kit-signal-pipeline .sp-glyph{
+  position:relative;
+  width:24px;
+  height:24px;
+  display:block;
+  transition:transform .5s cubic-bezier(.22,.61,.36,1), opacity .4s ease;
+  opacity:.86;
+}
+/* OBSERVE — aperture / lens */
+#kit-signal-pipeline .sp-glyph[data-glyph="observe"]{
+  border-radius:50%;
+  border:2px solid #f2b43c;
+  box-shadow:inset 0 0 0 4px rgba(242,180,60,0.16);
+}
+#kit-signal-pipeline .sp-glyph[data-glyph="observe"]::after{
+  content:"";position:absolute;inset:0;margin:auto;
+  width:6px;height:6px;border-radius:50%;background:#f2b43c;
+}
+/* DATA — stacked records */
+#kit-signal-pipeline .sp-glyph[data-glyph="data"]{
+  border-radius:3px;
+  border:2px solid #2fd9c3;
+  background:
+    linear-gradient(#2fd9c3,#2fd9c3) center/100% 2px no-repeat;
+}
+#kit-signal-pipeline .sp-glyph[data-glyph="data"]::after{
+  content:"";position:absolute;left:2px;right:2px;top:6px;height:2px;
+  background:rgba(47,217,195,0.5);
+  box-shadow:0 6px 0 rgba(47,217,195,0.5);
+}
+/* MODEL — node graph */
+#kit-signal-pipeline .sp-glyph[data-glyph="model"]{
+  transform-origin:center;
+}
+#kit-signal-pipeline .sp-glyph[data-glyph="model"]::before,
+#kit-signal-pipeline .sp-glyph[data-glyph="model"]::after{
+  content:"";position:absolute;border-radius:50%;
+  background:#8a5cff;
+}
+#kit-signal-pipeline .sp-glyph[data-glyph="model"]::before{
+  width:8px;height:8px;left:1px;top:8px;
+  box-shadow:14px -7px 0 #8a5cff, 6px 9px 0 rgba(138,92,255,0.65);
+}
+#kit-signal-pipeline .sp-glyph[data-glyph="model"]::after{
+  width:18px;height:2px;border-radius:2px;left:3px;top:6px;
+  transform:rotate(-22deg);
+  background:rgba(138,92,255,0.55);
+  box-shadow:-1px 13px 0 -0.5px rgba(138,92,255,0.45);
+}
+/* KNOWLEDGE — radiant core */
+#kit-signal-pipeline .sp-glyph[data-glyph="knowledge"]{
+  border-radius:50%;
+  background:radial-gradient(circle,#7fd957 0 30%, rgba(127,217,87,0.18) 60%, transparent 70%);
+}
+#kit-signal-pipeline .sp-glyph[data-glyph="knowledge"]::after{
+  content:"";position:absolute;inset:-3px;border-radius:50%;
+  border:1px solid rgba(127,217,87,0.4);
+}
+
+#kit-signal-pipeline .sp-label{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:clamp(11px,1.5vw,15px);
+  color:#f4f5ff;
+  transition:color .4s ease, letter-spacing .5s ease;
+  white-space:nowrap;
+}
+
+#kit-signal-pipeline .sp-desc{
+  position:absolute;
+  top:calc(50% + 54px);
+  left:50%;
+  width:min(86%,200px);
+  transform:translate(-50%,6px);
+  font-size:12px;
+  line-height:1.45;
+  color:#a6abe6;
+  text-align:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .45s ease, transform .45s cubic-bezier(.22,.61,.36,1);
+}
+
+/* hover / focus reveal */
+#kit-signal-pipeline .sp-node:hover .sp-ring,
+#kit-signal-pipeline .sp-node:focus-visible .sp-ring,
+#kit-signal-pipeline .sp-node.is-active .sp-ring{
+  transform:translateY(-4px) scale(1.06);
+}
+#kit-signal-pipeline .sp-node:hover .sp-glyph,
+#kit-signal-pipeline .sp-node:focus-visible .sp-glyph,
+#kit-signal-pipeline .sp-node.is-active .sp-glyph{
+  opacity:1;
+  transform:scale(1.06);
+}
+#kit-signal-pipeline .sp-node:hover .sp-label,
+#kit-signal-pipeline .sp-node:focus-visible .sp-label,
+#kit-signal-pipeline .sp-node.is-active .sp-label{
+  letter-spacing:.16em;
+}
+#kit-signal-pipeline .sp-node:hover .sp-desc,
+#kit-signal-pipeline .sp-node:focus-visible .sp-desc,
+#kit-signal-pipeline .sp-node.is-active .sp-desc{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* per-node accent on activation */
+#kit-signal-pipeline .sp-node[data-i="0"]:hover .sp-ring,
+#kit-signal-pipeline .sp-node[data-i="0"]:focus-visible .sp-ring,
+#kit-signal-pipeline .sp-node[data-i="0"].is-active .sp-ring{
+  border-color:rgba(242,180,60,0.6);box-shadow:0 0 22px -4px rgba(242,180,60,0.5);}
+#kit-signal-pipeline .sp-node[data-i="1"]:hover .sp-ring,
+#kit-signal-pipeline .sp-node[data-i="1"]:focus-visible .sp-ring,
+#kit-signal-pipeline .sp-node[data-i="1"].is-active .sp-ring{
+  border-color:rgba(47,217,195,0.6);box-shadow:0 0 22px -4px rgba(47,217,195,0.5);}
+#kit-signal-pipeline .sp-node[data-i="2"]:hover .sp-ring,
+#kit-signal-pipeline .sp-node[data-i="2"]:focus-visible .sp-ring,
+#kit-signal-pipeline .sp-node[data-i="2"].is-active .sp-ring{
+  border-color:rgba(138,92,255,0.6);box-shadow:0 0 22px -4px rgba(138,92,255,0.5);}
+#kit-signal-pipeline .sp-node[data-i="3"]:hover .sp-ring,
+#kit-signal-pipeline .sp-node[data-i="3"]:focus-visible .sp-ring,
+#kit-signal-pipeline .sp-node[data-i="3"].is-active .sp-ring{
+  border-color:rgba(127,217,87,0.6);box-shadow:0 0 22px -4px rgba(127,217,87,0.5);}
+
+#kit-signal-pipeline .sp-tag{
+  margin:18px 0 4px;
+  text-align:center;
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  font-size:clamp(10px,1.3vw,13px);
+  color:#a6abe6;
+}
+
+@media (max-width:520px){
+  #kit-signal-pipeline .sp-stage{aspect-ratio:auto;min-height:300px;}
+  #kit-signal-pipeline .sp-ring{width:48px;height:48px;}
+  #kit-signal-pipeline .sp-desc{width:88%;top:calc(50% + 46px);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  #kit-signal-pipeline .sp-ring,
+  #kit-signal-pipeline .sp-glyph,
+  #kit-signal-pipeline .sp-label,
+  #kit-signal-pipeline .sp-desc{transition:none;}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Observation to understanding</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-signal-pipeline">
+  <div class="sp-stage">
+    <canvas class="sp-canvas" aria-hidden="true"></canvas>
+    <div class="sp-nodes" role="list" aria-label="From observation to understanding">
+      <button class="sp-node" type="button" role="listitem" data-i="0" aria-describedby="kit-signal-pipeline-d0">
+        <span class="sp-ring"><span class="sp-glyph" data-glyph="observe"></span></span>
+        <span class="sp-label">Observe</span>
+        <span class="sp-desc" id="kit-signal-pipeline-d0">Instruments capture light from the Sun, the Earth and the Universe.</span>
+      </button>
+      <button class="sp-node" type="button" role="listitem" data-i="1" aria-describedby="kit-signal-pipeline-d1">
+        <span class="sp-ring"><span class="sp-glyph" data-glyph="data"></span></span>
+        <span class="sp-label">Data</span>
+        <span class="sp-desc" id="kit-signal-pipeline-d1">Raw signal is calibrated, archived and made ready for science.</span>
+      </button>
+      <button class="sp-node" type="button" role="listitem" data-i="2" aria-describedby="kit-signal-pipeline-d2">
+        <span class="sp-ring"><span class="sp-glyph" data-glyph="model"></span></span>
+        <span class="sp-label">Model</span>
+        <span class="sp-desc" id="kit-signal-pipeline-d2">Physics and analysis turn measurements into structure and meaning.</span>
+      </button>
+      <button class="sp-node" type="button" role="listitem" data-i="3" aria-describedby="kit-signal-pipeline-d3">
+        <span class="sp-ring"><span class="sp-glyph" data-glyph="knowledge"></span></span>
+        <span class="sp-label">Knowledge</span>
+        <span class="sp-desc" id="kit-signal-pipeline-d3">Understanding that informs decisions and serves life on Earth.</span>
+      </button>
+    </div>
+  </div>
+  <p class="sp-tag">From observation to understanding</p>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Hover (or focus/tap) any of the four nodes to reveal a one-line description; signal dots flow continuously left to right along the connecting lines.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-signal-pipeline');
+  if(!root) return;
+
+  var canvas=root.querySelector('.sp-canvas');
+  var nodesWrap=root.querySelector('.sp-nodes');
+  var nodeEls=Array.prototype.slice.call(root.querySelectorAll('.sp-node'));
+  var ctx=canvas.getContext('2d');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // segment accent colors (between node i and i+1) — meaning-tied
+  var SEG=[
+    [242,180,60],   // observe -> data (solar amber)
+    [47,217,195],   // data -> model (aurora teal)
+    [138,92,255]    // model -> knowledge (plasma violet)
+  ];
+  var END=[127,217,87]; // knowledge core glow
+
+  var W=0,H=0,dpr=1;
+  var centers=[];   // x positions (css px) of the 4 node centers
+  var cy=0;         // vertical center (css px)
+  var ringR=29;     // visual ring radius (css px)
+  var active=-1;    // hovered/focused node index, -1 none
+
+  function rgba(c,a){return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';}
+
+  function measure(){
+    var r=root.getBoundingClientRect();
+    W=Math.max(1,Math.round(r.width));
+    var stage=root.querySelector('.sp-stage').getBoundingClientRect();
+    H=Math.max(1,Math.round(stage.height));
+    dpr=Math.min(2,window.devicePixelRatio||1);
+    canvas.width=Math.round(W*dpr);
+    canvas.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    // read actual rendered node centers for perfect alignment
+    var srect=canvas.getBoundingClientRect();
+    centers=nodeEls.map(function(el){
+      var ring=el.querySelector('.sp-ring').getBoundingClientRect();
+      return ring.left+ring.width/2 - srect.left;
+    });
+    var firstRing=nodeEls[0].querySelector('.sp-ring').getBoundingClientRect();
+    cy=firstRing.top+firstRing.height/2 - srect.top;
+    ringR=firstRing.width/2;
+  }
+
+  // particles travel along each of the 3 segments
+  var particles=[];
+  function seedParticles(){
+    particles=[];
+    var perSeg=7;
+    for(var s=0;s<3;s++){
+      for(var k=0;k<perSeg;k++){
+        particles.push({
+          seg:s,
+          t:k/perSeg + Math.random()*0.04,
+          speed:0.10+Math.random()*0.05,
+          size:1.1+Math.random()*1.3
+        });
+      }
+    }
+  }
+  seedParticles();
+
+  function segGeom(s){
+    // start/end points: edge of ring s to edge of ring s+1
+    var x0=centers[s]+ringR+4;
+    var x1=centers[s+1]-ringR-4;
+    return {x0:x0,x1:x1,y:cy};
+  }
+
+  function drawConnectors(highlight){
+    for(var s=0;s<3;s++){
+      var g=segGeom(s);
+      var hot = (active===s || active===s+1);
+      // base hairline
+      ctx.lineWidth=1.4;
+      ctx.strokeStyle=hot?rgba(SEG[s],0.5):'rgba(166,171,230,0.20)';
+      ctx.beginPath();
+      ctx.moveTo(g.x0,g.y);
+      ctx.lineTo(g.x1,g.y);
+      ctx.stroke();
+      // faint endpoint ticks
+      ctx.fillStyle=hot?rgba(SEG[s],0.55):'rgba(166,171,230,0.28)';
+      ctx.beginPath();ctx.arc(g.x0,g.y,1.6,0,6.2832);ctx.fill();
+      ctx.beginPath();ctx.arc(g.x1,g.y,1.6,0,6.2832);ctx.fill();
+    }
+  }
+
+  function drawParticles(){
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    for(var i=0;i<particles.length;i++){
+      var p=particles[i];
+      var g=segGeom(p.seg);
+      var x=g.x0+(g.x1-g.x0)*p.t;
+      var c=SEG[p.seg];
+      var hot=(active===p.seg||active===p.seg+1||active===-1);
+      // fade in/out near the ends so dots emerge and dissolve
+      var edge=Math.min(p.t,1-p.t);
+      var fade=Math.min(1,edge*6);
+      var a=(0.55+0.4*Math.sin((p.t*6.2832)+i))*fade*(hot?1:0.55);
+      var r=p.size*(hot?1.25:1);
+      // glow
+      var grd=ctx.createRadialGradient(x,g.y,0,x,g.y,r*4.5);
+      grd.addColorStop(0,rgba(c,a));
+      grd.addColorStop(1,rgba(c,0));
+      ctx.fillStyle=grd;
+      ctx.beginPath();ctx.arc(x,g.y,r*4.5,0,6.2832);ctx.fill();
+      // core
+      ctx.fillStyle=rgba([244,245,255],a*0.9);
+      ctx.beginPath();ctx.arc(x,g.y,r*0.7,0,6.2832);ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawNodeAura(){
+    // soft halo behind each ring, accent when active
+    ctx.save();
+    ctx.globalCompositeOperation='lighter';
+    for(var n=0;n<4;n++){
+      var c = n<3?SEG[n]:END;
+      // observe uses its own accent; map node->color by stage meaning
+      var col=[SEG[0],SEG[1],SEG[2],END][n];
+      var on=(active===n);
+      var base= on?0.20:0.07;
+      var rad=ringR*2.4;
+      var grd=ctx.createRadialGradient(centers[n],cy,0,centers[n],cy,rad);
+      grd.addColorStop(0,rgba(col,base));
+      grd.addColorStop(1,rgba(col,0));
+      ctx.fillStyle=grd;
+      ctx.beginPath();ctx.arc(centers[n],cy,rad,0,6.2832);ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function frame(now){
+    ctx.clearRect(0,0,W,H);
+    drawNodeAura();
+    drawConnectors();
+    drawParticles();
+  }
+
+  var last=0;
+  function loop(now){
+    var dt=last?Math.min(0.05,(now-last)/1000):0.016;
+    last=now;
+    for(var i=0;i<particles.length;i++){
+      var p=particles[i];
+      p.t+=p.speed*dt;
+      if(p.t>=1){ p.t-=1; }
+    }
+    frame(now);
+    raf=requestAnimationFrame(loop);
+  }
+
+  var raf=null;
+  function start(){
+    if(reduce.matches){ frame(0); return; }
+    cancelAnimationFrame(raf);
+    last=0;
+    raf=requestAnimationFrame(loop);
+  }
+
+  // interaction
+  function setActive(i){
+    if(active===i) return;
+    active=i;
+    nodeEls.forEach(function(el,idx){
+      el.classList.toggle('is-active', idx===i);
+    });
+    if(reduce.matches) frame(0);
+  }
+  nodeEls.forEach(function(el,idx){
+    el.addEventListener('mouseenter',function(){setActive(idx);});
+    el.addEventListener('mouseleave',function(){setActive(-1);});
+    el.addEventListener('focus',function(){setActive(idx);});
+    el.addEventListener('blur',function(){setActive(-1);});
+    el.addEventListener('click',function(){
+      // tap toggle for touch devices
+      setActive(active===idx?-1:idx);
+    });
+  });
+
+  // resize handling (debounced)
+  var rt=null;
+  function onResize(){
+    clearTimeout(rt);
+    rt=setTimeout(function(){
+      measure();
+      if(reduce.matches) frame(0); else { /* loop reads geometry live */ }
+    },80);
+  }
+  window.addEventListener('resize',onResize);
+
+  if(reduce.addEventListener){
+    reduce.addEventListener('change',function(){ start(); });
+  }
+
+  // init after layout settles
+  measure();
+  start();
+  // re-measure once fonts/layout settle
+  setTimeout(function(){ measure(); if(reduce.matches) frame(0); },120);
+})();
+</script>
+</body></html>

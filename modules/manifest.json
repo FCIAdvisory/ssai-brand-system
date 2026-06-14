@@ -1,0 +1,601 @@
+{
+  "collections": [
+    {
+      "id": "earth-climate",
+      "name": "Earth & Climate",
+      "desc": "Our changing planet, watched from orbit."
+    },
+    {
+      "id": "remote-sensing",
+      "name": "Remote Sensing",
+      "desc": "How a satellite turns light into data."
+    },
+    {
+      "id": "satellites-orbits",
+      "name": "Satellites & Orbits",
+      "desc": "The machines and paths of observation."
+    },
+    {
+      "id": "sun-space-weather",
+      "name": "The Sun & Space Weather",
+      "desc": "Our star, and the storms it sends."
+    },
+    {
+      "id": "solar-system",
+      "name": "The Solar System",
+      "desc": "Worlds, moons, and the dance of orbits."
+    },
+    {
+      "id": "cosmos",
+      "name": "Stars, Galaxies & the Cosmos",
+      "desc": "From nearby stars to the deep field."
+    },
+    {
+      "id": "mission-tools",
+      "name": "Mission & Data Tools",
+      "desc": "The SSAI lens \u2014 observation to understanding."
+    }
+  ],
+  "modules": [
+    {
+      "slug": "earth-globe",
+      "title": "Rotating Earth",
+      "collection": "earth-climate",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA Blue Marble (MODIS)",
+      "blurb": "A photoreal hero globe of the real NASA Blue Marble, slowly auto-rotating with atmospheric rim glow and day-side terminator shading, marked with NASA science and mission sites.",
+      "interaction": "Auto-rotates west-to-east on the real Blue Marble; drag (mouse or touch) to spin and tilt the globe with eased momentum, hover a glowing marker to reveal its site label, and the readout tracks the lat/lon at the globe's center.",
+      "real": true
+    },
+    {
+      "slug": "earth-layers",
+      "title": "Earth data layers",
+      "collection": "earth-climate",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA Blue Marble / Black Marble (MODIS \u00b7 VIIRS)",
+      "blurb": "A multi-instrument Earth-observation hero: the real NASA Blue Marble rendered as a slowly rotating globe whose surface restyles between true-color, night-lights and three analytical science layers, showing SSAI's breadth across Earth-observing instruments.",
+      "interaction": "Click a layer button (True color, Night lights, Vegetation, Sea-surface temp, Aerosol) to smoothly crossfade the globe into that observation layer; the active layer's name, instrument tag and a short \"what SSAI uses it for\" caption update beneath, while the globe keeps rotating (paused when off-screen or for reduced-motion).",
+      "real": true
+    },
+    {
+      "slug": "day-night-terminator",
+      "title": "Day & Night",
+      "collection": "earth-climate",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA Blue Marble / Black Marble",
+      "blurb": "Shows Earth's real day/night terminator with NASA Blue Marble daylight and Black Marble city lights, swept by time-of-day and tilted by season.",
+      "interaction": "Drag the time-of-day slider to rotate the terminator and move the subsolar point; drag the season slider to tilt it toward polar day/night; press play to auto-advance time.",
+      "real": true
+    },
+    {
+      "slug": "aurora-ribbon",
+      "title": "Aurora ribbon",
+      "collection": "earth-climate",
+      "source": "",
+      "credit": "",
+      "blurb": "A reusable hero/banner background of flowing aurora curtains over a dark Earth limb, for Earth-science page headers and section dividers.",
+      "interaction": "Ambient only \u2014 continuous gentle shimmer and drift; no user input. Honors prefers-reduced-motion by rendering a single static frame.",
+      "real": false
+    },
+    {
+      "slug": "flow-field",
+      "title": "Data flow-field",
+      "collection": "earth-climate",
+      "source": "",
+      "credit": "",
+      "blurb": "A mesmerizing particle flow-field that advects ~1500 points along a smooth pseudo-noise vector field \u2014 turning Earth-observation data into living art, like ocean currents and atmospheric flow.",
+      "interaction": "Move the pointer (or touch) to inject a gentle swirling current the particles bend around; otherwise it flows on its own. Honors prefers-reduced-motion by rendering a single static frame.",
+      "real": false
+    },
+    {
+      "slug": "storm-tracker",
+      "title": "Storm Tracker",
+      "collection": "earth-climate",
+      "source": "NASA",
+      "credit": "Basemap \u00b7 NASA MODIS, Atlantic",
+      "blurb": "A live hurricane-tracking console rendering a recurving Atlantic storm \u2014 rotating spiral, clear eye, Saffir-Simpson category, past track and forecast cone \u2014 over a real NASA satellite view of the Atlantic Ocean.",
+      "interaction": "Press Play to fly the storm along its recurving track as it intensifies over warm water and weakens over land, or drag the timeline to scrub to any point; the category badge, max wind, central pressure, coordinates, track and forecast cone all update live.",
+      "real": true
+    },
+    {
+      "slug": "wildfire-detect",
+      "title": "Thermal fire detection",
+      "collection": "earth-climate",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA MODIS \u2014 Dixie Fire, 2021",
+      "blurb": "Runs a satellite active-fire detector across a real NASA MODIS scene of the 2021 Dixie Fire: a scan line sweeps the true-color image and ignites burn-scar hotspots wherever the actual shortwave-infrared band is high and vegetation index is low.",
+      "interaction": "Loads the real true-color MODIS scene and renders immediately; a scan line sweeps left-to-right and flags burn-scar / active-fire hotspots by reading the genuine SWIR (2130 nm) and NDVI bands from the image, lighting them as pulsing detections with a running count, swath-progress and peak-SWIR readout. Toggle Optical vs Thermal SWIR to recolor the same real pixels as a heat ramp and see why fire pops in shortwave-infrared; hover the scene for a live latitude/longitude readout.",
+      "real": true
+    },
+    {
+      "slug": "sea-level",
+      "title": "Sea-level rise \u2014 Nile Delta",
+      "collection": "earth-climate",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA MODIS \u2014 Nile Delta",
+      "blurb": "A sobering, premium sea-level-rise visualizer built on the real NASA MODIS/Terra true-color scene of the Nile Delta \u2014 one of Earth's most exposed low-lying coasts. A 0 to +2 m slider (with 2050/2100 low- vs high-emissions scenario presets and an ice-sheet-collapse tail) raises the Mediterranean, and a translucent ocean overlay encroaches inland, drowning the lowest ground first. Land elevation is approximated per-pixel from the real imagery \u2014 proximity to existing water (low NIR / NDVI&lt;0), low brightness, and low NDVI \u2014 so the flood spreads from the coast and up the river channels realistically rather than as a flat clip line. Shows live sea-level rise, estimated affected-land %, and the active scenario, with an honest caption that the inundation is an illustrative elevation-proxy projection, not a surveyed flood model. Demonstrates SSAI's Earth-observation and climate-monitoring credibility.",
+      "interaction": "Loads the real Nile Delta scene and paints the true-color basemap immediately on init (no interaction or scroll gating). Drag the sea-level slider from 0 to +2.0 m, or tap a scenario preset (Today, 2050 Low/High, 2100 Low/High, +2.0 m), to raise the water: a translucent ocean-blue overlay floods inward from the existing coast and channels, deepening in color over the lowest ground, with an accent-colored waterline that shimmers along the advancing shoreline. The HUD updates live \u2014 sea-level rise in metres, estimated land inundated %, and the year/emissions scenario \u2014 and the matching preset and on-image scenario chip highlight. Animation (waterline shimmer) pauses when the module scrolls off-screen and is disabled entirely under prefers-reduced-motion (still fully interactive, repainting on each slider change). The accent color is read live from --accent and applied to the slider, eyebrow, chip, waterline and main stat.",
+      "real": true
+    },
+    {
+      "slug": "keeling-co2",
+      "title": "The CO2 record",
+      "collection": "earth-climate",
+      "source": "",
+      "credit": "",
+      "blurb": "An animated, scrubbable Keeling curve of atmospheric CO2 (1960\u20132026) showing the rising trend and seasonal sawtooth in SSAI's dark-cosmic style.",
+      "interaction": "Hover/drag the chart or use the year slider to read year + ppm; toggle the seasonal cycle, replay the draw-on; live accent recolor.",
+      "real": false
+    },
+    {
+      "slug": "atmos-sounding",
+      "title": "Atmospheric profile",
+      "collection": "earth-climate",
+      "source": "",
+      "credit": "",
+      "blurb": "Explore how air temperature, humidity and pressure change with altitude through the troposphere, tropopause and stratosphere, and how satellites sound those layers.",
+      "interaction": "Drag the altitude marker (or use the slider / keyboard) to read temperature, dew point and pressure at any height; toggle the dew-point curve and the satellite sounding weighting functions.",
+      "real": false
+    },
+    {
+      "slug": "band-combiner",
+      "title": "False-color composite",
+      "collection": "remote-sensing",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA MODIS surface reflectance",
+      "blurb": "A real false-color composite builder on genuine NASA MODIS imagery. Visitors assign any spectral band (Blue, Green, Red, NIR, SWIR) to each of the R, G, B display channels, or hit a preset, and the satellite scene recomposites live from its actual pixel data, teaching how Earth-observation imagery is constructed and what each band combination reveals.",
+      "interaction": "Loads with the agriculture scene in Natural color, rendered immediately with no interaction. Switch scenes (Agriculture, Delta, Urban, Wildfire) to load other real MODIS scenes with live provenance. Tap a preset (Natural, Color-IR, Agriculture, Urban) to set all three channels at once, or use the three-row by five-button band-to-channel matrix to build a custom composite; the image recolors live, the active R/G/B mapping and an explanatory note update, and matching presets auto-highlight. Hover or touch the image to read that pixel real five-band reflectance values, computed NDVI with surface class, and latitude/longitude.",
+      "real": true
+    },
+    {
+      "slug": "ndvi-seasons",
+      "title": "Vegetation index (NDVI)",
+      "collection": "remote-sensing",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA MODIS \u2014 W. Kansas",
+      "blurb": "Scrub a real year of MODIS imagery over western-Kansas center-pivot irrigation and watch per-pixel NDVI green up in summer and senesce by autumn.",
+      "interaction": "Tap winter/spring/summer/autumn or drag the year slider (or press Play) to crossfade the real per-pixel NDVI raster; toggle True color to compare against the natural-color MODIS scene. The mean NDVI, vegetation class, NIR/Red band bars, date and colorbar marker all update live.",
+      "real": true
+    },
+    {
+      "slug": "pixel-drilldown",
+      "title": "Pixel drill-down",
+      "collection": "remote-sensing",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA MODIS multispectral",
+      "blurb": "Explore the multispectral data hidden inside a satellite image \u2014 hover any pixel to read its per-band reflectance, NDVI, lat/lon and classified surface type.",
+      "interaction": "Switch between four real NASA MODIS scenes (agriculture, river delta, urban, wildfire) and eight display modes (True color, False color/color-IR, NDVI, and single Blue/Green/Red/NIR/SWIR bands) \u2014 the canvas re-renders live from the real pixel data. Hover or tap anywhere on the scene: a crosshair and magnified pixel loupe follow the cursor while the side panel reads that exact pixel's five-band reflectance (with bars), computed NDVI, real latitude/longitude, and a classified surface type (Water / Dense vegetation / Crops / Bare soil / Built-up). The default True-color scene paints immediately on load with no interaction required.",
+      "real": true
+    },
+    {
+      "slug": "resolution-explorer",
+      "title": "Resolution",
+      "collection": "remote-sensing",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA MODIS",
+      "blurb": "An interactive ground-sample-distance explorer that block-averages real NASA MODIS imagery so detail emerges as the sample shrinks across sensor classes.",
+      "interaction": "Drag the GSD slider or tap a sensor preset (MODIS 250m to Commercial 0.5m); the scene re-samples in real time, the GSD readout and sample count update, and the feature legend lights up each detail as it becomes resolvable.",
+      "real": true
+    },
+    {
+      "slug": "spectral-signatures",
+      "title": "Spectral Signature Explorer",
+      "collection": "remote-sensing",
+      "source": "NASA",
+      "credit": "Data \u00b7 NASA MODIS surface reflectance",
+      "blurb": "An interactive spectral-signature explorer for SSAI's brand site that loads four real NASA MODIS surface-reflectance scenes (cropland, Nile Delta, Phoenix metro, Dixie Fire burn scar), samples real pixels at runtime, and computes the averaged five-band reflectance signature for each of five surface classes \u2014 vegetation, water, bare soil/desert, built-up/urban, and burn scar. It demonstrates SSAI's remote-sensing credibility by letting a viewer toggle classes on and off to compare how each material reflects across Blue 469, Green 555, Red 645, NIR 858, and SWIR 2130 nm, watching the textbook physics (the vegetation red edge, water's NIR collapse, soil rising into SWIR, the burn scar's elevated SWIR) emerge directly from genuine satellite data rather than illustration.",
+      "interaction": "Toggle any of the five surface-class chips to add or remove its signature curve from the plot; the curves animate in and the y-axis story rebalances live. Hover or move along the chart (mouse or touch) to drop a wavelength scrubber that reads out each active class's exact reflectance at that band. Each class card shows its real per-band values, live sample count, the source MODIS scene, and a representative real-pixel color swatch computed from the actual imagery. Everything renders on init from the loaded scenes; animation pauses when scrolled out of view and respects reduced-motion.",
+      "real": true
+    },
+    {
+      "slug": "sar-vs-optical",
+      "title": "Radar vs Optical",
+      "collection": "remote-sensing",
+      "source": "NASA / ESA",
+      "credit": "Optical \u00b7 NASA MODIS   \u00b7   SAR \u00b7 ESA Copernicus Sentinel-1 (CC BY-SA 4.0)",
+      "blurb": "Side-by-side comparison of real MODIS optical and Sentinel-1 SAR imagery showing why all-weather radar complements daylight-only optical sensing.",
+      "interaction": "Drag the cloud-cover slider to roll cloud across the optical scene until it goes blind while the radar stays clear; toggle day/night to dim the optical panel; toggle the radar signature pins to read water, structure and terrain returns.",
+      "real": true
+    },
+    {
+      "slug": "spectrum-explorer",
+      "title": "Spectrum explorer",
+      "collection": "remote-sensing",
+      "source": "",
+      "credit": "",
+      "blurb": "An interactive electromagnetic-spectrum explainer: drag a marker across the bands to learn each one's wavelength range and what it lets scientists observe.",
+      "interaction": "Drag the marker (or click/tap anywhere on the spectrum bar, or use arrow keys when focused) to move across the seven bands; the wave, accent colour and info panel update live to the selected band.",
+      "real": false
+    },
+    {
+      "slug": "ground-track",
+      "title": "Satellite ground tracks",
+      "collection": "satellites-orbits",
+      "source": "NASA",
+      "credit": "Basemap \u00b7 NASA Blue Marble",
+      "blurb": "Watch real LEO satellites \u2014 Landsat 9, Suomi-NPP, ICESat-2 and Aqua \u2014 trace sinusoidal ground tracks that drift westward across NASA Blue Marble imagery with a live day/night terminator.",
+      "interaction": "Hover or tap a track (or its legend chip) to highlight a satellite and read altitude, inclination and period; play/pause, scrub time-speed, and lengthen the orbital trails over the real Earth.",
+      "real": true
+    },
+    {
+      "slug": "orbit-types",
+      "title": "Orbit types",
+      "collection": "satellites-orbits",
+      "source": "",
+      "credit": "",
+      "blurb": "Side-on Earth diagram letting you toggle LEO, MEO, GEO, Sun-synchronous and Molniya orbits, each with an animated satellite, altitude and true Keplerian orbital period.",
+      "interaction": "Click an orbit chip to toggle its ring on/off; the most recently enabled orbit becomes the focused one \u2014 it draws solid, gains an animated satellite and an in-canvas label, and drives the readout panel (altitude, true period, orbital speed). The time-warp slider scales animation speed logarithmically, and a button switches the radial scale between logarithmic and linear so distant orbits stay legible.",
+      "real": false
+    },
+    {
+      "slug": "orbit-designer",
+      "title": "Orbit Designer",
+      "collection": "satellites-orbits",
+      "source": "",
+      "credit": "",
+      "blurb": "Reshape a single satellite orbit live with altitude, inclination, and eccentricity sliders and watch apogee, perigee, and Keplerian period update in real time.",
+      "interaction": "Drag the three sliders to morph the orbital ellipse and tilt the plane; the satellite revolves at true Kepler speed (faster at perigee) while readouts recompute apogee, perigee, and period.",
+      "real": false
+    },
+    {
+      "slug": "swath-scanner",
+      "title": "Observation swath",
+      "collection": "satellites-orbits",
+      "source": "NASA",
+      "credit": "Basemap \u00b7 NASA Blue Marble",
+      "blurb": "Shows how an orbiting imager builds global coverage by painting its sensor swath across the real NASA Blue Marble pass after pass.",
+      "interaction": "Play/pause and reset the scan, toggle a wide imager vs a narrow high-res sensor, and drag swath-width and speed sliders while coverage % climbs live.",
+      "real": true
+    },
+    {
+      "slug": "constellation-coverage",
+      "title": "Build a constellation",
+      "collection": "satellites-orbits",
+      "source": "NASA",
+      "credit": "Basemap \u00b7 NASA Blue Marble",
+      "blurb": "Lets a prospect design a LEO imaging constellation on the real NASA Blue Marble and instantly see how fleet size, altitude and inclination drive global daily coverage and revisit.",
+      "interaction": "Drag three sliders -- satellites (1-40), altitude (400-1200 km) and inclination (0-98 deg, or tap an SSO/Polar/Mid/Equatorial preset) -- and circular ground footprints tile across the real Earth while global coverage %, average revisit and passes/day update live; Reset restores the default fleet.",
+      "real": true
+    },
+    {
+      "slug": "downlink-pipeline",
+      "title": "Data downlink",
+      "collection": "satellites-orbits",
+      "source": "",
+      "credit": "",
+      "blurb": "Visualizes the journey of Earth-observation data from satellite acquisition through downlink, ground processing, and final data product, with a live end-to-end latency budget.",
+      "interaction": "Drag the downlink-rate and pass-geometry sliders to retime the pipeline, toggle play/pause and a fault injector, and hover any stage to reveal what it does while packets flow and the latency clock recomputes.",
+      "real": false
+    },
+    {
+      "slug": "debris-field",
+      "title": "Orbital debris",
+      "collection": "satellites-orbits",
+      "source": "",
+      "credit": "",
+      "blurb": "Visualize how rising space debris drives the Kessler cascade around Earth's LEO shell and GEO ring.",
+      "interaction": "Drag the debris-density slider to thicken the cloud and trigger self-spawning collision flashes; toggle Classify to color active satellites vs debris; Reset clears the field.",
+      "real": false
+    },
+    {
+      "slug": "orbit-tracker",
+      "title": "Orbit tracker",
+      "collection": "satellites-orbits",
+      "source": "",
+      "credit": "",
+      "blurb": "Show Earth-observing and deep-space missions circling a central Earth on tilted orbital rings, with mission identity on hover.",
+      "interaction": "Hover or tap a moving satellite to reveal its mission name, orbit type and altitude; its orbital ring brightens. Reduced-motion users get a single static composed frame.",
+      "real": false
+    },
+    {
+      "slug": "reentry-heating",
+      "title": "Atmospheric reentry",
+      "collection": "satellites-orbits",
+      "source": "",
+      "credit": "",
+      "blurb": "Fly a capsule into the atmosphere and find the narrow reentry corridor between skipping back to space and burning up.",
+      "interaction": "Drag the entry-angle and speed sliders, then press Initiate reentry to watch the heat-shield plasma, live telemetry (altitude, Mach, g-load, shield temperature) and the deceleration trace.",
+      "real": false
+    },
+    {
+      "slug": "solar-disk",
+      "title": "The living Sun",
+      "collection": "sun-space-weather",
+      "source": "",
+      "credit": "",
+      "blurb": "A mesmerizing animated Sun \u2014 limb-darkened amber disc with churning granulation, a soft corona, and flare arcs that erupt and fade off the limb \u2014 for a heliophysics / \"the Sun\" lens.",
+      "interaction": "Ambient and self-running: granulation drifts continuously and a flare arc erupts off the limb every few seconds; honors prefers-reduced-motion by rendering a single static frame.",
+      "real": false
+    },
+    {
+      "slug": "space-weather",
+      "title": "Space weather",
+      "collection": "sun-space-weather",
+      "source": "",
+      "credit": "",
+      "blurb": "A live semicircular instrument showing the current geomagnetic activity index (Kp), with the needle drifting smoothly between Quiet, Active, Storm and Severe over time.",
+      "interaction": "Passive/ambient: the needle eases continuously toward re-rolling targets (a damped spring with subtle breathing), so the gauge feels alive without user input; the word, status dot, needle color and Kp readout all update in sync. Honors prefers-reduced-motion by rendering one static frame.",
+      "real": false
+    },
+    {
+      "slug": "cme-eruption",
+      "title": "Solar storm",
+      "collection": "sun-space-weather",
+      "source": "",
+      "credit": "",
+      "blurb": "Watch a coronal mass ejection erupt from the Sun, race across space, and slam into Earth's magnetosphere \u2014 flaring the aurora and spiking the Kp geomagnetic-storm index.",
+      "interaction": "Set the shock speed (which scales the real 1\u20133 day Sun-to-Earth transit), press ERUPT, and watch the plasma cloud travel, compress the magnetosphere, ignite the poles, and drive the Kp gauge.",
+      "real": false
+    },
+    {
+      "slug": "magnetosphere",
+      "title": "Space weather",
+      "collection": "sun-space-weather",
+      "source": "",
+      "credit": "",
+      "blurb": "Shows how Earth's dipole magnetic field deflects the solar wind, compressing on the dayside, streaming into a magnetotail, and igniting polar aurorae as a storm intensifies.",
+      "interaction": "Drag the solar-wind speed slider (or tap a preset from Quiet to Severe) to ramp the wind: particles accelerate, the dayside magnetopause compresses inward, the magnetotail stretches, and the polar aurorae flare brighter while the Kp index and standoff distance update live.",
+      "real": false
+    },
+    {
+      "slug": "planet-viewer",
+      "title": "Planet Viewer",
+      "collection": "solar-system",
+      "source": "",
+      "credit": "",
+      "blurb": "An interactive generated planet (Earth / Mars / Moon) that visitors can spin and switch between to explore SSAI's three science domains \u2014 the Sun, the Earth, the Universe.",
+      "interaction": "Drag the planet to spin it (it auto-rotates when idle), and tap Earth / Mars / Moon to morph the procedural surface, palette, and atmosphere; terminator shading marks the lit and dark hemispheres.",
+      "real": false
+    },
+    {
+      "slug": "moon-phase",
+      "title": "Moon phase",
+      "collection": "solar-system",
+      "source": "",
+      "credit": "",
+      "blurb": "An interactive lunar phase explorer: a procedurally crater-textured Moon whose terminator shadow sweeps from new to full as you drag the disc or move the slider, with live phase name and illuminated percentage.",
+      "interaction": "Drag the Moon left/right (or move the slider) to scrub the full synodic cycle; tap New / First quarter / Full / Last quarter chips for a smooth eased jump. The terminator, phase name, and illumination readout update live.",
+      "real": false
+    },
+    {
+      "slug": "orrery",
+      "title": "Solar system orrery",
+      "collection": "solar-system",
+      "source": "",
+      "credit": "",
+      "blurb": "A top-down animated orrery where the planets orbit the Sun at correct relative periods, so inner worlds visibly outrace outer ones.",
+      "interaction": "Drag the speed slider to scrub time, toggle trails and play/pause, and hover or click any planet to read its real orbital period, distance and size.",
+      "real": false
+    },
+    {
+      "slug": "eclipse-sim",
+      "title": "Eclipse Simulator",
+      "collection": "solar-system",
+      "source": "",
+      "credit": "",
+      "blurb": "Drag the Moon around its orbit to align Sun, Earth and Moon and watch real shadow-cone geometry produce solar and lunar eclipses.",
+      "interaction": "Grab the Moon and drag it along its orbit; place it between Sun and Earth for a solar eclipse (umbra/penumbra cone darkens Earth) or behind Earth for a lunar eclipse (Moon reddens into a Blood Moon), with a live type readout, alignment angle, obscuration % and phase. Arrow keys nudge, Play autoruns the orbit, and Shadow cones toggles the geometry.",
+      "real": false
+    },
+    {
+      "slug": "comet",
+      "title": "Comet",
+      "collection": "solar-system",
+      "source": "",
+      "credit": "",
+      "blurb": "Watch a comet race through a stretched elliptical orbit, speeding up at perihelion while its ion and dust tails sweep to always face away from the Sun.",
+      "interaction": "Drag the orbit-speed slider to scrub the time-lapse and press play/pause; the live readout reports distance (AU), Keplerian speed (km/s), and orbital phase as the tails grow and shrink.",
+      "real": false
+    },
+    {
+      "slug": "lagrange",
+      "title": "Sun\u2013Earth Lagrange Points",
+      "collection": "solar-system",
+      "source": "",
+      "credit": "",
+      "blurb": "Shows the five Sun\u2013Earth Lagrange points at correct geometry with real spacecraft (JWST at L2, SOHO at L1) holding station as Earth orbits.",
+      "interaction": "Hover any L-point, planet, or spacecraft for a one-line label; toggle \"Pause orbit\" to freeze Earth and \"Lock frame\" to switch into the co-rotating reference frame where Earth and all five points stand still.",
+      "real": false
+    },
+    {
+      "slug": "tides",
+      "title": "Two Tides A Day",
+      "collection": "solar-system",
+      "source": "",
+      "credit": "",
+      "blurb": "Shows how the Moon's gravity raises two ocean bulges on Earth \u2014 one facing the Moon, one on the far side \u2014 producing two high tides per day at any coastline.",
+      "interaction": "Drag the Moon around its orbit (or let it auto-orbit and tune the Speed slider / Pause); the two tidal bulges track the Moon and the coastal tide gauge rises and falls twice per orbit.",
+      "real": false
+    },
+    {
+      "slug": "habitable-zone",
+      "title": "Goldilocks Zone",
+      "collection": "solar-system",
+      "source": "",
+      "credit": "",
+      "blurb": "Shows why a star's temperature and luminosity set where liquid water \u2014 and life \u2014 can exist.",
+      "interaction": "Drag the star's temperature slider to reshape the green habitable ring, then drag the planet in or out to see it turn scorched, ocean-blue, or ice-white with a live verdict.",
+      "real": false
+    },
+    {
+      "slug": "starfield-hero",
+      "title": "Starfield hero",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "A reusable site-hero banner: a multi-layer parallax starfield drifting on deep space behind SSAI's headline, responding gently to mouse movement.",
+      "interaction": "Three star layers auto-drift at different speeds and twinkle subtly; moving the mouse adds gentle depth-based parallax. Honors reduced-motion by rendering one static frame.",
+      "real": false
+    },
+    {
+      "slug": "deep-field",
+      "title": "Deep-field explorer",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "An awe-inducing generated JWST-style deep field \u2014 hundreds of stars and faint galaxies across parallax depth layers that visitors can pan and zoom through.",
+      "interaction": "Drag to pan and scroll-wheel or the +/\u2212 buttons to zoom; nearer layers parallax faster, and when left idle the field resumes a slow cosmic drift.",
+      "real": false
+    },
+    {
+      "slug": "nebula-viewer",
+      "title": "Nebula viewer",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "A generated, slowly drifting and breathing nebula of layered violet/teal/coral clouds with embedded twinkling stars; hovering reveals a \"Star-forming region\" label \u2014 an ambient, premium cosmic hero/section piece for SSAI's Universe content.",
+      "interaction": "Moving the pointer over the canvas reveals a floating \"Star-forming region\" label that tracks the cursor; the nebula otherwise drifts, breathes, and twinkles on its own. Honors prefers-reduced-motion by rendering a single static frame.",
+      "real": false
+    },
+    {
+      "slug": "galaxy-gen",
+      "title": "Galaxy generator",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "Procedurally generate a living spiral galaxy and explore how arm count, winding tightness and spin shape it.",
+      "interaction": "Drag the disk to reorient its inclination and roll; adjust the Arms, Arm tightness and Spin sliders to reshape and rewind it live; click Regenerate for a fresh galaxy.",
+      "real": false
+    },
+    {
+      "slug": "hyperspace-warp",
+      "title": "Lightspeed",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "Fly first-person through a starfield and watch relativistic optics warp the sky as you push toward the speed of light.",
+      "interaction": "Drag the speed slider from gentle cruise to near-lightspeed: stars stretch into streaks, blue-shift, and bunch toward the vanishing point as relativistic aberration intensifies.",
+      "real": false
+    },
+    {
+      "slug": "pulsar",
+      "title": "Pulsar",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "An interactive rotating neutron star whose tilted magnetic beams sweep past the viewer, dropping perfectly regular blips onto a live pulse-timing strip.",
+      "interaction": "Drag the spin-rate slider (1-700 Hz) to speed up rotation and the pulse train; toggle the magnetic-axis tilt and beam visibility to see how line-of-sight geometry creates the pulses.",
+      "real": false
+    },
+    {
+      "slug": "emission-spectrum",
+      "title": "Element fingerprints",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "Pick an element to reveal its characteristic emission-line spectrum and see how astronomers fingerprint atoms in distant stars.",
+      "interaction": "Tap an element to show its bright-line spectrum; toggle Compare to overlay two elements; hover the strip to snap-read each line's wavelength and host element.",
+      "real": false
+    },
+    {
+      "slug": "star-classify",
+      "title": "Star types: the OBAFGKM sequence",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "Drag a temperature slider to morph a star through the OBAFGKM spectral sequence and watch its blackbody color, size, class, mass, luminosity and place on the Hertzsprung-Russell diagram update in real time.",
+      "interaction": "Drag the surface-temperature slider (2,800-42,000 K) or tap an O/B/A/F/G/K/M class chip; the central star recolors and resizes by blackbody physics while the HUD and the dot on the H-R strip track live.",
+      "real": false
+    },
+    {
+      "slug": "exoplanet-transit",
+      "title": "Exoplanet Transit",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "Watch a planet cross its star and see the tiny brightness dip plotted live \u2014 the transit method NASA uses to discover exoplanets.",
+      "interaction": "Drag Planet size to deepen the dip (depth scales as (Rp/R\u2605)\u00b2) and Orbital speed to change the period and dip width; Pause/Play freezes the live light curve. Loops automatically; respects reduced-motion with a static frame.",
+      "real": false
+    },
+    {
+      "slug": "redshift-doppler",
+      "title": "Redshift",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "Drag a source's velocity to watch stellar absorption lines slide red (receding) or blue (approaching) and read off redshift z and line-of-sight speed.",
+      "interaction": "Drag the velocity slider (or pick a preset) to shift the spectrum; the absorption lines, wavelength readouts, z value and direction update live, and the exoplanet preset animates a periodic wobble.",
+      "real": false
+    },
+    {
+      "slug": "black-hole-lens",
+      "title": "Gravitational Lens",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "Shows how a black hole's gravity bends background starlight into an Einstein ring around a dark photon-sphere shadow.",
+      "interaction": "Drag the shadow anywhere across the starfield to re-lens stars in real time; adjust mass to grow the horizon and ring, toggle the accretion disk, or recenter.",
+      "real": false
+    },
+    {
+      "slug": "nbody-gravity",
+      "title": "Gravity sandbox",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "Drop stars and planets into a live Newtonian gravity field and watch them orbit, slingshot, and merge in real time.",
+      "interaction": "Click-drag on the canvas to launch a body in the drag direction; use Add planet / Add star / Clear and the mass + speed sliders to sculpt the system.",
+      "real": false
+    },
+    {
+      "slug": "gravity-waves",
+      "title": "Gravitational Waves",
+      "collection": "cosmos",
+      "source": "",
+      "credit": "",
+      "blurb": "Watch two black holes spiral inward and merge, warping a spacetime mesh and emitting ripples while a live LIGO-style chirp waveform rises then rings down.",
+      "interaction": "Drag the total-mass slider to retune the system, and hit Replay to restart the inspiral from the top.",
+      "real": false
+    },
+    {
+      "slug": "lenses-switch",
+      "title": "Three lenses",
+      "collection": "mission-tools",
+      "source": "",
+      "credit": "",
+      "blurb": "A hero domain-switcher embodying SSAI's three science arenas \u2014 pick The Sun, The Earth, or The Universe to crossfade a generative visualization and re-theme the module's accent.",
+      "interaction": "Click one of the three lenses; the central canvas crossfades between a flaring sun, a rotating dot-globe, and a twinkling starfield while the accent color eases from amber to teal to violet.",
+      "real": false
+    },
+    {
+      "slug": "missions-filter",
+      "title": "Mission filter",
+      "collection": "mission-tools",
+      "source": "NASA",
+      "credit": "24 real NASA missions",
+      "blurb": "A filterable constellation of SSAI's 24 real NASA missions, grouped by domain (Sun / Earth / Universe), for a website section that shows the breadth of the mission portfolio at a glance.",
+      "interaction": "Click All / Sun / Earth / Universe to smoothly highlight matching mission nodes, fade the rest, and update the live count; click any glowing node to reveal its name and one-line contribution below.",
+      "real": true
+    },
+    {
+      "slug": "mission-timeline",
+      "title": "Mission timeline",
+      "collection": "mission-tools",
+      "source": "NASA",
+      "credit": "Real NASA mission milestones",
+      "blurb": "A draggable 1977\u20132026 timeline scrubber that surfaces the active year large in Chakra italic and lights up nearby mission markers by domain.",
+      "interaction": "Drag the scrubber (or click any mission marker / use arrow keys) to scrub the year; the large year, mission name, domain accent, progress rail and nearby markers all update live.",
+      "real": true
+    },
+    {
+      "slug": "signal-pipeline",
+      "title": "Observation to understanding",
+      "collection": "mission-tools",
+      "source": "",
+      "credit": "",
+      "blurb": "Hero or about-section centerpiece that visualizes SSAI's core idea \u2014 turning raw observation into understanding through a four-stage pipeline.",
+      "interaction": "Hover (or focus/tap) any of the four nodes to reveal a one-line description; signal dots flow continuously left to right along the connecting lines.",
+      "real": false
+    },
+    {
+      "slug": "counter-cluster",
+      "title": "Animated stat counters",
+      "collection": "mission-tools",
+      "source": "",
+      "credit": "",
+      "blurb": "A row of four headline metrics that count up smoothly the first time the panel scrolls into view, anchoring SSAI's track record on a landing page or about section.",
+      "interaction": "Scroll the panel into view to trigger a one-time eased count-up (via IntersectionObserver); a faint sweep line crosses each stat as it settles. Reduced-motion shows final values instantly.",
+      "real": false
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galaxy generator · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-galaxy-gen{position:relative;width:100%;color:#f4f5ff;font-family:'Inter',system-ui,sans-serif;border-radius:14px;overflow:hidden;background:radial-gradient(120% 120% at 50% 35%,#0a0726 0%,#050314 60%,#040210 100%);border:1px solid rgba(166,171,230,0.16)}
+#kit-galaxy-gen *{box-sizing:border-box}
+#kit-galaxy-gen .gg-stage{position:relative;width:100%;aspect-ratio:16/10;min-height:300px;cursor:grab;touch-action:none}
+#kit-galaxy-gen .gg-stage:active{cursor:grabbing}
+#kit-galaxy-gen .gg-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-galaxy-gen .gg-canvas.gg-grab{cursor:grabbing}
+#kit-galaxy-gen .gg-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 100% at 50% 50%,transparent 55%,rgba(4,2,16,0.55) 100%)}
+#kit-galaxy-gen .gg-title{position:absolute;top:14px;left:18px;pointer-events:none;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;letter-spacing:.06em;font-size:13px;color:#f4f5ff;text-shadow:0 0 14px rgba(0,0,0,.6)}
+#kit-galaxy-gen .gg-hint{position:absolute;bottom:12px;right:16px;pointer-events:none;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a6abe6;opacity:.7}
+#kit-galaxy-gen .gg-panel{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:16px;align-items:end;padding:14px 18px 16px;background:linear-gradient(180deg,rgba(22,20,95,0) 0%,rgba(22,20,95,0.28) 100%);border-top:1px solid rgba(166,171,230,0.16)}
+#kit-galaxy-gen .gg-ctrl{display:flex;flex-direction:column;gap:7px;min-width:0}
+#kit-galaxy-gen .gg-ctrl label{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:#a6abe6;display:flex;justify-content:space-between;gap:8px;white-space:nowrap}
+#kit-galaxy-gen .gg-ctrl label span{color:var(--gg-accent,#3cc8ff);font-style:normal}
+#kit-galaxy-gen input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:rgba(166,171,230,0.22);outline:none;cursor:pointer}
+#kit-galaxy-gen input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gg-accent,#3cc8ff);border:2px solid #050314;box-shadow:0 0 10px var(--gg-glow,rgba(60,200,255,.7));transition:transform .12s ease}
+#kit-galaxy-gen input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.18)}
+#kit-galaxy-gen input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--gg-accent,#3cc8ff);border:2px solid #050314;box-shadow:0 0 10px var(--gg-glow,rgba(60,200,255,.7));cursor:pointer}
+#kit-galaxy-gen input[type=range]::-moz-range-track{height:3px;border-radius:3px;background:rgba(166,171,230,0.22)}
+#kit-galaxy-gen .gg-regen{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:11px;letter-spacing:.08em;color:#f4f5ff;background:rgba(22,20,95,0.55);border:1px solid var(--gg-accent,#3cc8ff);border-radius:9px;padding:9px 15px;cursor:pointer;white-space:nowrap;transition:background .18s ease,box-shadow .18s ease,transform .12s ease}
+#kit-galaxy-gen .gg-regen:hover{background:rgba(22,20,95,0.9);box-shadow:0 0 16px var(--gg-glow,rgba(60,200,255,.45))}
+#kit-galaxy-gen .gg-regen:active{transform:scale(.97)}
+@media (max-width:560px){#kit-galaxy-gen .gg-panel{grid-template-columns:1fr 1fr;gap:14px 16px}#kit-galaxy-gen .gg-regen{grid-column:1/-1}}
+@media (prefers-reduced-motion:reduce){#kit-galaxy-gen .gg-hint::after{content:' · static'}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Galaxy generator</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-galaxy-gen">
+  <div class="gg-stage">
+    <canvas class="gg-canvas" aria-label="Procedurally generated rotating spiral galaxy"></canvas>
+    <div class="gg-vignette" aria-hidden="true"></div>
+    <div class="gg-title">SPIRAL GALAXY GENERATOR</div>
+    <div class="gg-hint">Drag to reorient</div>
+  </div>
+  <div class="gg-panel">
+    <div class="gg-ctrl">
+      <label>ARMS <span data-gg-out="arms">4</span></label>
+      <input type="range" min="1" max="7" step="1" value="4" data-gg="arms" aria-label="Number of spiral arms">
+    </div>
+    <div class="gg-ctrl">
+      <label>ARM TIGHTNESS <span data-gg-out="tight">36%</span></label>
+      <input type="range" min="0.02" max="0.85" step="0.01" value="0.36" data-gg="tight" aria-label="Spiral arm tightness">
+    </div>
+    <div class="gg-ctrl">
+      <label>SPIN <span data-gg-out="spin">0.50×</span></label>
+      <input type="range" min="0" max="1.6" step="0.01" value="0.5" data-gg="spin" aria-label="Galactic spin speed">
+    </div>
+    <button class="gg-regen" data-gg="regen" type="button">REGENERATE</button>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Drag the disk to reorient its inclination and roll; adjust the Arms, Arm tightness and Spin sliders to reshape and rewind it live; click Regenerate for a fresh galaxy.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-galaxy-gen'); if(!root) return;
+  var canvas=root.querySelector('.gg-canvas');
+  var ctx=canvas.getContext('2d',{alpha:true});
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function accentRGB(){
+    var v=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim();
+    if(v){var a=v.split(',').map(function(n){return parseInt(n,10);}); if(a.length===3&&a.every(function(x){return !isNaN(x);})) return a;}
+    var hex=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#3cc8ff';
+    hex=hex.replace('#',''); if(hex.length===3) hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    var r=parseInt(hex.substr(0,2),16),g=parseInt(hex.substr(2,2),16),b=parseInt(hex.substr(4,2),16);
+    if(isNaN(r)||isNaN(g)||isNaN(b)) return [60,200,255];
+    return [r,g,b];
+  }
+  function syncCSSAccent(ac){
+    root.style.setProperty('--gg-accent','rgb('+ac[0]+','+ac[1]+','+ac[2]+')');
+    root.style.setProperty('--gg-glow','rgba('+ac[0]+','+ac[1]+','+ac[2]+',0.6)');
+  }
+
+  var DPR=Math.min(window.devicePixelRatio||1,2);
+  var W=0,H=0,CX=0,CY=0,scale=1;
+  function resize(){
+    var r=canvas.getBoundingClientRect();
+    W=Math.max(2,r.width); H=Math.max(2,r.height);
+    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    CX=W/2; CY=H/2; scale=Math.min(W,H)*0.46;
+  }
+
+  var P={arms:4, tightness:0.36, spin:0.5};
+  var stars=[], dust=[], halo=[];
+  var rngSeed=20240517;
+  function srand(){ rngSeed=(rngSeed*1664525+1013904223)&0x7fffffff; return rngSeed/0x7fffffff; }
+  function gauss(){ var u=0,v=0; while(u===0)u=srand(); while(v===0)v=srand(); return Math.sqrt(-2*Math.log(u))*Math.cos(6.2831853*v); }
+  function omega(r){ var v=1-Math.exp(-r/0.16); return v/Math.max(r,0.05); }
+
+  function starColor(r, inArm){
+    var R,G,B;
+    if(r<0.13){ R=255; G=210-(40*srand())|0; B=150-(50*srand())|0; }
+    else if(inArm){
+      var h=srand();
+      if(h<0.18){ R=170+(40*srand())|0; G=200+(30*srand())|0; B=255; }
+      else if(h<0.5){ R=235; G=240; B=255; }
+      else { R=255; G=240-(20*srand())|0; B=210-(30*srand())|0; }
+    } else { R=255; G=225-(30*srand())|0; B=185-(40*srand())|0; }
+    return [R,G,B];
+  }
+
+  function build(){
+    var saved=rngSeed; rngSeed=buildSeed; rngSeed=(rngSeed||1)&0x7fffffff;
+    stars=[]; dust=[]; halo=[];
+    var pitch=0.06+P.tightness*0.9;
+    var b=1/Math.tan(Math.max(0.05,pitch));
+    var armCount=P.arms, armGap=6.2831853/armCount;
+    var N=Math.round((W*H)/360); N=Math.max(2600,Math.min(N,7000));
+    var i,j,k,h;
+    for(i=0;i<N;i++){
+      var u=srand(), r=Math.pow(u,0.62);
+      var inArm=srand()<(0.78-0.25*r), ang;
+      if(inArm){
+        var arm=Math.floor(srand()*armCount);
+        var theta=Math.log(Math.max(r,0.04)/0.04)/b;
+        ang=theta+arm*armGap+gauss()*(0.10+0.16*r);
+      } else { ang=srand()*6.2831853; }
+      r+=gauss()*0.012;
+      if(r<0.01||r>1.05){ i--; continue; }
+      var col=starColor(r,inArm);
+      var mag=(inArm?1.0:0.6)*(0.5+0.6*(1-r))+srand()*0.5;
+      var sz=(inArm?(srand()<0.04?1.7:0.9):0.7)*(0.7+0.5*(1-r));
+      stars.push({r:r,a:ang,R:col[0],G:col[1],B:col[2],m:Math.min(mag,1.6),s:sz,tw:srand()*6.28,ts:0.4+srand()*1.2});
+    }
+    var Nb=Math.round(N*0.16);
+    for(j=0;j<Nb;j++){
+      var rb=Math.abs(gauss())*0.06; if(rb>0.2){ j--; continue; }
+      stars.push({r:rb,a:srand()*6.2831853,R:255,G:(215-30*srand())|0,B:(160-40*srand())|0,m:0.7+srand()*0.7,s:0.7+srand()*0.7,tw:srand()*6.28,ts:0.5+srand()});
+    }
+    var Nd=Math.round(N*0.5);
+    for(k=0;k<Nd;k++){
+      var rd=Math.pow(srand(),0.7); if(rd<0.08||rd>0.98){ k--; continue; }
+      var armd=Math.floor(srand()*armCount);
+      var thetad=Math.log(Math.max(rd,0.04)/0.04)/b;
+      var angd=thetad+armd*armGap-0.16+gauss()*(0.05+0.07*rd);
+      dust.push({r:rd,a:angd,s:1.2+srand()*2.4*rd,o:0.06+0.12*srand()});
+    }
+    var Nh=Math.round(N*0.22);
+    for(h=0;h<Nh;h++){
+      var rh=Math.abs(gauss())*0.5+srand()*0.2; if(rh>1.3){ h--; continue; }
+      halo.push({r:rh,a:srand()*6.2831853,o:0.02+0.05*srand(),s:0.5+srand()*0.6});
+    }
+    rngSeed=saved;
+  }
+  var buildSeed=20240517;
+
+  var tilt=0.62, yaw=0.0;
+  var dragging=false, lx=0, ly=0, vTilt=0, vYaw=0;
+  function project(r,a,t){
+    var ang=a+omega(r)*t;
+    var x=r*Math.cos(ang), y=r*Math.sin(ang);
+    var yt=y*Math.cos(tilt);
+    var ca=Math.cos(yaw), sa=Math.sin(yaw);
+    return [CX+(x*ca-yt*sa)*scale, CY+(x*sa+yt*ca)*scale];
+  }
+
+  var simT=0, last=performance.now(), running=false, rafId=0;
+  function draw(now){
+    if(!running) return;
+    var dt=Math.min(0.05,(now-last)/1000); last=now;
+    if(!reduce) simT+=dt*P.spin*0.35;
+    tilt+=vTilt; yaw+=vYaw; vTilt*=0.9; vYaw*=0.9;
+    tilt=Math.max(0.0,Math.min(1.35,tilt));
+
+    var ac=accentRGB(); syncCSSAccent(ac);
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation='lighter';
+
+    ctx.save();
+    ctx.translate(CX,CY); ctx.rotate(yaw); ctx.scale(1,Math.cos(tilt)); ctx.translate(-CX,-CY);
+    var gr=ctx.createRadialGradient(CX,CY,0,CX,CY,scale*0.55);
+    gr.addColorStop(0,'rgba(255,238,200,0.55)');
+    gr.addColorStop(0.18,'rgba('+ac[0]+','+ac[1]+','+ac[2]+',0.16)');
+    gr.addColorStop(0.5,'rgba('+Math.round(ac[0]*0.5+40)+','+Math.round(ac[1]*0.5+30)+','+Math.round(ac[2]*0.5+70)+',0.06)');
+    gr.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=gr; ctx.fillRect(0,0,W,H);
+    ctx.restore();
+
+    var ph,pp;
+    for(var hi=0;hi<halo.length;hi++){
+      ph=halo[hi]; pp=project(ph.r,ph.a,simT*0.2);
+      ctx.fillStyle='rgba('+ac[0]+','+ac[1]+','+ac[2]+','+ph.o+')';
+      ctx.fillRect(pp[0],pp[1],ph.s,ph.s);
+    }
+
+    var time=now*0.001;
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i], p=project(s.r,s.a,simT), px=p[0], py=p[1];
+      if(px<-4||px>W+4||py<-4||py>H+4) continue;
+      var tw=reduce?1:(0.78+0.22*Math.sin(time*s.ts+s.tw));
+      ctx.fillStyle='rgba('+s.R+','+s.G+','+s.B+','+Math.min(1,s.m*tw)+')';
+      ctx.fillRect(px-s.s*0.5,py-s.s*0.5,s.s,s.s);
+    }
+
+    ctx.globalCompositeOperation='source-over';
+    for(var d=0;d<dust.length;d++){
+      var du=dust[d], pd=project(du.r,du.a,simT);
+      ctx.fillStyle='rgba(8,4,18,'+du.o+')';
+      ctx.beginPath(); ctx.arc(pd[0],pd[1],du.s,0,6.2831853); ctx.fill();
+    }
+
+    ctx.globalCompositeOperation='lighter';
+    var cp=project(0,0,0);
+    var cg=ctx.createRadialGradient(cp[0],cp[1],0,cp[0],cp[1],scale*0.09);
+    cg.addColorStop(0,'rgba(255,250,235,0.95)');
+    cg.addColorStop(0.4,'rgba(255,225,180,0.5)');
+    cg.addColorStop(1,'rgba(255,200,150,0)');
+    ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cp[0],cp[1],scale*0.09,0,6.2831853); ctx.fill();
+    ctx.globalCompositeOperation='source-over';
+
+    if(reduce){ running=false; return; }
+    rafId=requestAnimationFrame(draw);
+  }
+  function start(){ if(running) return; running=true; last=performance.now(); rafId=requestAnimationFrame(draw); }
+  function stop(){ running=false; if(rafId) cancelAnimationFrame(rafId); rafId=0; }
+  function renderOnce(){ var pr=reduce; running=true; draw(performance.now()); running=false; }
+
+  function bindSlider(name,cb){
+    var el=root.querySelector('[data-gg="'+name+'"]');
+    var out=root.querySelector('[data-gg-out="'+name+'"]');
+    if(!el) return;
+    function upd(){ cb(parseFloat(el.value),out); if(reduce) renderOnce(); }
+    el.addEventListener('input',upd); upd();
+  }
+  bindSlider('arms',function(v,out){ P.arms=Math.round(v); if(out)out.textContent=P.arms; build(); });
+  bindSlider('tight',function(v,out){ P.tightness=v; if(out)out.textContent=Math.round(v*100)+'%'; build(); });
+  bindSlider('spin',function(v,out){ P.spin=v; if(out)out.textContent=v.toFixed(2)+'×'; });
+
+  var regen=root.querySelector('[data-gg="regen"]');
+  if(regen) regen.addEventListener('click',function(){ buildSeed=(Date.now()&0x7fffffff)||1; build(); if(reduce)renderOnce(); });
+
+  function down(e){ dragging=true; var pt=e.touches?e.touches[0]:e; lx=pt.clientX; ly=pt.clientY; canvas.classList.add('gg-grab'); if(e.touches&&e.cancelable)e.preventDefault(); }
+  function move(e){ if(!dragging)return; var pt=e.touches?e.touches[0]:e; var dx=pt.clientX-lx, dy=pt.clientY-ly; lx=pt.clientX; ly=pt.clientY;
+    yaw+=dx*0.006; tilt=Math.max(0,Math.min(1.35,tilt+dy*0.006)); vTilt=dy*0.0006; vYaw=dx*0.0006;
+    if(reduce) renderOnce(); if(e.touches&&e.cancelable)e.preventDefault(); }
+  function up(){ dragging=false; canvas.classList.remove('gg-grab'); }
+  canvas.addEventListener('mousedown',down);
+  window.addEventListener('mousemove',move);
+  window.addEventListener('mouseup',up);
+  canvas.addEventListener('touchstart',down,{passive:false});
+  canvas.addEventListener('touchmove',move,{passive:false});
+  window.addEventListener('touchend',up);
+
+  var rt;
+  window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(function(){ resize(); build(); if(reduce)renderOnce(); else if(running){} },120); });
+
+  resize(); build();
+  var io=new IntersectionObserver(function(ents){
+    ents.forEach(function(en){
+      if(en.isIntersecting){ if(reduce) renderOnce(); else start(); }
+      else stop();
+    });
+  },{threshold:0.01});
+  io.observe(root);
+  if(reduce) renderOnce();
+})();
+</script>
+</body></html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storm Tracker · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-storm-tracker{--st-bg:#050314;--st-indigo:#16145f;--st-text:#f4f5ff;--st-muted:#a6abe6;--st-hair:rgba(166,171,230,0.16);--st-accent:var(--accent,#3cc8ff);color:var(--st-text);font-family:'Inter',system-ui,-apple-system,sans-serif;width:100%;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+#kit-storm-tracker *,#kit-storm-tracker *::before,#kit-storm-tracker *::after{box-sizing:border-box;}
+#kit-storm-tracker .st-frame{background:linear-gradient(180deg,#070518 0%,#050314 70%);border:1px solid var(--st-hair);border-radius:14px;padding:16px;overflow:hidden;position:relative;}
+#kit-storm-tracker .st-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+#kit-storm-tracker .st-id{display:flex;flex-direction:column;gap:3px;min-width:0;}
+#kit-storm-tracker .st-id-tag{font-size:10px;letter-spacing:.22em;color:var(--st-muted);text-transform:uppercase;}
+#kit-storm-tracker .st-name{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(16px,3.2vw,22px);color:var(--st-text);line-height:1;}
+#kit-storm-tracker .st-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:74px;padding:6px 10px;border-radius:10px;border:1px solid var(--cat-col,var(--st-accent));background:rgba(8,6,28,0.65);box-shadow:0 0 18px -6px var(--cat-col,var(--st-accent)) inset;}
+#kit-storm-tracker .st-badge-lbl{font-size:9px;letter-spacing:.28em;color:var(--st-muted);text-transform:uppercase;}
+#kit-storm-tracker .st-cat-num{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:30px;line-height:1;color:var(--cat-col,var(--st-accent));}
+#kit-storm-tracker .st-stage{position:relative;width:100%;aspect-ratio:16/10;min-height:240px;border-radius:10px;overflow:hidden;border:1px solid var(--st-hair);background:#040210;}
+#kit-storm-tracker .st-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+#kit-storm-tracker .st-hud{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;padding:9px 11px;background:rgba(7,5,22,0.62);backdrop-filter:blur(3px);border:1px solid var(--st-hair);border-radius:8px;min-width:158px;}
+#kit-storm-tracker .st-hud-row{display:flex;align-items:baseline;justify-content:space-between;gap:14px;}
+#kit-storm-tracker .st-hud-k{font-size:9px;letter-spacing:.2em;color:var(--st-muted);text-transform:uppercase;}
+#kit-storm-tracker .st-hud-v,#kit-storm-tracker .st-coord,#kit-storm-tracker .st-cat-word{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.03em;color:var(--st-text);}
+#kit-storm-tracker .st-hud-v b{font-size:15px;color:var(--st-accent);font-style:italic;}
+#kit-storm-tracker .st-cat-word{color:var(--st-accent);font-size:12px;}
+#kit-storm-tracker .st-legend{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:9px;padding:6px 10px;background:rgba(7,5,22,0.62);backdrop-filter:blur(3px);border:1px solid var(--st-hair);border-radius:8px;}
+#kit-storm-tracker .st-leg-title{font-size:9px;letter-spacing:.18em;color:var(--st-muted);text-transform:uppercase;margin-right:2px;}
+#kit-storm-tracker .st-leg{display:flex;align-items:center;gap:4px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:11px;color:var(--st-text);}
+#kit-storm-tracker .st-sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
+#kit-storm-tracker .st-c1{background:var(--st-accent);}
+#kit-storm-tracker .st-c2{background:#ffd166;}
+#kit-storm-tracker .st-c3{background:#ffb14e;}
+#kit-storm-tracker .st-c4{background:#ffd2a6;}
+#kit-storm-tracker .st-c5{background:#ffffff;}
+#kit-storm-tracker .st-controls{display:flex;align-items:center;gap:14px;margin-top:14px;}
+#kit-storm-tracker .st-play{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:9px;border:1px solid var(--st-hair);background:rgba(22,20,95,0.34);color:var(--st-text);font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:12px;cursor:pointer;transition:border-color .18s,background .18s,box-shadow .18s;min-width:104px;justify-content:center;}
+#kit-storm-tracker .st-play:hover{border-color:var(--st-accent);background:rgba(22,20,95,0.55);box-shadow:0 0 16px -7px var(--st-accent);}
+#kit-storm-tracker .st-play-ico{color:var(--st-accent);font-size:11px;font-style:normal;line-height:1;}
+#kit-storm-tracker .st-track-wrap{flex:1 1 auto;min-width:0;}
+#kit-storm-tracker .st-scrub{width:100%;-webkit-appearance:none;appearance:none;height:4px;border-radius:3px;background:linear-gradient(90deg,var(--st-accent),rgba(166,171,230,0.18));outline:none;cursor:pointer;margin:0;}
+#kit-storm-tracker .st-scrub::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--st-text);border:2px solid var(--st-accent);box-shadow:0 0 10px -2px var(--st-accent);cursor:pointer;}
+#kit-storm-tracker .st-scrub::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--st-text);border:2px solid var(--st-accent);box-shadow:0 0 10px -2px var(--st-accent);cursor:pointer;}
+#kit-storm-tracker .st-axis{display:flex;justify-content:space-between;margin-top:6px;font-size:9px;letter-spacing:.16em;color:var(--st-muted);text-transform:uppercase;}
+#kit-storm-tracker .st-cap{margin:12px 0 2px;font-size:10px;line-height:1.5;color:var(--st-muted);letter-spacing:.01em;}
+@media (max-width:540px){#kit-storm-tracker .st-hud{min-width:0;padding:7px 9px;}#kit-storm-tracker .st-legend{gap:6px;padding:5px 8px;}#kit-storm-tracker .st-leg-title{display:none;}#kit-storm-tracker .st-controls{gap:10px;}#kit-storm-tracker .st-play{min-width:auto;padding:9px 12px;}}
+@media (prefers-reduced-motion:reduce){#kit-storm-tracker .st-play{transition:none;}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Storm Tracker</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-storm-tracker">
+  <div class="st-frame">
+    <div class="st-topbar">
+      <div class="st-id">
+        <span class="st-id-tag">NHC&nbsp;/&nbsp;SSAI&nbsp;STORM&nbsp;CONSOLE</span>
+        <span class="st-name">HURRICANE&nbsp;ATLAS</span>
+      </div>
+      <div class="st-badge" data-cat="0">
+        <span class="st-badge-lbl">CAT</span>
+        <span class="st-cat-num">TS</span>
+      </div>
+    </div>
+
+    <div class="st-stage">
+      <canvas class="st-canvas"></canvas>
+      <div class="st-hud">
+        <div class="st-hud-row"><span class="st-hud-k">STATUS</span><span class="st-cat-word">TROPICAL STORM</span></div>
+        <div class="st-hud-row"><span class="st-hud-k">MAX WIND</span><span class="st-hud-v"><b class="st-wind-val">40</b> MPH</span></div>
+        <div class="st-hud-row"><span class="st-hud-k">MIN PRESS</span><span class="st-hud-v"><b class="st-press-val">1000</b> MB</span></div>
+        <div class="st-hud-row"><span class="st-hud-k">CENTER</span><span class="st-coord">14.0°N 42.0°W</span></div>
+      </div>
+
+      <div class="st-legend">
+        <span class="st-leg-title">SAFFIR-SIMPSON</span>
+        <span class="st-leg"><i class="st-sw st-c1"></i>1</span>
+        <span class="st-leg"><i class="st-sw st-c2"></i>2</span>
+        <span class="st-leg"><i class="st-sw st-c3"></i>3</span>
+        <span class="st-leg"><i class="st-sw st-c4"></i>4</span>
+        <span class="st-leg"><i class="st-sw st-c5"></i>5</span>
+      </div>
+    </div>
+
+    <div class="st-controls">
+      <button class="st-play" type="button" aria-pressed="true" aria-label="Play or pause storm">
+        <span class="st-play-ico" aria-hidden="true">❚❚</span><span class="st-play-lbl">PAUSE</span>
+      </button>
+      <div class="st-track-wrap">
+        <input class="st-scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub storm timeline" />
+        <div class="st-axis"><span>GENESIS</span><span>RECURVE</span><span>DISSIPATION</span></div>
+      </div>
+    </div>
+
+    <p class="st-cap">Basemap: NASA Earth Observatory — Saharan dust over the Atlantic (MODIS). Track and Saffir-Simpson intensity are a modeled demonstration. SSAI hurricane science.</p>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Press Play to fly the storm along its recurving track as it intensifies over warm water and weakens over land, or drag the timeline to scrub to any point; the category badge, max wind, central pressure, coordinates, track and forecast cone all update live.</span>
+    <span class="mb-c-src">Basemap · NASA MODIS, Atlantic</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var root = document.getElementById('kit-storm-tracker');
+  if(!root) return;
+  var ACCENT = (function(){
+    try{ var v = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); return v || '#3cc8ff'; }
+    catch(e){ return '#3cc8ff'; }
+  })();
+
+  var stage = root.querySelector('.st-stage');
+  var cv = root.querySelector('.st-canvas');
+  var ctx = cv.getContext('2d');
+  var elCat = root.querySelector('.st-cat-num');
+  var elCatWord = root.querySelector('.st-cat-word');
+  var elWind = root.querySelector('.st-wind-val');
+  var elCoord = root.querySelector('.st-coord');
+  var elPress = root.querySelector('.st-press-val');
+  var playBtn = root.querySelector('.st-play');
+  var scrub = root.querySelector('.st-scrub');
+  var badge = root.querySelector('.st-badge');
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var TRACK = [
+    {x:0.86, y:0.30, lon:-42, lat:14, warm:1.00},
+    {x:0.80, y:0.33, lon:-48, lat:15, warm:1.00},
+    {x:0.74, y:0.36, lon:-54, lat:16, warm:1.00},
+    {x:0.68, y:0.39, lon:-60, lat:17, warm:1.00},
+    {x:0.62, y:0.42, lon:-66, lat:18, warm:0.98},
+    {x:0.56, y:0.45, lon:-72, lat:19, warm:0.96},
+    {x:0.50, y:0.47, lon:-78, lat:21, warm:0.95},
+    {x:0.45, y:0.48, lon:-82, lat:23, warm:0.90},
+    {x:0.41, y:0.47, lon:-85, lat:25, warm:0.97},
+    {x:0.39, y:0.44, lon:-87, lat:27, warm:0.99},
+    {x:0.38, y:0.40, lon:-88, lat:29, warm:0.55},
+    {x:0.39, y:0.35, lon:-87, lat:32, warm:0.18},
+    {x:0.43, y:0.30, lon:-84, lat:35, warm:0.10},
+    {x:0.49, y:0.25, lon:-79, lat:38, warm:0.30},
+    {x:0.57, y:0.21, lon:-72, lat:41, warm:0.45}
+  ];
+
+  function catFor(w){
+    if(w>=157) return 5;
+    if(w>=130) return 4;
+    if(w>=111) return 3;
+    if(w>=96)  return 2;
+    if(w>=74)  return 1;
+    return 0;
+  }
+  var CAT_WORDS = ['TROPICAL STORM','CATEGORY 1','CATEGORY 2','CATEGORY 3','CATEGORY 4','CATEGORY 5'];
+
+  var SAMPLES = 600;
+  var path = [];
+  function catmull(p0,p1,p2,p3,t,k){
+    var t2=t*t,t3=t2*t;
+    return 0.5*((2*p1[k]) + (-p0[k]+p2[k])*t + (2*p0[k]-5*p1[k]+4*p2[k]-p3[k])*t2 + (-p0[k]+3*p1[k]-3*p2[k]+p3[k])*t3);
+  }
+  (function buildPath(){
+    var n = TRACK.length, raw = [];
+    for(var s=0;s<SAMPLES;s++){
+      var u = s/(SAMPLES-1)*(n-1);
+      var i = Math.min(n-2, Math.floor(u));
+      var t = u - i;
+      var p0=TRACK[Math.max(0,i-1)], p1=TRACK[i], p2=TRACK[i+1], p3=TRACK[Math.min(n-1,i+2)];
+      raw.push({
+        x:catmull(p0,p1,p2,p3,t,'x'),
+        y:catmull(p0,p1,p2,p3,t,'y'),
+        lon:catmull(p0,p1,p2,p3,t,'lon'),
+        lat:catmull(p0,p1,p2,p3,t,'lat'),
+        warm:Math.max(0,Math.min(1,catmull(p0,p1,p2,p3,t,'warm')))
+      });
+    }
+    var wind = 35;
+    for(var j=0;j<raw.length;j++){
+      var warm = raw[j].warm;
+      var target = 35 + warm*warm*135;
+      var rate = (target>wind) ? 0.020 + warm*0.018 : 0.10;
+      wind += (target - wind)*rate;
+      wind = Math.max(28, Math.min(175, wind));
+      raw[j].wind = wind;
+      raw[j].cat = catFor(wind);
+    }
+    path = raw;
+  })();
+
+  var img = new Image();
+  var imgReady = false;
+  function onImg(){ imgReady = true; render(); }
+  img.onload = onImg;
+  img.onerror = function(){ imgReady = false; render(); };
+  img.src = '../assets/images/saharan-dust-atlantic.jpg';
+  if(img.complete && img.naturalWidth) onImg();
+
+  var W=0,H=0,DPR=1;
+  function resize(){
+    DPR = Math.min(2, window.devicePixelRatio||1);
+    var r = stage.getBoundingClientRect();
+    W = Math.max(280, r.width);
+    H = Math.max(220, r.height);
+    cv.width = Math.round(W*DPR);
+    cv.height = Math.round(H*DPR);
+    cv.style.width = W+'px';
+    cv.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    render();
+  }
+
+  var prog = 0, playing = !reduce, spin = 0, lastT = 0;
+
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function hex2rgb(h){h=h.replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c;}).join('');var n=parseInt(h,16);return[(n>>16)&255,(n>>8)&255,n&255];}
+  var ACC = hex2rgb(ACCENT);
+  function acca(a){return 'rgba('+ACC[0]+','+ACC[1]+','+ACC[2]+','+a+')';}
+
+  function catColor(c){
+    switch(c){
+      case 5: return '#ffffff';
+      case 4: return '#ffd2a6';
+      case 3: return '#ffb14e';
+      case 2: return '#ffd166';
+      case 1: return acca(0.95);
+      default: return ACCENT;
+    }
+  }
+
+  function idxAt(p){ return Math.max(0, Math.min(path.length-1, Math.round(p*(path.length-1)))); }
+  function px(p){return p.x*W;}
+  function py(p){return p.y*H;}
+
+  function drawBase(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = '#050314';
+    ctx.fillRect(0,0,W,H);
+    if(imgReady){
+      var iw=img.naturalWidth, ih=img.naturalHeight;
+      var scale = Math.max(W/iw, H/ih);
+      var dw=iw*scale, dh=ih*scale;
+      ctx.drawImage(img, (W-dw)/2,(H-dh)/2,dw,dh);
+    }
+    ctx.fillStyle = 'rgba(22,20,95,0.30)';
+    ctx.fillRect(0,0,W,H);
+    var g = ctx.createLinearGradient(0,0,W,0);
+    g.addColorStop(0, acca(0.05));
+    g.addColorStop(1, 'rgba(5,3,20,0.10)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+    var vg = ctx.createRadialGradient(W*0.5,H*0.5,Math.min(W,H)*0.25, W*0.5,H*0.5,Math.max(W,H)*0.72);
+    vg.addColorStop(0,'rgba(5,3,20,0)');
+    vg.addColorStop(1,'rgba(5,3,20,0.62)');
+    ctx.fillStyle = vg; ctx.fillRect(0,0,W,H);
+  }
+
+  function drawGraticule(){
+    ctx.save();
+    ctx.strokeStyle = 'rgba(166,171,230,0.10)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3,5]);
+    var cols=6, rows=4, i;
+    for(i=1;i<cols;i++){var x=W*i/cols; ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(i=1;i<rows;i++){var y=H*i/rows; ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    ctx.restore();
+  }
+
+  function drawConeAndTrack(curIdx){
+    ctx.save();
+    var coneStart = curIdx;
+    if(coneStart < path.length-2){
+      var left=[], right=[], total=path.length-1-coneStart;
+      for(var i=coneStart;i<path.length;i++){
+        var p=path[i];
+        var ahead = (i-coneStart)/Math.max(1,total);
+        var rad = lerp(8, 64, ahead) * (Math.min(W,H)/520);
+        var a=path[Math.max(coneStart,i-1)], b=path[Math.min(path.length-1,i+1)];
+        var dx=(b.x-a.x)*W, dy=(b.y-a.y)*H, len=Math.hypot(dx,dy)||1;
+        var nx=-dy/len, ny=dx/len;
+        left.push([px(p)+nx*rad, py(p)+ny*rad]);
+        right.push([px(p)-nx*rad, py(p)-ny*rad]);
+      }
+      ctx.beginPath();
+      ctx.moveTo(left[0][0],left[0][1]);
+      for(var L=1;L<left.length;L++) ctx.lineTo(left[L][0],left[L][1]);
+      for(var R=right.length-1;R>=0;R--) ctx.lineTo(right[R][0],right[R][1]);
+      ctx.closePath();
+      ctx.fillStyle = acca(0.10);
+      ctx.fill();
+      ctx.setLineDash([4,4]);
+      ctx.lineWidth=1;
+      ctx.strokeStyle = acca(0.40);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    ctx.lineCap='round';
+    for(var s=1;s<=curIdx;s++){
+      var p1=path[s-1], p2=path[s];
+      ctx.beginPath();
+      ctx.moveTo(px(p1),py(p1));
+      ctx.lineTo(px(p2),py(p2));
+      ctx.lineWidth = 2.2;
+      ctx.strokeStyle = catColor(p2.cat);
+      ctx.globalAlpha = 0.92;
+      ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+
+    ctx.beginPath();
+    ctx.setLineDash([2,6]);
+    ctx.lineWidth=1.4;
+    ctx.strokeStyle = acca(0.6);
+    for(var f=curIdx; f<path.length; f++){
+      var pf=path[f];
+      if(f===curIdx) ctx.moveTo(px(pf),py(pf)); else ctx.lineTo(px(pf),py(pf));
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    for(var w=0; w<TRACK.length; w++){
+      var pi = idxAt(w/(TRACK.length-1));
+      if(pi<=curIdx){
+        var pp=path[pi];
+        ctx.beginPath();
+        ctx.arc(px(pp),py(pp),2.6,0,Math.PI*2);
+        ctx.fillStyle = catColor(pp.cat);
+        ctx.fill();
+        ctx.strokeStyle='rgba(5,3,20,0.7)';
+        ctx.lineWidth=1; ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawStorm(cur, intensity, c){
+    var cx=px(cur), cy=py(cur), base = Math.min(W,H);
+    var rOuter = lerp(26, 78, intensity) * (base/520);
+    var rEye = lerp(8, 4.5, intensity) * (base/520);
+    var arms = (c>=1)?2:1, dir = -1;
+
+    ctx.save();
+    ctx.translate(cx,cy);
+
+    var gg = ctx.createRadialGradient(0,0,rEye*0.5, 0,0,rOuter*1.15);
+    gg.addColorStop(0,'rgba(255,255,255,'+lerp(0.10,0.22,intensity)+')');
+    gg.addColorStop(0.5,'rgba(232,236,255,'+lerp(0.05,0.12,intensity)+')');
+    gg.addColorStop(1,'rgba(232,236,255,0)');
+    ctx.beginPath(); ctx.arc(0,0,rOuter*1.15,0,Math.PI*2); ctx.fillStyle=gg; ctx.fill();
+
+    ctx.rotate(spin*dir);
+    for(var bnd=0;bnd<arms;bnd++){
+      var off = (Math.PI*2/arms)*bnd;
+      ctx.beginPath();
+      var steps=160;
+      for(var i=0;i<=steps;i++){
+        var t=i/steps;
+        var ang = off + t*Math.PI*2*(1.4+intensity*0.9);
+        var rr = lerp(rEye*1.3, rOuter, Math.pow(t,0.85));
+        var x=Math.cos(ang)*rr, y=Math.sin(ang)*rr;
+        if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.lineWidth = lerp(2.4, 6.5, intensity);
+      ctx.strokeStyle = 'rgba(255,255,255,'+lerp(0.16,0.42,intensity)+')';
+      ctx.lineCap='round';
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.arc(0,0,rEye*2.2,0,Math.PI*2);
+    ctx.lineWidth = lerp(3,9,intensity);
+    ctx.strokeStyle='rgba(255,255,255,'+lerp(0.30,0.7,intensity)+')';
+    ctx.stroke();
+
+    ctx.rotate(-spin*dir);
+
+    ctx.beginPath();
+    ctx.arc(0,0,rEye,0,Math.PI*2);
+    var eg = ctx.createRadialGradient(0,0,0, 0,0,rEye);
+    eg.addColorStop(0, 'rgba(8,14,40,0.92)');
+    eg.addColorStop(1, 'rgba(20,28,70,0.30)');
+    ctx.fillStyle=eg; ctx.fill();
+    ctx.beginPath();
+    ctx.arc(0,0,rEye,0,Math.PI*2);
+    ctx.lineWidth=1.4;
+    ctx.strokeStyle=catColor(c);
+    ctx.globalAlpha = 0.9;
+    ctx.stroke();
+    ctx.globalAlpha=1;
+
+    ctx.beginPath();
+    ctx.arc(0,0,rOuter*1.18,0,Math.PI*2);
+    ctx.setLineDash([3,7]);
+    ctx.lineWidth=1;
+    ctx.strokeStyle=acca(0.5);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(cx,cy);
+    var nxt = path[Math.min(path.length-1, idxAt(prog)+8)];
+    var hx=(nxt.x-cur.x)*W, hy=(nxt.y-cur.y)*H;
+    ctx.rotate(Math.atan2(hy,hx));
+    ctx.beginPath();
+    ctx.moveTo(rOuter*1.18,0);
+    ctx.lineTo(rOuter*1.18+14,0);
+    ctx.lineTo(rOuter*1.18+8,-4);
+    ctx.moveTo(rOuter*1.18+14,0);
+    ctx.lineTo(rOuter*1.18+8,4);
+    ctx.strokeStyle=acca(0.85);
+    ctx.lineWidth=1.4;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function fmtCoord(cur){
+    var ns = cur.lat>=0?'N':'S', ew = cur.lon>=0?'E':'W';
+    return Math.abs(cur.lat).toFixed(1)+'°'+ns+' '+Math.abs(cur.lon).toFixed(1)+'°'+ew;
+  }
+  function pressFor(w){ return Math.round(1010 - (w-30)*1.05); }
+
+  function updateHUD(cur){
+    var c = cur.cat;
+    elCat.textContent = c>0? c : 'TS';
+    elCatWord.textContent = CAT_WORDS[c];
+    elWind.textContent = Math.round(cur.wind);
+    elCoord.textContent = fmtCoord(cur);
+    elPress.textContent = pressFor(cur.wind);
+    badge.style.setProperty('--cat-col', catColor(c));
+    badge.setAttribute('data-cat', String(c));
+  }
+
+  function render(){
+    if(!W||!H) return;
+    drawBase();
+    drawGraticule();
+    if(path.length){
+      var idx = idxAt(prog), cur = path[idx];
+      var intensity = Math.max(0, Math.min(1, (cur.wind-35)/(170-35)));
+      drawConeAndTrack(idx);
+      drawStorm(cur, intensity, cur.cat);
+      updateHUD(cur);
+    }
+  }
+
+  var raf=null, visible=true;
+  function tick(t){
+    if(!lastT) lastT=t;
+    var dt=Math.min(50,t-lastT); lastT=t;
+    if(playing){
+      prog += dt*0.0000115;
+      if(prog>=1){ prog=1; playing=false; setPlay(false); }
+      scrub.value = String(Math.round(prog*1000));
+    }
+    spin += dt*0.0012;
+    render();
+    raf = visible ? requestAnimationFrame(tick) : null;
+  }
+  function startLoop(){ if(!raf){ lastT=0; raf=requestAnimationFrame(tick); } }
+  function stopLoop(){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+
+  function setPlay(on){
+    playing=on;
+    playBtn.setAttribute('aria-pressed', on?'true':'false');
+    playBtn.querySelector('.st-play-ico').textContent = on?'❚❚':'▶';
+    playBtn.querySelector('.st-play-lbl').textContent = on?'PAUSE':'PLAY';
+  }
+
+  playBtn.addEventListener('click', function(){
+    if(prog>=1){ prog=0; }
+    setPlay(!playing);
+  });
+  scrub.addEventListener('input', function(){
+    prog = Math.max(0,Math.min(1, scrub.value/1000));
+    setPlay(false);
+    render();
+  });
+
+  if(window.ResizeObserver){ new ResizeObserver(function(){resize();}).observe(stage); }
+  else { window.addEventListener('resize', resize); }
+
+  if(window.IntersectionObserver){
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        visible = e.isIntersecting;
+        if(visible) startLoop(); else stopLoop();
+      });
+    }, {threshold:0.01}).observe(root);
+  }
+
+  resize();
+  setPlay(!reduce);
+  startLoop();
+  if(reduce){ stopLoop(); render(); }
+})();
+</script>
+</body></html>

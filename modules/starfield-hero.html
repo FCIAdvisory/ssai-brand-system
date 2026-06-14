@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starfield hero · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-starfield-hero{
+  position:relative;
+  width:100%;
+  min-height:420px;
+  aspect-ratio:16/9;
+  max-height:560px;
+  overflow:hidden;
+  border-radius:14px;
+  background:radial-gradient(130% 120% at 50% 18%, #0a0726 0%, #070420 42%, #050314 100%);
+  font-family:'Inter',system-ui,sans-serif;
+  isolation:isolate;
+}
+#kit-starfield-hero .sf-stars{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  z-index:1;
+  will-change:transform;
+}
+#kit-starfield-hero .sf-vignette{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 50% 50%, rgba(5,3,20,0) 48%, rgba(5,3,20,0.55) 100%),
+    linear-gradient(180deg, rgba(5,3,20,0.28) 0%, rgba(5,3,20,0) 22%, rgba(5,3,20,0) 70%, rgba(5,3,20,0.42) 100%);
+}
+#kit-starfield-hero .sf-content{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:0 6%;
+  pointer-events:none;
+}
+#kit-starfield-hero .sf-eyebrow{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.42em;
+  font-size:clamp(10px,1.35vw,13px);
+  color:#8a5cff;
+  margin:0 0 1.15rem;
+  padding-left:0.42em;
+  opacity:0;
+  transform:translateY(8px);
+  animation:kit-starfield-hero-rise 1100ms cubic-bezier(0.22,0.61,0.36,1) 160ms forwards;
+}
+#kit-starfield-hero .sf-headline{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.012em;
+  line-height:0.98;
+  font-size:clamp(30px,6.4vw,76px);
+  margin:0;
+  color:#f4f5ff;
+  text-shadow:0 0 38px rgba(60,123,224,0.22), 0 2px 18px rgba(5,3,20,0.6);
+  opacity:0;
+  transform:translateY(14px);
+  animation:kit-starfield-hero-rise 1200ms cubic-bezier(0.22,0.61,0.36,1) 300ms forwards;
+}
+#kit-starfield-hero .sf-tagline{
+  font-family:'Inter',system-ui,sans-serif;
+  font-weight:400;
+  font-size:clamp(13px,1.7vw,18px);
+  letter-spacing:0.01em;
+  color:#a6abe6;
+  margin:1.35rem 0 0;
+  opacity:0;
+  transform:translateY(12px);
+  animation:kit-starfield-hero-rise 1200ms cubic-bezier(0.22,0.61,0.36,1) 520ms forwards;
+}
+#kit-starfield-hero .sf-tagline::before{
+  content:"";
+  display:block;
+  width:46px;
+  height:1px;
+  margin:0 auto 1.15rem;
+  background:linear-gradient(90deg, rgba(138,92,255,0) 0%, rgba(138,92,255,0.7) 50%, rgba(138,92,255,0) 100%);
+}
+@keyframes kit-starfield-hero-rise{
+  to{opacity:1;transform:translateY(0);}
+}
+@media (prefers-reduced-motion: reduce){
+  #kit-starfield-hero .sf-eyebrow,
+  #kit-starfield-hero .sf-headline,
+  #kit-starfield-hero .sf-tagline{
+    animation:none;
+    opacity:1;
+    transform:none;
+  }
+}
+@media (max-width:560px){
+  #kit-starfield-hero{aspect-ratio:auto;min-height:380px;}
+  #kit-starfield-hero .sf-eyebrow{letter-spacing:0.34em;}
+}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Starfield hero</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-starfield-hero">
+  <canvas class="sf-stars" aria-hidden="true"></canvas>
+  <div class="sf-vignette" aria-hidden="true"></div>
+  <div class="sf-content">
+    <span class="sf-eyebrow">The Universe</span>
+    <h1 class="sf-headline">Science for life on Earth.</h1>
+    <p class="sf-tagline">From observation to understanding.</p>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Three star layers auto-drift at different speeds and twinkle subtly; moving the mouse adds gentle depth-based parallax. Honors reduced-motion by rendering one static frame.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-starfield-hero');
+  if(!root) return;
+  var canvas=root.querySelector('.sf-stars');
+  if(!canvas) return;
+  var ctx=canvas.getContext('2d');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var W=0,H=0,dpr=1;
+  // three depth layers: [near .. far]. drift = autonomous px/sec; par = mouse parallax factor.
+  var layerCfg=[
+    {count:0, density:0.000085, rMin:0.9, rMax:1.9, drift:9.5, par:26, alpha:0.95, tint:'255,255,255'},
+    {count:0, density:0.00013,  rMin:0.55,rMax:1.15,drift:5.0, par:14, alpha:0.7,  tint:'214,224,255'},
+    {count:0, density:0.00020,  rMin:0.3, rMax:0.75,drift:2.2, par:6,  alpha:0.45, tint:'176,170,230'}
+  ];
+  var layers=[];
+  // a few brighter accent stars (subtle spectrum: orbit-blue + plasma violet)
+  var accentTints=['60,123,224','138,92,255','244,245,255'];
+
+  var mx=0,my=0;        // target mouse offset (-1..1)
+  var cmx=0,cmy=0;      // eased mouse offset
+
+  function rand(a,b){return a+Math.random()*(b-a);}
+
+  function buildLayers(){
+    layers=[];
+    var area=W*H;
+    for(var i=0;i<layerCfg.length;i++){
+      var cfg=layerCfg[i];
+      var n=Math.max(8, Math.round(area*cfg.density));
+      var stars=[];
+      for(var s=0;s<n;s++){
+        var accent=(i===0 && Math.random()<0.12);
+        stars.push({
+          x:Math.random()*W,
+          y:Math.random()*H,
+          r:rand(cfg.rMin,cfg.rMax)*(accent?1.5:1),
+          base:rand(0.45,1),
+          tw:rand(0.6,1.8),            // twinkle speed
+          ph:Math.random()*Math.PI*2,  // twinkle phase
+          tint:accent?accentTints[(Math.random()*accentTints.length)|0]:cfg.tint,
+          glow:accent
+        });
+      }
+      layers.push(stars);
+    }
+  }
+
+  function resize(){
+    var w=root.clientWidth||1;
+    var h=root.clientHeight||1;
+    if(w===W && h===H) return;
+    W=w;H=h;
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(W*dpr);
+    canvas.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    buildLayers();
+  }
+
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<layers.length;i++){
+      var cfg=layerCfg[i];
+      var stars=layers[i];
+      // autonomous horizontal drift, wrapped
+      var dx=((t/1000)*cfg.drift)%W;
+      var ox=cmx*cfg.par;
+      var oy=cmy*cfg.par;
+      for(var s=0;s<stars.length;s++){
+        var st=stars[s];
+        var px=st.x - dx + ox;
+        if(px<-4) px+=W; if(px>W+4) px-=W;
+        var py=st.y + oy;
+        var tw=reduce?1:(0.6+0.4*Math.sin(t*0.001*st.tw+st.ph));
+        var a=Math.min(1, cfg.alpha*st.base*tw);
+        if(st.glow && !reduce){
+          ctx.beginPath();
+          ctx.fillStyle='rgba('+st.tint+','+(a*0.16).toFixed(3)+')';
+          ctx.arc(px,py,st.r*3.4,0,6.2832);
+          ctx.fill();
+        }
+        ctx.beginPath();
+        ctx.fillStyle='rgba('+st.tint+','+a.toFixed(3)+')';
+        ctx.arc(px,py,st.r,0,6.2832);
+        ctx.fill();
+      }
+    }
+  }
+
+  var raf=0;
+  function loop(t){
+    cmx+=(mx-cmx)*0.045;
+    cmy+=(my-cmy)*0.045;
+    draw(t);
+    raf=requestAnimationFrame(loop);
+  }
+
+  function onMove(e){
+    var rect=root.getBoundingClientRect();
+    var px=(e.clientX-rect.left)/(rect.width||1);
+    var py=(e.clientY-rect.top)/(rect.height||1);
+    mx=(px-0.5)*2;
+    my=(py-0.5)*2;
+  }
+  function onLeave(){mx=0;my=0;}
+
+  resize();
+  window.addEventListener('resize',resize);
+
+  if(reduce){
+    cmx=0;cmy=0;
+    draw(0);
+  }else{
+    root.addEventListener('pointermove',onMove);
+    root.addEventListener('pointerleave',onLeave);
+    raf=requestAnimationFrame(loop);
+  }
+})();
+</script>
+</body></html>

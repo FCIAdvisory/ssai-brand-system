@@ -1,0 +1,643 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gravity sandbox · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-nbody-gravity{position:relative;width:100%;font-family:'Inter',system-ui,sans-serif;color:#f4f5ff;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;gap:14px;container-type:inline-size}
+#kit-nbody-gravity *{box-sizing:border-box}
+#kit-nbody-gravity .kit-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+#kit-nbody-gravity .kit-stage{position:relative;width:100%;aspect-ratio:16/10;min-height:340px;border-radius:18px;overflow:hidden;background:radial-gradient(120% 120% at 70% 12%,#0a0726 0%,#050314 58%,#02010a 100%);border:1px solid rgba(166,171,230,.16);box-shadow:0 0 0 1px rgba(5,3,20,.6) inset,0 24px 60px -30px rgba(0,0,0,.9);cursor:crosshair;touch-action:none}
+#kit-nbody-gravity .kit-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-nbody-gravity .kit-hud{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:14px 16px}
+#kit-nbody-gravity .kit-readout{display:inline-flex;flex-direction:column;gap:3px;align-self:flex-start;padding:11px 14px;border-radius:13px;background:linear-gradient(180deg,rgba(22,20,95,.42),rgba(8,6,30,.5));border:1px solid rgba(166,171,230,.16);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);min-width:158px}
+#kit-nbody-gravity .kit-r-row{display:flex;justify-content:space-between;align-items:baseline;gap:18px}
+#kit-nbody-gravity .kit-r-k{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:#a6abe6;font-weight:500}
+#kit-nbody-gravity .kit-r-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:14px;text-transform:uppercase;color:var(--kit-acc,#3cc8ff);font-variant-numeric:tabular-nums}
+#kit-nbody-gravity .kit-hint{align-self:flex-start;font-size:11.5px;letter-spacing:.04em;color:#a6abe6;padding:6px 12px;border-radius:20px;background:rgba(8,6,30,.5);border:1px solid rgba(166,171,230,.14);transition:opacity .5s ease;max-width:80%}
+#kit-nbody-gravity .kit-hint.kit-hide{opacity:0}
+#kit-nbody-gravity .kit-launchlabel{position:absolute;transform:translate(-50%,-160%);font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--kit-acc,#3cc8ff);text-shadow:0 0 12px rgba(0,0,0,.9);pointer-events:none;z-index:3;white-space:nowrap;font-variant-numeric:tabular-nums}
+#kit-nbody-gravity .kit-ll-unit{color:#a6abe6;font-size:10px}
+#kit-nbody-gravity .kit-panel{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;justify-content:space-between}
+#kit-nbody-gravity .kit-btns{display:flex;flex-wrap:wrap;gap:8px}
+#kit-nbody-gravity .kit-btn{display:inline-flex;align-items:center;gap:7px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:11.5px;color:#f4f5ff;background:linear-gradient(180deg,rgba(22,20,95,.55),rgba(12,10,46,.55));border:1px solid rgba(166,171,230,.22);border-radius:11px;padding:9px 14px;cursor:pointer;transition:transform .14s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease}
+#kit-nbody-gravity .kit-btn:hover{transform:translateY(-1px);border-color:var(--kit-acc,#3cc8ff);box-shadow:0 0 0 1px rgba(60,200,255,.18),0 10px 24px -14px var(--kit-acc,#3cc8ff)}
+#kit-nbody-gravity .kit-btn:active{transform:translateY(0) scale(.97)}
+#kit-nbody-gravity .kit-btn-ghost{background:rgba(8,6,30,.4);color:#a6abe6}
+#kit-nbody-gravity .kit-btn-ghost:hover{color:#f4f5ff}
+#kit-nbody-gravity .kit-btn[aria-pressed="true"]{border-color:var(--kit-acc,#3cc8ff);color:var(--kit-acc,#3cc8ff)}
+#kit-nbody-gravity .kit-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+#kit-nbody-gravity .kit-dot-p{background:#8fb6ff;box-shadow:0 0 8px #8fb6ff}
+#kit-nbody-gravity .kit-dot-s{background:#ffd27a;box-shadow:0 0 9px #ffb347}
+#kit-nbody-gravity .kit-sliders{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+#kit-nbody-gravity .kit-slider{display:flex;flex-direction:column;gap:6px;min-width:118px}
+#kit-nbody-gravity .kit-s-label{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:#a6abe6;font-weight:500}
+#kit-nbody-gravity .kit-s-label b{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;color:var(--kit-acc,#3cc8ff);font-size:12px;font-variant-numeric:tabular-nums}
+#kit-nbody-gravity .kit-range{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:rgba(166,171,230,.18);outline:none;cursor:pointer}
+#kit-nbody-gravity .kit-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:15px;height:15px;border-radius:50%;background:var(--kit-acc,#3cc8ff);border:2px solid #050314;box-shadow:0 0 10px -1px var(--kit-acc,#3cc8ff);cursor:pointer;transition:transform .12s ease}
+#kit-nbody-gravity .kit-range::-webkit-slider-thumb:hover{transform:scale(1.18)}
+#kit-nbody-gravity .kit-range::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--kit-acc,#3cc8ff);border:2px solid #050314;box-shadow:0 0 10px -1px var(--kit-acc,#3cc8ff);cursor:pointer}
+#kit-nbody-gravity .kit-slider-toggle{flex-direction:row;align-items:center;gap:9px;min-width:auto}
+#kit-nbody-gravity .kit-check{position:absolute;opacity:0;width:0;height:0}
+#kit-nbody-gravity .kit-switch{position:relative;width:34px;height:18px;border-radius:20px;background:rgba(166,171,230,.18);border:1px solid rgba(166,171,230,.22);transition:background .2s ease,border-color .2s ease;flex:0 0 auto}
+#kit-nbody-gravity .kit-switch::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#a6abe6;transition:transform .2s ease,background .2s ease}
+#kit-nbody-gravity .kit-check:checked + .kit-switch{background:rgba(60,200,255,.3);border-color:var(--kit-acc,#3cc8ff)}
+#kit-nbody-gravity .kit-check:checked + .kit-switch::after{transform:translateX(16px);background:var(--kit-acc,#3cc8ff)}
+#kit-nbody-gravity .kit-check:focus-visible + .kit-switch,#kit-nbody-gravity .kit-btn:focus-visible,#kit-nbody-gravity .kit-range:focus-visible{outline:2px solid var(--kit-acc,#3cc8ff);outline-offset:2px}
+@container (max-width:430px){#kit-nbody-gravity .kit-stage{aspect-ratio:4/5}#kit-nbody-gravity .kit-panel{gap:12px}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Gravity sandbox</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-nbody-gravity">
+  <h2 class="kit-sr">Interactive real-time Newtonian N-body gravity simulation: click and drag to launch bodies that attract, orbit, slingshot and merge.</h2>
+  <div class="kit-stage">
+    <canvas class="kit-canvas"></canvas>
+    <div class="kit-hud" aria-hidden="true">
+      <div class="kit-readout">
+        <div class="kit-r-row"><span class="kit-r-k">Bodies</span><span class="kit-r-v" data-k="bodies">3</span></div>
+        <div class="kit-r-row"><span class="kit-r-k">Total mass</span><span class="kit-r-v" data-k="mass">—</span></div>
+        <div class="kit-r-row"><span class="kit-r-k">Kinetic E</span><span class="kit-r-v" data-k="ke">—</span></div>
+        <div class="kit-r-row"><span class="kit-r-k">Merges</span><span class="kit-r-v" data-k="merge">0</span></div>
+      </div>
+      <div class="kit-hint" data-hint>Click &amp; drag the void to launch a world</div>
+    </div>
+    <div class="kit-launchlabel" data-launch hidden>
+      <span data-launch-speed>0</span><span class="kit-ll-unit"> v</span>
+    </div>
+  </div>
+  <div class="kit-panel">
+    <div class="kit-btns">
+      <button type="button" class="kit-btn" data-act="planet"><span class="kit-dot kit-dot-p"></span>Add planet</button>
+      <button type="button" class="kit-btn" data-act="star"><span class="kit-dot kit-dot-s"></span>Add star</button>
+      <button type="button" class="kit-btn" data-act="preset">Reset system</button>
+      <button type="button" class="kit-btn kit-btn-ghost" data-act="clear">Clear</button>
+      <button type="button" class="kit-btn kit-btn-ghost" data-act="pause" aria-pressed="false">Pause</button>
+    </div>
+    <div class="kit-sliders">
+      <label class="kit-slider">
+        <span class="kit-s-label">Launch mass <b data-val="mass">12</b></span>
+        <input type="range" class="kit-range" data-ctl="mass" min="2" max="160" step="1" value="12">
+      </label>
+      <label class="kit-slider">
+        <span class="kit-s-label">Launch speed <b data-val="speed">1.0</b>&times;</span>
+        <input type="range" class="kit-range" data-ctl="speed" min="0" max="30" step="1" value="10">
+      </label>
+      <label class="kit-slider">
+        <span class="kit-s-label">Gravity G <b data-val="g">1.0</b>&times;</span>
+        <input type="range" class="kit-range" data-ctl="g" min="2" max="40" step="1" value="14">
+      </label>
+      <label class="kit-slider kit-slider-toggle">
+        <span class="kit-s-label">Trails</span>
+        <input type="checkbox" class="kit-check" data-ctl="trails" checked>
+        <span class="kit-switch" aria-hidden="true"></span>
+      </label>
+    </div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Click-drag on the canvas to launch a body in the drag direction; use Add planet / Add star / Clear and the mass + speed sliders to sculpt the system.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('kit-nbody-gravity');
+  if(!root) return;
+  var canvas=root.querySelector('.kit-canvas');
+  var ctx=canvas.getContext('2d');
+  var stage=root.querySelector('.kit-stage');
+  var hintEl=root.querySelector('[data-hint]');
+  var launchEl=root.querySelector('[data-launch]');
+  var launchSpeedEl=root.querySelector('[data-launch-speed]');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var readouts={
+    bodies:root.querySelector('[data-k="bodies"]'),
+    mass:root.querySelector('[data-k="mass"]'),
+    ke:root.querySelector('[data-k="ke"]'),
+    merge:root.querySelector('[data-k="merge"]')
+  };
+
+  // ---- runtime accent ----
+  var acc='#3cc8ff', accRGB='60,200,255';
+  function readAccent(){
+    var cs=getComputedStyle(document.documentElement);
+    var a=cs.getPropertyValue('--accent').trim();
+    if(a) acc=a;
+    var r=cs.getPropertyValue('--accent-rgb').trim();
+    if(r) accRGB=r; else accRGB=hexToRgb(acc)||accRGB;
+    root.style.setProperty('--kit-acc',acc);
+  }
+  function hexToRgb(h){
+    if(!h) return null; h=h.replace('#','');
+    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    if(h.length!==6) return null;
+    var n=parseInt(h,16);
+    return (n>>16&255)+','+(n>>8&255)+','+(n&255);
+  }
+  readAccent();
+
+  // ---- sim state ----
+  var W=0,H=0,DPR=1;
+  var bodies=[];
+  var G_BASE=0.9, gMul=1.4, massCtl=12, speedMul=1.0;
+  var SOFT=14;            // gravitational softening length
+  var trailsOn=true, paused=false, mergeCount=0;
+  var STAR_DENS=0.00055;  // mass->visual-radius density tuning
+
+  function radiusOf(m,isStar){
+    // r ~ m^(1/3) like real density-conserving spheres, scaled for screen
+    var base=Math.cbrt(m);
+    return (isStar?2.6:2.0)*base+2.4;
+  }
+  function makeBody(x,y,vx,vy,m,kind){
+    var isStar=kind==='star';
+    return {x:x,y:y,vx:vx,vy:vy,m:m,star:isStar,
+      r:radiusOf(m,isStar),trail:[],alive:true,
+      seed:Math.random()*6.283};
+  }
+  function starColor(m){
+    // hotter/bluer for big stars, oranger for small
+    var t=Math.min(1,(m-30)/220);
+    var r=Math.round(255-40*t), g=Math.round(190+50*t), b=Math.round(110+135*t);
+    return [r,g,b];
+  }
+  function planetColor(seed){
+    var hues=[[143,182,255],[120,225,210],[180,160,255],[110,205,160],[255,176,140]];
+    return hues[Math.floor(seed*hues.length)%hues.length];
+  }
+
+  function totalMass(){var s=0;for(var i=0;i<bodies.length;i++)s+=bodies[i].m;return s;}
+  function totalKE(){var s=0;for(var i=0;i<bodies.length;i++){var b=bodies[i];s+=0.5*b.m*(b.vx*b.vx+b.vy*b.vy);}return s;}
+
+  function fmt(n){
+    if(n>=1e6) return (n/1e6).toFixed(1)+'M';
+    if(n>=1e3) return (n/1e3).toFixed(1)+'k';
+    if(n>=100) return Math.round(n).toString();
+    return n.toFixed(0);
+  }
+  function updateReadout(){
+    readouts.bodies.textContent=bodies.length;
+    readouts.mass.textContent=fmt(totalMass());
+    readouts.ke.textContent=fmt(totalKE());
+    readouts.merge.textContent=mergeCount;
+  }
+
+  // ---- seed a believable system: central star + orbiting planets ----
+  function circularV(centralM,dist){
+    // softened circular orbital speed: v = sqrt(G*M*r^2/(r^2+soft^2)^1.5)
+    var G=G_BASE*gMul;
+    var d2=dist*dist+SOFT*SOFT;
+    return Math.sqrt(G*centralM*dist*dist/Math.pow(d2,1.5))/dist*dist; // = sqrt(G*M*dist/d2^1.5)*dist -> simplify below
+  }
+  function orbitalSpeed(centralM,dist){
+    var G=G_BASE*gMul;
+    var d2=dist*dist+SOFT*SOFT;
+    return Math.sqrt(G*centralM*dist*dist/Math.pow(d2,1.5));
+  }
+  function seedSystem(){
+    bodies=[]; mergeCount=0;
+    var cx=W/2, cy=H/2;
+    var starM=420;
+    var star=makeBody(cx,cy,0,0,starM,'star');
+    bodies.push(star);
+    var n=3;
+    var dim=Math.min(W,H);
+    for(var i=0;i<n;i++){
+      var dist=dim*(0.16+i*0.13)+ (Math.random()*16-8);
+      var ang=Math.random()*6.283;
+      var px=cx+Math.cos(ang)*dist, py=cy+Math.sin(ang)*dist;
+      var v=orbitalSpeed(starM,dist);
+      // tangential direction (perp to radius), randomized orbit sense
+      var sgn=i%2===0?1:1;
+      var tx=-Math.sin(ang)*sgn, ty=Math.cos(ang)*sgn;
+      var pm=14+Math.random()*22;
+      var p=makeBody(px,py,tx*v+star.vx,ty*v+star.vy,pm,'planet');
+      bodies.push(p);
+    }
+    // tiny moon for flair
+    var host=bodies[1];
+    var md=host.r+22;
+    var mv=orbitalSpeed(host.m,md);
+    var moon=makeBody(host.x+md,host.y,host.vx,host.vy+mv,3,'planet');
+    bodies.push(moon);
+    updateReadout();
+  }
+
+  // ---- physics: leapfrog-ish symplectic step (semi-implicit Euler w/ softening) ----
+  function step(dt){
+    var G=G_BASE*gMul;
+    var n=bodies.length;
+    // accumulate accelerations
+    for(var i=0;i<n;i++){bodies[i].ax=0;bodies[i].ay=0;}
+    for(var i=0;i<n;i++){
+      var a=bodies[i];
+      for(var j=i+1;j<n;j++){
+        var b=bodies[j];
+        var dx=b.x-a.x, dy=b.y-a.y;
+        var r2=dx*dx+dy*dy+SOFT*SOFT;
+        var inv=1/Math.sqrt(r2);
+        var inv3=inv*inv*inv;
+        var f=G*inv3;
+        a.ax+=f*b.m*dx; a.ay+=f*b.m*dy;
+        b.ax-=f*a.m*dx; b.ay-=f*a.m*dy;
+      }
+    }
+    // integrate
+    for(var i=0;i<n;i++){
+      var p=bodies[i];
+      p.vx+=p.ax*dt; p.vy+=p.ay*dt;
+      p.x+=p.vx*dt;  p.y+=p.vy*dt;
+    }
+    detectMerges();
+    recordTrails();
+  }
+
+  function detectMerges(){
+    for(var i=0;i<bodies.length;i++){
+      var a=bodies[i]; if(!a.alive) continue;
+      for(var j=i+1;j<bodies.length;j++){
+        var b=bodies[j]; if(!b.alive) continue;
+        var dx=b.x-a.x, dy=b.y-a.y;
+        var d=Math.sqrt(dx*dx+dy*dy);
+        if(d < (a.r+b.r)*0.62){
+          // inelastic merge: conserve mass & momentum
+          var M=a.m+b.m;
+          var nx=(a.x*a.m+b.x*b.m)/M;
+          var ny=(a.y*a.m+b.y*b.m)/M;
+          var nvx=(a.vx*a.m+b.vx*b.m)/M;
+          var nvy=(a.vy*a.m+b.vy*b.m)/M;
+          var keepStar=a.star||b.star;
+          var survivor=a.m>=b.m?a:b;
+          survivor.m=M; survivor.x=nx; survivor.y=ny;
+          survivor.vx=nvx; survivor.vy=nvy;
+          survivor.star = keepStar || M>120;
+          survivor.r=radiusOf(M,survivor.star);
+          (b.m>a.m?a:b).alive=false;
+          spawnFlash(nx,ny,Math.min(60,survivor.r*2.4));
+          mergeCount++;
+        }
+      }
+    }
+    var k=0;
+    for(var i=0;i<bodies.length;i++){if(bodies[i].alive)bodies[k++]=bodies[i];}
+    bodies.length=k;
+  }
+
+  var trailEvery=0;
+  function recordTrails(){
+    if(!trailsOn){return;}
+    trailEvery++;
+    if(trailEvery%2!==0) return;
+    for(var i=0;i<bodies.length;i++){
+      var p=bodies[i];
+      p.trail.push(p.x,p.y);
+      var max= p.star?44:74;
+      if(p.trail.length>max*2) p.trail.splice(0,p.trail.length-max*2);
+    }
+  }
+
+  // ---- merge flash particles ----
+  var flashes=[];
+  function spawnFlash(x,y,size){
+    if(reduce) return;
+    flashes.push({x:x,y:y,t:0,life:0.55,size:size});
+  }
+
+  // ---- render ----
+  var starsBg=[];
+  function buildStarfield(){
+    starsBg=[];
+    var count=Math.round((W*H)/9000);
+    for(var i=0;i<count;i++){
+      starsBg.push({x:Math.random()*W,y:Math.random()*H,
+        r:Math.random()*1.2+0.2,a:Math.random()*0.5+0.12,
+        tw:Math.random()*6.283,ts:0.6+Math.random()*1.4});
+    }
+  }
+
+  function draw(time){
+    readAccent();
+    ctx.clearRect(0,0,W,H);
+    // faint twinkling backdrop stars
+    for(var i=0;i<starsBg.length;i++){
+      var s=starsBg[i];
+      var tw=reduce?1:(0.6+0.4*Math.sin(time*0.001*s.ts+s.tw));
+      ctx.globalAlpha=s.a*tw;
+      ctx.fillStyle='#cdd2ff';
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.283);ctx.fill();
+    }
+    ctx.globalAlpha=1;
+
+    // trails
+    if(trailsOn){
+      for(var i=0;i<bodies.length;i++){
+        var p=bodies[i], t=p.trail, L=t.length;
+        if(L<4) continue;
+        var col=p.star?starColor(p.m):planetColor(p.seed);
+        for(var k=2;k<L;k+=2){
+          var frac=k/L;
+          ctx.strokeStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+(frac*0.5).toFixed(3)+')';
+          ctx.lineWidth=Math.max(0.5,p.r*0.45*frac);
+          ctx.beginPath();
+          ctx.moveTo(t[k-2],t[k-1]);
+          ctx.lineTo(t[k],t[k+1]);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // bodies
+    for(var i=0;i<bodies.length;i++){
+      var p=bodies[i];
+      var col=p.star?starColor(p.m):planetColor(p.seed);
+      var rs='rgb('+col[0]+','+col[1]+','+col[2]+')';
+      // glow
+      var gr=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r* (p.star?5.5:3.4));
+      gr.addColorStop(0,'rgba('+col[0]+','+col[1]+','+col[2]+','+(p.star?0.55:0.32)+')');
+      gr.addColorStop(1,'rgba('+col[0]+','+col[1]+','+col[2]+',0)');
+      ctx.fillStyle=gr;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r*(p.star?5.5:3.4),0,6.283);ctx.fill();
+      // core
+      var cg=ctx.createRadialGradient(p.x-p.r*0.35,p.y-p.r*0.35,p.r*0.1,p.x,p.y,p.r);
+      cg.addColorStop(0,'rgba(255,255,255,'+(p.star?0.95:0.7)+')');
+      cg.addColorStop(0.4,rs);
+      cg.addColorStop(1,'rgb('+Math.round(col[0]*0.55)+','+Math.round(col[1]*0.55)+','+Math.round(col[2]*0.55)+')');
+      ctx.fillStyle=cg;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();
+      // star corona ring
+      if(p.star){
+        ctx.strokeStyle='rgba('+col[0]+','+col[1]+','+col[2]+',0.4)';
+        ctx.lineWidth=1;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r*1.5+ (reduce?0:Math.sin(time*0.003+p.seed)*1.5),0,6.283);ctx.stroke();
+      }
+    }
+
+    // merge flashes
+    for(var i=flashes.length-1;i>=0;i--){
+      var f=flashes[i];
+      var pr=f.t/f.life;
+      var rr=f.size*(0.3+pr*1.4);
+      ctx.globalAlpha=(1-pr)*0.85;
+      var fg=ctx.createRadialGradient(f.x,f.y,0,f.x,f.y,rr);
+      fg.addColorStop(0,'rgba('+accRGB+',0.9)');
+      fg.addColorStop(0.5,'rgba(255,255,255,0.5)');
+      fg.addColorStop(1,'rgba('+accRGB+',0)');
+      ctx.fillStyle=fg;
+      ctx.beginPath();ctx.arc(f.x,f.y,rr,0,6.283);ctx.fill();
+      ctx.globalAlpha=1;
+    }
+
+    // drag launch vector
+    if(drag.active){
+      var dx=drag.x-drag.sx, dy=drag.y-drag.sy;
+      var len=Math.sqrt(dx*dx+dy*dy);
+      // predicted body preview at start point
+      var prevR=radiusOf(massCtl,massCtl>=90);
+      ctx.setLineDash([5,5]);
+      ctx.strokeStyle='rgba('+accRGB+',0.65)';
+      ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(drag.sx,drag.sy);ctx.lineTo(drag.x,drag.y);ctx.stroke();
+      ctx.setLineDash([]);
+      // arrowhead at drag point
+      if(len>6){
+        var ang=Math.atan2(dy,dx);
+        ctx.fillStyle='rgba('+accRGB+',0.9)';
+        ctx.beginPath();
+        ctx.moveTo(drag.x,drag.y);
+        ctx.lineTo(drag.x-Math.cos(ang-0.4)*9,drag.y-Math.sin(ang-0.4)*9);
+        ctx.lineTo(drag.x-Math.cos(ang+0.4)*9,drag.y-Math.sin(ang+0.4)*9);
+        ctx.closePath();ctx.fill();
+      }
+      // ghost body
+      ctx.fillStyle='rgba('+accRGB+',0.5)';
+      ctx.beginPath();ctx.arc(drag.sx,drag.sy,prevR,0,6.283);ctx.fill();
+      ctx.strokeStyle='rgba('+accRGB+',0.9)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(drag.sx,drag.sy,prevR,0,6.283);ctx.stroke();
+    }
+  }
+
+  // ---- advance flashes timer ----
+  function advFlashes(dt){
+    for(var i=flashes.length-1;i>=0;i--){
+      flashes[i].t+=dt;
+      if(flashes[i].t>=flashes[i].life) flashes.splice(i,1);
+    }
+  }
+
+  // ---- main loop ----
+  var raf=null, last=0, running=false;
+  function frame(now){
+    if(!running) return;
+    var dt=Math.min(0.05,(now-last)/1000)||0.016;
+    last=now;
+    if(!paused && !reduce){
+      // fixed sub-steps for stability
+      var steps=4, sub=dt*60/steps; // scale to ~ time units
+      for(var s=0;s<steps;s++) step(sub*0.25);
+      advFlashes(dt);
+    }
+    draw(now);
+    if(!paused) updateReadout();
+    raf=requestAnimationFrame(frame);
+  }
+  function startLoop(){
+    if(running||reduce) return;
+    running=true; last=performance.now();
+    raf=requestAnimationFrame(frame);
+  }
+  function stopLoop(){
+    running=false;
+    if(raf) cancelAnimationFrame(raf); raf=null;
+  }
+
+  // ---- sizing ----
+  function resize(){
+    var rect=stage.getBoundingClientRect();
+    if(rect.width<2) return;
+    DPR=Math.min(2,window.devicePixelRatio||1);
+    var newW=rect.width, newH=rect.height;
+    var hadSize=W>0;
+    var ratioX=hadSize?newW/W:1, ratioY=hadSize?newH/H:1;
+    W=newW; H=newH;
+    canvas.width=Math.round(W*DPR);
+    canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    buildStarfield();
+    if(hadSize){
+      for(var i=0;i<bodies.length;i++){
+        bodies[i].x*=ratioX; bodies[i].y*=ratioY;
+        bodies[i].trail.length=0;
+      }
+    }
+    if(reduce) draw(performance.now());
+  }
+
+  // ---- interaction: click-drag to launch ----
+  var drag={active:false,sx:0,sy:0,x:0,y:0,moved:false};
+  function evtPos(e){
+    var rect=stage.getBoundingClientRect();
+    var cx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+    var cy=(e.touches?e.touches[0].clientY:e.clientY)-rect.top;
+    return {x:cx,y:cy};
+  }
+  function dragStart(e){
+    if(e.button!==undefined && e.button!==0) return;
+    var p=evtPos(e);
+    drag.active=true;drag.sx=p.x;drag.sy=p.y;drag.x=p.x;drag.y=p.y;drag.moved=false;
+    hintEl.classList.add('kit-hide');
+    if(reduce){ // reduced motion: place a static body, no autoplay
+      launchBody(p.x,p.y,0,0);
+      drag.active=false;
+    }
+    e.preventDefault();
+  }
+  function dragMove(e){
+    if(!drag.active) return;
+    var p=evtPos(e);
+    drag.x=p.x;drag.y=p.y;drag.moved=true;
+    var dx=drag.x-drag.sx, dy=drag.y-drag.sy;
+    var sp=Math.sqrt(dx*dx+dy*dy)*0.04*speedMul;
+    launchSpeedEl.textContent=sp.toFixed(1);
+    launchEl.hidden=false;
+    launchEl.style.left=p.x+'px';
+    launchEl.style.top=p.y+'px';
+    if(reduce) draw(performance.now());
+    e.preventDefault();
+  }
+  function dragEnd(e){
+    if(!drag.active) return;
+    var dx=drag.x-drag.sx, dy=drag.y-drag.sy;
+    // launch velocity in drag direction (pull-to-aim, like a slingshot toward drag)
+    var vx=dx*0.04*speedMul, vy=dy*0.04*speedMul;
+    launchBody(drag.sx,drag.sy,vx,vy);
+    drag.active=false;
+    launchEl.hidden=true;
+    if(reduce) draw(performance.now());
+  }
+  function launchBody(x,y,vx,vy){
+    var kind=massCtl>=90?'star':'planet';
+    bodies.push(makeBody(x,y,vx,vy,massCtl,kind));
+    updateReadout();
+  }
+
+  stage.addEventListener('mousedown',dragStart);
+  window.addEventListener('mousemove',dragMove);
+  window.addEventListener('mouseup',dragEnd);
+  stage.addEventListener('touchstart',dragStart,{passive:false});
+  stage.addEventListener('touchmove',dragMove,{passive:false});
+  stage.addEventListener('touchend',dragEnd);
+
+  // ---- buttons ----
+  function addRandom(kind){
+    var m=kind==='star'?(140+Math.random()*180):(14+Math.random()*30);
+    var x=W*(0.2+Math.random()*0.6), y=H*(0.2+Math.random()*0.6);
+    // give it a sane tangential nudge relative to system barycenter
+    var cx=W/2,cy=H/2,dxr=x-cx,dyr=y-cy,d=Math.sqrt(dxr*dxr+dyr*dyr)||1;
+    var M=totalMass()||400;
+    var v=orbitalSpeed(M,d)*0.85;
+    var tx=-dyr/d, ty=dxr/d;
+    bodies.push(makeBody(x,y,tx*v,ty*v,m,kind));
+    hintEl.classList.add('kit-hide');
+    updateReadout();
+    if(reduce) draw(performance.now());
+  }
+  root.querySelectorAll('[data-act]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var a=btn.getAttribute('data-act');
+      if(a==='planet') addRandom('planet');
+      else if(a==='star') addRandom('star');
+      else if(a==='clear'){bodies=[];flashes=[];updateReadout();if(reduce)draw(performance.now());}
+      else if(a==='preset'){seedSystem();if(reduce)draw(performance.now());}
+      else if(a==='pause'){
+        paused=!paused;
+        btn.setAttribute('aria-pressed',paused?'true':'false');
+        btn.textContent=paused?'Resume':'Pause';
+      }
+    });
+  });
+
+  // ---- sliders ----
+  function bindRange(ctl,fn){
+    var el=root.querySelector('[data-ctl="'+ctl+'"]');
+    var out=root.querySelector('[data-val="'+ctl+'"]');
+    function upd(){fn(parseFloat(el.value),out);}
+    el.addEventListener('input',upd); upd();
+  }
+  bindRange('mass',function(v,out){massCtl=v;if(out)out.textContent=Math.round(v);});
+  bindRange('speed',function(v,out){speedMul=v/10;if(out)out.textContent=(v/10).toFixed(1);});
+  bindRange('g',function(v,out){gMul=v/10;if(out)out.textContent=(v/10).toFixed(1);});
+  var trailChk=root.querySelector('[data-ctl="trails"]');
+  trailChk.addEventListener('change',function(){
+    trailsOn=trailChk.checked;
+    if(!trailsOn){for(var i=0;i<bodies.length;i++)bodies[i].trail.length=0;}
+  });
+
+  // ---- resize ----
+  var rsz;
+  window.addEventListener('resize',function(){clearTimeout(rsz);rsz=setTimeout(resize,120);});
+
+  // ---- IntersectionObserver: pause off-screen ----
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ if(!running) startLoop(); }
+      else { stopLoop(); }
+    });
+  },{threshold:0.01});
+
+  // ---- init ----
+  function init(){
+    resize();
+    seedSystem();
+    if(reduce){draw(performance.now());}
+    io.observe(root);
+  }
+  if(W===0){
+    requestAnimationFrame(function(){init();});
+  } else { init(); }
+})();
+</script>
+</body></html>

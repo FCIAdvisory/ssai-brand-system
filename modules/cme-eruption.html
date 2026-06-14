@@ -1,0 +1,560 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar storm · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-cme-eruption{position:relative;width:100%;min-height:420px;aspect-ratio:16/10;border-radius:16px;overflow:hidden;background:radial-gradient(120% 140% at 18% 50%,#0c0830 0%,#070420 42%,#050314 100%);font-family:'Inter',system-ui,sans-serif;color:#f4f5ff;-webkit-user-select:none;user-select:none;border:1px solid rgba(166,171,230,0.16)}
+#kit-cme-eruption .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#kit-cme-eruption .kit-cme-eruption-cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#kit-cme-eruption .kit-cme-eruption-ui{position:absolute;left:0;right:0;bottom:0;padding:14px 18px 16px;display:flex;flex-direction:column;gap:10px;z-index:3;background:linear-gradient(0deg,rgba(5,3,20,0.92) 0%,rgba(5,3,20,0.62) 62%,rgba(5,3,20,0) 100%)}
+#kit-cme-eruption .kit-cme-eruption-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+#kit-cme-eruption .kit-cme-eruption-erupt{position:relative;display:inline-flex;align-items:center;gap:10px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:15px;letter-spacing:.12em;color:#050314;padding:11px 22px 11px 18px;border:none;border-radius:11px;cursor:pointer;background:var(--ka,#3cc8ff);box-shadow:0 0 0 1px rgba(255,255,255,0.18) inset,0 0 22px -2px var(--kaglow,rgba(60,200,255,0.7));transition:transform .12s ease,box-shadow .25s ease,opacity .2s ease;flex:0 0 auto}
+#kit-cme-eruption .kit-cme-eruption-erupt:hover{transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,0.28) inset,0 0 34px 0 var(--kaglow,rgba(60,200,255,0.85))}
+#kit-cme-eruption .kit-cme-eruption-erupt:active{transform:translateY(0) scale(.97)}
+#kit-cme-eruption .kit-cme-eruption-erupt[disabled]{opacity:.42;cursor:not-allowed;box-shadow:0 0 0 1px rgba(255,255,255,0.12) inset}
+#kit-cme-eruption .kit-cme-eruption-eIcon{width:9px;height:9px;border-radius:50%;background:#050314;box-shadow:0 0 0 3px rgba(5,3,20,0.35);position:relative}
+#kit-cme-eruption .kit-cme-eruption-eIcon::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1.5px solid rgba(5,3,20,0.55);animation:kit-cme-eruption-pulse 1.8s ease-out infinite}
+#kit-cme-eruption .kit-cme-eruption-erupt[disabled] .kit-cme-eruption-eIcon::after{animation:none}
+@keyframes kit-cme-eruption-pulse{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+#kit-cme-eruption .kit-cme-eruption-speed{flex:1 1 220px;min-width:200px;display:flex;flex-direction:column;gap:5px}
+#kit-cme-eruption .kit-cme-eruption-speed label{font-family:'Chakra Petch','Inter',sans-serif;font-size:10.5px;letter-spacing:.16em;color:#a6abe6;font-style:italic;text-transform:uppercase}
+#kit-cme-eruption .kit-cme-eruption-speed label b,#kit-cme-eruption .kit-cme-eruption-eta b{color:#f4f5ff;font-style:italic;font-weight:700}
+#kit-cme-eruption .kit-cme-eruption-eta{font-family:'Chakra Petch','Inter',sans-serif;font-size:10px;letter-spacing:.16em;color:var(--ka,#3cc8ff);font-style:italic;text-transform:uppercase}
+#kit-cme-eruption .kit-cme-eruption-eta b{color:#f4f5ff}
+#kit-cme-eruption .kit-cme-eruption-slider{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:rgba(166,171,230,0.22);outline:none;cursor:pointer}
+#kit-cme-eruption .kit-cme-eruption-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--ka,#3cc8ff);border:2px solid #050314;box-shadow:0 0 12px -1px var(--kaglow,rgba(60,200,255,0.8));cursor:pointer}
+#kit-cme-eruption .kit-cme-eruption-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--ka,#3cc8ff);border:2px solid #050314;box-shadow:0 0 12px -1px var(--kaglow,rgba(60,200,255,0.8));cursor:pointer}
+#kit-cme-eruption .kit-cme-eruption-gauge{display:flex;flex-direction:column;gap:6px}
+#kit-cme-eruption .kit-cme-eruption-gtop{display:flex;align-items:baseline;justify-content:space-between}
+#kit-cme-eruption .kit-cme-eruption-glabel{font-family:'Chakra Petch','Inter',sans-serif;font-size:10.5px;letter-spacing:.18em;color:#a6abe6;font-style:italic;text-transform:uppercase}
+#kit-cme-eruption .kit-cme-eruption-kp{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;display:inline-flex;align-items:baseline;gap:4px}
+#kit-cme-eruption .kit-cme-eruption-kp b{font-size:22px;font-weight:700;line-height:1;color:#f4f5ff;transition:color .3s ease}
+#kit-cme-eruption .kit-cme-eruption-kp i{font-size:11px;letter-spacing:.1em;color:#a6abe6;font-style:italic}
+#kit-cme-eruption .kit-cme-eruption-bar{position:relative;width:100%;height:8px;border-radius:6px;background:rgba(166,171,230,0.14);overflow:hidden}
+#kit-cme-eruption .kit-cme-eruption-fill{position:absolute;left:0;top:0;bottom:0;width:13%;border-radius:6px;background:linear-gradient(90deg,#3a7bd5 0%,#37d39a 30%,#f7c948 62%,#f2761b 82%,#e23b4a 100%);transition:width .14s linear}
+#kit-cme-eruption .kit-cme-eruption-bar::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(20% - 1px),rgba(5,3,20,0.55) calc(20% - 1px),rgba(5,3,20,0.55) 20%);pointer-events:none}
+#kit-cme-eruption .kit-cme-eruption-scale{display:flex;justify-content:space-between;font-family:'Chakra Petch','Inter',sans-serif;font-size:9px;letter-spacing:.14em;color:rgba(166,171,230,0.7);font-style:italic}
+#kit-cme-eruption .kit-cme-eruption-status{font-size:12px;line-height:1.45;color:#a6abe6;min-height:17px}
+#kit-cme-eruption .kit-cme-eruption-status b{color:#f4f5ff;font-weight:600}
+@media (max-width:520px){#kit-cme-eruption{aspect-ratio:auto;min-height:480px}#kit-cme-eruption .kit-cme-eruption-row{gap:10px}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Solar storm</div></div>
+    </div>
+    
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-cme-eruption">
+  <h2 class="sr-only">Interactive simulation of a coronal mass ejection erupting from the Sun, traveling to Earth, compressing its magnetosphere, triggering aurora, and spiking the Kp geomagnetic storm index.</h2>
+  <canvas class="kit-cme-eruption-cv"></canvas>
+  <div class="kit-cme-eruption-ui">
+    <div class="kit-cme-eruption-row">
+      <button class="kit-cme-eruption-erupt" type="button">
+        <span class="kit-cme-eruption-eIcon"></span>ERUPT
+      </button>
+      <div class="kit-cme-eruption-speed">
+        <label>SHOCK SPEED <b class="kit-cme-eruption-sval">1200</b> KM/S</label>
+        <input class="kit-cme-eruption-slider" type="range" min="400" max="2500" step="50" value="1200" aria-label="CME shock speed in kilometers per second">
+        <div class="kit-cme-eruption-eta">ARRIVAL <b class="kit-cme-eruption-etaval">31 H</b></div>
+      </div>
+    </div>
+    <div class="kit-cme-eruption-gauge">
+      <div class="kit-cme-eruption-gtop">
+        <span class="kit-cme-eruption-glabel">GEOMAGNETIC STORM</span>
+        <span class="kit-cme-eruption-kp"><b class="kit-cme-eruption-kpval">1.2</b><i>Kp</i></span>
+      </div>
+      <div class="kit-cme-eruption-bar"><div class="kit-cme-eruption-fill"></div></div>
+      <div class="kit-cme-eruption-scale"><span>QUIET</span><span>G1</span><span>G3</span><span>G5</span></div>
+    </div>
+    <div class="kit-cme-eruption-status">Standing by. Press ERUPT to launch a coronal mass ejection.</div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Set the shock speed (which scales the real 1–3 day Sun-to-Earth transit), press ERUPT, and watch the plasma cloud travel, compress the magnetosphere, ignite the poles, and drive the Kp gauge.</span>
+    <span class="mb-c-src">Concept · SSAI</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+var root=document.getElementById('kit-cme-eruption'); if(!root) return;
+var cv=root.querySelector('.kit-cme-eruption-cv'); var ctx=cv.getContext('2d');
+var btn=root.querySelector('.kit-cme-eruption-erupt');
+var slider=root.querySelector('.kit-cme-eruption-slider');
+var sval=root.querySelector('.kit-cme-eruption-sval');
+var etaval=root.querySelector('.kit-cme-eruption-etaval');
+var kpval=root.querySelector('.kit-cme-eruption-kpval');
+var fill=root.querySelector('.kit-cme-eruption-fill');
+var status=root.querySelector('.kit-cme-eruption-status');
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+var W=0,H=0,DPR=1;
+function resize(){
+  var r=root.getBoundingClientRect();
+  W=Math.max(40,r.width); H=Math.max(40,r.height);
+  DPR=Math.min(2,window.devicePixelRatio||1);
+  cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+
+var accent='#3cc8ff', accentRGB='60,200,255';
+function readAccent(){
+  var cs=getComputedStyle(document.documentElement);
+  var a=cs.getPropertyValue('--accent').trim(); if(a) accent=a;
+  var rgb=cs.getPropertyValue('--accent-rgb').trim();
+  if(rgb){ accentRGB=rgb; }
+  else { var p=hexRGB(accent); if(p) accentRGB=p.r+','+p.g+','+p.b; }
+  root.style.setProperty('--ka',accent);
+  root.style.setProperty('--kaglow','rgba('+accentRGB+',0.7)');
+}
+function hexRGB(h){ h=(h||'').replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2]; if(h.length<6) return null; var n=parseInt(h,16); return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}; }
+function aRGBA(al){ return 'rgba('+accentRGB+','+al+')'; }
+
+// stars
+var stars=[];
+function seedStars(){
+  stars=[]; var n=Math.round(W*H/5200);
+  for(var i=0;i<n;i++){ stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.1+0.25,tw:Math.random()*6.28,sp:Math.random()*1.6+0.4}); }
+}
+
+// physics: 1 AU transit scaled to seconds
+var AU=1.5e8; // km
+function transitHours(v){ return AU/v/3600; }
+function transitSeconds(v){
+  // map real 21h..104h -> 2.0s..6.5s (fast arrives sooner)
+  var h=transitHours(v); // ~21..104
+  var t=(h-21)/(104-21); t=Math.max(0,Math.min(1,t));
+  return 2.0+t*4.5;
+}
+
+// state machine
+var phase='idle'; // idle, launch, transit, impact, storm, recover
+var t0=0;          // phase start time (s)
+var now=0;
+var kp=1.2, kpTarget=1.2;
+var transitDur=4.0;
+var shockSpeed=1200;
+var peakKp=6.0;
+var compress=0;    // 0..1 magnetosphere compression
+var auroraE=0;     // aurora energy 0..1
+var flashE=0;      // launch flash
+var particles=[];  // CME plasma particles
+var cmeX=0;        // leading edge fraction 0..1
+var impactRipple=0;
+var spotPhase=Math.random()*6.28;
+
+function setStatus(html){ status.innerHTML=html; }
+
+function updateETA(){
+  shockSpeed=+slider.value;
+  sval.textContent=shockSpeed;
+  var h=Math.round(transitHours(shockSpeed));
+  etaval.textContent=h+' H';
+}
+slider.addEventListener('input',updateETA);
+updateETA();
+
+function launch(){
+  if(phase!=='idle'&&phase!=='recover') return;
+  shockSpeed=+slider.value;
+  transitDur=transitSeconds(shockSpeed);
+  // peak Kp scales with speed (faster shock = stronger storm)
+  var f=(shockSpeed-400)/(2500-400);
+  peakKp=4.4+f*4.4; // 4.4 .. 8.8
+  phase='launch'; t0=now; flashE=1; particles=[];
+  btn.setAttribute('disabled','');
+  setStatus('<b>Eruption.</b> Plasma cloud launched at '+shockSpeed+' km/s.');
+  // spawn plasma particles burst
+  var bx=sunPos().x, by=sunPos().y, br=sunR();
+  var n=reduce?26:70;
+  for(var i=0;i<n;i++){
+    var ang=(Math.random()-0.5)*0.95; // forward cone toward Earth (+x)
+    particles.push({
+      a:ang, base:Math.random(), // 0..1 lane within the cloud
+      spread:(Math.random()-0.5),
+      r:Math.random()*5+2,
+      hue:Math.random(),
+      seed:Math.random()*6.28,
+      sx:bx+Math.cos(ang)*br*0.9, sy:by+Math.sin(ang)*br*0.9
+    });
+  }
+}
+btn.addEventListener('click',launch);
+
+function sunPos(){ return {x:W*0.155, y:H*0.46}; }
+function sunR(){ return Math.min(W,H)*0.135; }
+function earthPos(){ return {x:W*0.83, y:H*0.46}; }
+function earthR(){ return Math.min(W,H)*0.052; }
+
+function tickState(dt){
+  var e=now-t0;
+  if(phase==='launch'){
+    flashE=Math.max(0,1-e/0.6);
+    cmeX=0;
+    if(e>0.45){ phase='transit'; t0=now; setStatus('<b>In transit.</b> Riding the solar wind toward Earth.'); }
+  } else if(phase==='transit'){
+    cmeX=Math.min(1,e/transitDur);
+    var hLeft=Math.max(0,Math.round(transitHours(shockSpeed)*(1-cmeX)));
+    if(((now*2)|0)%2===0) setStatus('<b>In transit.</b> '+hLeft+' h to impact — leading edge at '+Math.round(cmeX*100)+'% of the way.');
+    if(cmeX>=1){ phase='impact'; t0=now; impactRipple=1; compress=0; setStatus('<b>Impact.</b> Shock front compresses Earth’s magnetosphere.'); }
+  } else if(phase==='impact'){
+    compress=Math.min(1,e/0.5);
+    auroraE=Math.min(1,e/0.4);
+    impactRipple=Math.max(0,1-e/0.7);
+    kpTarget=peakKp;
+    if(e>0.55){ phase='storm'; t0=now; }
+  } else if(phase==='storm'){
+    kpTarget=peakKp;
+    compress=0.85+Math.sin(now*3)*0.12;
+    auroraE=1;
+    var gLevel=peakKp>=8?'G4–G5 (extreme)':peakKp>=7?'G3 (strong)':peakKp>=6?'G2 (moderate)':'G1 (minor)';
+    setStatus('<b>Geomagnetic storm '+gLevel+'.</b> Aurora flaring at the poles.');
+    if(e>1.7){ phase='recover'; t0=now; }
+  } else if(phase==='recover'){
+    kpTarget=1.2;
+    compress*=Math.pow(0.05,dt);
+    auroraE=Math.max(0,auroraE-dt*0.45);
+    if(kp<1.9&&auroraE<0.05){
+      phase='idle'; btn.removeAttribute('disabled');
+      setStatus('Storm subsided. Press ERUPT to launch another coronal mass ejection.');
+    }
+  }
+  // ease Kp toward target
+  var spd=(kpTarget>kp)?6.5:1.3;
+  kp+=(kpTarget-kp)*Math.min(1,dt*spd);
+  kp=Math.max(1.0,Math.min(9,kp));
+}
+
+function syncGauge(){
+  kpval.textContent=kp.toFixed(1);
+  fill.style.width=(8+(kp/9)*92).toFixed(1)+'%';
+  var c= kp>=7?'#ff7a59': kp>=5?'#f7c948': '#f4f5ff';
+  kpval.style.color=c;
+}
+
+// ---- drawing ----
+function drawStars(){
+  for(var i=0;i<stars.length;i++){ var s=stars[i];
+    var tw=reduce?0.7:(0.55+0.45*Math.sin(now*s.sp+s.tw));
+    ctx.globalAlpha=tw*0.85;
+    ctx.fillStyle= (i%9===0)? aRGBA(0.9) : '#f4f5ff';
+    ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,6.2832); ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+
+function drawSun(){
+  var p=sunPos(), R=sunR();
+  // outer corona glow
+  var cg=ctx.createRadialGradient(p.x,p.y,R*0.6,p.x,p.y,R*2.6);
+  cg.addColorStop(0,'rgba(255,176,70,0.42)');
+  cg.addColorStop(0.4,'rgba(255,120,40,0.16)');
+  cg.addColorStop(1,'rgba(255,90,30,0)');
+  ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(p.x,p.y,R*2.6,0,6.2832); ctx.fill();
+  // body
+  var bg=ctx.createRadialGradient(p.x-R*0.25,p.y-R*0.25,R*0.1,p.x,p.y,R);
+  bg.addColorStop(0,'#fff3d0'); bg.addColorStop(0.45,'#ffd45e');
+  bg.addColorStop(0.78,'#ff9a2e'); bg.addColorStop(1,'#e8631a');
+  ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(p.x,p.y,R,0,6.2832); ctx.fill();
+  // churning granulation (clip to disk)
+  ctx.save(); ctx.beginPath(); ctx.arc(p.x,p.y,R,0,6.2832); ctx.clip();
+  var T=reduce?0:now;
+  for(var i=0;i<22;i++){
+    var a=i*0.618*6.2832+spotPhase;
+    var rr=R*(0.2+(i/22)*0.78);
+    var wob=Math.sin(T*0.9+i)*R*0.06;
+    var cx=p.x+Math.cos(a+T*0.12)*rr*0.7;
+    var cy=p.y+Math.sin(a+T*0.1)*rr*0.7+wob;
+    var br=R*(0.12+0.1*((i*7)%5)/5);
+    var g=ctx.createRadialGradient(cx,cy,0,cx,cy,br);
+    var hot=(Math.sin(T*1.4+i*1.7)+1)/2;
+    g.addColorStop(0,'rgba(255,'+(225+hot*30|0)+','+(150+hot*70|0)+',0.55)');
+    g.addColorStop(1,'rgba(220,90,20,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,br,0,6.2832); ctx.fill();
+  }
+  // sunspots
+  for(var j=0;j<3;j++){
+    var sa=spotPhase+j*2.3+T*0.05;
+    var sx=p.x+Math.cos(sa)*R*0.5, sy=p.y+Math.sin(sa)*R*0.4;
+    ctx.fillStyle='rgba(120,40,10,0.35)';
+    ctx.beginPath(); ctx.ellipse(sx,sy,R*0.09,R*0.07,sa,0,6.2832); ctx.fill();
+  }
+  ctx.restore();
+  // limb darkening rim
+  var rim=ctx.createRadialGradient(p.x,p.y,R*0.82,p.x,p.y,R);
+  rim.addColorStop(0,'rgba(0,0,0,0)'); rim.addColorStop(1,'rgba(120,40,5,0.5)');
+  ctx.fillStyle=rim; ctx.beginPath(); ctx.arc(p.x,p.y,R,0,6.2832); ctx.fill();
+  // prominences flicker + eruption flash
+  if(flashE>0){
+    var fg=ctx.createRadialGradient(p.x+R*0.6,p.y,0,p.x+R*0.6,p.y,R*2.2);
+    fg.addColorStop(0,'rgba(255,240,210,'+(0.55*flashE)+')');
+    fg.addColorStop(0.5,'rgba(255,150,60,'+(0.3*flashE)+')');
+    fg.addColorStop(1,'rgba(255,120,40,0)');
+    ctx.fillStyle=fg; ctx.beginPath(); ctx.arc(p.x+R*0.7,p.y,R*2.2,0,6.2832); ctx.fill();
+  }
+}
+
+function drawCME(){
+  if(particles.length===0) return;
+  var sp=sunPos(), ep=earthPos();
+  // path from sun to just before earth
+  var x0=sp.x+sunR()*0.9, x1=ep.x-earthR()*2.6;
+  var span=x1-x0;
+  var lead=cmeX; // 0..1
+  ctx.save();
+  ctx.globalCompositeOperation='lighter';
+  for(var i=0;i<particles.length;i++){
+    var pt=particles[i];
+    // each particle sits at a lane within the cloud, cloud has depth
+    var depth=pt.base*0.34; // trailing tail behind leading edge
+    var fr=lead-depth;
+    if(fr<-0.05) continue;
+    fr=Math.max(0,fr);
+    var px=x0+fr*span;
+    // vertical spread widens with distance (cloud expansion)
+    var widen=(0.4+fr*1.3);
+    var baseY=sp.y;
+    var py=baseY+pt.spread*sunR()*1.5*widen + Math.sin(now*1.6+pt.seed)*6*(reduce?0:1);
+    var alpha=(phase==='impact'||phase==='storm')?0.0:(0.16+0.5*(1-depth/0.34));
+    if(fr>=1) alpha*=Math.max(0,1-(now-t0)*1.2); // fade after impact during impact phase
+    if(alpha<=0.01) continue;
+    var rr=pt.r*(1+fr*1.8);
+    var g=ctx.createRadialGradient(px,py,0,px,py,rr*2.6);
+    // plasma: accent-tinted hot core
+    g.addColorStop(0,aRGBA((0.7*alpha).toFixed(3)));
+    g.addColorStop(0.4,'rgba('+accentRGB+','+(0.32*alpha).toFixed(3)+')');
+    g.addColorStop(1,'rgba('+accentRGB+',0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(px,py,rr*2.6,0,6.2832); ctx.fill();
+  }
+  // bright leading shock arc
+  if(lead>0.02&&lead<1.02){
+    var lx=x0+Math.min(1,lead)*span;
+    var ly=sp.y;
+    var ah=sunR()*1.7*(0.5+lead*1.1);
+    ctx.globalCompositeOperation='lighter';
+    var lg=ctx.createLinearGradient(lx-30,0,lx+18,0);
+    lg.addColorStop(0,'rgba('+accentRGB+',0)');
+    lg.addColorStop(1,aRGBA('0.5'));
+    ctx.strokeStyle=lg; ctx.lineWidth=2.4;
+    ctx.beginPath();
+    ctx.moveTo(lx, ly-ah);
+    ctx.quadraticCurveTo(lx+22, ly, lx, ly+ah);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawEarth(){
+  var p=earthPos(), R=earthR();
+  // ---- magnetosphere ---- (compressed dayside toward sun = left)
+  var comp=compress;
+  var dayR=R*(2.6-comp*1.0);     // sunward bow shock standoff shrinks under compression
+  var nightR=R*(6.2+comp*3.5);   // tail stretches
+  ctx.save();
+  ctx.globalCompositeOperation='lighter';
+  // field "bubble"
+  for(var L=0;L<3;L++){
+    var s=1-L*0.26;
+    var al=(0.10+0.05*L)*(0.7+comp*0.9);
+    ctx.strokeStyle=aRGBA(al.toFixed(3));
+    ctx.lineWidth=1.4;
+    ctx.beginPath();
+    var topY=p.y-R*(2.0+L*0.5)*(1-comp*0.18);
+    var botY=p.y+R*(2.0+L*0.5)*(1-comp*0.18);
+    // dayside (left) bow
+    ctx.moveTo(p.x-dayR*s, p.y);
+    ctx.quadraticCurveTo(p.x-dayR*s*0.92, topY, p.x, topY*0.96+p.y*0.04);
+    ctx.quadraticCurveTo(p.x+nightR*s*0.5, topY, p.x+nightR*s, p.y-R*0.6);
+    ctx.lineTo(p.x+nightR*s, p.y+R*0.6);
+    ctx.quadraticCurveTo(p.x+nightR*s*0.5, botY, p.x, botY*0.96+p.y*0.04);
+    ctx.quadraticCurveTo(p.x-dayR*s*0.92, botY, p.x-dayR*s, p.y);
+    ctx.stroke();
+  }
+  // bow-shock leading edge highlight (sunward)
+  ctx.strokeStyle=aRGBA((0.28+comp*0.5).toFixed(3));
+  ctx.lineWidth=2.2;
+  ctx.beginPath();
+  ctx.moveTo(p.x-dayR, p.y-R*2.0*(1-comp*0.18));
+  ctx.quadraticCurveTo(p.x-dayR*1.28, p.y, p.x-dayR, p.y+R*2.0*(1-comp*0.18));
+  ctx.stroke();
+  // impact ripple
+  if(impactRipple>0){
+    ctx.strokeStyle=aRGBA((0.5*impactRipple).toFixed(3));
+    ctx.lineWidth=3*impactRipple+0.5;
+    var rr2=dayR*(1+(1-impactRipple)*1.6);
+    ctx.beginPath(); ctx.arc(p.x,p.y,rr2,Math.PI*0.55,Math.PI*1.45); ctx.stroke();
+  }
+  ctx.restore();
+
+  // ---- Earth body ----
+  ctx.save();
+  ctx.beginPath(); ctx.arc(p.x,p.y,R,0,6.2832); ctx.clip();
+  // night/day: lit from the left (sunward)
+  var eg=ctx.createRadialGradient(p.x-R*0.5,p.y-R*0.3,R*0.1,p.x+R*0.5,p.y+R*0.4,R*1.6);
+  eg.addColorStop(0,'#3a7bd5'); eg.addColorStop(0.5,'#1d3f86'); eg.addColorStop(1,'#0a1430');
+  ctx.fillStyle=eg; ctx.fillRect(p.x-R,p.y-R,R*2,R*2);
+  // continents (abstract)
+  ctx.fillStyle='rgba(40,150,110,0.55)';
+  var cont=[[-0.3,-0.4,0.4,0.3],[0.1,0.2,0.5,0.35],[-0.5,0.3,0.35,0.25],[0.35,-0.5,0.3,0.22]];
+  for(var c=0;c<cont.length;c++){ var k=cont[c];
+    ctx.beginPath(); ctx.ellipse(p.x+k[0]*R,p.y+k[1]*R,k[2]*R,k[3]*R,0.4,0,6.2832); ctx.fill();
+  }
+  // terminator shadow on far (anti-sunward) side
+  var tg=ctx.createLinearGradient(p.x,p.y,p.x+R,p.y);
+  tg.addColorStop(0,'rgba(0,0,0,0)'); tg.addColorStop(1,'rgba(0,0,0,0.55)');
+  ctx.fillStyle=tg; ctx.fillRect(p.x-R,p.y-R,R*2,R*2);
+  ctx.restore();
+  // atmosphere rim
+  ctx.strokeStyle='rgba(120,180,255,0.45)'; ctx.lineWidth=1.4;
+  ctx.beginPath(); ctx.arc(p.x,p.y,R+0.7,0,6.2832); ctx.stroke();
+
+  // ---- AURORA at poles ----
+  if(auroraE>0.01){
+    drawAurora(p,R,auroraE);
+  }
+}
+
+function drawAurora(p,R,E){
+  ctx.save();
+  ctx.globalCompositeOperation='lighter';
+  var T=reduce?0:now;
+  // two polar caps (top + bottom), facing slightly sunward
+  var poles=[{sy:-1},{sy:1}];
+  for(var pi=0;pi<poles.length;pi++){
+    var sy=poles[pi].sy;
+    var cx=p.x, cy=p.y+sy*R*0.92;
+    var bands=reduce?3:6;
+    for(var b=0;b<bands;b++){
+      var ph=T*1.3+b*0.9+pi*2;
+      var spread=R*(1.1+b*0.34);
+      var hgt=R*(1.0+b*0.5)*(0.6+E*0.7);
+      var flick=0.6+0.4*Math.sin(T*2.4+b*1.5+pi);
+      var al=(0.16*E)*flick*(1-b/(bands+1));
+      // green band low, magenta/violet tips high (real aurora colors)
+      var col= b<bands*0.6 ? '60,255,160' : '180,120,255';
+      var g=ctx.createLinearGradient(cx,cy,cx+sy*0+0,cy+sy*hgt);
+      g.addColorStop(0,'rgba('+col+','+al.toFixed(3)+')');
+      g.addColorStop(1,'rgba('+col+',0)');
+      ctx.fillStyle=g;
+      ctx.beginPath();
+      var steps=10;
+      for(var s=0;s<=steps;s++){
+        var fx=cx-spread+(s/steps)*spread*2;
+        var wob=Math.sin(ph+s*0.7)*R*0.14;
+        var fy=cy + sy*(hgt*(0.2+0.8*Math.sin((s/steps)*Math.PI))) + wob;
+        if(s===0) ctx.moveTo(fx,cy); else ctx.lineTo(fx,fy);
+      }
+      for(var s2=steps;s2>=0;s2--){
+        var fx2=cx-spread+(s2/steps)*spread*2;
+        ctx.lineTo(fx2,cy);
+      }
+      ctx.closePath(); ctx.fill();
+    }
+    // bright base arc on the cap
+    ctx.strokeStyle='rgba(90,255,180,'+(0.4*E).toFixed(3)+')';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y, R*1.02, sy>0?Math.PI*0.18:Math.PI*1.18, sy>0?Math.PI*0.82:Math.PI*1.82);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function frame(ts){
+  if(!running) return;
+  if(!last) last=ts;
+  var dt=Math.min(0.05,(ts-last)/1000); last=ts;
+  now+=dt;
+  tickState(dt);
+  ctx.clearRect(0,0,W,H);
+  readAccent();
+  drawStars();
+  drawSun();
+  drawCME();
+  drawEarth();
+  syncGauge();
+  raf=requestAnimationFrame(frame);
+}
+
+var raf=0,last=0,running=false;
+function start(){ if(running) return; running=true; last=0; raf=requestAnimationFrame(frame); }
+function stop(){ running=false; if(raf) cancelAnimationFrame(raf); raf=0; }
+
+function renderStatic(){
+  // one paint for reduced-motion / off-screen entry
+  ctx.clearRect(0,0,W,H);
+  readAccent(); drawStars(); drawSun(); drawCME(); drawEarth(); syncGauge();
+}
+
+// init
+resize(); readAccent(); seedStars(); renderStatic();
+
+var ro;
+function onResize(){ resize(); seedStars(); if(!running) renderStatic(); }
+window.addEventListener('resize',onResize);
+if('ResizeObserver' in window){ ro=new ResizeObserver(onResize); ro.observe(root); }
+
+// IntersectionObserver: pause when off-screen
+var io;
+if('IntersectionObserver' in window){
+  io=new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(en.isIntersecting){ if(!reduce) start(); else renderStatic(); }
+      else { stop(); }
+    });
+  },{threshold:0.05});
+  io.observe(root);
+} else if(!reduce){ start(); }
+
+if(reduce){
+  // reduced motion: still interactive. ERUPT computes final state instantly.
+  btn.addEventListener('click',function(){
+    var f=(+slider.value-400)/(2500-400);
+    peakKp=4.4+f*4.4; kp=peakKp; kpTarget=peakKp; compress=0.9; auroraE=1; cmeX=1; particles=[];
+    var gLevel=peakKp>=8?'G4–G5 (extreme)':peakKp>=7?'G3 (strong)':peakKp>=6?'G2 (moderate)':'G1 (minor)';
+    setStatus('<b>Geomagnetic storm '+gLevel+'.</b> Magnetosphere compressed, aurora at the poles. (Motion reduced.)');
+    renderStatic();
+  },{once:false});
+}
+})();
+</script>
+</body></html>

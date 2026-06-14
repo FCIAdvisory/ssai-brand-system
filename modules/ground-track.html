@@ -1,0 +1,462 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satellite ground tracks · SSAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;--space:#050314;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--hair:rgba(166,171,230,.16);
+--ion:var(--accent);--aurora:var(--accent);--orbit:var(--accent);--plasma:var(--accent);--nebula:var(--accent);--solar:var(--accent);--coral:var(--accent);--teal:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--space);color:var(--star);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+.mb-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.mb-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-bottom:1px solid var(--hair);position:relative;z-index:5;}
+.mb-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.mb-ssai{height:22px;width:auto;display:block;opacity:.96;flex:0 0 auto;}
+.mb-titles{min-width:0;}
+.mb-kicker{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--neb);}
+.mb-title{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;line-height:1.05;color:var(--star);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mb-cobrand{display:flex;align-items:center;gap:11px;flex:0 0 auto;}
+.mb-x{color:var(--neb);font-size:13px;opacity:.6;}
+.mb-srclogos{display:flex;align-items:center;gap:12px;}
+.mb-srclogos img{height:26px;width:auto;display:block;opacity:.98;}
+.mb-srctag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--neb);opacity:.7;align-self:center;margin-right:2px;}
+.mb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,34px);}
+.mb-stage>.kfig{width:100%;max-width:1120px;}
+.mb-credit{padding:9px 20px 14px;border-top:1px solid var(--hair);font-size:10.5px;letter-spacing:.04em;color:var(--neb);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+.mb-credit .mb-c-int{color:var(--neb);opacity:.85;max-width:62ch;}
+.mb-credit .mb-c-src{color:var(--star);opacity:.8;white-space:nowrap;}
+body.mb-embed .mb-bar{display:none;}
+body.mb-embed .mb-stage{padding-top:clamp(12px,2.4vw,26px);}
+@media(max-width:640px){.mb-bar{padding:11px 14px;} .mb-title{font-size:13px;} .mb-srclogos img{height:20px;}}
+#kit-ground-track{--gtk-bg:#050314;--gtk-indigo:#16145f;--gtk-text:#f4f5ff;--gtk-muted:#a6abe6;--gtk-line:rgba(166,171,230,0.16);--gtk-accent:#3cc8ff;--gtk-accent-rgb:60,200,255;position:relative;width:100%;box-sizing:border-box;color:var(--gtk-text);font-family:'Inter',system-ui,sans-serif;background:radial-gradient(120% 90% at 50% 0%,#0a0726 0%,var(--gtk-bg) 60%);border:1px solid var(--gtk-line);border-radius:16px;padding:14px;overflow:hidden}
+#kit-ground-track *{box-sizing:border-box}
+#kit-ground-track .gtk-stage{position:relative;width:100%;aspect-ratio:2/1;min-height:240px;border-radius:12px;overflow:hidden;background:#03020e;border:1px solid var(--gtk-line);cursor:crosshair}
+#kit-ground-track .gtk-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#kit-ground-track .gtk-grat{position:absolute;inset:0;pointer-events:none}
+#kit-ground-track .gtk-lat{position:absolute;left:9px;transform:translateY(-50%);font-size:10px;letter-spacing:.06em;color:var(--gtk-muted);opacity:.5;font-variant-numeric:tabular-nums;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+#kit-ground-track .gtk-prov{position:absolute;left:10px;bottom:8px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gtk-muted);opacity:.62;pointer-events:none;text-shadow:0 1px 4px rgba(0,0,0,.9)}
+#kit-ground-track .gtk-clock{position:absolute;left:10px;top:9px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:11px;letter-spacing:.08em;color:var(--gtk-text);opacity:.85;pointer-events:none;text-shadow:0 1px 5px rgba(0,0,0,.9);font-variant-numeric:tabular-nums}
+#kit-ground-track .gtk-readout{position:absolute;top:9px;right:9px;min-width:178px;max-width:62%;padding:11px 13px;background:rgba(5,4,16,0.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--gtk-line);border-radius:11px;transition:border-color .35s ease,box-shadow .35s ease}
+#kit-ground-track .gtk-readout:not([data-empty]){border-color:rgba(var(--gtk-accent-rgb),0.5);box-shadow:0 0 26px -6px rgba(var(--gtk-accent-rgb),0.5)}
+#kit-ground-track .gtk-r-name{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:14px;line-height:1.15;color:var(--gtk-text);transition:color .3s ease}
+#kit-ground-track .gtk-readout:not([data-empty]) .gtk-r-name{color:var(--gtk-accent)}
+#kit-ground-track .gtk-r-sub{font-size:10.5px;color:var(--gtk-muted);margin-top:2px;letter-spacing:.02em}
+#kit-ground-track .gtk-r-stats{display:flex;gap:14px;margin-top:9px}
+#kit-ground-track .gtk-stat{display:flex;flex-direction:column;gap:1px}
+#kit-ground-track .gtk-k{font-size:8.5px;letter-spacing:.14em;color:var(--gtk-muted);opacity:.7}
+#kit-ground-track .gtk-v{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;font-size:13px;color:var(--gtk-text);font-variant-numeric:tabular-nums}
+#kit-ground-track .gtk-controls{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px;padding:2px}
+#kit-ground-track .gtk-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;background:rgba(22,20,95,0.4);color:var(--gtk-text);border:1px solid var(--gtk-line);border-radius:9px;font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:11px;cursor:pointer;transition:background .25s ease,border-color .25s ease,transform .1s ease}
+#kit-ground-track .gtk-btn:hover{background:rgba(22,20,95,0.7);border-color:rgba(var(--gtk-accent-rgb),0.45)}
+#kit-ground-track .gtk-btn:active{transform:scale(.97)}
+#kit-ground-track .gtk-btn:focus-visible{outline:none;box-shadow:0 0 0 2px rgba(var(--gtk-accent-rgb),0.45)}
+#kit-ground-track .gtk-ico{width:11px;height:11px;display:inline-block;position:relative}
+#kit-ground-track .gtk-ico-pause::before,#kit-ground-track .gtk-ico-pause::after{content:"";position:absolute;top:0;width:3.5px;height:11px;background:var(--gtk-accent);border-radius:1px}
+#kit-ground-track .gtk-ico-pause::before{left:1px}
+#kit-ground-track .gtk-ico-pause::after{right:1px}
+#kit-ground-track .gtk-ico-play::before{content:"";position:absolute;top:0;left:2px;border-style:solid;border-width:5.5px 0 5.5px 9px;border-color:transparent transparent transparent var(--gtk-accent)}
+#kit-ground-track .gtk-ctrl{display:flex;flex-direction:column;gap:4px;min-width:130px;flex:1 1 130px;max-width:200px}
+#kit-ground-track .gtk-ctrl-lbl{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.06em;color:var(--gtk-muted);text-transform:uppercase}
+#kit-ground-track .gtk-ctrl-lbl span{color:var(--gtk-text);font-variant-numeric:tabular-nums;font-weight:600}
+#kit-ground-track .gtk-slider{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:3px;background:rgba(166,171,230,0.18);outline:none;cursor:pointer}
+#kit-ground-track .gtk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gtk-accent);border:2px solid var(--gtk-bg);box-shadow:0 0 8px -1px rgba(var(--gtk-accent-rgb),0.7);cursor:pointer}
+#kit-ground-track .gtk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--gtk-accent);border:2px solid var(--gtk-bg);box-shadow:0 0 8px -1px rgba(var(--gtk-accent-rgb),0.7);cursor:pointer}
+#kit-ground-track .gtk-slider:focus-visible{box-shadow:0 0 0 3px rgba(var(--gtk-accent-rgb),0.3)}
+#kit-ground-track .gtk-legend{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-left:auto}
+#kit-ground-track .gtk-leg-item{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;color:var(--gtk-muted);letter-spacing:.02em;cursor:pointer;transition:color .2s ease,opacity .2s ease;background:none;border:0;padding:2px 0;font-family:inherit}
+#kit-ground-track .gtk-leg-item:hover{color:var(--gtk-text)}
+#kit-ground-track .gtk-leg-item.gtk-dim{opacity:.38}
+#kit-ground-track .gtk-leg-item.gtk-sel{color:var(--gtk-text)}
+#kit-ground-track .gtk-leg-dot{width:8px;height:8px;border-radius:50%;flex:none;box-shadow:0 0 7px -1px currentColor}
+@media (max-width:520px){#kit-ground-track .gtk-readout{min-width:146px;padding:9px 10px}#kit-ground-track .gtk-legend{margin-left:0;width:100%}#kit-ground-track .gtk-ctrl{min-width:108px;flex-basis:108px}}
+</style></head>
+<body>
+<div class="mb-wrap">
+  <header class="mb-bar">
+    <div class="mb-left">
+      <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Satellite ground tracks</div></div>
+    </div>
+    <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
+  </header>
+  <div class="mb-stage"><div class="kfig" id="kit-ground-track">
+  <div class="gtk-stage">
+    <canvas class="gtk-canvas" aria-label="NASA Blue Marble world map with live satellite ground tracks for Landsat 9, Suomi-NPP, ICESat-2 and Aqua"></canvas>
+    <div class="gtk-grat" aria-hidden="true">
+      <span class="gtk-lat" style="top:16.67%">+60&deg;</span>
+      <span class="gtk-lat" style="top:50%">0&deg;</span>
+      <span class="gtk-lat" style="top:83.33%">&minus;60&deg;</span>
+    </div>
+    <div class="gtk-clock" aria-hidden="true"></div>
+    <div class="gtk-readout" data-empty="1" role="status" aria-live="polite">
+      <div class="gtk-r-name">Satellite ground tracks</div>
+      <div class="gtk-r-sub">Hover a track to inspect</div>
+      <div class="gtk-r-stats">
+        <div class="gtk-stat"><span class="gtk-k">ALT</span><span class="gtk-v gtk-v-alt">&mdash;</span></div>
+        <div class="gtk-stat"><span class="gtk-k">INC</span><span class="gtk-v gtk-v-inc">&mdash;</span></div>
+        <div class="gtk-stat"><span class="gtk-k">PERIOD</span><span class="gtk-v gtk-v-per">&mdash;</span></div>
+      </div>
+    </div>
+    <div class="gtk-prov">NASA Blue Marble &middot; Black Marble (VIIRS)</div>
+  </div>
+  <div class="gtk-controls">
+    <button class="gtk-btn gtk-play" type="button" aria-pressed="true">
+      <span class="gtk-ico gtk-ico-pause"></span><span class="gtk-btn-lbl">Pause</span>
+    </button>
+    <div class="gtk-ctrl">
+      <label class="gtk-ctrl-lbl">Time &times;<span class="gtk-speed-val">120</span></label>
+      <input class="gtk-slider gtk-speed" type="range" min="20" max="600" step="10" value="120" aria-label="Time speed multiplier">
+    </div>
+    <div class="gtk-ctrl">
+      <label class="gtk-ctrl-lbl">Trail<span class="gtk-trail-val">1.4 orb</span></label>
+      <input class="gtk-slider gtk-trail" type="range" min="40" max="220" step="5" value="140" aria-label="Trail length">
+    </div>
+    <div class="gtk-legend"></div>
+  </div>
+</div></div>
+  <footer class="mb-credit">
+    <span class="mb-c-int">Hover or tap a track (or its legend chip) to highlight a satellite and read altitude, inclination and period; play/pause, scrub time-speed, and lengthen the orbital trails over the real Earth.</span>
+    <span class="mb-c-src">Basemap · NASA Blue Marble</span>
+  </footer>
+</div>
+<script>
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    var ac=q.get('accent'); if(ac){ document.documentElement.style.setProperty('--accent',ac);
+      var h=ac.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+      var n=parseInt(h,16); if(!isNaN(n)) document.documentElement.style.setProperty('--accent-rgb',((n>>16)&255)+','+((n>>8)&255)+','+(n&255)); }
+    var th=q.get('theme'); if(th==='light') document.documentElement.setAttribute('data-theme','light');
+    if(q.get('embed')==='1') document.body.classList.add('mb-embed');
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+var root=document.getElementById('kit-ground-track');if(!root)return;
+var stage=root.querySelector('.gtk-stage');
+var canvas=root.querySelector('.gtk-canvas');
+var clockEl=root.querySelector('.gtk-clock');
+var readout=root.querySelector('.gtk-readout');
+var rName=root.querySelector('.gtk-r-name');
+var rSub=root.querySelector('.gtk-r-sub');
+var vAlt=root.querySelector('.gtk-v-alt');
+var vInc=root.querySelector('.gtk-v-inc');
+var vPer=root.querySelector('.gtk-v-per');
+var playBtn=root.querySelector('.gtk-play');
+var playLbl=root.querySelector('.gtk-btn-lbl');
+var playIco=root.querySelector('.gtk-ico');
+var speedEl=root.querySelector('.gtk-speed');
+var speedVal=root.querySelector('.gtk-speed-val');
+var trailEl=root.querySelector('.gtk-trail');
+var trailVal=root.querySelector('.gtk-trail-val');
+var legend=root.querySelector('.gtk-legend');
+var ctx=canvas.getContext('2d');
+
+var DPR=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+var W=2,H=1;
+var accent='#3cc8ff',accentRGB='60,200,255';
+
+function hexRGB(h){h=(h||'').trim().replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];var n=parseInt(h,16);if(isNaN(n))return null;return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}
+function readAccent(){try{var cs=getComputedStyle(document.documentElement);var a=cs.getPropertyValue('--accent').trim();if(a)accent=a;var r=cs.getPropertyValue('--accent-rgb').trim();accentRGB=r||hexRGB(accent)||accentRGB;}catch(e){}root.style.setProperty('--gtk-accent',accent);root.style.setProperty('--gtk-accent-rgb',accentRGB);}
+readAccent();
+
+var SATS=[
+  {id:'landsat9', name:'Landsat 9',  short:'LS9',  alt:705, inc:98.2,  period:99.0,  color:'#5ad6ff', raan:18,  ph:0.00},
+  {id:'snpp',     name:'Suomi-NPP',  short:'NPP',  alt:824, inc:98.7,  period:101.4, color:'#ffb454', raan:155, ph:0.34},
+  {id:'icesat2',  name:'ICESat-2',   short:'IS2',  alt:496, inc:92.0,  period:94.2,  color:'#9b8cff', raan:262, ph:0.62},
+  {id:'aqua',     name:'Aqua',       short:'AQUA', alt:705, inc:98.2,  period:98.8,  color:'#48e6b0', raan:78,  ph:0.18}
+];
+var TWO=Math.PI*2, D2R=Math.PI/180, R2D=180/Math.PI;
+var EARTH_DAY=1436.0;
+
+var dayImg=new Image(), nightImg=new Image();
+var dayReady=false, nightReady=false;
+var srcCanvas=null, srcDay=null, srcNight=null, SRCW=0, SRCH=0;
+var baseCanvas=document.createElement('canvas'), baseCtx=null, baseW=0, baseH=0, lastSun=999;
+
+function hookImg(img,cb){
+  var done=false;function ok(){if(done)return;done=true;cb();}
+  img.onload=ok;img.onerror=function(){};
+  img.src=img._src;
+  if(img.complete&&img.naturalWidth)ok();
+}
+function buildSrc(){
+  if(!dayReady||!nightReady||srcCanvas)return;
+  SRCW=dayImg.naturalWidth;SRCH=dayImg.naturalHeight;
+  srcCanvas=document.createElement('canvas');srcCanvas.width=SRCW;srcCanvas.height=SRCH;
+  var c=srcCanvas.getContext('2d',{willReadFrequently:true});
+  c.drawImage(dayImg,0,0,SRCW,SRCH);srcDay=c.getImageData(0,0,SRCW,SRCH).data;
+  c.clearRect(0,0,SRCW,SRCH);c.drawImage(nightImg,0,0,SRCW,SRCH);srcNight=c.getImageData(0,0,SRCW,SRCH).data;
+}
+
+function subsolar(t){
+  var frac=(t/1440)%1;if(frac<0)frac+=1;
+  var lonSun=180-frac*360;
+  var doy=(t/1440/365)%1;
+  var latSun=23.44*Math.sin((doy*TWO)-1.4);
+  return {lon:lonSun,lat:latSun};
+}
+
+function buildBase(sunLon,sunLat){
+  if(!srcCanvas)return;
+  var TW=Math.min(SRCW,Math.max(512,Math.round(W*DPR)));
+  var TH=Math.round(TW*(SRCH/SRCW));
+  if(baseW!==TW||baseH!==TH){baseW=TW;baseH=TH;baseCanvas.width=TW;baseCanvas.height=TH;baseCtx=baseCanvas.getContext('2d',{willReadFrequently:false});}
+  var out=baseCtx.createImageData(TW,TH),o=out.data;
+  var sLat=sunLat*D2R, sLon=sunLon*D2R, sinSL=Math.sin(sLat), cosSL=Math.cos(sLat);
+  var band=0.16;
+  for(var y=0;y<TH;y++){
+    var lat=(90-(y/TH)*180)*D2R, sinLa=Math.sin(lat), cosLa=Math.cos(lat);
+    var srcY=(y*SRCH/TH)|0;if(srcY>=SRCH)srcY=SRCH-1;
+    for(var x=0;x<TW;x++){
+      var lon=(x/TW*360-180)*D2R;
+      var srcX=(x*SRCW/TW)|0;if(srcX>=SRCW)srcX=SRCW-1;
+      var si=(srcY*SRCW+srcX)<<2;
+      var cosz=sinSL*sinLa+cosSL*cosLa*Math.cos(lon-sLon);
+      var dayW=cosz/band+0.5; if(dayW<0)dayW=0; else if(dayW>1)dayW=1;
+      dayW=dayW*dayW*(3-2*dayW);
+      var nightW=1-dayW;
+      var di=(srcDay[si]*dayW), dg=(srcDay[si+1]*dayW), db=(srcDay[si+2]*dayW);
+      var nr=srcNight[si], ng=srcNight[si+1], nb=srcNight[si+2];
+      var baseNight=0.07;
+      var oi=(y*TW+x)<<2;
+      o[oi]  =di + nightW*(srcDay[si]*baseNight + nr*1.05);
+      o[oi+1]=dg + nightW*(srcDay[si+1]*baseNight + ng*1.05);
+      o[oi+2]=db + nightW*(srcDay[si+2]*baseNight + nb*1.25);
+      o[oi+3]=255;
+    }
+  }
+  baseCtx.putImageData(out,0,0);
+  baseCtx.globalCompositeOperation='multiply';
+  baseCtx.fillStyle='rgba(120,124,210,0.13)';baseCtx.fillRect(0,0,TW,TH);
+  baseCtx.globalCompositeOperation='source-over';
+  var vg=baseCtx.createRadialGradient(TW/2,TH/2,TH*0.2,TW/2,TH/2,TH*0.82);
+  vg.addColorStop(0,'rgba(5,3,20,0)');vg.addColorStop(1,'rgba(5,3,20,0.5)');
+  baseCtx.fillStyle=vg;baseCtx.fillRect(0,0,TW,TH);
+}
+
+function lon2x(lon){return (lon+180)/360*W;}
+function lat2y(lat){return (90-lat)/180*H;}
+
+function subpoint(s,t){
+  var n=TWO/s.period;
+  var arg=s.ph*TWO + n*t;
+  var inc=s.inc*D2R;
+  var lat=Math.asin(Math.sin(inc)*Math.sin(arg));
+  var y=Math.cos(inc)*Math.sin(arg), x=Math.cos(arg);
+  var dl=Math.atan2(y,x);
+  var lon=s.raan + dl*R2D - (t/EARTH_DAY)*360;
+  lon=((lon+180)%360+360)%360-180;
+  return {lat:lat*R2D,lon:lon};
+}
+
+var simT=0;
+var playing=!reduce;
+var speed=120;
+var trailMin=140;
+var hoverId=null, pinId=null, focusId=null;
+var last=performance.now();
+var visible=true, raf=null;
+
+function buildLegend(){
+  legend.innerHTML='';
+  SATS.forEach(function(s){
+    var b=document.createElement('button');b.type='button';b.className='gtk-leg-item';b.dataset.id=s.id;
+    b.innerHTML='<span class="gtk-leg-dot" style="background:'+s.color+';color:'+s.color+'"></span>'+s.short;
+    b.addEventListener('mouseenter',function(){hoverId=s.id;syncFocus();});
+    b.addEventListener('mouseleave',function(){if(hoverId===s.id)hoverId=null;syncFocus();});
+    b.addEventListener('click',function(){pinId=(pinId===s.id?null:s.id);syncFocus();});
+    legend.appendChild(b);
+  });
+}
+function syncFocus(){
+  focusId=hoverId||pinId;
+  var items=legend.querySelectorAll('.gtk-leg-item');
+  for(var i=0;i<items.length;i++){
+    var id=items[i].dataset.id;
+    items[i].classList.toggle('gtk-sel',id===focusId);
+    items[i].classList.toggle('gtk-dim',!!focusId&&id!==focusId);
+  }
+  updateReadout();
+}
+function updateReadout(){
+  var s=focusId?find(focusId):null;
+  if(!s){readout.setAttribute('data-empty','1');rName.textContent='Satellite ground tracks';rSub.textContent='Hover a track to inspect';vAlt.innerHTML='&mdash;';vInc.innerHTML='&mdash;';vPer.innerHTML='&mdash;';rName.style.color='';return;}
+  readout.removeAttribute('data-empty');
+  rName.textContent=s.name;rSub.textContent='Low Earth orbit · polar';
+  vAlt.textContent=s.alt+' km';
+  vInc.textContent=s.inc.toFixed(1)+'°';
+  vPer.textContent=s.period.toFixed(0)+' min';
+  rName.style.color=s.color;
+}
+function find(id){for(var i=0;i<SATS.length;i++)if(SATS[i].id===id)return SATS[i];return null;}
+
+function resize(){
+  DPR=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+  var r=stage.getBoundingClientRect();
+  W=Math.max(2,r.width);H=Math.max(1,r.height);
+  canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  lastSun=999;
+  render();
+}
+
+function drawTrack(s,isFocus){
+  var rgb=hexRGB(s.color)||'120,200,255';
+  var span=trailMin/100*s.period;
+  var steps=Math.max(60,Math.round(span/0.9));
+  var t0=simT-span;
+  ctx.lineJoin='round';ctx.lineCap='round';
+  var prev=null, prevX=0;
+  ctx.beginPath();
+  var started=false;
+  for(var i=0;i<=steps;i++){
+    var tt=t0+(span)*(i/steps);
+    var sp=subpoint(s,tt);
+    var x=lon2x(sp.lon)*DPR, y=lat2y(sp.lat)*DPR;
+    if(prev!==null && Math.abs(x-prevX)>W*DPR*0.5){
+      ctx.stroke();ctx.beginPath();started=false;
+    }
+    if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);
+    prev=sp;prevX=x;
+  }
+  ctx.lineWidth=(isFocus?2.4:1.4)*DPR;
+  ctx.strokeStyle='rgba('+rgb+','+(isFocus?0.95:0.5)+')';
+  if(isFocus){ctx.shadowColor='rgba('+rgb+',0.85)';ctx.shadowBlur=8*DPR;}else{ctx.shadowBlur=0;}
+  ctx.stroke();
+  ctx.shadowBlur=0;
+
+  var cur=subpoint(s,simT);
+  var cx=lon2x(cur.lon)*DPR, cy=lat2y(cur.lat)*DPR;
+  var rad=(isFocus?5.5:4)*DPR;
+  var g=ctx.createRadialGradient(cx,cy,0,cx,cy,rad*3.4);
+  g.addColorStop(0,'rgba('+rgb+',0.95)');g.addColorStop(1,'rgba('+rgb+',0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,rad*3.4,0,TWO);ctx.fill();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,rad*0.55,0,TWO);ctx.fill();
+  ctx.strokeStyle='rgba('+rgb+',1)';ctx.lineWidth=1.6*DPR;ctx.beginPath();ctx.arc(cx,cy,rad,0,TWO);ctx.stroke();
+  ctx.font='italic 700 '+(10.5*DPR)+"px 'Chakra Petch','Inter',sans-serif";
+  var label=s.short;
+  var tw=ctx.measureText(label).width;
+  var lx=cx+rad+6*DPR, ly=cy-6*DPR;
+  if(lx+tw+8*DPR>W*DPR)lx=cx-rad-6*DPR-tw-8*DPR;
+  if(ly<10*DPR)ly=cy+rad+10*DPR;
+  ctx.fillStyle='rgba(5,4,16,'+(isFocus?0.82:0.6)+')';
+  var pad=4*DPR;
+  ctx.fillRect(lx-pad,ly-9*DPR-pad,tw+pad*2,13*DPR+pad);
+  ctx.fillStyle=isFocus?s.color:'rgba(244,245,255,0.92)';
+  ctx.textBaseline='alphabetic';
+  ctx.fillText(label,lx,ly+2*DPR);
+}
+
+function drawGraticule(){
+  ctx.save();
+  ctx.strokeStyle='rgba(166,171,230,0.10)';ctx.lineWidth=1;
+  for(var lon=-150;lon<=150;lon+=30){var x=lon2x(lon)*DPR;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H*DPR);ctx.stroke();}
+  for(var lat=-60;lat<=60;lat+=30){var y=lat2y(lat)*DPR;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W*DPR,y);ctx.stroke();}
+  ctx.strokeStyle='rgba(166,171,230,0.16)';ctx.beginPath();ctx.moveTo(0,lat2y(0)*DPR);ctx.lineTo(W*DPR,lat2y(0)*DPR);ctx.stroke();
+  ctx.restore();
+}
+
+function render(){
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  var sun=subsolar(simT);
+  if(srcCanvas){
+    if(Math.abs(sun.lon-lastSun)>1.4||baseW===0){buildBase(sun.lon,sun.lat);lastSun=sun.lon;}
+    ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+    ctx.drawImage(baseCanvas,0,0,baseW,baseH,0,0,W*DPR,H*DPR);
+  }else{
+    ctx.fillStyle='#06041a';ctx.fillRect(0,0,W*DPR,H*DPR);
+  }
+  drawGraticule();
+  var fId=focusId;
+  for(var i=0;i<SATS.length;i++){if(SATS[i].id!==fId)drawTrack(SATS[i],false);}
+  if(fId){var fs=find(fId);if(fs)drawTrack(fs,true);}
+  var h=Math.floor((simT/60)%24);if(h<0)h+=24;var m=Math.floor(simT%60);if(m<0)m+=60;
+  clockEl.textContent='SIM '+(h<10?'0':'')+h+':'+(m<10?'0':'')+m+' UTC';
+}
+
+function loop(now){
+  raf=null;
+  var dt=(now-last)/1000;last=now;
+  if(dt>0.1)dt=0.1;
+  if(playing){simT+=dt*speed;}
+  render();
+  if(playing&&visible)raf=requestAnimationFrame(loop);
+}
+function start(){if(raf==null){last=performance.now();raf=requestAnimationFrame(loop);}}
+function stop(){if(raf!=null){cancelAnimationFrame(raf);raf=null;}}
+
+function setPlay(p){
+  playing=p;
+  playBtn.setAttribute('aria-pressed',p?'true':'false');
+  playLbl.textContent=p?'Pause':'Play';
+  playIco.className='gtk-ico '+(p?'gtk-ico-pause':'gtk-ico-play');
+  if(p&&visible)start();else if(!p){stop();render();}
+}
+playBtn.addEventListener('click',function(){setPlay(!playing);});
+speedEl.addEventListener('input',function(){speed=+speedEl.value;speedVal.textContent=speed;});
+trailEl.addEventListener('input',function(){trailMin=+trailEl.value;trailVal.textContent=(trailMin/100).toFixed(1)+' orb';if(!playing)render();});
+speed=+speedEl.value;speedVal.textContent=speed;
+trailMin=+trailEl.value;trailVal.textContent=(trailMin/100).toFixed(1)+' orb';
+
+function pick(clientX,clientY){
+  var r=canvas.getBoundingClientRect();
+  var px=(clientX-r.left), py=(clientY-r.top);
+  if(px<0||py<0||px>W||py>H)return null;
+  var best=null,bd=1e9;
+  for(var i=0;i<SATS.length;i++){
+    var s=SATS[i];
+    var steps=120;
+    for(var k=0;k<=steps;k++){
+      var tt=simT-s.period*(k/steps);
+      var sp=subpoint(s,tt);
+      var dx=lon2x(sp.lon)-px, dy=lat2y(sp.lat)-py;
+      if(dx>W/2)dx-=W;else if(dx<-W/2)dx+=W;
+      var d=dx*dx+dy*dy;
+      if(d<bd){bd=d;best=s;}
+    }
+  }
+  var thresh=(16)*(16);
+  return (best&&bd<thresh)?best.id:null;
+}
+function onMove(e){
+  var t=e.touches&&e.touches[0];var cx=t?t.clientX:e.clientX,cy=t?t.clientY:e.clientY;
+  var id=pick(cx,cy);
+  if(id!==hoverId){hoverId=id;syncFocus();if(!playing)render();}
+}
+function onLeave(){if(hoverId!==null){hoverId=null;syncFocus();if(!playing)render();}}
+canvas.addEventListener('mousemove',onMove);
+canvas.addEventListener('mouseleave',onLeave);
+canvas.addEventListener('click',function(e){var id=pick(e.clientX,e.clientY);pinId=(pinId===id?null:id);hoverId=id;syncFocus();if(!playing)render();});
+canvas.addEventListener('touchstart',function(e){if(e.touches[0]){onMove(e);var id=pick(e.touches[0].clientX,e.touches[0].clientY);pinId=id;syncFocus();}},{passive:true});
+canvas.addEventListener('touchmove',function(e){onMove(e);},{passive:true});
+
+try{var mo=new MutationObserver(function(){readAccent();if(!playing)render();});mo.observe(document.documentElement,{attributes:true,attributeFilter:['style','class','data-theme']});}catch(e){}
+
+var rPend=false;
+window.addEventListener('resize',function(){if(rPend)return;rPend=true;requestAnimationFrame(function(){rPend=false;resize();});});
+
+try{
+  var io=new IntersectionObserver(function(ents){
+    ents.forEach(function(en){
+      visible=en.isIntersecting;
+      if(visible){if(playing)start();}else{stop();}
+    });
+  },{threshold:0.05});
+  io.observe(root);
+}catch(e){visible=true;}
+
+buildLegend();syncFocus();
+setPlay(!reduce);
+resize();
+dayImg._src='../assets/images/blue-marble-world.jpg';
+nightImg._src='../assets/images/black-marble-world.jpg';
+hookImg(dayImg,function(){dayReady=true;buildSrc();lastSun=999;render();if(playing&&visible)start();});
+hookImg(nightImg,function(){nightReady=true;buildSrc();lastSun=999;render();});
+if(reduce){render();}
+})();
+</script>
+</body></html>
