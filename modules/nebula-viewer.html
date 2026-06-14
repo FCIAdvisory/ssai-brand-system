@@ -127,6 +127,98 @@ body.mb-embed #kit-nebula-viewer{display:flex!important;flex-direction:column!im
 body.mb-embed #kit-nebula-viewer>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-nebula-viewer [class*='stage'],body.mb-embed #kit-nebula-viewer [class*='scene'],body.mb-embed #kit-nebula-viewer [class*='map'],body.mb-embed #kit-nebula-viewer [class*='plot'],body.mb-embed #kit-nebula-viewer [class*='globe'],body.mb-embed #kit-nebula-viewer [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== SSAI CONTROL DESIGN SYSTEM — match Orbit Tracker. Controls only; canvas untouched. ===== */
+
+/* ---- PRIMARY READOUT (HUD, bottom-left) -> frosted chip box ---- */
+#kit-nebula-viewer .nbv-readout{
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  padding:8px 12px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+/* labels / field names */
+#kit-nebula-viewer .nbv-rk{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;
+}
+/* values / readouts */
+#kit-nebula-viewer .nbv-rv{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  font-size:13px;letter-spacing:.02em;color:#f4f5ff;
+}
+/* keep accent zoom emphasis on system value color base */
+#kit-nebula-viewer [data-nbv-zoom]{color:var(--nbv-accent,#3cc8ff);}
+/* progress fill aligned to accent system */
+#kit-nebula-viewer .nbv-rbar{background:rgba(166,171,230,0.16);border-radius:3px;}
+#kit-nebula-viewer .nbv-rbar i{background:linear-gradient(90deg,var(--nbv-accent,#3cc8ff),rgba(255,255,255,0.14));}
+
+/* ---- SEGMENTED / PRESET CHIPS (tabs, top-right) ---- */
+#kit-nebula-viewer button.nbv-tab{
+  background:transparent;
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:8px;
+  padding:6px 12px;
+  color:#a6abe6;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:none;
+}
+#kit-nebula-viewer button.nbv-tab:hover{
+  border-color:rgba(166,171,230,0.4);color:#f4f5ff;background:transparent;
+}
+#kit-nebula-viewer button.nbv-tab.is-active{
+  background:var(--nbv-accent,#3cc8ff);
+  border-color:var(--nbv-accent,#3cc8ff);
+  color:#050314;
+  box-shadow:0 0 12px -2px var(--nbv-accent,#3cc8ff);
+}
+#kit-nebula-viewer button.nbv-tab .nbv-tab-k{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:11px;letter-spacing:.05em;color:#a6abe6;text-shadow:none;
+}
+#kit-nebula-viewer button.nbv-tab .nbv-tab-n{
+  font-family:'Inter',sans-serif;font-style:normal;font-weight:700;text-transform:uppercase;
+  font-size:9px;letter-spacing:.2em;
+}
+#kit-nebula-viewer button.nbv-tab.is-active .nbv-tab-k,
+#kit-nebula-viewer button.nbv-tab.is-active .nbv-tab-n{color:#050314;text-shadow:none;}
+
+/* ---- BUTTON CLUSTER + TOGGLE (bottom-right) ---- */
+/* lift cluster so the global controls-toggle corner (~14px) stays clear */
+#kit-nebula-viewer .nbv-controls{bottom:56px;}
+#kit-nebula-viewer button.nbv-ctl{
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  color:#a6abe6;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+#kit-nebula-viewer button.nbv-ctl:hover{
+  border-color:rgba(166,171,230,0.4);color:#f4f5ff;background:rgba(12,9,38,0.62);
+}
+/* toggle ON = filled accent (segmented active state) */
+#kit-nebula-viewer button.nbv-ctl-toggle.is-on{
+  background:var(--nbv-accent,#3cc8ff);
+  border-color:var(--nbv-accent,#3cc8ff);
+  color:#050314;
+  box-shadow:0 0 12px -2px var(--nbv-accent,#3cc8ff);
+}
+
+/* ---- CAPTION / SOURCE LEGEND ---- */
+#kit-nebula-viewer .nbv-credit{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;opacity:.7;
+}
+
+/* ---- EYEBROW / SUB labels to system label spec ---- */
+#kit-nebula-viewer .nbv-eyebrow,
+#kit-nebula-viewer .nbv-sub{
+  font-family:'Inter',sans-serif;font-weight:700;color:#a6abe6;
+}
 </style></head>
 <body>
 <div class="mb-wrap">

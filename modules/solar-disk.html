@@ -326,6 +326,183 @@ body.mb-embed #kit-solar-disk{display:flex!important;flex-direction:column!impor
 body.mb-embed #kit-solar-disk>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-solar-disk [class*='stage'],body.mb-embed #kit-solar-disk [class*='scene'],body.mb-embed #kit-solar-disk [class*='map'],body.mb-embed #kit-solar-disk [class*='plot'],body.mb-embed #kit-solar-disk [class*='globe'],body.mb-embed #kit-solar-disk [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== SSAI control design-system unification — overrides only (scope: #kit-solar-disk) =====
+   Visual already fills the frame (.lsun-stage/.lsun-canvas inset:0) and HUD is overlaid,
+   so we only restyle controls/readouts and reposition the bottom clusters per the system:
+   primary readout TL, secondary stats TR, MAIN CONTROLS bottom-left, LEGEND/SOURCE bottom-right
+   (above the global toggle), keeping the bottom-right corner clear. */
+
+/* ---- FROSTED CHIP/BOX: top-left badge ---- */
+#kit-solar-disk .lsun-badge{
+  gap:8px;
+  padding:6px 12px;
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+/* badge text -> system LABEL */
+#kit-solar-disk .lsun-badge-txt{
+  font-family:'Inter',sans-serif;
+  font-style:normal;
+  font-weight:700;
+  font-size:9px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:#a6abe6;
+}
+#kit-solar-disk .lsun-badge-live{
+  font-family:'Inter',sans-serif;
+  font-style:normal;
+  font-weight:700;
+  font-size:8.5px;
+  letter-spacing:0.2em;
+  color:#050314;
+  background:var(--accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff);
+}
+
+/* ---- PRIMARY READOUT (TL): big wavelength value + sublabel ---- */
+#kit-solar-disk .lsun-wl-val{
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+  color:#f4f5ff;
+}
+#kit-solar-disk .lsun-wl-sub{
+  font-family:'Inter',sans-serif;
+  font-style:normal;
+  font-weight:700;
+  font-size:9px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:#a6abe6;
+}
+
+/* ---- SECONDARY STATS (TR): frosted column, value + uppercase sublabel ---- */
+#kit-solar-disk .lsun-hud--tr{
+  gap:8px;
+  align-items:flex-start;
+}
+#kit-solar-disk .lsun-hud--tr .lsun-stat{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:3px;
+  padding:6px 12px;
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+#kit-solar-disk .lsun-stat-k{
+  font-family:'Inter',sans-serif;
+  font-style:normal;
+  font-weight:700;
+  font-size:8.5px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:#a6abe6;
+}
+#kit-solar-disk .lsun-stat-v{
+  margin-top:0;
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+  color:#f4f5ff;
+}
+
+/* ---- LEGEND / SOURCE (caption block) -> bottom-RIGHT, above the global toggle ---- */
+#kit-solar-disk .lsun-hud--bl{
+  left:auto;
+  right:16px;
+  bottom:56px;
+  max-width:min(54%,460px);
+  text-align:right;
+  padding:6px 12px;
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+#kit-solar-disk .lsun-cap{
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  color:#f4f5ff;
+  letter-spacing:0.06em;
+}
+#kit-solar-disk .lsun-cred{
+  font-family:'Inter',sans-serif;
+  font-weight:700;
+  font-size:8.5px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:#a6abe6;
+  opacity:0.9;
+}
+
+/* ---- MAIN CONTROLS: preset/segmented chips -> bottom-LEFT (clear of corner toggle) ---- */
+#kit-solar-disk .lsun-switch{
+  right:auto;
+  left:16px;
+  bottom:16px;
+  gap:6px;
+  padding:6px;
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+/* inactive preset chip = transparent + hairline + muted text */
+#kit-solar-disk .lsun-chip{
+  padding:6px 12px;
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:8px;
+  background:transparent;
+  color:#a6abe6;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease,transform .15s ease;
+}
+#kit-solar-disk .lsun-chip:hover{
+  background:rgba(166,171,230,0.07);
+  border-color:rgba(166,171,230,0.4);
+  color:#f4f5ff;
+}
+/* active/selected preset chip = accent bg + ink text + glow */
+#kit-solar-disk .lsun-chip.is-active,
+#kit-solar-disk .lsun-chip[aria-pressed="true"]{
+  background:var(--accent,#3cc8ff);
+  border-color:var(--accent,#3cc8ff);
+  color:#050314;
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff);
+}
+#kit-solar-disk .lsun-chip-tx b{
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  letter-spacing:0.04em;
+  font-variant-numeric:tabular-nums;
+}
+#kit-solar-disk .lsun-chip-tx i{
+  font-family:'Inter',sans-serif;
+  font-weight:700;
+  font-size:8.5px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  opacity:0.85;
+}
+#kit-solar-disk .lsun-chip.is-active .lsun-chip-tx i,
+#kit-solar-disk .lsun-chip[aria-pressed="true"] .lsun-chip-tx i{
+  color:#050314;
+  opacity:0.78;
+}
 </style></head>
 <body>
 <div class="mb-wrap">

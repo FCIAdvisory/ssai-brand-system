@@ -100,6 +100,124 @@ body.mb-embed #kit-atmos-sounding{display:flex!important;flex-direction:column!i
 body.mb-embed #kit-atmos-sounding>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-atmos-sounding [class*='stage'],body.mb-embed #kit-atmos-sounding [class*='scene'],body.mb-embed #kit-atmos-sounding [class*='map'],body.mb-embed #kit-atmos-sounding [class*='plot'],body.mb-embed #kit-atmos-sounding [class*='globe'],body.mb-embed #kit-atmos-sounding [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== ATMOS-SOUNDING -> ORBIT-TRACKER CONTROL DESIGN SYSTEM =====
+   Visual (.as-canvas) already fills the frame (inset:0); controls are
+   already absolute overlays. Below we only restyle/reposition the
+   control/HUD layer to match orbit-tracker. */
+
+/* ---------- PRIMARY READOUT: move to top-left, frosted box ---------- */
+#kit-atmos-sounding .as-readout{
+  left:16px;right:auto;top:16px;bottom:auto;
+  min-width:0;width:max-content;max-width:min(260px,64vw);
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 18px 48px -18px rgba(0,0,0,.8);
+  padding:11px 14px;
+}
+/* layer kicker = uppercase label token */
+#kit-atmos-sounding .as-ro-layer{
+  font-family:'Inter',sans-serif;font-style:normal;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:var(--as-accent,#3cc8ff);
+}
+/* big altitude readout = value token */
+#kit-atmos-sounding .as-ro-alt{margin:.2em 0 .55em;}
+#kit-atmos-sounding .as-ro-num{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;color:#f4f5ff;
+  font-size:clamp(30px,4.6vw,46px);line-height:.9;
+}
+#kit-atmos-sounding .as-ro-unit{
+  font-family:'Inter',sans-serif;font-style:normal;
+  font-size:9px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;
+}
+#kit-atmos-sounding .as-ro-grid{
+  gap:clamp(8px,1.3vw,14px);padding-top:10px;
+  border-top:1px solid rgba(166,171,230,0.16);
+}
+/* sub-labels = uppercase label token */
+#kit-atmos-sounding .as-ro-lab{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;margin-bottom:.45em;
+}
+/* cell values = value token */
+#kit-atmos-sounding .as-ro-val{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;color:#f4f5ff;
+  font-size:clamp(14px,1.8vw,19px);line-height:1;
+}
+#kit-atmos-sounding .as-ro-su{
+  font-style:normal;font-family:'Inter',sans-serif;font-weight:600;
+  font-size:8.5px;letter-spacing:.06em;color:#a6abe6;margin-left:.28em;
+}
+/* hint row = muted uppercase label */
+#kit-atmos-sounding .as-ro-hint{
+  margin-top:10px;font-size:8.5px;letter-spacing:.2em;font-weight:700;
+  text-transform:uppercase;color:rgba(166,171,230,.62);
+}
+
+/* ---------- SEGMENTED TOGGLE: orbit chip look, stays top-right ---------- */
+#kit-atmos-sounding .as-toggle{
+  top:16px;right:16px;left:auto;
+  gap:4px;padding:4px 6px;border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+/* inactive segment = transparent + muted + hairline */
+#kit-atmos-sounding .as-chip{
+  font-family:'Inter',sans-serif;font-style:normal;font-weight:700;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;line-height:1;
+  color:#a6abe6;background:transparent;
+  border:1px solid rgba(166,171,230,0.16);border-radius:6px;
+  padding:6px 11px;transition:color .18s,background .18s,border-color .18s,box-shadow .18s;
+}
+#kit-atmos-sounding .as-chip:hover{color:#f4f5ff;border-color:rgba(166,171,230,.4);}
+/* active segment = accent bg + ink + glow */
+#kit-atmos-sounding .as-chip.as-chip-on{
+  color:#050314;background:var(--as-accent,#3cc8ff);
+  border-color:var(--as-accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--as-accent,#3cc8ff);
+}
+#kit-atmos-sounding .as-chip.as-chip-on:hover{color:#050314;}
+
+/* ---------- LEGEND: bottom-right, ABOVE the corner toggle ---------- */
+#kit-atmos-sounding .as-legend{
+  right:16px;left:auto;bottom:56px;
+  gap:5px;align-items:flex-end;
+}
+#kit-atmos-sounding .as-leg-item{
+  gap:7px;padding:4px 9px;border-radius:7px;
+  border:1px solid rgba(166,171,230,0.16);
+  background:rgba(8,6,28,0.46);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  font-family:'Inter',sans-serif;font-weight:700;
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#a6abe6;
+  text-shadow:none;white-space:nowrap;
+}
+#kit-atmos-sounding .as-leg-swatch{width:16px;height:3px;border-radius:2px;}
+
+/* ---------- CREDIT/CAPTION: move off-center to bottom-left, keep
+   bottom-right corner clear for the global controls toggle ---------- */
+#kit-atmos-sounding .as-credit{
+  left:16px;right:auto;bottom:16px;
+  text-align:left;padding:0;max-width:60%;
+  font-family:'Inter',sans-serif;font-weight:500;
+  font-size:8px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(166,171,230,.62);
+  text-shadow:0 1px 8px rgba(5,3,20,.9);
+}
+
+/* small screens: keep readout from overflowing now that it's top-left */
+@media (max-width:540px){
+  #kit-atmos-sounding .as-readout{left:12px;right:auto;max-width:72vw;}
+  #kit-atmos-sounding .as-credit{max-width:78%;}
+}
 </style></head>
 <body>
 <div class="mb-wrap">

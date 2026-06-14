@@ -188,6 +188,89 @@ body.mb-embed #kit-planet-viewer{display:flex!important;flex-direction:column!im
 body.mb-embed #kit-planet-viewer>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-planet-viewer [class*='stage'],body.mb-embed #kit-planet-viewer [class*='scene'],body.mb-embed #kit-planet-viewer [class*='map'],body.mb-embed #kit-planet-viewer [class*='plot'],body.mb-embed #kit-planet-viewer [class*='globe'],body.mb-embed #kit-planet-viewer [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== PLANET VIEWER — unify CONTROL styling to SSAI design system (orbit-tracker reference) ===== */
+
+/* --- Make the visual full-bleed and overlay all controls (rail currently stacks below) --- */
+#kit-planet-viewer{position:relative;display:block;}
+#kit-planet-viewer .pv-stagewrap{position:absolute;inset:0;flex:none;}
+
+/* --- PRESET / SEGMENTED CHIPS: relocate rail from stacked-below to bottom-left frosted overlay --- */
+#kit-planet-viewer .pv-rail{
+  position:absolute; left:16px; bottom:16px; right:auto; top:auto; z-index:7;
+  flex:none; max-width:calc(100% - 32px);
+  gap:6px; padding:6px 8px; border-top:0;
+  border:1px solid rgba(166,171,230,0.16); border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+}
+#kit-planet-viewer .pv-rail:focus-visible{box-shadow:inset 0 0 0 1px var(--accent,#3cc8ff);}
+
+/* preset chips — inactive: transparent + hairline + muted */
+#kit-planet-viewer .pv-chip{
+  padding:5px 11px 5px 9px; border-radius:8px;
+  background:transparent; border:1px solid rgba(166,171,230,0.16);
+  color:#a6abe6;
+  font-family:'Inter',sans-serif; font-size:8.5px; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase;
+  transition:background .2s,border-color .2s,color .2s,box-shadow .2s,transform .15s;
+}
+#kit-planet-viewer .pv-chip:hover{color:#f4f5ff;background:rgba(166,171,230,0.07);border-color:rgba(166,171,230,0.4);}
+/* preset chips — active/selected: accent fill + dark ink + glow */
+#kit-planet-viewer .pv-chip[aria-selected="true"]{
+  background:var(--accent,#3cc8ff); color:#050314;
+  border-color:var(--accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff);
+}
+
+/* --- PRIMARY READOUT (top-left): align eyebrow + sub to system labels --- */
+#kit-planet-viewer .pv-hud{top:16px; left:16px; z-index:7;}
+#kit-planet-viewer .pv-eyebrow{
+  font-family:'Inter',sans-serif; font-size:8.5px; letter-spacing:.2em;
+  font-weight:700; text-transform:uppercase; color:#a6abe6; opacity:1;
+}
+#kit-planet-viewer .pv-title{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+#kit-planet-viewer .pv-sub{font-family:'Inter',sans-serif; color:#a6abe6;}
+
+/* --- SECONDARY STATS (top-right frosted column): re-anchor from mid-right to top-right --- */
+#kit-planet-viewer .pv-panel{
+  top:16px; bottom:auto; right:16px; transform:none; z-index:7;
+  gap:1px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16); border-radius:9px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+}
+#kit-planet-viewer .pv-stat{padding:6px 12px; background:transparent;}
+/* labels */
+#kit-planet-viewer .pv-k{
+  font-family:'Inter',sans-serif; font-size:8.5px; letter-spacing:.2em;
+  font-weight:700; text-transform:uppercase; color:#a6abe6; opacity:1;
+}
+/* values / readouts */
+#kit-planet-viewer .pv-v{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  font-variant-numeric:tabular-nums; color:#f4f5ff;
+}
+
+/* --- SOURCE CAPTION (bottom-right, above the corner controls toggle ~bottom:56px) --- */
+#kit-planet-viewer .pv-credit{
+  left:auto; right:16px; bottom:56px; z-index:6;
+  font-family:'Inter',sans-serif; font-size:8.5px; letter-spacing:.2em;
+  font-weight:700; text-transform:uppercase; color:#a6abe6; opacity:.7;
+}
+
+/* keep the right-edge stats column clear of the bottom-right controls toggle on narrow widths */
+@media (max-width:460px){
+  #kit-planet-viewer .pv-panel{
+    top:16px; bottom:auto; right:16px; left:auto; transform:none;
+    grid-template-columns:1fr 1fr; width:auto; min-width:0;
+  }
+  #kit-planet-viewer .pv-credit{left:auto; right:16px; transform:none; text-align:right; bottom:56px;}
+  #kit-planet-viewer .pv-rail{left:16px; right:auto; bottom:16px;}
+}
 </style></head>
 <body>
 <div class="mb-wrap">

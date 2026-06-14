@@ -271,6 +271,207 @@ body.mb-embed #kit-emission-spectrum{display:flex!important;flex-direction:colum
 body.mb-embed #kit-emission-spectrum>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-emission-spectrum [class*='stage'],body.mb-embed #kit-emission-spectrum [class*='scene'],body.mb-embed #kit-emission-spectrum [class*='map'],body.mb-embed #kit-emission-spectrum [class*='plot'],body.mb-embed #kit-emission-spectrum [class*='globe'],body.mb-embed #kit-emission-spectrum [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== EMISSION SPECTRUM -> ORBIT TRACKER CONTROL DESIGN SYSTEM =====
+   Overlay all controls on a full-bleed visual; match orbit-tracker tokens. */
+
+/* Frame becomes a non-stacking overlay layer (kill the flex column + padding) */
+#kit-emission-spectrum .es-frame{
+  display:block !important;
+  padding:0 !important;
+  gap:0 !important;
+}
+
+/* Visual fills the frame edge-to-edge, sits beneath the overlaid controls */
+#kit-emission-spectrum .es-stage{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:1;
+  flex:none;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+#kit-emission-spectrum #es-canvas{width:100%;height:100%;}
+
+/* ---------- PRIMARY READOUT : top-left frosted chip ---------- */
+#kit-emission-spectrum .es-head{
+  position:absolute;top:16px;left:16px;right:16px;z-index:7;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:12px;margin:0;padding:0;flex-wrap:nowrap;pointer-events:none;
+}
+#kit-emission-spectrum .es-titlewrap{pointer-events:none;}
+#kit-emission-spectrum .es-eyebrow{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;margin:0;text-shadow:0 1px 10px rgba(5,3,20,.9);
+}
+#kit-emission-spectrum .es-readout{
+  pointer-events:auto;
+  min-width:0;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  padding:6px 12px;
+}
+#kit-emission-spectrum .es-readout-empty{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;padding:0;
+}
+#kit-emission-spectrum .es-readout-data{display:flex;align-items:baseline;gap:7px;}
+#kit-emission-spectrum .es-ro-el{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;width:100%;
+}
+#kit-emission-spectrum .es-ro-nm{
+  font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;color:#f4f5ff;
+  font-size:clamp(20px,2.8cqw,30px);line-height:1;
+}
+#kit-emission-spectrum .es-ro-unit{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;font-style:normal;
+}
+#kit-emission-spectrum .es-ro-band{
+  margin-left:6px;align-self:center;
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:var(--es-accent,#3cc8ff);
+}
+
+/* ---------- MAIN CONTROLS : bottom-left frosted ---------- */
+#kit-emission-spectrum .es-controls{
+  position:absolute;left:16px;bottom:16px;z-index:7;
+  display:flex;align-items:center;justify-content:flex-start;
+  gap:8px;flex-wrap:wrap;margin:0;max-width:calc(100% - 32px);
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  padding:6px 12px;
+}
+#kit-emission-spectrum .es-pickgroup{gap:8px;}
+#kit-emission-spectrum .es-pick-label{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;margin-right:1px;
+}
+
+/* ---------- SEGMENTED / PRESET CHIPS (element + overlay picks) ---------- */
+#kit-emission-spectrum .es-buttons{gap:5px;}
+#kit-emission-spectrum .es-buttons button,
+#kit-emission-spectrum .es-overlay-pick button{
+  font-family:'Inter',sans-serif;
+  font-size:9.5px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;
+  background:transparent;
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:6px;
+  padding:5px 10px;gap:6px;
+  box-shadow:none;transform:none;
+}
+#kit-emission-spectrum .es-buttons button:hover,
+#kit-emission-spectrum .es-overlay-pick button:hover{
+  color:#f4f5ff;border-color:rgba(166,171,230,0.40);
+  background:rgba(12,9,38,0.62);transform:none;
+}
+#kit-emission-spectrum .es-buttons button[aria-pressed="true"],
+#kit-emission-spectrum .es-overlay-pick button[aria-pressed="true"]{
+  color:#050314;
+  background:var(--es-accent,#3cc8ff);
+  border-color:transparent;
+  box-shadow:0 0 12px -2px var(--es-accent,#3cc8ff);
+}
+#kit-emission-spectrum .es-buttons button .es-swatch,
+#kit-emission-spectrum .es-overlay-pick button .es-swatch{
+  width:7px;height:7px;box-shadow:0 0 6px 1px currentColor;
+}
+
+/* ---------- TOGGLE BUTTONS (overlay toggle, clear) ---------- */
+#kit-emission-spectrum .es-overlaygroup{gap:6px;}
+#kit-emission-spectrum .es-overlay-toggle,
+#kit-emission-spectrum .es-clear{
+  font-family:'Inter',sans-serif;
+  font-size:9.5px;letter-spacing:.12em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;
+  background:transparent;
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:6px;
+  padding:5px 10px;
+}
+#kit-emission-spectrum .es-overlay-toggle:hover,
+#kit-emission-spectrum .es-clear:hover{
+  color:#f4f5ff;border-color:rgba(166,171,230,0.40);
+  background:rgba(12,9,38,0.62);
+}
+#kit-emission-spectrum .es-overlay-toggle[aria-pressed="true"]{
+  color:#050314;
+  background:var(--es-accent,#3cc8ff);
+  border-color:transparent;
+  box-shadow:0 0 12px -2px var(--es-accent,#3cc8ff);
+}
+
+/* ---------- LEGEND : bottom-right, frosted, above the corner toggle ---------- */
+#kit-emission-spectrum .es-legend{
+  position:absolute;right:16px;bottom:56px;z-index:6;
+  display:flex;flex-direction:column;align-items:flex-end;
+  gap:5px;margin:0;max-width:46%;
+}
+#kit-emission-spectrum .es-legend .es-leg{
+  display:flex;align-items:center;gap:7px;
+  padding:4px 9px;border-radius:7px;
+  border:1px solid rgba(166,171,230,0.16);
+  background:rgba(8,6,28,0.40);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+#kit-emission-spectrum .es-legend .es-leg b{
+  font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.04em;color:#f4f5ff;font-size:9.5px;
+}
+#kit-emission-spectrum .es-legend .es-leg .es-leg-sw{
+  width:16px;height:3px;border-radius:2px;box-shadow:0 0 8px -1px currentColor;
+}
+#kit-emission-spectrum .es-legend .es-leg .es-leg-count{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.16em;font-weight:600;text-transform:uppercase;
+  color:#a6abe6;opacity:.85;
+}
+
+/* ---------- CAPTION / SOURCE : bottom-left, above the controls ---------- */
+#kit-emission-spectrum .es-caption{
+  position:absolute;left:16px;bottom:auto;top:auto;z-index:5;
+  bottom:calc(16px + 44px);
+  max-width:56%;margin:0;pointer-events:none;
+  font-family:'Inter',sans-serif;
+  font-size:8px;letter-spacing:.14em;font-weight:500;text-transform:uppercase;
+  color:#a6abe6;opacity:.62;text-shadow:0 1px 8px rgba(5,3,20,.9);
+}
+#kit-emission-spectrum .es-caption .es-dot{
+  width:6px;height:6px;box-shadow:0 0 8px 1px var(--es-accent,#3cc8ff);
+}
+
+/* Tooltip: align frosted styling to the system */
+#kit-emission-spectrum .es-tooltip{
+  background:rgba(8,6,28,0.92);
+  border:1px solid rgba(166,171,230,0.16);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+#kit-emission-spectrum .es-tooltip b{
+  font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;
+  color:#f4f5ff;
+}
+
+/* Small-width: tuck the readout back under the eyebrow on the left */
+@container (max-width: 540px){
+  #kit-emission-spectrum .es-head{flex-direction:column;align-items:flex-start;}
+  #kit-emission-spectrum .es-readout{min-width:0;order:0;}
+  #kit-emission-spectrum .es-legend{max-width:80%;}
+  #kit-emission-spectrum .es-caption{max-width:80%;}
+}
 </style></head>
 <body>
 <div class="mb-wrap">

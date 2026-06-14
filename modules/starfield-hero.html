@@ -81,6 +81,77 @@ body.mb-embed #kit-starfield-hero{display:flex!important;flex-direction:column!i
 body.mb-embed #kit-starfield-hero>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-starfield-hero [class*='stage'],body.mb-embed #kit-starfield-hero [class*='scene'],body.mb-embed #kit-starfield-hero [class*='map'],body.mb-embed #kit-starfield-hero [class*='plot'],body.mb-embed #kit-starfield-hero [class*='globe'],body.mb-embed #kit-starfield-hero [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== STARFIELD-HERO control unification → SSAI design system (Orbit Tracker) ===== */
+
+/* --- accent-rgb fallback so thumb glow / active states resolve --- */
+#kit-starfield-hero{--accent-rgb:60,200,255;}
+
+/* --- TOP-RIGHT toggle chips: segmented/toggle button system --- */
+#kit-starfield-hero .sf-hud-tr{top:16px;right:16px;gap:8px;}
+#kit-starfield-hero .sf-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  height:30px;padding:0 11px;border-radius:9px;
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;
+  font-weight:700;text-transform:uppercase;
+  color:#a6abe6;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  cursor:pointer;transition:color .18s,border-color .18s,background .18s,box-shadow .18s;
+}
+#kit-starfield-hero .sf-chip:hover{
+  color:#f4f5ff;border-color:rgba(166,171,230,0.4);background:rgba(12,9,38,0.62);
+}
+#kit-starfield-hero .sf-chip .sf-dot{
+  width:6px;height:6px;border-radius:50%;background:#4a4f86;
+  transition:background .2s,box-shadow .2s;
+}
+/* active / pressed = filled accent toggle */
+#kit-starfield-hero .sf-chip.sf-on{
+  color:#050314;
+  background:var(--accent,#3cc8ff);
+  border-color:var(--accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff);
+}
+#kit-starfield-hero .sf-chip.sf-on:hover{
+  color:#050314;background:var(--accent,#3cc8ff);border-color:var(--accent,#3cc8ff);
+}
+#kit-starfield-hero .sf-chip.sf-on .sf-dot{
+  background:#050314;box-shadow:none;
+}
+
+/* --- BOTTOM-LEFT readout: frosted box, correct label/value tokens --- */
+#kit-starfield-hero .sf-readout{
+  left:16px;bottom:54px;
+  padding:11px 13px;border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+#kit-starfield-hero .sf-r-name{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.04em;font-size:14px;color:#f4f5ff;
+}
+/* LABELS / field names */
+#kit-starfield-hero .sf-r-k{
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;
+}
+/* VALUES / readouts */
+#kit-starfield-hero .sf-r-v{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:.02em;color:#f4f5ff;
+}
+/* override the per-cell special-case so all values use the shared token */
+#kit-starfield-hero .sf-r-cell:nth-child(4) .sf-r-v{color:#f4f5ff;font-size:12px;}
+
+/* --- BOTTOM-RIGHT source/legend caption: keep above the corner toggle --- */
+#kit-starfield-hero .sf-credit{
+  right:16px;bottom:56px;
+  font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.14em;
+  font-weight:500;text-transform:uppercase;color:#a6abe6;opacity:.62;
+}
 </style></head>
 <body>
 <div class="mb-wrap">

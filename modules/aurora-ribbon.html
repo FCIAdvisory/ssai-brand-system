@@ -87,6 +87,116 @@ body.mb-embed #kit-aurora-ribbon{display:flex!important;flex-direction:column!im
 body.mb-embed #kit-aurora-ribbon>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-aurora-ribbon [class*='stage'],body.mb-embed #kit-aurora-ribbon [class*='scene'],body.mb-embed #kit-aurora-ribbon [class*='map'],body.mb-embed #kit-aurora-ribbon [class*='plot'],body.mb-embed #kit-aurora-ribbon [class*='globe'],body.mb-embed #kit-aurora-ribbon [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== AURORA RIBBON — unify CONTROL styling to SSAI design system (Orbit Tracker reference) ===== */
+/* Scope: #kit-aurora-ribbon. Canvas (.ar-stage) already fills the frame inset:0; visual untouched. */
+
+/* ---- TOP-RIGHT secondary stats: frosted readout column ---- */
+#kit-aurora-ribbon .ar-readout{
+  top:16px;right:16px;
+  width:clamp(160px,28vw,200px);
+  padding:10px 13px 11px;
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+#kit-aurora-ribbon .ar-storm{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;font-size:14px;
+  color:var(--accent,#3cc8ff);margin-bottom:10px;
+}
+#kit-aurora-ribbon .ar-rows{gap:8px;}
+#kit-aurora-ribbon .ar-row.ar-vis{padding-top:8px;border-top:1px solid rgba(166,171,230,0.16);}
+#kit-aurora-ribbon .ar-lab{
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;
+}
+#kit-aurora-ribbon .ar-val{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  text-transform:uppercase;font-variant-numeric:tabular-nums;
+  font-size:13px;color:#f4f5ff;
+}
+#kit-aurora-ribbon .ar-row.ar-vis .ar-val{font-size:12px;}
+
+/* ---- BOTTOM-LEFT main control: frosted Kp slider box ---- */
+#kit-aurora-ribbon .ar-hud{
+  left:16px;right:auto;bottom:16px;
+  transform:none;
+  width:min(360px,calc(100% - 32px));
+  padding:9px 14px 10px;
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+#kit-aurora-ribbon .ar-hud-head{margin-bottom:9px;}
+#kit-aurora-ribbon .ar-hud-lab{
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;
+}
+#kit-aurora-ribbon .ar-kp{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;font-size:22px;line-height:1;
+  color:var(--accent,#3cc8ff);
+}
+
+/* ---- SLIDER: design-system rail + thumb ---- */
+#kit-aurora-ribbon input.ar-slider{
+  height:3px;border-radius:3px;
+  background:linear-gradient(90deg,var(--accent,#3cc8ff),rgba(255,255,255,0.14));
+}
+#kit-aurora-ribbon input.ar-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2px solid var(--accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16);
+}
+#kit-aurora-ribbon input.ar-slider::-moz-range-thumb{
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2px solid var(--accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16);
+}
+#kit-aurora-ribbon .ar-scale{
+  margin-top:5px;
+  font-family:'Inter',sans-serif;font-style:normal;font-weight:700;
+  font-size:8.5px;letter-spacing:.2em;color:#a6abe6;
+}
+
+/* ---- NIGHT toggle: small segmented chip, relocated to bottom-left cluster (clears corner) ---- */
+#kit-aurora-ribbon .ar-toggle{
+  right:auto;bottom:16px;left:calc(16px + min(360px,calc(100% - 32px)) + 8px);
+  width:34px;height:34px;border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#a6abe6;font-size:16px;
+  transition:color .2s,background .2s,border-color .2s,box-shadow .2s;
+}
+#kit-aurora-ribbon .ar-toggle:hover{color:#f4f5ff;border-color:rgba(166,171,230,0.4);}
+#kit-aurora-ribbon .ar-toggle[aria-pressed="true"]{
+  background:var(--accent,#3cc8ff);
+  border-color:var(--accent,#3cc8ff);
+  color:#050314;
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff);
+}
+
+/* ---- SOURCE caption: move to bottom-right, above the global controls toggle ---- */
+#kit-aurora-ribbon .ar-credit{
+  left:auto;right:16px;bottom:56px;
+  text-align:right;
+  font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.14em;
+  text-transform:uppercase;color:#a6abe6;opacity:.62;
+  max-width:48%;
+}
+@media (max-width:560px){
+  #kit-aurora-ribbon .ar-credit{bottom:58px;max-width:60%;}
+}
+/* night-side toggle: no icon font is loaded, so render a real crescent glyph */
+#kit-aurora-ribbon .ar-toggle i.ti{font-style:normal;font-family:'Inter',system-ui,sans-serif;line-height:1}
+#kit-aurora-ribbon .ar-toggle i.ti-moon::before{content:'\263E';font-size:16px}
+#kit-aurora-ribbon .ar-toggle[aria-pressed="true"] i.ti-moon::before{content:'\2600'}
+
 </style></head>
 <body>
 <div class="mb-wrap">

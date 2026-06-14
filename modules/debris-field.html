@@ -225,6 +225,158 @@ body.mb-embed #kit-debris-field{display:flex!important;flex-direction:column!imp
 body.mb-embed #kit-debris-field>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-debris-field [class*='stage'],body.mb-embed #kit-debris-field [class*='scene'],body.mb-embed #kit-debris-field [class*='map'],body.mb-embed #kit-debris-field [class*='plot'],body.mb-embed #kit-debris-field [class*='globe'],body.mb-embed #kit-debris-field [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== DEBRIS-FIELD → SSAI CONTROL DESIGN SYSTEM (overlay everything on the visual) ===== */
+
+/* Frame becomes the positioning context + full-bleed stage; controls & foot overlay it */
+#kit-debris-field{position:relative;}
+#kit-debris-field .kdf-stage{
+  position:absolute;inset:0;width:100%;height:100%;
+  aspect-ratio:auto;min-height:0;max-height:none;margin:0;
+}
+/* give the frame real height since the stage is now absolute */
+#kit-debris-field{aspect-ratio:16/10;min-height:340px;max-height:560px;}
+
+/* overlay layer should not eat pointer events except on real controls */
+#kit-debris-field .kdf-overlay{padding:16px;pointer-events:none;}
+#kit-debris-field .kdf-stats{pointer-events:auto;}
+
+/* ---- PRIMARY READOUT: head, top-left ---- */
+#kit-debris-field .kdf-head{
+  position:absolute;left:16px;top:16px;z-index:6;max-width:62%;
+}
+#kit-debris-field .kdf-eyebrow{
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;margin-bottom:4px;
+  text-shadow:0 1px 10px rgba(5,3,20,.9);
+}
+#kit-debris-field .kdf-status{
+  margin:8px 0 0;max-width:100%;
+  background:rgba(8,6,28,.46);border:1px solid rgba(166,171,230,.16);
+  border-radius:9px;padding:6px 12px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:inline-block;
+  font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;
+}
+
+/* ---- SECONDARY STATS: frosted column, top-right ---- */
+#kit-debris-field .kdf-stats{
+  position:absolute;right:16px;top:16px;z-index:6;
+  display:flex;flex-direction:column;gap:6px;align-items:stretch;
+  grid-template-columns:none;align-self:auto;width:max-content;max-width:42%;
+}
+#kit-debris-field .kdf-stat{
+  background:rgba(8,6,28,.46);border:1px solid rgba(166,171,230,.16);
+  border-radius:9px;padding:6px 12px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;flex-direction:row;align-items:baseline;justify-content:space-between;gap:14px;
+}
+#kit-debris-field .kdf-statnum{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:15px;line-height:1;letter-spacing:.02em;color:#f4f5ff;
+  font-variant-numeric:tabular-nums;
+}
+#kit-debris-field .kdf-num-sat{color:var(--kdf-accent,#3cc8ff);}
+#kit-debris-field .kdf-statlbl{
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;
+}
+
+/* ---- MAIN CONTROLS: frosted, bottom-left ---- */
+#kit-debris-field .kdf-controls{
+  position:absolute;left:16px;bottom:16px;z-index:7;
+  display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;
+  margin:0;padding:8px 12px;max-width:calc(100% - 32px);
+  background:rgba(8,6,28,.46);border:1px solid rgba(166,171,230,.16);
+  border-radius:9px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+#kit-debris-field .kdf-sliderwrap{flex:1 1 220px;min-width:200px;}
+
+/* slider field label + value */
+#kit-debris-field .kdf-label{
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;margin-bottom:7px;
+}
+#kit-debris-field .kdf-sliderval{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:12px;letter-spacing:.02em;color:#f4f5ff;text-transform:none;
+  font-variant-numeric:tabular-nums;
+}
+#kit-debris-field .kdf-scale{
+  margin-top:7px;
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;
+}
+
+/* ---- SLIDER: 3px track, gradient, 14px white thumb ---- */
+#kit-debris-field .kdf-slider{
+  -webkit-appearance:none;appearance:none;width:100%;height:3px;
+  border-radius:3px;background:linear-gradient(90deg,var(--kdf-accent,#3cc8ff),rgba(255,255,255,.14));
+  outline:none;cursor:pointer;
+}
+#kit-debris-field .kdf-slider::-webkit-slider-runnable-track{
+  height:3px;border-radius:3px;background:transparent;
+}
+#kit-debris-field .kdf-slider::-moz-range-track{
+  height:3px;border-radius:3px;background:linear-gradient(90deg,var(--kdf-accent,#3cc8ff),rgba(255,255,255,.14));
+}
+#kit-debris-field .kdf-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:14px;height:14px;border-radius:50%;margin-top:-5.5px;
+  background:#fff;border:2px solid var(--kdf-accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),.16);
+}
+#kit-debris-field .kdf-slider::-moz-range-thumb{
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2px solid var(--kdf-accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),.16);
+}
+
+/* ---- BUTTONS: toggle + reset → segmented chip style ---- */
+#kit-debris-field .kdf-btns{gap:8px;}
+#kit-debris-field .kdf-toggle,
+#kit-debris-field .kdf-reset{
+  font-family:'Inter',sans-serif;font-size:9.5px;letter-spacing:.18em;
+  font-weight:700;text-transform:uppercase;
+  color:#a6abe6;background:transparent;
+  border:1px solid rgba(166,171,230,.16);border-radius:8px;
+  padding:7px 11px;height:30px;
+}
+#kit-debris-field .kdf-toggle:hover,
+#kit-debris-field .kdf-reset:hover{
+  border-color:rgba(166,171,230,.4);background:rgba(12,9,38,.42);color:#f4f5ff;
+}
+#kit-debris-field .kdf-dot{
+  width:9px;height:9px;background:rgba(166,171,230,.5);box-shadow:none;
+}
+/* active / pressed toggle */
+#kit-debris-field .kdf-toggle.kdf-on,
+#kit-debris-field .kdf-toggle[aria-pressed="true"]{
+  background:var(--kdf-accent,#3cc8ff);color:#050314;border-color:var(--kdf-accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--kdf-accent,#3cc8ff);
+}
+#kit-debris-field .kdf-toggle.kdf-on .kdf-dot,
+#kit-debris-field .kdf-toggle[aria-pressed="true"] .kdf-dot{
+  background:#050314;box-shadow:none;
+}
+
+/* ---- FOOT / caption: bottom-right, above the corner toggle ---- */
+#kit-debris-field .kdf-foot{
+  position:absolute;right:16px;bottom:56px;left:auto;z-index:6;
+  margin:0;max-width:46%;
+  font-family:'Inter',sans-serif;font-size:8.5px;line-height:1.5;
+  letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+  color:#a6abe6;opacity:.7;text-align:right;pointer-events:none;
+  text-shadow:0 1px 8px rgba(5,3,20,.9);
+}
+
+@media (max-width:560px){
+  #kit-debris-field .kdf-foot{display:none;}
+  #kit-debris-field .kdf-stats{max-width:50%;}
+  #kit-debris-field .kdf-controls{max-width:calc(100% - 32px);}
+}
 </style></head>
 <body>
 <div class="mb-wrap">

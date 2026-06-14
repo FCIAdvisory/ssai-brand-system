@@ -103,6 +103,132 @@ body.mb-embed #kit-redshift-doppler{display:flex!important;flex-direction:column
 body.mb-embed #kit-redshift-doppler>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-redshift-doppler [class*='stage'],body.mb-embed #kit-redshift-doppler [class*='scene'],body.mb-embed #kit-redshift-doppler [class*='map'],body.mb-embed #kit-redshift-doppler [class*='plot'],body.mb-embed #kit-redshift-doppler [class*='globe'],body.mb-embed #kit-redshift-doppler [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== REDSHIFT DOPPLER -> SSAI control design system (match Orbit Tracker) ===== */
+
+/* Canvas already fills the frame (inset:0); keep it full-bleed and behind controls. */
+#kit-redshift-doppler .rsd-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;}
+
+/* --- OVERLAY: split into top-left primary + top-right secondary column --- */
+#kit-redshift-doppler .rsd-overlay{padding:16px;gap:16px;align-items:flex-start;}
+
+/* Primary readout (REDSHIFT z) promoted into a frosted chip, top-left */
+#kit-redshift-doppler .rsd-head{
+  gap:5px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  padding:8px 13px;
+  text-shadow:none;
+}
+#kit-redshift-doppler .rsd-sub{
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:0.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;
+}
+
+/* Secondary stats: frosted column, top-right (value over uppercase sublabel) */
+#kit-redshift-doppler .rsd-readouts{
+  flex-direction:column;align-items:flex-end;gap:6px;justify-content:flex-start;
+}
+#kit-redshift-doppler .rsd-ro{
+  align-items:flex-end;gap:2px;min-width:0;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  padding:6px 12px;
+}
+#kit-redshift-doppler .rsd-ro-galrow{flex-direction:row-reverse;}
+
+/* LABELS — units / field names */
+#kit-redshift-doppler .rsd-ro-k{
+  font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:0.2em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;
+}
+
+/* VALUES / readouts */
+#kit-redshift-doppler .rsd-ro-v{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  color:#f4f5ff;font-variant-numeric:tabular-nums;text-shadow:none;
+}
+#kit-redshift-doppler #rsd-z{
+  color:var(--accent,#3cc8ff);
+  text-shadow:0 0 18px rgba(var(--accent-rgb,60,200,255),0.4);
+}
+
+/* --- DOCK (bottom controls): frosted, anchored bottom-left, clear of corner toggle --- */
+#kit-redshift-doppler .rsd-dock{
+  left:16px;right:auto;bottom:16px;
+  padding:0;background:none;
+  gap:10px;max-width:min(560px,calc(100% - 84px));
+}
+
+/* PRESET CHIPS — segmented look: frosted/hairline inactive, solid accent active */
+#kit-redshift-doppler .rsd-chip{
+  gap:1px;padding:6px 12px;border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+#kit-redshift-doppler .rsd-chip:hover{
+  border-color:rgba(166,171,230,0.4);background:rgba(12,9,38,0.62);
+}
+#kit-redshift-doppler .rsd-chip.on{
+  background:var(--accent,#3cc8ff);border-color:var(--accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff);
+}
+#kit-redshift-doppler .rsd-chip-n{
+  font-family:'Inter',sans-serif;font-size:9px;letter-spacing:0.14em;
+  font-weight:700;text-transform:uppercase;color:#a6abe6;
+}
+#kit-redshift-doppler .rsd-chip-z{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:10px;letter-spacing:0.04em;color:#a6abe6;
+  text-transform:uppercase;font-variant-numeric:tabular-nums;
+}
+#kit-redshift-doppler .rsd-chip.on .rsd-chip-n,
+#kit-redshift-doppler .rsd-chip.on .rsd-chip-z{color:#050314;}
+
+/* SLIDER row: frosted shell so the rail reads against the visual */
+#kit-redshift-doppler .rsd-sliderwrap{
+  gap:12px;padding:6px 12px;border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+#kit-redshift-doppler .rsd-slab{
+  font-family:'Inter',sans-serif;font-style:normal;font-size:8.5px;
+  letter-spacing:0.2em;font-weight:700;color:#a6abe6;text-transform:uppercase;
+}
+
+/* SLIDER track + thumb to spec */
+#kit-redshift-doppler .rsd-slider{
+  height:3px;border-radius:3px;
+  background:linear-gradient(90deg,var(--accent,#3cc8ff),rgba(255,255,255,0.14));
+}
+#kit-redshift-doppler .rsd-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2px solid var(--accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16);
+}
+#kit-redshift-doppler .rsd-slider::-moz-range-thumb{
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2px solid var(--accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16);
+}
+#kit-redshift-doppler .rsd-slider::-moz-range-track{
+  height:3px;border-radius:3px;
+  background:linear-gradient(90deg,var(--accent,#3cc8ff),rgba(255,255,255,0.14));
+}
+
+/* CREDIT / source -> caption, moved to bottom-right above the corner toggle (~56px) */
+#kit-redshift-doppler .rsd-credit{
+  position:absolute;right:16px;bottom:56px;left:auto;z-index:5;
+  font-size:8px;letter-spacing:0.14em;font-weight:500;text-transform:uppercase;
+  color:#a6abe6;opacity:0.62;text-align:right;max-width:60%;
+  text-shadow:0 1px 8px rgba(5,3,20,0.9);pointer-events:none;
+}
 </style></head>
 <body>
 <div class="mb-wrap">

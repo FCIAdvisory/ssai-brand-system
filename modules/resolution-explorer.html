@@ -115,6 +115,150 @@ body.mb-embed #kit-resolution-explorer{display:flex!important;flex-direction:col
 body.mb-embed #kit-resolution-explorer>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-resolution-explorer [class*='stage'],body.mb-embed #kit-resolution-explorer [class*='scene'],body.mb-embed #kit-resolution-explorer [class*='map'],body.mb-embed #kit-resolution-explorer [class*='plot'],body.mb-embed #kit-resolution-explorer [class*='globe'],body.mb-embed #kit-resolution-explorer [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== Resolution Explorer -> unify CONTROL styling to Orbit Tracker design system =====
+   Strategy: make the root a positioned full-bleed frame; the canvas fills it (inset:0);
+   every control/readout/legend/preset/slider becomes a frosted absolute overlay.
+   Containers (.rex-shell/.rex-stage/.rex-head/.rex-panel) collapse to passthrough so
+   their children can be positioned against the root frame. CSS only. */
+
+/* --- root becomes the overlay frame; canvas goes full-bleed --- */
+#kit-resolution-explorer{position:relative;overflow:hidden;padding:0;min-height:440px}
+#kit-resolution-explorer .rex-shell{display:block;gap:0;position:static}
+#kit-resolution-explorer .rex-stage{display:block;grid-template-columns:none;gap:0;position:static}
+#kit-resolution-explorer .rex-head{position:static;display:contents}
+#kit-resolution-explorer .rex-panel{display:contents}
+
+/* visual fills the whole frame */
+#kit-resolution-explorer .rex-canvas-wrap{position:absolute;inset:0;aspect-ratio:auto;min-height:0;border:0;border-radius:inherit;z-index:0}
+
+/* keep the immersive toggle corner (bottom-right ~14px) clear; overlays sit above canvas */
+#kit-resolution-explorer .rex-readout,
+#kit-resolution-explorer .rex-legend,
+#kit-resolution-explorer .rex-controls,
+#kit-resolution-explorer .rex-scenebar,
+#kit-resolution-explorer .rex-prov,
+#kit-resolution-explorer .rex-note{position:absolute;z-index:7}
+
+/* --- FROSTED CHIP/BOX base (orbit-tracker tokens) --- */
+#kit-resolution-explorer .rex-readout,
+#kit-resolution-explorer .rex-legend,
+#kit-resolution-explorer .rex-controls,
+#kit-resolution-explorer .rex-scenebar,
+#kit-resolution-explorer .rex-prov{
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+
+/* --- PRIMARY READOUT: top-left --- */
+#kit-resolution-explorer .rex-readout{
+  top:16px;left:16px;padding:8px 13px 9px;width:auto;min-width:0
+}
+#kit-resolution-explorer .rex-gsd-num{font-size:34px;line-height:.9;color:#f4f5ff}
+#kit-resolution-explorer .rex-gsd-unit{font-size:14px;color:#a6abe6}
+#kit-resolution-explorer .rex-sensor{
+  font-size:9px;letter-spacing:.2em;color:#a6abe6;margin-top:4px;font-style:normal;
+  font-family:'Inter',sans-serif;font-weight:700
+}
+#kit-resolution-explorer .rex-samples{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#a6abe6;margin-top:3px;font-weight:700;font-family:'Inter',sans-serif}
+#kit-resolution-explorer .rex-samples-n{color:#f4f5ff;font-variant-numeric:tabular-nums}
+
+/* --- SECONDARY STATS (feature legend): top-right frosted column --- */
+#kit-resolution-explorer .rex-legend{
+  top:16px;right:16px;gap:1px;padding:6px;background:rgba(8,6,28,0.46);max-width:min(46%,220px)
+}
+#kit-resolution-explorer .rex-leg{padding:4px 8px;gap:8px}
+#kit-resolution-explorer .rex-leg.is-live{background:rgba(var(--accent-rgb,60,200,255),.1)}
+#kit-resolution-explorer .rex-leg-t{font-size:9.5px;letter-spacing:.1em;color:#a6abe6;font-weight:600}
+#kit-resolution-explorer .rex-leg.is-live .rex-leg-t{color:#f4f5ff}
+#kit-resolution-explorer .rex-leg-v{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-size:9px;letter-spacing:.02em;color:#a6abe6;font-variant-numeric:tabular-nums;opacity:.75
+}
+#kit-resolution-explorer .rex-leg.is-live .rex-leg-v{opacity:1;color:var(--accent,#3cc8ff)}
+#kit-resolution-explorer .rex-leg.is-live .rex-dot{background:var(--accent,#3cc8ff);box-shadow:0 0 9px 1px var(--accent,#3cc8ff)}
+
+/* --- SCENEBAR (segmented toggle): top-center as a frosted pill --- */
+#kit-resolution-explorer .rex-scenebar{
+  top:16px;left:50%;transform:translateX(-50%);gap:4px;padding:4px;
+  background:rgba(8,6,28,0.46);border:1px solid rgba(166,171,230,0.16);border-radius:9px
+}
+#kit-resolution-explorer .rex-scene{
+  font-size:9px;letter-spacing:.18em;font-weight:700;font-family:'Inter',sans-serif;font-style:normal;
+  text-transform:uppercase;color:#a6abe6;padding:5px 11px;border-radius:6px;border:1px solid transparent;background:transparent
+}
+#kit-resolution-explorer .rex-scene:hover{color:#f4f5ff}
+#kit-resolution-explorer .rex-scene.is-on{
+  color:#050314;background:var(--accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff)
+}
+
+/* --- MAIN CONTROLS (slider + presets): bottom-left frosted --- */
+#kit-resolution-explorer .rex-controls{
+  left:16px;bottom:16px;gap:11px;padding:11px 13px;
+  background:rgba(8,6,28,0.46);border:1px solid rgba(166,171,230,0.16);border-radius:9px;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  width:min(420px,calc(100% - 32px))
+}
+#kit-resolution-explorer .rex-slider-cap{
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;color:#a6abe6;
+  font-family:'Inter',sans-serif;font-style:normal;text-transform:uppercase
+}
+
+/* SLIDER -> design-system track + thumb (3px rail, 14px thumb, accent ring) */
+#kit-resolution-explorer .rex-slider{
+  height:3px;border-radius:3px;
+  background:linear-gradient(90deg,var(--accent,#3cc8ff) 0%,var(--accent,#3cc8ff) var(--rex-fill,0%),rgba(255,255,255,0.14) var(--rex-fill,0%),rgba(255,255,255,0.14) 100%)
+}
+#kit-resolution-explorer .rex-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2px solid var(--accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16)
+}
+#kit-resolution-explorer .rex-slider::-moz-range-thumb{
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2px solid var(--accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16)
+}
+
+/* PRESET chips -> segmented buttons: inactive transparent+hairline, active accent fill */
+#kit-resolution-explorer .rex-preset{
+  background:transparent;border:1px solid rgba(166,171,230,0.16);border-radius:7px;
+  color:#a6abe6;font-size:9px;letter-spacing:.06em;padding:6px 5px;gap:2px
+}
+#kit-resolution-explorer .rex-preset small{font-size:8.5px;color:#a6abe6}
+#kit-resolution-explorer .rex-preset:hover{color:#f4f5ff;border-color:rgba(166,171,230,.4);background:rgba(12,9,38,.5)}
+#kit-resolution-explorer .rex-preset.is-on{
+  color:#050314;background:var(--accent,#3cc8ff);border-color:var(--accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff)
+}
+#kit-resolution-explorer .rex-preset.is-on small{color:#050314;opacity:.8}
+
+/* --- PROVENANCE caption: bottom-right, ABOVE the corner toggle (~bottom:56px) --- */
+#kit-resolution-explorer .rex-prov{
+  left:auto;right:16px;bottom:56px;padding:7px 11px;
+  background:rgba(8,6,28,0.46)
+}
+#kit-resolution-explorer .rex-prov-name{font-size:10px;letter-spacing:.05em;color:#f4f5ff}
+#kit-resolution-explorer .rex-prov-meta{
+  font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#a6abe6;font-weight:600
+}
+
+/* --- footnote: hide the stacked explainer (kept in the page's mb-credit footer) --- */
+#kit-resolution-explorer .rex-note{display:none}
+
+/* --- embed mode: force overlay layout (override the generic flex/full-bleed reset) --- */
+body.mb-embed #kit-resolution-explorer{display:block!important;position:relative!important}
+body.mb-embed #kit-resolution-explorer .rex-shell{display:block!important;height:100%!important}
+body.mb-embed #kit-resolution-explorer .rex-stage{display:block!important;flex:none!important;height:auto!important}
+body.mb-embed #kit-resolution-explorer .rex-canvas-wrap{position:absolute!important;inset:0!important;flex:none!important;height:auto!important;aspect-ratio:auto!important}
+body.mb-embed #kit-resolution-explorer .rex-readout,
+body.mb-embed #kit-resolution-explorer .rex-legend,
+body.mb-embed #kit-resolution-explorer .rex-controls,
+body.mb-embed #kit-resolution-explorer .rex-scenebar,
+body.mb-embed #kit-resolution-explorer .rex-prov{flex:none!important;height:auto!important}
 </style></head>
 <body>
 <div class="mb-wrap">

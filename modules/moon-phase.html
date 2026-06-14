@@ -164,6 +164,143 @@ body.mb-embed #kit-moon-phase{display:flex!important;flex-direction:column!impor
 body.mb-embed #kit-moon-phase>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-moon-phase [class*='stage'],body.mb-embed #kit-moon-phase [class*='scene'],body.mb-embed #kit-moon-phase [class*='map'],body.mb-embed #kit-moon-phase [class*='plot'],body.mb-embed #kit-moon-phase [class*='globe'],body.mb-embed #kit-moon-phase [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== MOON PHASE · unify CONTROLS to SSAI design system (orbit-tracker) ===== */
+/* Make the root a full-bleed positioned frame and the canvas fill it; overlay all controls. */
+
+#kit-moon-phase{
+  height:100%; min-height:100%;
+  padding:0 !important;
+  overflow:hidden;
+  --muted:#a6abe6; --hair:rgba(166,171,230,0.16);
+}
+
+/* visual fills the frame */
+#kit-moon-phase .kmoon-stage{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  aspect-ratio:auto; min-height:0; margin:0;
+}
+#kit-moon-phase .kmoon-canvas{ position:absolute; inset:0; width:100%; height:100%; }
+
+/* keep the embed full-bleed mode from stacking the overlays */
+body.mb-embed #kit-moon-phase{ display:block !important; }
+body.mb-embed #kit-moon-phase>*{ min-height:0; }
+body.mb-embed #kit-moon-phase .kmoon-stage{ flex:none !important; position:absolute !important; inset:0 !important; }
+
+/* ---- shared frosted chip/box ---- */
+#kit-moon-phase .kmoon-head,
+#kit-moon-phase .kmoon-controls{
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+}
+
+/* ---- PRIMARY READOUT (phase name + illumination) :: top-left ---- */
+#kit-moon-phase .kmoon-head{
+  position:absolute; top:16px; left:16px; right:auto; z-index:7;
+  display:flex; flex-direction:column; align-items:flex-start; gap:4px;
+  margin:0; padding:8px 13px; max-width:calc(100% - 32px); flex-wrap:nowrap;
+}
+#kit-moon-phase .kmoon-eyebrow{
+  order:1;
+  font-family:'Inter',sans-serif; font-style:normal; font-weight:700;
+  font-size:8.5px; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--muted);
+}
+#kit-moon-phase .kmoon-illumwrap{
+  order:3;
+  display:flex; align-items:baseline; gap:6px;
+  font-family:'Inter',sans-serif; font-size:8.5px; font-weight:700;
+  letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);
+}
+#kit-moon-phase .kmoon-illum{
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  font-size:13px; letter-spacing:0.02em; color:#f4f5ff;
+  font-variant-numeric:tabular-nums; text-transform:none;
+}
+
+/* phase NAME becomes the big readout, pulled up into the primary chip */
+#kit-moon-phase .kmoon-name{
+  position:absolute; top:34px; left:24px; right:auto; z-index:8;
+  margin:0; text-align:left;
+  font-family:'Chakra Petch',sans-serif; font-style:italic; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.04em;
+  font-size:clamp(15px,2.4vw,20px); line-height:1; color:#f4f5ff;
+  text-shadow:0 1px 14px rgba(5,3,20,0.9);
+}
+/* give the head room for the absolutely-stacked name */
+#kit-moon-phase .kmoon-head{ padding-bottom:30px; }
+
+/* ---- CAPTION / HINT :: bottom-right, above the corner toggle ---- */
+#kit-moon-phase .kmoon-hint{
+  position:absolute; right:16px; bottom:56px; left:auto; z-index:6;
+  margin:0; text-align:right; max-width:60%;
+  font-family:'Inter',sans-serif; font-size:8px; font-weight:600;
+  letter-spacing:0.18em; text-transform:uppercase; color:var(--muted);
+  opacity:0.7; text-shadow:0 1px 8px rgba(5,3,20,0.9);
+}
+
+/* ---- MAIN CONTROLS (slider + preset chips) :: bottom-left frosted ---- */
+#kit-moon-phase .kmoon-controls{
+  position:absolute; left:16px; bottom:16px; right:16px; z-index:7;
+  padding:10px 12px;
+  display:flex; flex-direction:column; gap:8px;
+  max-width:min(420px,calc(100% - 72px));
+}
+
+/* slider :: hairline accent track + 14px white thumb */
+#kit-moon-phase .kmoon-slider{ height:14px; margin:2px 0 2px; }
+#kit-moon-phase .kmoon-slider::-webkit-slider-runnable-track{
+  height:3px; border-radius:3px;
+  background:linear-gradient(90deg,var(--accent,#3cc8ff),rgba(255,255,255,0.14));
+}
+#kit-moon-phase .kmoon-slider::-moz-range-track{
+  height:3px; border-radius:3px;
+  background:linear-gradient(90deg,var(--accent,#3cc8ff),rgba(255,255,255,0.14));
+}
+#kit-moon-phase .kmoon-slider::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  width:14px; height:14px; margin-top:-5.5px; border-radius:50%;
+  background:#fff; border:2px solid var(--accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16);
+}
+#kit-moon-phase .kmoon-slider:hover::-webkit-slider-thumb,
+#kit-moon-phase .kmoon-slider:active::-webkit-slider-thumb{
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16);
+  transform:none;
+}
+#kit-moon-phase .kmoon-slider::-moz-range-thumb{
+  width:14px; height:14px; border-radius:50%;
+  background:#fff; border:2px solid var(--accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16);
+}
+
+/* preset chips :: segmented buttons (inactive transparent + hairline + muted) */
+#kit-moon-phase .kmoon-chips{ justify-content:flex-start; gap:6px; }
+#kit-moon-phase .kmoon-chip{
+  font-family:'Inter',sans-serif; font-size:8.5px; font-weight:700;
+  letter-spacing:0.18em; text-transform:uppercase; color:var(--muted);
+  background:transparent;
+  border:1px solid var(--hair); border-radius:7px;
+  padding:5px 10px;
+}
+#kit-moon-phase .kmoon-chip:hover{
+  color:#050314; background:var(--accent,#3cc8ff);
+  border-color:var(--accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff);
+}
+#kit-moon-phase .kmoon-chip:active{
+  color:#050314; background:var(--accent,#3cc8ff);
+  border-color:var(--accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--accent,#3cc8ff);
+  transform:translateY(1px);
+}
+#kit-moon-phase .kmoon-chip:focus-visible{
+  outline:none; border-color:var(--accent,#3cc8ff);
+  box-shadow:0 0 0 3px rgba(var(--accent-rgb,60,200,255),0.18);
+}
 </style></head>
 <body>
 <div class="mb-wrap">

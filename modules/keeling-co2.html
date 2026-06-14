@@ -74,6 +74,49 @@ body.mb-embed #kit-keeling-co2{display:flex!important;flex-direction:column!impo
 body.mb-embed #kit-keeling-co2>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-keeling-co2 [class*='stage'],body.mb-embed #kit-keeling-co2 [class*='scene'],body.mb-embed #kit-keeling-co2 [class*='map'],body.mb-embed #kit-keeling-co2 [class*='plot'],body.mb-embed #kit-keeling-co2 [class*='globe'],body.mb-embed #kit-keeling-co2 [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== Keeling CO2 — unify CONTROL styling to the SSAI design system (orbit-tracker reference) ===== */
+/* Strategy: the module stacks head(title+stats) ABOVE the canvas and caption BELOW it.
+   Re-lay it out as overlays: stage fills the frame (inset:0), controls float on top. */
+
+/* Make the module a clean positioning context and kill the column flow + inner padding
+   so the visual can go full-bleed. */
+#kit-keeling-co2{padding:0!important;gap:0!important;display:block!important;}
+body.mb-embed #kit-keeling-co2{display:block!important;gap:0!important;}
+
+/* Visual fills the entire frame */
+#kit-keeling-co2 .kco2-stage{position:absolute!important;inset:0!important;min-height:0!important;z-index:1;}
+#kit-keeling-co2 .kco2-canvas{position:absolute;inset:0;width:100%;height:100%;}
+
+/* ---- PRIMARY READOUT (label) — top-left, 16px ---- */
+#kit-keeling-co2 .kco2-head{position:absolute;top:0;left:0;right:0;z-index:6;padding:16px;margin:0;pointer-events:none;align-items:flex-start;}
+#kit-keeling-co2 .kco2-titles{display:flex;flex-direction:column;gap:3px;}
+#kit-keeling-co2 .kco2-eyebrow{font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;color:#a6abe6;margin:0;text-shadow:0 1px 10px rgba(5,3,20,.9);}
+#kit-keeling-co2 .kco2-title{font-family:'Chakra Petch','Inter',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.06em;line-height:1;font-size:15px;background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:#f4f5ff;color:#f4f5ff;text-shadow:0 1px 14px rgba(5,3,20,.9);}
+
+/* ---- SECONDARY STATS — top-right, 16px, frosted column ---- */
+#kit-keeling-co2 .kco2-stats{position:absolute;top:16px;right:16px;z-index:7;display:flex;flex-direction:column;gap:6px;width:auto;justify-content:flex-start;}
+#kit-keeling-co2 .kco2-stat{text-align:right;min-width:0;padding:6px 12px;border-radius:9px;border:1px solid rgba(166,171,230,.16);background:rgba(8,6,28,.46);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+#kit-keeling-co2 .kco2-stat-num{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-variant-numeric:tabular-nums;font-size:18px;line-height:1;color:#f4f5ff;text-shadow:none;}
+#kit-keeling-co2 .kco2-stat-lab{font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;color:#a6abe6;margin-top:5px;}
+
+/* ---- LEGEND / SOURCE CAPTION — bottom-right, 16px, ABOVE the corner toggle (~bottom:56px) ---- */
+#kit-keeling-co2 .kco2-foot{position:absolute;right:16px;bottom:56px;left:auto;top:auto;z-index:6;max-width:60%;justify-content:flex-end;text-align:right;font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.14em;font-weight:500;text-transform:uppercase;color:#a6abe6;opacity:.7;line-height:1.4;text-shadow:0 1px 8px rgba(5,3,20,.9);pointer-events:none;}
+#kit-keeling-co2 .kco2-foot-dot{width:6px;height:6px;background:var(--kco2-accent,var(--accent,#3cc8ff));box-shadow:0 0 8px var(--kco2-accent,var(--accent,#3cc8ff));}
+
+/* ---- SCRUB READOUT (frosted tooltip chip) ---- */
+#kit-keeling-co2 .kco2-readout{padding:11px 13px;border-radius:10px;border:1px solid rgba(166,171,230,.16);background:rgba(8,6,28,.46);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 18px 48px -16px rgba(0,0,0,.8);z-index:9;}
+#kit-keeling-co2 .kco2-readout-year{font-family:'Inter',sans-serif;font-style:normal;font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;color:#a6abe6;}
+#kit-keeling-co2 .kco2-readout-ppm{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-variant-numeric:tabular-nums;font-size:22px;line-height:1.05;color:#f4f5ff;margin-top:2px;}
+#kit-keeling-co2 .kco2-readout-unit{font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;color:var(--kco2-accent,var(--accent,#3cc8ff));}
+#kit-keeling-co2 .kco2-readout-delta{font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.06em;color:#a6abe6;margin-top:4px;}
+
+/* small screens: keep stats compact and legend out of the toggle corner */
+@media (max-width:520px){
+  #kit-keeling-co2 .kco2-stats{width:auto;justify-content:flex-start;}
+  #kit-keeling-co2 .kco2-stat{text-align:right;}
+  #kit-keeling-co2 .kco2-foot{bottom:58px;max-width:72%;}
+}
 </style></head>
 <body>
 <div class="mb-wrap">

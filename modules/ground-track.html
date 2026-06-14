@@ -93,6 +93,63 @@ body.mb-embed #kit-ground-track{display:flex!important;flex-direction:column!imp
 body.mb-embed #kit-ground-track>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-ground-track [class*='stage'],body.mb-embed #kit-ground-track [class*='scene'],body.mb-embed #kit-ground-track [class*='map'],body.mb-embed #kit-ground-track [class*='plot'],body.mb-embed #kit-ground-track [class*='globe'],body.mb-embed #kit-ground-track [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== GROUND-TRACK -> unify CONTROL styling to ORBIT-TRACKER design system =====
+   Controls in this module stack BELOW the visual. Make the root a full-bleed
+   positioning context, let the stage fill it (inset:0), and overlay every
+   control/HUD/legend/readout/caption on top. Scope everything to #kit-ground-track. */
+
+/* root becomes the full-bleed stage frame (kill padding/border/radius/bg so stage fills) */
+#kit-ground-track{padding:0;border:0;border-radius:0;background:#050314;overflow:hidden;min-height:240px;aspect-ratio:2/1;}
+
+/* main visual fills the frame */
+#kit-ground-track .gtk-stage{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;min-height:0;border:0;border-radius:0;}
+#kit-ground-track .gtk-canvas{position:absolute;inset:0;width:100%;height:100%;}
+
+/* ---- PRIMARY READOUT: clock, top-left (16px) frosted chip ---- */
+#kit-ground-track .gtk-clock{left:16px;top:16px;padding:6px 12px;border:1px solid rgba(166,171,230,0.16);border-radius:9px;background:rgba(8,6,28,0.46);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:13px;letter-spacing:.06em;color:#f4f5ff;opacity:1;font-variant-numeric:tabular-nums;z-index:7;}
+
+/* ---- SECONDARY STATS: readout, top-right (16px) frosted column ---- */
+#kit-ground-track .gtk-readout{top:16px;right:16px;padding:9px 12px;background:rgba(8,6,28,0.46);border:1px solid rgba(166,171,230,0.16);border-radius:9px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:7;}
+#kit-ground-track .gtk-readout:not([data-empty]){border-color:rgba(var(--gtk-accent-rgb),0.5);box-shadow:0 0 26px -6px rgba(var(--gtk-accent-rgb),0.5);}
+#kit-ground-track .gtk-r-name{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#f4f5ff;}
+#kit-ground-track .gtk-r-sub{font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;color:#a6abe6;margin-top:3px;}
+#kit-ground-track .gtk-k{font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;color:#a6abe6;opacity:1;}
+#kit-ground-track .gtk-v{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;color:#f4f5ff;font-variant-numeric:tabular-nums;}
+
+/* ---- MAIN CONTROLS: was stacked below; overlay bottom-left (16px) frosted ---- */
+#kit-ground-track .gtk-controls{position:absolute;left:16px;bottom:16px;right:auto;margin-top:0;padding:6px 12px;gap:12px;background:rgba(8,6,28,0.46);border:1px solid rgba(166,171,230,0.16);border-radius:9px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);max-width:calc(100% - 32px);z-index:7;}
+
+/* play/pause = segmented/toggle button: active (playing, aria-pressed=true) is accent-filled */
+#kit-ground-track .gtk-btn{padding:5px 11px;background:transparent;border:1px solid rgba(166,171,230,0.16);border-radius:8px;color:#a6abe6;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:9.5px;}
+#kit-ground-track .gtk-btn:hover{background:rgba(12,9,38,0.62);border-color:rgba(166,171,230,0.4);color:#f4f5ff;}
+#kit-ground-track .gtk-btn[aria-pressed="true"]{background:var(--gtk-accent,#3cc8ff);border-color:var(--gtk-accent,#3cc8ff);color:#050314;box-shadow:0 0 12px -2px var(--gtk-accent,#3cc8ff);}
+#kit-ground-track .gtk-btn[aria-pressed="true"] .gtk-ico-pause::before,#kit-ground-track .gtk-btn[aria-pressed="true"] .gtk-ico-pause::after{background:#050314;}
+
+/* slider control labels: name in muted uppercase, value in italic Chakra */
+#kit-ground-track .gtk-ctrl{gap:5px;min-width:118px;flex-basis:118px;}
+#kit-ground-track .gtk-ctrl-lbl{font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;color:#a6abe6;}
+#kit-ground-track .gtk-ctrl-lbl span{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;color:#f4f5ff;letter-spacing:.02em;font-variant-numeric:tabular-nums;}
+
+/* sliders: thin accent-gradient rail + white thumb w/ accent ring */
+#kit-ground-track .gtk-slider{height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gtk-accent,#3cc8ff),rgba(255,255,255,0.14));}
+#kit-ground-track .gtk-slider::-webkit-slider-thumb{width:14px;height:14px;background:#fff;border:2px solid var(--gtk-accent,#3cc8ff);box-shadow:0 0 0 4px rgba(var(--gtk-accent-rgb,60,200,255),0.16);}
+#kit-ground-track .gtk-slider::-moz-range-thumb{width:14px;height:14px;background:#fff;border:2px solid var(--gtk-accent,#3cc8ff);box-shadow:0 0 0 4px rgba(var(--gtk-accent-rgb,60,200,255),0.16);}
+
+/* ---- LEGEND: was inside controls (margin-left:auto); pull out to bottom-right column,
+        above the corner immersive toggle (~bottom:56px) ---- */
+#kit-ground-track .gtk-legend{position:absolute;right:16px;bottom:56px;left:auto;margin-left:0;flex-direction:column;align-items:flex-end;gap:5px;width:auto;z-index:7;}
+#kit-ground-track .gtk-leg-item{padding:4px 9px;border-radius:7px;border:1px solid transparent;background:rgba(8,6,28,0.46);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:9.5px;letter-spacing:.1em;color:#a6abe6;}
+#kit-ground-track .gtk-leg-item:hover{border-color:rgba(166,171,230,0.16);background:rgba(12,9,38,0.6);color:#f4f5ff;}
+#kit-ground-track .gtk-leg-item.gtk-sel{color:#f4f5ff;border-color:rgba(166,171,230,0.16);}
+
+/* ---- SOURCE CAPTION: keep bottom-left but lift above the overlaid controls bar ---- */
+#kit-ground-track .gtk-prov{left:16px;bottom:auto;top:42px;font-size:8px;letter-spacing:.14em;font-weight:500;text-transform:uppercase;color:#a6abe6;opacity:.62;}
+
+@media (max-width:560px){
+  #kit-ground-track .gtk-legend{bottom:60px;}
+  #kit-ground-track .gtk-prov{top:46px;}
+}
 </style></head>
 <body>
 <div class="mb-wrap">

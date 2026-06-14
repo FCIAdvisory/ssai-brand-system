@@ -396,6 +396,117 @@ body.mb-embed #kit-deep-field{display:flex!important;flex-direction:column!impor
 body.mb-embed #kit-deep-field>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-deep-field [class*='stage'],body.mb-embed #kit-deep-field [class*='scene'],body.mb-embed #kit-deep-field [class*='map'],body.mb-embed #kit-deep-field [class*='plot'],body.mb-embed #kit-deep-field [class*='globe'],body.mb-embed #kit-deep-field [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== Deep-Field controls unified to SSAI / Orbit-Tracker design system =====
+   Scope: #kit-deep-field. Appended AFTER module CSS (same specificity wins).
+   Visual (.df-stage/.df-canvas) already fills the frame via inset:0 — untouched. */
+
+/* ---- shared frosted chip surface ---- */
+#kit-deep-field .df-id,
+#kit-deep-field .df-readout,
+#kit-deep-field .df-btn{
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+/* ---- identity chip (top-left) ---- */
+#kit-deep-field .df-id{ padding:6px 12px; }
+#kit-deep-field .df-id-text{
+  font-family:'Chakra Petch','Inter',sans-serif;
+  font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  color:#f4f5ff;
+  letter-spacing:.06em;
+}
+
+/* ---- readout / stat panel (top-right) ---- */
+#kit-deep-field .df-readout{ padding:6px 12px; min-width:128px; }
+#kit-deep-field .df-ro-k{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;
+}
+#kit-deep-field .df-ro-v{
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  color:#f4f5ff;
+  letter-spacing:.02em;
+}
+
+/* ---- main controls: move bottom-left, frosted (system: primary controls bottom-left) ---- */
+#kit-deep-field .df-controls{
+  left:16px;right:auto;
+  bottom:16px;
+  flex-direction:row;gap:7px;
+}
+#kit-deep-field .df-btn{
+  width:30px;height:30px;
+  border-radius:8px;
+  color:#f4f5ff;
+  transition:border-color .18s,background .18s,color .18s,transform .12s;
+}
+#kit-deep-field .df-btn:hover{
+  border-color:rgba(var(--accent-rgb,60,200,255),.55);
+  color:var(--accent,#3cc8ff);
+  background:rgba(12,9,38,.62);
+}
+
+/* ---- scalebar label -> system label/value styling (sits above bottom-left controls) ---- */
+#kit-deep-field .df-scalebar{
+  left:16px;right:auto;
+  bottom:54px;
+}
+#kit-deep-field .df-scale-label{
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  color:#a6abe6;
+  letter-spacing:.06em;
+}
+
+/* ---- source credit (bottom-right, ABOVE the corner controls toggle ~bottom:14px) ---- */
+#kit-deep-field .df-credit{
+  right:16px;
+  bottom:56px;
+  font-size:8px;letter-spacing:.14em;font-weight:500;text-transform:uppercase;
+  color:#a6abe6;opacity:.62;
+  max-width:60%;text-align:right;
+}
+
+/* ---- hint caption -> system label tokens ---- */
+#kit-deep-field .df-hint{
+  bottom:16px;
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;
+}
+
+/* ---- pin labels / tooltip values -> system value tokens ---- */
+#kit-deep-field .df-pin-label{
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;font-weight:700;
+  color:#f4f5ff;letter-spacing:.06em;
+}
+#kit-deep-field .df-tip-tag{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:var(--accent,#3cc8ff);
+}
+#kit-deep-field .df-tip-meta span{
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  color:#f4f5ff;
+}
+#kit-deep-field .df-tip-meta span b{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;
+}
 </style></head>
 <body>
 <div class="mb-wrap">

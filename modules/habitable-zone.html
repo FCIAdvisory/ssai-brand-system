@@ -88,6 +88,55 @@ body.mb-embed #kit-habitable-zone{display:flex!important;flex-direction:column!i
 body.mb-embed #kit-habitable-zone>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-habitable-zone [class*='stage'],body.mb-embed #kit-habitable-zone [class*='scene'],body.mb-embed #kit-habitable-zone [class*='map'],body.mb-embed #kit-habitable-zone [class*='plot'],body.mb-embed #kit-habitable-zone [class*='globe'],body.mb-embed #kit-habitable-zone [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== HABITABLE ZONE -> SSAI control design system (overlay everything on a full-bleed stage) ===== */
+
+/* Root becomes a positioned, full-height stage container; hide the stacked title block */
+#kit-habitable-zone{position:relative;height:100%;min-height:100%;padding:0;overflow:hidden;border-radius:0;background:#050314;}
+#kit-habitable-zone .kfig-head{display:none!important;}
+
+/* Visual fills the frame */
+#kit-habitable-zone .kfig-stage{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;border-radius:0;}
+#kit-habitable-zone .kfig-canvas{position:absolute;inset:0;width:100%!important;height:100%!important;}
+
+/* ---- Primary readout: verdict, top-left ---- */
+#kit-habitable-zone .kfig-verdict{top:16px;left:16px;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:13px;letter-spacing:.12em;padding:7px 13px;border-radius:9px;border:1px solid rgba(166,171,230,0.16);background:rgba(8,6,28,0.46);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none;}
+#kit-habitable-zone .kfig-verdict.just{color:#7af0b0;background:rgba(8,6,28,0.46);box-shadow:0 0 16px -4px rgba(80,230,160,0.5);}
+#kit-habitable-zone .kfig-verdict.hot{color:#ffb27a;background:rgba(8,6,28,0.46);box-shadow:0 0 16px -4px rgba(232,100,42,0.5);}
+#kit-habitable-zone .kfig-verdict.cold{color:#bcd8ff;background:rgba(8,6,28,0.46);box-shadow:0 0 16px -4px rgba(143,182,224,0.45);}
+
+/* ---- Secondary stats: frosted column, top-right ---- */
+#kit-habitable-zone .kfig-stats{position:absolute;top:16px;right:16px;z-index:7;display:flex;flex-direction:column;gap:6px;grid-template-columns:none;margin:0;width:auto;max-width:42%;align-items:stretch;}
+#kit-habitable-zone .kfig-stat{display:flex;flex-direction:column;align-items:flex-end;gap:2px;background:rgba(8,6,28,0.46);border:1px solid rgba(166,171,230,0.16);border-radius:9px;padding:6px 12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+#kit-habitable-zone .kfig-k{order:2;margin:0;font-family:'Inter',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a6abe6;}
+#kit-habitable-zone .kfig-v{order:1;font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:14px;color:#f4f5ff;font-variant-numeric:tabular-nums;text-align:right;}
+
+/* ---- Main controls: frosted box, bottom-left ---- */
+#kit-habitable-zone .kfig-controls{position:absolute;left:16px;bottom:16px;z-index:7;margin:0;width:min(340px,calc(100% - 32px));background:rgba(8,6,28,0.46);border:1px solid rgba(166,171,230,0.16);border-radius:9px;padding:10px 14px 12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+#kit-habitable-zone .kfig-clabel{font-family:'Inter',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a6abe6;margin-bottom:9px;}
+
+/* Slider: 3px rail, 14px white thumb with accent ring */
+#kit-habitable-zone input[type=range].kfig-temp{height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent,#3cc8ff),rgba(255,255,255,0.14));}
+#kit-habitable-zone .kfig-temp::-webkit-slider-thumb{width:14px;height:14px;background:#fff;border:2px solid var(--accent,#3cc8ff);box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16);}
+#kit-habitable-zone .kfig-temp::-moz-range-thumb{width:14px;height:14px;background:#fff;border:2px solid var(--accent,#3cc8ff);box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),0.16);}
+
+#kit-habitable-zone .kfig-scale{font-family:'Inter',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#a6abe6;margin-top:7px;}
+
+/* Preset chips: inactive transparent hairline, accent on hover */
+#kit-habitable-zone .kfig-presets{gap:6px;margin-top:11px;}
+#kit-habitable-zone .kfig-presets button{font-family:'Inter',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#a6abe6;background:transparent;border:1px solid rgba(166,171,230,0.22);border-radius:8px;padding:5px 10px;}
+#kit-habitable-zone .kfig-presets button:hover{background:var(--accent,#3cc8ff);color:#050314;border-color:var(--accent,#3cc8ff);box-shadow:0 0 12px -2px var(--accent,#3cc8ff);}
+
+#kit-habitable-zone .kfig-hint{margin-top:9px;font-family:'Inter',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#a6abe6;text-align:left;opacity:.75;}
+
+/* ---- Legend: frosted, bottom-right, lifted above the global controls toggle ---- */
+#kit-habitable-zone .kfig-legend{bottom:56px;right:16px;z-index:6;gap:12px;font-family:'Inter',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#a6abe6;background:rgba(8,6,28,0.46);border:1px solid rgba(166,171,230,0.16);padding:6px 12px;border-radius:9px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+
+/* Keep overlay layout on small screens (don't let the module revert legend/stats to static stacking) */
+@media (max-width:560px){
+  #kit-habitable-zone .kfig-stats{grid-template-columns:none;max-width:46%;}
+  #kit-habitable-zone .kfig-legend{position:absolute;margin:0;justify-content:flex-end;}
+}
 </style></head>
 <body>
 <div class="mb-wrap">

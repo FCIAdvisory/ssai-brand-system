@@ -99,6 +99,250 @@ body.mb-embed #kit-downlink-pipeline{display:flex!important;flex-direction:colum
 body.mb-embed #kit-downlink-pipeline>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-downlink-pipeline [class*='stage'],body.mb-embed #kit-downlink-pipeline [class*='scene'],body.mb-embed #kit-downlink-pipeline [class*='map'],body.mb-embed #kit-downlink-pipeline [class*='plot'],body.mb-embed #kit-downlink-pipeline [class*='globe'],body.mb-embed #kit-downlink-pipeline [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ===== DOWNLINK PIPELINE -> SSAI CONTROL DESIGN SYSTEM (match Orbit Tracker) ===== */
+/* Overlay all controls on a full-bleed visual instead of stacking below it. */
+
+/* --- Frame becomes a pure positioning context, full-bleed visual, no card chrome --- */
+#kit-downlink-pipeline{
+  padding:0;
+  border-radius:0;
+  border:0;
+  overflow:hidden;
+  background:#050314;
+  aspect-ratio:16/9;
+  min-height:340px;
+}
+#kit-downlink-pipeline::before{display:none;}
+
+/* --- Main visual fills the frame; canvas behind the overlays --- */
+#kit-downlink-pipeline .kdp-stage{
+  position:absolute;
+  inset:0;
+  width:auto;height:auto;
+  aspect-ratio:auto;
+  min-height:0;
+  border:0;
+  border-radius:0;
+  background:linear-gradient(180deg, rgba(22,20,95,0.16), rgba(5,3,20,0));
+  z-index:1;
+}
+#kit-downlink-pipeline .kdp-stage canvas,
+#kit-downlink-pipeline canvas{width:100%;height:100%;}
+
+/* --- Embed mode: keep frame as positioning context, don't flex-stack the overlays --- */
+body.mb-embed #kit-downlink-pipeline{
+  display:block!important;
+  position:relative!important;
+  aspect-ratio:auto!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+body.mb-embed #kit-downlink-pipeline>*{position:absolute;}
+body.mb-embed #kit-downlink-pipeline .kdp-stage{
+  position:absolute!important;
+  inset:0!important;
+  flex:none!important;
+  height:auto!important;width:auto!important;
+}
+
+/* ============================ PRIMARY READOUT (top-left) ============================ */
+/* The end-to-end latency hero number, lifted out of the (hidden) head into a frosted box. */
+#kit-downlink-pipeline .kdp-head{
+  position:absolute;
+  top:16px;left:16px;right:auto;
+  margin:0;
+  display:block;
+  z-index:7;
+  pointer-events:none;
+}
+#kit-downlink-pipeline .kdp-latency{
+  display:inline-block;
+  text-align:left;
+  min-width:0;
+  padding:6px 12px;
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:none;
+}
+#kit-downlink-pipeline .kdp-lat-label{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:0.2em;font-weight:700;
+  text-transform:uppercase;color:#a6abe6;
+}
+#kit-downlink-pipeline .kdp-lat-val{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  font-size:22px;line-height:1.05;color:#f4f5ff;
+}
+#kit-downlink-pipeline .kdp-lat-sub{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:0.2em;font-weight:700;
+  text-transform:uppercase;color:#a6abe6;margin-top:3px;
+}
+
+/* ============================ SECONDARY STATS (top-right) =========================== */
+/* Frosted column of value + uppercase sublabel. */
+#kit-downlink-pipeline .kdp-readout{
+  position:absolute;
+  top:16px;right:16px;
+  margin:0;
+  display:flex;flex-direction:column;gap:6px;
+  align-items:stretch;flex-wrap:nowrap;
+  z-index:7;
+}
+#kit-downlink-pipeline .kdp-chip{
+  flex:0 0 auto;min-width:120px;
+  gap:2px;
+  padding:6px 12px;
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+#kit-downlink-pipeline .kdp-chip-k{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:0.2em;font-weight:700;
+  text-transform:uppercase;color:#a6abe6;
+}
+#kit-downlink-pipeline .kdp-chip-v{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  font-size:15px;letter-spacing:0.02em;color:#f4f5ff;text-transform:uppercase;
+}
+#kit-downlink-pipeline .kdp-chip-v.kdp-ok{color:var(--kdp-accent,#3cc8ff);}
+#kit-downlink-pipeline .kdp-chip-v.kdp-bad{color:#ff7a6b;}
+
+/* ============================ MAIN CONTROLS (bottom-left) =========================== */
+/* Sliders + buttons inside one frosted panel. */
+#kit-downlink-pipeline .kdp-controls{
+  position:absolute;
+  left:16px;bottom:16px;right:auto;
+  margin:0;
+  display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;
+  max-width:min(520px,calc(100% - 32px));
+  padding:8px 12px;
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  z-index:7;
+}
+#kit-downlink-pipeline .kdp-ctl{
+  flex:1 1 150px;min-width:140px;gap:5px;
+}
+#kit-downlink-pipeline .kdp-ctl label{
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:0.2em;font-weight:700;
+  text-transform:uppercase;color:#a6abe6;
+}
+#kit-downlink-pipeline .kdp-ctl output{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  font-size:13px;letter-spacing:0.02em;color:#f4f5ff;text-transform:uppercase;
+}
+
+/* --- Sliders --- */
+#kit-downlink-pipeline input[type=range]{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,var(--kdp-accent,#3cc8ff),rgba(255,255,255,0.14));
+  outline:none;cursor:pointer;
+}
+#kit-downlink-pipeline input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;
+  border:2px solid var(--kdp-accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--kdp-accent-rgb,60,200,255),0.16);
+  cursor:pointer;transition:box-shadow .2s ease;
+}
+#kit-downlink-pipeline input[type=range]::-webkit-slider-thumb:hover{
+  box-shadow:0 0 0 5px rgba(var(--kdp-accent-rgb,60,200,255),0.22);
+}
+#kit-downlink-pipeline input[type=range]::-moz-range-thumb{
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;
+  border:2px solid var(--kdp-accent,#3cc8ff);
+  box-shadow:0 0 0 4px rgba(var(--kdp-accent-rgb,60,200,255),0.16);
+  cursor:pointer;
+}
+#kit-downlink-pipeline input[type=range]::-moz-range-track{
+  height:3px;border-radius:3px;
+  background:linear-gradient(90deg,var(--kdp-accent,#3cc8ff),rgba(255,255,255,0.14));
+}
+
+/* --- Buttons / toggles (segmented look) --- */
+#kit-downlink-pipeline .kdp-btns{gap:8px;}
+#kit-downlink-pipeline .kdp-btn{
+  font-family:'Inter',sans-serif;font-style:normal;
+  font-size:9px;letter-spacing:0.2em;font-weight:700;text-transform:uppercase;
+  color:#a6abe6;
+  background:transparent;
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  padding:7px 12px;
+  box-shadow:none;
+}
+#kit-downlink-pipeline .kdp-btn:hover{
+  background:rgba(8,6,28,0.46);
+  border-color:rgba(166,171,230,0.4);
+  color:#f4f5ff;
+}
+#kit-downlink-pipeline .kdp-btn.kdp-btn-on{
+  color:#050314;
+  background:var(--kdp-accent,#3cc8ff);
+  border-color:var(--kdp-accent,#3cc8ff);
+  box-shadow:0 0 12px -2px var(--kdp-accent,#3cc8ff);
+}
+#kit-downlink-pipeline .kdp-btn.kdp-btn-fault{
+  color:#a6abe6;border-color:rgba(255,122,107,0.5);background:transparent;
+}
+#kit-downlink-pipeline .kdp-btn.kdp-btn-fault.kdp-btn-on{
+  color:#2a0805;background:#ff7a6b;border-color:#ff7a6b;
+  box-shadow:0 0 12px -2px #ff7a6b;
+}
+
+/* ============================ CAPTION / LEGEND (bottom-right) ======================= */
+/* Above the corner controls toggle (~bottom:14px). */
+#kit-downlink-pipeline .kdp-foot{
+  position:absolute;
+  right:16px;bottom:56px;left:auto;
+  margin:0;padding:6px 12px;
+  border-top:0;
+  display:flex;flex-direction:column;align-items:flex-end;gap:3px;
+  max-width:min(360px,calc(100% - 32px));
+  border-radius:9px;
+  background:rgba(8,6,28,0.46);
+  border:1px solid rgba(166,171,230,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;letter-spacing:0.2em;font-weight:700;text-transform:uppercase;color:#a6abe6;
+  text-align:right;
+  z-index:6;
+}
+#kit-downlink-pipeline .kdp-foot-note{color:#a6abe6;opacity:0.8;}
+
+/* --- Tooltip stays as an in-stage overlay; align frosted token --- */
+#kit-downlink-pipeline .kdp-tip{
+  background:rgba(8,6,28,0.86);
+  border:1px solid rgba(166,171,230,0.16);
+  border-radius:9px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+#kit-downlink-pipeline .kdp-tip-name{
+  font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;
+  color:var(--kdp-accent,#3cc8ff);
+}
+
+@media (max-width:560px){
+  #kit-downlink-pipeline .kdp-readout{gap:5px;}
+  #kit-downlink-pipeline .kdp-chip{min-width:96px;}
+  #kit-downlink-pipeline .kdp-foot{display:none;}
+  #kit-downlink-pipeline .kdp-controls{max-width:calc(100% - 32px);}
+}
 </style></head>
 <body>
 <div class="mb-wrap">

@@ -229,6 +229,184 @@ body.mb-embed #kit-spectrum-explorer{display:flex!important;flex-direction:colum
 body.mb-embed #kit-spectrum-explorer>*{flex:0 0 auto;min-height:0;}
 body.mb-embed #kit-spectrum-explorer [class*='stage'],body.mb-embed #kit-spectrum-explorer [class*='scene'],body.mb-embed #kit-spectrum-explorer [class*='map'],body.mb-embed #kit-spectrum-explorer [class*='plot'],body.mb-embed #kit-spectrum-explorer [class*='globe'],body.mb-embed #kit-spectrum-explorer [class*='wrap']{flex:1 1 auto!important;min-height:0!important;}
 
+/* === unified control design system (Orbit Tracker tokens) === */
+/* ============================================================
+   SPECTRUM EXPLORER — unify CONTROL styling to ORBIT TRACKER
+   Appended AFTER module CSS. Visual = .sx-canvas/.sx-stage.
+   Controls = head/hint, axis, track+marker (slider), panel/readout.
+   ============================================================ */
+
+/* --- Frame: make the wrap the full-bleed stage so controls overlay --- */
+#kit-spectrum-explorer .sx-wrap{
+  position:relative;
+  min-height:360px;
+  height:100%;
+  padding:0;
+  display:block;
+}
+body.mb-embed #kit-spectrum-explorer .sx-wrap{height:100%;min-height:0;}
+
+/* --- VISUAL fills the frame (the spectrum bar) --- */
+#kit-spectrum-explorer .sx-stage{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:center;
+  margin:0;
+}
+#kit-spectrum-explorer .sx-canvas{
+  height:clamp(120px,38vh,220px);
+  border-radius:0;
+}
+#kit-spectrum-explorer .sx-track{
+  height:clamp(120px,38vh,220px);
+  border-radius:0;
+}
+#kit-spectrum-explorer .sx-marker{
+  top:50%;
+  height:clamp(140px,42vh,250px);
+  transform:translate(-50%,-50%);
+}
+
+/* === CAPTION / EYEBROW — top-left frosted (primary readout slot) === */
+#kit-spectrum-explorer .sx-head{
+  position:absolute;
+  top:16px;
+  left:16px;
+  right:auto;
+  z-index:7;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:5px;
+  margin:0;
+}
+#kit-spectrum-explorer .sx-eyebrow{
+  font-family:'Inter',sans-serif;
+  font-style:normal;
+  font-size:9px;
+  letter-spacing:.2em;
+  font-weight:700;
+  text-transform:uppercase;
+  color:#a6abe6;
+  text-shadow:0 1px 10px rgba(5,3,20,.9);
+}
+#kit-spectrum-explorer .sx-hint{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 12px;
+  border-radius:9px;
+  border:1px solid rgba(166,171,230,.16);
+  background:rgba(8,6,28,.46);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;
+  letter-spacing:.2em;
+  font-weight:700;
+  text-transform:uppercase;
+  color:#a6abe6;
+}
+
+/* === AXIS LABELS — captions, bottom-right frosted (legend slot, clear of toggle) === */
+#kit-spectrum-explorer .sx-axis{
+  position:absolute;
+  right:16px;
+  bottom:56px;
+  left:auto;
+  z-index:6;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:5px;
+  margin:0;
+  text-transform:uppercase;
+  color:#a6abe6;
+}
+#kit-spectrum-explorer .sx-axis>span{
+  padding:4px 9px;
+  border-radius:7px;
+  border:1px solid rgba(166,171,230,.16);
+  background:rgba(8,6,28,.4);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  font-family:'Inter',sans-serif;
+  font-size:8.5px;
+  letter-spacing:.2em;
+  font-weight:700;
+  color:#a6abe6;
+  white-space:nowrap;
+}
+
+/* === READOUT PANEL — bottom-left frosted chip (primary readout) === */
+#kit-spectrum-explorer .sx-panel{
+  position:absolute;
+  left:16px;
+  bottom:16px;
+  right:auto;
+  z-index:7;
+  margin:0;
+  max-width:min(420px,calc(100% - 32px));
+  padding:10px 14px 12px;
+  border-radius:9px;
+  border:1px solid rgba(166,171,230,.16);
+  border-left:1px solid rgba(166,171,230,.16);
+  background:rgba(8,6,28,.46);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+}
+#kit-spectrum-explorer .sx-panel-top{
+  align-items:center;
+  gap:9px;
+}
+#kit-spectrum-explorer .sx-band{
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.05em;
+  font-size:clamp(18px,2.6vw,24px);
+  color:#f4f5ff;
+}
+#kit-spectrum-explorer .sx-range{
+  font-family:'Chakra Petch',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+  font-size:12px;
+  letter-spacing:.02em;
+  color:#f4f5ff;
+  padding:3px 9px;
+  border:1px solid rgba(166,171,230,.16);
+  border-radius:999px;
+  background:rgba(8,6,28,.3);
+}
+#kit-spectrum-explorer .sx-reveal{
+  margin-top:7px;
+  font-size:12px;
+  line-height:1.5;
+  color:#a6abe6;
+  max-width:46ch;
+}
+
+/* === SLIDER THUMB (marker dot) — match design-system thumb === */
+#kit-spectrum-explorer .sx-marker-dot{
+  width:14px;
+  height:14px;
+  top:0;
+  background:#fff;
+  border:2px solid var(--sx-accent,var(--accent,#3cc8ff));
+  box-shadow:0 0 0 4px rgba(var(--accent-rgb,60,200,255),.16),0 0 18px var(--sx-accent,var(--accent,#3cc8ff));
+}
+
+/* Keep clear of the global controls toggle (bottom-right ~14px) on small frames */
+@media (max-width:560px){
+  #kit-spectrum-explorer .sx-axis{bottom:60px;}
+  #kit-spectrum-explorer .sx-axis-r{display:none;}
+}
 </style></head>
 <body>
 <div class="mb-wrap">
