@@ -493,6 +493,9 @@ body.mb-embed #kit-debris-field [class*='stage'],body.mb-embed #kit-debris-field
 
   var canvas=root.querySelector('.kdf-canvas');
   var ctx=canvas.getContext('2d');
+  var earthImg=new Image(); var earthReady=false;
+  earthImg.onload=function(){earthReady=true;};
+  earthImg.src='../assets/images/planets/earth.jpg';
   var slider=root.querySelector('.kdf-slider');
   var sliderVal=root.querySelector('.kdf-sliderval');
   var colorToggle=root.querySelector('.kdf-toggle');
@@ -527,7 +530,7 @@ body.mb-embed #kit-debris-field [class*='stage'],body.mb-embed #kit-debris-field
     ctx.setTransform(dpr,0,0,dpr,0,0);
     cx=W/2; cy=H/2;
     scale=Math.min(W,H);
-    earthR=scale*0.135;
+    earthR=scale*0.19;
     buildStars();
   }
 
@@ -707,29 +710,29 @@ body.mb-embed #kit-debris-field [class*='stage'],body.mb-embed #kit-debris-field
   }
 
   function drawEarth(){
-    var g=ctx.createRadialGradient(cx-earthR*0.35,cy-earthR*0.35,earthR*0.15,cx,cy,earthR*1.02);
-    g.addColorStop(0,'#1b2a55');
-    g.addColorStop(0.45,'#101a3a');
-    g.addColorStop(0.85,'#0a1230');
-    g.addColorStop(1,'#070b22');
-    ctx.beginPath(); ctx.arc(cx,cy,earthR,0,TWO); ctx.fillStyle=g; ctx.fill();
-
     ctx.save();
     ctx.beginPath(); ctx.arc(cx,cy,earthR,0,TWO); ctx.clip();
-    ctx.fillStyle='rgba(40,70,120,0.55)';
-    var blobs=[[-0.3,-0.2,0.45],[0.25,0.1,0.5],[-0.1,0.4,0.35],[0.4,-0.35,0.3]];
-    for(var b=0;b<blobs.length;b++){
-      ctx.beginPath();
-      ctx.ellipse(cx+blobs[b][0]*earthR, cy+blobs[b][1]*earthR, earthR*blobs[b][2], earthR*blobs[b][2]*0.7, b, 0, TWO);
-      ctx.fill();
+    if(earthReady){
+      // real Blue Marble disk (960x961 round disk maps 1:1 to the circle)
+      var iw=earthImg.naturalWidth||960, ih=earthImg.naturalHeight||961;
+      var s=Math.max((earthR*2)/iw,(earthR*2)/ih);
+      var dw=iw*s, dh=ih*s;
+      ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+      ctx.drawImage(earthImg, cx-dw/2, cy-dh/2, dw, dh);
+      // gentle day/night terminator for depth (light from upper-left)
+      var tg2=ctx.createRadialGradient(cx-earthR*0.35,cy-earthR*0.35,earthR*0.2,cx,cy,earthR*1.15);
+      tg2.addColorStop(0,'rgba(8,10,30,0)');
+      tg2.addColorStop(0.7,'rgba(6,8,24,0.12)');
+      tg2.addColorStop(1,'rgba(4,6,18,0.6)');
+      ctx.fillStyle=tg2; ctx.fillRect(cx-earthR,cy-earthR,earthR*2,earthR*2);
+    } else {
+      var g=ctx.createRadialGradient(cx-earthR*0.35,cy-earthR*0.35,earthR*0.15,cx,cy,earthR*1.02);
+      g.addColorStop(0,'#1b2a55');
+      g.addColorStop(0.45,'#101a3a');
+      g.addColorStop(0.85,'#0a1230');
+      g.addColorStop(1,'#070b22');
+      ctx.fillStyle=g; ctx.fillRect(cx-earthR,cy-earthR,earthR*2,earthR*2);
     }
-    ctx.globalCompositeOperation='lighter';
-    var tg=ctx.createLinearGradient(cx-earthR,cy,cx+earthR,cy);
-    tg.addColorStop(0,'rgba('+accentRGB+',0)');
-    tg.addColorStop(0.78,'rgba('+accentRGB+',0)');
-    tg.addColorStop(1,'rgba('+accentRGB+',0.12)');
-    ctx.fillStyle=tg;
-    ctx.fillRect(cx-earthR,cy-earthR,earthR*2,earthR*2);
     ctx.restore();
 
     ctx.save();
