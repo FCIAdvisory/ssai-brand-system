@@ -261,7 +261,7 @@ p{max-width:62ch}
 .app .ov{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;background:linear-gradient(to top,#050314dd,transparent 60%)}
 .app .ov .ln{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;font-size:15px;color:#fff;letter-spacing:-.01em;line-height:1}
 .app .ov .lg{height:22px;width:auto;align-self:flex-start;object-fit:contain;margin-bottom:auto}
-.app.big{grid-column:span 3} .app.tall{grid-column:span 2} .app.std{grid-column:span 2} .app.w4{grid-column:span 4} .app.w2{grid-column:span 2}
+.app.big{grid-column:span 3} .app.tall{grid-column:span 2} .app.std{grid-column:span 2} .app.w4{grid-column:span 4} .app.w2{grid-column:span 2} .app.w6{grid-column:1 / -1}
 .app .stage.r169{aspect-ratio:16/9} .app .stage.r34{aspect-ratio:3/4} .app .stage.r11{aspect-ratio:1/1} .app .stage.r43{aspect-ratio:4/3}
 .card-mock{aspect-ratio:1.75/1;background:linear-gradient(135deg,#0c0a30,#16145f);display:flex;flex-direction:column;justify-content:space-between;padding:18px}
 .card-mock .nm{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;font-size:15px;color:#fff}
@@ -528,6 +528,63 @@ p{max-width:62ch}
 .world.ring .pic img{object-fit:contain}
 .world .wn{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(15px,1.5vw,19px);letter-spacing:.01em;color:var(--starlight);margin-top:16px}
 .world .wm{font-family:var(--label);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+/* ===== Applications — sub-sections: covers, marketing, swag ===== */
+.subhead{font-family:var(--label);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--nebula);margin:56px 0 18px;display:flex;align-items:center;gap:11px}
+.subhead::before{content:"";width:22px;height:1px;background:var(--hair-2)}
+.app .stage.r916{aspect-ratio:9/16} .app .stage.r219{aspect-ratio:21/9} .app .stage.r41{aspect-ratio:4/1} .app .stage.r11{aspect-ratio:1/1}
+
+/* proposal / report covers */
+.covers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:760px){.covers{grid-template-columns:1fr 1fr}}
+.cover{position:relative;aspect-ratio:3/4;border-radius:10px;overflow:hidden;border:1px solid var(--hair);box-shadow:0 30px 72px -36px rgba(0,0,0,.85)}
+.cover img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cover .gr{position:absolute;inset:0;background:linear-gradient(to top,#050314 15%,rgba(5,3,20,.5) 44%,rgba(5,3,20,.08) 72%,transparent),linear-gradient(to bottom,rgba(5,3,20,.55),transparent 26%)}
+.cover .ct-top{position:absolute;top:18px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;z-index:2}
+.cover .ct-top img{height:17px;width:auto}
+.cover .ct-top .ed{font-family:var(--label);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#cfd2ff}
+.cover .ct-bot{position:absolute;left:20px;right:20px;bottom:20px;z-index:2}
+.cover .ct-bot .rl{width:42px;height:2px;background:var(--teal);margin-bottom:13px}
+.cover .ct-bot .k{font-family:var(--label);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:9px}
+.cover .ct-bot .h{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(19px,2.1vw,27px);line-height:.95;color:#fff}
+.cover .ct-bot .ft{font-family:var(--label);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:#bfc3f0;margin-top:13px;padding-top:9px;border-top:1px solid rgba(255,255,255,.2)}
+
+/* merch & swag */
+.swagrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.swagrid{grid-template-columns:1fr 1fr}}
+.swag{border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:#07061e}
+.swag .obj{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(120% 110% at 50% 26%,#13123e,#06051a)}
+.swag .cap{font-family:var(--label);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:11px 13px;border-top:1px solid var(--hair)}
+.swag img.wlg{filter:brightness(0) invert(1)}
+/* garment silhouettes (tee, cap, tote) */
+.gobj{position:relative;width:66%;height:66%}
+.gobj svg{position:absolute;inset:0;width:100%;height:100%}
+.gobj svg .fill{fill:var(--g,#16145f)} .gobj svg .stk{fill:none;stroke:var(--g,#16145f)}
+.gobj img{position:absolute;left:50%;transform:translateX(-50%);width:auto}
+/* mug */
+.m-mug{position:relative;width:48%;height:40%;border-radius:7px 7px 11px 11px;background:linear-gradient(100deg,#2522a4,#16145f);box-shadow:inset -13px 0 22px rgba(0,0,0,.34),inset 9px 0 12px rgba(255,255,255,.08)}
+.m-mug::after{content:"";position:absolute;right:-15%;top:24%;width:22%;height:52%;border:7px solid #1b1882;border-left:0;border-radius:0 60% 60% 0}
+.m-mug img{position:absolute;inset:0;margin:auto;height:40%;width:auto}
+/* bottle */
+.m-bottle{position:relative;width:19%;height:60%;border-radius:9px 9px 13px 13px;background:linear-gradient(100deg,#2b2bb0,#1a1670);box-shadow:inset -6px 0 13px rgba(0,0,0,.36)}
+.m-bottle::before{content:"";position:absolute;top:-12%;left:50%;transform:translateX(-50%);width:56%;height:13%;background:#0b0a2c;border-radius:4px 4px 0 0}
+.m-bottle img{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);height:24%;width:auto}
+/* enamel pin */
+.m-pin{position:relative;width:46%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 36% 30%,#2b28aa,#14125a);border:3px solid #d9b25a;box-shadow:0 0 0 1px rgba(0,0,0,.45),inset 0 2px 11px rgba(255,255,255,.16),0 12px 24px -8px rgba(0,0,0,.6)}
+.m-pin img{position:absolute;inset:0;margin:auto;height:46%;width:auto}
+/* notebook */
+.m-note{position:relative;width:42%;height:58%;border-radius:4px 9px 9px 4px;background:linear-gradient(120deg,#100e36,#1c1a78);box-shadow:0 16px 32px -14px rgba(0,0,0,.75)}
+.m-note::before{content:"";position:absolute;left:13%;top:0;bottom:0;width:2px;background:rgba(255,255,255,.14)}
+.m-note::after{content:"";position:absolute;right:15%;top:0;bottom:0;width:5px;background:var(--teal);opacity:.9}
+.m-note img{position:absolute;left:48%;top:50%;transform:translate(-50%,-50%);height:22%;width:auto}
+/* lanyard */
+.m-lanyard{position:relative;width:42%;height:80%;display:flex;flex-direction:column;align-items:center}
+.m-lanyard .strap{width:30%;height:40%;background:repeating-linear-gradient(180deg,#16145f 0 11px,#221f86 11px 22px);border-radius:2px 2px 0 0}
+.m-lanyard .clip{width:10%;height:4%;background:#9a9ec4;border-radius:2px}
+.m-lanyard .badge{width:100%;flex:1;background:#0a0930;border:1px solid var(--hair-2);border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px}
+.m-lanyard .badge img{height:18%;width:auto}
+.m-lanyard .badge .bn{font-family:var(--label);font-size:6.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--nebula);text-align:center;line-height:1.5}
+.m-lanyard .badge .bd{width:60%;height:3px;border-radius:3px;background:var(--hair-2)}
 </style>
 </head>
 <body>
@@ -1061,6 +1118,35 @@ p{max-width:62ch}
       <div class="app w2"><div class="stage"><div class="card-mock"><img src="assets/logo/ssai-color-full.png" alt=""><div><div class="nm">Dr. Shilpa Bahethi</div><div class="ti">Chief Executive Officer</div></div><div class="ct">ssaihq.com · Lanham, MD</div></div></div><div class="cap">Business card · quiet counterpoint</div></div>
       <div class="app w2"><div class="stage"><div class="card-mock" style="background:#06061a"><img src="assets/logo/ssai-white-mark.png" alt=""><div><div class="nm" style="font-size:13px">Jordan Rivera</div><div class="ti">Research Scientist · Earth Science</div></div><div class="ct">jordan.rivera@ssaihq.com · 301‑555‑0142</div></div></div><div class="cap">Email signature</div></div>
       <div class="app w2"><div class="stage r43"><img src="assets/images/jwst-gold-mirror.jpg" loading="lazy" alt=""><div class="ov"><img class="lg" src="assets/logo/ssai-white-mark.png" alt=""><div class="ln">Mission badge</div></div></div><div class="cap">Mission badge / decal</div></div>
+    </div>
+
+    <div class="subhead">Proposal &amp; report covers</div>
+    <div class="covers">
+      <div class="cover"><img class="bg" src="assets/images/webb-deep-field.jpg" loading="lazy" alt=""><div class="gr"></div><div class="ct-top"><img src="assets/logo/ssai-white-mark.png" alt="SSAI"><span class="ed">Confidential · 2026</span></div><div class="ct-bot"><div class="rl"></div><div class="k">Capability Proposal</div><div class="h">From observation to understanding.</div><div class="ft">Science Systems and Applications, Inc. · Earth Science Solicitation</div></div></div>
+      <div class="cover"><img class="bg" src="assets/images/sst-gulf-stream.jpg" loading="lazy" alt=""><div class="gr"></div><div class="ct-top"><img src="assets/logo/ssai-white-mark.png" alt="SSAI"><span class="ed">Vol. 12 · 2026</span></div><div class="ct-bot"><div class="rl"></div><div class="k">Annual Science Review</div><div class="h">Reading the planet.</div><div class="ft">Earth Science Division · Capability &amp; impact report</div></div></div>
+      <div class="cover"><img class="bg" src="assets/images/sun-flare-gold-sdo.jpg" loading="lazy" alt=""><div class="gr"></div><div class="ct-top"><img src="assets/logo/ssai-white-mark.png" alt="SSAI"><span class="ed">Brief · 2026</span></div><div class="ct-bot"><div class="rl"></div><div class="k">Heliophysics Capability</div><div class="h">The pursuit of why.</div><div class="ft">Sun &amp; space weather · Mission support statement</div></div></div>
+    </div>
+
+    <div class="subhead">On screen &amp; out of home</div>
+    <div class="apps">
+      <div class="app w2"><div class="stage r11"><img src="assets/images/phytoplankton-barents.jpg" loading="lazy" alt=""><div class="ov"><img class="lg" src="assets/logo/ssai-white-mark.png" alt=""><div class="ln">Reading the planet.</div></div></div><div class="cap">Social post · 1:1</div></div>
+      <div class="app w2"><div class="stage r916"><img src="assets/images/aurora-australis-limb.jpg" loading="lazy" alt=""><div class="ov"><img class="lg" src="assets/logo/ssai-white-mark.png" alt=""><div class="ln">The pursuit<br>of why.</div></div></div><div class="cap">Story / Reel · 9:16</div></div>
+      <div class="app w2"><div class="stage r34"><img src="assets/images/earth-night-limb-airglow.jpg" loading="lazy" alt=""><div class="ov"><img class="lg" src="assets/logo/ssai-white-mark.png" alt=""><div class="ln">The night side.</div></div></div><div class="cap">Email newsletter</div></div>
+      <div class="app w6"><div class="stage r219"><img src="assets/images/blue-marble-world.jpg" loading="lazy" alt=""><div class="ov"><img class="lg" src="assets/logo/ssai-white-mark.png" alt=""><div class="ln">Science for life on Earth.</div></div></div><div class="cap">Billboard / out-of-home · 21:9</div></div>
+      <div class="app w4"><div class="stage r41"><img src="assets/images/saharan-dust-atlantic.jpg" loading="lazy" alt=""><div class="ov"><img class="lg" src="assets/logo/ssai-white-mark.png" alt=""><div class="ln">From observation to understanding.</div></div></div><div class="cap">Web leaderboard · 728×90</div></div>
+      <div class="app w2"><div class="stage r11"><img src="assets/images/cosmic-cliffs-carina.jpg" loading="lazy" alt=""><div class="ov"><img class="lg" src="assets/logo/ssai-white-mark.png" alt=""><div class="ln">Wonder, on the wall.</div></div></div><div class="cap">Lobby display · 1:1</div></div>
+    </div>
+
+    <div class="subhead">Merch &amp; environment</div>
+    <div class="swagrid">
+      <div class="swag"><div class="obj"><div class="gobj" style="--g:#16145f"><svg viewBox="0 0 120 110" aria-hidden="true"><path class="fill" d="M46 14 L30 20 L12 40 L26 53 L38 44 L38 98 L82 98 L82 44 L94 53 L108 40 L90 20 L74 14 C70 25 62 29 60 29 C58 29 50 25 46 14 Z"/></svg><img class="wlg" src="assets/logo/ssai-white-mark.png" alt="" style="top:48%;height:15%"></div></div><div class="cap">T‑shirt</div></div>
+      <div class="swag"><div class="obj"><div class="gobj" style="--g:#221f7a"><svg viewBox="0 0 120 82" aria-hidden="true"><path class="fill" d="M22 58 a38 32 0 0 1 76 0 Z"/><ellipse class="fill" cx="40" cy="60" rx="36" ry="9"/></svg><img class="wlg" src="assets/logo/ssai-white-mark.png" alt="" style="top:34%;left:46%;height:12%"></div></div><div class="cap">Embroidered cap</div></div>
+      <div class="swag"><div class="obj"><div class="gobj" style="--g:#16145f"><svg viewBox="0 0 100 110" aria-hidden="true"><rect class="fill" x="24" y="36" width="52" height="64" rx="3"/><path class="stk" stroke-width="5" d="M37 36 Q37 16 50 16 Q63 16 63 36"/></svg><img class="wlg" src="assets/logo/ssai-white-mark.png" alt="" style="top:58%;height:12%"></div></div><div class="cap">Canvas tote</div></div>
+      <div class="swag"><div class="obj"><div class="m-mug"><img src="assets/logo/ssai-white-mark.png" alt=""></div></div><div class="cap">Ceramic mug</div></div>
+      <div class="swag"><div class="obj"><div class="m-bottle"><img src="assets/logo/ssai-white-mark.png" alt=""></div></div><div class="cap">Insulated bottle</div></div>
+      <div class="swag"><div class="obj"><div class="m-pin"><img src="assets/logo/ssai-white-mark.png" alt=""></div></div><div class="cap">Enamel pin</div></div>
+      <div class="swag"><div class="obj"><div class="m-note"><img src="assets/logo/ssai-white-mark.png" alt=""></div></div><div class="cap">Field notebook</div></div>
+      <div class="swag"><div class="obj"><div class="m-lanyard"><div class="strap"></div><div class="clip"></div><div class="badge"><img src="assets/logo/ssai-white-mark.png" alt=""><div class="bn">Jordan Rivera<br>Earth Science</div><div class="bd"></div></div></div></div><div class="cap">Lanyard &amp; badge</div></div>
     </div>
   </div>
 </section>
