@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rising Tide — Nile Delta · SSAI</title>
+<title>Rising Tide — Sea-Level Rise · SSAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -42,36 +42,51 @@ body.mb-immersive [class*='panel'],body.mb-immersive [class*='control'],body.mb-
 body.mb-immersive [class*='stage'],body.mb-immersive [class*='scene'],body.mb-immersive [class*='canvas'],body.mb-immersive [class*='globe'],body.mb-immersive [class*='map'],body.mb-immersive [class*='plot'],body.mb-immersive [class*='view'],body.mb-immersive [class*='viz'],body.mb-immersive [class*='panel']:has(canvas),body.mb-immersive [class*='panel']:has(>svg){opacity:1!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn{opacity:.5!important;pointer-events:auto!important;}
 body.mb-immersive .mb-immersive-btn:hover{opacity:1!important;}
-#kit-sea-level{position:relative;width:100%;height:100%;overflow:hidden;background:#050314;font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#eaf2ff;-webkit-font-smoothing:antialiased;}
-#kit-sea-level canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
-#kit-sea-level .sea-level-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 38%,rgba(5,3,20,0) 52%,rgba(5,3,20,0.55) 100%);z-index:2;}
+#kit-sea-level{position:relative;width:100%;height:100%;overflow:hidden;background:#05030f;font-family:'Inter',system-ui,-apple-system,sans-serif;color:#eef1ff;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#kit-sea-level .slv-map{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#kit-sea-level .slv-map:active{cursor:grabbing}
+#kit-sea-level .slv-vig{position:absolute;inset:0;pointer-events:none;z-index:2;background:radial-gradient(125% 120% at 50% 34%,transparent 56%,rgba(5,3,15,.52) 100%)}
 
-#kit-sea-level .sea-level-controls{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:6;width:min(560px,82%);}
-#kit-sea-level .sea-level-slider-wrap{display:flex;align-items:center;gap:14px;padding:11px 18px;border-radius:999px;background:linear-gradient(180deg,rgba(10,16,38,0.62),rgba(6,10,26,0.46));border:1px solid rgba(150,190,255,0.16);backdrop-filter:blur(14px) saturate(130%);-webkit-backdrop-filter:blur(14px) saturate(130%);box-shadow:0 18px 50px -18px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.06);}
-#kit-sea-level .sea-level-slider-label{font-size:10px;font-weight:600;letter-spacing:0.22em;color:rgba(200,218,255,0.62);white-space:nowrap;}
-#kit-sea-level .sea-level-slider-val{font-size:12px;font-weight:600;letter-spacing:0.02em;color:#eaf2ff;min-width:54px;text-align:right;font-variant-numeric:tabular-nums;text-shadow:0 1px 6px rgba(0,0,0,0.5);}
-#kit-sea-level .sea-level-range{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--accent,#7fc9ff) 0%,var(--accent,#7fc9ff) var(--sl-fill,32%),rgba(160,190,255,0.18) var(--sl-fill,32%),rgba(160,190,255,0.18) 100%);outline:none;cursor:pointer;}
-#kit-sea-level .sea-level-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,var(--accent,#7fc9ff) 78%);border:2px solid rgba(255,255,255,0.85);box-shadow:0 0 0 6px rgba(127,201,255,0.16),0 4px 14px rgba(0,0,0,0.5);cursor:pointer;transition:box-shadow .18s ease,transform .12s ease;}
-#kit-sea-level .sea-level-range::-webkit-slider-thumb:hover{box-shadow:0 0 0 9px rgba(127,201,255,0.22),0 4px 16px rgba(0,0,0,0.55);transform:scale(1.06);}
-#kit-sea-level .sea-level-range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,var(--accent,#7fc9ff) 78%);border:2px solid rgba(255,255,255,0.85);box-shadow:0 0 0 6px rgba(127,201,255,0.16),0 4px 14px rgba(0,0,0,0.5);cursor:pointer;}
-#kit-sea-level .sea-level-range::-moz-range-track{height:4px;border-radius:999px;background:transparent;}
+/* === frosted control design system (orbit-tracker tokens) === */
+#kit-sea-level .slv-controls{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;background:rgba(8,6,28,.46);border:1px solid rgba(166,171,230,.16);border-radius:999px;padding:5px;-webkit-backdrop-filter:blur(10px) saturate(125%);backdrop-filter:blur(10px) saturate(125%);box-shadow:0 12px 38px -18px rgba(0,0,0,.82)}
+#kit-sea-level .slv-zoom{right:16px;top:50%;transform:translateY(-50%);flex-direction:column;gap:4px;padding:4px;border-radius:16px}
+#kit-sea-level .slv-zb{appearance:none;cursor:pointer;width:26px;height:26px;border-radius:50%;border:1px solid rgba(166,171,230,.18);background:rgba(255,255,255,.05);color:#eaf0ff;font:600 15px/1 'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s}
+#kit-sea-level .slv-zb:hover{background:rgba(255,255,255,.13);border-color:rgba(166,171,230,.4)}
 
-#kit-sea-level .sea-level-hud{position:absolute;z-index:5;pointer-events:none;}
-#kit-sea-level .sea-level-hud-tl{top:18px;left:18px;}
-#kit-sea-level .sea-level-hud-tr{top:18px;right:18px;}
-#kit-sea-level .sea-level-hud-br{bottom:84px;right:18px;}
-#kit-sea-level .sea-level-hud-bl{bottom:84px;left:18px;}
-#kit-sea-level .sea-level-chip{display:flex;flex-direction:column;gap:3px;padding:9px 13px;border-radius:13px;background:linear-gradient(180deg,rgba(9,14,32,0.5),rgba(6,10,24,0.32));border:1px solid rgba(150,190,255,0.14);backdrop-filter:blur(10px) saturate(125%);-webkit-backdrop-filter:blur(10px) saturate(125%);box-shadow:0 10px 30px -14px rgba(0,0,0,0.6);}
-#kit-sea-level .sea-level-hud-tr .sea-level-chip,#kit-sea-level .sea-level-hud-br .sea-level-chip{align-items:flex-end;}
-#kit-sea-level .sea-level-chip-k{font-size:9.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(186,206,242,0.6);white-space:nowrap;}
-#kit-sea-level .sea-level-chip-v{font-size:21px;font-weight:600;letter-spacing:-0.01em;color:#f3f8ff;font-variant-numeric:tabular-nums;line-height:1;text-shadow:0 1px 10px rgba(0,0,0,0.55);}
-#kit-sea-level .sea-level-chip-v i{font-style:normal;font-size:11px;font-weight:500;color:rgba(190,210,245,0.66);margin-left:1px;}
-#kit-sea-level .sea-level-tag{font-size:9.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(180,202,240,0.5);text-shadow:0 1px 8px rgba(0,0,0,0.6);}
+#kit-sea-level .slv-coordbar{left:50%;top:16px;transform:translateX(-50%);padding:6px 14px}
+#kit-sea-level .slv-coord{font:600 12px/1 'Inter',sans-serif;color:#eef1ff;font-variant-numeric:tabular-nums;letter-spacing:.03em;white-space:nowrap;text-shadow:0 1px 6px rgba(0,0,0,.5)}
 
-@media (max-width:560px){
-  #kit-sea-level .sea-level-chip-v{font-size:17px;}
-  #kit-sea-level .sea-level-hud-br,#kit-sea-level .sea-level-hud-bl{bottom:78px;}
-  #kit-sea-level .sea-level-slider-label{display:none;}
+#kit-sea-level .slv-sliderbar{left:50%;bottom:48px;transform:translateX(-50%);width:min(540px,80%);gap:14px;padding:10px 18px;border-radius:999px}
+#kit-sea-level .slv-slider-label{font:600 10px/1 'Inter',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:rgba(166,171,230,.7);white-space:nowrap}
+#kit-sea-level .slv-slider-val{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:13px;letter-spacing:.01em;color:#f3f8ff;min-width:60px;text-align:right;font-variant-numeric:tabular-nums;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+#kit-sea-level .slv-range{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--accent,#3cc8ff) 0%,var(--accent,#3cc8ff) var(--sl-fill,15%),rgba(166,171,230,.2) var(--sl-fill,15%),rgba(166,171,230,.2) 100%);outline:none;cursor:pointer}
+#kit-sea-level .slv-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--accent,#3cc8ff) 78%);border:2px solid rgba(255,255,255,.85);box-shadow:0 0 0 6px rgba(var(--accent-rgb,60,200,255),.16),0 4px 14px rgba(0,0,0,.5);cursor:pointer;transition:box-shadow .18s ease,transform .12s ease}
+#kit-sea-level .slv-range::-webkit-slider-thumb:hover{box-shadow:0 0 0 9px rgba(var(--accent-rgb,60,200,255),.22),0 4px 16px rgba(0,0,0,.55);transform:scale(1.06)}
+#kit-sea-level .slv-range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--accent,#3cc8ff) 78%);border:2px solid rgba(255,255,255,.85);box-shadow:0 0 0 6px rgba(var(--accent-rgb,60,200,255),.16),0 4px 14px rgba(0,0,0,.5);cursor:pointer}
+#kit-sea-level .slv-range::-moz-range-track{height:4px;border-radius:999px;background:transparent}
+
+#kit-sea-level .slv-hud{position:absolute;z-index:5;pointer-events:none}
+#kit-sea-level .slv-tl{top:16px;left:16px}
+#kit-sea-level .slv-tr{top:16px;right:16px}
+#kit-sea-level .slv-br{bottom:104px;right:16px}
+#kit-sea-level .slv-chip{display:flex;flex-direction:column;gap:3px;padding:9px 13px;border-radius:13px;background:rgba(8,6,28,.46);border:1px solid rgba(166,171,230,.16);-webkit-backdrop-filter:blur(10px) saturate(125%);backdrop-filter:blur(10px) saturate(125%);box-shadow:0 12px 34px -16px rgba(0,0,0,.7)}
+#kit-sea-level .slv-tr .slv-chip,#kit-sea-level .slv-br .slv-chip{align-items:flex-end}
+#kit-sea-level .slv-chip-k{font:600 9.5px/1 'Inter',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(166,171,230,.62);white-space:nowrap}
+#kit-sea-level .slv-chip-v{font-family:'Chakra Petch',sans-serif;font-style:italic;font-weight:700;font-size:21px;letter-spacing:.01em;color:#f3f8ff;font-variant-numeric:tabular-nums;line-height:1;text-shadow:0 1px 10px rgba(0,0,0,.55)}
+#kit-sea-level .slv-chip-v i{font-family:'Inter',sans-serif;font-style:normal;font-size:11px;font-weight:500;color:rgba(166,171,230,.66);margin-left:2px}
+
+#kit-sea-level .slv-source{position:absolute;left:16px;bottom:16px;z-index:5;pointer-events:none;font:500 10px/1.2 'Inter',sans-serif;letter-spacing:.05em;color:rgba(166,171,230,.62);text-shadow:0 1px 8px rgba(0,0,0,.6);max-width:60%}
+
+#kit-sea-level .slv-load{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:7;display:none;align-items:center;gap:9px;padding:10px 16px;border-radius:999px;background:rgba(8,6,28,.66);border:1px solid rgba(166,171,230,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font:500 11.5px/1 'Inter',sans-serif;letter-spacing:.06em;color:#dfe5ff}
+#kit-sea-level .slv-load.slv-on{display:flex}
+#kit-sea-level .slv-spin{width:13px;height:13px;border-radius:50%;border:2px solid rgba(166,171,230,.28);border-top-color:var(--accent,#3cc8ff);animation:slv-rot .9s linear infinite}
+@keyframes slv-rot{to{transform:rotate(360deg)}}
+
+@media (max-width:600px){
+  #kit-sea-level .slv-chip-v{font-size:17px}
+  #kit-sea-level .slv-br{bottom:98px}
+  #kit-sea-level .slv-slider-label{display:none}
+  #kit-sea-level .slv-source{max-width:52%;font-size:9px}
 }
 
 body.mb-embed #kit-sea-level{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;margin:0!important;width:100%!important;max-width:none!important;height:100%!important;}
@@ -91,45 +106,56 @@ body.mb-embed #kit-sea-level [class*='stage'],body.mb-embed #kit-sea-level [clas
   <header class="mb-bar">
     <div class="mb-left">
       <img class="mb-ssai" src="../assets/logo/ssai-white-mark.png" alt="SSAI">
-      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Rising Tide — Nile Delta</div></div>
+      <div class="mb-titles"><div class="mb-kicker">SSAI Interactive</div><div class="mb-title">Rising Tide — Sea-Level Rise</div></div>
     </div>
     <div class="mb-cobrand"><span class="mb-srctag">Data&nbsp;source</span><span class="mb-srclogos"><img src="../assets/logo/nasa-logo.png" alt="NASA"></span></div>
   </header>
   <div class="mb-stage"><div class="kfig" id="kit-sea-level">
-  <canvas id="sea-level-canvas"></canvas>
-  <div class="sea-level-vignette"></div>
-  <div class="sea-level-controls">
-    <div class="sea-level-slider-wrap">
-      <span class="sea-level-slider-label">SEA&nbsp;LEVEL</span>
-      <input id="sea-level-range" class="sea-level-range" type="range" min="0" max="100" value="32" step="0.5" aria-label="Sea level rise" />
-      <span id="sea-level-slider-val" class="sea-level-slider-val">+1.6 m</span>
+<div class="mb-geosearch"><div class="mb-geosearch-bar"><svg class="mb-geosearch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input class="mb-geosearch-input" type="text" placeholder="Search city or country…" autocomplete="off" spellcheck="false"><button class="mb-geosearch-x" type="button" aria-label="Clear">×</button></div><div class="mb-geosearch-list" role="listbox"></div></div>
+  <canvas class="slv-map" aria-label="Interactive map of NASA satellite imagery with real-terrain flood overlay"></canvas>
+  <div class="slv-vig"></div>
+
+  <div class="slv-hud slv-tl">
+    <div class="slv-chip">
+      <span class="slv-chip-k">Sea-level rise</span>
+      <span class="slv-chip-v" id="slv-rise">+1.5 <i>m</i></span>
     </div>
   </div>
-  <div class="sea-level-hud sea-level-hud-tl">
-    <div class="sea-level-chip">
-      <span class="sea-level-chip-k">Sea-level rise</span>
-      <span class="sea-level-chip-v" id="sea-level-rise">+1.6 <i>m</i></span>
+  <div class="slv-hud slv-tr">
+    <div class="slv-chip">
+      <span class="slv-chip-k">Land inundated</span>
+      <span class="slv-chip-v" id="slv-inund">— <i>%</i></span>
     </div>
   </div>
-  <div class="sea-level-hud sea-level-hud-tr">
-    <div class="sea-level-chip">
-      <span class="sea-level-chip-k">Land inundated</span>
-      <span class="sea-level-chip-v" id="sea-level-inund">14 <i>%</i></span>
+  <div class="slv-hud slv-br">
+    <div class="slv-chip">
+      <span class="slv-chip-k">Inundated area</span>
+      <span class="slv-chip-v" id="slv-area">— <i>km²</i></span>
     </div>
   </div>
-  <div class="sea-level-hud sea-level-hud-br">
-    <div class="sea-level-chip">
-      <span class="sea-level-chip-k">Population at risk</span>
-      <span class="sea-level-chip-v" id="sea-level-pop">2.1 <i>M</i></span>
-    </div>
+
+  <div class="slv-controls slv-zoom">
+    <button class="slv-zb" type="button" data-z="1" aria-label="Zoom in">+</button>
+    <button class="slv-zb" type="button" data-z="-1" aria-label="Zoom out">−</button>
   </div>
-  <div class="sea-level-hud sea-level-hud-bl">
-    <div class="sea-level-tag">NASA&nbsp;MODIS · Nile&nbsp;Delta</div>
+
+  <div class="slv-controls slv-coordbar">
+    <span class="slv-coord" id="slv-coord">—</span>
   </div>
+
+  <div class="slv-controls slv-sliderbar">
+    <span class="slv-slider-label">SEA LEVEL</span>
+    <input id="slv-range" class="slv-range" type="range" min="0" max="10" value="1.5" step="0.1" aria-label="Sea level rise in metres" />
+    <span id="slv-slider-val" class="slv-slider-val">+1.5 m</span>
+  </div>
+
+  <div class="slv-source">NASA Blue Marble (cloud-free) · Flood from Terrarium DEM — SRTM/ASTER elevation</div>
+
+  <div class="slv-load slv-on"><span class="slv-spin"></span>Loading imagery & elevation…</div>
 </div></div>
   <footer class="mb-credit">
     <span class="mb-c-int">Drag the sea-level slider to raise the water line from 0 to 10 m. Darker (lower) terrain floods first using image brightness as an elevation proxy; the shoreline breathes and the flooded water caustically shimmers. At rest, ambient tide animation and drifting light keep the scene alive.</span>
-    <span class="mb-c-src">Data · NASA MODIS — Nile Delta</span>
+    <span class="mb-c-src">Elevation · Terrarium DEM (SRTM/ASTER) · NASA Blue Marble</span>
   </footer>
   <button class="mb-immersive-btn" type="button" aria-pressed="false" title="Hide or show controls (H)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg>
@@ -180,427 +206,268 @@ body.mb-embed #kit-sea-level [class*='stage'],body.mb-embed #kit-sea-level [clas
 <script src="../assets/js/geosearch.js"></script>
 <script>
 (function(){
-  var root=document.getElementById('kit-sea-level');
-  if(!root) return;
-  var canvas=root.querySelector('#sea-level-canvas');
-  var ctx=canvas.getContext('2d');
-  var range=root.querySelector('#sea-level-range');
-  var sliderVal=root.querySelector('#sea-level-slider-val');
-  var riseEl=root.querySelector('#sea-level-rise');
-  var inundEl=root.querySelector('#sea-level-inund');
-  var popEl=root.querySelector('#sea-level-pop');
+  var root=document.getElementById('kit-sea-level'); if(!root) return;
+  var canvas=root.querySelector('.slv-map'), ctx=canvas.getContext('2d');
+  var coordEl=root.querySelector('#slv-coord'), loadEl=root.querySelector('.slv-load');
+  var range=root.querySelector('#slv-range');
+  var sliderVal=root.querySelector('#slv-slider-val');
+  var riseEl=root.querySelector('#slv-rise');
+  var inundEl=root.querySelector('#slv-inund');
+  var areaEl=root.querySelector('#slv-area');
+  var TS=256;
 
-  var DPR=Math.max(1,Math.min(2.5,window.devicePixelRatio||1));
-  var W=1,H=1;
+  // ---- single basemap layer: MODIS True Color, date = today-2 ----
+  function pad(n){ return (n<10?'0':'')+n; }
+  function fmtD(d){ return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate()); }
+  var dayMs=86400000, dateStr=fmtD(new Date(Date.now()-2*dayMs));
+  var LAYER={id:'BlueMarble_NextGeneration', ms:8, ext:'jpeg'};
+  function lay(){ return LAYER; }
 
-  function accent(){
-    var c=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    return c||'#7fc9ff';
+  // ---- view: Nile Delta ----
+  var lon=31.0, lat=30.9, zoom=8;
+
+  // ---- DEM flood threshold (metres) ----
+  var THRESHOLD=parseFloat(range.value)||1.5;
+
+  // ---- basemap tile cache + loader ----
+  var cache={}, loading={}, inflight=0, MAXLOAD=10, firstLoaded=false;
+  function url(z,x,y){ var l=lay(); return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+l.id+'/default/GoogleMapsCompatible_Level'+l.ms+'/'+z+'/'+y+'/'+x+'.'+l.ext; }
+  function key(z,x,y){ return lay().id+'|'+dateStr+'|'+z+'|'+x+'|'+y; }
+  function tile(z,x,y){
+    var n=Math.pow(2,z); if(y<0||y>=n) return null; x=((x%n)+n)%n;
+    var k=key(z,x,y); var c=cache[k]; if(c) return c;
+    if(loading[k]||inflight>=MAXLOAD) return null;
+    loading[k]=1; inflight++;
+    var im=new Image(); try{ im.crossOrigin='anonymous'; }catch(e){}
+    im.onload=function(){ cache[k]=im; delete loading[k]; inflight--; scheduleDraw(); if(!firstLoaded){firstLoaded=true; if(loadEl) loadEl.classList.remove('slv-on');} };
+    im.onerror=function(){ cache[k]='e'; delete loading[k]; inflight--; };
+    im.src=url(z,x,y);
+    return null;
   }
-  function hexToRgb(h){
-    h=(h||'').replace('#','');
-    if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    var n=parseInt(h,16);
-    if(isNaN(n)||h.length<6) return {r:127,g:201,b:255};
-    return {r:(n>>16)&255,g:(n>>8)&255,b:n&255};
+
+  // ---- DEM (terrarium elevation) tiles: decode once, build water mask ----
+  // demElev[key] = Float32Array(256*256) of metres
+  // demMask[key] = canvas (256x256) water overlay, rebuilt when THRESHOLD changes
+  var demElev={}, demMask={}, demLoading={}, demInflight=0, DEM_MAXLOAD=8;
+  var demScratch=document.createElement('canvas'); demScratch.width=256; demScratch.height=256;
+  var demSctx=demScratch.getContext('2d',{willReadFrequently:true});
+
+  function demUrl(z,x,y){ return 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/'+z+'/'+x+'/'+y+'.png'; }
+  function demKey(z,x,y){ return z+'|'+x+'|'+y; }
+
+  function decodeDem(im,k){
+    try{
+      demSctx.clearRect(0,0,256,256);
+      demSctx.drawImage(im,0,0,256,256);
+      var d=demSctx.getImageData(0,0,256,256).data;
+      var el=new Float32Array(256*256);
+      for(var i=0,p=0;i<256*256;i++,p+=4){
+        el[i]=(d[p]*256 + d[p+1] + d[p+2]/256) - 32768;
+      }
+      demElev[k]=el;
+      buildMask(k);
+    }catch(e){ demElev[k]='e'; }
   }
 
-  // ---- scene image + elevation proxy ----
-  var img=new Image();
-  var imgReady=false;
-  img.onload=function(){imgReady=true; buildElevation();};
-  img.onerror=function(){imgReady=false;};
-  try{img.src='../assets/scenes/delta/rgb.jpg';}catch(e){}
-
-  var EGRID=160; // elevation sample grid (cols), rows scaled to aspect
-  var elev=null, eCols=0, eRows=0; // brightness proxy 0..1 (0 low/flood-first)
-  var elevSorted=null; // for percentile mapping
-  function buildElevation(){
-    if(!imgReady) return;
-    var iw=img.naturalWidth||img.width, ih=img.naturalHeight||img.height;
-    if(!iw||!ih) return;
-    eCols=EGRID;
-    eRows=Math.max(40,Math.round(EGRID*ih/iw));
-    var tmp=document.createElement('canvas');
-    tmp.width=eCols; tmp.height=eRows;
-    var tctx=tmp.getContext('2d');
-    try{ tctx.drawImage(img,0,0,eCols,eRows); }catch(e){ return; }
-    var data;
-    try{ data=tctx.getImageData(0,0,eCols,eRows).data; }catch(e){ return; }
-    elev=new Float32Array(eCols*eRows);
-    var mn=1e9,mx=-1e9;
-    for(var i=0,p=0;i<eCols*eRows;i++,p+=4){
-      var r=data[p],g=data[p+1],b=data[p+2];
-      // luminance as elevation proxy; water/dark = low. Slight green weighting (delta vegetation mid)
-      var lum=(0.30*r+0.62*g+0.18*b)/255;
-      elev[i]=lum;
-      if(lum<mn)mn=lum; if(lum>mx)mx=lum;
+  // build the 256x256 water-mask canvas for a tile from its cached elevations
+  function buildMask(k){
+    var el=demElev[k]; if(!el||el==='e') return;
+    var mc=demMask[k];
+    if(!mc){ mc=document.createElement('canvas'); mc.width=256; mc.height=256; demMask[k]=mc; }
+    var mctx=mc.getContext('2d');
+    var imgd=mctx.createImageData(256,256);
+    var o=imgd.data;
+    var thr=THRESHOLD;
+    // waterline band near the current threshold reads slightly brighter
+    var band=Math.max(0.25,thr*0.12);
+    for(var i=0,p=0;i<256*256;i++,p+=4){
+      var e=el[i];
+      if(e>0 && e<=thr){
+        // brighter waterline close to the new shoreline
+        if(e >= thr-band){
+          o[p]=110; o[p+1]=200; o[p+2]=255; o[p+3]=180;
+        }else{
+          o[p]=40; o[p+1]=150; o[p+2]=230; o[p+3]=158; // ~rgba(40,150,230,0.62)
+        }
+      }else{
+        o[p]=0; o[p+1]=0; o[p+2]=0; o[p+3]=0;
+      }
     }
-    var rng=Math.max(0.0001,mx-mn);
-    var arr=new Float32Array(eCols*eRows);
-    for(var k=0;k<elev.length;k++){ elev[k]=(elev[k]-mn)/rng; arr[k]=elev[k]; }
-    arr.sort();
-    elevSorted=arr;
+    mctx.putImageData(imgd,0,0);
   }
 
-  function fillFraction(){ // fraction of land below current threshold
-    // threshold derived from slider 0..1 mapped to a gentle curve
-    return curThreshold;
+  function demTile(z,x,y){
+    var n=Math.pow(2,z); if(y<0||y>=n) return null; x=((x%n)+n)%n;
+    var k=demKey(z,x,y);
+    if(demMask[k]) return demMask[k];
+    if(demElev[k]==='e') return null;
+    if(demLoading[k]||demInflight>=DEM_MAXLOAD) return null;
+    demLoading[k]=1; demInflight++;
+    var im=new Image(); try{ im.crossOrigin='anonymous'; }catch(e){}
+    im.onload=function(){ decodeDem(im,k); delete demLoading[k]; demInflight--; updateStats(); scheduleDraw(); };
+    im.onerror=function(){ demElev[k]='e'; delete demLoading[k]; demInflight--; };
+    im.src=demUrl(z,x,y);
+    return null;
   }
 
-  // ---- sizing ----
+  // rebuild every cached mask from cached elevations (slider change) — no re-fetch
+  function rebuildMasks(){
+    for(var k in demElev){ if(demElev.hasOwnProperty(k) && demElev[k]!=='e') buildMask(k); }
+  }
+
+  // ---- mercator projection (tile units at zoom z) ----
+  function lon2tx(lo,z){ return (lo+180)/360*Math.pow(2,z); }
+  function lat2ty(la,z){ var s=Math.sin(la*Math.PI/180); s=Math.max(-0.99999,Math.min(0.99999,s)); return (0.5 - Math.log((1+s)/(1-s))/(4*Math.PI))*Math.pow(2,z); }
+  function tx2lon(tx,z){ return tx/Math.pow(2,z)*360-180; }
+  function ty2lat(ty,z){ var k=Math.PI-2*Math.PI*ty/Math.pow(2,z); return 180/Math.PI*Math.atan(0.5*(Math.exp(k)-Math.exp(-k))); }
+
+  var W=1,H=1,DPR=1;
   function resize(){
-    var w=canvas.clientWidth||root.clientWidth||1;
-    var h=canvas.clientHeight||root.clientHeight||1;
-    if(w<1)w=1; if(h<1)h=1;
-    DPR=Math.max(1,Math.min(2.5,window.devicePixelRatio||1));
-    W=w; H=h;
-    canvas.width=Math.round(w*DPR);
-    canvas.height=Math.round(h*DPR);
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    W=root.clientWidth||800; H=root.clientHeight||500;
+    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0); scheduleDraw();
   }
+  function clamp(){ var mz=lay().ms; if(zoom>mz) zoom=mz; if(zoom<1.2) zoom=1.2; if(lat>83) lat=83; if(lat<-83) lat=-83; }
 
-  // ---- cover-fit mapping for image ----
-  function coverRect(iw,ih){
-    var sa=W/H, ia=iw/ih, dw,dh,dx,dy;
-    if(ia>sa){ dh=H; dw=H*ia; }else{ dw=W; dh=W/ia; }
-    dx=(W-dw)/2; dy=(H-dh)/2;
-    return {dw:dw,dh:dh,dx:dx,dy:dy};
-  }
-
-  // ---- procedural fallback terrain ----
-  var fbCanvas=null;
-  function buildFallback(){
-    fbCanvas=document.createElement('canvas');
-    fbCanvas.width=640; fbCanvas.height=400;
-    var c=fbCanvas.getContext('2d');
-    var g=c.createLinearGradient(0,0,640,400);
-    g.addColorStop(0,'#0a1326'); g.addColorStop(0.5,'#13243f'); g.addColorStop(1,'#091a2c');
-    c.fillStyle=g; c.fillRect(0,0,640,400);
-    // braided delta-ish channels (darker = lower)
-    for(var s=0;s<7;s++){
-      c.strokeStyle='rgba(8,14,26,0.8)';
-      c.lineWidth=4+s*2.4;
-      c.beginPath();
-      var x=120+s*60, y=10;
-      c.moveTo(x,y);
-      for(var t=0;t<22;t++){
-        x+=Math.sin(t*0.6+s)*18+ (s-3)*2;
-        y+=18;
-        c.lineTo(x,y);
-      }
-      c.stroke();
-    }
-    // vegetation patches (mid)
-    for(var v=0;v<260;v++){
-      var px=Math.random()*640, py=Math.random()*400;
-      c.fillStyle='rgba(40,'+(70+Math.random()*40|0)+',55,0.10)';
-      c.beginPath(); c.arc(px,py,3+Math.random()*9,0,7); c.fill();
-    }
-    // build elevation from fallback if real elevation absent
-    if(!elev){
-      var tmp=document.createElement('canvas'); tmp.width=EGRID; tmp.height=Math.round(EGRID*400/640);
-      var tc=tmp.getContext('2d'); tc.drawImage(fbCanvas,0,0,tmp.width,tmp.height);
-      var d=tc.getImageData(0,0,tmp.width,tmp.height).data;
-      eCols=tmp.width; eRows=tmp.height; elev=new Float32Array(eCols*eRows);
-      var mn=1e9,mx=-1e9;
-      for(var i=0,p=0;i<eCols*eRows;i++,p+=4){var lum=(d[p]+d[p+1]+d[p+2])/765; elev[i]=lum; if(lum<mn)mn=lum; if(lum>mx)mx=lum;}
-      var rng=Math.max(0.0001,mx-mn); var arr=new Float32Array(elev.length);
-      for(var k=0;k<elev.length;k++){elev[k]=(elev[k]-mn)/rng; arr[k]=elev[k];} arr.sort(); elevSorted=arr;
-    }
-  }
-  buildFallback();
-
-  // ---- water mask offscreen (drawn at elevation grid res, scaled up) ----
-  var maskCanvas=document.createElement('canvas');
-  var maskCtx=maskCanvas.getContext('2d');
-
-  // ---- state ----
-  var targetSlider=parseFloat(range.value)/100;
-  var slider=targetSlider;
-  var curThreshold=0; // 0..1 elevation threshold below which flooded
-  var inundFrac=0;
-  var time=0;
-
-  function sliderToRiseMeters(s){ return s*10; } // 0..10 m
-  // map rise meters -> elevation-brightness threshold. Low areas (small brightness) flood first.
-  // Use a curve so early rise floods notable area; we map meters to a normalized threshold then via percentile.
-  function riseToThreshold(s){
-    // gentle ease so motion at low end is visible
-    return Math.pow(s,0.78)*0.92; // 0..~0.92 normalized brightness band that gets submerged
-  }
-
-  range.addEventListener('input',function(){
-    targetSlider=parseFloat(range.value)/100;
-  });
-
-  function fmt(n,d){ return n.toFixed(d); }
-
-  function updateReadouts(){
-    var rise=sliderToRiseMeters(slider);
-    // inundation fraction via percentile of brightness below threshold
-    if(elevSorted&&elevSorted.length){
-      var th=curThreshold;
-      // binary search count below th
-      var lo=0,hi=elevSorted.length;
-      while(lo<hi){var mid=(lo+hi)>>1; if(elevSorted[mid]<th) lo=mid+1; else hi=mid;}
-      inundFrac=lo/elevSorted.length;
-    }
-    // exclude the natural open-sea/dark baseline a bit so % reads as *land* inundated
-    var landInund=Math.max(0,(inundFrac-0.06))/0.94;
-    landInund=Math.min(1,landInund);
-    var pop=landInund*9.2; // proxy: ~9.2M people across exposed delta lowlands
-
-    sliderVal.textContent='+'+fmt(rise,1)+' m';
-    riseEl.innerHTML='+'+fmt(rise,1)+' <i>m</i>';
-    inundEl.innerHTML=Math.round(landInund*100)+' <i>%</i>';
-    popEl.innerHTML=fmt(pop,1)+' <i>M</i>';
-    range.style.setProperty('--sl-fill',(slider*100)+'%');
-  }
-
-  // ---- render water mask: per elevation cell, alpha if below shimmering threshold ----
-  function renderMask(){
-    if(!elev||!eCols||!eRows) return;
-    if(maskCanvas.width!==eCols||maskCanvas.height!==eRows){
-      maskCanvas.width=eCols; maskCanvas.height=eRows;
-    }
-    var imgd=maskCtx.createImageData(eCols,eRows);
-    var d=imgd.data;
-    var th=curThreshold;
-    var edge=0.05; // soft shoreline band
-    for(var y=0;y<eRows;y++){
-      for(var x=0;x<eCols;x++){
-        var idx=y*eCols+x;
-        var e=elev[idx];
-        // animated shoreline: tide ripple modulates effective threshold along coast
-        var tide=Math.sin(x*0.21+ y*0.13 + time*0.9)*0.012
-               + Math.sin(x*0.08 - time*0.6)*0.010;
-        var localTh=th+tide;
-        var a;
-        if(e< localTh-edge){ a=1; }
-        else if(e> localTh+edge){ a=0; }
-        else { a=1-( (e-(localTh-edge))/(2*edge) ); a=a*a*(3-2*a); }
-        // depth shading: deeper (lower e relative to th) => stronger
-        var depth=Math.max(0,Math.min(1,(localTh-e)/Math.max(0.18,localTh)));
-        var p=idx*4;
-        d[p]=depth*255;      // store depth in R for later use
-        d[p+1]=0; d[p+2]=0;
-        d[p+3]=Math.round(a*255);
-      }
-    }
-    maskCtx.putImageData(imgd,0,0);
-  }
-
-  // caustic shimmer overlay canvas (small, tiled feel)
-  function drawCaustics(rect,acc){
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    var n=Math.round((W*H)/26000);
-    n=Math.max(40,Math.min(220,n));
-    for(var i=0;i<n;i++){
-      // pseudo-stable points drifting
-      var sx=( (i*97.13)%1000)/1000;
-      var sy=( (i*53.71)%1000)/1000;
-      var px=rect.dx+ ((sx*rect.dw + Math.sin(time*0.5+i)*14 + time*8) % rect.dw);
-      var py=rect.dy+ ((sy*rect.dh + Math.cos(time*0.4+i*0.7)*10) % rect.dh);
-      // only over flooded cells
-      var ex=Math.floor((px-rect.dx)/rect.dw*eCols);
-      var ey=Math.floor((py-rect.dy)/rect.dh*eRows);
-      if(ex<0||ey<0||ex>=eCols||ey>=eRows) continue;
-      var e=elev?elev[ey*eCols+ex]:1;
-      if(e>=curThreshold) continue;
-      var tw=0.5+0.5*Math.sin(time*2.2+i*1.3);
-      var rr=8+tw*16;
-      var g=ctx.createRadialGradient(px,py,0,px,py,rr);
-      var al=0.05+tw*0.07;
-      g.addColorStop(0,'rgba('+acc.r+','+acc.g+','+acc.b+','+al+')');
-      g.addColorStop(0.5,'rgba(190,225,255,'+(al*0.5)+')');
-      g.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=g;
-      ctx.beginPath(); ctx.arc(px,py,rr,0,6.2832); ctx.fill();
-    }
-    ctx.restore();
-  }
-
-  // ambient surface drift particles (atmosphere over whole scene)
-  var motes=[];
-  function initMotes(){
-    motes=[];
-    var n=46;
-    for(var i=0;i<n;i++){
-      motes.push({x:Math.random(),y:Math.random(),s:0.4+Math.random()*1.4,v:0.004+Math.random()*0.01,ph:Math.random()*6.28});
-    }
-  }
-  initMotes();
-  function drawMotes(acc){
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    for(var i=0;i<motes.length;i++){
-      var m=motes[i];
-      m.x+=m.v*0.16; if(m.x>1.05)m.x=-0.05;
-      var px=m.x*W, py=(m.y+Math.sin(time*0.5+m.ph)*0.01)*H;
-      var tw=0.4+0.6*Math.sin(time*1.3+m.ph);
-      var rr=m.s*2.2;
-      var g=ctx.createRadialGradient(px,py,0,px,py,rr*5);
-      g.addColorStop(0,'rgba(210,230,255,'+(0.10*tw)+')');
-      g.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=g;
-      ctx.beginPath(); ctx.arc(px,py,rr*5,0,6.2832); ctx.fill();
-    }
-    ctx.restore();
+  function drawParent(z,x,y,sx,sy,ts){
+    for(var dz=1;dz<=4;dz++){ var pz=z-dz; if(pz<0) break; var f=Math.pow(2,dz);
+      var px=Math.floor(x/f), py=Math.floor(y/f); var n=Math.pow(2,pz); var pk=lay().id+'|'+dateStr+'|'+pz+'|'+(((px%n)+n)%n)+'|'+py;
+      var pt=cache[pk]; if(pt && pt!=='e'){ var sub=1/f; ctx.drawImage(pt,(x-px*f)/f*256,(y-py*f)/f*256,256*sub,256*sub,sx,sy,ts+1,ts+1); return true; } }
+    ctx.fillStyle='rgba(16,18,42,.55)'; ctx.fillRect(sx,sy,ts+1,ts+1); return false;
   }
 
   function draw(){
-    var cw=canvas.clientWidth||1, ch=canvas.clientHeight||1;
-    if(Math.abs(cw-W)>0.5||Math.abs(ch-H)>0.5||canvas.width!==Math.round(cw*DPR)||canvas.height!==Math.round(ch*DPR)){
-      resize();
+    clamp();
+    var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom)));
+    var scale=Math.pow(2,zoom-z), ts=TS*scale;
+    var cTx=lon2tx(lon,z), cTy=lat2ty(lat,z);
+    var ox=cTx-(W/2)/ts, oy=cTy-(H/2)/ts;
+    var n=Math.pow(2,z);
+    ctx.fillStyle='#05030f'; ctx.fillRect(0,0,W,H);
+    var x0=Math.floor(ox), x1=Math.floor(ox+W/ts), y0=Math.floor(oy), y1=Math.floor(oy+H/ts);
+    for(var ty=y0;ty<=y1;ty++){ if(ty<0||ty>=n) continue;
+      for(var tx=x0;tx<=x1;tx++){
+        var sx=(tx-ox)*ts, sy=(ty-oy)*ts;
+        var xw=((tx%n)+n)%n;
+        var t=tile(z,tx,ty);
+        if(t && t!=='e'){ ctx.drawImage(t,sx,sy,ts+1,ts+1); }
+        else { drawParent(z,xw,ty,sx,sy,ts); }
+        // DEM flood overlay (same z/x/y grid, aligns 1:1)
+        var dm=demTile(z,tx,ty);
+        if(dm){ ctx.imageSmoothingEnabled=true; ctx.drawImage(dm,sx,sy,ts+1,ts+1); }
+      }
     }
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    ctx.clearRect(0,0,W,H);
-
-    var acc=hexToRgb(accent());
-
-    // base wash
-    var bg=ctx.createRadialGradient(W*0.5,H*0.4,0,W*0.5,H*0.5,Math.max(W,H)*0.75);
-    bg.addColorStop(0,'#0a0a22'); bg.addColorStop(1,'#050314');
-    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-
-    // source for terrain
-    var src=imgReady?img:fbCanvas;
-    var iw=imgReady?(img.naturalWidth||img.width):fbCanvas.width;
-    var ih=imgReady?(img.naturalHeight||img.height):fbCanvas.height;
-    var rect=coverRect(iw,ih);
-
-    // draw terrain (cover)
-    ctx.save();
-    ctx.imageSmoothingEnabled=true;
-    try{ ctx.drawImage(src,rect.dx,rect.dy,rect.dw,rect.dh); }catch(e){}
-    ctx.restore();
-
-    // subtle cinematic grade over land
-    ctx.save();
-    ctx.globalCompositeOperation='multiply';
-    var grade=ctx.createLinearGradient(0,rect.dy,0,rect.dy+rect.dh);
-    grade.addColorStop(0,'rgba(120,140,190,1)');
-    grade.addColorStop(0.5,'rgba(255,250,240,1)');
-    grade.addColorStop(1,'rgba(110,130,180,1)');
-    ctx.fillStyle=grade; ctx.fillRect(0,0,W,H);
-    ctx.restore();
-
-    // ---- WATER LAYER ----
-    renderMask();
-    if(eCols&&eRows){
-      // 1) tinted water body via mask alpha
-      ctx.save();
-      ctx.imageSmoothingEnabled=true;
-      // draw mask scaled to rect to a temp via globalAlpha trick:
-      // We composite a colored water rect clipped by mask alpha.
-      // Use the mask as alpha by drawing it, then source-in the water gradient.
-      var wtemp=getWTemp(rect);
-      ctx.drawImage(wtemp,rect.dx,rect.dy,rect.dw,rect.dh);
-      ctx.restore();
-
-      // 2) caustic shimmer over flooded zones
-      drawCaustics(rect,acc);
-
-      // 3) shoreline glow line (advance edge)
-      drawShoreGlow(rect,acc);
-    }
-
-    // ambient motes over everything
-    drawMotes(acc);
-
-    // top light sweep
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    var sweepX=(0.5+0.5*Math.sin(time*0.18))*W;
-    var sw=ctx.createRadialGradient(sweepX,H*0.18,0,sweepX,H*0.18,Math.max(W,H)*0.5);
-    sw.addColorStop(0,'rgba('+acc.r+','+acc.g+','+acc.b+',0.05)');
-    sw.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=sw; ctx.fillRect(0,0,W,H);
-    ctx.restore();
   }
+  var pending=false;
+  function scheduleDraw(){ if(pending) return; pending=true; setTimeout(function(){ pending=false; draw(); },16); }
 
-  // water-colored layer masked by flood alpha, with depth tint
-  var wtempCanvas=document.createElement('canvas');
-  var wtempCtx=wtempCanvas.getContext('2d');
-  function getWTemp(rect){
-    var acc=hexToRgb(accent());
-    // render at mask resolution for crispness then scaled in draw()
-    if(wtempCanvas.width!==eCols||wtempCanvas.height!==eRows){
-      wtempCanvas.width=eCols; wtempCanvas.height=eRows;
-    }
-    var wc=wtempCtx;
-    wc.clearRect(0,0,eCols,eRows);
-    // water gradient (shallow accent -> deep navy)
-    var grd=wc.createLinearGradient(0,0,0,eRows);
-    grd.addColorStop(0,'rgba('+Math.round(acc.r*0.5+40)+','+Math.round(acc.g*0.6+60)+','+Math.round(acc.b*0.7+70)+',0.78)');
-    grd.addColorStop(1,'rgba(8,'+Math.round(30)+','+Math.round(70)+',0.86)');
-    wc.globalCompositeOperation='source-over';
-    wc.fillStyle=grd;
-    wc.fillRect(0,0,eCols,eRows);
-    // apply mask alpha
-    wc.globalCompositeOperation='destination-in';
-    wc.drawImage(maskCanvas,0,0);
-    wc.globalCompositeOperation='source-over';
-    return wtempCanvas;
+  // ---- coordinate readout ----
+  function fmtCoord(la,lo){
+    var ns=la>=0?'N':'S', ew=lo>=0?'E':'W';
+    return Math.abs(la).toFixed(2)+'°'+ns+'  '+Math.abs(lo).toFixed(2)+'°'+ew+'   z'+zoom.toFixed(1);
   }
+  function pxToGeo(px,py){
+    var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))), scale=Math.pow(2,zoom-z), ts=TS*scale;
+    var cTx=lon2tx(lon,z), cTy=lat2ty(lat,z);
+    var tx=cTx+(px-W/2)/ts, ty=cTy+(py-H/2)/ts;
+    return [ty2lat(ty,z), tx2lon(tx,z)];
+  }
+  function showCoord(px,py){ var g=(px==null)?[lat,lon]:pxToGeo(px,py); if(coordEl) coordEl.textContent=fmtCoord(g[0],g[1]); }
 
-  // glowing shoreline where alpha transitions (approx by sampling threshold band)
-  function drawShoreGlow(rect,acc){
-    if(!elev) return;
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    var th=curThreshold, edge=0.05;
-    var step=Math.max(1,Math.floor(eCols/120));
-    var cellW=rect.dw/eCols, cellH=rect.dh/eRows;
-    for(var y=0;y<eRows;y+=step){
-      for(var x=0;x<eCols;x+=step){
-        var e=elev[y*eCols+x];
-        var tide=Math.sin(x*0.21+y*0.13+time*0.9)*0.012+Math.sin(x*0.08-time*0.6)*0.010;
-        var localTh=th+tide;
-        if(Math.abs(e-localTh)<edge*0.7){
-          var px=rect.dx+(x+0.5)*cellW, py=rect.dy+(y+0.5)*cellH;
-          var tw=0.45+0.55*Math.sin(time*2.4+x*0.3+y*0.2);
-          var rr=cellW*1.6;
-          var g=ctx.createRadialGradient(px,py,0,px,py,rr*2.4);
-          g.addColorStop(0,'rgba(220,240,255,'+(0.10*tw)+')');
-          g.addColorStop(0.4,'rgba('+acc.r+','+acc.g+','+acc.b+','+(0.07*tw)+')');
-          g.addColorStop(1,'rgba(0,0,0,0)');
-          ctx.fillStyle=g;
-          ctx.beginPath(); ctx.arc(px,py,rr*2.4,0,6.2832); ctx.fill();
+  // ---- stats: all real, decoded from DEM tiles currently in view ----
+  function groundMetersPerPx(z){
+    return (2*20037508.34/(Math.pow(2,z)*256)) / Math.pow(2,zoom-z) * Math.cos(lat*Math.PI/180);
+  }
+  function fmtNum(n){
+    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  }
+  function updateStats(){
+    var rise=THRESHOLD;
+    sliderVal.textContent='+'+rise.toFixed(1)+' m';
+    riseEl.innerHTML='+'+rise.toFixed(1)+' <i>m</i>';
+    range.style.setProperty('--sl-fill',((rise/10)*100)+'%');
+
+    // count over decoded pixels of visible DEM tiles
+    var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom)));
+    var scale=Math.pow(2,zoom-z), ts=TS*scale;
+    var cTx=lon2tx(lon,z), cTy=lat2ty(lat,z);
+    var ox=cTx-(W/2)/ts, oy=cTy-(H/2)/ts;
+    var n=Math.pow(2,z);
+    var x0=Math.floor(ox), x1=Math.floor(ox+W/ts), y0=Math.floor(oy), y1=Math.floor(oy+H/ts);
+    var land=0, flooded=0;
+    for(var ty=y0;ty<=y1;ty++){ if(ty<0||ty>=n) continue;
+      for(var tx=x0;tx<=x1;tx++){
+        var xw=((tx%n)+n)%n;
+        var el=demElev[demKey(z,xw,ty)];
+        if(!el||el==='e') continue;
+        for(var i=0;i<el.length;i++){
+          var e=el[i];
+          if(e>0){ land++; if(e<=THRESHOLD) flooded++; }
         }
       }
     }
-    ctx.restore();
+    if(land>0){
+      var pct=Math.round(100*flooded/land);
+      inundEl.innerHTML=pct+' <i>%</i>';
+      var gmpp=groundMetersPerPx(z);
+      var areaKm2=flooded*gmpp*gmpp/1e6;
+      areaEl.innerHTML=fmtNum(areaKm2)+' <i>km²</i>';
+    }else{
+      inundEl.innerHTML='— <i>%</i>';
+      areaEl.innerHTML='— <i>km²</i>';
+    }
   }
 
-  var last=performance.now();
-  function loop(now){
-    var dt=Math.min(0.05,(now-last)/1000); last=now;
-    time+=dt;
-    // ease slider toward target + ambient breathing on threshold
-    slider+=(targetSlider-slider)*Math.min(1,dt*6);
-    var ambient=Math.sin(time*0.5)*0.006; // gentle tide at rest
-    curThreshold=riseToThreshold(slider)+ambient;
-    if(curThreshold<0)curThreshold=0;
-    updateReadouts();
-    draw();
-    requestAnimationFrame(loop);
-  }
+  // ---- interaction: drag pan ----
+  var drag=false, lpx=0, lpy=0;
+  function relXY(e){ var r=canvas.getBoundingClientRect(); var t=e.touches?e.touches[0]:e; return [t.clientX-r.left, t.clientY-r.top]; }
+  canvas.addEventListener('pointerdown',function(e){ drag=true; var p=relXY(e); lpx=p[0]; lpy=p[1]; try{canvas.setPointerCapture(e.pointerId);}catch(_){ } });
+  canvas.addEventListener('pointermove',function(e){
+    var p=relXY(e);
+    if(drag){
+      var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))), scale=Math.pow(2,zoom-z), ts=TS*scale;
+      var cTx=lon2tx(lon,z)-(p[0]-lpx)/ts, cTy=lat2ty(lat,z)-(p[1]-lpy)/ts;
+      lon=tx2lon(cTx,z); lat=ty2lat(cTy,z); lpx=p[0]; lpy=p[1]; clamp(); scheduleDraw(); updateStats();
+    }
+    showCoord(p[0],p[1]);
+  });
+  function endDrag(){ drag=false; }
+  canvas.addEventListener('pointerup',endDrag); canvas.addEventListener('pointercancel',endDrag); canvas.addEventListener('pointerleave',function(){ drag=false; showCoord(null); });
+  // wheel zoom anchored at cursor
+  canvas.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var p=relXY(e); var g=pxToGeo(p[0],p[1]);
+    var dz=(-e.deltaY)*0.0016; zoom+=dz; clamp();
+    var z=Math.max(1,Math.min(lay().ms,Math.floor(zoom))), scale=Math.pow(2,zoom-z), ts=TS*scale;
+    var gTx=lon2tx(g[1],z), gTy=lat2ty(g[0],z);
+    var cTx=gTx-(p[0]-W/2)/ts, cTy=gTy-(p[1]-H/2)/ts;
+    lon=tx2lon(cTx,z); lat=ty2lat(cTy,z); clamp(); scheduleDraw(); showCoord(p[0],p[1]); updateStats();
+  },{passive:false});
+  // zoom buttons (anchored at center)
+  root.querySelectorAll('.slv-zb').forEach(function(b){ b.addEventListener('click',function(){ zoom+=(+b.dataset.z)*0.9; clamp(); scheduleDraw(); showCoord(null); updateStats(); }); });
 
-  // init
-  resize();
-  updateReadouts();
-  draw();
-  requestAnimationFrame(loop);
+  // ---- slider: THRESHOLD in metres ----
+  range.addEventListener('input',function(){
+    THRESHOLD=parseFloat(range.value)||0;
+    rebuildMasks();
+    updateStats();
+    scheduleDraw();
+  });
 
-  // observers
-  var ro=null;
-  if('ResizeObserver' in window){
-    ro=new ResizeObserver(function(){ resize(); });
-    ro.observe(root);
-  }
+  // ---- init ----
+  if(loadEl) loadEl.classList.add('slv-on');
+  resize(); showCoord(null); updateStats();
+  if(window.ResizeObserver){ try{ new ResizeObserver(resize).observe(root); }catch(e){} }
   window.addEventListener('resize',resize);
+  draw();
+  // safety: clear the loading chip even if some tiles are slow
+  setTimeout(function(){ if(loadEl) loadEl.classList.remove('slv-on'); },5000);
+  // periodic stat refresh while DEM tiles stream in
+  setTimeout(updateStats,1200); setTimeout(updateStats,2600); setTimeout(updateStats,4200);
+
+  if(window.SSAIGeoSearch)SSAIGeoSearch(root,{flyTo:function(_lo,_la,_z){lon=_lo;lat=_la;zoom=Math.min(_z,lay().ms);clamp();rebuildMasks&&rebuildMasks();scheduleDraw();try{showCoord();}catch(e){}}});
 })();
 </script>
 </body></html>

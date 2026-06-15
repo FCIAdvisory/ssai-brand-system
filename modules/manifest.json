@@ -109,11 +109,11 @@
     },
     {
       "slug": "sea-level",
-      "title": "Rising Tide \u2014 Nile Delta",
+      "title": "Rising Tide \u2014 Sea-Level Rise",
       "collection": "earth-climate",
       "source": "NASA",
-      "credit": "Data \u00b7 NASA MODIS \u2014 Nile Delta",
-      "blurb": "Visualizes how progressive sea-level rise inundates a real low-lying coastline. The Nile Delta (NASA MODIS true-color) fills the frame; a translucent, shimmering water layer floods the lowest terrain first as you raise sea level, with live readouts for rise (m), land inundated (%), and a population-at-risk proxy.",
+      "credit": "Elevation \u00b7 Terrarium DEM (SRTM/ASTER) \u00b7 NASA Blue Marble",
+      "blurb": "A live, pannable map where sea-level rise is computed from REAL terrain elevation: a NASA Blue Marble basemap with a flood layer driven by the Terrarium DEM (SRTM/ASTER) \u2014 every pixel below your chosen sea level floods, every pixel above stays dry. Search any coastline (city or country) and raise the slider; land-inundated % and inundated area (km\u00b2) update live from the elevation data.",
       "interaction": "Drag the sea-level slider to raise the water line from 0 to 10 m. Darker (lower) terrain floods first using image brightness as an elevation proxy; the shoreline breathes and the flooded water caustically shimmers. At rest, ambient tide animation and drifting light keep the scene alive.",
       "real": true
     },

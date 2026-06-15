@@ -339,7 +339,7 @@ body.mb-embed #kit-wildfire-detect [class*='stage'],body.mb-embed #kit-wildfire-
 
   /* basemap tile cache */
   var cache={}, loading={}, inflight=0, MAXLOAD=10, firstLoaded=false;
-  function url(z,x,y){ var l=lay(); return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+l.id+'/default/'+dateStr+'/GoogleMapsCompatible_Level'+l.ms+'/'+z+'/'+y+'/'+x+'.'+l.ext; }
+  function url(z,x,y){ var l=lay(); return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+l.id+'/default/GoogleMapsCompatible_Level'+l.ms+'/'+z+'/'+y+'/'+x+'.'+l.ext; }
   function key(z,x,y){ return lay().id+'|'+dateStr+'|'+z+'|'+x+'|'+y; }
   function tile(z,x,y){
     var n=Math.pow(2,z); if(y<0||y>=n) return null; x=((x%n)+n)%n;
