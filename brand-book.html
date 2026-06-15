@@ -476,6 +476,7 @@ p{max-width:62ch}
   radial-gradient(120% 80% at 80% -10%,rgba(34,31,122,.5),transparent 60%),
   radial-gradient(90% 70% at 0% 110%,rgba(47,217,195,.10),transparent 55%),
   linear-gradient(#070524,#050314)}
+.livesys .inner{position:relative;z-index:5;max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px)}
 .livesys .specbar{height:2px;width:54px;background:linear-gradient(90deg,var(--teal),transparent);margin:14px 0 22px}
 .livesys h2.disp{font-size:clamp(34px,6.4vw,82px);color:var(--starlight);margin:0 0 18px;max-width:18ch}
 .livesys .lglede{color:var(--nebula);max-width:64ch;font-weight:300;font-size:clamp(16px,1.5vw,19px)}
@@ -492,9 +493,16 @@ p{max-width:62ch}
 .lsdev .bar .open{margin-left:auto;font-family:var(--label);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--nebula);border:1px solid var(--hair-2);border-radius:30px;padding:5px 12px;pointer-events:auto;transition:.2s}
 .lsdev .bar .open:hover{color:var(--starlight);border-color:var(--blue);background:rgba(60,123,224,.12)}
 .lsdev .vp{position:relative;aspect-ratio:16/10;background:#05030f;overflow:hidden}
-.lsdev.feat .vp{aspect-ratio:21/9}
-@media(max-width:900px){.lsdev.feat .vp{aspect-ratio:16/10}}
-.lsdev iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.lsdev.feat .vp{aspect-ratio:auto;height:clamp(300px,40vh,430px)}
+@media(max-width:900px){.lsdev.feat .vp{height:auto;aspect-ratio:16/10}}
+.lsdev iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;pointer-events:none}
+.lsdev.active iframe{pointer-events:auto}
+/* scroll guard — the page scrolls over the instrument until you click to interact */
+.lsguard{position:absolute;inset:0;z-index:4;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;background:transparent;transition:opacity .3s}
+.lsguard .gp{font-family:var(--label);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--starlight);background:rgba(8,6,28,.74);border:1px solid var(--hair-2);border-radius:30px;padding:7px 15px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transition:opacity .25s;display:flex;align-items:center;gap:7px}
+.lsguard .gp::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.lsdev:hover .lsguard .gp{opacity:1}
+.lsdev.active .lsguard{opacity:0;pointer-events:none}
 .lsdev .ph{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;transition:opacity .8s ease}
 .lsdev .ph::after{content:"";position:absolute;inset:0;background:rgba(5,3,20,.5)}
 .lsdev.loaded .ph{opacity:0;pointer-events:none}
@@ -510,16 +518,16 @@ p{max-width:62ch}
 /* ===== WORLDS — planet imagery strip ===== */
 .worldswrap{margin-top:38px}
 .worldslab{font-family:var(--label);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--nebula);margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.worlds{display:flex;gap:clamp(14px,1.6vw,22px);overflow-x:auto;padding:6px 2px 18px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.worlds{display:flex;gap:clamp(18px,2.4vw,40px);overflow-x:auto;padding:14px 2px 26px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
 .worlds::-webkit-scrollbar{height:6px}.worlds::-webkit-scrollbar-thumb{background:var(--hair-2);border-radius:6px}
-.world{flex:0 0 auto;width:clamp(118px,15vw,172px);scroll-snap-align:center;text-align:center}
+.world{flex:0 0 auto;width:clamp(150px,18vw,224px);scroll-snap-align:center;text-align:center}
 .world .pic{position:relative;aspect-ratio:1;border-radius:50%;overflow:hidden;background:#04030e;border:1px solid var(--hair);box-shadow:0 18px 44px -22px rgba(0,0,0,.9);transition:transform .3s,border-color .3s}
 .world:hover .pic{transform:scale(1.05);border-color:var(--blue)}
 .world .pic img{width:100%;height:100%;object-fit:cover}
 .world.ring .pic{border-radius:18px;background:radial-gradient(circle at 50% 45%,#0a0820,#04030e)}
 .world.ring .pic img{object-fit:contain}
-.world .wn{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;font-size:14px;letter-spacing:.01em;color:var(--starlight);margin-top:13px}
-.world .wm{font-family:var(--label);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.world .wn{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(15px,1.5vw,19px);letter-spacing:.01em;color:var(--starlight);margin-top:16px}
+.world .wm{font-family:var(--label);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 </style>
 </head>
 <body>
@@ -623,22 +631,22 @@ p{max-width:62ch}
     <div class="lsgrid">
       <div class="lsdev feat reveal">
         <div class="bar"><img class="mk" src="assets/logo/ssai-white-mark.png" alt="SSAI"><div class="dot3"><i></i><i></i><i></i></div><span class="t">Rising Tide · Sea-Level Rise</span><a class="open" href="modules/sea-level.html" target="_blank" rel="noopener">Open ↗</a></div>
-        <div class="vp"><div class="ph" style="background-image:url(assets/images/sst-gulf-stream.jpg)"><div class="spin"></div></div><iframe data-live="modules/sea-level.html?embed=1&accent=%233c7be0" title="Rising Tide — live sea-level rise" loading="lazy"></iframe></div>
+        <div class="vp"><div class="ph" style="background-image:url(assets/images/sst-gulf-stream.jpg)"><div class="spin"></div></div><iframe data-live="modules/sea-level.html?embed=1&accent=%233c7be0" title="Rising Tide — live sea-level rise" loading="lazy"></iframe><div class="lsguard"><span class="gp">Click to interact</span></div></div>
         <div class="cap"><span class="ci">Earth &amp; climate</span><p class="cd">Flooding computed from real terrain elevation (SRTM/ASTER) over a live NASA Blue Marble basemap. Search any coastline and raise the sea level — the water finds the low ground.</p></div>
       </div>
       <div class="lsdev reveal">
         <div class="bar"><img class="mk" src="assets/logo/ssai-white-mark.png" alt="SSAI"><span class="t">Aurora Forecast</span><a class="open" href="modules/aurora-ribbon.html" target="_blank" rel="noopener">Open ↗</a></div>
-        <div class="vp"><div class="ph" style="background-image:url(assets/images/aurora-australis-limb.jpg)"><div class="spin"></div></div><iframe data-live="modules/aurora-ribbon.html?embed=1&accent=%232fd9c3" title="Aurora forecast — live WebGL globe" loading="lazy"></iframe></div>
+        <div class="vp"><div class="ph" style="background-image:url(assets/images/aurora-australis-limb.jpg)"><div class="spin"></div></div><iframe data-live="modules/aurora-ribbon.html?embed=1&accent=%232fd9c3" title="Aurora forecast — live WebGL globe" loading="lazy"></iframe><div class="lsguard"><span class="gp">Click to interact</span></div></div>
         <div class="cap"><span class="ci">Space weather</span><p class="cd">The NOAA OVATION auroral oval on a real WebGL Earth. North or south pole.</p></div>
       </div>
       <div class="lsdev reveal">
         <div class="bar"><img class="mk" src="assets/logo/ssai-white-mark.png" alt="SSAI"><span class="t">Orbit Tracker</span><a class="open" href="modules/orbit-tracker.html" target="_blank" rel="noopener">Open ↗</a></div>
-        <div class="vp"><div class="ph" style="background-image:url(assets/images/black-marble-hemisphere.jpg)"><div class="spin"></div></div><iframe data-live="modules/orbit-tracker.html?embed=1&accent=%233c7be0" title="Orbit tracker" loading="lazy"></iframe></div>
+        <div class="vp"><div class="ph" style="background-image:url(assets/images/black-marble-hemisphere.jpg)"><div class="spin"></div></div><iframe data-live="modules/orbit-tracker.html?embed=1&accent=%233c7be0" title="Orbit tracker" loading="lazy"></iframe><div class="lsguard"><span class="gp">Click to interact</span></div></div>
         <div class="cap"><span class="ci">Satellites</span><p class="cd">Live satellite positions and orbital parameters over the Blue Marble.</p></div>
       </div>
       <div class="lsdev reveal">
         <div class="bar"><img class="mk" src="assets/logo/ssai-white-mark.png" alt="SSAI"><span class="t">Moon Phase</span><a class="open" href="modules/moon-phase.html" target="_blank" rel="noopener">Open ↗</a></div>
-        <div class="vp"><div class="ph" style="background-image:url(assets/images/planets/moon.jpg)"><div class="spin"></div></div><iframe data-live="modules/moon-phase.html?embed=1&accent=%238a5cff" title="Moon phase" loading="lazy"></iframe></div>
+        <div class="vp"><div class="ph" style="background-image:url(assets/images/planets/moon.jpg)"><div class="spin"></div></div><iframe data-live="modules/moon-phase.html?embed=1&accent=%238a5cff" title="Moon phase" loading="lazy"></iframe><div class="lsguard"><span class="gp">Click to interact</span></div></div>
         <div class="cap"><span class="ci">Solar system</span><p class="cd">A real NASA/LRO Moon with a physically-correct terminator.</p></div>
       </div>
     </div>
@@ -1008,8 +1016,15 @@ p{max-width:62ch}
     <div class="frame-img"><img src="assets/images/sls-night-launch.jpg" loading="lazy" alt=""><div class="placard"><div class="t">Night launch</div><div class="m">Space Launch System · Artemis<br>NASA · public domain</div></div></div>
   </div>
   <div class="inner"><p class="galhint">◂ Drag / scroll the wall ▸&nbsp;&nbsp;·&nbsp;&nbsp;Do: real, credited, vast, one subject. Don't: stock handshakes, fake "AI brain" glows, over‑graded plates.</p></div>
-  <div class="inner worldswrap reveal">
-    <div class="worldslab"><img class="ey-mark" src="assets/logo/ssai-white-mark.png" alt="SSAI">The planetary archive · real NASA imagery, every world</div>
+</section>
+
+<!-- WORLDS (own section) -->
+<section class="spec" id="worlds" data-alt="The planetary archive · every world" data-nav="Worlds">
+  <div class="inner reveal">
+    <div class="eyrow"><img class="ey-mark" src="assets/logo/ssai-white-mark.png" alt="SSAI"><span class="lab lab-bl">✦ / Worlds</span></div>
+    <div class="specbar"></div>
+    <h2 class="disp">Every world, in real light.</h2>
+    <p style="color:var(--nebula);max-width:62ch">Real NASA imagery of every body we observe — from MESSENGER at Mercury to Voyager 2 at Neptune. Never illustrations; always the genuine article, credited. Drag to explore the archive.</p>
     <div class="worlds">
       <div class="world"><div class="pic"><img src="assets/images/planets/mercury.jpg" loading="lazy" alt="Mercury"></div><div class="wn">Mercury</div><div class="wm">MESSENGER</div></div>
       <div class="world"><div class="pic"><img src="assets/images/planets/venus.jpg" loading="lazy" alt="Venus"></div><div class="wn">Venus</div><div class="wm">Magellan</div></div>
@@ -1154,6 +1169,11 @@ p{max-width:62ch}
       window.addEventListener('scroll',sc,{passive:true});
     } else { go(); }
   }
+
+  // click-to-interact: the page scrolls over each instrument until you activate it
+  document.querySelectorAll('.lsguard').forEach(function(g){
+    g.addEventListener('click',function(){ var d=g.closest('.lsdev'); if(d) d.classList.add('active'); });
+  });
 })();
 </script>
 <script src="assets/js/theme.js"></script>
