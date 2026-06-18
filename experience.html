@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SSAI — The Descent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/cesium@1.123/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 <style>
 @font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BoldItalic.woff2') format('woff2');font-weight:700;font-style:italic;font-display:swap}
 @font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BlackItalic.woff2') format('woff2');font-weight:800;font-style:italic;font-display:swap}
@@ -19,18 +19,14 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--space);color:var(--starlight);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-/* ---------- fixed stage layers ---------- */
-#scene{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}        /* cosmic WebGL */
-.acts{position:fixed;inset:0;z-index:1}                                                  /* live WebGL act iframes */
-.acts iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;display:none;background:#04030e;pointer-events:none;will-change:opacity,transform}
-.plates{position:fixed;inset:0;z-index:2;pointer-events:none}                            /* photo payoff plates */
-.plate{position:absolute;inset:0;opacity:0;will-change:opacity,transform}
-.plate img{width:100%;height:100%;object-fit:cover;object-position:center}
-.plate .pscrim{position:absolute;inset:0;background:
-  linear-gradient(to top,#04030e 4%,rgba(4,3,14,.78) 20%,rgba(4,3,14,.18) 52%,transparent 72%),
-  linear-gradient(to right,rgba(4,3,14,.86),rgba(4,3,14,.3) 52%,transparent 80%)}
-.plate.tint-te .pscrim{box-shadow:inset 0 0 300px rgba(47,217,195,.12)}
-.plate.tint-bl .pscrim{box-shadow:inset 0 0 300px rgba(60,123,224,.14)}
+#cesium{position:fixed;inset:0;width:100vw;height:100vh;z-index:0}
+#cesium .cesium-widget-credits,.cesium-credit-lightbox-overlay{font-size:10px!important}
+.cesium-credit-container,.cesium-widget-credits{position:absolute;bottom:6px;left:14px;color:rgba(255,255,255,.5)!important;z-index:5}
+.cesium-viewer-bottom{bottom:6px;left:14px}
+
+/* gentle vignette + space grade over the globe so brand copy reads */
+.grade{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  radial-gradient(130% 90% at 50% 42%,transparent 52%,rgba(4,3,14,.55) 100%);opacity:.9}
 
 .copylayer{position:fixed;inset:0;z-index:3;pointer-events:none}
 .copylayer .inner{position:relative;width:100%;max-width:1180px;height:100%;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
@@ -39,9 +35,13 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .beat .k::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
 .beat .k.bl::before{background:var(--blue);box-shadow:0 0 10px var(--blue)}
 .beat h1{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;
-  font-size:clamp(36px,7.2vw,104px);line-height:.92;letter-spacing:-.02em;text-shadow:0 2px 40px rgba(4,3,14,.6),0 0 50px rgba(120,150,255,.25)}
+  font-size:clamp(36px,7.2vw,104px);line-height:.92;letter-spacing:-.02em;text-shadow:0 2px 40px rgba(4,3,14,.7),0 0 50px rgba(120,150,255,.3)}
 .beat h1 .em{text-shadow:0 0 60px rgba(120,160,255,.7)}
-.beat p{margin-top:18px;color:#e7e8ff;font-weight:300;font-size:clamp(15px,1.6vw,19px);max-width:48ch;line-height:1.6;text-shadow:0 1px 20px rgba(4,3,14,.8)}
+.beat p{margin-top:18px;color:#eef0ff;font-weight:300;font-size:clamp(15px,1.6vw,19px);max-width:46ch;line-height:1.6;text-shadow:0 1px 24px rgba(4,3,14,.95)}
+.beat .stat{display:flex;gap:30px;margin-top:26px;flex-wrap:wrap}
+.beat .stat div{border-left:1px solid var(--hair);padding-left:14px}
+.beat .stat b{display:block;font-family:var(--disp);font-style:italic;font-size:clamp(22px,3vw,34px);color:var(--teal);line-height:1}
+.beat .stat span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--nebula)}
 .beat .lock{display:flex;align-items:center;gap:16px;margin-top:30px}
 .beat .lock img{height:36px;width:auto}
 .beat .lock .ll{border-left:1px solid var(--hair);padding-left:16px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--nebula);line-height:1.5}
@@ -54,33 +54,15 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .beat.center .inr{max-width:1180px;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
 .beat.center .k{justify-content:center}
 
-/* a small parent eyebrow that rides the live WebGL acts (the iframes carry their own headline) */
-.actlabel{position:fixed;left:clamp(22px,5vw,64px);top:clamp(70px,12vh,110px);z-index:4;opacity:0;pointer-events:none;
-  font-family:var(--body);font-weight:600;text-transform:uppercase;letter-spacing:.26em;font-size:11px;color:var(--nebula);
-  display:flex;align-items:center;gap:9px;transition:opacity .4s}
-.actlabel::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
-.draghint{position:fixed;left:50%;top:50%;transform:translate(-50%,140px);z-index:4;opacity:0;pointer-events:none;
-  font-family:var(--body);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--starlight);
-  border:1px solid var(--hair);border-radius:30px;padding:9px 18px;background:rgba(8,6,28,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity .5s}
-
-/* ---------- chrome ---------- */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;
-  padding:18px clamp(22px,5vw,46px);pointer-events:none;background:linear-gradient(rgba(4,3,14,.5),transparent)}
+  padding:18px clamp(22px,5vw,46px);pointer-events:none;background:linear-gradient(rgba(4,3,14,.55),transparent)}
 .topbar img{height:24px;width:auto;pointer-events:auto;filter:drop-shadow(0 2px 14px rgba(60,123,224,.5))}
 .topbar .chap{font-family:var(--body);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);transition:color .4s}
 .prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:8;background:linear-gradient(90deg,var(--blue),var(--teal));box-shadow:0 0 10px var(--blue)}
-.cue{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:6;
-  font-family:var(--body);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--nebula);
-  display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none}
+.cue{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:6;font-family:var(--body);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--nebula);display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none}
 .cue .ar{width:1px;height:34px;background:linear-gradient(var(--blue),transparent);animation:fall 1.8s ease-in-out infinite}
 @keyframes fall{0%{transform:scaleY(.3);transform-origin:top;opacity:.3}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.3);transform-origin:bottom;opacity:.3}}
-.chapters{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:7;display:flex;flex-direction:column;gap:11px}
-.chapters b{width:7px;height:7px;border-radius:50%;background:var(--hair);transition:.3s;cursor:pointer;display:block;border:0;padding:0}
-.chapters b.on{background:var(--teal);box-shadow:0 0 9px var(--teal)}
-@media(max-width:820px){.chapters{display:none}}
-.shellnav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:7;display:flex;gap:6px;align-items:center;
-  padding:7px 9px;border-radius:30px;background:rgba(8,6,28,.62);border:1px solid var(--hair);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-  font-family:var(--body);font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .5s}
+.shellnav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:7;display:flex;gap:6px;align-items:center;padding:7px 9px;border-radius:30px;background:rgba(8,6,28,.62);border:1px solid var(--hair);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);font-family:var(--body);font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .5s}
 .shellnav.show{opacity:1}
 .shellnav a{color:var(--nebula);padding:5px 12px;border-radius:20px;text-decoration:none}
 .shellnav a.on{background:var(--teal);color:#04201c;font-weight:600}
@@ -92,33 +74,26 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .loader .lt{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--nebula)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.scroll{position:relative;z-index:2;width:100%;height:1500vh}   /* the long scroll track */
+/* "add your key" state — premium, not broken-looking */
+.needkey{position:fixed;inset:0;z-index:40;background:radial-gradient(120% 100% at 50% 30%,#0b0a24,#04030e);display:none;align-items:center;justify-content:center;text-align:center;padding:30px}
+.needkey.show{display:flex}
+.needkey .box{max-width:560px}
+.needkey .k{font-family:var(--body);font-weight:600;text-transform:uppercase;letter-spacing:.26em;font-size:11px;color:var(--nebula);margin-bottom:14px}
+.needkey h2{font-family:var(--disp);font-style:italic;text-transform:uppercase;font-size:clamp(28px,5vw,52px);line-height:.96;color:#fff;margin-bottom:18px}
+.needkey p{color:#cdd0f5;font-weight:300;font-size:15px;line-height:1.7}
+.needkey ol{text-align:left;margin:20px auto 0;max-width:460px;color:#cdd0f5;font-size:14px;line-height:1.9;padding-left:20px}
+.needkey code{background:rgba(255,255,255,.08);padding:2px 7px;border-radius:5px;font-size:12.5px;color:var(--teal)}
+.needkey a{color:var(--teal)}
+
+.scroll{position:relative;z-index:2;width:100%;height:760vh}
 </style>
 </head>
 <body>
 
 <div class="loader" id="loader"><div class="spin"></div><div class="lt">Acquiring orbit…</div></div>
 
-<canvas id="scene"></canvas>
-
-<!-- live WebGL acts (each a validated standalone Three.js scene, driven by scroll) -->
-<div class="acts" id="acts">
-  <iframe id="if-orbits"    data-a="0.25" data-b="0.38" data-fi="0.225" data-fo="0.405" src="_demos/orbits-A.html"    title="Orbits — LEO, MEO, GEO" scrolling="no"></iframe>
-  <iframe id="if-inspector" data-a="0.41" data-b="0.54" data-fi="0.385" data-fo="0.565" data-interactive="1" src="_demos/inspector-B.html" title="The instrument — drag to inspect" scrolling="no"></iframe>
-  <iframe id="if-descent"   data-a="0.57" data-b="0.66" data-fi="0.545" data-fo="0.675" src="_demos/descent.html"    title="Re-entry" scrolling="no"></iframe>
-  <iframe id="if-terrain"   data-a="0.69" data-b="0.80" data-fi="0.665" data-fo="0.815" src="_demos/terrain-A.html"  title="Navigating Earth" scrolling="no"></iframe>
-</div>
-
-<!-- photo payoff -->
-<div class="plates" id="plates">
-  <div class="plate tint-te" data-a="0.795" data-b="0.843"><img src="assets/images/phytoplankton-barents.jpg" alt="Phytoplankton bloom"><div class="pscrim"></div></div>
-  <div class="plate"        data-a="0.835" data-b="0.873"><img src="assets/images/forest-amazon.jpg" alt="Rainforest from orbit"><div class="pscrim"></div></div>
-  <div class="plate tint-bl" data-a="0.863" data-b="0.897"><img src="assets/images/arctic-ice.jpg" alt="Arctic sea ice"><div class="pscrim"></div></div>
-  <div class="plate"        data-a="0.889" data-b="0.921"><img src="assets/images/storm-cyclone.jpg" alt="Tropical cyclone from orbit"><div class="pscrim"></div></div>
-  <div class="plate tint-te" data-a="0.913" data-b="0.949"><img src="assets/images/aurora-australis-limb.jpg" alt="Aurora australis"><div class="pscrim"></div></div>
-  <div class="plate tint-bl" data-a="0.945" data-b="0.984"><img src="assets/images/earth-ops-center.jpg" alt="Operations floor — a wall of Earth-observation screens"><div class="pscrim"></div></div>
-  <div class="plate"        data-a="0.974" data-b="1.02"><img src="assets/images/orbital-sunrise-limb.jpg" alt="Orbital sunrise"><div class="pscrim"></div></div>
-</div>
+<div id="cesium"></div>
+<div class="grade"></div>
 <div class="prog" id="prog"></div>
 
 <header class="topbar">
@@ -127,163 +102,131 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 </header>
 
 <div class="copylayer"><div class="inner" id="beats">
-  <!-- COSMIC -->
-  <div class="beat" data-a="-0.05" data-b="0.06"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
-  <div class="beat" data-a="0.075" data-b="0.135"><span class="k bl">A pale blue dot · home</span><h1>Science for<br>life on <span class="em">Earth.</span></h1><div class="lock"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><span class="ll">From observation<br>to understanding</span></div></div>
-  <div class="beat" data-a="0.150" data-b="0.205"><span class="k">01 · The living planet</span><h1>One world,<br><span class="em">watched.</span></h1><p>Every day, from orbit, we measure the one planet we all depend on — its oceans, its air, its ice, its light.</p></div>
-  <!-- NATURE PAYOFF -->
-  <div class="beat" data-a="0.795" data-b="0.843"><span class="k">What we see · Oceans</span><h1>The blue that<br>makes us <span class="em">rare.</span></h1><p>Ocean colour reveals the phytoplankton that make half the oxygen we breathe — read in a dozen wavelengths of light.</p></div>
-  <div class="beat" data-a="0.835" data-b="0.873"><span class="k">What we see · Forests</span><h1>The green that<br><span class="em">breathes.</span></h1><p>The carbon the forests hold, and the health of every growing season — measured from space.</p></div>
-  <div class="beat" data-a="0.863" data-b="0.897"><span class="k bl">What we see · Ice</span><h1>The white that's<br><span class="em">changing.</span></h1><p>Sea ice, glaciers, and the poles — tracked year over year, so the world can see what's happening.</p></div>
-  <div class="beat" data-a="0.889" data-b="0.921"><span class="k">What we see · Storms</span><h1>The restless<br><span class="em">sky.</span></h1><p>From the eye of a cyclone to the dust that crosses an ocean — observed, modelled, and forecast.</p></div>
-  <div class="beat" data-a="0.913" data-b="0.949"><span class="k">What we see · Space weather</span><h1>Where Earth meets<br>the Sun's <span class="em">storms.</span></h1><p>The aurora is the visible edge of a system SSAI helps NASA and NOAA watch around the clock.</p></div>
-  <!-- LAB -->
-  <div class="beat" data-a="0.945" data-b="0.984"><span class="k bl">The understanding layer</span><h1>From observation,<br>to <span class="em">understanding.</span></h1><p>Inside the lab, the planet becomes knowledge — the imagery you just flew through, turned into decisions humanity can trust.</p></div>
-  <!-- CLOSE -->
-  <div class="beat center" data-a="0.975" data-b="1.02"><div class="inr"><span class="k">Science for life on Earth</span><h1 style="font-size:clamp(40px,8vw,116px)"><span class="em">Science for life<br>on Earth.</span></h1><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:26px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
+  <div class="beat" data-a="-0.05" data-b="0.075"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
+  <div class="beat" data-a="0.12" data-b="0.23"><span class="k bl">A pale blue dot · home</span><h1>Science for<br>life on <span class="em">Earth.</span></h1><div class="lock"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><span class="ll">From observation<br>to understanding</span></div></div>
+  <div class="beat" data-a="0.30" data-b="0.44"><span class="k">What we do</span><h1>We read the<br>whole <span class="em">planet.</span></h1><p>Oceans, air, ice, fire and storms — measured every day, with NASA, NOAA and partners around the world.</p><div class="stat"><div><b>~50 yrs</b><span>NASA Earth science</span></div><div><b>Every day</b><span>Eyes on the planet</span></div></div></div>
+  <div class="beat" data-a="0.50" data-b="0.63"><span class="k bl">From orbit to ground</span><h1>All the<br>way <span class="em">down.</span></h1><p>The same science that watches the planet from space comes all the way down to the people who use it.</p></div>
+  <div class="beat" data-a="0.69" data-b="0.82"><span class="k">Greenbelt · Maryland</span><h1>Where the work<br><span class="em">happens.</span></h1><p>Beside NASA's Goddard Space Flight Center, SSAI's scientists turn raw light into decisions the world can trust.</p></div>
+  <div class="beat center" data-a="0.88" data-b="1.04"><div class="inr"><span class="k">Science for life on Earth</span><h1 style="font-size:clamp(40px,8vw,116px)"><span class="em">Science for life<br>on Earth.</span></h1><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:26px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
 </div></div>
 
 <div class="cue" id="cue">Scroll<div class="ar"></div></div>
-<div class="chapters" id="chapters"></div>
 <nav class="shellnav" id="shellnav">
   <a href="experience.html" class="on">Experience</a>
   <a href="brand-book.html">Brand book</a>
   <a href="interactive-kit.html">Instruments</a>
 </nav>
 
+<div class="needkey" id="needkey"><div class="box">
+  <div class="k" id="nkk">One step to go live</div>
+  <h2>Add your<br>Google Earth key</h2>
+  <p id="nkmsg">This experience flies through Google's real, photorealistic 3D Earth. That needs a free Google Maps API key — paste yours into <code>experience.html</code> where it says <code>GOOGLE_MAPS_API_KEY</code>.</p>
+  <ol>
+    <li>Go to <a href="https://console.cloud.google.com/google/maps-apis" target="_blank" rel="noopener">Google Cloud → Maps</a> and create / pick a project.</li>
+    <li>Enable the <b>Map Tiles API</b>.</li>
+    <li>Create an <b>API key</b> (Credentials → Create credentials → API key).</li>
+    <li>Paste it into <code>experience.html</code> at <code>const GOOGLE_MAPS_API_KEY = "…"</code> and reload.</li>
+  </ol>
+</div></div>
+
 <div class="scroll" id="scroll"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
-<script type="module">
-import * as THREE from 'three';
+<script>window.CESIUM_BASE_URL='https://cdn.jsdelivr.net/npm/cesium@1.123/Build/Cesium/';</script>
+<script src="https://cdn.jsdelivr.net/npm/cesium@1.123/Build/Cesium/Cesium.js"></script>
+<script>
+/* ============================================================
+   PASTE YOUR GOOGLE MAPS API KEY BETWEEN THE QUOTES BELOW
+   (Map Tiles API must be enabled — see the on-screen steps)
+   ============================================================ */
+const GOOGLE_MAPS_API_KEY = "GOOGLE_MAPS_API_KEY";
+
 var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
-var scrollP=0, canvas=document.getElementById('scene');
-var mxN=0,myN=0; // normalised cursor (-1..1)
-
-/* ---------- cosmic three.js scene: stars + Earth (acts 0-2) ---------- */
-var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
-renderer.outputColorSpace=THREE.SRGBColorSpace;
-var scene=new THREE.Scene();
-var camera=new THREE.PerspectiveCamera(38, innerWidth/innerHeight, 0.1, 3000);
-camera.position.set(0,0,15.5);
-var sunDir=new THREE.Vector3(-0.6,0.26,0.76).normalize();
-
-(function(){ var N=(innerWidth<700?1500:2800), g=new THREE.BufferGeometry(), pos=new Float32Array(N*3), col=new Float32Array(N*3), c=new THREE.Color();
-  for(var i=0;i<N;i++){ var r=150+Math.random()*500, t=Math.acos(2*Math.random()-1), ph=Math.random()*6.2832;
-    pos[i*3]=r*Math.sin(t)*Math.cos(ph); pos[i*3+1]=r*Math.sin(t)*Math.sin(ph); pos[i*3+2]=r*Math.cos(t);
-    var k=Math.random(); c.setHSL(k<0.1?0.08:(k<0.2?0.58:0.62),0.45,0.6+Math.random()*0.32); col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b; }
-  g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setAttribute('color',new THREE.BufferAttribute(col,3));
-  scene.add(new THREE.Points(g,new THREE.PointsMaterial({size:1.05,sizeAttenuation:true,vertexColors:true,transparent:true,opacity:.9,depthWrite:false}))); })();
-
-var earthReady=false, mgr=new THREE.LoadingManager(), tx=new THREE.TextureLoader(mgr);
-var dayTex=tx.load('assets/images/blue-marble-world.jpg'), nightTex=tx.load('assets/images/black-marble-world.jpg');
-dayTex.colorSpace=nightTex.colorSpace=THREE.SRGBColorSpace;
-dayTex.anisotropy=nightTex.anisotropy=renderer.capabilities.getMaxAnisotropy();
-var earthMat=new THREE.ShaderMaterial({
-  uniforms:{dayMap:{value:dayTex},nightMap:{value:nightTex},sunDir:{value:sunDir},camPos:{value:camera.position},atmo:{value:new THREE.Color(0x5a8ee6)}},
-  vertexShader:`varying vec2 vUv;varying vec3 vN;varying vec3 vP;void main(){vUv=uv;vN=normalize(mat3(modelMatrix)*normal);vP=(modelMatrix*vec4(position,1.0)).xyz;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
-  fragmentShader:`uniform sampler2D dayMap;uniform sampler2D nightMap;uniform vec3 sunDir;uniform vec3 camPos;uniform vec3 atmo;varying vec2 vUv;varying vec3 vN;varying vec3 vP;
-    void main(){vec3 N=normalize(vN);float s=dot(N,normalize(sunDir));float dayAmt=smoothstep(-0.09,0.34,s);
-    vec3 day=texture2D(dayMap,vUv).rgb*1.06; vec3 night=texture2D(nightMap,vUv).rgb*1.7; vec3 col=mix(night,day,dayAmt);
-    float term=smoothstep(0.0,0.15,s)*(1.0-smoothstep(0.15,0.42,s)); col+=vec3(0.26,0.12,0.04)*term*0.45;
-    vec3 V=normalize(camPos-vP);float fres=pow(1.0-max(dot(N,V),0.0),4.0); col+=atmo*fres*(0.10+0.24*dayAmt);
-    gl_FragColor=vec4(col,1.0);}`
-});
-var earth=new THREE.Mesh(new THREE.SphereGeometry(1,96,96),earthMat); earth.rotation.z=0.41; scene.add(earth);
-var atmoMat=new THREE.ShaderMaterial({uniforms:{camPos:{value:camera.position},glow:{value:new THREE.Color(0x4f8ff0)}},transparent:true,blending:THREE.AdditiveBlending,side:THREE.BackSide,depthWrite:false,
-  vertexShader:`varying vec3 vN;varying vec3 vP;void main(){vN=normalize(mat3(modelMatrix)*normal);vP=(modelMatrix*vec4(position,1.0)).xyz;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
-  fragmentShader:`uniform vec3 camPos;uniform vec3 glow;varying vec3 vN;varying vec3 vP;void main(){vec3 V=normalize(camPos-vP);float f=pow(1.0-max(dot(normalize(vN),V),0.0),4.0);gl_FragColor=vec4(glow,f*0.42);}`});
-var atmo=new THREE.Mesh(new THREE.SphereGeometry(1.028,64,64),atmoMat); scene.add(atmo);
-mgr.onLoad=function(){earthReady=true;var l=document.getElementById('loader');if(l)l.classList.add('gone');draw();};
-
-/* ---------- helpers ---------- */
-function ease(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
-function lerp(a,b,t){return a+(b-a)*t;}
 function clamp01(x){return x<0?0:(x>1?1:x);}
+function lerp(a,b,t){return a+(b-a)*t;}
 function range(p,a,b){return clamp01((p-a)/(b-a));}
 function fadeOp(p,a,b,f){return clamp01(Math.min((p-a)/f,(b-p)/f,1));}
+function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
 
-/* ---------- live WebGL acts (iframes) ---------- */
-var ACTS=[].slice.call(document.querySelectorAll('.acts iframe')).map(function(el){
-  return {el:el, a:+el.dataset.a, b:+el.dataset.b, fi:+el.dataset.fi, fo:+el.dataset.fo,
-          interactive:el.dataset.interactive==='1', cw:null, ready:false};
-});
-ACTS.forEach(function(A){ A.el.addEventListener('load',function(){ A.ready=true; try{A.cw=A.el.contentWindow;}catch(e){} }); });
-function actOp(p,A){ return clamp01(Math.min(range(p,A.fi,A.a), 1-range(p,A.b,A.fo))); }
+/* ---- the flight: keyframes from deep space down to Goddard / Greenbelt, MD ---- */
+/* edit lon/lat/h(m)/head/pit(deg) freely; p is the scroll position of each keyframe */
+var KF=[
+  {p:0.00, lon:-58, lat:22,     h:24000000, head:0,  pit:-90},   // whole Earth from space
+  {p:0.30, lon:-72, lat:35,     h:2400000,  head:8,  pit:-79},   // North America / US east coast
+  {p:0.55, lon:-76.55,lat:38.65,h:150000,   head:14, pit:-58},   // Washington DC metro
+  {p:0.78, lon:-76.86,lat:38.95,h:13000,    head:22, pit:-42},   // approaching Greenbelt / Goddard
+  {p:1.00, lon:-76.842,lat:38.991,h:1100,   head:32, pit:-26}    // low oblique over the campus
+];
+function camAt(p){
+  var i=0; while(i<KF.length-2 && p>KF[i+1].p) i++;
+  var A=KF[i],B=KF[i+1]; var t=easeIO(clamp01((p-A.p)/(B.p-A.p)));
+  return { lon:lerp(A.lon,B.lon,t), lat:lerp(A.lat,B.lat,t),
+           h:Math.exp(lerp(Math.log(A.h),Math.log(B.h),t)),
+           head:lerp(A.head,B.head,t), pit:lerp(A.pit,B.pit,t) };
+}
 
-var plates=[].slice.call(document.querySelectorAll('.plate'));
 var beats=[].slice.call(document.querySelectorAll('.beat'));
-var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'),
-    chap=document.getElementById('chap');
-var CH=[['The Descent',0],['Approach',0.075],['One world',0.150],['Orbit',0.25],['The instrument',0.41],['Re-entry',0.57],['Surface',0.69],['What we see',0.795],['The lab',0.945],['Science for life on Earth',0.975]];
-var chapEls=[];
-(function(){var c=document.getElementById('chapters');CH.forEach(function(ch,i){var b=document.createElement('button');b.title=ch[0];b.onclick=function(){scrollToP(ch[1]+0.012);};c.appendChild(b);chapEls.push(b);});})();
-var t=0, canvasOp=1;
+var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap');
+var CH=[['The Descent',0],['Approach',0.12],['The planet',0.30],['Descent',0.50],['Greenbelt, MD',0.69],['Science for life on Earth',0.88]];
+var scrollP=0, viewer=null, tilesReady=false;
+
+function showNeedKey(msg){ var n=document.getElementById('needkey'); if(msg) document.getElementById('nkmsg').textContent=msg; n.classList.add('show'); var l=document.getElementById('loader'); if(l) l.classList.add('gone'); }
 
 function applyScroll(){
   var p=scrollP;
-  /* cosmic camera fly-in (acts 0-2), with subtle cursor parallax */
-  var cp=range(p,0,0.20), e=ease(cp);
-  camera.position.z=lerp(15.5,2.5,e);
-  camera.position.x=lerp(0.5,0.0,ease(range(p,0,0.17))) + mxN*0.16*(1-cp);
-  camera.position.y=lerp(0.2,-0.04,e) + myN*0.12*(1-cp);
-  var fr=ease(range(p,0.03,0.16));
-  camera.lookAt(lerp(-0.85,0,fr),lerp(-0.5,0,fr),0);
-  canvasOp=1-range(p,0.20,0.25);
-  canvas.style.opacity=canvasOp;
-
-  /* live WebGL act iframes: crossfade + scrub + perf gating + parallax */
-  for(var n=0;n<ACTS.length;n++){ var A=ACTS[n]; var op=actOp(p,A);
-    var near=(p>A.fi-0.03 && p<A.fo+0.03);
-    A.el.style.display=near?'block':'none';
-    A.el.style.opacity=op;
-    A.el.style.pointerEvents=(A.interactive && op>0.55)?'auto':'none';
-    A.el.style.transform=A.interactive?'none':('translate('+(mxN*-7)+'px,'+(myN*-7)+'px)');
-    if(near && A.cw && A.cw.setDemoProgress){ try{ A.cw.setDemoProgress(range(p,A.a,A.b)); }catch(e){} }
+  if(viewer && tilesReady){ var c=camAt(p);
+    viewer.camera.setView({
+      destination: Cesium.Cartesian3.fromDegrees(c.lon,c.lat,c.h),
+      orientation: { heading:Cesium.Math.toRadians(c.head), pitch:Cesium.Math.toRadians(c.pit), roll:0 }
+    });
   }
-
-  /* photo plates */
-  for(var i=0;i<plates.length;i++){var a=+plates[i].dataset.a,b=+plates[i].dataset.b;var pop=fadeOp(p,a,b,0.022);
-    plates[i].style.opacity=pop; plates[i].style.transform='scale('+(1.07-0.07*range(p,a,b))+')';}
-
-  /* beats */
-  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.028);
+  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
     beats[j].style.opacity=bo;
     if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
-
-  /* chrome */
   if(prog) prog.style.width=(clamp01(p)*100)+'%';
   if(cue) cue.style.opacity=(1-range(p,0.03,0.10));
-  if(shellnav) shellnav.classList.toggle('show',p>0.972);
+  if(shellnav) shellnav.classList.toggle('show',p>0.88);
   var ci=0; for(var k=0;k<CH.length;k++){ if(p>=CH[k][1]-0.005) ci=k; }
   if(chap) chap.textContent=CH[ci][0];
-  for(var d=0;d<chapEls.length;d++) chapEls[d].classList.toggle('on',d===ci);
 }
-function draw(){ if(!earthReady) return;
-  if(canvasOp<=0.01){ return; }   /* skip cosmic GL once handed off to the act iframes */
-  earthMat.uniforms.camPos.value.copy(camera.position); atmoMat.uniforms.camPos.value.copy(camera.position);
-  earth.rotation.y=t*0.028+scrollP*1.1; atmo.rotation.copy(earth.rotation);
-  renderer.render(scene,camera);
-}
-function resize(){var w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();applyScroll();draw();}
-addEventListener('resize',resize);
-addEventListener('mousemove',function(ev){ mxN=(ev.clientX/innerWidth)*2-1; myN=(ev.clientY/innerHeight)*2-1; },{passive:true});
 
-/* ---------- scroll engine ---------- */
+/* ---- scroll engine ---- */
 var lenis=null;
-function scrollToP(p){ var max=document.documentElement.scrollHeight-innerHeight; var y=p*max; if(lenis) lenis.scrollTo(y,{duration:1.6}); else window.scrollTo({top:y,behavior:'smooth'}); }
 if(window.gsap && window.ScrollTrigger){
   gsap.registerPlugin(ScrollTrigger);
-  if(!reduce && window.Lenis){ lenis=new Lenis({duration:1.15,smoothWheel:true}); lenis.on('scroll',ScrollTrigger.update); gsap.ticker.add(function(time){lenis.raf(time*1000);}); gsap.ticker.lagSmoothing(0); }
-  ScrollTrigger.create({trigger:'#scroll',start:'top top',end:'bottom bottom',scrub:reduce?false:0.55,onUpdate:function(self){scrollP=self.progress;applyScroll();}});
+  if(!reduce && window.Lenis){ lenis=new Lenis({duration:1.2,smoothWheel:true}); lenis.on('scroll',ScrollTrigger.update); gsap.ticker.add(function(time){lenis.raf(time*1000);}); gsap.ticker.lagSmoothing(0); }
+  ScrollTrigger.create({trigger:'#scroll',start:'top top',end:'bottom bottom',scrub:reduce?false:0.6,onUpdate:function(self){scrollP=self.progress;applyScroll();}});
 }
-function loop(now){ t=(now||0)/1000; draw(); requestAnimationFrame(loop); }
-requestAnimationFrame(loop); resize(); applyScroll();
-window.__exp={get p(){return scrollP;},set p(v){scrollP=v;applyScroll();draw();},cam:camera,acts:ACTS};
+
+/* ---- Cesium boot ---- */
+async function boot(){
+  if(typeof Cesium==='undefined'){ showNeedKey('Could not load the 3D engine — check your connection and reload.'); return; }
+  if(!GOOGLE_MAPS_API_KEY || GOOGLE_MAPS_API_KEY==="GOOGLE_MAPS_API_KEY"){ showNeedKey(); applyScroll(); return; }
+  try{
+    viewer=new Cesium.Viewer('cesium',{
+      baseLayer:false, animation:false, baseLayerPicker:false, fullscreenButton:false, geocoder:false,
+      homeButton:false, infoBox:false, sceneModePicker:false, selectionIndicator:false, timeline:false,
+      navigationHelpButton:false, navigationInstructionsInitiallyVisible:false, scene3DOnly:true, requestRenderMode:false
+    });
+    viewer.scene.globe.show=false;                                   // Google 3D tiles ARE the surface
+    viewer.scene.screenSpaceCameraController.enableInputs=false;     // scroll drives the camera, no fighting
+    viewer.scene.skyAtmosphere.show=true;
+    viewer.cesiumWidget.creditContainer.style.display='block';
+    Cesium.GoogleMaps.defaultApiKey=GOOGLE_MAPS_API_KEY;
+    var tileset=await Cesium.createGooglePhotorealistic3DTileset();
+    viewer.scene.primitives.add(tileset);
+    tilesReady=true;
+    var l=document.getElementById('loader'); if(l) l.classList.add('gone');
+    applyScroll();
+  }catch(err){
+    console.warn('Cesium/Google tiles failed:',err);
+    showNeedKey('That key didn’t work yet — make sure the Map Tiles API is enabled for it, then reload.');
+  }
+}
+boot(); applyScroll();
+window.__exp={get p(){return scrollP;},set p(v){scrollP=v;applyScroll();}, get viewer(){return viewer;}, camAt:camAt};
 </script>
 </body>
 </html>
