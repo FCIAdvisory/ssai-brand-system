@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>SSAI — Eyes in Every Orbit</title>
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#04030e;overflow:hidden;}
+  #c{position:fixed;inset:0;width:100vw;height:100vh;display:block;}
+  /* subtle vignette + label overlay, restrained/premium */
+  #vig{position:fixed;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 120% 90% at 50% 48%, rgba(4,3,14,0) 52%, rgba(4,3,14,0.55) 100%);}
+  #ui{position:fixed;left:28px;bottom:26px;pointer-events:none;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    color:#f4f5ff;letter-spacing:.14em;}
+  #ui .tier{font-size:11px;font-weight:600;text-transform:uppercase;color:#2fd9c3;
+    opacity:.92;transition:color .6s ease;}
+  #ui .sub{font-size:10px;font-weight:400;letter-spacing:.22em;color:rgba(244,245,255,.42);margin-top:5px;}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="vig"></div>
+<div id="ui"><div class="tier" id="tierLabel">LOW EARTH ORBIT</div><div class="sub">EYES IN EVERY ORBIT</div></div>
+
+<script type="module">
+import * as THREE from 'three';
+
+/* ----------------------------------------------------------------------------
+   SSAI — "Eyes in every orbit"  (orbits-A)
+   A premium data-ballet: Earth (day/night) + LEO / MEO / GEO orbital families.
+   ---------------------------------------------------------------------------- */
+
+const BG     = 0x04030e;
+const TEAL   = 0x2fd9c3;
+const BLUE   = 0x3c7be0;
+const INDIGO = 0x6f6ad6;   // light indigo for the GEO ring (kept readable)
+const STAR   = 0xf4f5ff;
+
+const ASSET = '/ssai-brand-site/assets/images/';
+
+const EARTH_R = 1.0;
+
+// ---- renderer ---------------------------------------------------------------
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.setClearColor(BG, 1);
+const MAX_ANISO = renderer.capabilities.getMaxAnisotropy();
+
+// ---- scene / camera ---------------------------------------------------------
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(BG, 0.0125);
+
+const camera = new THREE.PerspectiveCamera(42, window.innerWidth/window.innerHeight, 0.1, 200);
+camera.position.set(0, 0.6, 3.0);
+
+// world tilt group so the whole system reads with a 23deg axial lean
+const world = new THREE.Group();
+world.rotation.z = THREE.MathUtils.degToRad(23.4);
+scene.add(world);
+
+// sun direction (for day/night terminator)
+const sunDir = new THREE.Vector3(0.6, 0.25, 0.75).normalize();
+
+// ---- loader with safe fallbacks --------------------------------------------
+const texLoader = new THREE.TextureLoader();
+function loadTex(file, onReady){
+  texLoader.load(
+    ASSET + file,
+    (t)=>{ t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = MAX_ANISO;
+           t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping; onReady(t, true); },
+    undefined,
+    ()=>{ onReady(null, false); }   // never throw — fall back
+  );
+}
+
+// ============================================================================
+//  EARTH  (day/night blended by sun direction + subtle fresnel atmosphere)
+// ============================================================================
+const earthGroup = new THREE.Group();
+world.add(earthGroup);
+
+const earthUniforms = {
+  dayMap:   { value: null },
+  nightMap: { value: null },
+  hasDay:   { value: 0 },
+  hasNight: { value: 0 },
+  sunDir:   { value: sunDir.clone() },
+  dayCol:   { value: new THREE.Color(0x2b6fb0) },  // fallback ocean-ish day
+  nightCol: { value: new THREE.Color(0x05060f) }
+};
+
+const earthMat = new THREE.ShaderMaterial({
+  uniforms: earthUniforms,
+  vertexShader: /* glsl */`
+    varying vec3 vNormalW;
+    varying vec3 vViewDir;
+    varying vec2 vUv;
+    void main(){
+      vUv = uv;
+      vec4 wp = modelMatrix * vec4(position,1.0);
+      vNormalW = normalize(mat3(modelMatrix) * normal);
+      vViewDir = normalize(cameraPosition - wp.xyz);
+      gl_Position = projectionMatrix * viewMatrix * wp;
+    }`,
+  fragmentShader: /* glsl */`
+    uniform sampler2D dayMap;
+    uniform sampler2D nightMap;
+    uniform int hasDay;
+    uniform int hasNight;
+    uniform vec3 sunDir;
+    uniform vec3 dayCol;
+    uniform vec3 nightCol;
+    varying vec3 vNormalW;
+    varying vec3 vViewDir;
+    varying vec2 vUv;
+    void main(){
+      vec3 N = normalize(vNormalW);
+      float lambert = dot(N, normalize(sunDir));     // -1..1
+      // smooth terminator
+      float dayAmt = smoothstep(-0.12, 0.22, lambert);
+
+      vec3 day   = (hasDay==1)   ? texture2D(dayMap,   vUv).rgb : dayCol;
+      vec3 night = (hasNight==1) ? texture2D(nightMap, vUv).rgb : nightCol;
+
+      // night city lights only glow where it's actually dark
+      night *= (0.9 + 0.6*(1.0-dayAmt));
+      // gentle day shading so the lit side has form
+      vec3 litDay = day * (0.18 + 0.95*clamp(lambert,0.0,1.0));
+
+      vec3 col = mix(night*0.85, litDay, dayAmt);
+
+      // faint rim cool-light so the planet edge separates from space
+      float rim = pow(1.0 - max(dot(N, normalize(vViewDir)),0.0), 3.0);
+      col += vec3(0.06,0.12,0.16) * rim * dayAmt;
+
+      gl_FragColor = vec4(col, 1.0);
+    }`
+});
+
+const earth = new THREE.Mesh(new THREE.SphereGeometry(EARTH_R, 96, 96), earthMat);
+earthGroup.add(earth);
+
+loadTex('blue-marble-world.jpg', (t,ok)=>{ earthUniforms.dayMap.value=t;   earthUniforms.hasDay.value   = ok?1:0; earthMat.needsUpdate=true; });
+loadTex('black-marble-world.jpg',(t,ok)=>{ earthUniforms.nightMap.value=t; earthUniforms.hasNight.value = ok?1:0; earthMat.needsUpdate=true; });
+
+// ---- SUBTLE fresnel atmosphere shell (additive, restrained) ----------------
+const atmoMat = new THREE.ShaderMaterial({
+  transparent:true,
+  blending:THREE.AdditiveBlending,
+  side:THREE.BackSide,
+  depthWrite:false,
+  uniforms:{ glow:{ value:new THREE.Color(0x3c7be0) }, sunDir:{ value:sunDir.clone() } },
+  vertexShader:/* glsl */`
+    varying vec3 vN; varying vec3 vV;
+    void main(){
+      vec4 wp = modelMatrix*vec4(position,1.0);
+      vN = normalize(mat3(modelMatrix)*normal);
+      vV = normalize(cameraPosition - wp.xyz);
+      gl_Position = projectionMatrix*viewMatrix*wp;
+    }`,
+  fragmentShader:/* glsl */`
+    uniform vec3 glow; uniform vec3 sunDir;
+    varying vec3 vN; varying vec3 vV;
+    void main(){
+      float f = pow(1.0 - max(dot(normalize(vN), normalize(vV)),0.0), 4.0);
+      float lit = smoothstep(-0.35, 0.5, dot(normalize(vN), normalize(sunDir)));
+      // keep it thin and quiet — client disliked heavy blue haze
+      float a = f * (0.10 + 0.42*lit);
+      gl_FragColor = vec4(glow, a*0.9);
+    }`
+});
+const atmo = new THREE.Mesh(new THREE.SphereGeometry(EARTH_R*1.018, 64, 64), atmoMat);
+earthGroup.add(atmo);
+
+// ============================================================================
+//  STARFIELD
+// ============================================================================
+function makeStars(count, radius){
+  const g = new THREE.BufferGeometry();
+  const pos = new Float32Array(count*3);
+  const col = new Float32Array(count*3);
+  const cTeal = new THREE.Color(TEAL), cStar = new THREE.Color(STAR), cBlue = new THREE.Color(BLUE);
+  for(let i=0;i<count;i++){
+    // shell distribution
+    const u=Math.random(), v=Math.random();
+    const th=2*Math.PI*u, ph=Math.acos(2*v-1);
+    const r=radius*(0.55+Math.random()*0.45);
+    pos[i*3]   = r*Math.sin(ph)*Math.cos(th);
+    pos[i*3+1] = r*Math.cos(ph);
+    pos[i*3+2] = r*Math.sin(ph)*Math.sin(th);
+    const t=Math.random();
+    const c = t>0.92 ? cTeal : (t>0.84 ? cBlue : cStar);
+    const b = 0.45+Math.random()*0.55;
+    col[i*3]=c.r*b; col[i*3+1]=c.g*b; col[i*3+2]=c.b*b;
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  g.setAttribute('color',    new THREE.BufferAttribute(col,3));
+  const m = new THREE.PointsMaterial({ size:0.045, sizeAttenuation:true, vertexColors:true,
+    transparent:true, opacity:0.9, depthWrite:false, blending:THREE.AdditiveBlending });
+  return new THREE.Points(g,m);
+}
+const stars = makeStars(2600, 60);
+scene.add(stars);
+
+// ============================================================================
+//  ORBITAL FAMILIES
+// ============================================================================
+function ringLine(radius, color, segments=256){
+  const g = new THREE.BufferGeometry();
+  const pos = new Float32Array((segments+1)*3);
+  for(let i=0;i<=segments;i++){
+    const a=(i/segments)*Math.PI*2;
+    pos[i*3]=Math.cos(a)*radius; pos[i*3+1]=0; pos[i*3+2]=Math.sin(a)*radius;
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  const m = new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.5,
+    blending:THREE.AdditiveBlending, depthWrite:false });
+  return new THREE.Line(g,m);
+}
+
+// a single satellite: dark bus + two solar panels + emissive edge dot
+function makeSat(emissiveHex, scale=1){
+  const sat = new THREE.Group();
+
+  const busMat = new THREE.MeshStandardMaterial({ color:0x14161f, roughness:0.55, metalness:0.4 });
+  const bus = new THREE.Mesh(new THREE.BoxGeometry(0.05,0.05,0.07), busMat);
+  sat.add(bus);
+
+  // emissive edge frame so it reads as a point of light
+  const edgeMat = new THREE.MeshBasicMaterial({ color:emissiveHex });
+  const edge = new THREE.Mesh(new THREE.BoxGeometry(0.066,0.018,0.018), edgeMat);
+  sat.add(edge);
+
+  // glow sprite-ish point
+  const haloMat = new THREE.MeshBasicMaterial({ color:emissiveHex, transparent:true, opacity:0.5,
+    blending:THREE.AdditiveBlending, depthWrite:false });
+  const halo = new THREE.Mesh(new THREE.SphereGeometry(0.04,10,10), haloMat);
+  sat.add(halo);
+
+  // solar panels
+  const panelMat = new THREE.MeshStandardMaterial({ color:0x0e1b3a, roughness:0.35, metalness:0.6,
+    emissive:new THREE.Color(emissiveHex), emissiveIntensity:0.10, side:THREE.DoubleSide });
+  const pG = new THREE.PlaneGeometry(0.16,0.07);
+  const pL = new THREE.Mesh(pG, panelMat); pL.position.x=-0.13;
+  const pR = new THREE.Mesh(pG, panelMat); pR.position.x= 0.13;
+  sat.add(pL, pR);
+
+  // connecting struts (thin)
+  const strutMat = new THREE.MeshBasicMaterial({ color:0x2a3350 });
+  const sL = new THREE.Mesh(new THREE.BoxGeometry(0.07,0.006,0.006), strutMat); sL.position.x=-0.06;
+  const sR = new THREE.Mesh(new THREE.BoxGeometry(0.07,0.006,0.006), strutMat); sR.position.x= 0.06;
+  sat.add(sL, sR);
+
+  sat.scale.setScalar(scale);
+  return sat;
+}
+
+// build one orbital family (a tilted group holding the ring + N satellites)
+function makeFamily({ radius, inclination, count, color, speed, satScale }){
+  const grp = new THREE.Group();
+  grp.rotation.x = THREE.MathUtils.degToRad(inclination);
+  world.add(grp);
+
+  const ring = ringLine(radius, color);
+  grp.add(ring);
+
+  // faint second, fatter ring for a soft "glow path" read
+  const ringGlow = ringLine(radius, color);
+  ringGlow.material.opacity = 0.16;
+  ringGlow.scale.setScalar(1.0);
+  grp.add(ringGlow);
+
+  const sats = [];
+  for(let i=0;i<count;i++){
+    const s = makeSat(color, satScale);
+    grp.add(s);
+    sats.push({ mesh:s, phase:(i/count)*Math.PI*2 });
+  }
+  return { grp, ring, ringGlow, sats, radius, color, speed, baseOpacity:0.5 };
+}
+
+const families = {
+  leo: makeFamily({ radius: EARTH_R*1.22, inclination: 52, count: 4, color: TEAL,   speed: 0.42, satScale:0.95 }),
+  meo: makeFamily({ radius: EARTH_R*1.90, inclination: 30, count: 2, color: BLUE,   speed: 0.20, satScale:1.15 }),
+  geo: makeFamily({ radius: EARTH_R*3.00, inclination: 0,  count: 2, color: INDIGO, speed: 0.055,satScale:1.3  })
+};
+
+// ---- downlink beam from ONE leo sat to the Earth surface beneath it ---------
+const downlinkMat = new THREE.LineBasicMaterial({ color:TEAL, transparent:true, opacity:0.0,
+  blending:THREE.AdditiveBlending, depthWrite:false });
+const downlinkGeo = new THREE.BufferGeometry();
+downlinkGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(2*3),3));
+const downlink = new THREE.Line(downlinkGeo, downlinkMat);
+world.add(downlink);
+
+// small footprint ring on the Earth surface where the downlink lands
+const footMat = new THREE.LineBasicMaterial({ color:TEAL, transparent:true, opacity:0.0,
+  blending:THREE.AdditiveBlending, depthWrite:false });
+const footGeo = new THREE.BufferGeometry();
+{
+  const seg=48, p=new Float32Array((seg+1)*3);
+  for(let i=0;i<=seg;i++){ const a=i/seg*Math.PI*2; p[i*3]=Math.cos(a); p[i*3+1]=0; p[i*3+2]=Math.sin(a); }
+  footGeo.setAttribute('position', new THREE.BufferAttribute(p,3));
+}
+const footprint = new THREE.Line(footGeo, footMat);
+footprint.scale.setScalar(0.14);
+world.add(footprint);
+
+// ============================================================================
+//  LIGHTS  (gentle — earth uses its own shader, this is for sats/panels)
+// ============================================================================
+const key = new THREE.DirectionalLight(0xffffff, 1.6);
+key.position.copy(sunDir).multiplyScalar(10);
+scene.add(key);
+scene.add(new THREE.AmbientLight(0x223055, 0.6));
+const rim = new THREE.PointLight(TEAL, 0.5, 30);
+rim.position.set(-4,2,-3);
+scene.add(rim);
+
+// ============================================================================
+//  CAMERA RIG / GUIDED JOURNEY
+// ============================================================================
+let _p = 0;
+let userControlled = false;
+let autoT = 0;
+
+// eased helpers
+const easeInOut = (x)=> x<0.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2;
+const clamp01 = (x)=> Math.max(0, Math.min(1, x));
+const lerp = (a,b,t)=> a+(b-a)*t;
+const smooth = (a,b,t)=> lerp(a,b,easeInOut(clamp01(t)));
+
+// emphasis values (eased toward targets each frame)
+const emph = { leo:1, meo:0.32, geo:0.22 };
+let camRadius = 3.0;
+let camHeight = 0.55;
+let azimuth   = 0.0;        // continuous drift, always advancing
+const tierLabel = document.getElementById('tierLabel');
+
+function targetsForP(p){
+  // three guided stages
+  let r, h, e;
+  if(p < 0.34){
+    const k = p/0.34;
+    r = smooth(2.55, 3.4, k);
+    h = smooth(0.42, 0.7, k);
+    e = { leo:1.0, meo:lerp(0.28,0.5,k), geo:0.2 };
+  } else if(p < 0.67){
+    const k = (p-0.34)/0.33;
+    r = smooth(3.4, 6.0, k);
+    h = smooth(0.7, 1.3, k);
+    e = { leo:lerp(1.0,0.7,k), meo:lerp(0.5,1.0,k), geo:lerp(0.2,0.45,k) };
+  } else {
+    const k = (p-0.67)/0.33;
+    r = smooth(6.0, 9.6, k);
+    h = smooth(1.3, 2.1, k);
+    e = { leo:lerp(0.7,0.6,k), meo:lerp(1.0,0.78,k), geo:lerp(0.45,1.0,k) };
+  }
+  return { r, h, e };
+}
+
+function updateTierLabel(p){
+  let txt, col;
+  if(p < 0.34){ txt='LOW EARTH ORBIT'; col='#2fd9c3'; }
+  else if(p < 0.67){ txt='MEDIUM EARTH ORBIT'; col='#3c7be0'; }
+  else { txt='GEOSTATIONARY ORBIT'; col='#9b97ee'; }
+  if(tierLabel.textContent !== txt){ tierLabel.textContent = txt; tierLabel.style.color = col; }
+}
+
+// PUBLIC API ------------------------------------------------------------------
+window.setDemoProgress = function(p){
+  userControlled = true;
+  _p = clamp01(typeof p === 'number' ? p : 0);
+};
+window.__demo = { get p(){ return _p; }, set p(v){ window.setDemoProgress(v); } };
+
+// ============================================================================
+//  ANIMATION LOOP
+// ============================================================================
+const clock = new THREE.Clock();
+
+function placeSats(fam, t){
+  for(const s of fam.sats){
+    const a = s.phase + t*fam.speed*Math.PI*2*0.25;
+    const x = Math.cos(a)*fam.radius;
+    const z = Math.sin(a)*fam.radius;
+    s.mesh.position.set(x, 0, z);
+    // orient bus along travel; panels stay roughly perpendicular to sun
+    s.mesh.lookAt(0,0,0);
+    s.mesh.rotateY(Math.PI*0.5);
+    s.lastA = a;
+  }
+}
+
+function animate(){
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), 0.05);
+  const t  = clock.elapsedTime;
+
+  // ---- progress source: auto-demo until user takes over ----
+  if(!userControlled){
+    autoT += dt;
+    const loopP = (autoT % 22) / 22;          // 0->1 over 22s, loops
+    _p = easeInOut(loopP);                     // eased scrub
+  }
+  updateTierLabel(_p);
+
+  // ---- camera targets ----
+  const tg = targetsForP(_p);
+  camRadius = lerp(camRadius, tg.r, 1-Math.pow(0.0001, dt));  // smooth follow
+  camHeight = lerp(camHeight, tg.h, 1-Math.pow(0.0001, dt));
+  emph.leo  = lerp(emph.leo, tg.e.leo, 1-Math.pow(0.0006, dt));
+  emph.meo  = lerp(emph.meo, tg.e.meo, 1-Math.pow(0.0006, dt));
+  emph.geo  = lerp(emph.geo, tg.e.geo, 1-Math.pow(0.0006, dt));
+
+  // continuous slow azimuth drift (always alive)
+  azimuth += dt * 0.085;
+  const camX = Math.sin(azimuth)*camRadius;
+  const camZ = Math.cos(azimuth)*camRadius;
+  camera.position.set(camX, camHeight, camZ);
+  camera.lookAt(0, 0, 0);
+
+  // ---- earth + atmosphere slow spin ----
+  earth.rotation.y += dt * 0.045;
+  atmo.rotation.y  += dt * 0.045;
+  stars.rotation.y += dt * 0.004;
+
+  // ---- satellites travel ----
+  placeSats(families.leo, t);
+  placeSats(families.meo, t);
+  placeSats(families.geo, t);
+
+  // ---- emphasis -> ring + sat opacity/scale ----
+  function applyEmph(fam, e){
+    fam.ring.material.opacity     = 0.18 + 0.55*e;
+    fam.ringGlow.material.opacity = 0.05 + 0.16*e;
+    for(const s of fam.sats){
+      // dim the whole sat by toggling child materials' opacity-ish via scale of halo
+      const halo = s.mesh.children[2];
+      if(halo && halo.material){ halo.material.opacity = 0.18 + 0.5*e; }
+      const edge = s.mesh.children[1];
+      if(edge && edge.material){ edge.material.color.setHex(fam.color); }
+    }
+    fam.grp.children.forEach(()=>{});
+  }
+  applyEmph(families.leo, emph.leo);
+  applyEmph(families.meo, emph.meo);
+  applyEmph(families.geo, emph.geo);
+
+  // ---- downlink beam from one LEO sat to Earth surface ----
+  const beamSat = families.leo.sats[0].mesh;
+  // world-space position of that satellite
+  const satW = beamSat.getWorldPosition(new THREE.Vector3());
+  // point on earth surface beneath it (toward planet center), in world space
+  const dir  = satW.clone().normalize();
+  const surfW = dir.clone().multiplyScalar(EARTH_R*1.001);
+  // convert to `world` group local space (downlink/footprint are children of world)
+  const satL  = world.worldToLocal(satW.clone());
+  const surfL = world.worldToLocal(surfW.clone());
+
+  const dp = downlinkGeo.attributes.position.array;
+  dp[0]=satL.x; dp[1]=satL.y; dp[2]=satL.z;
+  dp[3]=surfL.x; dp[4]=surfL.y; dp[5]=surfL.z;
+  downlinkGeo.attributes.position.needsUpdate = true;
+
+  const pulse = 0.5 + 0.5*Math.sin(t*2.2);
+  const beamVis = emph.leo;                    // only when LEO is emphasized
+  downlinkMat.opacity = (0.12 + 0.5*pulse) * beamVis;
+
+  // footprint on the surface, oriented to the local normal
+  footprint.position.copy(surfL);
+  footprint.up.set(0,1,0);
+  footprint.lookAt(surfL.clone().multiplyScalar(2));  // face outward
+  footprint.rotateX(Math.PI*0.5);
+  footMat.opacity = (0.15 + 0.35*pulse) * beamVis;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+// ============================================================================
+//  RESIZE
+// ============================================================================
+window.addEventListener('resize', ()=>{
+  const w=window.innerWidth, h=window.innerHeight;
+  renderer.setSize(w,h);
+  camera.aspect = w/h;
+  camera.updateProjectionMatrix();
+});
+</script>
+</body>
+</html>

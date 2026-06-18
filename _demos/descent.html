@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SSAI — Re-entry / The Descent</title>
+<link rel="icon" href="data:,">
+
+<style>
+  :root{
+    --bg:#04030e; --teal:#2fd9c3; --blue:#3c7be0; --indigo:#16145f; --star:#f4f5ff;
+  }
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;}
+  body{color:var(--star);font-family:"Helvetica Neue",Arial,sans-serif;}
+  #scene{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0;}
+  /* whiteout overlay — driven from JS so the page can hard-cut to terrain */
+  #flash{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(120% 120% at 50% 46%,#ffffff 0%,#f4f5ff 55%,#dfe7ff 100%);opacity:0;}
+  /* faint vignette to keep the frame premium */
+  #vig{position:fixed;inset:0;z-index:1;pointer-events:none;
+       background:radial-gradient(130% 130% at 50% 50%,rgba(0,0,0,0) 56%,rgba(0,0,0,.55) 100%);}
+  .hud{position:fixed;z-index:3;pointer-events:none;font-size:11px;letter-spacing:.32em;
+       text-transform:uppercase;color:rgba(244,245,255,.62);user-select:none;}
+  #hudTL{top:22px;left:24px;}
+  #hudBR{right:24px;bottom:22px;text-align:right;letter-spacing:.18em;color:rgba(244,245,255,.38);}
+  #hudBR b{color:var(--teal);font-weight:600;letter-spacing:.2em;}
+  @media (max-width:640px){ .hud{font-size:9.5px;letter-spacing:.22em;} #hudTL{left:16px;top:16px;} #hudBR{right:16px;bottom:16px;} }
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div id="vig"></div>
+<div id="flash"></div>
+<div class="hud" id="hudTL">SSAI · RE-ENTRY</div>
+<div class="hud" id="hudBR">ALT <b id="alt">412 KM</b> · VELOCITY <b id="vel">7.8 KM/S</b></div>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+
+/* ======================================================================
+   SSAI — "Re-entry": the bridge from orbit to the terrain flythrough.
+   Camera dives from high orbit, skims the limb, ramps a leading-edge
+   entry glow + speed streaks + shake, and ends in a whiteout.
+   ====================================================================== */
+
+const ASSET = '/ssai-brand-site/assets/images/';
+const DAY_URL   = ASSET + 'blue-marble-world.jpg';
+const NIGHT_URL = ASSET + 'black-marble-world.jpg';
+
+const COL = {
+  teal:   new THREE.Color(0x2fd9c3),
+  blue:   new THREE.Color(0x3c7be0),
+  indigo: new THREE.Color(0x16145f),
+  atmo:   new THREE.Color(0x5a8ee6),   // reference fresnel tint
+  glow:   new THREE.Color(0x4f8ff0),   // reference atmosphere shell
+  white:  new THREE.Color(0xffffff)
+};
+
+const canvas = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, powerPreference:'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setSize(innerWidth, innerHeight, false);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x04030e);
+// fog used for the terminal whiteout — colour & density animated by p
+scene.fog = new THREE.FogExp2(0xeaf0ff, 0.0001);
+
+const camera = new THREE.PerspectiveCamera(46, innerWidth/innerHeight, 0.05, 4000);
+camera.position.set(0, 0.3, 14);
+
+// sun direction (matches reference site)
+const sunDir = new THREE.Vector3(-0.6, 0.26, 0.76).normalize();
+
+const maxAniso = renderer.capabilities.getMaxAnisotropy();
+
+/* ----------------------------------------------------------------------
+   Starfield — a few thousand HSL-tinted points (reference palette).
+   Lives on a rig we slowly drift + counter-rotate for parallax.
+   ---------------------------------------------------------------------- */
+const starRig = new THREE.Group();
+scene.add(starRig);
+(function buildStars(){
+  const N = innerWidth < 700 ? 2200 : 3600;
+  const g = new THREE.BufferGeometry();
+  const pos = new Float32Array(N*3), col = new Float32Array(N*3);
+  const c = new THREE.Color();
+  for (let i=0;i<N;i++){
+    const r = 220 + Math.random()*900;
+    const t = Math.acos(2*Math.random()-1), ph = Math.random()*6.2832;
+    pos[i*3]   = r*Math.sin(t)*Math.cos(ph);
+    pos[i*3+1] = r*Math.sin(t)*Math.sin(ph);
+    pos[i*3+2] = r*Math.cos(t);
+    const k = Math.random();
+    // mostly cool starlight, a few warm/teal accents
+    c.setHSL(k<0.08?0.08:(k<0.22?0.50:0.62), 0.42, 0.62 + Math.random()*0.32);
+    col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  g.setAttribute('color',    new THREE.BufferAttribute(col,3));
+  const m = new THREE.PointsMaterial({ size:1.25, sizeAttenuation:true, vertexColors:true,
+                                       transparent:true, opacity:.92, depthWrite:false });
+  starRig.add(new THREE.Points(g, m));
+})();
+
+/* ----------------------------------------------------------------------
+   Earth — reference look: day/night map mixed by sun dot, warm
+   terminator band, subtle fresnel atmosphere. Tilted ~23deg (z=0.41).
+   On any texture error we fall back to solid materials so nothing breaks.
+   ---------------------------------------------------------------------- */
+const earthGroup = new THREE.Group();
+earthGroup.rotation.z = 0.41;
+scene.add(earthGroup);
+
+const EARTH_R = 3.0;
+const loader = new THREE.TextureLoader();
+
+// fallback solid colours (oceanic blue / dark night) until/if textures load
+const fbDay   = makeSolidTexture('#1d3f6e');
+const fbNight = makeSolidTexture('#070a16');
+
+const earthUniforms = {
+  dayMap:  { value: fbDay },
+  nightMap:{ value: fbNight },
+  sunDir:  { value: sunDir },
+  camPos:  { value: camera.position.clone() },
+  atmo:    { value: COL.atmo.clone() },
+  uWhite:  { value: 0.0 }   // ramps the surface to white in the final whiteout
+};
+
+const earthMat = new THREE.ShaderMaterial({
+  uniforms: earthUniforms,
+  vertexShader: `
+    varying vec2 vUv; varying vec3 vN; varying vec3 vP;
+    void main(){
+      vUv = uv;
+      vN  = normalize(mat3(modelMatrix) * normal);
+      vP  = (modelMatrix * vec4(position,1.0)).xyz;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+    }`,
+  fragmentShader: `
+    uniform sampler2D dayMap; uniform sampler2D nightMap;
+    uniform vec3 sunDir; uniform vec3 camPos; uniform vec3 atmo; uniform float uWhite;
+    varying vec2 vUv; varying vec3 vN; varying vec3 vP;
+    void main(){
+      vec3 N = normalize(vN);
+      float s = dot(N, normalize(sunDir));
+      float dayAmt = smoothstep(-0.09, 0.34, s);
+      vec3 day   = texture2D(dayMap,  vUv).rgb * 1.06;
+      vec3 night = texture2D(nightMap,vUv).rgb * 1.7;
+      vec3 col = mix(night, day, dayAmt);
+      // warm terminator band
+      float term = smoothstep(0.0,0.15,s) * (1.0 - smoothstep(0.15,0.42,s));
+      col += vec3(0.26,0.12,0.04) * term * 0.45;
+      // subtle fresnel atmosphere on the surface itself
+      vec3 V = normalize(camPos - vP);
+      float fres = pow(1.0 - max(dot(N,V),0.0), 4.0);
+      col += atmo * fres * (0.10 + 0.24*dayAmt);
+      // whiteout ramp
+      col = mix(col, vec3(1.05), uWhite);
+      gl_FragColor = vec4(col, 1.0);
+    }`
+});
+const earth = new THREE.Mesh(new THREE.SphereGeometry(EARTH_R, 128, 128), earthMat);
+earthGroup.add(earth);
+
+/* --- atmosphere shell: reference subtle additive fresnel + travel-edge entry glow ---
+   We extend the reference shader with a directional "entry" term that lights the
+   leading edge (side facing the camera's travel) and ramps teal -> hot white. */
+const atmoUniforms = {
+  camPos:   { value: camera.position.clone() },
+  glow:     { value: COL.glow.clone() },
+  travel:   { value: new THREE.Vector3(0,0,-1) }, // world-space dir of travel (camera forward)
+  entry:    { value: 0.0 },     // 0..1 strength of the leading-edge entry glow
+  hot:      { value: COL.teal.clone() },
+  hotWhite: { value: COL.white.clone() },
+  uWhite:   { value: 0.0 }
+};
+const atmoMat = new THREE.ShaderMaterial({
+  uniforms: atmoUniforms,
+  transparent:true, blending:THREE.AdditiveBlending, side:THREE.BackSide, depthWrite:false,
+  vertexShader: `
+    varying vec3 vN; varying vec3 vP;
+    void main(){
+      vN = normalize(mat3(modelMatrix)*normal);
+      vP = (modelMatrix*vec4(position,1.0)).xyz;
+      gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0);
+    }`,
+  fragmentShader: `
+    uniform vec3 camPos; uniform vec3 glow; uniform vec3 travel;
+    uniform float entry; uniform vec3 hot; uniform vec3 hotWhite; uniform float uWhite;
+    varying vec3 vN; varying vec3 vP;
+    void main(){
+      vec3 N = normalize(vN);
+      vec3 V = normalize(camPos - vP);
+      float f = pow(1.0 - max(dot(N,V),0.0), 4.0);
+      // base reference atmosphere — kept SUBTLE
+      vec3 col = glow * (0.42);
+      float a = f * 0.42;
+      // leading-edge entry glow: brightest where the limb faces our travel dir
+      // (compression of air ahead of the vehicle). lead in [0..1].
+      float lead = smoothstep(0.0, 1.0, dot(-N, normalize(travel)) * 0.5 + 0.5);
+      lead = pow(lead, 2.2);
+      float edge = pow(1.0 - max(dot(N,V),0.0), 2.0); // wider band than fresnel
+      float plasma = lead * edge * entry;
+      // teal leads, ramping to hot white only as we approach the whiteout
+      vec3 plasmaCol = mix(hot, hotWhite, smoothstep(0.45,1.0,entry));
+      col += plasmaCol * plasma * 3.2;
+      a   += plasma * 1.05;
+      // whiteout
+      col = mix(col, hotWhite, uWhite);
+      a   = mix(a,   1.0,      uWhite);
+      gl_FragColor = vec4(col, clamp(a,0.0,1.0));
+    }`
+});
+const atmoShell = new THREE.Mesh(new THREE.SphereGeometry(EARTH_R*1.045, 96, 96), atmoMat);
+earthGroup.add(atmoShell);
+
+/* load real textures; on success swap in, on error keep fallbacks (no crash) */
+loadTex(DAY_URL,   t=>{ earthUniforms.dayMap.value   = t; });
+loadTex(NIGHT_URL, t=>{ earthUniforms.nightMap.value = t; });
+
+function loadTex(url, onOk){
+  loader.load(url, (t)=>{
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.anisotropy = maxAniso;
+    onOk(t);
+  }, undefined, ()=>{ /* keep solid fallback — scene stays alive */ });
+}
+function makeSolidTexture(hex){
+  const c = document.createElement('canvas'); c.width = c.height = 4;
+  const ctx = c.getContext('2d'); ctx.fillStyle = hex; ctx.fillRect(0,0,4,4);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+
+/* ----------------------------------------------------------------------
+   Speed streaks — short LINE SEGMENTS that rush past the camera along the
+   travel axis. Each streak is a 2-vertex line: a HEAD (aHead=1) at the
+   particle position and a TAIL (aHead=0) trailing behind it. The tail
+   length grows with speed (uStretch) so the streaks genuinely elongate at
+   velocity, like re-entry plasma trails. Additive, no depth test, so they
+   always read as foreground motion in front of the planet.
+   ---------------------------------------------------------------------- */
+const STREAK_N = 1200;                 // segments
+const streakGeo = new THREE.BufferGeometry();
+const sPos  = new Float32Array(STREAK_N*2*3);  // 2 verts / segment
+const sHead = new Float32Array(STREAK_N*2);    // 1 = head, 0 = tail
+const sSeed = new Float32Array(STREAK_N*2);    // per-segment random (shared by both verts)
+// field AHEAD of the camera (camera looks down -z) => depth stored as NEGATIVE z
+const FIELD_R = 10, FIELD_NEAR = 0.6, FIELD_FAR = 70;
+const headZ = new Float32Array(STREAK_N);      // current head depth (positive = ahead)
+const headXY = new Float32Array(STREAK_N*2);   // x,y of each streak
+let _tailLen = 0.0;                            // current tail length (world units)
+for (let i=0;i<STREAK_N;i++){
+  const seed = Math.random();
+  sSeed[i*2] = seed; sSeed[i*2+1] = seed;
+  sHead[i*2] = 1.0;  sHead[i*2+1] = 0.0;
+  resetStreak(i, true);
+}
+writeStreakGeo();
+streakGeo.setAttribute('position', new THREE.BufferAttribute(sPos,3));
+streakGeo.setAttribute('aHead',    new THREE.BufferAttribute(sHead,1));
+streakGeo.setAttribute('aSeed',    new THREE.BufferAttribute(sSeed,1));
+
+function resetStreak(i, anywhere){
+  const ang = Math.random()*6.2832;
+  const rad = 0.2 + Math.pow(Math.random(),0.75)*FIELD_R;   // bias toward axis
+  headXY[i*2]   = Math.cos(ang)*rad;
+  headXY[i*2+1] = Math.sin(ang)*rad;
+  headZ[i] = anywhere ? (FIELD_NEAR + Math.random()*(FIELD_FAR-FIELD_NEAR))
+                      : (FIELD_FAR - Math.random()*6);
+}
+// rebuild the segment vertex buffer from head positions + current tail length
+function writeStreakGeo(){
+  for (let i=0;i<STREAK_N;i++){
+    const x = headXY[i*2], y = headXY[i*2+1], z = -headZ[i]; // negative z = ahead
+    const seed = sSeed[i*2];
+    const tl = _tailLen * (0.6 + 0.9*seed);   // per-streak tail length
+    // head
+    sPos[i*6]   = x; sPos[i*6+1] = y; sPos[i*6+2] = z;
+    // tail trails BEHIND the head along travel (toward +z, away from motion)
+    sPos[i*6+3] = x; sPos[i*6+4] = y; sPos[i*6+5] = z - tl;
+  }
+}
+
+const streakUniforms = {
+  uIntensity:{ value: 0.0 },
+  uColorA:   { value: COL.teal.clone() },
+  uColorB:   { value: COL.blue.clone() },
+  uColorHot: { value: COL.white.clone() },
+  uHot:      { value: 0.0 }
+};
+const streakMat = new THREE.ShaderMaterial({
+  uniforms: streakUniforms,
+  transparent:true, depthWrite:false, depthTest:false, blending:THREE.AdditiveBlending,
+  vertexShader: `
+    attribute float aHead; attribute float aSeed;
+    varying float vSeed; varying float vHead; varying float vFade;
+    void main(){
+      vSeed = aSeed; vHead = aHead;
+      vec4 mv = modelViewMatrix * vec4(position,1.0);
+      float depth = -mv.z;                       // positive in front
+      // brightest in the mid field, fade right at the camera and far away
+      float nf = smoothstep(0.0, 2.5, depth);
+      float ff = 1.0 - smoothstep(48.0, 72.0, depth);
+      vFade = nf * ff;
+      gl_Position = projectionMatrix * mv;
+    }`,
+  fragmentShader: `
+    precision highp float;
+    uniform float uIntensity; uniform vec3 uColorA; uniform vec3 uColorB;
+    uniform vec3 uColorHot; uniform float uHot;
+    varying float vSeed; varying float vHead; varying float vFade;
+    void main(){
+      vec3 c = mix(uColorA, uColorB, vSeed);
+      c = mix(c, uColorHot, uHot * (0.35 + 0.65*vSeed));
+      // bright at the head, fading toward the tail
+      float along = mix(0.18, 1.0, vHead);
+      float a = vFade * uIntensity * along;
+      if(a < 0.01) discard;
+      gl_FragColor = vec4(c * (0.6 + 0.6*vHead), a);
+    }`
+});
+const streaks = new THREE.LineSegments(streakGeo, streakMat);
+streaks.frustumCulled = false;
+// streaks ride on a rig parked at the camera each frame, facing travel
+const streakRig = new THREE.Group();
+streakRig.add(streaks);
+scene.add(streakRig);
+
+/* ----------------------------------------------------------------------
+   Progress / choreography
+   ---------------------------------------------------------------------- */
+let _p = 0;
+let userControlled = false;
+let streakStretch = 0;     // tail-length driver set in applyProgress, used in advanceStreaks
+let autoT = 0;
+const AUTO_DUR = 22;          // seconds for a full self-demo sweep
+const clock = new THREE.Clock();
+
+// optional ?p=0.5 query freezes progress (handy for design review / integration)
+let _frozen = null;
+try{
+  const qp = new URLSearchParams(location.search).get('p');
+  if (qp !== null && qp !== '' && !isNaN(+qp)){ _frozen = clamp01_(+qp); }
+}catch(e){}
+function clamp01_(x){ return x<0?0:(x>1?1:x); }
+
+const easeInOut = x => x<0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2;
+const easeIn    = x => x*x*x;
+const clamp01   = x => x<0?0:(x>1?1:x);
+const lerp      = (a,b,t)=>a+(b-a)*t;
+const range     = (p,a,b)=>clamp01((p-a)/(b-a));
+const mixV      = (out,a,b,t)=>out.copy(a).lerp(b,t);
+
+const altEl = document.getElementById('alt');
+const velEl = document.getElementById('vel');
+const flash = document.getElementById('flash');
+
+// reusable temporaries (no per-frame allocation)
+const _camTarget = new THREE.Vector3();
+const _fwd = new THREE.Vector3();
+const _shake = new THREE.Vector3();
+const _v0 = new THREE.Vector3(), _v1 = new THREE.Vector3(), _v2 = new THREE.Vector3();
+const _up = new THREE.Vector3(0,1,0);
+
+window.setDemoProgress = function(p){
+  userControlled = true;
+  _p = clamp01(p);
+};
+window.__demo = {
+  get p(){ return _p; },
+  set p(v){ window.setDemoProgress(v); }
+};
+
+/* ----------------------------------------------------------------------
+   The dive: a smooth camera curve from high orbit to limb-skim to whiteout.
+   p=0   calm high orbit (Earth small, upper-frame, gentle)
+   p=.5  mid-dive, Earth large, skimming the limb, streaks + entry glow
+   p=1   plunge into the atmosphere -> whiteout
+   ---------------------------------------------------------------------- */
+function applyProgress(p, time){
+  // --- master eased phases ---
+  const dive     = easeInOut(range(p, 0.02, 0.94));  // overall descent shape
+  const entry    = range(p, 0.34, 0.80);             // entry-glow strength (blooms by mid-dive)
+  const whiteout = easeIn(range(p, 0.84, 1.0));       // final flash
+
+  // ---------------------------------------------------------------------
+  // Camera path. Earth centre is the origin; Earth radius = EARTH_R.
+  // The camera lives on a descending arc and ALWAYS frames the globe so it
+  // grows from a small distant sphere (p=0) to a wall we skim past (p~.9).
+  //
+  //   distance: 7.2R  (small globe, orbit) ->  1.02R (grazing the limb)
+  //   arc:      sweeps ~0.9 rad so the day/night terminator slides across
+  //   pitch:    we drop below the equator as we dive
+  // ---------------------------------------------------------------------
+  // distance collapse is front-loaded (easeInOut) so by p=0.5 the planet is
+  // already large and we're skimming the limb; the last stretch grazes it.
+  const dist = lerp(EARTH_R*7.2, EARTH_R*1.015, easeInOut(range(p,0.0,0.96)));
+  const arc  = lerp(-0.35, 0.62, dive);              // azimuth sweep (rad)
+  const pitch= lerp(0.26, -0.16, dive);              // descend below equator
+
+  const cx = Math.sin(arc) * dist * Math.cos(pitch);
+  const cy = Math.sin(pitch) * dist;
+  const cz = Math.cos(arc) * dist * Math.cos(pitch);
+  camera.position.set(cx, cy, cz);
+
+  // FOV widens through the plunge for a visceral speed feel
+  const fov = lerp(42, 82, easeIn(range(p,0.45,1.0)));
+  if (Math.abs(camera.fov - fov) > 0.01){ camera.fov = fov; camera.updateProjectionMatrix(); }
+
+  // ---------------------------------------------------------------------
+  // Look target. At p=0 we aim OFF the planet centre so the small globe sits
+  // upper-right (hero copy would own lower-left) against the starfield.
+  // As we dive, the aim eases toward the limb tangent so the curved edge
+  // leads the frame and we skim it; at the very end we pitch the aim down
+  // past the limb so we plunge INTO the atmosphere (-> whiteout).
+  // The aim point is expressed in the camera's own view basis (right/up from
+  // the camera->centre direction) so it stays framed at any arc position.
+  // ---------------------------------------------------------------------
+  // base: look at planet centre
+  _camTarget.set(0,0,0);
+  // view basis
+  const toCtr = _v0.copy(_camTarget).sub(camera.position).normalize();
+  const right = _v1.crossVectors(toCtr, _up).normalize();
+  const upv   = _v2.crossVectors(right, toCtr).normalize();
+  // framing offsets (in radians of view angle, scaled by distance)
+  // start: globe pushed to upper-right  ->  end: aim toward lower limb tangent
+  const offRight = lerp(-0.42, 0.0,  easeInOut(range(p,0.05,0.55)));
+  const offUp    = lerp( 0.30, -0.50, dive);   // pull aim down as we dive past the limb
+  _camTarget
+    .addScaledVector(right, offRight * dist * 0.5)
+    .addScaledVector(upv,   offUp   * dist * 0.5);
+
+  // --- camera shake builds with the dive (and spikes during entry) ---
+  const shakeAmp = (0.0008 + 0.010*easeIn(range(p,0.42,0.95))) * (1.0 + 1.6*entry);
+  const s = time*46.0;
+  _shake.set(
+    (Math.sin(s*1.7)+Math.sin(s*2.9)*0.6) * shakeAmp,
+    (Math.cos(s*2.1)+Math.sin(s*3.7)*0.5) * shakeAmp,
+    Math.sin(s*2.4) * shakeAmp*0.5
+  );
+  camera.position.add(_shake);
+  camera.lookAt(_camTarget);
+  // tiny roll wobble for organic feel
+  camera.rotation.z += Math.sin(time*1.3)*0.004*(0.3+entry);
+
+  // --- camera forward (world) used to aim the entry glow + streaks ---
+  camera.getWorldDirection(_fwd);
+  atmoUniforms.travel.value.copy(_fwd);
+
+  // --- entry glow / plasma ---
+  atmoUniforms.entry.value = entry * entry;
+  // surface stays the reference look; only whiteout pushes it bright
+  earthUniforms.uWhite.value = whiteout;
+  atmoUniforms.uWhite.value  = whiteout;
+
+  // --- speed streaks ---
+  // ramp in once the dive has momentum, hold strong, ease off into the whiteout
+  const streakI = clamp01(range(p,0.20,0.46)) * (1.0 - whiteout*0.5);
+  streakUniforms.uIntensity.value = streakI;
+  streakUniforms.uHot.value       = clamp01(entry*0.55 + whiteout);
+  // tail-length driver (consumed by advanceStreaks)
+  streakStretch = easeInOut(range(p,0.22,0.85)) * (0.75 + 0.55*entry);
+
+  // --- whiteout overlay (DOM flash) for the hard cut ---
+  flash.style.opacity = (whiteout*whiteout).toFixed(3);
+
+  // --- fog ramp: near-invisible until the plunge, then dense cloud whiteout ---
+  scene.fog.density = lerp(0.0002, 0.18, easeIn(range(p,0.72,1.0)));
+
+  // --- HUD telemetry (premium restraint, not gamey) ---
+  // altitude tracks the actual descent shape; velocity climbs as we accelerate in
+  const altKm = Math.round(lerp(412, 0, dive));
+  const vel   = lerp(7.8, 27.4, easeIn(range(p,0.18,1.0)));
+  if (altEl) altEl.textContent = altKm.toLocaleString() + ' KM';
+  if (velEl) velEl.textContent = vel.toFixed(1) + ' KM/S';
+}
+
+/* ----------------------------------------------------------------------
+   Per-frame streak advance: move points toward the camera along local +z->cam,
+   recycle when they pass behind. The streakRig is parked at the camera, facing
+   the camera's forward so streaks always rush toward the viewer.
+   ---------------------------------------------------------------------- */
+function advanceStreaks(dt, p, stretch){
+  // park + orient the rig at the camera so the field always faces our travel
+  streakRig.position.copy(camera.position);
+  streakRig.quaternion.copy(camera.quaternion);
+  // tail length (world units) scales with the stretch driver
+  _tailLen = lerp(0.4, 7.5, stretch);
+  // advance head depths toward the camera (depth decreases toward 0), recycle
+  const speed = lerp(10, 200, easeIn(range(p,0.10,1.0)));   // units / sec
+  const adv = speed * dt;
+  for (let i=0;i<STREAK_N;i++){
+    headZ[i] -= adv;
+    if (headZ[i] < FIELD_NEAR){ resetStreak(i, false); }
+  }
+  writeStreakGeo();
+  streakGeo.attributes.position.needsUpdate = true;
+}
+
+/* ----------------------------------------------------------------------
+   Render loop — ALWAYS alive: Earth rotates, stars drift, even at p=0.
+   ---------------------------------------------------------------------- */
+function tick(){
+  requestAnimationFrame(tick);
+  const dt = Math.min(clock.getDelta(), 0.05);
+  const time = clock.elapsedTime;
+
+  // auto-demo until an external scrubber takes over
+  if (_frozen !== null){
+    _p = _frozen;                 // ?p= review override
+  } else if (!userControlled){
+    autoT += dt;
+    const cyc = (autoT % AUTO_DUR) / AUTO_DUR;
+    // ease 0->1, brief hold at the whiteout, then snap back to orbit
+    _p = cyc < 0.9 ? easeInOut(cyc/0.9) : 1.0;
+  }
+
+  // ambient life (independent of p)
+  earthGroup.rotation.y += dt * 0.018;          // slow planet spin
+  starRig.rotation.y    += dt * 0.0045;          // drifting stars
+  starRig.rotation.x     = Math.sin(time*0.05)*0.02;
+
+  // keep shader cam positions current
+  earthUniforms.camPos.value.copy(camera.position);
+  atmoUniforms.camPos.value.copy(camera.position);
+
+  applyProgress(_p, time);
+  advanceStreaks(dt, _p, streakStretch);
+
+  renderer.render(scene, camera);
+}
+tick();
+
+/* ----------------------------------------------------------------------
+   Resize
+   ---------------------------------------------------------------------- */
+function onResize(){
+  const w = innerWidth, h = innerHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w/h;
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize', onResize);
+onResize();
+</script>
+</body>
+</html>

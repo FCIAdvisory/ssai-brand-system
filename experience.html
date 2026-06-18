@@ -20,8 +20,10 @@
 html,body{background:var(--space);color:var(--starlight);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
 /* ---------- fixed stage layers ---------- */
-#scene{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}      /* WebGL */
-.plates{position:fixed;inset:0;z-index:1;pointer-events:none}                          /* photo plates */
+#scene{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}        /* cosmic WebGL */
+.acts{position:fixed;inset:0;z-index:1}                                                  /* live WebGL act iframes */
+.acts iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;display:none;background:#04030e;pointer-events:none;will-change:opacity,transform}
+.plates{position:fixed;inset:0;z-index:2;pointer-events:none}                            /* photo payoff plates */
 .plate{position:absolute;inset:0;opacity:0;will-change:opacity,transform}
 .plate img{width:100%;height:100%;object-fit:cover;object-position:center}
 .plate .pscrim{position:absolute;inset:0;background:
@@ -48,11 +50,18 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
   background:var(--teal);border-radius:30px;padding:13px 24px;text-decoration:none;transition:transform .2s,box-shadow .2s}
 .beat .cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px -10px rgba(47,217,195,.6)}
 .beat .cta.ghost{background:transparent;color:var(--starlight);border:1px solid var(--hair);margin-left:10px}
-
-/* centered close variant */
 .beat.center{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);text-align:center;max-width:none}
 .beat.center .inr{max-width:1180px;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
 .beat.center .k{justify-content:center}
+
+/* a small parent eyebrow that rides the live WebGL acts (the iframes carry their own headline) */
+.actlabel{position:fixed;left:clamp(22px,5vw,64px);top:clamp(70px,12vh,110px);z-index:4;opacity:0;pointer-events:none;
+  font-family:var(--body);font-weight:600;text-transform:uppercase;letter-spacing:.26em;font-size:11px;color:var(--nebula);
+  display:flex;align-items:center;gap:9px;transition:opacity .4s}
+.actlabel::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+.draghint{position:fixed;left:50%;top:50%;transform:translate(-50%,140px);z-index:4;opacity:0;pointer-events:none;
+  font-family:var(--body);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--starlight);
+  border:1px solid var(--hair);border-radius:30px;padding:9px 18px;background:rgba(8,6,28,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity .5s}
 
 /* ---------- chrome ---------- */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;
@@ -65,8 +74,6 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
   display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none}
 .cue .ar{width:1px;height:34px;background:linear-gradient(var(--blue),transparent);animation:fall 1.8s ease-in-out infinite}
 @keyframes fall{0%{transform:scaleY(.3);transform-origin:top;opacity:.3}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.3);transform-origin:bottom;opacity:.3}}
-.skip{position:fixed;top:16px;right:clamp(22px,5vw,46px);z-index:9;pointer-events:auto;display:none}
-/* chapter dots */
 .chapters{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:7;display:flex;flex-direction:column;gap:11px}
 .chapters b{width:7px;height:7px;border-radius:50%;background:var(--hair);transition:.3s;cursor:pointer;display:block;border:0;padding:0}
 .chapters b.on{background:var(--teal);box-shadow:0 0 9px var(--teal)}
@@ -85,7 +92,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .loader .lt{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--nebula)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.scroll{position:relative;z-index:2;width:100%;height:880vh}   /* the long scroll track */
+.scroll{position:relative;z-index:2;width:100%;height:1500vh}   /* the long scroll track */
 </style>
 </head>
 <body>
@@ -93,15 +100,24 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 <div class="loader" id="loader"><div class="spin"></div><div class="lt">Acquiring orbit…</div></div>
 
 <canvas id="scene"></canvas>
+
+<!-- live WebGL acts (each a validated standalone Three.js scene, driven by scroll) -->
+<div class="acts" id="acts">
+  <iframe id="if-orbits"    data-a="0.25" data-b="0.38" data-fi="0.225" data-fo="0.405" src="_demos/orbits-A.html"    title="Orbits — LEO, MEO, GEO" scrolling="no"></iframe>
+  <iframe id="if-inspector" data-a="0.41" data-b="0.54" data-fi="0.385" data-fo="0.565" data-interactive="1" src="_demos/inspector-B.html" title="The instrument — drag to inspect" scrolling="no"></iframe>
+  <iframe id="if-descent"   data-a="0.57" data-b="0.66" data-fi="0.545" data-fo="0.675" src="_demos/descent.html"    title="Re-entry" scrolling="no"></iframe>
+  <iframe id="if-terrain"   data-a="0.69" data-b="0.80" data-fi="0.665" data-fo="0.815" src="_demos/terrain-A.html"  title="Navigating Earth" scrolling="no"></iframe>
+</div>
+
+<!-- photo payoff -->
 <div class="plates" id="plates">
-  <div class="plate tint-te" data-a="0.42" data-b="0.515"><img src="assets/images/phytoplankton-barents.jpg" alt="Phytoplankton bloom"><div class="pscrim"></div></div>
-  <div class="plate"        data-a="0.50" data-b="0.595"><img src="assets/images/forest-amazon.jpg" alt="Rainforest from orbit"><div class="pscrim"></div></div>
-  <div class="plate tint-bl" data-a="0.585" data-b="0.665"><img src="assets/images/arctic-ice.jpg" alt="Arctic sea ice"><div class="pscrim"></div></div>
-  <div class="plate"        data-a="0.655" data-b="0.735"><img src="assets/images/storm-cyclone.jpg" alt="Tropical cyclone from orbit"><div class="pscrim"></div></div>
-  <div class="plate tint-te" data-a="0.725" data-b="0.80"><img src="assets/images/aurora-australis-limb.jpg" alt="Aurora australis"><div class="pscrim"></div></div>
-  <div class="plate"        data-a="0.79" data-b="0.865"><img src="assets/images/earth-night-limb-airglow.jpg" alt="Earth night limb"><div class="pscrim"></div></div>
-  <div class="plate tint-bl" data-a="0.855" data-b="0.955"><img src="assets/images/earth-ops-center.jpg" alt="Operations floor — a wall of Earth-observation screens"><div class="pscrim"></div></div>
-  <div class="plate"        data-a="0.945" data-b="1.001"><img src="assets/images/orbital-sunrise-limb.jpg" alt="Orbital sunrise"><div class="pscrim"></div></div>
+  <div class="plate tint-te" data-a="0.795" data-b="0.843"><img src="assets/images/phytoplankton-barents.jpg" alt="Phytoplankton bloom"><div class="pscrim"></div></div>
+  <div class="plate"        data-a="0.835" data-b="0.873"><img src="assets/images/forest-amazon.jpg" alt="Rainforest from orbit"><div class="pscrim"></div></div>
+  <div class="plate tint-bl" data-a="0.863" data-b="0.897"><img src="assets/images/arctic-ice.jpg" alt="Arctic sea ice"><div class="pscrim"></div></div>
+  <div class="plate"        data-a="0.889" data-b="0.921"><img src="assets/images/storm-cyclone.jpg" alt="Tropical cyclone from orbit"><div class="pscrim"></div></div>
+  <div class="plate tint-te" data-a="0.913" data-b="0.949"><img src="assets/images/aurora-australis-limb.jpg" alt="Aurora australis"><div class="pscrim"></div></div>
+  <div class="plate tint-bl" data-a="0.945" data-b="0.984"><img src="assets/images/earth-ops-center.jpg" alt="Operations floor — a wall of Earth-observation screens"><div class="pscrim"></div></div>
+  <div class="plate"        data-a="0.974" data-b="1.02"><img src="assets/images/orbital-sunrise-limb.jpg" alt="Orbital sunrise"><div class="pscrim"></div></div>
 </div>
 <div class="prog" id="prog"></div>
 
@@ -109,25 +125,22 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
   <img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc.">
   <span class="chap" id="chap">The Descent</span>
 </header>
-<a class="skip" id="skip" href="#" aria-label="Skip the intro"></a>
 
 <div class="copylayer"><div class="inner" id="beats">
   <!-- COSMIC -->
-  <div class="beat" data-a="-0.05" data-b="0.085"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
-  <div class="beat" data-a="0.11" data-b="0.20"><span class="k bl">A pale blue dot · home</span><h1>Science for<br>life on <span class="em">Earth.</span></h1><div class="lock"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><span class="ll">From observation<br>to understanding</span></div></div>
-  <div class="beat" data-a="0.24" data-b="0.34"><span class="k">01 · The living planet</span><h1>One world,<br><span class="em">watched.</span></h1><p>Every day, from orbit, we measure the one planet we all depend on — its oceans, its air, its ice, its light.</p></div>
-  <!-- NATURE -->
-  <div class="beat" data-a="0.43" data-b="0.515"><span class="k">02 · Oceans</span><h1>The blue that<br>makes us <span class="em">rare.</span></h1><p>Ocean colour reveals the phytoplankton that produce half the oxygen we breathe — read in a dozen wavelengths of light.</p></div>
-  <div class="beat" data-a="0.515" data-b="0.595"><span class="k">03 · Forests</span><h1>The green that<br><span class="em">breathes.</span></h1><p>We track the carbon the forests hold and the health of every growing season from space.</p></div>
-  <div class="beat" data-a="0.60" data-b="0.665"><span class="k bl">04 · Ice</span><h1>The white that's<br><span class="em">changing.</span></h1><p>Sea ice, glaciers, and the poles — measured year over year, so the world can see what's happening.</p></div>
-  <div class="beat" data-a="0.668" data-b="0.735"><span class="k">05 · Storms</span><h1>The restless<br><span class="em">sky.</span></h1><p>From the eye of a hurricane to the dust that crosses an ocean — observed, modelled, and forecast.</p></div>
-  <div class="beat" data-a="0.738" data-b="0.80"><span class="k">06 · Space weather</span><h1>Where Earth meets<br>the Sun's <span class="em">storms.</span></h1><p>The aurora is the visible edge of a system SSAI helps NASA and NOAA watch around the clock.</p></div>
-  <!-- OBSERVATION -->
-  <div class="beat" data-a="0.80" data-b="0.865"><span class="k bl">07 · The instrument</span><h1>We don't just watch.<br>We <span class="em">measure.</span></h1><p>Calibration, models, data assimilation, AI — the understanding layer that turns raw light into science you can trust.</p></div>
+  <div class="beat" data-a="-0.05" data-b="0.06"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
+  <div class="beat" data-a="0.075" data-b="0.135"><span class="k bl">A pale blue dot · home</span><h1>Science for<br>life on <span class="em">Earth.</span></h1><div class="lock"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><span class="ll">From observation<br>to understanding</span></div></div>
+  <div class="beat" data-a="0.150" data-b="0.205"><span class="k">01 · The living planet</span><h1>One world,<br><span class="em">watched.</span></h1><p>Every day, from orbit, we measure the one planet we all depend on — its oceans, its air, its ice, its light.</p></div>
+  <!-- NATURE PAYOFF -->
+  <div class="beat" data-a="0.795" data-b="0.843"><span class="k">What we see · Oceans</span><h1>The blue that<br>makes us <span class="em">rare.</span></h1><p>Ocean colour reveals the phytoplankton that make half the oxygen we breathe — read in a dozen wavelengths of light.</p></div>
+  <div class="beat" data-a="0.835" data-b="0.873"><span class="k">What we see · Forests</span><h1>The green that<br><span class="em">breathes.</span></h1><p>The carbon the forests hold, and the health of every growing season — measured from space.</p></div>
+  <div class="beat" data-a="0.863" data-b="0.897"><span class="k bl">What we see · Ice</span><h1>The white that's<br><span class="em">changing.</span></h1><p>Sea ice, glaciers, and the poles — tracked year over year, so the world can see what's happening.</p></div>
+  <div class="beat" data-a="0.889" data-b="0.921"><span class="k">What we see · Storms</span><h1>The restless<br><span class="em">sky.</span></h1><p>From the eye of a cyclone to the dust that crosses an ocean — observed, modelled, and forecast.</p></div>
+  <div class="beat" data-a="0.913" data-b="0.949"><span class="k">What we see · Space weather</span><h1>Where Earth meets<br>the Sun's <span class="em">storms.</span></h1><p>The aurora is the visible edge of a system SSAI helps NASA and NOAA watch around the clock.</p></div>
   <!-- LAB -->
-  <div class="beat" data-a="0.87" data-b="0.95"><span class="k bl">08 · The understanding layer</span><h1>From observation,<br>to <span class="em">understanding.</span></h1><p>Inside the lab, the planet becomes knowledge — the same imagery you just fell through, turned into decisions humanity can trust.</p></div>
+  <div class="beat" data-a="0.945" data-b="0.984"><span class="k bl">The understanding layer</span><h1>From observation,<br>to <span class="em">understanding.</span></h1><p>Inside the lab, the planet becomes knowledge — the imagery you just flew through, turned into decisions humanity can trust.</p></div>
   <!-- CLOSE -->
-  <div class="beat center" data-a="0.955" data-b="1.001"><div class="inr"><span class="k">Science for life on Earth</span><h1 style="font-size:clamp(40px,8vw,116px)"><span class="em">Science for life<br>on Earth.</span></h1><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:26px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
+  <div class="beat center" data-a="0.975" data-b="1.02"><div class="inr"><span class="k">Science for life on Earth</span><h1 style="font-size:clamp(40px,8vw,116px)"><span class="em">Science for life<br>on Earth.</span></h1><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:26px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
 </div></div>
 
 <div class="cue" id="cue">Scroll<div class="ar"></div></div>
@@ -148,8 +161,9 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 import * as THREE from 'three';
 var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
 var scrollP=0, canvas=document.getElementById('scene');
+var mxN=0,myN=0; // normalised cursor (-1..1)
 
-/* ---------- three.js: stars + Earth (day/night + subtle atmosphere) ---------- */
+/* ---------- cosmic three.js scene: stars + Earth (acts 0-2) ---------- */
 var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -186,58 +200,78 @@ var atmoMat=new THREE.ShaderMaterial({uniforms:{camPos:{value:camera.position},g
 var atmo=new THREE.Mesh(new THREE.SphereGeometry(1.028,64,64),atmoMat); scene.add(atmo);
 mgr.onLoad=function(){earthReady=true;var l=document.getElementById('loader');if(l)l.classList.add('gone');draw();};
 
-/* ---------- choreography ---------- */
+/* ---------- helpers ---------- */
 function ease(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
 function lerp(a,b,t){return a+(b-a)*t;}
 function clamp01(x){return x<0?0:(x>1?1:x);}
 function range(p,a,b){return clamp01((p-a)/(b-a));}
 function fadeOp(p,a,b,f){return clamp01(Math.min((p-a)/f,(b-p)/f,1));}
 
+/* ---------- live WebGL acts (iframes) ---------- */
+var ACTS=[].slice.call(document.querySelectorAll('.acts iframe')).map(function(el){
+  return {el:el, a:+el.dataset.a, b:+el.dataset.b, fi:+el.dataset.fi, fo:+el.dataset.fo,
+          interactive:el.dataset.interactive==='1', cw:null, ready:false};
+});
+ACTS.forEach(function(A){ A.el.addEventListener('load',function(){ A.ready=true; try{A.cw=A.el.contentWindow;}catch(e){} }); });
+function actOp(p,A){ return clamp01(Math.min(range(p,A.fi,A.a), 1-range(p,A.b,A.fo))); }
+
 var plates=[].slice.call(document.querySelectorAll('.plate'));
 var beats=[].slice.call(document.querySelectorAll('.beat'));
-var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap');
-var CH=[['The Descent',0],['Approach',0.10],['The living planet',0.22],['Oceans',0.43],['Forests',0.515],['Ice',0.60],['Storms',0.668],['Space weather',0.738],['Earth observation',0.80],['The lab',0.855],['Science for life on Earth',0.955]];
+var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'),
+    chap=document.getElementById('chap');
+var CH=[['The Descent',0],['Approach',0.075],['One world',0.150],['Orbit',0.25],['The instrument',0.41],['Re-entry',0.57],['Surface',0.69],['What we see',0.795],['The lab',0.945],['Science for life on Earth',0.975]];
 var chapEls=[];
-(function(){var c=document.getElementById('chapters');CH.forEach(function(ch,i){var b=document.createElement('button');b.title=ch[0];b.onclick=function(){scrollToP(ch[1]+0.01);};c.appendChild(b);chapEls.push(b);});})();
-var t=0, webglOp=1;
+(function(){var c=document.getElementById('chapters');CH.forEach(function(ch,i){var b=document.createElement('button');b.title=ch[0];b.onclick=function(){scrollToP(ch[1]+0.012);};c.appendChild(b);chapEls.push(b);});})();
+var t=0, canvasOp=1;
 
 function applyScroll(){
   var p=scrollP;
-  /* camera fly-in during the cosmic phase, then hold */
-  var cp=range(p,0,0.40), e=ease(cp);
+  /* cosmic camera fly-in (acts 0-2), with subtle cursor parallax */
+  var cp=range(p,0,0.20), e=ease(cp);
   camera.position.z=lerp(15.5,2.5,e);
-  camera.position.x=lerp(0.5,0.0,ease(range(p,0,0.34)));
-  camera.position.y=lerp(0.2,-0.04,e);
-  /* offset the look-target so the distant Earth sits upper-right (hero copy owns lower-left), easing to centre on approach */
-  var fr=ease(range(p,0.05,0.30));
+  camera.position.x=lerp(0.5,0.0,ease(range(p,0,0.17))) + mxN*0.16*(1-cp);
+  camera.position.y=lerp(0.2,-0.04,e) + myN*0.12*(1-cp);
+  var fr=ease(range(p,0.03,0.16));
   camera.lookAt(lerp(-0.85,0,fr),lerp(-0.5,0,fr),0);
-  /* webgl fades out as the first nature plate takes over */
-  webglOp=1-range(p,0.40,0.50);
-  canvas.style.opacity=webglOp;
-  /* plates crossfade */
-  for(var i=0;i<plates.length;i++){var a=+plates[i].dataset.a,b=+plates[i].dataset.b;var op=fadeOp(p,a,b,0.035);
-    plates[i].style.opacity=op; plates[i].style.transform='scale('+(1.06-0.06*range(p,a,b))+')';}
-  /* beats crossfade + drift */
-  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
+  canvasOp=1-range(p,0.20,0.25);
+  canvas.style.opacity=canvasOp;
+
+  /* live WebGL act iframes: crossfade + scrub + perf gating + parallax */
+  for(var n=0;n<ACTS.length;n++){ var A=ACTS[n]; var op=actOp(p,A);
+    var near=(p>A.fi-0.03 && p<A.fo+0.03);
+    A.el.style.display=near?'block':'none';
+    A.el.style.opacity=op;
+    A.el.style.pointerEvents=(A.interactive && op>0.55)?'auto':'none';
+    A.el.style.transform=A.interactive?'none':('translate('+(mxN*-7)+'px,'+(myN*-7)+'px)');
+    if(near && A.cw && A.cw.setDemoProgress){ try{ A.cw.setDemoProgress(range(p,A.a,A.b)); }catch(e){} }
+  }
+
+  /* photo plates */
+  for(var i=0;i<plates.length;i++){var a=+plates[i].dataset.a,b=+plates[i].dataset.b;var pop=fadeOp(p,a,b,0.022);
+    plates[i].style.opacity=pop; plates[i].style.transform='scale('+(1.07-0.07*range(p,a,b))+')';}
+
+  /* beats */
+  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.028);
     beats[j].style.opacity=bo;
     if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
+
   /* chrome */
-  if(prog) prog.style.width=(p*100)+'%';
+  if(prog) prog.style.width=(clamp01(p)*100)+'%';
   if(cue) cue.style.opacity=(1-range(p,0.03,0.10));
-  if(shellnav) shellnav.classList.toggle('show',p>0.955);
-  /* chapter label + dots */
+  if(shellnav) shellnav.classList.toggle('show',p>0.972);
   var ci=0; for(var k=0;k<CH.length;k++){ if(p>=CH[k][1]-0.005) ci=k; }
   if(chap) chap.textContent=CH[ci][0];
   for(var d=0;d<chapEls.length;d++) chapEls[d].classList.toggle('on',d===ci);
 }
 function draw(){ if(!earthReady) return;
-  if(webglOp<=0.01){ return; }   /* skip GL work once hidden */
+  if(canvasOp<=0.01){ return; }   /* skip cosmic GL once handed off to the act iframes */
   earthMat.uniforms.camPos.value.copy(camera.position); atmoMat.uniforms.camPos.value.copy(camera.position);
   earth.rotation.y=t*0.028+scrollP*1.1; atmo.rotation.copy(earth.rotation);
   renderer.render(scene,camera);
 }
 function resize(){var w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();applyScroll();draw();}
 addEventListener('resize',resize);
+addEventListener('mousemove',function(ev){ mxN=(ev.clientX/innerWidth)*2-1; myN=(ev.clientY/innerHeight)*2-1; },{passive:true});
 
 /* ---------- scroll engine ---------- */
 var lenis=null;
@@ -249,7 +283,7 @@ if(window.gsap && window.ScrollTrigger){
 }
 function loop(now){ t=(now||0)/1000; draw(); requestAnimationFrame(loop); }
 requestAnimationFrame(loop); resize(); applyScroll();
-window.__exp={get p(){return scrollP;},set p(v){scrollP=v;canvas.style.opacity=(1-range(v,0.40,0.50));applyScroll();draw();},cam:camera};
+window.__exp={get p(){return scrollP;},set p(v){scrollP=v;applyScroll();draw();},cam:camera,acts:ACTS};
 </script>
 </body>
 </html>

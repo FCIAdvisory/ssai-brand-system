@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>SSAI — Navigating Earth</title>
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#04030e;overflow:hidden;}
+  canvas{display:block;position:fixed;inset:0;width:100vw;height:100vh;}
+  #ui{position:fixed;left:28px;bottom:24px;z-index:10;pointer-events:none;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+      color:#f4f5ff;}
+  #ui .kicker{font-size:11px;letter-spacing:.42em;text-transform:uppercase;
+      color:#2fd9c3;opacity:.85;margin:0 0 8px;font-weight:600;}
+  #ui .title{font-size:26px;letter-spacing:.02em;margin:0;font-weight:300;
+      color:#f4f5ff;opacity:.92;}
+  #ui .sub{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+      margin:7px 0 0;color:#a9b2d6;opacity:.7;font-weight:400;}
+  #vig{position:fixed;inset:0;z-index:5;pointer-events:none;
+      background:radial-gradient(ellipse 120% 90% at 50% 42%,rgba(4,3,14,0) 38%,rgba(4,3,14,.55) 100%);}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+</head>
+<body>
+<div id="vig"></div>
+<div id="ui">
+  <p class="kicker">SSAI · Earth Science</p>
+  <h1 class="title">Navigating Earth</h1>
+  <p class="sub">Elevation data · live flythrough</p>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+
+const canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.setClearColor(0x04030e, 1);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x16145f, 0.0036);
+
+const camera = new THREE.PerspectiveCamera(64, window.innerWidth/window.innerHeight, 0.1, 2000);
+camera.position.set(0, 26, 0);
+
+// ---- palette ----
+const C_BG       = new THREE.Color(0x04030e);
+const C_TEAL     = new THREE.Color(0x2fd9c3);
+const C_BLUE     = new THREE.Color(0x3c7be0);
+const C_INDIGO   = new THREE.Color(0x16145f);
+const C_STAR     = new THREE.Color(0xf4f5ff);
+
+// =====================================================================
+//  TERRAIN  — large plane displaced by FBM value-noise in the vertex
+//  shader. uOffset scrolls the noise sampling so ridges flow toward and
+//  past the camera infinitely (recycled by modulo, never an edge).
+//  Fragment shader paints glowing elevation CONTOUR BANDS (teal->blue)
+//  over a near-black fill, with ridgeline rim light.
+// =====================================================================
+const PLANE_W = 460;
+const PLANE_D = 1040;
+const SEG_W   = 240;
+const SEG_D   = 280;
+
+// Near edge sits BEHIND the camera (camera is ~z=40), far edge dives deep
+// into the fog. This guarantees the ground fills the lower frame at every
+// sway/pitch phase — the camera can never see past the near edge into void.
+const NEAR_EDGE_Z = 150;
+const geo = new THREE.PlaneGeometry(PLANE_W, PLANE_D, SEG_W, SEG_D);
+geo.rotateX(-Math.PI/2);                  // lie flat (XZ plane)
+geo.translate(0, 0, NEAR_EDGE_Z - PLANE_D*0.5);
+
+const terrainUniforms = {
+  uOffset:   { value: 0.0 },
+  uTime:     { value: 0.0 },
+  uAmp:      { value: 34.0 },
+  uTeal:     { value: C_TEAL },
+  uBlue:     { value: C_BLUE },
+  uIndigo:   { value: C_INDIGO },
+  uBG:       { value: C_BG },
+  uCamZ:     { value: 0.0 },
+  uFogColor: { value: C_INDIGO },
+  uFogDensity:{ value: scene.fog.density }
+};
+
+const terrainVert = /* glsl */`
+  uniform float uOffset;
+  uniform float uTime;
+  uniform float uAmp;
+  varying float vH;        // normalized height 0..1
+  varying float vFogDepth;
+  varying vec3  vWorld;
+  varying float vRidge;
+
+  // ---- hash + value noise + fbm ----
+  vec2 hash2(vec2 p){
+    p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+    return fract(sin(p) * 43758.5453123);
+  }
+  float vnoise(vec2 p){
+    vec2 i = floor(p), f = fract(p);
+    vec2 u = f*f*(3.0-2.0*f);
+    float a = hash2(i + vec2(0.0,0.0)).x;
+    float b = hash2(i + vec2(1.0,0.0)).x;
+    float c = hash2(i + vec2(0.0,1.0)).x;
+    float d = hash2(i + vec2(1.0,1.0)).x;
+    return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
+  }
+  float fbm(vec2 p){
+    float v = 0.0, amp = 0.5;
+    mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
+    for(int i=0;i<5;i++){
+      v += amp * vnoise(p);
+      p = m * p;
+      amp *= 0.5;
+    }
+    return v;
+  }
+
+  // height field sampled in world XZ, scrolled by uOffset along Z
+  float heightAt(vec2 world){
+    vec2 p = world * 0.011;
+    p.y += uOffset;                       // scroll noise toward camera
+    float base = fbm(p);
+    // ridged detail: sharp valleys/peaks for "elevation data" feel
+    float ridged = fbm(p * 2.3 + 7.0);
+    ridged = 1.0 - abs(ridged - 0.5) * 2.0;
+    float h = base * 0.78 + ridged * 0.30;
+    // carry a broad valley down the centre so the camera flies a channel
+    float channel = smoothstep(0.0, 150.0, abs(world.x));
+    h *= mix(0.55, 1.0, channel);
+    return h;
+  }
+
+  void main(){
+    vec3 pos = position;
+    vec2 world = vec2(pos.x, pos.z);
+
+    float h = heightAt(world);
+    float e = 0.9;
+    float hx = heightAt(world + vec2(e, 0.0));
+    float hz = heightAt(world + vec2(0.0, e));
+
+    pos.y += h * uAmp;
+    vH = clamp(h, 0.0, 1.0);
+
+    // crude slope -> ridge factor (steep = ridgeline)
+    float slope = abs(h - hx) + abs(h - hz);
+    vRidge = clamp(slope * 34.0, 0.0, 1.0);
+
+    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+    vFogDepth = -mv.z;
+    vWorld = pos;
+    gl_Position = projectionMatrix * mv;
+  }
+`;
+
+const terrainFrag = /* glsl */`
+  precision highp float;
+  uniform vec3  uTeal;
+  uniform vec3  uBlue;
+  uniform vec3  uIndigo;
+  uniform vec3  uBG;
+  uniform vec3  uFogColor;
+  uniform float uFogDensity;
+  uniform float uTime;
+  varying float vH;
+  varying float vFogDepth;
+  varying vec3  vWorld;
+  varying float vRidge;
+
+  void main(){
+    // base fill: near-black indigo, lifting subtly with elevation
+    vec3 col = mix(uBG, uIndigo * 1.4, vH * vH * 0.6);
+
+    // elevation colour ramp teal(low) -> blue(high)
+    vec3 ramp = mix(uTeal, uBlue, smoothstep(0.15, 0.85, vH));
+
+    // ---- glowing contour bands (crisp isolines, derivative-AA, ~1.3px) ----
+    float bands = vH * 15.0;
+    float fw = fwidth(bands);
+    float gridDist = abs(fract(bands - 0.5) - 0.5) / max(fw, 1e-4);
+    float line = 1.0 - clamp(gridDist - 1.3, 0.0, 1.0);   // glowing isolines
+    // soft inner glow around each line for the premium "data" bloom
+    float glow = 1.0 - clamp(gridDist * 0.18, 0.0, 1.0);
+
+    col += ramp * line * 1.15;
+    col += ramp * glow * 0.18;
+
+    // ridgeline rim catches teal light
+    col += uTeal * vRidge * 0.55 * smoothstep(0.2, 0.9, vH);
+
+    // faint base glow on the valley floor (kept subtle, no solid slabs)
+    col += uTeal * 0.025 * (1.0 - smoothstep(0.0, 0.2, vH));
+
+    // exponential fog into indigo->black
+    float fogF = 1.0 - exp(-uFogDensity * uFogDensity * vFogDepth * vFogDepth);
+    col = mix(col, uFogColor * 0.18, clamp(fogF, 0.0, 1.0));
+    col = mix(col, uBG, smoothstep(0.55, 1.0, fogF) * 0.85);
+
+    gl_FragColor = vec4(col, 1.0);
+  }
+`;
+
+const terrainMat = new THREE.ShaderMaterial({
+  uniforms: terrainUniforms,
+  vertexShader: terrainVert,
+  fragmentShader: terrainFrag,
+  fog: false
+});
+const terrain = new THREE.Mesh(geo, terrainMat);
+terrain.frustumCulled = false;
+scene.add(terrain);
+
+// Additive teal wireframe ghost layer sitting just above the surface
+// to give the "data mesh" a premium glowing structure.
+const wireMat = new THREE.ShaderMaterial({
+  uniforms: terrainUniforms,
+  vertexShader: terrainVert,
+  fragmentShader: /* glsl */`
+    precision highp float;
+    uniform vec3 uTeal; uniform vec3 uBlue;
+    uniform float uFogDensity;
+    varying float vH; varying float vFogDepth;
+    void main(){
+      vec3 c = mix(uTeal, uBlue, smoothstep(0.2,0.9,vH));
+      float fogF = 1.0 - exp(-uFogDensity*uFogDensity*vFogDepth*vFogDepth);
+      float a = (0.10 + vH*0.16) * (1.0 - clamp(fogF,0.0,1.0));
+      gl_FragColor = vec4(c, a);
+    }
+  `,
+  wireframe: true,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+  fog: false
+});
+const wire = new THREE.Mesh(geo, wireMat);
+wire.frustumCulled = false;
+wire.position.y = 0.15;
+scene.add(wire);
+
+// =====================================================================
+//  STARFIELD — a few thousand Points above the horizon
+// =====================================================================
+function makeStars(){
+  const N = 2200;
+  const pos = new Float32Array(N*3);
+  const siz = new Float32Array(N);
+  for(let i=0;i<N;i++){
+    const r = 600 + Math.random()*700;
+    const theta = Math.random()*Math.PI*2;
+    const phi = Math.random()*Math.PI*0.42;     // upper dome only
+    pos[i*3]   = Math.sin(theta)*Math.cos(phi)*r;
+    pos[i*3+1] = 80 + Math.abs(Math.sin(phi))*r*0.9;
+    pos[i*3+2] = Math.cos(theta)*Math.cos(phi)*r - 200;
+    siz[i] = Math.random()*1.6 + 0.4;
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  g.setAttribute('aSize', new THREE.BufferAttribute(siz,1));
+  const m = new THREE.ShaderMaterial({
+    uniforms:{ uColor:{value:C_STAR}, uTime:{value:0} },
+    vertexShader:`
+      attribute float aSize; uniform float uTime;
+      varying float vTw;
+      void main(){
+        vec4 mv = modelViewMatrix * vec4(position,1.0);
+        gl_Position = projectionMatrix * mv;
+        vTw = 0.6 + 0.4*sin(uTime*1.5 + position.x*0.05 + position.z*0.03);
+        gl_PointSize = aSize * (300.0 / -mv.z) * vTw;
+      }`,
+    fragmentShader:`
+      uniform vec3 uColor; varying float vTw;
+      void main(){
+        vec2 d = gl_PointCoord - 0.5;
+        float a = smoothstep(0.5, 0.0, length(d));
+        gl_FragColor = vec4(uColor, a * vTw * 0.9);
+      }`,
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending
+  });
+  return new THREE.Points(g,m);
+}
+const stars = makeStars();
+scene.add(stars);
+
+// =====================================================================
+//  HORIZON GLOW BAND — a soft teal/blue band where terrain meets sky
+// =====================================================================
+function makeHorizon(){
+  const g = new THREE.PlaneGeometry(2600, 360, 1, 1);
+  const m = new THREE.ShaderMaterial({
+    uniforms:{ uTeal:{value:C_TEAL}, uBlue:{value:C_BLUE}, uTime:{value:0} },
+    vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
+    fragmentShader:`
+      uniform vec3 uTeal; uniform vec3 uBlue; uniform float uTime;
+      varying vec2 vUv;
+      void main(){
+        float band = smoothstep(0.0,0.5,vUv.y) * (1.0 - smoothstep(0.5,1.0,vUv.y));
+        float horiz = pow(band, 2.2);
+        float sweep = 0.7 + 0.3*sin(vUv.x*6.2831 + uTime*0.4);
+        vec3 c = mix(uBlue, uTeal, vUv.x*0.6 + 0.2);
+        gl_FragColor = vec4(c, horiz * 0.5 * sweep);
+      }`,
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, fog:false, side:THREE.DoubleSide
+  });
+  const mesh = new THREE.Mesh(g,m);
+  mesh.position.set(0, 60, -760);
+  return mesh;
+}
+const horizon = makeHorizon();
+scene.add(horizon);
+
+// =====================================================================
+//  PROGRESS / AUTO-DEMO  state
+// =====================================================================
+let _p = 0;
+let userControlled = false;
+let autoT = 0;                          // seconds for auto loop
+const AUTO_DUR = 22;                    // self-demo loop length
+
+window.setDemoProgress = function(p){
+  userControlled = true;
+  _p = Math.min(1, Math.max(0, p));
+};
+window.__demo = {
+  get p(){ return _p; },
+  set p(v){ window.setDemoProgress(v); }
+};
+
+// ease helper
+const easeInOut = t => t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+
+// =====================================================================
+//  ANIMATION LOOP
+// =====================================================================
+const clock = new THREE.Clock();
+let travel = 0;                 // accumulated forward travel (drives uOffset)
+let prevP  = 0;
+const BASE_SPEED   = 0.85;      // ambient scroll, always alive
+const SCRUB_TRAVEL = 60.0;      // how much uOffset advances across 0->1
+
+function animate(){
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), 0.05);
+  const t  = clock.elapsedTime;
+
+  // auto-advance p until user takes control
+  if(!userControlled){
+    autoT += dt;
+    const loop = (autoT % AUTO_DUR) / AUTO_DUR;
+    _p = easeInOut(loop);
+  }
+
+  // forward travel = ambient drift + scrubbed journey.
+  // ambient component always advances (scene alive on load / when paused);
+  // the p-driven component lets scrubbing fly far through the landscape.
+  travel += dt * BASE_SPEED;
+  const journey = _p * SCRUB_TRAVEL;
+  const offset  = travel + journey;
+
+  terrainUniforms.uOffset.value = offset;
+  terrainUniforms.uTime.value   = t;
+
+  // ---- piloting camera: low over the ridges, pitched DOWN the valley ----
+  // Gentle lateral sway + a small banking roll so it feels piloted, but the
+  // pitch is held firmly downward so the terrain always fills the frame and
+  // distance dissolves into fog — never an empty void below the horizon.
+  const sway = Math.sin(t*0.27) * 11.0 + Math.sin(t*0.11)*5.0;
+  const bank = Math.sin(t*0.27) * 0.035 + Math.sin(t*0.19)*0.018;
+  const bob  = Math.sin(t*0.7) * 0.8 + Math.sin(t*0.23)*1.1;
+  prevP = _p;
+
+  camera.position.x = sway;
+  camera.position.y = 30 + bob;
+  camera.position.z = 40;
+
+  // look ahead and gently DOWN the valley. Target y below the camera with a
+  // far -Z keeps the horizon high and the terrain filling the lower frame.
+  const look = new THREE.Vector3(sway*0.35, 12 + Math.sin(t*0.4)*1.2, -240);
+  camera.up.set(Math.sin(bank), Math.cos(bank), 0);   // bank via up-vector (stable)
+  camera.lookAt(look);
+
+  // keep stars & horizon anchored relative to camera heading (they don't fly past)
+  stars.position.x = camera.position.x * 0.6;
+  horizon.position.x = camera.position.x * 0.5;
+
+  // animate ancillary uniforms
+  stars.material.uniforms.uTime.value = t;
+  horizon.material.uniforms.uTime.value = t;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+// =====================================================================
+//  RESIZE
+// =====================================================================
+function onResize(){
+  const w = window.innerWidth, h = window.innerHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w/h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', onResize);
+</script>
+</body>
+</html>

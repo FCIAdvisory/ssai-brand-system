@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>SSAI — Instrument inspector</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='3' fill='%232fd9c3'/></svg>" />
+<style>
+  @font-face{
+    font-family:"Tactic Sans";font-style:italic;font-weight:700;font-display:swap;
+    src:url("/ssai-brand-site/assets/fonts/tactic-bold-italic.woff2") format("woff2");
+  }
+  @font-face{
+    font-family:"Tactic Sans";font-style:normal;font-weight:500;font-display:swap;
+    src:url("/ssai-brand-site/assets/fonts/tactic-medium.woff2") format("woff2");
+  }
+  :root{
+    --bg:#04030e; --teal:#2fd9c3; --blue:#3c7be0; --indigo:#16145f; --star:#f4f5ff;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;
+    font-family:"Helvetica Neue",Arial,system-ui,sans-serif;color:var(--star);
+    -webkit-font-smoothing:antialiased;}
+  #c{position:fixed;inset:0;display:block;width:100vw;height:100vh;touch-action:none;cursor:grab;}
+  #c.grabbing{cursor:grabbing;}
+
+  /* ---- top-left wordmark ---- */
+  #brand{position:fixed;left:34px;top:30px;pointer-events:none;z-index:6;}
+  #brand .k{font-size:10px;letter-spacing:.42em;text-transform:uppercase;opacity:.5;}
+  #brand .t{font-family:"Tactic Sans","Helvetica Neue",Arial,sans-serif;
+    font-style:italic;font-weight:700;text-transform:uppercase;
+    font-size:24px;letter-spacing:.015em;margin-top:9px;line-height:1.05;}
+  #brand .s{font-size:12px;letter-spacing:.05em;opacity:.58;margin-top:8px;max-width:300px;line-height:1.5;}
+
+  /* ---- hotspot labels (HTML, projected each frame) ---- */
+  #spots{position:fixed;inset:0;pointer-events:none;z-index:5;}
+  .spot{position:absolute;left:0;top:0;will-change:transform,opacity;
+    transform:translate(-50%,-50%);transition:opacity .45s ease;}
+  .spot .dot{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;
+    background:var(--teal);box-shadow:0 0 0 0 rgba(47,217,195,.5);
+    pointer-events:auto;cursor:pointer;}
+  .spot .dot::after{content:"";position:absolute;inset:-9px;border-radius:50%;
+    border:1px solid rgba(47,217,195,.4);}
+  .spot .ring{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;
+    border:1px solid var(--teal);animation:pulse 2.6s ease-out infinite;}
+  @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(3.4);opacity:0}100%{opacity:0}}
+
+  .spot .leader{position:absolute;left:0;top:0;height:1px;
+    background:linear-gradient(90deg,rgba(47,217,195,.85),rgba(47,217,195,.15));
+    transform-origin:left center;}
+  .spot .card{position:absolute;white-space:nowrap;
+    background:rgba(6,7,20,.62);border:1px solid rgba(244,245,255,.16);
+    border-left:2px solid var(--teal);
+    backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+    border-radius:3px;padding:8px 12px;pointer-events:auto;cursor:default;
+    box-shadow:0 14px 40px rgba(0,0,0,.5);}
+  .spot .card .lab{font-size:10px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--teal);font-weight:600;}
+  .spot .card .desc{font-size:12.5px;letter-spacing:.01em;line-height:1.5;
+    margin-top:0;max-height:0;opacity:0;overflow:hidden;white-space:normal;max-width:230px;
+    color:var(--star);transition:max-height .5s cubic-bezier(.2,.7,.2,1),opacity .4s ease,margin-top .4s ease;}
+  .spot.open .card{border-left-color:var(--blue);}
+  .spot.open .card .lab{color:var(--blue);}
+  .spot.open .card .desc{max-height:90px;opacity:.85;margin-top:6px;}
+  .spot.active .card{border-left-color:var(--blue);box-shadow:0 0 0 1px rgba(60,123,224,.25),0 18px 50px rgba(0,0,0,.55);}
+
+  /* ---- hint / controls ---- */
+  #hint{position:fixed;left:34px;bottom:30px;z-index:6;pointer-events:none;
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.5;
+    transition:opacity .8s ease;}
+  #hint b{font-weight:600;color:var(--teal);opacity:.95;}
+
+  #tour{position:fixed;right:34px;bottom:30px;z-index:6;text-align:right;}
+  #tour .row{display:flex;align-items:center;justify-content:flex-end;gap:9px;
+    font-size:10px;letter-spacing:.26em;text-transform:uppercase;opacity:.4;margin-top:8px;
+    transition:opacity .4s ease;}
+  #tour .row.on{opacity:.95;}
+  #tour .row .pip{width:6px;height:6px;border-radius:50%;background:var(--star);opacity:.35;
+    transition:all .4s ease;}
+  #tour .row.on .pip{background:var(--teal);opacity:1;box-shadow:0 0 10px var(--teal);}
+
+  #prog{position:fixed;left:0;right:0;bottom:0;height:2px;background:rgba(244,245,255,.07);z-index:6;}
+  #prog>div{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--blue));
+    box-shadow:0 0 10px rgba(60,123,224,.7);}
+
+  .vig{position:fixed;inset:0;pointer-events:none;z-index:4;
+    background:radial-gradient(120% 90% at 50% 38%,rgba(4,3,14,0) 52%,rgba(4,3,14,.72) 100%);}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="vig"></div>
+
+<div id="brand">
+  <div class="k">SSAI — Earth Intelligence</div>
+  <div class="t">The Instrument</div>
+  <div class="s">An Earth-observation platform, built and flown. Drag to inspect.</div>
+</div>
+
+<div id="spots"></div>
+
+<div id="hint"><b>Drag</b> to rotate · <b>Scroll</b> to zoom · <b>Click</b> a marker</div>
+
+<div id="tour">
+  <div class="row" data-i="0"><span>Imaging sensor</span><span class="pip"></span></div>
+  <div class="row" data-i="1"><span>Solar array</span><span class="pip"></span></div>
+  <div class="row" data-i="2"><span>Downlink antenna</span><span class="pip"></span></div>
+  <div class="row" data-i="3"><span>Star tracker</span><span class="pip"></span></div>
+</div>
+
+<div id="prog"><div id="prog-bar"></div></div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+/* ===================== palette ===================== */
+const COL = {
+  bg:0x04030e, teal:0x2fd9c3, blue:0x3c7be0, indigo:0x16145f,
+  indigoLift:0x8f8cff, star:0xf4f5ff, gold:0xd9b25a, foil:0xe9c97a
+};
+
+/* ===================== renderer ===================== */
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.04;
+const maxAniso = renderer.capabilities.getMaxAnisotropy();
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(COL.bg);
+scene.fog = new THREE.FogExp2(COL.bg, 0.018);
+
+const camera = new THREE.PerspectiveCamera(40, innerWidth/innerHeight, 0.1, 2000);
+camera.position.set(0, 1.4, 16);
+
+/* ===================== lighting ===================== */
+// Sun comes from upper-left (the +X/-ish sunshade side faces it)
+const SUN_DIR = new THREE.Vector3(-0.62, 0.5, 0.6).normalize();
+const sun = new THREE.DirectionalLight(0xfff4e2, 2.5);
+sun.position.copy(SUN_DIR).multiplyScalar(60);
+scene.add(sun);
+// cool fill from Earth side (below)
+const earthFill = new THREE.DirectionalLight(0x2b4f8c, 0.9);
+earthFill.position.set(0.2, -0.9, 0.3);
+scene.add(earthFill);
+scene.add(new THREE.AmbientLight(0x1a2238, 0.6));
+// teal rim accent
+const rim = new THREE.PointLight(COL.teal, 18, 40, 2.0);
+rim.position.set(5, 1, 6);
+scene.add(rim);
+
+/* environment map for crisp metal specular (procedural, no asset) */
+const pmrem = new THREE.PMREMGenerator(renderer);
+const envScene = new THREE.Scene();
+(()=> {
+  // simple gradient sphere env: bright sun pole, dark space, faint earth glow
+  const g = new THREE.SphereGeometry(50, 24, 16);
+  const m = new THREE.MeshBasicMaterial({ side: THREE.BackSide, vertexColors:true });
+  const geo = g.clone();
+  const cnt = geo.attributes.position.count;
+  const colors = new Float32Array(cnt*3);
+  const tmp = new THREE.Vector3();
+  const cTop = new THREE.Color(0x121a30), cSun = new THREE.Color(0xfff2dc),
+        cBot = new THREE.Color(0x0a1830), cSpace = new THREE.Color(0x05060f);
+  for(let i=0;i<cnt;i++){
+    tmp.fromBufferAttribute(geo.attributes.position,i).normalize();
+    const up = tmp.y*0.5+0.5;
+    const c = cTop.clone().lerp(cBot, 1-up);
+    const sd = Math.max(0, tmp.dot(SUN_DIR));
+    c.lerp(cSun, Math.pow(sd,3)*0.9);
+    c.lerp(cSpace, Math.pow(Math.max(0,-tmp.y),2)*0.4);
+    colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
+  }
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+  envScene.add(new THREE.Mesh(geo, m));
+})();
+const envRT = pmrem.fromScene(envScene, 0.04);
+scene.environment = envRT.texture;
+envScene.children.forEach(o=>{o.geometry.dispose();o.material.dispose();});
+pmrem.dispose();
+
+/* ===================== starfield ===================== */
+(()=> {
+  const N = 1400;
+  const pos = new Float32Array(N*3), col = new Float32Array(N*3), siz = new Float32Array(N);
+  const tints = [new THREE.Color(COL.star), new THREE.Color(COL.teal), new THREE.Color(COL.blue)];
+  for(let i=0;i<N;i++){
+    const r = 90 + Math.random()*220;
+    const u=Math.random()*2-1, t=Math.random()*Math.PI*2, s=Math.sqrt(1-u*u);
+    pos[i*3]=Math.cos(t)*s*r; pos[i*3+1]=u*r; pos[i*3+2]=Math.sin(t)*s*r;
+    const c = tints[Math.random()<0.16?(Math.random()<0.5?1:2):0].clone()
+      .multiplyScalar(0.55+Math.random()*0.45);
+    col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
+    siz[i]=Math.random()*1.5+0.4;
+  }
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  g.setAttribute('color',new THREE.BufferAttribute(col,3));
+  g.setAttribute('asize',new THREE.BufferAttribute(siz,1));
+  const m=new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+    uniforms:{ uT:{value:0}, uPR:{value:renderer.getPixelRatio()} },
+    vertexColors:true,
+    vertexShader:`uniform float uT;uniform float uPR;attribute float asize;
+      varying vec3 vC;varying float vTw;
+      void main(){vC=color;
+        vTw=0.6+0.4*sin(uT*1.6+position.x*0.4+position.y*0.2);
+        vec4 mv=modelViewMatrix*vec4(position,1.0);
+        gl_PointSize=asize*uPR*(170.0/-mv.z);
+        gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`varying vec3 vC;varying float vTw;
+      void main(){vec2 d=gl_PointCoord-0.5;float a=smoothstep(0.5,0.0,length(d));
+        gl_FragColor=vec4(vC,a*vTw);}`
+  });
+  const stars=new THREE.Points(g,m);
+  stars.renderOrder=-2;
+  scene.add(stars);
+  scene._stars=m;
+})();
+
+/* ===================== Earth limb arc (bottom of frame) ===================== */
+const texLoader = new THREE.TextureLoader();
+function loadTex(url,onOk){
+  texLoader.load(url,(t)=>{ t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=maxAniso; onOk&&onOk(t); },
+    undefined, ()=>{ /* guarded: keep gradient fallback */ });
+}
+(()=> {
+  // a large faint sphere far below = horizon/limb. Soft gradient fallback always present.
+  const R=70;
+  const earth=new THREE.Mesh(
+    new THREE.SphereGeometry(R,64,48),
+    new THREE.MeshStandardMaterial({ color:0x0c2748, roughness:1, metalness:0,
+      emissive:0x06203f, emissiveIntensity:0.5 })
+  );
+  earth.position.set(0,-R-7.5,-6);
+  scene.add(earth);
+  loadTex('/ssai-brand-site/assets/images/blue-marble-world.jpg',(t)=>{
+    earth.material.map=t; earth.material.color.set(0x9fb8d8);
+    earth.material.emissive.set(0x07172e); earth.material.needsUpdate=true;
+  });
+  // atmosphere limb glow (thin additive shell)
+  const atmo=new THREE.Mesh(
+    new THREE.SphereGeometry(R*1.028,64,48),
+    new THREE.ShaderMaterial({ side:THREE.BackSide, transparent:true, depthWrite:false,
+      blending:THREE.AdditiveBlending,
+      uniforms:{ uC:{value:new THREE.Color(COL.blue)} },
+      vertexShader:`varying vec3 vN;varying vec3 vV;
+        void main(){vN=normalize(normalMatrix*normal);
+          vec4 mv=modelViewMatrix*vec4(position,1.0);vV=normalize(-mv.xyz);
+          gl_Position=projectionMatrix*mv;}`,
+      fragmentShader:`uniform vec3 uC;varying vec3 vN;varying vec3 vV;
+        void main(){float f=pow(1.0-abs(dot(vN,vV)),3.0);
+          gl_FragColor=vec4(uC,f*0.9);}`
+    })
+  );
+  atmo.position.copy(earth.position);
+  scene.add(atmo);
+})();
+
+/* god-ray-ish soft sun glow sprite (volumetric feel, cheap) */
+(()=> {
+  const cv=document.createElement('canvas');cv.width=cv.height=256;
+  const x=cv.getContext('2d');
+  const g=x.createRadialGradient(128,128,0,128,128,128);
+  g.addColorStop(0,'rgba(255,244,224,0.9)');
+  g.addColorStop(0.25,'rgba(255,236,200,0.32)');
+  g.addColorStop(1,'rgba(255,236,200,0)');
+  x.fillStyle=g;x.fillRect(0,0,256,256);
+  const tex=new THREE.CanvasTexture(cv);tex.colorSpace=THREE.SRGBColorSpace;
+  const spr=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,
+    blending:THREE.AdditiveBlending,depthWrite:false,opacity:0.85}));
+  spr.scale.set(26,26,1);
+  spr.position.copy(SUN_DIR).multiplyScalar(34);
+  spr.renderOrder=-1;
+  scene.add(spr);
+})();
+
+/* ===================== materials ===================== */
+const matFoil = new THREE.MeshStandardMaterial({
+  color:0xb88a35, metalness:1.0, roughness:0.32,
+  emissive:0x2a1c06, emissiveIntensity:0.45, envMapIntensity:1.3 });
+const matFoilDark = new THREE.MeshStandardMaterial({
+  color:0x6e561f, metalness:1.0, roughness:0.5, envMapIntensity:1.0 });
+const matAlu = new THREE.MeshStandardMaterial({
+  color:0xc9cdd6, metalness:0.95, roughness:0.34, envMapIntensity:1.2 });
+const matDarkMetal = new THREE.MeshStandardMaterial({
+  color:0x2a2f3a, metalness:0.9, roughness:0.42, envMapIntensity:1.0 });
+const matBlack = new THREE.MeshStandardMaterial({
+  color:0x0c0e16, metalness:0.6, roughness:0.55 });
+const matGlass = new THREE.MeshPhysicalMaterial({
+  color:0x06141a, metalness:0.2, roughness:0.06, envMapIntensity:1.6,
+  clearcoat:1, clearcoatRoughness:0.04, emissive:0x07372f, emissiveIntensity:0.35 });
+const matRadiator = new THREE.MeshStandardMaterial({
+  color:0xe9edf4, metalness:0.2, roughness:0.85, envMapIntensity:0.6 });
+
+/* solar-cell canvas texture (dark blue cells + thin grid) */
+function solarTexture(){
+  const w=256,h=512,cv=document.createElement('canvas');cv.width=w;cv.height=h;
+  const x=cv.getContext('2d');
+  x.fillStyle='#0a1a3a';x.fillRect(0,0,w,h);
+  const cols=6, rows=12, gap=3;
+  const cw=(w-gap*(cols+1))/cols, ch=(h-gap*(rows+1))/rows;
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    const px=gap+c*(cw+gap), py=gap+r*(ch+gap);
+    const grd=x.createLinearGradient(px,py,px+cw,py+ch);
+    grd.addColorStop(0,'#16306a');grd.addColorStop(0.5,'#1d3d82');grd.addColorStop(1,'#102452');
+    x.fillStyle=grd;x.fillRect(px,py,cw,ch);
+    x.strokeStyle='rgba(120,160,230,0.35)';x.lineWidth=1;
+    for(let k=1;k<4;k++){const ly=py+ch*k/4;x.beginPath();x.moveTo(px,ly);x.lineTo(px+cw,ly);x.stroke();}
+    x.strokeStyle='rgba(8,14,30,0.9)';x.strokeRect(px,py,cw,ch);
+  }
+  const t=new THREE.CanvasTexture(cv);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=maxAniso;
+  return t;
+}
+const matSolar = new THREE.MeshStandardMaterial({
+  map:solarTexture(), color:0x9fb4dd, metalness:0.35, roughness:0.4,
+  emissive:0x0a1830, emissiveIntensity:0.6, envMapIntensity:0.8, side:THREE.DoubleSide });
+const matSolarBack = new THREE.MeshStandardMaterial({
+  color:0x141414, metalness:0.6, roughness:0.6, side:THREE.DoubleSide });
+
+/* foil "blanket" multi-layer insulation ridges via slightly displaced rings — faked with bands */
+function blanketTexture(){
+  const w=64,h=256,cv=document.createElement('canvas');cv.width=w;cv.height=h;
+  const x=cv.getContext('2d');
+  const base=x.createLinearGradient(0,0,w,0);
+  base.addColorStop(0,'#7a5e22');base.addColorStop(0.5,'#d9b25a');base.addColorStop(1,'#8a6a28');
+  x.fillStyle=base;x.fillRect(0,0,w,h);
+  for(let i=0;i<26;i++){const y=Math.random()*h;
+    x.strokeStyle='rgba(60,40,10,'+(0.1+Math.random()*0.25)+')';x.lineWidth=0.6+Math.random();
+    x.beginPath();x.moveTo(0,y);x.lineTo(w,y+(Math.random()*6-3));x.stroke();}
+  for(let i=0;i<10;i++){const y=Math.random()*h;
+    x.strokeStyle='rgba(255,240,200,'+(0.08+Math.random()*0.18)+')';x.lineWidth=0.6;
+    x.beginPath();x.moveTo(0,y);x.lineTo(w,y);x.stroke();}
+  const t=new THREE.CanvasTexture(cv);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=maxAniso;
+  t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(3,2);
+  return t;
+}
+matFoil.map = blanketTexture();
+
+/* ===================== build the satellite (sculptural / VARIANT B) ===================== */
+const sat = new THREE.Group();          // outer interactive group (drag rotates this)
+const satTilt = new THREE.Group();      // gives a nice 3/4 attitude
+sat.add(satTilt);
+scene.add(sat);
+satTilt.rotation.set(0.18, -0.35, 0.08);
+
+// hexagonal bus
+const hexBus = new THREE.Mesh(
+  new THREE.CylinderGeometry(1.5,1.5,2.6,6,1,false),
+  matFoil
+);
+hexBus.rotation.y = Math.PI/6;
+satTilt.add(hexBus);
+// foil end caps / trim rings
+const capTop = new THREE.Mesh(new THREE.CylinderGeometry(1.52,1.52,0.18,6), matFoilDark);
+capTop.rotation.y=Math.PI/6; capTop.position.y=1.34; satTilt.add(capTop);
+const capBot = capTop.clone(); capBot.position.y=-1.34; satTilt.add(capBot);
+// thin alu ribs down hexagon edges
+for(let i=0;i<6;i++){
+  const a=Math.PI/6 + i*Math.PI/3;
+  const rib=new THREE.Mesh(new THREE.BoxGeometry(0.07,2.6,0.07), matAlu);
+  rib.position.set(Math.cos(a)*1.5,0,Math.sin(a)*1.5);
+  rib.rotation.y=-a;
+  satTilt.add(rib);
+}
+
+/* --- IMAGING TELESCOPE w/ stepped sunshade baffle (nadir = -Y, Earth-facing) --- */
+const sensorGrp = new THREE.Group();
+sensorGrp.position.y = -1.34;
+satTilt.add(sensorGrp);
+// barrel
+const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.78,0.92,1.5,40), matDarkMetal);
+barrel.position.y=-0.75; sensorGrp.add(barrel);
+// stepped baffle (3 widening rings -> sunshade)
+const baffleSteps=[[0.95,0.30,-1.65],[1.12,0.30,-1.95],[1.32,0.32,-2.27]];
+baffleSteps.forEach(([r,hh,yy])=>{
+  const ring=new THREE.Mesh(new THREE.CylinderGeometry(r,r-0.16,hh,44,1,true), matBlack);
+  ring.position.y=yy; sensorGrp.add(ring);
+  const lip=new THREE.Mesh(new THREE.TorusGeometry(r,0.022,8,44), matAlu);
+  lip.rotation.x=Math.PI/2; lip.position.y=yy-hh/2; sensorGrp.add(lip);
+});
+// dark glass lens (catches teal specular)
+const lens = new THREE.Mesh(new THREE.SphereGeometry(0.74,40,28,0,Math.PI*2,0,Math.PI*0.5), matGlass);
+lens.scale.set(1,0.45,1); lens.position.y=-0.02; lens.rotation.x=Math.PI; sensorGrp.add(lens);
+const lensRing=new THREE.Mesh(new THREE.TorusGeometry(0.78,0.05,10,40), matAlu);
+lensRing.rotation.x=Math.PI/2; lensRing.position.y=-0.02; sensorGrp.add(lensRing);
+
+/* --- single ASYMMETRIC solar wing on a boom (+X) --- */
+const wing = new THREE.Group();
+satTilt.add(wing);
+const boom = new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,2.0,12), matAlu);
+boom.rotation.z=Math.PI/2; boom.position.set(2.5,0.2,0); satTilt.add(boom);
+const panelW=4.6, panelH=1.9;
+const panel=new THREE.Mesh(new THREE.BoxGeometry(panelW,0.04,panelH), matSolar);
+panel.position.set(2.5+1.0+panelW/2,0.2,0);
+panel.rotation.x=Math.PI/2;       // face the sun-ish plane
+// give material per-face: top=cells, others dark
+panel.material=[matSolarBack,matSolarBack,matSolar,matSolarBack,matSolarBack,matSolarBack];
+wing.add(panel);
+// panel frame + spar lines
+const frame=new THREE.Mesh(new THREE.BoxGeometry(panelW+0.08,0.06,panelH+0.08),
+  new THREE.MeshStandardMaterial({color:0x2a3550,metalness:0.7,roughness:0.5}));
+frame.position.copy(panel.position); frame.rotation.copy(panel.rotation);
+frame.scale.set(1,0.9,1); frame.renderOrder=-0.5; wing.add(frame);
+// fine emissive spar lines across the wing (fake grid in 3D)
+for(let i=1;i<5;i++){
+  const sx = panel.position.x - panelW/2 + (panelW*i/5);
+  const spar=new THREE.Mesh(new THREE.BoxGeometry(0.02,0.05,panelH),
+    new THREE.MeshBasicMaterial({color:0x5e86c8,transparent:true,opacity:0.5}));
+  spar.position.set(sx,0.205,0); spar.rotation.x=Math.PI/2; wing.add(spar);
+}
+
+/* --- RADIATOR panel opposite the wing (-X), white, for that asymmetric look --- */
+const radBoom=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,0.9,10),matAlu);
+radBoom.rotation.z=Math.PI/2; radBoom.position.set(-1.9,0.1,0); satTilt.add(radBoom);
+const radiator=new THREE.Mesh(new THREE.BoxGeometry(1.7,0.05,1.9), matRadiator);
+radiator.position.set(-3.1,0.1,0); radiator.rotation.x=Math.PI/2; satTilt.add(radiator);
+for(let i=1;i<7;i++){ // radiator grooves
+  const gx=-3.1-0.85+(1.7*i/7);
+  const grv=new THREE.Mesh(new THREE.BoxGeometry(0.015,0.06,1.9),
+    new THREE.MeshBasicMaterial({color:0xb9c4d6,transparent:true,opacity:0.5}));
+  grv.position.set(gx,0.105,0); grv.rotation.x=Math.PI/2; satTilt.add(grv);
+}
+
+/* --- high-gain DOWNLINK mesh dish on a short mast (+Z, up-ish) --- */
+const dishGrp=new THREE.Group();
+dishGrp.position.set(0.4,1.1,0.9);
+satTilt.add(dishGrp);
+const dishMast=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,1.0,10),matAlu);
+dishMast.position.y=0.4; dishGrp.add(dishMast);
+// fine mesh dish: thin wireframe-feel paraboloid
+const dishGeo=new THREE.SphereGeometry(0.95,28,18,0,Math.PI*2,0,Math.PI*0.42);
+const dish=new THREE.Mesh(dishGeo, new THREE.MeshStandardMaterial({
+  color:0xcfd6e2, metalness:0.85, roughness:0.45, side:THREE.DoubleSide,
+  envMapIntensity:1.1 }));
+dish.scale.set(1,0.6,1); dish.position.y=1.0; dish.rotation.x=-0.5; dishGrp.add(dish);
+const dishWire=new THREE.Mesh(dishGeo, new THREE.MeshBasicMaterial({
+  color:0x7fa0d0, wireframe:true, transparent:true, opacity:0.28 }));
+dishWire.scale.copy(dish.scale); dishWire.position.copy(dish.position); dishWire.rotation.copy(dish.rotation);
+dishGrp.add(dishWire);
+// feed horn
+const feed=new THREE.Mesh(new THREE.ConeGeometry(0.1,0.32,12),matAlu);
+feed.position.set(0,1.0,0); feed.rotation.x=Math.PI; dishGrp.add(feed);
+
+/* --- STAR TRACKER box + small lens on the bus shoulder (+Z/-X corner) --- */
+const trackerGrp=new THREE.Group();
+trackerGrp.position.set(-0.9,0.9,1.1);
+satTilt.add(trackerGrp);
+const trk=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.6), matFoilDark);
+trackerGrp.add(trk);
+const trkBaff=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.22,0.42,20,1,true), matBlack);
+trkBaff.rotation.x=Math.PI/2; trkBaff.position.set(0,0.05,0.5); trackerGrp.add(trkBaff);
+const trkGlass=new THREE.Mesh(new THREE.CircleGeometry(0.16,20),
+  new THREE.MeshPhysicalMaterial({color:0x081a16,roughness:0.04,clearcoat:1,
+    emissive:0x0a3a30,emissiveIntensity:0.5,metalness:0.3}));
+trkGlass.position.set(0,0.05,0.71); trackerGrp.add(trkGlass);
+// tiny antenna whip for life
+const whip=new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,0.7,6),matAlu);
+whip.position.set(0.9,1.0,-0.6); whip.rotation.set(0.2,0,0.3); satTilt.add(whip);
+
+/* faint emissive specks / nav strobe on the bus for "alive" feel */
+const strobe=new THREE.Mesh(new THREE.SphereGeometry(0.05,10,10),
+  new THREE.MeshBasicMaterial({color:COL.teal}));
+strobe.position.set(1.4,0.9,0.6); satTilt.add(strobe);
+
+/* ===================== hotspots (anchored in 3D, projected to 2D) ===================== */
+const HOTSPOTS = [
+  { i:0, label:'Imaging sensor',
+    desc:'Multispectral optics resolve the planet in a dozen wavelengths of light.',
+    anchor:new THREE.Vector3(0,-3.4,0), parent:satTilt },
+  { i:1, label:'Solar array',
+    desc:'A single deployed wing turns sunlight into power across the full orbit.',
+    anchor:new THREE.Vector3(4.6,0.2,0), parent:satTilt },
+  { i:2, label:'Downlink antenna',
+    desc:'A steerable high-gain dish streams the day’s observations to the ground.',
+    anchor:new THREE.Vector3(0.4,2.5,1.1), parent:satTilt },
+  { i:3, label:'Star tracker',
+    desc:'Star-field optics fix the spacecraft’s attitude to a fraction of a degree.',
+    anchor:new THREE.Vector3(-0.9,1.1,1.55), parent:satTilt }
+];
+const spotsEl=document.getElementById('spots');
+HOTSPOTS.forEach(hs=>{
+  const el=document.createElement('div'); el.className='spot';
+  el.innerHTML=`
+    <div class="leader"></div>
+    <div class="dot"></div>
+    <div class="ring"></div>
+    <div class="card">
+      <div class="lab">${hs.label}</div>
+      <div class="desc">${hs.desc}</div>
+    </div>`;
+  spotsEl.appendChild(el);
+  hs.el=el;
+  hs.cardEl=el.querySelector('.card');
+  hs.leaderEl=el.querySelector('.leader');
+  hs.world=new THREE.Vector3();
+  hs.open=false;
+  // place label up-left or up-right depending on side
+  hs.side = hs.anchor.x>=0 ? 1 : -1;
+  const dot=el.querySelector('.dot');
+  dot.addEventListener('pointerenter',()=>{ hs.hover=true; });
+  dot.addEventListener('pointerleave',()=>{ hs.hover=false; });
+  el.querySelector('.dot').addEventListener('click',(e)=>{
+    e.stopPropagation(); markUser(); hs.open=!hs.open; });
+  hs.cardEl.addEventListener('click',(e)=>e.stopPropagation());
+});
+
+/* ===================== interaction: drag / inertia / parallax / zoom ===================== */
+const state = {
+  rotY:0, rotX:0,           // current applied
+  velY:0, velX:0,           // inertia
+  targetParX:0, targetParY:0, // cursor parallax targets
+  parX:0, parY:0,
+  dist:16,                  // camera distance (zoom)
+  targetDist:16,
+  dragging:false,
+  userControlled:false,
+  px:0, py:0
+};
+const DIST_MIN=8.5, DIST_MAX=26;
+
+function markUser(){ if(!state.userControlled){ state.userControlled=true;
+  document.getElementById('hint').style.opacity='0'; } }
+
+function onDown(e){
+  state.dragging=true; canvas.classList.add('grabbing');
+  const p=pt(e); state.px=p.x; state.py=p.y;
+  markUser();
+}
+function onMove(e){
+  const p=pt(e);
+  // parallax target from cursor (normalized -1..1)
+  state.targetParY=(p.x/innerWidth*2-1);
+  state.targetParX=(p.y/innerHeight*2-1);
+  if(state.dragging){
+    const dx=p.x-state.px, dy=p.y-state.py;
+    state.px=p.x; state.py=p.y;
+    state.velY = dx*0.006;
+    state.velX = dy*0.006;
+    state.rotY += state.velY;
+    state.rotX += state.velX;
+    state.rotX = Math.max(-1.1, Math.min(1.1, state.rotX));
+  }
+}
+function onUp(){ state.dragging=false; canvas.classList.remove('grabbing'); }
+function pt(e){ const t=e.touches&&e.touches[0]; return t?{x:t.clientX,y:t.clientY}:{x:e.clientX,y:e.clientY}; }
+
+canvas.addEventListener('pointerdown',onDown);
+window.addEventListener('pointermove',onMove);
+window.addEventListener('pointerup',onUp);
+canvas.addEventListener('pointerleave',()=>{ /* keep last parallax */ });
+
+// wheel zoom — disabled when embedded so the parent page can scroll through the act
+var EMBEDDED = (function(){ try{ return window.self !== window.top; }catch(e){ return true; } })();
+canvas.addEventListener('wheel',(e)=>{
+  if(EMBEDDED) return;                // let the wheel scroll the parent experience
+  e.preventDefault(); markUser();
+  state.targetDist = Math.max(DIST_MIN, Math.min(DIST_MAX,
+    state.targetDist + e.deltaY*0.012));
+},{passive:false});
+
+// pinch zoom
+let pinch0=null;
+canvas.addEventListener('touchstart',(e)=>{
+  if(e.touches.length===2){ pinch0=dist2(e); markUser(); }
+},{passive:false});
+canvas.addEventListener('touchmove',(e)=>{
+  if(e.touches.length===2 && pinch0){
+    e.preventDefault();
+    const d=dist2(e); const f=(pinch0-d)*0.02;
+    state.targetDist=Math.max(DIST_MIN,Math.min(DIST_MAX,state.targetDist+f));
+    pinch0=d;
+  }
+},{passive:false});
+canvas.addEventListener('touchend',()=>{ pinch0=null; });
+function dist2(e){const a=e.touches[0],b=e.touches[1];
+  return Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);}
+
+// click empty space closes open cards
+canvas.addEventListener('click',()=>{ HOTSPOTS.forEach(h=>h.open=false); });
+
+/* ===================== guided tour ===================== */
+let guided = { active:true, camAngle:0, focus:-1, emphasis:0, zoom:0 };
+const tourRows=[...document.querySelectorAll('#tour .row')];
+
+function setDemoProgress(p){
+  p = Math.max(0, Math.min(1, p));
+  guided.p = p;
+  document.getElementById('prog-bar').style.width=(p*100)+'%';
+
+  // orbit camera azimuth slowly around the satellite across p
+  guided.camAngle = p * Math.PI * 1.6;            // ~290° sweep
+  // which hotspot is emphasized: 4 windows
+  const seg = p*4;                                // 0..4
+  const idx = Math.min(3, Math.floor(seg));
+  guided.focus = idx;
+  // emphasis ramps in/out within each window
+  const local = seg - idx;                        // 0..1 inside window
+  guided.emphasis = Math.sin(Math.min(1,local)*Math.PI); // 0->1->0
+  // gentle zoom toward active part at mid-window
+  guided.zoom = guided.emphasis;
+
+  // open the focused card while emphasized (only when not user-controlled)
+  if(!state.userControlled){
+    HOTSPOTS.forEach(h=>{ h.open = (h.i===idx && guided.emphasis>0.45); });
+  }
+  // tour readout
+  tourRows.forEach(r=>r.classList.toggle('on', +r.dataset.i===idx && guided.emphasis>0.3));
+}
+window.setDemoProgress = setDemoProgress;
+window.__demo = { get p(){ return guided.p||0; }, set p(v){ setDemoProgress(v); } };
+
+// clicking a tour row scrubs to it (and counts as interaction-lite: scrubs but keeps auto)
+tourRows.forEach(r=>{
+  r.style.pointerEvents='auto'; r.style.cursor='pointer';
+  r.addEventListener('click',()=>{
+    const i=+r.dataset.i;
+    autoP = (i+0.5)/4;          // center of that window
+    setDemoProgress(autoP);
+  });
+});
+
+/* auto-advance p 0->1 over ~24s, loop, until first user (drag/zoom) interaction */
+let autoP=0;
+const AUTO_DUR=24; // seconds
+
+/* ===================== camera target rig ===================== */
+const camTarget=new THREE.Vector3(0,0,0);
+const focusTargets=[                                  // where camera looks during emphasis
+  new THREE.Vector3(0,-2.0,0),  // sensor (down)
+  new THREE.Vector3(3.2,0.2,0), // wing
+  new THREE.Vector3(0.4,1.8,0.8),// dish
+  new THREE.Vector3(-0.9,1.0,1.2)// tracker
+];
+
+/* ===================== render loop ===================== */
+const projV=new THREE.Vector3();
+const clock=new THREE.Clock();
+let t=0;
+
+function tick(){
+  const dt=Math.min(0.05, clock.getDelta());
+  t+=dt;
+
+  // ---- auto tour advance ----
+  if(!state.userControlled){
+    autoP += dt/AUTO_DUR;
+    if(autoP>1) autoP-=1;
+    setDemoProgress(autoP);
+  }
+
+  // ---- satellite rotation ----
+  if(state.userControlled){
+    if(!state.dragging){
+      // inertia glide to rest
+      state.rotY += state.velY; state.rotX += state.velX;
+      state.velY*=0.94; state.velX*=0.94;
+      state.rotX=Math.max(-1.1,Math.min(1.1,state.rotX));
+    }
+    // cursor parallax (idle subtle follow)
+    state.targetParX=state.targetParX; // set on move
+  } else {
+    // ambient slow spin always on
+    state.rotY += dt*0.18;
+  }
+  // ease parallax
+  state.parX += (state.targetParX - state.parX)*0.05;
+  state.parY += (state.targetParY - state.parY)*0.05;
+
+  sat.rotation.y = state.rotY + state.parY*0.18;
+  sat.rotation.x = state.rotX + state.parX*0.12;
+  // subtle breathing bob
+  sat.position.y = Math.sin(t*0.6)*0.12;
+
+  // strobe blink
+  strobe.material.color.setScalar(0).lerp(new THREE.Color(COL.teal),
+    (Math.sin(t*6)>0.6)?1:0.12);
+
+  // ---- camera ----
+  if(state.userControlled){
+    state.dist += (state.targetDist-state.dist)*0.08;
+    camera.position.set(0,1.4,state.dist);
+    camTarget.lerp(new THREE.Vector3(0,0,0),0.06);
+  } else {
+    // guided orbit + zoom toward focus part
+    const ang=guided.camAngle;
+    const baseDist=16 - guided.zoom*4.5;        // zoom in on active part
+    const camY=1.4 + Math.sin(ang*0.5)*1.2;
+    camera.position.set(Math.sin(ang)*baseDist, camY, Math.cos(ang)*baseDist);
+    state.dist=baseDist; state.targetDist=baseDist;
+    // ease look-target toward the focused part during emphasis
+    const ft = focusTargets[guided.focus]||camTarget;
+    const want = new THREE.Vector3(0,0,0).lerp(ft, guided.emphasis*0.8);
+    camTarget.lerp(want,0.05);
+  }
+  camera.lookAt(camTarget);
+
+  // rim light orbits a touch for living specular
+  rim.position.set(Math.cos(t*0.4)*6, 1.5, Math.sin(t*0.4)*6);
+
+  // stars twinkle
+  if(scene._stars) scene._stars.uniforms.uT.value=t;
+
+  // ---- project hotspots to screen ----
+  HOTSPOTS.forEach(hs=>{
+    hs.parent.localToWorld(hs.world.copy(hs.anchor));
+    projV.copy(hs.world).project(camera);
+    const sx=(projV.x*0.5+0.5)*innerWidth;
+    const sy=(-projV.y*0.5+0.5)*innerHeight;
+    const behind = projV.z>1;                // beyond far / behind cam
+    // occlusion: is the anchor blocked by the bus? cheap test via distance to camera vs bus center
+    // (kept simple: hide only when projected behind camera)
+    hs.el.style.transform=`translate(${sx}px,${sy}px)`;
+
+    const active = (!state.userControlled && guided.focus===hs.i && guided.emphasis>0.3);
+    hs.el.classList.toggle('active', active);
+    const shouldOpen = hs.open || hs.hover || active;
+    hs.el.classList.toggle('open', shouldOpen);
+
+    // leader line + card placement (anchored offset up + to a side)
+    const lx = hs.side*70, ly=-54;           // label offset px
+    const len=Math.hypot(lx,ly);
+    const ang2=Math.atan2(ly,lx);
+    hs.leaderEl.style.width=len+'px';
+    hs.leaderEl.style.transform=`rotate(${ang2}rad)`;
+    // place card at end of leader
+    hs.cardEl.style.left=(lx)+'px';
+    hs.cardEl.style.top=(ly)+'px';
+    hs.cardEl.style.transform = hs.side>0
+      ? 'translate(0,-50%)' : 'translate(-100%,-50%)';
+    hs.cardEl.style.textAlign = hs.side>0 ? 'left':'right';
+
+    // visibility: fade when behind camera
+    let vis = behind ? 0 : 1;
+    // during guided tour, dim non-focused markers
+    if(!state.userControlled && guided.focus!==hs.i) vis*=0.35;
+    hs.el.style.opacity = vis;
+  });
+
+  renderer.render(scene,camera);
+  requestAnimationFrame(tick);
+}
+setDemoProgress(0);
+tick();
+
+/* ===================== resize ===================== */
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+  if(scene._stars) scene._stars.uniforms.uPR.value=renderer.getPixelRatio();
+});
+</script>
+</body>
+</html>
