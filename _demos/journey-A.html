@@ -186,6 +186,7 @@ const earthGroup = new THREE.Group();
 earthGroup.position.copy(P_EARTH);
 earthGroup.rotation.z = THREE.MathUtils.degToRad(23.4);  // Earth axial tilt
 scene.add(earthGroup);
+earthGroup.visible = false;   // the real Earth is the MapLibre globe; this flight ends at the Moon
 
 const earthUniforms = {
   dayMap:   { value: null },
@@ -372,25 +373,18 @@ const KEYS = [
   // p,      target (body centre),                 camera offset from target
   // -- MARS: fills the frame, then pulls back to a disc --------------------
   { p:0.00, look:P_MARS.clone(),  off:v3( 0.0,  0.05,  R_MARS*2.95) },  // Mars fills frame
-  { p:0.20, look:P_MARS.clone(),  off:v3( 0.4,  0.20,  R_MARS*5.6 ) },  // easing back
-  { p:0.30, look:P_MARS.clone(),  off:v3( 1.1,  0.45,  R_MARS*11.0) },  // Mars now a disc
+  { p:0.22, look:P_MARS.clone(),  off:v3( 0.4,  0.20,  R_MARS*5.8 ) },  // easing back
+  { p:0.38, look:P_MARS.clone(),  off:v3( 1.1,  0.45,  R_MARS*12.0) },  // Mars now a disc, receding
   // -- cross the void toward the Moon --------------------------------------
-  { p:0.40, look:P_MOON.clone(),  off:v3( 1.6,  0.70,  R_MOON*16.0) },  // Moon approached, still smallish
+  { p:0.52, look:P_MOON.clone(),  off:v3( 1.6,  0.70,  R_MOON*16.0) },  // Moon approached
   // -- MOON: grows, shown close --------------------------------------------
-  { p:0.48, look:P_MOON.clone(),  off:v3( 0.3,  0.10,  R_MOON*4.2 ) },  // Moon grows
-  { p:0.55, look:P_MOON.clone(),  off:v3(-0.15, 0.04,  R_MOON*2.95) },  // Moon close, fills
-  // -- pull back from the Moon ---------------------------------------------
-  { p:0.62, look:P_MOON.clone(),  off:v3(-0.9,  0.45,  R_MOON*10.0) },  // recede
-  // -- approach EARTH -------------------------------------------------------
-  { p:0.74, look:P_EARTH.clone(), off:v3(-1.2,  0.30,  R_EARTH*7.6 ) }, // Earth in view, distant
-  { p:0.88, look:P_EARTH.clone(), off:v3(-0.4,  0.10,  R_EARTH*5.2 ) }, // approaching
-  // -- HANDOFF: Earth a centred globe-with-space (matches a MapLibre z~1.25 globe) --
-  { p:1.00, look:P_EARTH.clone(), off:v3( 0.0,  0.0,   R_EARTH*4.05) }  // Earth globe, space around it
+  { p:0.64, look:P_MOON.clone(),  off:v3( 0.3,  0.10,  R_MOON*4.2 ) },  // Moon grows
+  { p:0.78, look:P_MOON.clone(),  off:v3(-0.10, 0.04,  R_MOON*2.95) },  // Moon close, fills
+  // -- zoom back out from the Moon — then the REAL (MapLibre) Earth takes over
+  { p:1.00, look:P_MOON.clone(),  off:v3(-0.7,  0.40,  R_MOON*9.0 ) }   // Moon a disc again, out in space
 ];
-// host can fine-tune the handoff face/distance from the iframe URL (?earthDeg=&earthDist=)
+// (the flight now ends at the Moon; the real Earth is the MapLibre globe the host crossfades to)
 const _QP = new URLSearchParams(location.search);
-const _qDist = parseFloat(_QP.get('earthDist'));
-if (!isNaN(_qDist) && _qDist > 0) KEYS[KEYS.length-1].off.z = R_EARTH * _qDist;
 
 // Catmull-Rom interpolation between two vectors with neighbour tangents.
 function catmull(p0, p1, p2, p3, t){
