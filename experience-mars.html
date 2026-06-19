@@ -139,8 +139,8 @@ var KF=[
   {p:0.00, lng:55,     lat:6,      z:0.92, pitch:0,  bear:0},   // the whole disc of Mars — the rovers across it
   {p:0.34, lng:68,     lat:12,     z:2.6,  pitch:12, bear:0},   // toward Isidis & the Jezero region
   {p:0.60, lng:75,     lat:16,     z:3.6,  pitch:26, bear:4},   // approaching Jezero
-  {p:0.82, lng:77.1,   lat:18.0,   z:4.8,  pitch:42, bear:14},  // the crater rim
-  {p:1.00, lng:77.45,  lat:18.44,  z:5.7,  pitch:48, bear:18}   // Jezero Crater · Perseverance (2021)
+  {p:0.82, lng:77.1,   lat:18.0,   z:4.15, pitch:28, bear:14},  // the crater rim — level off where the 8K texture stays crisp
+  {p:1.00, lng:77.45,  lat:18.44,  z:4.85, pitch:36, bear:18}   // Jezero Crater · Perseverance (2021)
 ];
 function camAt(p){
   var i=0; while(i<KF.length-2 && p>KF[i+1].p) i++;
@@ -180,9 +180,11 @@ function boot(){
     style:{ version:8, projection:{type:'globe'},
       sources:{
         shade:{type:'raster', tiles:['https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/1/{z}/{x}/{y}.png'], tileSize:256, maxzoom:6, attribution:'Mars: NASA · USGS · MOLA · Viking / OpenPlanetaryMap'},
-        color:{type:'raster', tiles:['https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/2/{z}/{x}/{y}.png'], tileSize:256, maxzoom:6}
+        color:{type:'raster', tiles:['https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/2/{z}/{x}/{y}.png'], tileSize:256, maxzoom:6},
+        /* crisp HD surface: one reprojected (web-mercator) 8K Mars texture, GPU-sampled so it stays sharp on the descent. The opm color/shade tiles load instantly underneath while this streams in. */
+        hires:{type:'image', url:'assets/images/scenes/mars-hires.jpg', coordinates:[[-180,85.0511],[180,85.0511],[180,-85.0511],[-180,-85.0511]]}
       },
-      layers:[ {id:'bg', type:'background', paint:{'background-color':'#060403'}}, {id:'sat', type:'raster', source:'color', paint:{'raster-saturation':0.25,'raster-contrast':0.08}}, {id:'sat2', type:'raster', source:'shade', paint:{'raster-opacity':0.30}} ]
+      layers:[ {id:'bg', type:'background', paint:{'background-color':'#060403'}}, {id:'sat', type:'raster', source:'color', paint:{'raster-saturation':0.25,'raster-contrast':0.08}}, {id:'sat2', type:'raster', source:'shade', paint:{'raster-opacity':0.30}}, {id:'hires', type:'raster', source:'hires', paint:{'raster-opacity':0,'raster-opacity-transition':{duration:650},'raster-saturation':0.12}} ]
     }
   });
   map.addControl(new maplibregl.AttributionControl({compact:true}));
@@ -194,7 +196,10 @@ function boot(){
     try{ [['Viking 1',22.48,-49.97,0],['Viking 2',47.97,134.0,0],['Pathfinder',19.33,-33.55,0],['Spirit',-14.57,175.48,0],['Opportunity',-1.95,-5.53,0],['Curiosity',-4.59,137.44,1],['Perseverance',18.44,77.45,1],['InSight',4.50,135.62,0],['Zhurong',25.1,109.9,0]].forEach(function(s){ var el=document.createElement('div'); el.className='lpin'+(s[3]?'':' rob'); el.innerHTML='<span class="d"></span><span class="lab">'+s[0]+'</span>'; new maplibregl.Marker({element:el,anchor:'top'}).setLngLat([s[2],s[1]]).addTo(map); el.style.opacity=0; el.style.transition='opacity .4s'; pins.push(el); }); }catch(e){}
     mapReady=true; applyScroll();
   });
-  map.on('idle',function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
+  /* fade the crisp texture in the moment it finishes streaming (opm stays visible until then) */
+  function revealHires(){ try{ if(map.getLayer('hires') && map.isSourceLoaded('hires')) map.setPaintProperty('hires','raster-opacity',1); }catch(e){} }
+  map.on('sourcedata',revealHires);
+  map.on('idle',function(){ revealHires(); var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
 }
 boot();
 

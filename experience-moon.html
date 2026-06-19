@@ -139,8 +139,8 @@ var KF=[
   {p:0.00, lng:6,      lat:6,      z:0.92, pitch:0,  bear:0},   // the whole near-side Moon — every landing in view
   {p:0.34, lng:5,      lat:16,     z:2.6,  pitch:12, bear:0},   // north toward the Apennines
   {p:0.60, lng:4.2,    lat:23,     z:3.5,  pitch:26, bear:4},   // the Apennine mountain front
-  {p:0.82, lng:3.74,   lat:25.88,  z:5.0,  pitch:42, bear:14},  // Hadley
-  {p:1.00, lng:3.634,  lat:26.132, z:5.7,  pitch:48, bear:18}   // Apollo 15 · Hadley Rille (1971)
+  {p:0.82, lng:3.74,   lat:25.88,  z:4.15, pitch:28, bear:14},  // Hadley — level off where the 8K texture stays crisp
+  {p:1.00, lng:3.634,  lat:26.132, z:4.85, pitch:36, bear:18}   // Apollo 15 · Hadley Rille (1971)
 ];
 function camAt(p){
   var i=0; while(i<KF.length-2 && p>KF[i+1].p) i++;
@@ -179,9 +179,11 @@ function boot(){
     center:[KF[0].lng,KF[0].lat], zoom:KF[0].z, pitch:KF[0].pitch, bearing:KF[0].bear,
     style:{ version:8, projection:{type:'globe'},
       sources:{
-        sat:{type:'raster', tiles:['https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-moon-basemap-v0-1/1/{z}/{x}/{y}.png'], tileSize:256, maxzoom:7, attribution:'Moon: NASA · USGS · LROC / OpenPlanetaryMap'}
+        sat:{type:'raster', tiles:['https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-moon-basemap-v0-1/1/{z}/{x}/{y}.png'], tileSize:256, maxzoom:7, attribution:'Moon: NASA · USGS · LROC / OpenPlanetaryMap'},
+        /* crisp HD surface: one reprojected (web-mercator) 8K texture, GPU-sampled so it stays sharp on the descent. The opm tiles above load instantly underneath while this streams in. */
+        hires:{type:'image', url:'assets/images/scenes/moon-hires.jpg', coordinates:[[-180,85.0511],[180,85.0511],[180,-85.0511],[-180,-85.0511]]}
       },
-      layers:[ {id:'bg', type:'background', paint:{'background-color':'#03030a'}}, {id:'sat', type:'raster', source:'sat'} ]
+      layers:[ {id:'bg', type:'background', paint:{'background-color':'#03030a'}}, {id:'sat', type:'raster', source:'sat'}, {id:'hires', type:'raster', source:'hires', paint:{'raster-opacity':0,'raster-opacity-transition':{duration:650}}} ]
     }
   });
   map.addControl(new maplibregl.AttributionControl({compact:true}));
@@ -193,7 +195,10 @@ function boot(){
     try{ [['Apollo 11',0.674,23.473,1],['Apollo 12',-3.012,-23.42,1],['Apollo 14',-3.645,-17.471,1],['Apollo 15',26.132,3.634,1],['Apollo 16',-8.973,15.501,1],['Apollo 17',20.191,30.772,1],['Luna 9',7.08,-64.37,0],['Surveyor 1',-2.47,-43.34,0],['Chang’e 5',43.06,-51.92,0],['Chandrayaan-3',-69.37,32.32,0]].forEach(function(s){ var el=document.createElement('div'); el.className='lpin'+(s[3]?'':' rob'); el.innerHTML='<span class="d"></span><span class="lab">'+s[0]+'</span>'; new maplibregl.Marker({element:el,anchor:'top'}).setLngLat([s[2],s[1]]).addTo(map); el.style.opacity=0; el.style.transition='opacity .4s'; pins.push(el); }); }catch(e){}
     mapReady=true; applyScroll();
   });
-  map.on('idle',function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
+  /* fade the crisp texture in the moment it finishes streaming (opm stays visible until then) */
+  function revealHires(){ try{ if(map.getLayer('hires') && map.isSourceLoaded('hires')) map.setPaintProperty('hires','raster-opacity',1); }catch(e){} }
+  map.on('sourcedata',revealHires);
+  map.on('idle',function(){ revealHires(); var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
 }
 boot();
 
