@@ -24,19 +24,11 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 #map .maplibregl-ctrl-attrib a{color:rgba(244,245,255,.7)}
 .maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right{z-index:4}
 
-/* space + vignette grade so the brand copy always reads over the globe */
-.grade{position:fixed;inset:0;z-index:2;pointer-events:none;background:
-  radial-gradient(135% 95% at 50% 40%,transparent 50%,rgba(4,3,14,.6) 100%)}
-/* the cosmos opening act (a real-planet Three.js flythrough) sits above the map until handoff */
-#cosmos{position:fixed;inset:0;width:100vw;height:100vh;border:0;z-index:1;pointer-events:none}
-/* atmosphere flash that masks the cosmos->map handoff so the engine swap is invisible */
-.flash{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 44%,rgba(198,216,255,1),rgba(96,134,232,.92) 58%,rgba(26,38,104,.78) 100%)}
-.stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.0;transition:opacity 1.2s}
-.stars.show{opacity:1}
+.grade{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  radial-gradient(140% 100% at 50% 38%,transparent 48%,rgba(4,3,14,.62) 100%)}
 
 .copylayer{position:fixed;inset:0;z-index:3;pointer-events:none}
-.copylayer .inner{position:relative;width:100%;max-width:1180px;height:100%;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
-.beat{position:absolute;left:clamp(22px,5vw,64px);bottom:clamp(60px,13vh,128px);max-width:780px;opacity:0;will-change:opacity,transform}
+.beat{position:absolute;left:clamp(22px,5vw,64px);bottom:clamp(60px,13vh,128px);max-width:760px;opacity:0;will-change:opacity,transform}
 .beat .k{display:inline-flex;align-items:center;gap:9px;margin-bottom:16px;font-family:var(--body);font-weight:600;text-transform:uppercase;letter-spacing:.26em;font-size:11px;color:var(--nebula)}
 .beat .k::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
 .beat .k.bl::before{background:var(--blue);box-shadow:0 0 10px var(--blue)}
@@ -44,10 +36,6 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
   font-size:clamp(36px,7.2vw,104px);line-height:.92;letter-spacing:-.02em;text-shadow:0 2px 40px rgba(4,3,14,.8),0 0 50px rgba(120,150,255,.3)}
 .beat h1 .em{text-shadow:0 0 60px rgba(120,160,255,.7)}
 .beat p{margin-top:18px;color:#eef0ff;font-weight:300;font-size:clamp(15px,1.6vw,19px);max-width:46ch;line-height:1.6;text-shadow:0 1px 24px rgba(4,3,14,.95)}
-.beat .stat{display:flex;gap:30px;margin-top:26px;flex-wrap:wrap}
-.beat .stat div{border-left:1px solid var(--hair);padding-left:14px}
-.beat .stat b{display:block;font-family:var(--disp);font-style:italic;font-size:clamp(22px,3vw,34px);color:var(--teal);line-height:1}
-.beat .stat span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--nebula)}
 .beat .lock{display:flex;align-items:center;gap:16px;margin-top:30px}
 .beat .lock img{height:36px;width:auto}
 .beat .lock .ll{border-left:1px solid var(--hair);padding-left:16px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--nebula);line-height:1.5}
@@ -59,6 +47,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .beat.center{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);text-align:center;max-width:none}
 .beat.center .inr{max-width:1180px;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
 .beat.center .k{justify-content:center}
+.beat.center p{margin-left:auto;margin-right:auto}
 
 .topbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;
   padding:18px clamp(22px,5vw,46px);pointer-events:none;background:linear-gradient(rgba(4,3,14,.55),transparent)}
@@ -68,11 +57,10 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .cue{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:6;font-family:var(--body);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--nebula);display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none}
 .cue .ar{width:1px;height:34px;background:linear-gradient(var(--blue),transparent);animation:fall 1.8s ease-in-out infinite}
 @keyframes fall{0%{transform:scaleY(.3);transform-origin:top;opacity:.3}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.3);transform-origin:bottom;opacity:.3}}
-.shellnav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:7;display:flex;gap:6px;align-items:center;padding:7px 9px;border-radius:30px;background:rgba(8,6,28,.62);border:1px solid var(--hair);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);font-family:var(--body);font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .5s}
-.shellnav.show{opacity:1}
-.shellnav a{color:var(--nebula);padding:5px 12px;border-radius:20px;text-decoration:none}
-.shellnav a.on{background:var(--teal);color:#04201c;font-weight:600}
-@media(max-width:640px){.shellnav{display:none}}
+
+.ssaipin{display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .5s}
+.ssaipin .dot{width:14px;height:14px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px rgba(47,217,195,.22),0 0 18px var(--teal);animation:pinpulse 2s ease-in-out infinite}
+@keyframes pinpulse{0%,100%{box-shadow:0 0 0 4px rgba(47,217,195,.28),0 0 16px var(--teal)}50%{box-shadow:0 0 0 11px rgba(47,217,195,0),0 0 22px var(--teal)}}
 
 .loader{position:fixed;inset:0;z-index:30;background:var(--space);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity 1s ease}
 .loader.gone{opacity:0;pointer-events:none}
@@ -80,21 +68,14 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .loader .lt{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--nebula)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.ssaipin{display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none;opacity:0;transition:opacity .5s}
-.ssaipin .lbl{font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(8,6,28,.72);padding:5px 11px;border-radius:20px;border:1px solid var(--hair);white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 6px 20px -8px rgba(0,0,0,.8)}
-.ssaipin .dot{width:14px;height:14px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px rgba(47,217,195,.22),0 0 18px var(--teal);animation:pinpulse 2s ease-in-out infinite}
-@keyframes pinpulse{0%,100%{box-shadow:0 0 0 4px rgba(47,217,195,.28),0 0 16px var(--teal)}50%{box-shadow:0 0 0 11px rgba(47,217,195,0),0 0 22px var(--teal)}}
-.scroll{position:relative;z-index:2;width:100%;height:1150vh}
+.scroll{position:relative;z-index:2;width:100%;height:620vh}
 </style>
 </head>
 <body>
 
 <div class="loader" id="loader"><div class="spin"></div><div class="lt">Acquiring orbit…</div></div>
 
-<div class="stars" id="stars"></div>
 <div id="map"></div>
-<iframe id="cosmos" src="scenes/cosmos.html" title="The cosmos — planets" loading="eager"></iframe>
-<div class="flash" id="flash"></div>
 <div class="grade"></div>
 <div class="prog" id="prog"></div>
 
@@ -103,27 +84,18 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
   <span class="chap" id="chap">The Descent</span>
 </header>
 
-<div class="copylayer"><div class="inner" id="beats">
-  <div class="beat" data-a="0.305" data-b="0.378"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
-  <div class="beat" data-a="0.385" data-b="0.46"><span class="k">The mountains</span><h1>Every range,<br>in <span class="em">relief.</span></h1><p>We measure the height and change of the world's mountains and ice — terrain read from orbit, to the metre.</p></div>
-  <div class="beat" data-a="0.555" data-b="0.625"><span class="k bl">The oceans</span><h1>The blue we<br><span class="em">measure.</span></h1><p>Ocean colour reveals the phytoplankton that make half the oxygen we breathe — read in a dozen wavelengths of light.</p></div>
-  <div class="beat" data-a="0.735" data-b="0.80"><span class="k">Mauna Kea · Hawai‘i</span><h1>Where we<br>watch the <span class="em">sky.</span></h1><p>From mountaintop observatories to instruments in orbit, SSAI helps keep watch on Earth and the space around it.</p></div>
-  <div class="beat" data-a="0.875" data-b="0.925"><span class="k bl">Coming home</span><h1>All the<br>way <span class="em">home.</span></h1><p>Every measurement, every model, every forecast comes back down to the people who put it to work.</p></div>
-  <div class="beat center" data-a="0.94" data-b="1.05"><div class="inr"><span class="k">The Aerospace Building · 10210 Greenbelt Rd · Lanham, MD</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p style="margin-left:auto;margin-right:auto">Right here, beside NASA's Goddard Space Flight Center, SSAI turns raw light from across the planet into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
-</div></div>
+<div class="copylayer" id="beats">
+  <div class="beat" data-a="-0.05" data-b="0.12"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
+  <div class="beat" data-a="0.30" data-b="0.50"><span class="k bl">From orbit, every day</span><h1>Science for<br>life on <span class="em">Earth.</span></h1><p>Oceans, air, ice, fire and storms — measured from space, with NASA, NOAA and partners around the world.</p></div>
+  <div class="beat" data-a="0.58" data-b="0.76"><span class="k">From orbit to ground</span><h1>All the<br>way <span class="em">home.</span></h1><p>The same science that watches the planet comes all the way down to the people who put it to work.</p></div>
+  <div class="beat center" data-a="0.90" data-b="1.06"><div class="inr"><span class="k">The Aerospace Building · 10210 Greenbelt Rd · Lanham, MD</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p>Right here, beside NASA's Goddard Space Flight Center, SSAI turns raw light from across the planet into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
+</div>
 
 <div class="cue" id="cue">Scroll<div class="ar"></div></div>
-<nav class="shellnav" id="shellnav">
-  <a href="experience-earth.html" class="on">Experience</a>
-  <a href="brand-book.html">Brand book</a>
-  <a href="interactive-kit.html">Instruments</a>
-</nav>
 
 <div class="scroll" id="scroll"></div>
 
 <script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
@@ -133,23 +105,13 @@ function range(p,a,b){return clamp01((p-a)/(b-a));}
 function fadeOp(p,a,b,f){return clamp01(Math.min((p-a)/f,(b-p)/f,1));}
 function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
 
-/* paint a quiet starfield behind the globe (shows while we are out in space) */
-(function(){var c=document.createElement('canvas'),s=document.getElementById('stars');function sz(){c.width=innerWidth;c.height=innerHeight;var x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);for(var i=0;i<460;i++){var r=Math.pow(Math.random(),2.4)*1.5+.2,a=Math.random()*.6+.15;x.beginPath();x.arc(Math.random()*c.width,Math.random()*c.height,r,0,7);x.fillStyle='rgba(244,245,255,'+a+')';x.fill();}s.style.backgroundImage='url('+c.toDataURL()+')';}sz();addEventListener('resize',sz);})();
-
-/* ---- the flight: from globe in space down to Goddard / Greenbelt, MD ---- */
-/* edit lng/lat/z(zoom)/pitch/bear freely; p is each keyframe's scroll position */
-/* a full journey: spin eastward around the real planet, dipping to each place, then home.
-   lng runs monotonically 60 -> 283 so the globe rotates one smooth direction (values >180 wrap). */
+/* a clean, single descent: Earth globe -> North America -> DC/Maryland -> the SSAI building */
 var KF=[
-  {p:0.00, lng:12,     lat:22,      z:2.35, pitch:0,  bear:0},   // arrived at Earth — bright North Africa/Sahara fills the frame (handoff view)
-  {p:0.13, lng:86.925, lat:27.985,  z:10.6, pitch:66, bear:22},  // Himalayas / Everest (mountains)
-  {p:0.26, lng:118,    lat:4,       z:2.70, pitch:12, bear:0},   // lift back to the globe
-  {p:0.39, lng:145.78, lat:-16.10,  z:9.90, pitch:32, bear:0},   // Great Barrier Reef ribbons (ocean)
-  {p:0.52, lng:178,    lat:8,       z:2.60, pitch:12, bear:0},   // lift, cross the Pacific
-  {p:0.65, lng:204.53, lat:19.821,  z:13.2, pitch:50, bear:34},  // Mauna Kea summit observatories (-155.47)
-  {p:0.78, lng:240,     lat:33,       z:3.00, pitch:14, bear:0},   // lift toward North America
-  {p:0.90, lng:283.05,  lat:38.86,    z:9.40, pitch:52, bear:14},  // approach over the DC / Maryland suburbs
-  {p:1.00, lng:283.1717,lat:38.99159, z:16.8, pitch:60, bear:20}   // SSAI · The Aerospace Building, 10210 Greenbelt Rd, Lanham MD (-76.8283)
+  {p:0.00, lng:-42,     lat:18,      z:1.40, pitch:0,  bear:0},
+  {p:0.34, lng:-83,     lat:37,      z:4.30, pitch:22, bear:0},
+  {p:0.62, lng:-76.95,  lat:38.78,   z:9.20, pitch:50, bear:10},
+  {p:0.82, lng:-76.87,  lat:38.95,   z:12.6, pitch:57, bear:16},
+  {p:1.00, lng:-76.8283,lat:38.99159,z:16.6, pitch:60, bear:20}
 ];
 var SSAI_LNGLAT=[-76.8282966, 38.9915921];
 function camAt(p){
@@ -160,42 +122,45 @@ function camAt(p){
 }
 
 var beats=[].slice.call(document.querySelectorAll('.beat'));
-var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap'), stars=document.getElementById('stars');
-var CH=[['The Cosmos',0],['Approach · Earth',0.27],['The Himalayas',0.385],['The oceans',0.55],['Mauna Kea',0.73],['Coming home',0.87],['SSAI · Greenbelt, MD',0.95]];
-var scrollP=0, map=null, mapReady=false, ssaiMarker=null;
-var cosmosFrame=document.getElementById('cosmos'), cosmosWin=null, flash=document.getElementById('flash'), topbar=document.querySelector('.topbar'), HANDOFF=0.30;
-if(cosmosFrame){ cosmosFrame.addEventListener('load',function(){ try{cosmosWin=cosmosFrame.contentWindow;}catch(e){} applyScroll(); setTimeout(function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); },1500); }); }
+var prog=document.getElementById('prog'), cue=document.getElementById('cue'), chap=document.getElementById('chap');
+var CH=[['The Descent',0],['Science for life on Earth',0.30],['Coming home',0.58],['SSAI · Greenbelt, MD',0.90]];
+var map=null, mapReady=false, ssaiMarker=null;
 
-function applyScroll(){
-  var p=scrollP;
-  var cosmosP=clamp01(p/HANDOFF);                 // 0..1 across the opening cosmos act
-  var mapP=clamp01((p-HANDOFF)/(1-HANDOFF));       // 0..1 across the Earth flight
-  /* drive the cosmos opening */
-  if(cosmosWin && cosmosWin.setDemoProgress){ try{cosmosWin.setDemoProgress(cosmosP);}catch(e){} }
-  /* crossfade cosmos -> map, masked by an atmosphere flash so the engine swap is invisible */
-  var fs=HANDOFF-0.05, fe=HANDOFF+0.02;
-  if(cosmosFrame){ cosmosFrame.style.opacity=1-range(p,fs,fe); cosmosFrame.style.display=(p<fe+0.06?'block':'none'); }
-  var mc=document.getElementById('map'); if(mc) mc.style.opacity=range(p,fs,fe);
-  if(flash) flash.style.opacity=clamp01(1-Math.abs(p-HANDOFF)/0.055)*0.97;
-  /* drive the Earth flight */
-  if(map && mapReady){ var c=camAt(mapP);
+function render(p){
+  if(map && mapReady){ var c=camAt(p);
     map.jumpTo({center:[c.lng,c.lat], zoom:c.z, pitch:c.pitch, bearing:c.bear}); }
-  if(ssaiMarker){ ssaiMarker.getElement().style.opacity = (p>0.93 ? clamp01((p-0.93)/0.04) : 0); }
-  /* brand chrome is hidden during the cosmos (it carries its own labels), shown after handoff */
-  if(topbar) topbar.style.opacity=(p<HANDOFF-0.03?0:1);
-  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
+  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.04);
     beats[j].style.opacity=bo;
-    if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
+    if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(20,-12,range(p,ba,bb))+'px)';}
   if(prog) prog.style.width=(clamp01(p)*100)+'%';
-  if(cue) cue.style.opacity=(1-range(p,0.02,0.07));
-  if(shellnav) shellnav.classList.toggle('show',p>0.95);
+  if(cue) cue.style.opacity=(1-range(p,0.02,0.08));
+  if(ssaiMarker){ ssaiMarker.getElement().style.opacity = (p>0.9 ? clamp01((p-0.9)/0.05) : 0); }
   var ci=0; for(var k=0;k<CH.length;k++){ if(p>=CH[k][1]-0.005) ci=k; }
   if(chap) chap.textContent=CH[ci][0];
 }
 
-/* ---- the free, no-key 3D Earth: MapLibre globe + real satellite imagery + terrain ---- */
+/* ---- smooth, damped camera: scroll sets a target; a rAF loop glides toward it (no per-event jumps) ---- */
+var targetP=0, curP=0, lastRenderP=-1, loaderDone=false;
+function readTarget(){ var max=Math.max(1, document.documentElement.scrollHeight - innerHeight); targetP=clamp01((window.scrollY||window.pageYOffset||0)/max); }
+function dismissLoader(){ if(loaderDone) return; loaderDone=true; var l=document.getElementById('loader'); if(l) l.classList.add('gone'); }
+function tick(){
+  readTarget();
+  curP += (targetP - curP) * (reduce?1:0.10);
+  if(Math.abs(targetP-curP) < 0.00015) curP=targetP;
+  /* only touch the map when the camera actually moved — lets it settle to idle + saves work */
+  if(Math.abs(curP-lastRenderP) > 0.00002){ lastRenderP=curP; render(curP); }
+  if(mapReady && !loaderDone){ try{ if(map.areTilesLoaded()) dismissLoader(); }catch(e){} }
+  requestAnimationFrame(tick);
+}
+
+/* Lenis just smooths the native scroll; the rAF above does the easing into the camera */
+if(!reduce && window.Lenis){ var lenis=new Lenis({duration:1.1, smoothWheel:true, wheelMultiplier:0.9});
+  function lraf(t){ lenis.raf(t); requestAnimationFrame(lraf); } requestAnimationFrame(lraf); }
+requestAnimationFrame(tick);
+
+/* ---- the real Earth: MapLibre globe + satellite imagery + terrain (free, no key) ---- */
 function boot(){
-  if(typeof maplibregl==='undefined'){ var l=document.getElementById('loader'); if(l){l.querySelector('.lt').textContent='Could not load the map engine — check your connection.';} return; }
+  if(typeof maplibregl==='undefined'){ var l=document.getElementById('loader'); if(l) l.querySelector('.lt').textContent='Could not load the map engine — check your connection.'; return; }
   map=new maplibregl.Map({
     container:'map', interactive:false, attributionControl:false, maxPitch:85, antialias:true,
     center:[KF[0].lng,KF[0].lat], zoom:KF[0].z, pitch:KF[0].pitch, bearing:KF[0].bear,
@@ -210,24 +175,17 @@ function boot(){
   map.addControl(new maplibregl.AttributionControl({compact:true}));
   map.on('load',function(){
     try{ map.setProjection({type:'globe'}); }catch(e){}
-    try{ map.setTerrain({source:'dem', exaggeration:1.3}); }catch(e){}
-    try{ map.setSky({'sky-color':'#0a1a3a','horizon-color':'#16145f','fog-color':'#04030e','sky-horizon-blend':.6,'horizon-fog-blend':.5,'fog-ground-blend':.2,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,1,8,.4,12,0]}); }catch(e){}
+    try{ map.setTerrain({source:'dem', exaggeration:1.15}); }catch(e){}
+    try{ map.setSky({'sky-color':'#0a1733','horizon-color':'#16145f','fog-color':'#04030e','sky-horizon-blend':.5,'horizon-fog-blend':.5,'fog-ground-blend':.15,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,.9,7,.35,11,0]}); }catch(e){}
     try{ var el=document.createElement('div'); el.className='ssaipin'; el.innerHTML='<span class="dot"></span>'; ssaiMarker=new maplibregl.Marker({element:el,anchor:'center'}).setLngLat(SSAI_LNGLAT).addTo(map); }catch(e){}
-    mapReady=true; applyScroll();
+    mapReady=true; lastRenderP=-1; render(curP);
+    setTimeout(function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); }, 3500);
   });
   map.on('idle',function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
 }
 boot();
 
-/* ---- scroll engine ---- */
-var lenis=null;
-if(window.gsap && window.ScrollTrigger){
-  gsap.registerPlugin(ScrollTrigger);
-  if(!reduce && window.Lenis){ lenis=new Lenis({duration:1.25,smoothWheel:true}); lenis.on('scroll',ScrollTrigger.update); gsap.ticker.add(function(time){lenis.raf(time*1000);}); gsap.ticker.lagSmoothing(0); }
-  ScrollTrigger.create({trigger:'#scroll',start:'top top',end:'bottom bottom',scrub:reduce?false:0.7,onUpdate:function(self){scrollP=self.progress;applyScroll();}});
-}
-applyScroll();
-window.__exp={get p(){return scrollP;},set p(v){scrollP=v;applyScroll();}, get map(){return map;}, camAt:camAt};
+window.__exp={get p(){return curP;}, set p(v){ curP=targetP=v; render(v); }, get map(){return map;}, camAt:camAt};
 </script>
 </body>
 </html>
