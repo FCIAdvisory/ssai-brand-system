@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SSAI — The Cosmos / Grand Tour</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg:#04030e; --teal:#2fd9c3; --blue:#3c7be0; --indigo:#16145f; --star:#f4f5ff;
+  }
+  @font-face{
+    font-family:"Tactic Sans";
+    src:url("/ssai-brand-site/assets/fonts/TacticSans-MediumItalic.woff2") format("woff2");
+    font-weight:500; font-style:italic; font-display:swap;
+  }
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;}
+  body{color:var(--star);font-family:"Tactic Sans","Helvetica Neue",Arial,sans-serif;}
+  #scene{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0;}
+  /* faint vignette keeps the frame premium */
+  #vig{position:fixed;inset:0;z-index:1;pointer-events:none;
+       background:radial-gradient(132% 132% at 50% 48%,rgba(0,0,0,0) 54%,rgba(0,0,0,.55) 100%);}
+  /* planet label — fades in/out as each world is featured */
+  #planetLabel{position:fixed;z-index:3;pointer-events:none;user-select:none;
+       left:50%;bottom:13.5%;transform:translateX(-50%);
+       font-style:italic;font-weight:500;text-transform:uppercase;
+       font-size:13px;letter-spacing:.46em;
+       color:rgba(244,245,255,.82);opacity:0;transition:opacity .9s ease;
+       text-shadow:0 0 22px rgba(60,123,224,.45);white-space:nowrap;}
+  #planetLabel .sub{display:block;margin-top:7px;font-size:9px;letter-spacing:.34em;
+       color:rgba(244,245,255,.42);text-align:center;}
+  .hud{position:fixed;z-index:3;pointer-events:none;font-style:italic;font-size:11px;
+       letter-spacing:.34em;text-transform:uppercase;color:rgba(244,245,255,.5);user-select:none;}
+  #hudTL{top:22px;left:24px;}
+  #hudBR{right:24px;bottom:22px;text-align:right;letter-spacing:.2em;color:rgba(244,245,255,.34);}
+  #hudBR b{color:var(--teal);font-weight:500;letter-spacing:.22em;}
+  @media (max-width:640px){
+    .hud{font-size:9.5px;letter-spacing:.24em;}
+    #hudTL{left:16px;top:16px;} #hudBR{right:16px;bottom:16px;}
+    #planetLabel{font-size:11px;letter-spacing:.36em;bottom:12%;}
+  }
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div id="vig"></div>
+<div class="hud" id="hudTL">SSAI · THE COSMOS</div>
+<div class="hud" id="hudBR">GRAND TOUR · <b id="leg">OUTER SYSTEM</b></div>
+<div id="planetLabel"><span id="planetName"></span><span class="sub" id="planetSub"></span></div>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+
+/* ======================================================================
+   SSAI — THE COSMOS, Art Direction A "Grand Tour"
+   A choreographed flight across the solar system toward home:
+   out among the gas giants (Jupiter + ringed Saturn for scale), sweeping
+   inward past Mars, then the Moon, finally swinging toward a growing Earth.
+   Ends (p->1) framed on Earth: an arrival / earthrise — handoff point.
+   ====================================================================== */
+
+const TEX = {
+  moon:    '/ssai-brand-site/assets/images/planets/moon.jpg',
+  mars:    '/ssai-brand-site/assets/images/planets/mars.jpg',
+  jupiter: '/ssai-brand-site/assets/images/planets/jupiter.jpg',
+  saturn:  '/ssai-brand-site/assets/images/planets/saturn.png',
+  earth:   '/ssai-brand-site/assets/images/planets/earth.jpg',
+};
+
+const COL = {
+  bg:    0x04030e,
+  teal:  0x2fd9c3,
+  blue:  0x3c7be0,
+  indigo:0x16145f,
+  star:  0xf4f5ff,
+};
+
+const canvas = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.08;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(COL.bg);
+scene.fog = new THREE.FogExp2(COL.bg, 0.00072);
+
+const camera = new THREE.PerspectiveCamera(46, window.innerWidth/window.innerHeight, 0.1, 6000);
+
+const maxAniso = renderer.capabilities.getMaxAnisotropy();
+const loader = new THREE.TextureLoader();
+
+/* Guarded texture load: returns a material immediately, swaps the map in
+   when the file loads; on error we keep the tasteful fallback color. */
+function makePlanetMaterial(url, fallbackColor, opts = {}){
+  const mat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(fallbackColor),
+    roughness: opts.roughness ?? 1.0,
+    metalness: 0.0,
+  });
+  loader.load(
+    url,
+    (tex) => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = maxAniso;
+      tex.wrapS = THREE.RepeatWrapping;
+      mat.map = tex;
+      mat.color.set(0xffffff);
+      mat.needsUpdate = true;
+    },
+    undefined,
+    () => { /* keep fallback solid color — scene never breaks */ }
+  );
+  return mat;
+}
+
+/* ----------------------------------------------------------------------
+   LIGHTING — one key "sun" + low ambient, so a terminator reads on worlds
+   ---------------------------------------------------------------------- */
+// Sun is set so the camera-facing hemispheres of the inner worlds (and Earth
+// at the arrival) read as luminous, while a clear terminator still curves
+// across each globe. -Z bias lights the faces the inbound camera looks at.
+const sunDir = new THREE.Vector3(-0.62, 0.30, -0.72).normalize();
+const sun = new THREE.DirectionalLight(0xfff4e6, 2.6);
+sun.position.copy(sunDir).multiplyScalar(900);
+scene.add(sun);
+scene.add(new THREE.AmbientLight(0x2a3a72, 0.5));
+// cool fill from the opposite side keeps shadow sides from going pure black
+const fill = new THREE.DirectionalLight(0x3c7be0, 0.42);
+fill.position.copy(sunDir).multiplyScalar(-700);
+scene.add(fill);
+
+/* ----------------------------------------------------------------------
+   ATMOSPHERE / RIM — additive backside shell for a tasteful bloom-feel
+   ---------------------------------------------------------------------- */
+function addAtmosphere(mesh, radius, color, strength = 1.0, power = 3.0){
+  const geo = new THREE.SphereGeometry(radius * 1.025, 64, 64);
+  const mat = new THREE.ShaderMaterial({
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    side: THREE.BackSide,
+    depthWrite: false,
+    uniforms: {
+      uColor:    { value: new THREE.Color(color) },
+      uStrength: { value: strength },
+      uPower:    { value: power },
+      uSunDir:   { value: sunDir.clone() },
+    },
+    vertexShader: `
+      varying vec3 vN; varying vec3 vWPos;
+      void main(){
+        vN = normalize(mat3(modelMatrix) * normal);
+        vec4 wp = modelMatrix * vec4(position,1.0);
+        vWPos = wp.xyz;
+        gl_Position = projectionMatrix * viewMatrix * wp;
+      }`,
+    fragmentShader: `
+      varying vec3 vN; varying vec3 vWPos;
+      uniform vec3 uColor; uniform float uStrength; uniform float uPower; uniform vec3 uSunDir;
+      void main(){
+        vec3 V = normalize(cameraPosition - vWPos);
+        float rim = pow(1.0 - max(dot(V, -vN), 0.0), uPower);
+        // brighten the rim on the sun-facing limb
+        float lit = clamp(dot(normalize(vN), uSunDir) * 0.5 + 0.62, 0.0, 1.0);
+        gl_FragColor = vec4(uColor, rim * uStrength * lit);
+      }`,
+  });
+  const shell = new THREE.Mesh(geo, mat);
+  shell.scale.setScalar(1 / 1.025); // align to parent radius; geo already padded
+  mesh.add(shell);
+  return shell;
+}
+
+/* ----------------------------------------------------------------------
+   PLANET FACTORY
+   ---------------------------------------------------------------------- */
+const worlds = [];
+function makePlanet({ key, url, fallback, radius, pos, tilt = 0.2, atmo = null, spin = 0.02 }){
+  const group = new THREE.Group();
+  group.position.set(pos.x, pos.y, pos.z);
+
+  const geo = new THREE.SphereGeometry(radius, 64, 48);
+  const mat = makePlanetMaterial(url, fallback, { roughness: 1.0 });
+  const sphere = new THREE.Mesh(geo, mat);
+  sphere.rotation.z = tilt;
+  group.add(sphere);
+
+  if (atmo) addAtmosphere(sphere, radius, atmo.color, atmo.strength, atmo.power);
+
+  scene.add(group);
+  const w = { key, group, sphere, radius, spin, pos: new THREE.Vector3(pos.x,pos.y,pos.z) };
+  worlds.push(w);
+  return w;
+}
+
+/* ---- Layout the system along the flight corridor (camera flies -Z to +... toward origin/Earth)
+   The camera starts deep out at -Z (gas giants) and travels toward Earth near origin. ---- */
+
+// JUPITER — grand background scale, far out
+const jupiter = makePlanet({
+  key:'jupiter', url:TEX.jupiter, fallback:0xc7a87f, radius:62,
+  pos:{ x:-150, y:46, z:-980 }, tilt:0.05,
+  atmo:{ color:0xd8b98a, strength:0.55, power:3.2 }, spin:0.018,
+});
+
+// SATURN — sphere body; we add a real billboarded ringed-Saturn sprite too,
+// further out for awe. The sphere uses the saturn.png planet body color.
+const saturn = makePlanet({
+  key:'saturn', url:TEX.saturn, fallback:0xd9c9a0, radius:48,
+  pos:{ x:205, y:80, z:-1230 }, tilt:0.46,
+  atmo:{ color:0xe6d3a6, strength:0.42, power:3.4 }, spin:0.02,
+});
+// Saturn rings — geometric ring so it reads as "Saturn with rings" at scale
+(function addSaturnRings(){
+  const inner = 58, outer = 104;
+  const ringGeo = new THREE.RingGeometry(inner, outer, 128, 1);
+  // remap UVs radially so a gradient texture (procedural) bands the ring
+  const pos = ringGeo.attributes.position;
+  const uv = ringGeo.attributes.uv;
+  const v3 = new THREE.Vector3();
+  for (let i=0;i<pos.count;i++){
+    v3.fromBufferAttribute(pos,i);
+    const r = v3.length();
+    const t = (r - inner) / (outer - inner);
+    uv.setXY(i, t, 0.5);
+  }
+  // procedural banded ring texture on a small canvas
+  const c = document.createElement('canvas'); c.width = 512; c.height = 1;
+  const ctx = c.getContext('2d');
+  for (let x=0;x<512;x++){
+    const t = x/512;
+    // gaps + bands (Cassini-ish)
+    let a = 0.55 + 0.35*Math.sin(t*44.0) * Math.sin(t*7.0);
+    if (t>0.42 && t<0.48) a *= 0.12;          // Cassini division
+    if (t<0.06) a *= 0.25;
+    a = Math.max(0, Math.min(0.92, a));
+    const lum = 190 + 50*Math.sin(t*30.0);
+    ctx.fillStyle = `rgba(${lum|0},${(lum*0.92)|0},${(lum*0.74)|0},${a.toFixed(3)})`;
+    ctx.fillRect(x,0,1,1);
+  }
+  const ringTex = new THREE.CanvasTexture(c);
+  ringTex.colorSpace = THREE.SRGBColorSpace;
+  ringTex.anisotropy = maxAniso;
+  const ringMat = new THREE.MeshBasicMaterial({
+    map: ringTex, transparent:true, side:THREE.DoubleSide,
+    opacity:0.92, depthWrite:false, blending:THREE.NormalBlending,
+  });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = Math.PI/2 - 0.42;  // match planet tilt, tip toward viewer
+  ring.rotation.z = 0.18;
+  saturn.sphere.add(ring);
+  saturn.ring = ring;
+})();
+
+// MARS — ruddy waypoint, "a world we reach for"
+const mars = makePlanet({
+  key:'mars', url:TEX.mars, fallback:0xb24a30, radius:20,
+  pos:{ x:118, y:-26, z:-470 }, tilt:0.44,
+  atmo:{ color:0xd98a5a, strength:0.5, power:3.0 }, spin:0.05,
+});
+
+// MOON — close enough to read craters
+const moon = makePlanet({
+  key:'moon', url:TEX.moon, fallback:0x9a9a9a, radius:15,
+  pos:{ x:-150, y:34, z:-150 }, tilt:0.06,
+  atmo:null, spin:0.03,
+});
+
+// EARTH — destination, near origin; camera ends framed on it
+const earth = makePlanet({
+  key:'earth', url:TEX.earth, fallback:0x2a5a8a, radius:34,
+  pos:{ x:0, y:0, z:120 }, tilt:0.41,
+  atmo:{ color:0x6fa8ff, strength:1.15, power:3.0 }, spin:0.026,
+});
+// a slightly larger, softer outer halo on Earth for the "arrival" glow
+addAtmosphere(earth.sphere, earth.radius*1.06, 0x3c7be0, 0.7, 2.2);
+
+/* ----------------------------------------------------------------------
+   DISTANT SUN GLOW — a soft bright disc far off toward the sun direction,
+   so the lighting has a believable source on screen at the right moments.
+   ---------------------------------------------------------------------- */
+(function addSunGlow(){
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const ctx = c.getContext('2d');
+  const g = ctx.createRadialGradient(128,128,0,128,128,128);
+  g.addColorStop(0.0,'rgba(255,250,240,1)');
+  g.addColorStop(0.18,'rgba(255,240,214,0.85)');
+  g.addColorStop(0.45,'rgba(255,210,150,0.25)');
+  g.addColorStop(1.0,'rgba(255,200,140,0)');
+  ctx.fillStyle = g; ctx.fillRect(0,0,256,256);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const mat = new THREE.SpriteMaterial({ map:tex, transparent:true, blending:THREE.AdditiveBlending, depthWrite:false });
+  const s = new THREE.Sprite(mat);
+  s.scale.setScalar(560);
+  s.position.copy(sunDir).multiplyScalar(2200);
+  scene.add(s);
+})();
+
+/* ----------------------------------------------------------------------
+   STARFIELD — rich, subtle twinkle, slight parallax (two layers)
+   ---------------------------------------------------------------------- */
+function makeStarLayer(count, spread, size, baseColor){
+  const positions = new Float32Array(count*3);
+  const colors = new Float32Array(count*3);
+  const phases = new Float32Array(count);
+  const tmp = new THREE.Color();
+  for (let i=0;i<count;i++){
+    // shell distribution so stars surround the whole journey
+    const r = spread * (0.55 + Math.random()*0.45);
+    const u = Math.random()*2-1, th = Math.random()*Math.PI*2;
+    const s = Math.sqrt(1-u*u);
+    positions[i*3+0] = r * s * Math.cos(th);
+    positions[i*3+1] = r * s * Math.sin(th);
+    positions[i*3+2] = r * u;
+    // subtle palette: mostly starlight, a few teal/blue tints
+    const t = Math.random();
+    if (t > 0.93) tmp.set(COL.teal);
+    else if (t > 0.84) tmp.set(COL.blue);
+    else tmp.set(baseColor);
+    const b = 0.55 + Math.random()*0.45;
+    colors[i*3+0] = tmp.r*b; colors[i*3+1] = tmp.g*b; colors[i*3+2] = tmp.b*b;
+    phases[i] = Math.random()*Math.PI*2;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+  geo.setAttribute('aPhase', new THREE.BufferAttribute(phases,1));
+
+  const mat = new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+    uniforms:{ uTime:{value:0}, uSize:{value:size}, uPixelRatio:{value:renderer.getPixelRatio()} },
+    vertexShader:`
+      attribute float aPhase; attribute vec3 color;
+      uniform float uTime; uniform float uSize; uniform float uPixelRatio;
+      varying vec3 vColor; varying float vTw;
+      void main(){
+        vColor = color;
+        float tw = 0.6 + 0.4 * sin(uTime*1.6 + aPhase);
+        vTw = tw;
+        vec4 mv = modelViewMatrix * vec4(position,1.0);
+        gl_Position = projectionMatrix * mv;
+        gl_PointSize = uSize * uPixelRatio * (300.0 / -mv.z) * (0.7 + 0.6*tw);
+      }`,
+    fragmentShader:`
+      varying vec3 vColor; varying float vTw;
+      void main(){
+        vec2 d = gl_PointCoord - vec2(0.5);
+        float r = length(d);
+        if (r > 0.5) discard;
+        float a = smoothstep(0.5, 0.0, r);
+        a *= a;
+        gl_FragColor = vec4(vColor, a * vTw);
+      }`,
+  });
+  const pts = new THREE.Points(geo, mat);
+  pts.frustumCulled = false;
+  scene.add(pts);
+  return { pts, mat };
+}
+const starFar  = makeStarLayer(3400, 3600, 2.2, COL.star);
+const starNear = makeStarLayer(1100, 1800, 3.2, COL.star);
+
+/* Faint dust band (milky-way feel) — a single soft additive plane far away */
+(function addDust(){
+  const c = document.createElement('canvas'); c.width=512; c.height=128;
+  const ctx = c.getContext('2d');
+  const g = ctx.createLinearGradient(0,0,512,0);
+  g.addColorStop(0,'rgba(60,123,224,0)');
+  g.addColorStop(0.5,'rgba(120,140,210,0.10)');
+  g.addColorStop(1,'rgba(47,217,195,0)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,512,128);
+  // mottle it
+  for(let i=0;i<900;i++){
+    ctx.fillStyle=`rgba(200,210,255,${Math.random()*0.05})`;
+    ctx.fillRect(Math.random()*512, Math.random()*128, 1.5, 1.5);
+  }
+  const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
+  const mat=new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(5200,1400),mat);
+  m.position.set(200,-300,-1400); m.rotation.z=-0.4; m.rotation.x=0.2;
+  scene.add(m);
+})();
+
+/* ======================================================================
+   CAMERA JOURNEY — keyframed position + lookAt, Catmull-Rom eased.
+   p:0 deep space among the gas giants  ->  p:1 framed on Earth (earthrise).
+   ====================================================================== */
+
+// Camera position keyframes (the spline the camera flies along)
+const camKeys = [
+  new THREE.Vector3(  90,  46, -1620),  // 0.00  deep out, gas giants ahead, lit
+  new THREE.Vector3(  60,  40, -1410),  // sweep toward Saturn (sun side, lit)
+  new THREE.Vector3(-300,  90, -1080),  // Jupiter's lit flank (sun side)
+  new THREE.Vector3(  20,  20,  -560),  // inbound, approaching Mars (sun side)
+  new THREE.Vector3(  56,   2,  -388),  // Mars close pass — lit face to camera
+  new THREE.Vector3( -96,  44,  -300),  // crossing toward the Moon (sun side)
+  new THREE.Vector3(-200,  50,  -190),  // Moon close pass — lit cratered face
+  new THREE.Vector3( -70,  20,   -40),  // turning toward home
+  new THREE.Vector3(   2,   6,    52),  // 1.00  framed on Earth (arrival)
+];
+// LookAt targets per keyframe — what the camera is gazing at
+const lookKeys = [
+  new THREE.Vector3(  60,  72, -1280),  // out at the gas-giant zone
+  new THREE.Vector3( 205,  80, -1230),  // Saturn
+  new THREE.Vector3(-150,  46,  -980),  // Jupiter (lit flank)
+  new THREE.Vector3( 118, -26,  -470),  // Mars approach
+  new THREE.Vector3( 118, -26,  -470),  // Mars
+  new THREE.Vector3(-150,  34,  -150),  // Moon ahead
+  new THREE.Vector3(-150,  34,  -150),  // Moon
+  new THREE.Vector3( -40,  10,    40),  // Earth comes into view (swing right to home)
+  new THREE.Vector3(   0,   0,   120),  // Earth centered
+];
+
+const camCurve  = new THREE.CatmullRomCurve3(camKeys,  false, 'catmullrom', 0.5);
+const lookCurve = new THREE.CatmullRomCurve3(lookKeys, false, 'catmullrom', 0.5);
+
+// A gentle ease so motion accelerates/decelerates between beats (no abrupt cuts)
+function easeInOutSine(x){ return -(Math.cos(Math.PI*x)-1)/2; }
+
+// Featured-world schedule for label fades (p-range each is "the subject")
+const labelSchedule = [
+  { key:'saturn',  name:'SATURN',  sub:'OUTER SYSTEM · SCALE',     a:0.11, b:0.26 },
+  { key:'jupiter', name:'JUPITER', sub:'GAS GIANT · GRANDEUR',     a:0.29, b:0.37 },
+  { key:'mars',    name:'MARS',    sub:'A WORLD WE REACH FOR',     a:0.40, b:0.51 },
+  { key:'moon',    name:'THE MOON',sub:'NEAREST NEIGHBOUR',        a:0.60, b:0.72 },
+  { key:'earth',   name:'EARTH',   sub:'OUR ONLY HOME · ARRIVAL',  a:0.84, b:1.001 },
+];
+const legSchedule = [
+  { a:0.00, t:'OUTER SYSTEM' },
+  { a:0.40, t:'INNER WORLDS' },
+  { a:0.60, t:'NEAR SPACE' },
+  { a:0.84, t:'APPROACH · EARTH' },
+];
+
+const labelEl = document.getElementById('planetLabel');
+const nameEl  = document.getElementById('planetName');
+const subEl   = document.getElementById('planetSub');
+const legEl   = document.getElementById('leg');
+let curLabel = null, curLeg = null;
+
+function updateLabels(p){
+  let active = null;
+  for (const s of labelSchedule){ if (p >= s.a && p < s.b){ active = s; break; } }
+  if (active){
+    if (curLabel !== active.key){
+      curLabel = active.key;
+      nameEl.textContent = active.name;
+      subEl.textContent  = active.sub;
+    }
+    labelEl.style.opacity = '1';
+  } else {
+    labelEl.style.opacity = '0';
+    curLabel = null;
+  }
+  let leg = legSchedule[0];
+  for (const l of legSchedule){ if (p >= l.a) leg = l; }
+  if (curLeg !== leg.t){ curLeg = leg.t; legEl.textContent = leg.t; }
+}
+
+/* ----------------------------------------------------------------------
+   PRIMARY SCRUB — setDemoProgress(p): drives camera along the journey.
+   Continuous gentle drift is layered on top so it's alive at any p.
+   ---------------------------------------------------------------------- */
+let progress = 0;
+const _camPos = new THREE.Vector3();
+const _look   = new THREE.Vector3();
+const _drift  = new THREE.Vector3();
+let _clockT = 0;
+
+function applyCamera(p){
+  const e = easeInOutSine(THREE.MathUtils.clamp(p, 0, 1));
+  camCurve.getPoint(e, _camPos);
+  lookCurve.getPoint(e, _look);
+
+  // continuous ambient drift — small lateral float + breathing, always alive
+  const t = _clockT;
+  _drift.set(
+    Math.sin(t*0.27) * 5.5 + Math.cos(t*0.13) * 3.0,
+    Math.cos(t*0.21) * 4.0 + Math.sin(t*0.17) * 2.2,
+    Math.sin(t*0.11) * 2.5
+  );
+  // taper drift as we lock onto Earth so the final frame settles
+  const settle = 1.0 - THREE.MathUtils.smoothstep(p, 0.82, 1.0) * 0.82;
+  camera.position.copy(_camPos).addScaledVector(_drift, settle);
+  camera.lookAt(_look);
+
+  // very subtle roll for cinematic life, eased out at the end
+  camera.rotation.z += Math.sin(t*0.15) * 0.012 * settle;
+
+  updateLabels(p);
+}
+
+function setDemoProgress(p){
+  progress = THREE.MathUtils.clamp(p, 0, 1);
+  userTookOver = true;       // first external call stops auto-advance
+  applyCamera(progress);
+}
+window.setDemoProgress = setDemoProgress;
+window.__demo = {
+  get p(){ return progress; },
+  set p(v){ setDemoProgress(v); },
+};
+
+/* ----------------------------------------------------------------------
+   AUTO-ADVANCE: loop p 0->1 over ~26s until the first external scrub.
+   ---------------------------------------------------------------------- */
+let userTookOver = false;
+const AUTO_DURATION = 26.0; // seconds
+let autoT = 0;
+
+/* ----------------------------------------------------------------------
+   RENDER LOOP — ambient motion ALWAYS on.
+   ---------------------------------------------------------------------- */
+const clock = new THREE.Clock();
+
+function tick(){
+  const dt = Math.min(clock.getDelta(), 0.05);
+  _clockT += dt;
+
+  // auto-advance until the user (host page) takes control
+  if (!userTookOver){
+    autoT += dt;
+    let p = (autoT % AUTO_DURATION) / AUTO_DURATION;
+    progress = p;
+    applyCamera(p);
+  } else {
+    // keep ambient drift alive even when scrubbed/paused
+    applyCamera(progress);
+  }
+
+  // gentle self-rotation per world
+  for (const w of worlds){ w.sphere.rotation.y += w.spin * dt; }
+  // saturn rings drift faintly with body (already child of sphere)
+
+  // starfield twinkle + slight parallax against camera
+  starFar.mat.uniforms.uTime.value  = _clockT;
+  starNear.mat.uniforms.uTime.value = _clockT;
+  starFar.pts.position.x  = camera.position.x * 0.04;
+  starFar.pts.position.y  = camera.position.y * 0.04;
+  starNear.pts.position.x = camera.position.x * 0.10;
+  starNear.pts.position.y = camera.position.y * 0.10;
+
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+
+/* ----------------------------------------------------------------------
+   RESIZE
+   ---------------------------------------------------------------------- */
+function onResize(){
+  const w = window.innerWidth, h = window.innerHeight;
+  camera.aspect = w/h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  starFar.mat.uniforms.uPixelRatio.value  = renderer.getPixelRatio();
+  starNear.mat.uniforms.uPixelRatio.value = renderer.getPixelRatio();
+}
+window.addEventListener('resize', onResize);
+
+// initialize at p=0 then start
+applyCamera(0);
+tick();
+</script>
+</body>
+</html>
