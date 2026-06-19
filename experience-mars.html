@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSAI — Mars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css" rel="stylesheet">
+<style>
+@font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BoldItalic.woff2') format('woff2');font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BlackItalic.woff2') format('woff2');font-weight:800;font-style:italic;font-display:swap}
+@font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-MediumItalic.woff2') format('woff2');font-weight:500;font-style:italic;font-display:swap}
+:root{
+  --space:#04030e; --starlight:#f4f5ff; --nebula:#a6abe6; --muted:#7e84bf;
+  --hair:rgba(166,171,230,.18); --blue:#3c7be0; --teal:#2fd9c3; --indigo:#16145f;
+  --disp:'Tactic Sans',system-ui,sans-serif; --body:'Inter',-apple-system,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--space);color:var(--starlight);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+#map{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;background:var(--space)}
+#map .maplibregl-ctrl-attrib{background:rgba(4,3,14,.45);color:rgba(244,245,255,.55);font-size:10px}
+#map .maplibregl-ctrl-attrib a{color:rgba(244,245,255,.7)}
+.maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right{z-index:4}
+
+/* space + vignette grade so the brand copy always reads over the globe */
+.grade{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  radial-gradient(135% 95% at 50% 40%,transparent 50%,rgba(4,3,14,.6) 100%)}
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.0;transition:opacity 1.2s}
+.stars.show{opacity:1}
+
+.copylayer{position:fixed;inset:0;z-index:3;pointer-events:none}
+.copylayer .inner{position:relative;width:100%;max-width:1180px;height:100%;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
+.beat{position:absolute;left:clamp(22px,5vw,64px);bottom:clamp(60px,13vh,128px);max-width:780px;opacity:0;will-change:opacity,transform}
+.beat .k{display:inline-flex;align-items:center;gap:9px;margin-bottom:16px;font-family:var(--body);font-weight:600;text-transform:uppercase;letter-spacing:.26em;font-size:11px;color:var(--nebula)}
+.beat .k::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+.beat .k.bl::before{background:var(--blue);box-shadow:0 0 10px var(--blue)}
+.beat h1{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;
+  font-size:clamp(36px,7.2vw,104px);line-height:.92;letter-spacing:-.02em;text-shadow:0 2px 40px rgba(4,3,14,.8),0 0 50px rgba(120,150,255,.3)}
+.beat h1 .em{text-shadow:0 0 60px rgba(120,160,255,.7)}
+.beat p{margin-top:18px;color:#eef0ff;font-weight:300;font-size:clamp(15px,1.6vw,19px);max-width:46ch;line-height:1.6;text-shadow:0 1px 24px rgba(4,3,14,.95)}
+.beat .stat{display:flex;gap:30px;margin-top:26px;flex-wrap:wrap}
+.beat .stat div{border-left:1px solid var(--hair);padding-left:14px}
+.beat .stat b{display:block;font-family:var(--disp);font-style:italic;font-size:clamp(22px,3vw,34px);color:var(--teal);line-height:1}
+.beat .stat span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--nebula)}
+.beat .lock{display:flex;align-items:center;gap:16px;margin-top:30px}
+.beat .lock img{height:36px;width:auto}
+.beat .lock .ll{border-left:1px solid var(--hair);padding-left:16px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--nebula);line-height:1.5}
+.beat .cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;pointer-events:auto;
+  font-family:var(--body);font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#04201c;
+  background:var(--teal);border-radius:30px;padding:13px 24px;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.beat .cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px -10px rgba(47,217,195,.6)}
+.beat .cta.ghost{background:transparent;color:var(--starlight);border:1px solid var(--hair);margin-left:10px}
+.beat.center{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);text-align:center;max-width:none}
+.beat.center .inr{max-width:1180px;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
+.beat.center .k{justify-content:center}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(22px,5vw,46px);pointer-events:none;background:linear-gradient(rgba(4,3,14,.55),transparent)}
+.topbar img{height:24px;width:auto;pointer-events:auto;filter:drop-shadow(0 2px 14px rgba(60,123,224,.5))}
+.topbar .chap{font-family:var(--body);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);transition:color .4s}
+.prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:8;background:linear-gradient(90deg,var(--blue),var(--teal));box-shadow:0 0 10px var(--blue)}
+.cue{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:6;font-family:var(--body);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--nebula);display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none}
+.cue .ar{width:1px;height:34px;background:linear-gradient(var(--blue),transparent);animation:fall 1.8s ease-in-out infinite}
+@keyframes fall{0%{transform:scaleY(.3);transform-origin:top;opacity:.3}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.3);transform-origin:bottom;opacity:.3}}
+.shellnav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:7;display:flex;gap:6px;align-items:center;padding:7px 9px;border-radius:30px;background:rgba(8,6,28,.62);border:1px solid var(--hair);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);font-family:var(--body);font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .5s}
+.shellnav.show{opacity:1}
+.shellnav a{color:var(--nebula);padding:5px 12px;border-radius:20px;text-decoration:none}
+.shellnav a.on{background:var(--teal);color:#04201c;font-weight:600}
+@media(max-width:640px){.shellnav{display:none}}
+
+.loader{position:fixed;inset:0;z-index:30;background:var(--space);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity 1s ease}
+.loader.gone{opacity:0;pointer-events:none}
+.loader .spin{width:34px;height:34px;border-radius:50%;border:2px solid var(--hair);border-top-color:var(--teal);animation:spin 1s linear infinite}
+.loader .lt{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--nebula)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* moon-landing pins */
+.lpin{display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none}
+.lpin .d{width:5.5px;height:5.5px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 2px rgba(47,217,195,.16),0 0 6px var(--teal);animation:lpulse 2.6s ease-in-out infinite}
+.lpin .lab{font-family:var(--body);font-size:7.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#fff;white-space:nowrap;text-shadow:0 1px 3px #000,0 0 6px #000}
+.lpin.rob .d{width:4px;height:4px;background:var(--nebula);box-shadow:0 0 0 1.5px rgba(166,171,230,.15),0 0 4px var(--nebula);animation:none}
+.lpin.rob .lab{color:var(--nebula);font-weight:500;font-size:6.5px}
+@keyframes lpulse{0%,100%{box-shadow:0 0 0 2px rgba(47,217,195,.24),0 0 6px var(--teal)}50%{box-shadow:0 0 0 6px rgba(47,217,195,0),0 0 9px var(--teal)}}
+.scroll{position:relative;z-index:2;width:100%;height:780vh}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div class="spin"></div><div class="lt">Acquiring orbit…</div></div>
+
+<div class="stars" id="stars"></div>
+<div id="map"></div>
+<div class="grade"></div>
+<div class="prog" id="prog"></div>
+
+<header class="topbar">
+  <img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc.">
+  <span class="chap" id="chap">Mars</span>
+</header>
+
+<div class="copylayer"><div class="inner" id="beats">
+  <div class="beat" data-a="-0.05" data-b="0.085"><span class="k bl">The fourth planet · the red world</span><h1>A world we<br>keep <span class="em">reaching for.</span></h1><p>Cold, rust‑red, and half the size of Earth — Mars is where humanity has landed more machines than anywhere beyond our own world.</p></div>
+  <div class="beat" data-a="0.14" data-b="0.27"><span class="k">Where our robots have landed</span><h1>Landers<br>and <span class="em">rovers.</span></h1><p>From the Vikings of the 1970s to Perseverance today — a fleet of machines scattered across the red plains, our eyes and hands on another world.</p></div>
+  <div class="beat" data-a="0.355" data-b="0.47"><span class="k bl">Toward Isidis</span><h1>An ancient<br><span class="em">shoreline.</span></h1><p>Down toward a basin where water once stood — and a crater that may still hold the chemistry of a living past.</p></div>
+  <div class="beat" data-a="0.60" data-b="0.71"><span class="k">Jezero Crater</span><h1>A river<br>ran <span class="em">here.</span></h1><p>Billions of years ago a river spilled into this crater and built a delta. Perseverance set down in 2021 to read what it left behind.</p></div>
+  <div class="beat center" data-a="0.86" data-b="1.04"><div class="inr"><span class="k">Jezero Crater · Perseverance · February 2021</span><h1 style="font-size:clamp(40px,8vw,116px)"><span class="em">We have always<br>looked up.</span></h1><p>From the first robots on Mars to the science we do at home — the same curiosity that watches our own world reaches for every other.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="experience-earth.html">Return to Earth</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:26px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Science for life on Earth</div></div></div>
+</div></div>
+
+<div class="cue" id="cue">Scroll<div class="ar"></div></div>
+<nav class="shellnav" id="shellnav">
+  <a href="experience-earth.html" class="on">Experience</a>
+  <a href="brand-book.html">Brand book</a>
+  <a href="interactive-kit.html">Instruments</a>
+</nav>
+
+<div class="scroll" id="scroll"></div>
+
+<script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+function clamp01(x){return x<0?0:(x>1?1:x);}
+function lerp(a,b,t){return a+(b-a)*t;}
+function range(p,a,b){return clamp01((p-a)/(b-a));}
+function fadeOp(p,a,b,f){return clamp01(Math.min((p-a)/f,(b-p)/f,1));}
+function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
+
+/* paint a quiet starfield behind the globe (shows while we are out in space) */
+(function(){var c=document.createElement('canvas'),s=document.getElementById('stars');function sz(){c.width=innerWidth;c.height=innerHeight;var x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);for(var i=0;i<460;i++){var r=Math.pow(Math.random(),2.4)*1.5+.2,a=Math.random()*.6+.15;x.beginPath();x.arc(Math.random()*c.width,Math.random()*c.height,r,0,7);x.fillStyle='rgba(244,245,255,'+a+')';x.fill();}s.style.backgroundImage='url('+c.toDataURL()+')';}sz();addEventListener('resize',sz);})();
+
+/* ---- the flight: from globe in space down to Goddard / Greenbelt, MD ---- */
+/* edit lng/lat/z(zoom)/pitch/bear freely; p is each keyframe's scroll position */
+var KF=[
+  {p:0.00, lng:55,     lat:6,      z:0.92, pitch:0,  bear:0},   // the whole disc of Mars — the rovers across it
+  {p:0.34, lng:68,     lat:12,     z:2.6,  pitch:12, bear:0},   // toward Isidis & the Jezero region
+  {p:0.60, lng:75,     lat:16,     z:3.6,  pitch:26, bear:4},   // approaching Jezero
+  {p:0.82, lng:77.1,   lat:18.0,   z:4.8,  pitch:42, bear:14},  // the crater rim
+  {p:1.00, lng:77.45,  lat:18.44,  z:5.7,  pitch:48, bear:18}   // Jezero Crater · Perseverance (2021)
+];
+function camAt(p){
+  var i=0; while(i<KF.length-2 && p>KF[i+1].p) i++;
+  var A=KF[i],B=KF[i+1]; var t=easeIO(clamp01((p-A.p)/(B.p-A.p)));
+  return { lng:lerp(A.lng,B.lng,t), lat:lerp(A.lat,B.lat,t), z:lerp(A.z,B.z,t),
+           pitch:lerp(A.pitch,B.pitch,t), bear:lerp(A.bear,B.bear,t) };
+}
+
+var beats=[].slice.call(document.querySelectorAll('.beat'));
+var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap'), stars=document.getElementById('stars');
+var CH=[['Mars',0],['The rovers',0.14],['Isidis',0.355],['Jezero',0.60],['Perseverance',0.86]];
+var scrollP=0, map=null, mapReady=false;
+
+function applyScroll(){
+  var p=scrollP;
+  if(map && mapReady){ var c=camAt(p);
+    map.jumpTo({center:[c.lng,c.lat], zoom:c.z, pitch:c.pitch, bearing:c.bear});
+  }
+  if(stars) stars.classList.toggle('show', p<0.34);
+  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
+    beats[j].style.opacity=bo;
+    if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
+  if(prog) prog.style.width=(clamp01(p)*100)+'%';
+  if(cue) cue.style.opacity=(1-range(p,0.03,0.10));
+  if(shellnav) shellnav.classList.toggle('show',p>0.88);
+  var ci=0; for(var k=0;k<CH.length;k++){ if(p>=CH[k][1]-0.005) ci=k; }
+  if(chap) chap.textContent=CH[ci][0];
+}
+
+/* ---- the free, no-key 3D Earth: MapLibre globe + real satellite imagery + terrain ---- */
+function boot(){
+  if(typeof maplibregl==='undefined'){ var l=document.getElementById('loader'); if(l){l.querySelector('.lt').textContent='Could not load the map engine — check your connection.';} return; }
+  map=new maplibregl.Map({
+    container:'map', interactive:false, attributionControl:false, maxPitch:80, antialias:true,
+    center:[KF[0].lng,KF[0].lat], zoom:KF[0].z, pitch:KF[0].pitch, bearing:KF[0].bear,
+    style:{ version:8, projection:{type:'globe'},
+      sources:{
+        shade:{type:'raster', tiles:['https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/1/{z}/{x}/{y}.png'], tileSize:256, maxzoom:6, attribution:'Mars: NASA · USGS · MOLA · Viking / OpenPlanetaryMap'},
+        color:{type:'raster', tiles:['https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/2/{z}/{x}/{y}.png'], tileSize:256, maxzoom:6}
+      },
+      layers:[ {id:'bg', type:'background', paint:{'background-color':'#060403'}}, {id:'sat', type:'raster', source:'shade'}, {id:'sat2', type:'raster', source:'color', paint:{'raster-opacity':0.62}} ]
+    }
+  });
+  map.addControl(new maplibregl.AttributionControl({compact:true}));
+  map.on('load',function(){
+    try{ map.setProjection({type:'globe'}); }catch(e){}
+    /* Mars has a thin, dusty atmosphere — a faint rust-coloured haze at the limb, no blue */
+    try{ map.setSky({'sky-color':'#0a0604','horizon-color':'#6a3420','fog-color':'#160c07','sky-horizon-blend':.35,'horizon-fog-blend':.4,'fog-ground-blend':.15,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,.5,5,.14,8,0]}); }catch(e){}
+    /* pin the real landing sites (active rovers = teal, landers/past = grey). lat,lon */
+    try{ [['Viking 1',22.48,-49.97,0],['Viking 2',47.97,134.0,0],['Pathfinder',19.33,-33.55,0],['Spirit',-14.57,175.48,0],['Opportunity',-1.95,-5.53,0],['Curiosity',-4.59,137.44,1],['Perseverance',18.44,77.45,1],['InSight',4.50,135.62,0],['Zhurong',25.1,109.9,0]].forEach(function(s){ var el=document.createElement('div'); el.className='lpin'+(s[3]?'':' rob'); el.innerHTML='<span class="d"></span><span class="lab">'+s[0]+'</span>'; new maplibregl.Marker({element:el,anchor:'top'}).setLngLat([s[2],s[1]]).addTo(map); }); }catch(e){}
+    mapReady=true; applyScroll();
+  });
+  map.on('idle',function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
+}
+boot();
+
+/* ---- scroll engine: damped rAF loop — the camera GLIDES toward the scroll target and SETTLES
+        fast when you stop (no per-event jumps) — this is the only change to the one you loved ---- */
+var lenis=null, targetP=0, curP=0, lastP=-1;
+if(!reduce && window.Lenis){ lenis=new Lenis({duration:1.0,smoothWheel:true}); (function lr(t){lenis.raf(t);requestAnimationFrame(lr);})(0); }
+function rloop(){
+  var max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+  targetP=clamp01((window.scrollY||window.pageYOffset||0)/max);
+  curP+=(targetP-curP)*(reduce?1:0.16);
+  if(Math.abs(targetP-curP)<0.0005) curP=targetP;
+  if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; applyScroll(); }
+  requestAnimationFrame(rloop);
+}
+requestAnimationFrame(rloop);
+applyScroll();
+window.__exp={get p(){return scrollP;},set p(v){scrollP=v;applyScroll();}, get map(){return map;}, camAt:camAt};
+</script>
+</body>
+</html>
