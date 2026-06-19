@@ -68,7 +68,12 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .loader .lt{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--nebula)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.scroll{position:relative;z-index:2;width:100%;height:620vh}
+.satcard{display:flex;align-items:center;gap:14px;margin-top:24px;max-width:430px;background:rgba(8,6,28,.52);border:1px solid var(--hair);border-radius:14px;padding:11px 16px 11px 11px;-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);box-shadow:0 14px 36px -16px rgba(0,0,0,.7)}
+.satcard img{width:92px;height:66px;object-fit:cover;border-radius:9px;flex:none;background:#04030e}
+.satcard .sn{font-family:var(--disp);font-style:italic;text-transform:uppercase;font-size:17px;color:#fff;line-height:1}
+.satcard .si{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin:5px 0 6px}
+.satcard .sd{font-size:12.5px;color:#d7daf6;line-height:1.45;font-weight:300}
+.scroll{position:relative;z-index:2;width:100%;height:1500vh}
 </style>
 </head>
 <body>
@@ -85,10 +90,13 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 </header>
 
 <div class="copylayer" id="beats">
-  <div class="beat" data-a="-0.05" data-b="0.12"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
-  <div class="beat" data-a="0.30" data-b="0.50"><span class="k bl">From orbit, every day</span><h1>Science for<br>life on <span class="em">Earth.</span></h1><p>Oceans, air, ice, fire and storms — measured from space, with NASA, NOAA and partners around the world.</p></div>
-  <div class="beat" data-a="0.58" data-b="0.76"><span class="k">From orbit to ground</span><h1>All the<br>way <span class="em">home.</span></h1><p>The same science that watches the planet comes all the way down to the people who put it to work.</p></div>
-  <div class="beat center" data-a="0.90" data-b="1.06"><div class="inr"><span class="k">The Aerospace Building · 10210 Greenbelt Rd · Lanham, MD</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p>Right here, beside NASA's Goddard Space Flight Center, SSAI turns raw light from across the planet into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
+  <div class="beat" data-a="-0.05" data-b="0.05"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
+  <div class="beat" data-a="0.125" data-b="0.185"><span class="k bl">Svalbard · 78° North</span><h1>Where satellites<br><span class="em">phone home.</span></h1><p>At the top of the world, a field of white domes catches every polar‑orbiting satellite, pass after pass.</p><div class="satcard"><img src="assets/images/sat-aqua.jpg" alt="Aqua satellite"><div><div class="sn">Aqua · MODIS</div><div class="si">Oceans &amp; water</div><div class="sd">Sea‑surface temperature, clouds and the global water cycle — pole to pole, twice a day.</div></div></div></div>
+  <div class="beat" data-a="0.325" data-b="0.385"><span class="k">Mauna Kea · Hawai‘i</span><h1>A crown of<br><span class="em">silver domes.</span></h1><p>Above a sea of clouds on a sleeping volcano, the great telescopes keep watch on Earth and the sky around it.</p></div>
+  <div class="beat" data-a="0.505" data-b="0.565"><span class="k bl">Goldstone · Mojave Desert</span><h1>Reaching into<br>the <span class="em">dark.</span></h1><p>Seventy‑metre dishes listen across the solar system — the craft of antennas and signals that keeps Earth's satellites in reach.</p><div class="satcard"><img src="assets/images/sat-aura.jpg" alt="Aura satellite"><div><div class="sn">Aura · OMI</div><div class="si">Atmosphere</div><div class="sd">SSAI helped build the OMI nitrogen‑dioxide product — mapping the air's pollution from orbit.</div></div></div></div>
+  <div class="beat" data-a="0.665" data-b="0.725"><span class="k">Very Large Array · New Mexico</span><h1>Twenty‑seven<br>ears on the <span class="em">sky.</span></h1><p>A perfect Y of dishes splayed across the high desert, listening to a universe of faint radio light.</p><div class="satcard"><img src="assets/images/sat-smap.jpg" alt="SMAP satellite"><div><div class="sn">SMAP</div><div class="si">Land &amp; water</div><div class="sd">Maps soil moisture worldwide — sharpening drought, flood and harvest forecasts.</div></div></div></div>
+  <div class="beat" data-a="0.835" data-b="0.885"><span class="k bl">Green Bank · West Virginia</span><h1>The largest<br><span class="em">steerable dish.</span></h1><p>A hundred metres of steel in a radio‑silent valley — the last note before home.</p></div>
+  <div class="beat center" data-a="0.935" data-b="1.06"><div class="inr"><span class="k">The Aerospace Building · 10210 Greenbelt Rd · Lanham, MD</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p>Right here, beside NASA's Goddard Space Flight Center, SSAI turns raw light from across the planet into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
 </div>
 
 <div class="cue" id="cue">Scroll<div class="ar"></div></div>
@@ -106,12 +114,29 @@ function fadeOp(p,a,b,f){return clamp01(Math.min((p-a)/f,(b-p)/f,1));}
 function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
 
 /* a clean, single descent: Earth globe -> North America -> DC/Maryland -> the SSAI building */
+/* a long world tour of the places that watch the sky + talk to satellites, then home to SSAI.
+   lng runs monotonically (western-hemisphere values wrap past 180) so the globe spins one way.
+   each stop is a pair of identical keyframes (a DWELL so tiles finish loading while you look),
+   with a high-altitude LIFT between distant stops so travel is smooth, not a low streak. */
 var KF=[
-  {p:0.00, lng:-42,     lat:18,      z:1.40, pitch:0,  bear:0},
-  {p:0.34, lng:-83,     lat:37,      z:4.30, pitch:22, bear:0},
-  {p:0.62, lng:-76.95,  lat:38.78,   z:9.20, pitch:50, bear:10},
-  {p:0.82, lng:-76.87,  lat:38.95,   z:12.6, pitch:57, bear:16},
-  {p:1.00, lng:-76.8283,lat:38.99159,z:16.6, pitch:60, bear:20}
+  {p:0.00, lng:-42,     lat:18,      z:1.40, pitch:0,  bear:0},   // Earth, from space
+  {p:0.07, lng:-10,     lat:52,      z:3.10, pitch:8,  bear:0},   // rise toward the Arctic
+  {p:0.13, lng:15.408,  lat:78.230,  z:12.9, pitch:42, bear:0},   // SvalSat (Svalbard) arrive
+  {p:0.185,lng:15.408,  lat:78.230,  z:12.9, pitch:42, bear:0},   // · dwell
+  {p:0.25, lng:95,      lat:46,      z:2.55, pitch:8,  bear:0},   // lift, fly east across Asia
+  {p:0.33, lng:204.525, lat:19.822,  z:13.3, pitch:52, bear:28},  // Mauna Kea arrive (-155.475)
+  {p:0.385,lng:204.525, lat:19.822,  z:13.3, pitch:52, bear:28},  // · dwell
+  {p:0.45, lng:226,     lat:31,      z:3.30, pitch:10, bear:0},   // lift toward the US Southwest
+  {p:0.51, lng:243.110, lat:35.427,  z:12.3, pitch:48, bear:16},  // Goldstone DSN arrive (-116.890)
+  {p:0.565,lng:243.110, lat:35.427,  z:12.3, pitch:48, bear:16},  // · dwell
+  {p:0.62, lng:248,     lat:34.6,    z:6.30, pitch:28, bear:0},   // short hop
+  {p:0.67, lng:252.382, lat:34.079,  z:12.3, pitch:42, bear:10},  // Very Large Array arrive (-107.618)
+  {p:0.725,lng:252.382, lat:34.079,  z:12.3, pitch:42, bear:10},  // · dwell
+  {p:0.79, lng:266,     lat:37,      z:4.40, pitch:16, bear:0},   // lift east toward the Appalachians
+  {p:0.84, lng:280.160, lat:38.433,  z:13.6, pitch:46, bear:14},  // Green Bank arrive (-79.840)
+  {p:0.885,lng:280.160, lat:38.433,  z:13.6, pitch:46, bear:14},  // · dwell
+  {p:0.95, lng:282.40,  lat:38.86,   z:10.4, pitch:52, bear:18},  // approach SSAI
+  {p:1.00, lng:283.172, lat:38.99159,z:16.5, pitch:60, bear:20}   // SSAI · The Aerospace Building (-76.8283)
 ];
 var SSAI_LNGLAT=[-76.8282966, 38.9915921];
 function camAt(p){
@@ -123,7 +148,7 @@ function camAt(p){
 
 var beats=[].slice.call(document.querySelectorAll('.beat'));
 var prog=document.getElementById('prog'), cue=document.getElementById('cue'), chap=document.getElementById('chap');
-var CH=[['The Descent',0],['Science for life on Earth',0.30],['Coming home',0.58],['SSAI · Greenbelt, MD',0.90]];
+var CH=[['The Descent',0],['Svalbard · 78°N',0.11],['Mauna Kea',0.31],['Goldstone',0.49],['Very Large Array',0.65],['Green Bank',0.82],['SSAI · Greenbelt, MD',0.93]];
 var map=null, mapReady=false, ssaiMarker=null;
 
 function render(p){
