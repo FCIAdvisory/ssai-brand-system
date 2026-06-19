@@ -214,8 +214,10 @@ function boot(){
     try{ map.setProjection({type:'globe'}); }catch(e){}
     try{ map.setSky({'sky-color':'#0a1733','horizon-color':'#1a2a55','fog-color':'#04030e','sky-horizon-blend':.5,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,.7,6,.25,10,0]}); }catch(e){}
     try{ var el=document.createElement('div'); el.className='ssaipin'; el.innerHTML='<span class="dot"></span>'; ssaiMarker=new maplibregl.Marker({element:el,anchor:'center'}).setLngLat(SSAI_LNGLAT).addTo(map); }catch(e){}
-    mapReady=true; prewarm();
+    mapReady=true; prewarming=false; lastRenderP=-1; render(0);
   });
+  map.on('idle', dismissLoader);
+  setTimeout(dismissLoader, 4500);
 }
 boot();
 
