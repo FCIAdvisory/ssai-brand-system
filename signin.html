@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — MySSAI Employee Portal — SSAI</title>
+<meta name="description" content="MySSAI is the employee portal for Science Systems and Applications, Inc. Sign in with your SSAI credentials. Single sign-on provided through Okta. Authorized employees only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="assets/site.css" rel="stylesheet">
+<style>
+/* signin.html — minimal inline tweaks for the gated portal (no equivalent in shared sheet) */
+.gate{min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.gate::before{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 80% at 50% -10%,rgba(22,20,95,.5),transparent 60%),
+  radial-gradient(80% 60% at 80% 110%,rgba(242,193,78,.06),transparent 55%);pointer-events:none}
+.gatebar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;
+  padding:22px clamp(20px,5vw,56px);border-bottom:1px solid var(--hair)}
+.gatebar .gb-logo img{height:30px;width:auto;display:block}
+.gb-back{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--nebula);transition:color .2s}
+.gb-back:hover{color:var(--gold)}
+.gate-main{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:clamp(48px,8vh,90px) 22px clamp(40px,6vh,70px)}
+.signin-card{width:100%;max-width:440px;margin:0 auto;text-align:center}
+.signin-card .si-mark{height:48px;width:auto;margin:0 auto 20px;display:block}
+.si-word{font-family:var(--disp);font-style:italic;font-weight:800;text-transform:uppercase;color:#fff;
+  font-size:clamp(30px,5vw,42px);letter-spacing:-.01em;line-height:1}
+.si-word .em{color:var(--gold);text-shadow:0 0 44px rgba(242,193,78,.4)}
+.signin-card h1{font-family:var(--body);font-weight:600;font-size:13px;letter-spacing:.04em;color:var(--text);
+  margin:14px auto 0;max-width:38ch;line-height:1.6}
+.si-form{margin-top:30px;text-align:left;display:grid;gap:16px}
+.si-field label{display:block;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px}
+.si-field input{width:100%;font-family:var(--body);font-size:15px;color:var(--starlight);
+  background:rgba(166,171,230,.04);border:1px solid var(--hair2);border-radius:12px;padding:14px 16px;
+  transition:border-color .25s,background .25s,box-shadow .25s}
+.si-field input::placeholder{color:var(--faint)}
+.si-field input:focus{outline:none;border-color:var(--gold);background:rgba(242,193,78,.05);
+  box-shadow:0 0 0 3px rgba(242,193,78,.12)}
+.si-row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:2px}
+.si-remember{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--nebula);cursor:pointer}
+.si-remember input{accent-color:var(--gold);width:15px;height:15px}
+.si-forgot{font-size:12px;letter-spacing:.04em;color:var(--gold);text-decoration:none;white-space:nowrap}
+.si-forgot:hover{text-decoration:underline}
+.si-form .btn{width:100%;justify-content:center;margin-top:6px;padding:15px 26px}
+.si-or{display:flex;align-items:center;gap:14px;margin:4px 0;color:var(--faint);
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase}
+.si-or::before,.si-or::after{content:"";flex:1;height:1px;background:var(--hair)}
+.si-form .btn.ghost{width:100%;justify-content:center;padding:14px 26px}
+.si-inside{width:100%;max-width:760px;margin:clamp(40px,6vh,64px) auto 0;text-align:center}
+.si-inside .lbl{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.si-tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.si-tile{border:1px solid var(--hair);border-radius:30px;padding:9px 16px;font-size:12px;letter-spacing:.04em;
+  color:var(--nebula);transition:border-color .25s,color .25s}
+.si-tile:hover{border-color:var(--hair2);color:var(--text)}
+.si-note{margin-top:22px;font-size:12px;color:var(--muted);line-height:1.6;max-width:60ch;margin-left:auto;margin-right:auto}
+.si-note a{color:var(--nebula);text-decoration:underline;text-underline-offset:2px}
+.si-note a:hover{color:var(--gold)}
+.gate-foot{position:relative;z-index:2;text-align:center;padding:26px 22px 30px;border-top:1px solid var(--hair);
+  font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+</style>
+</head>
+<body>
+
+<div class="gate">
+
+  <div class="gatebar">
+    <a class="gb-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc."></a>
+    <a class="gb-back" href="index.html">&larr; ssai.com</a>
+  </div>
+
+  <main class="gate-main">
+
+    <section class="signin-card card">
+      <img class="si-mark" src="assets/logo/ssai-white-mark.png" alt="SSAI">
+      <div class="si-word">My<span class="em">SSAI</span></div>
+      <h1>Welcome to MySSAI, the employee portal for Science Systems and Applications, Inc. Sign in with your SSAI credentials to access company resources.</h1>
+
+      <form class="si-form" onsubmit="return false;">
+        <div class="si-field">
+          <label for="si-user">Username</label>
+          <input type="text" id="si-user" name="username" placeholder="firstname.lastname" autocomplete="username">
+        </div>
+        <div class="si-field">
+          <label for="si-pass">Password</label>
+          <input type="password" id="si-pass" name="password" placeholder="••••••••••" autocomplete="current-password">
+        </div>
+        <div class="si-row">
+          <label class="si-remember"><input type="checkbox" id="si-remember"> Keep me signed in</label>
+          <a class="si-forgot" href="#account-help">Forgot password?</a>
+        </div>
+        <a class="btn" href="intranet.html">Sign in</a>
+        <div class="si-or">Or</div>
+        <a class="btn ghost" href="intranet.html">Sign in with Okta SSO</a>
+      </form>
+    </section>
+
+    <section class="si-inside" id="account-help">
+      <div class="lbl">What&rsquo;s inside</div>
+      <div class="si-tiles">
+        <span class="si-tile">Webmail (Pronto!)</span>
+        <span class="si-tile">Timesheets &amp; Forms</span>
+        <span class="si-tile">Announcements</span>
+        <span class="si-tile">Benefits &amp; HR</span>
+        <span class="si-tile">SSAI University (SSAIU)</span>
+        <span class="si-tile">IT Help Desk</span>
+      </div>
+      <p class="si-note">
+        Authorized SSAI employees only. Single sign-on is provided through Okta, and your dashboard tiles are tailored to your role. Need account help? Use the <a href="#account-help">SSAI Employee Information Site (EIS)</a> self-service recovery or contact the IT help desk. For HR questions, including benefits and accommodations, reach the Human Resources Department at <a href="mailto:hr@ssaihq.com">hr@ssaihq.com</a>.
+      </p>
+    </section>
+
+  </main>
+
+  <div class="gate-foot">
+    &copy; 1977&ndash;2026 Science Systems and Applications, Inc. &middot; The Aerospace Building, Lanham, MD
+  </div>
+
+</div>
+
+</body>
+</html>

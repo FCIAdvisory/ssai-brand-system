@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MySSAI Portal — SSAI</title>
+<meta name="description" content="MySSAI — the employee portal for Science Systems and Applications, Inc. One place for Webmail, timesheets, company forms, announcements, benefits, learning, and IT support.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="assets/site.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ===== Slim portal top bar (post sign-in; no public nav) ===== -->
+<header class="nav solid" id="nav" style="position:sticky;justify-content:space-between;border-bottom:1px solid var(--hair)">
+  <a class="nav-logo" href="intranet.html" style="display:flex;align-items:center;gap:14px">
+    <img src="assets/logo/ssai-white-mark.png" alt="SSAI" style="height:34px;filter:drop-shadow(0 2px 14px rgba(60,123,224,.45))">
+    <span style="font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;font-size:18px;letter-spacing:-.01em">My<span style="color:var(--gold)">SSAI</span></span>
+  </a>
+  <div style="display:flex;align-items:center;gap:clamp(12px,2vw,22px)">
+    <span style="display:flex;flex-direction:column;align-items:flex-end;line-height:1.3">
+      <span style="font-size:13px;color:var(--text);font-weight:500">Welcome back, J. Rivera</span>
+      <span style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Engineering · Lanham, MD</span>
+    </span>
+    <span aria-hidden="true" style="width:38px;height:38px;border-radius:50%;border:1px solid var(--hair2);display:grid;place-items:center;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--gold);background:rgba(242,193,78,.08)">JR</span>
+    <a class="nav-cta" href="index.html" style="font-size:11px">Sign out</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== Welcome ===== -->
+  <section class="section tight" style="padding-top:clamp(40px,6vh,72px)">
+    <div class="container">
+      <span class="kick">MySSAI Employee Portal</span>
+      <h1 class="dtitle">Good morning, <span class="em">Jordan.</span></h1>
+      <p class="lead">Everything you need in one place — Webmail, timesheets, forms, benefits, learning, and support. Your tiles are tailored to your role in Engineering. Today is Thursday, June 18, 2026.</p>
+      <div class="chips">
+        <span class="chip"><b>3</b> unread in Pronto!</span>
+        <span class="chip">Timesheet due <b>Fri Jun 20</b></span>
+        <span class="chip">Open enrollment <b>closes Jun 30</b></span>
+        <span class="chip"><b>2</b> SSAIU courses assigned</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== Portal tiles ===== -->
+  <section class="section tight">
+    <div class="container">
+      <span class="eyebrow">Your Workspace</span>
+      <div class="grid grid-4">
+
+        <a class="card" href="#">
+          <span class="n">Email</span>
+          <h3>Webmail</h3>
+          <p>Pronto! — your SSAI inbox, calendar, and contacts. 3 messages waiting.</p>
+          <span class="tag">Open Pronto!</span>
+        </a>
+
+        <a class="card" href="#">
+          <span class="n">Time &amp; Labor</span>
+          <h3>Timesheets</h3>
+          <p>Enter, review, and submit your hours. Current period closes Friday.</p>
+          <span class="tag">Due Jun 20</span>
+        </a>
+
+        <a class="card" href="#">
+          <span class="n">Documents</span>
+          <h3>Company Forms</h3>
+          <p>The full forms library — travel, expenses, leave requests, and procurement.</p>
+          <span class="tag">Browse library</span>
+        </a>
+
+        <a class="card" href="#">
+          <span class="n">News</span>
+          <h3>Announcements</h3>
+          <p>Company-wide notices, all-hands updates, and mission milestones.</p>
+          <span class="tag">3 new</span>
+        </a>
+
+        <a class="card" href="#">
+          <span class="n">People</span>
+          <h3>Benefits &amp; HR</h3>
+          <p>Health, retirement, PTO, and life events. Open enrollment is live.</p>
+          <span class="tag">Enroll now</span>
+        </a>
+
+        <a class="card" href="#">
+          <span class="n">Learning</span>
+          <h3>SSAI University</h3>
+          <p>SSAIU — required training, certifications, and professional development.</p>
+          <span class="tag">2 assigned</span>
+        </a>
+
+        <a class="card" href="#">
+          <span class="n">Support</span>
+          <h3>IT Help Desk</h3>
+          <p>Open a ticket, reset access, or request hardware and software.</p>
+          <span class="tag">Get help</span>
+        </a>
+
+        <a class="card" href="#">
+          <span class="n">Self-Service</span>
+          <h3>Employee Info Site</h3>
+          <p>EIS — pay statements, tax documents, and personal record updates.</p>
+          <span class="tag">Open EIS</span>
+        </a>
+
+      </div>
+
+      <!-- Directory as a wide ninth tile -->
+      <div class="grid grid-2" style="margin-top:20px">
+        <a class="card feature" href="#" style="display:flex;flex-direction:column;justify-content:center">
+          <span class="n">Find a Colleague</span>
+          <h3>Directory</h3>
+          <p>Search the SSAI employee directory by name, team, location, or program — across Lanham and every field site.</p>
+          <span class="tag">Search directory</span>
+        </a>
+        <a class="card" href="#" style="display:flex;flex-direction:column;justify-content:center">
+          <span class="n">Single Sign-On</span>
+          <h3>App Launcher</h3>
+          <p>All your authorized applications behind Okta SSO, in one launcher. No second sign-in required.</p>
+          <span class="tag">Open launcher</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== Announcements panel ===== -->
+  <section class="section tight">
+    <div class="container">
+      <div class="lede-grid">
+        <div>
+          <span class="eyebrow">Internal</span>
+          <h2 class="dtitle" style="font-size:clamp(26px,3.4vw,40px);margin-top:14px">Announcements</h2>
+          <p class="note" style="margin-top:16px">Posted by Corporate Communications &amp; Human Resources. Visible to all employees.</p>
+          <div class="btn-row" style="margin-top:26px">
+            <a class="btn ghost" href="#" style="font-size:11px">View all notices</a>
+          </div>
+        </div>
+
+        <div class="body-col" style="max-width:none">
+          <div class="card">
+            <span class="n">HR · Posted Jun 16, 2026</span>
+            <h3 style="font-size:clamp(18px,2vw,23px)">Open Enrollment Is Now Live</h3>
+            <p>Benefits open enrollment runs through <b style="color:var(--gold);font-weight:600">June 30</b>. Review your medical, dental, vision, and retirement elections in Benefits &amp; HR. No action means your current plans roll over — but new HSA contribution limits apply for 2027. Questions: <span style="color:var(--nebula)">hr@ssaihq.com</span>.</p>
+          </div>
+
+          <div class="card" style="margin-top:16px">
+            <span class="n">Corporate · Posted Jun 15, 2026</span>
+            <h3 style="font-size:clamp(18px,2vw,23px)">Company All-Hands — June 25</h3>
+            <p>Join leadership for the quarterly all-hands on <b style="color:var(--gold);font-weight:600">Thursday, June 25 at 11:00 AM ET</b>. Agenda: program highlights, the year ahead, and a live Q&amp;A. Joining details will arrive in Pronto!; the session will be recorded and posted to SSAIU.</p>
+          </div>
+
+          <div class="card" style="margin-top:16px">
+            <span class="n">Mission · Posted Jun 12, 2026</span>
+            <h3 style="font-size:clamp(18px,2vw,23px)">SARSAT Ground-Segment Milestone</h3>
+            <p>Congratulations to the Mission Operations team on a clean SARSAT ground-segment milestone review last week. The search-and-rescue payload support work continues to set the standard. A short write-up is available in Announcements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Quick links strip ===== -->
+  <section class="band">
+    <div class="container">
+      <div class="lede-grid" style="align-items:center">
+        <div>
+          <span class="eyebrow">Need a hand?</span>
+          <h2 class="dtitle" style="font-size:clamp(24px,3vw,38px);margin-top:12px">We're <span class="em">here for you.</span></h2>
+        </div>
+        <ul class="flist" style="margin-top:0">
+          <li>Trouble signing in? Reset access in the <b style="color:var(--gold);font-weight:600">IT Help Desk</b> or via EIS self-service recovery.</li>
+          <li>Benefits, accommodations, or HR questions? Reach the Human Resources Department at <span style="color:var(--nebula)">hr@ssaihq.com</span>.</li>
+          <li>Lost in the portal? The <b style="color:var(--gold);font-weight:600">Directory</b> and App Launcher get you anywhere in two clicks.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== Portal footer (lightweight, internal) ===== -->
+<footer class="footer" style="padding-top:clamp(40px,6vh,64px)">
+  <div class="container footer-bottom" style="border-top:0;margin-top:0;padding-top:0">
+    <span>MySSAI · For authorized SSAI employees only · &copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span>
+    <span><a href="index.html" style="color:var(--nebula)">Sign out</a> · The Aerospace Building · Lanham, MD · (301) 867-2000</span>
+  </div>
+</footer>
+
+<script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+</body>
+</html>

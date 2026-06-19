@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — SSAI</title>
+<meta name="description" content="Contact Science Systems and Applications, Inc. — headquartered beside NASA Goddard in Lanham, Maryland. Reach Business Development, Human Resources, Careers, or our main line directly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="assets/site.css" rel="stylesheet">
+<style>
+/* minimal form styling — no form classes exist in the shared stylesheet */
+.cform{display:grid;gap:20px}
+.cfield{display:grid;gap:9px}
+.cfield label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--nebula)}
+.cfield input,.cfield select,.cfield textarea{width:100%;font-family:var(--body);font-size:15px;font-weight:300;color:var(--starlight);background:rgba(166,171,230,.04);border:1px solid var(--hair);border-radius:12px;padding:14px 16px;transition:border-color .25s,background .25s;line-height:1.5}
+.cfield textarea{resize:vertical;min-height:140px}
+.cfield input::placeholder,.cfield textarea::placeholder{color:var(--faint)}
+.cfield input:focus,.cfield select:focus,.cfield textarea:focus{outline:none;border-color:rgba(242,193,78,.55);background:rgba(242,193,78,.05)}
+.cfield select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);background-position:calc(100% - 20px) calc(1em + 4px),calc(100% - 15px) calc(1em + 4px);background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.cfield select option{background:var(--panel2);color:var(--starlight)}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:560px){.crow{grid-template-columns:1fr}}
+.cpanel{border:1px solid var(--hair);border-radius:20px;padding:clamp(26px,3vw,40px);background:rgba(166,171,230,.03)}
+.contact-line{display:grid;gap:5px;margin-top:22px}
+.contact-line:first-of-type{margin-top:0}
+.contact-line .lbl{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.contact-line .val{font-size:15.5px;font-weight:300;color:var(--text);line-height:1.6}
+.contact-line a.val{color:var(--gold);transition:color .2s}
+.contact-line a.val:hover{color:#fff}
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc."></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="nav-links" id="navLinks">
+    <a class="nav-link" href="company.html">Company</a>
+    <a class="nav-link" href="science.html">Science</a>
+    <a class="nav-link" href="instruments.html">Instruments</a>
+    <a class="nav-link" href="mission-operations-data.html">Mission Ops &amp; Data</a>
+    <a class="nav-link" href="partner.html">Partner</a>
+    <a class="nav-link" href="careers.html">Careers</a>
+    <a class="nav-link" href="newsroom.html">Newsroom</a>
+    <a class="nav-link active" href="contact.html">Contact</a>
+    <a class="nav-link nav-cta" href="signin.html">Sign In</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="phero">
+    <div class="container">
+      <span class="kick">Contact SSAI</span>
+      <h1>Let's <span class="em">talk.</span></h1>
+      <p class="sub">Whether you are a federal customer, a prospective partner, a candidate, or a member of the press, we would like to hear from you. Use the form below, or reach the right team directly.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="lede-grid">
+
+        <div>
+          <h2 class="dtitle">Send us a <span class="em">message</span></h2>
+          <p class="lead">Tell us who you are and what you are looking for. Your note routes to the right team, and a person — not an auto-responder — gets back to you.</p>
+          <div class="cpanel mt-m">
+            <form class="cform" novalidate>
+              <div class="crow">
+                <div class="cfield">
+                  <label for="cf-name">Name</label>
+                  <input id="cf-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
+                </div>
+                <div class="cfield">
+                  <label for="cf-email">Email</label>
+                  <input id="cf-email" name="email" type="email" autocomplete="email" placeholder="you@organization.gov">
+                </div>
+              </div>
+              <div class="crow">
+                <div class="cfield">
+                  <label for="cf-org">Organization</label>
+                  <input id="cf-org" name="organization" type="text" autocomplete="organization" placeholder="Agency, company, or institution">
+                </div>
+                <div class="cfield">
+                  <label for="cf-topic">Topic</label>
+                  <select id="cf-topic" name="topic">
+                    <option value="">Select a topic</option>
+                    <option value="customer-contracts">Customer Contracts</option>
+                    <option value="business-development">Business Development</option>
+                    <option value="careers">Careers</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="cfield">
+                <label for="cf-message">Message</label>
+                <textarea id="cf-message" name="message" placeholder="How can we help?"></textarea>
+              </div>
+              <div class="btn-row" style="margin-top:8px">
+                <button class="btn" type="button">Send Message</button>
+              </div>
+              <p class="note">By submitting, you agree we may contact you about your inquiry. We never sell or share your information.</p>
+            </form>
+          </div>
+        </div>
+
+        <div>
+          <span class="eyebrow">Headquarters</span>
+          <h2 class="dtitle mt-s" style="font-size:clamp(24px,3vw,38px)">Beside NASA <span class="em">Goddard</span></h2>
+          <div class="cpanel mt-m">
+            <div class="contact-line">
+              <span class="lbl">Address</span>
+              <span class="val">Science Systems and Applications, Inc.<br>The Aerospace Building<br>10210 Greenbelt Road, Suite 600<br>Lanham, MD 20706<br>Adjacent to NASA Goddard Space Flight Center</span>
+            </div>
+            <div class="contact-line">
+              <span class="lbl">Main Line</span>
+              <a class="val" href="tel:+13018672000">(301) 867-2000</a>
+            </div>
+            <div class="contact-line">
+              <span class="lbl">Hours</span>
+              <span class="val">Monday&ndash;Friday, 8:00&nbsp;AM &ndash; 5:00&nbsp;PM ET</span>
+            </div>
+          </div>
+
+          <div class="cpanel" style="margin-top:20px">
+            <span class="eyebrow">Reach the right team</span>
+            <div class="contact-line" style="margin-top:18px">
+              <span class="lbl">Business Development &amp; Customer Contracts</span>
+              <a class="val" href="mailto:BD@ssaihq.com">BD@ssaihq.com</a>
+            </div>
+            <div class="contact-line">
+              <span class="lbl">Human Resources, Accommodations &amp; AAP Requests</span>
+              <a class="val" href="mailto:hr@ssaihq.com">hr@ssaihq.com</a>
+            </div>
+            <div class="contact-line">
+              <span class="lbl">Careers</span>
+              <span class="val">Search and apply for open roles on our <a class="val" href="careers.html" style="display:inline">Careers page</a>.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section alt" id="teams">
+    <div class="container">
+      <span class="eyebrow">Routing</span>
+      <h2 class="dtitle mt-s">Find the <span class="em">right door</span></h2>
+      <p class="lead">Four ways in — each pointed at the team that can move fastest on your request.</p>
+      <div class="grid grid-3">
+        <div class="card feature">
+          <span class="n">Customer Contracts &amp; BD</span>
+          <h3>Federal Customers</h3>
+          <p>Active programs, task orders, and new business. Our Business Development team manages customer contracts and prospective work across our civilian, defense, and commercial portfolios.</p>
+          <a class="tag" href="mailto:BD@ssaihq.com">BD@ssaihq.com</a>
+        </div>
+        <div class="card">
+          <span class="n">Careers</span>
+          <h3>Candidates</h3>
+          <p>Looking to join the team turning the view from space into understanding on the ground? Browse open roles and apply directly through our Careers page.</p>
+          <a class="tag" href="careers.html">View open roles</a>
+        </div>
+        <div class="card">
+          <span class="n">Human Resources</span>
+          <h3>HR &amp; Accommodations</h3>
+          <p>Accommodation requests, Affirmative Action Plan inquiries, and people-team matters route to Human Resources for a prompt, confidential response.</p>
+          <a class="tag" href="mailto:hr@ssaihq.com">hr@ssaihq.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="locations">
+    <div class="container">
+      <div class="lede-grid">
+        <div>
+          <span class="eyebrow">Where we work</span>
+          <h2 class="dtitle mt-s">On site, where the <span class="em">science is</span></h2>
+        </div>
+        <div class="body-col">
+          <p>Our headquarters is in Lanham, Maryland, but our people work where the science is — embedded alongside our partners at NASA Goddard, Langley, Ames, Marshall, and Stennis, at NOAA facilities, and at agency sites across the country.</p>
+          <p>If your inquiry concerns work at a specific site or program, note it in your message and we will connect you with the team on the ground.</p>
+          <div class="chips">
+            <span class="chip"><b>NASA</b> Goddard</span>
+            <span class="chip"><b>NASA</b> Langley</span>
+            <span class="chip"><b>NASA</b> Ames</span>
+            <span class="chip"><b>NASA</b> Marshall</span>
+            <span class="chip"><b>NASA</b> Stennis</span>
+            <span class="chip"><b>NOAA</b> Facilities</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-cta">
+      <h2>Ready when <span class="em">you are.</span></h2>
+      <div class="btn-row">
+        <a class="btn" href="mailto:BD@ssaihq.com">Email Business Development</a>
+        <a class="btn ghost" href="tel:+13018672000">Call (301) 867-2000</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="assets/logo/ssai-white-full.png" alt="SSAI">
+      <p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p>
+    </div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">About</a><a href="company.html#history">History</a><a href="company.html#leadership">Leadership</a><a href="company.html#values">Values</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="science.html#earth">Earth</a><a href="science.html#heliophysics">Heliophysics</a><a href="science.html#planetary">Planetary &amp; Astrophysics</a><a href="instruments.html">Instruments</a></div>
+    <div class="footer-col"><h4>Work</h4><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner With Us</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="contact.html">Contact</a><a href="signin.html">MySSAI Sign In</a><a href="index.html">The Descent</a></div>
+  </div>
+  <div class="container footer-bottom">
+    <span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span>
+    <span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span>
+  </div>
+</footer>
+<script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+</body>
+</html>
