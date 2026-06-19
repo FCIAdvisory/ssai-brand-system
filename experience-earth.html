@@ -76,6 +76,10 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .loader .lt{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--nebula)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+.ssaipin{display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none;opacity:0;transition:opacity .5s}
+.ssaipin .lbl{font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(8,6,28,.72);padding:5px 11px;border-radius:20px;border:1px solid var(--hair);white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 6px 20px -8px rgba(0,0,0,.8)}
+.ssaipin .dot{width:14px;height:14px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px rgba(47,217,195,.22),0 0 18px var(--teal);animation:pinpulse 2s ease-in-out infinite}
+@keyframes pinpulse{0%,100%{box-shadow:0 0 0 4px rgba(47,217,195,.28),0 0 16px var(--teal)}50%{box-shadow:0 0 0 11px rgba(47,217,195,0),0 0 22px var(--teal)}}
 .scroll{position:relative;z-index:2;width:100%;height:780vh}
 </style>
 </head>
@@ -99,7 +103,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
   <div class="beat" data-a="0.345" data-b="0.45"><span class="k bl">The oceans</span><h1>The blue we<br><span class="em">measure.</span></h1><p>Ocean colour reveals the phytoplankton that make half the oxygen we breathe — read in a dozen wavelengths of light.</p></div>
   <div class="beat" data-a="0.595" data-b="0.70"><span class="k">Mauna Kea · Hawai‘i</span><h1>Where we<br>watch the <span class="em">sky.</span></h1><p>From mountaintop observatories to instruments in orbit, SSAI helps keep watch on Earth and the space around it.</p></div>
   <div class="beat" data-a="0.815" data-b="0.90"><span class="k bl">Coming home</span><h1>All the<br>way <span class="em">home.</span></h1><p>Every measurement, every model, every forecast comes back down to the people who put it to work.</p></div>
-  <div class="beat center" data-a="0.94" data-b="1.05"><div class="inr"><span class="k">Greenbelt · Maryland</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p style="margin-left:auto;margin-right:auto">Beside NASA's Goddard Space Flight Center, this is where SSAI turns raw light into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
+  <div class="beat center" data-a="0.94" data-b="1.05"><div class="inr"><span class="k">The Aerospace Building · 10210 Greenbelt Rd · Lanham, MD</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p style="margin-left:auto;margin-right:auto">Right here, beside NASA's Goddard Space Flight Center, SSAI turns raw light from across the planet into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
 </div></div>
 
 <div class="cue" id="cue">Scroll<div class="ar"></div></div>
@@ -137,10 +141,11 @@ var KF=[
   {p:0.39, lng:145.78, lat:-16.10,  z:9.90, pitch:32, bear:0},   // Great Barrier Reef ribbons (ocean)
   {p:0.52, lng:178,    lat:8,       z:2.60, pitch:12, bear:0},   // lift, cross the Pacific
   {p:0.65, lng:204.53, lat:19.821,  z:13.2, pitch:50, bear:34},  // Mauna Kea summit observatories (-155.47)
-  {p:0.78, lng:240,    lat:33,      z:3.00, pitch:14, bear:0},   // lift toward North America
-  {p:0.90, lng:283.05, lat:38.75,   z:8.60, pitch:50, bear:10},  // Washington DC metro (-76.95)
-  {p:1.00, lng:283.16, lat:38.9967, z:16.1, pitch:63, bear:34}   // SSAI · Greenbelt / Goddard (-76.84)
+  {p:0.78, lng:240,     lat:33,       z:3.00, pitch:14, bear:0},   // lift toward North America
+  {p:0.90, lng:283.05,  lat:38.86,    z:9.40, pitch:52, bear:14},  // approach over the DC / Maryland suburbs
+  {p:1.00, lng:283.1717,lat:38.99159, z:16.8, pitch:60, bear:20}   // SSAI · The Aerospace Building, 10210 Greenbelt Rd, Lanham MD (-76.8283)
 ];
+var SSAI_LNGLAT=[-76.8282966, 38.9915921];
 function camAt(p){
   var i=0; while(i<KF.length-2 && p>KF[i+1].p) i++;
   var A=KF[i],B=KF[i+1]; var t=easeIO(clamp01((p-A.p)/(B.p-A.p)));
@@ -151,7 +156,7 @@ function camAt(p){
 var beats=[].slice.call(document.querySelectorAll('.beat'));
 var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap'), stars=document.getElementById('stars');
 var CH=[['The Descent',0],['The Himalayas',0.08],['The oceans',0.34],['Mauna Kea',0.60],['Coming home',0.81],['SSAI · Greenbelt, MD',0.94]];
-var scrollP=0, map=null, mapReady=false;
+var scrollP=0, map=null, mapReady=false, ssaiMarker=null;
 
 function applyScroll(){
   var p=scrollP;
@@ -159,6 +164,7 @@ function applyScroll(){
     map.jumpTo({center:[c.lng,c.lat], zoom:c.z, pitch:c.pitch, bearing:c.bear});
   }
   if(stars) stars.classList.toggle('show', p<0.34);
+  if(ssaiMarker){ ssaiMarker.getElement().style.opacity = (p>0.9 ? clamp01((p-0.9)/0.045) : 0); }
   for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
     beats[j].style.opacity=bo;
     if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
@@ -188,6 +194,7 @@ function boot(){
     try{ map.setProjection({type:'globe'}); }catch(e){}
     try{ map.setTerrain({source:'dem', exaggeration:1.3}); }catch(e){}
     try{ map.setSky({'sky-color':'#0a1a3a','horizon-color':'#16145f','fog-color':'#04030e','sky-horizon-blend':.6,'horizon-fog-blend':.5,'fog-ground-blend':.2,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,1,8,.4,12,0]}); }catch(e){}
+    try{ var el=document.createElement('div'); el.className='ssaipin'; el.innerHTML='<span class="dot"></span>'; ssaiMarker=new maplibregl.Marker({element:el,anchor:'center'}).setLngLat(SSAI_LNGLAT).addTo(map); }catch(e){}
     mapReady=true; applyScroll();
   });
   map.on('idle',function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
