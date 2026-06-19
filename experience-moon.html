@@ -78,11 +78,11 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 
 /* moon-landing pins */
 .lpin{display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none}
-.lpin .d{width:5.5px;height:5.5px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 2px rgba(47,217,195,.16),0 0 6px var(--teal);animation:lpulse 2.6s ease-in-out infinite}
-.lpin .lab{font-family:var(--body);font-size:7.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#fff;white-space:nowrap;text-shadow:0 1px 3px #000,0 0 6px #000}
-.lpin.rob .d{width:4px;height:4px;background:var(--nebula);box-shadow:0 0 0 1.5px rgba(166,171,230,.15),0 0 4px var(--nebula);animation:none}
-.lpin.rob .lab{color:var(--nebula);font-weight:500;font-size:6.5px}
-@keyframes lpulse{0%,100%{box-shadow:0 0 0 2px rgba(47,217,195,.24),0 0 6px var(--teal)}50%{box-shadow:0 0 0 6px rgba(47,217,195,0),0 0 9px var(--teal)}}
+.lpin .d{width:6px;height:6px;border-radius:50%;background:rgba(255,253,248,.95);box-shadow:0 0 0 1px rgba(255,255,255,.30),0 0 7px rgba(255,250,238,.55);animation:lpulse 3.4s ease-in-out infinite}
+.lpin .lab{font-family:var(--body);font-size:7.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(250,247,240,.95);white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.92),0 0 7px rgba(0,0,0,.7)}
+.lpin.rob .d{width:4px;height:4px;background:rgba(255,253,248,.5);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 0 4px rgba(255,250,238,.3);animation:none}
+.lpin.rob .lab{color:rgba(250,247,240,.62);font-weight:500;font-size:6.5px}
+@keyframes lpulse{0%,100%{box-shadow:0 0 0 1px rgba(255,255,255,.34),0 0 6px rgba(255,250,238,.5)}50%{box-shadow:0 0 0 5px rgba(255,250,238,0),0 0 9px rgba(255,250,238,.55)}}
 .scroll{position:relative;z-index:2;width:100%;height:780vh}
 </style>
 </head>
@@ -102,9 +102,9 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 
 <div class="copylayer"><div class="inner" id="beats">
   <div class="beat" data-a="-0.05" data-b="0.085"><span class="k bl">Earth's nearest neighbour · 384,400 km</span><h1>The only world<br>we have <span class="em">walked.</span></h1><p>Beyond our own — the Moon is the one other place where human boots have touched the ground.</p></div>
-  <div class="beat" data-a="0.14" data-b="0.27"><span class="k">Every place we have landed</span><h1>Footprints<br>and <span class="em">rovers.</span></h1><p>Six crewed Apollo landings, and a fleet of robots before and since — each one a mark on a world we have only begun to know.</p></div>
-  <div class="beat" data-a="0.355" data-b="0.47"><span class="k bl">Mare Imbrium</span><h1>Across the<br><span class="em">grey seas.</span></h1><p>North over the ancient lava plains, toward the place where the lunar Apennines rise from the flat.</p></div>
-  <div class="beat" data-a="0.60" data-b="0.71"><span class="k">Hadley · the Apennines</span><h1>Higher than<br>the <span class="em">Alps.</span></h1><p>Apollo 15 set down at their foot in July 1971, beside the winding Hadley Rille — and drove the first car on another world.</p></div>
+  <div class="beat" data-a="0.16" data-b="0.40"><span class="k bl">Mare Imbrium</span><h1>Across the<br><span class="em">grey seas.</span></h1><p>North over the ancient lava plains, toward the place where the lunar Apennines rise from the flat.</p></div>
+  <div class="beat" data-a="0.49" data-b="0.63"><span class="k">Every place we have landed</span><h1>Footprints<br>and <span class="em">rovers.</span></h1><p>Six crewed Apollo landings, and a fleet of robots before and since — each one a mark on a world we have only begun to know.</p></div>
+  <div class="beat" data-a="0.71" data-b="0.82"><span class="k">Hadley · the Apennines</span><h1>Higher than<br>the <span class="em">Alps.</span></h1><p>Apollo 15 set down at their foot in July 1971, beside the winding Hadley Rille — and drove the first car on another world.</p></div>
   <div class="beat center" data-a="0.86" data-b="1.04"><div class="inr"><span class="k">Apollo 15 · Hadley–Apennine · July 1971</span><h1 style="font-size:clamp(40px,8vw,116px)"><span class="em">We have always<br>looked up.</span></h1><p>From the first footprints to the maps we draw of the Moon today — the same curiosity that watches our own world reaches for every other.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="experience-earth.html">Return to Earth</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:26px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Science for life on Earth</div></div></div>
 </div></div>
 
@@ -160,7 +160,7 @@ function applyScroll(){
     map.jumpTo({center:[c.lng,c.lat], zoom:c.z, pitch:c.pitch, bearing:c.bear});
   }
   if(stars) stars.classList.toggle('show', p<0.34);
-  var po=range(p,0.10,0.17); for(var pi=0;pi<pins.length;pi++) pins[pi].style.opacity=po;  /* pins fade in after the opening headline */
+  var po=range(p,0.50,0.60); for(var pi=0;pi<pins.length;pi++) pins[pi].style.opacity=po;  /* pins only appear at the third position */
   for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
     beats[j].style.opacity=bo;
     if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
@@ -207,7 +207,7 @@ function rloop(){
   curP+=(targetP-curP)*(reduce?1:0.16);
   if(Math.abs(targetP-curP)<0.0005) curP=targetP;
   if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; applyScroll(); }
-  if(pins.length){ var _po=range(curP,0.10,0.17); for(var _q=0;_q<pins.length;_q++) pins[_q].style.opacity=_po; }  /* keep pins synced even when the camera is parked */
+  if(pins.length){ var _po=range(curP,0.50,0.60); for(var _q=0;_q<pins.length;_q++) pins[_q].style.opacity=_po; }  /* keep pins synced even when the camera is parked */
   requestAnimationFrame(rloop);
 }
 requestAnimationFrame(rloop);
