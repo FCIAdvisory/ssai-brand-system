@@ -78,7 +78,13 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .topbar nav a:hover{color:#fff}
 .topbar nav a.navcta{border:1px solid var(--hair);border-radius:30px;padding:10px 20px;color:#fff}
 .topbar nav a.navcta:hover{border-color:var(--gold);color:var(--gold)}
-@media(max-width:860px){.topbar nav a:not(.navcta){display:none}}
+.topbar .menu-btn{display:none;background:none;border:0;color:#fff;font-size:25px;line-height:1;cursor:pointer;padding:4px 6px;z-index:21}
+@media(max-width:860px){
+  .topbar .menu-btn{display:block}
+  .topbar nav{position:fixed;inset:0 0 0 auto;width:min(330px,82vw);flex-direction:column;align-items:flex-start;justify-content:center;gap:24px;padding:88px 38px;background:rgba(7,8,20,.97);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-left:1px solid var(--hair);transform:translateX(102%);transition:transform .4s cubic-bezier(.6,0,.2,1)}
+  .topbar nav.open{transform:translateX(0)}
+  .topbar nav a{font-size:16px}
+}
 
 .prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:22;background:linear-gradient(90deg,var(--blue),var(--gold));box-shadow:0 0 10px var(--blue)}
 .cue{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:5;font-family:var(--body);font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--nebula);display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none}
@@ -151,7 +157,8 @@ footer .copy{max-width:1240px;margin:46px auto 0;font-size:10.5px;letter-spacing
 
 <header class="topbar" id="topbar">
   <img class="logo" src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc.">
-  <nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">&#9776;</button>
+  <nav id="topnav">
     <a href="company.html">Company</a>
     <a href="science.html">Science</a>
     <a href="instruments.html">Instruments</a>
@@ -367,6 +374,7 @@ setTimeout(killLoader, 9000);
 
 /* ---- header turns solid once we're into the content ---- */
 function headerState(){ if(topbar) topbar.classList.toggle('solid', (window.scrollY||0) > innerHeight*7.1); }
+(function(){ var mb=document.getElementById('menuBtn'), tn=document.getElementById('topnav'); if(mb&&tn) mb.addEventListener('click',function(){ tn.classList.toggle('open'); }); })();
 
 /* ---- scroll engine: damped rAF (glide + settle), drives the global progress ---- */
 var lenis=null, targetP=0, curP=0, lastP=-1;
