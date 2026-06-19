@@ -94,12 +94,12 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 </header>
 
 <div class="copylayer"><div class="inner" id="beats">
-  <div class="beat" data-a="-0.05" data-b="0.075"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
-  <div class="beat" data-a="0.12" data-b="0.23"><span class="k bl">A pale blue dot · home</span><h1>Science for<br>life on <span class="em">Earth.</span></h1><div class="lock"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><span class="ll">From observation<br>to understanding</span></div></div>
-  <div class="beat" data-a="0.30" data-b="0.44"><span class="k">What we do</span><h1>We read the<br>whole <span class="em">planet.</span></h1><p>Oceans, air, ice, fire and storms — measured every day, with NASA, NOAA and partners around the world.</p><div class="stat"><div><b>~50 yrs</b><span>NASA Earth science</span></div><div><b>Every day</b><span>Eyes on the planet</span></div></div></div>
-  <div class="beat" data-a="0.50" data-b="0.63"><span class="k bl">From orbit to ground</span><h1>All the<br>way <span class="em">down.</span></h1><p>The same science that watches the planet from space comes all the way down to the people who use it.</p></div>
-  <div class="beat" data-a="0.69" data-b="0.82"><span class="k">Greenbelt · Maryland</span><h1>Where the work<br><span class="em">happens.</span></h1><p>Beside NASA's Goddard Space Flight Center, SSAI's scientists turn raw light into decisions the world can trust.</p></div>
-  <div class="beat center" data-a="0.88" data-b="1.04"><div class="inr"><span class="k">Science for life on Earth</span><h1 style="font-size:clamp(40px,8vw,116px)"><span class="em">Science for life<br>on Earth.</span></h1><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:26px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
+  <div class="beat" data-a="-0.05" data-b="0.07"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
+  <div class="beat" data-a="0.085" data-b="0.185"><span class="k">The mountains</span><h1>Every range,<br>in <span class="em">relief.</span></h1><p>We measure the height and change of the world's mountains and ice — terrain read from orbit, to the metre.</p></div>
+  <div class="beat" data-a="0.345" data-b="0.45"><span class="k bl">The oceans</span><h1>The blue we<br><span class="em">measure.</span></h1><p>Ocean colour reveals the phytoplankton that make half the oxygen we breathe — read in a dozen wavelengths of light.</p></div>
+  <div class="beat" data-a="0.595" data-b="0.70"><span class="k">Mauna Kea · Hawai‘i</span><h1>Where we<br>watch the <span class="em">sky.</span></h1><p>From mountaintop observatories to instruments in orbit, SSAI helps keep watch on Earth and the space around it.</p></div>
+  <div class="beat" data-a="0.815" data-b="0.90"><span class="k bl">Coming home</span><h1>All the<br>way <span class="em">home.</span></h1><p>Every measurement, every model, every forecast comes back down to the people who put it to work.</p></div>
+  <div class="beat center" data-a="0.94" data-b="1.05"><div class="inr"><span class="k">Greenbelt · Maryland</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p style="margin-left:auto;margin-right:auto">Beside NASA's Goddard Space Flight Center, this is where SSAI turns raw light into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
 </div></div>
 
 <div class="cue" id="cue">Scroll<div class="ar"></div></div>
@@ -128,12 +128,18 @@ function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
 
 /* ---- the flight: from globe in space down to Goddard / Greenbelt, MD ---- */
 /* edit lng/lat/z(zoom)/pitch/bear freely; p is each keyframe's scroll position */
+/* a full journey: spin eastward around the real planet, dipping to each place, then home.
+   lng runs monotonically 60 -> 283 so the globe rotates one smooth direction (values >180 wrap). */
 var KF=[
-  {p:0.00, lng:-42,    lat:18,     z:1.25, pitch:0,  bear:0},   // whole Earth (globe in space)
-  {p:0.30, lng:-86,    lat:36,     z:4.1,  pitch:24, bear:0},   // North America
-  {p:0.55, lng:-76.95, lat:38.72,  z:8.4,  pitch:46, bear:8},   // Washington DC metro
-  {p:0.78, lng:-76.86, lat:38.96,  z:12.4, pitch:58, bear:20},  // approaching Greenbelt / Goddard
-  {p:1.00, lng:-76.8403,lat:38.9967,z:16.1, pitch:62, bear:34}  // low oblique over the campus
+  {p:0.00, lng:60,     lat:15,      z:1.30, pitch:0,  bear:0},   // whole Earth (globe in space)
+  {p:0.13, lng:86.925, lat:27.985,  z:10.6, pitch:66, bear:22},  // Himalayas / Everest (mountains)
+  {p:0.26, lng:118,    lat:4,       z:2.70, pitch:12, bear:0},   // lift back to the globe
+  {p:0.39, lng:145.78, lat:-16.10,  z:9.90, pitch:32, bear:0},   // Great Barrier Reef ribbons (ocean)
+  {p:0.52, lng:178,    lat:8,       z:2.60, pitch:12, bear:0},   // lift, cross the Pacific
+  {p:0.65, lng:204.53, lat:19.821,  z:13.2, pitch:50, bear:34},  // Mauna Kea summit observatories (-155.47)
+  {p:0.78, lng:240,    lat:33,      z:3.00, pitch:14, bear:0},   // lift toward North America
+  {p:0.90, lng:283.05, lat:38.75,   z:8.60, pitch:50, bear:10},  // Washington DC metro (-76.95)
+  {p:1.00, lng:283.16, lat:38.9967, z:16.1, pitch:63, bear:34}   // SSAI · Greenbelt / Goddard (-76.84)
 ];
 function camAt(p){
   var i=0; while(i<KF.length-2 && p>KF[i+1].p) i++;
@@ -144,7 +150,7 @@ function camAt(p){
 
 var beats=[].slice.call(document.querySelectorAll('.beat'));
 var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap'), stars=document.getElementById('stars');
-var CH=[['The Descent',0],['Approach',0.12],['The planet',0.30],['Descent',0.50],['Greenbelt, MD',0.69],['Science for life on Earth',0.88]];
+var CH=[['The Descent',0],['The Himalayas',0.08],['The oceans',0.34],['Mauna Kea',0.60],['Coming home',0.81],['SSAI · Greenbelt, MD',0.94]];
 var scrollP=0, map=null, mapReady=false;
 
 function applyScroll(){
