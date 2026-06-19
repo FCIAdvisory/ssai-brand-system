@@ -6,7 +6,6 @@
 <title>SSAI — The Descent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css" rel="stylesheet">
 <style>
 @font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BoldItalic.woff2') format('woff2');font-weight:700;font-style:italic;font-display:swap}
 @font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BlackItalic.woff2') format('woff2');font-weight:800;font-style:italic;font-display:swap}
@@ -19,13 +18,13 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--space);color:var(--starlight);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-#map{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;background:var(--space)}
-#map .maplibregl-ctrl-attrib{background:rgba(4,3,14,.45);color:rgba(244,245,255,.55);font-size:10px}
-#map .maplibregl-ctrl-attrib a{color:rgba(244,245,255,.7)}
-.maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right{z-index:4}
-
+/* the film: a stack of pre-loaded real satellite scenes, cross-faded + slowly zoomed (Ken Burns).
+   ZERO live data — nothing streams while you scroll, so it never blacks out or glitches. */
+.film{position:fixed;inset:0;z-index:0;background:var(--space)}
+.scene{position:fixed;inset:0;opacity:0;will-change:opacity;overflow:hidden}
+.scene .kb{position:absolute;inset:-3%;background-size:cover;background-position:center;will-change:transform;transform-origin:center}
 .grade{position:fixed;inset:0;z-index:1;pointer-events:none;background:
-  radial-gradient(140% 100% at 50% 38%,transparent 48%,rgba(4,3,14,.62) 100%)}
+  radial-gradient(140% 105% at 50% 36%,transparent 46%,rgba(4,3,14,.66) 100%)}
 
 .copylayer{position:fixed;inset:0;z-index:3;pointer-events:none}
 .beat{position:absolute;left:clamp(22px,5vw,64px);bottom:clamp(60px,13vh,128px);max-width:760px;opacity:0;will-change:opacity,transform}
@@ -33,21 +32,22 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .beat .k::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
 .beat .k.bl::before{background:var(--blue);box-shadow:0 0 10px var(--blue)}
 .beat h1{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;
-  font-size:clamp(36px,7.2vw,104px);line-height:.92;letter-spacing:-.02em;text-shadow:0 2px 40px rgba(4,3,14,.8),0 0 50px rgba(120,150,255,.3)}
+  font-size:clamp(36px,7.2vw,104px);line-height:.92;letter-spacing:-.02em;text-shadow:0 2px 40px rgba(4,3,14,.85),0 0 50px rgba(120,150,255,.3)}
 .beat h1 .em{text-shadow:0 0 60px rgba(120,160,255,.7)}
 .beat p{margin-top:18px;color:#eef0ff;font-weight:300;font-size:clamp(15px,1.6vw,19px);max-width:46ch;line-height:1.6;text-shadow:0 1px 24px rgba(4,3,14,.95)}
-.beat .lock{display:flex;align-items:center;gap:16px;margin-top:30px}
-.beat .lock img{height:36px;width:auto}
-.beat .lock .ll{border-left:1px solid var(--hair);padding-left:16px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--nebula);line-height:1.5}
+.satcard{display:flex;align-items:center;gap:14px;margin-top:24px;max-width:430px;background:rgba(8,6,28,.52);border:1px solid var(--hair);border-radius:14px;padding:11px 16px 11px 11px;-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);box-shadow:0 14px 36px -16px rgba(0,0,0,.7)}
+.satcard img{width:92px;height:66px;object-fit:cover;border-radius:9px;flex:none;background:#04030e}
+.satcard .sn{font-family:var(--disp);font-style:italic;text-transform:uppercase;font-size:17px;color:#fff;line-height:1}
+.satcard .si{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin:5px 0 6px}
+.satcard .sd{font-size:12.5px;color:#d7daf6;line-height:1.45;font-weight:300}
+.beat.center{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);text-align:center;max-width:none}
+.beat.center .inr{max-width:1180px;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
+.beat.center .k{justify-content:center}.beat.center p{margin-left:auto;margin-right:auto}
 .beat .cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;pointer-events:auto;
   font-family:var(--body);font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#04201c;
   background:var(--teal);border-radius:30px;padding:13px 24px;text-decoration:none;transition:transform .2s,box-shadow .2s}
 .beat .cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px -10px rgba(47,217,195,.6)}
 .beat .cta.ghost{background:transparent;color:var(--starlight);border:1px solid var(--hair);margin-left:10px}
-.beat.center{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);text-align:center;max-width:none}
-.beat.center .inr{max-width:1180px;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
-.beat.center .k{justify-content:center}
-.beat.center p{margin-left:auto;margin-right:auto}
 
 .topbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;
   padding:18px clamp(22px,5vw,46px);pointer-events:none;background:linear-gradient(rgba(4,3,14,.55),transparent)}
@@ -58,29 +58,21 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .cue .ar{width:1px;height:34px;background:linear-gradient(var(--blue),transparent);animation:fall 1.8s ease-in-out infinite}
 @keyframes fall{0%{transform:scaleY(.3);transform-origin:top;opacity:.3}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.3);transform-origin:bottom;opacity:.3}}
 
-.ssaipin{display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .5s}
-.ssaipin .dot{width:14px;height:14px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px rgba(47,217,195,.22),0 0 18px var(--teal);animation:pinpulse 2s ease-in-out infinite}
-@keyframes pinpulse{0%,100%{box-shadow:0 0 0 4px rgba(47,217,195,.28),0 0 16px var(--teal)}50%{box-shadow:0 0 0 11px rgba(47,217,195,0),0 0 22px var(--teal)}}
-
-.loader{position:fixed;inset:0;z-index:30;background:var(--space);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity 1s ease}
+.loader{position:fixed;inset:0;z-index:30;background:var(--space);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity .9s ease}
 .loader.gone{opacity:0;pointer-events:none}
 .loader .spin{width:34px;height:34px;border-radius:50%;border:2px solid var(--hair);border-top-color:var(--teal);animation:spin 1s linear infinite}
 .loader .lt{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--nebula)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.satcard{display:flex;align-items:center;gap:14px;margin-top:24px;max-width:430px;background:rgba(8,6,28,.52);border:1px solid var(--hair);border-radius:14px;padding:11px 16px 11px 11px;-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);box-shadow:0 14px 36px -16px rgba(0,0,0,.7)}
-.satcard img{width:92px;height:66px;object-fit:cover;border-radius:9px;flex:none;background:#04030e}
-.satcard .sn{font-family:var(--disp);font-style:italic;text-transform:uppercase;font-size:17px;color:#fff;line-height:1}
-.satcard .si{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin:5px 0 6px}
-.satcard .sd{font-size:12.5px;color:#d7daf6;line-height:1.45;font-weight:300}
-.scroll{position:relative;z-index:2;width:100%;height:1500vh}
+.credit{position:fixed;bottom:6px;left:14px;z-index:5;font-size:10px;color:rgba(244,245,255,.4);pointer-events:none}
+.scroll{position:relative;z-index:2;width:100%;height:560vh}
 </style>
 </head>
 <body>
 
-<div class="loader" id="loader"><div class="spin"></div><div class="lt">Acquiring orbit…</div></div>
+<div class="loader" id="loader"><div class="spin"></div><div class="lt">Loading the journey…</div></div>
 
-<div id="map"></div>
+<div class="film" id="film"></div>
 <div class="grade"></div>
 <div class="prog" id="prog"></div>
 
@@ -90,20 +82,17 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 </header>
 
 <div class="copylayer" id="beats">
-  <div class="beat" data-a="-0.05" data-b="0.05"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
-  <div class="beat" data-a="0.125" data-b="0.185"><span class="k bl">Svalbard · 78° North</span><h1>Where satellites<br><span class="em">phone home.</span></h1><p>At the top of the world, a field of white domes catches every polar‑orbiting satellite, pass after pass.</p><div class="satcard"><img src="assets/images/sat-aqua.jpg" alt="Aqua satellite"><div><div class="sn">Aqua · MODIS</div><div class="si">Oceans &amp; water</div><div class="sd">Sea‑surface temperature, clouds and the global water cycle — pole to pole, twice a day.</div></div></div></div>
-  <div class="beat" data-a="0.325" data-b="0.385"><span class="k">Mauna Kea · Hawai‘i</span><h1>A crown of<br><span class="em">silver domes.</span></h1><p>Above a sea of clouds on a sleeping volcano, the great telescopes keep watch on Earth and the sky around it.</p></div>
-  <div class="beat" data-a="0.505" data-b="0.565"><span class="k bl">Goldstone · Mojave Desert</span><h1>Reaching into<br>the <span class="em">dark.</span></h1><p>Seventy‑metre dishes listen across the solar system — the craft of antennas and signals that keeps Earth's satellites in reach.</p><div class="satcard"><img src="assets/images/sat-aura.jpg" alt="Aura satellite"><div><div class="sn">Aura · OMI</div><div class="si">Atmosphere</div><div class="sd">SSAI helped build the OMI nitrogen‑dioxide product — mapping the air's pollution from orbit.</div></div></div></div>
-  <div class="beat" data-a="0.665" data-b="0.725"><span class="k">Very Large Array · New Mexico</span><h1>Twenty‑seven<br>ears on the <span class="em">sky.</span></h1><p>A perfect Y of dishes splayed across the high desert, listening to a universe of faint radio light.</p><div class="satcard"><img src="assets/images/sat-smap.jpg" alt="SMAP satellite"><div><div class="sn">SMAP</div><div class="si">Land &amp; water</div><div class="sd">Maps soil moisture worldwide — sharpening drought, flood and harvest forecasts.</div></div></div></div>
-  <div class="beat" data-a="0.835" data-b="0.885"><span class="k bl">Green Bank · West Virginia</span><h1>The largest<br><span class="em">steerable dish.</span></h1><p>A hundred metres of steel in a radio‑silent valley — the last note before home.</p></div>
-  <div class="beat center" data-a="0.935" data-b="1.06"><div class="inr"><span class="k">The Aerospace Building · 10210 Greenbelt Rd · Lanham, MD</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p>Right here, beside NASA's Goddard Space Flight Center, SSAI turns raw light from across the planet into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
+  <div class="beat" data-a="-0.05" data-b="0.20"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
+  <div class="beat" data-a="0.285" data-b="0.46"><span class="k bl">Svalbard · 78° North</span><h1>Where satellites<br><span class="em">phone home.</span></h1><p>At the top of the world, a field of white domes catches every polar‑orbiting satellite, pass after pass.</p><div class="satcard"><img src="assets/images/sat-aqua.jpg" alt="Aqua"><div><div class="sn">Aqua · MODIS</div><div class="si">Oceans &amp; water</div><div class="sd">Sea‑surface temperature, clouds and the global water cycle — pole to pole, twice a day.</div></div></div></div>
+  <div class="beat" data-a="0.535" data-b="0.71"><span class="k">Mauna Kea · Hawai‘i</span><h1>A crown of<br><span class="em">silver domes.</span></h1><p>Above the clouds on a sleeping volcano, the great observatories keep watch on Earth and the sky around it.</p><div class="satcard"><img src="assets/images/sat-aura.jpg" alt="Aura"><div><div class="sn">Aura · OMI</div><div class="si">Atmosphere</div><div class="sd">SSAI helped build the OMI nitrogen‑dioxide product — mapping the air's pollution from orbit.</div></div></div></div>
+  <div class="beat center" data-a="0.80" data-b="1.06"><div class="inr"><span class="k">The Aerospace Building · 10210 Greenbelt Rd · Lanham, MD</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p>Right here, beside NASA's Goddard Space Flight Center, SSAI turns raw light from across the planet into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
 </div>
 
 <div class="cue" id="cue">Scroll<div class="ar"></div></div>
+<div class="credit">Imagery © Esri, Maxar, Earthstar Geographics · Earth: NASA</div>
 
 <div class="scroll" id="scroll"></div>
 
-<script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
@@ -113,115 +102,72 @@ function range(p,a,b){return clamp01((p-a)/(b-a));}
 function fadeOp(p,a,b,f){return clamp01(Math.min((p-a)/f,(b-p)/f,1));}
 function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
 
-/* a clean, single descent: Earth globe -> North America -> DC/Maryland -> the SSAI building */
-/* a long world tour of the places that watch the sky + talk to satellites, then home to SSAI.
-   lng runs monotonically (western-hemisphere values wrap past 180) so the globe spins one way.
-   each stop is a pair of identical keyframes (a DWELL so tiles finish loading while you look),
-   with a high-altitude LIFT between distant stops so travel is smooth, not a low streak. */
-var KF=[
-  {p:0.00, lng:-42,     lat:18,      z:1.40, pitch:0,  bear:0},   // Earth, from space
-  {p:0.07, lng:-10,     lat:52,      z:3.10, pitch:8,  bear:0},   // rise toward the Arctic
-  {p:0.13, lng:15.408,  lat:78.230,  z:12.9, pitch:42, bear:0},   // SvalSat (Svalbard) arrive
-  {p:0.185,lng:15.408,  lat:78.230,  z:12.9, pitch:42, bear:0},   // · dwell
-  {p:0.25, lng:95,      lat:46,      z:2.55, pitch:8,  bear:0},   // lift, fly east across Asia
-  {p:0.33, lng:204.525, lat:19.822,  z:13.0, pitch:44, bear:28},  // Mauna Kea arrive (-155.475)
-  {p:0.385,lng:204.525, lat:19.822,  z:13.0, pitch:44, bear:28},  // · dwell
-  {p:0.45, lng:226,     lat:31,      z:3.30, pitch:10, bear:0},   // lift toward the US Southwest
-  {p:0.51, lng:243.110, lat:35.427,  z:12.3, pitch:48, bear:16},  // Goldstone DSN arrive (-116.890)
-  {p:0.565,lng:243.110, lat:35.427,  z:12.3, pitch:48, bear:16},  // · dwell
-  {p:0.62, lng:248,     lat:34.6,    z:6.30, pitch:28, bear:0},   // short hop
-  {p:0.67, lng:252.382, lat:34.079,  z:12.3, pitch:42, bear:10},  // Very Large Array arrive (-107.618)
-  {p:0.725,lng:252.382, lat:34.079,  z:12.3, pitch:42, bear:10},  // · dwell
-  {p:0.79, lng:266,     lat:37,      z:4.40, pitch:16, bear:0},   // lift east toward the Appalachians
-  {p:0.84, lng:280.160, lat:38.433,  z:13.6, pitch:46, bear:14},  // Green Bank arrive (-79.840)
-  {p:0.885,lng:280.160, lat:38.433,  z:13.6, pitch:46, bear:14},  // · dwell
-  {p:0.95, lng:282.40,  lat:38.86,   z:10.4, pitch:52, bear:18},  // approach SSAI
-  {p:1.00, lng:283.172, lat:38.99159,z:14.8, pitch:50, bear:20}   // SSAI · The Aerospace Building (-76.8283)
+/* the scenes: real, pre-loaded satellite stills. zoom = the descent; pan = life. */
+var SCENES=[
+  {img:'earth',     px:0,   py:0,   zoom:[1.10,1.40]},  /* approach Earth */
+  {img:'svalbard',  px:3.5, py:-2,  zoom:[1.05,1.20]},
+  {img:'maunakea',  px:-3,  py:2,   zoom:[1.05,1.20]},
+  {img:'ssai',      px:2,   py:-3,  zoom:[1.06,1.22]}
 ];
-var SSAI_LNGLAT=[-76.8282966, 38.9915921];
-function camAt(p){
-  var i=0; while(i<KF.length-2 && p>KF[i+1].p) i++;
-  var A=KF[i],B=KF[i+1]; var t=easeIO(clamp01((p-A.p)/(B.p-A.p)));
-  return { lng:lerp(A.lng,B.lng,t), lat:lerp(A.lat,B.lat,t), z:lerp(A.z,B.z,t),
-           pitch:lerp(A.pitch,B.pitch,t), bear:lerp(A.bear,B.bear,t) };
-}
+var CH=[['The Descent',0],['Svalbard · 78°N',0.27],['Mauna Kea',0.52],['SSAI · Greenbelt, MD',0.80]];
+var n=SCENES.length, seg=1/n;
+var film=document.getElementById('film'), sceneEls=[], kbEls=[];
+for(var i=0;i<n;i++){ var sc=document.createElement('div'); sc.className='scene';
+  var kb=document.createElement('div'); kb.className='kb';
+  kb.style.backgroundImage="url('assets/images/scenes/"+SCENES[i].img+".jpg')";
+  sc.appendChild(kb); film.appendChild(sc); sceneEls.push(sc); kbEls.push(kb); }
 
 var beats=[].slice.call(document.querySelectorAll('.beat'));
 var prog=document.getElementById('prog'), cue=document.getElementById('cue'), chap=document.getElementById('chap');
-var CH=[['The Descent',0],['Svalbard · 78°N',0.11],['Mauna Kea',0.31],['Goldstone',0.49],['Very Large Array',0.65],['Green Bank',0.82],['SSAI · Greenbelt, MD',0.93]];
-var map=null, mapReady=false, ssaiMarker=null;
 
 function render(p){
-  if(map && mapReady){ var c=camAt(p);
-    map.jumpTo({center:[c.lng,c.lat], zoom:c.z, pitch:c.pitch, bearing:c.bear}); }
-  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.04);
+  for(var i=0;i<n;i++){
+    var lo=i*seg, hi=(i+1)*seg, xf=seg*0.42;
+    var op = (i===0) ? 1 : range(p, lo-xf, lo);
+    if(i<n-1) op = Math.min(op, 1 - range(p, hi-xf, hi));
+    sceneEls[i].style.opacity = op;
+    if(op>0.001){
+      var lp = clamp01((p - (lo-xf)) / (seg + xf));         /* this scene's own progress */
+      var z = lerp(SCENES[i].zoom[0], SCENES[i].zoom[1], easeIO(lp));
+      var tx = (SCENES[i].px*(lp-0.5)).toFixed(2), ty = (SCENES[i].py*(lp-0.5)).toFixed(2);
+      kbEls[i].style.transform = 'scale('+z.toFixed(4)+') translate('+tx+'%,'+ty+'%)';
+    }
+  }
+  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.045);
     beats[j].style.opacity=bo;
     if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(20,-12,range(p,ba,bb))+'px)';}
   if(prog) prog.style.width=(clamp01(p)*100)+'%';
-  if(cue) cue.style.opacity=(1-range(p,0.02,0.08));
-  if(ssaiMarker){ ssaiMarker.getElement().style.opacity = (p>0.9 ? clamp01((p-0.9)/0.05) : 0); }
+  if(cue) cue.style.opacity=(1-range(p,0.02,0.10));
   var ci=0; for(var k=0;k<CH.length;k++){ if(p>=CH[k][1]-0.005) ci=k; }
   if(chap) chap.textContent=CH[ci][0];
 }
 
-/* ---- camera: scroll sets a target; a rAF loop eases curP toward it and SETTLES FAST so the
-        map can finish loading tiles before it moves on (perpetual motion was starving tiles) ---- */
-var targetP=0, curP=0, lastRenderP=-1, loaderDone=false, prewarming=true;
-function readTarget(){ var max=Math.max(1, document.documentElement.scrollHeight - innerHeight); targetP=clamp01((window.scrollY||window.pageYOffset||0)/max); }
-function dismissLoader(){ if(loaderDone) return; loaderDone=true; var l=document.getElementById('loader'); if(l) l.classList.add('gone'); }
+/* ---- smooth scroll-driven playback (pure CSS transforms on pre-loaded images = no streaming) ---- */
+var targetP=0, curP=0, lastP=-1;
 function tick(){
-  if(!prewarming){
-    readTarget();
-    curP += (targetP - curP) * (reduce?1:0.32);
-    if(Math.abs(targetP-curP) < 0.0008) curP=targetP;       /* snap + hold so tiles can settle */
-    if(Math.abs(curP-lastRenderP) > 0.00004){ lastRenderP=curP; render(curP); }
-  }
+  var max=Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  targetP=clamp01((window.scrollY||window.pageYOffset||0)/max);
+  curP += (targetP - curP) * (reduce?1:0.14);
+  if(Math.abs(targetP-curP)<0.0004) curP=targetP;
+  if(Math.abs(curP-lastP)>0.00006){ lastP=curP; render(curP); }
   requestAnimationFrame(tick);
 }
-if(!reduce && window.Lenis){ var lenis=new Lenis({duration:0.85, smoothWheel:true, wheelMultiplier:0.9});
+if(!reduce && window.Lenis){ var lenis=new Lenis({duration:1.0, smoothWheel:true});
   function lraf(t){ lenis.raf(t); requestAnimationFrame(lraf); } requestAnimationFrame(lraf); }
-requestAnimationFrame(tick);
 
-function waitTiles(maxMs){ return new Promise(function(res){ var s=Date.now(); (function chk(){ var d=false; try{d=map.areTilesLoaded();}catch(e){d=true;} if(d||Date.now()-s>maxMs) return res(); setTimeout(chk,140); })(); }); }
-/* PRE-WARM: visit every stop behind the loader so its tiles land in cache — then the scroll
-   re-uses the cache instead of streaming (this is what removes the black/pop on the way down). */
-async function prewarm(){
-  var idx=[3,6,9,12,15,17];
-  for(var i=0;i<idx.length;i++){ var s=KF[idx[i]];
-    var lt=document.querySelector('.loader .lt'); if(lt) lt.textContent='Preparing the journey · '+(i+1)+' / '+idx.length;
-    map.jumpTo({center:[s.lng,s.lat], zoom:s.z, pitch:s.pitch, bearing:s.bear});
-    await waitTiles(2600);
-  }
-  map.jumpTo({center:[KF[0].lng,KF[0].lat], zoom:KF[0].z, pitch:KF[0].pitch, bearing:KF[0].bear});
-  await waitTiles(1200);
-  prewarming=false; lastRenderP=-1; render(0); dismissLoader();
-}
-
-/* ---- the real Earth: MapLibre globe + satellite imagery (NO terrain — stripped for smoothness) ---- */
+/* ---- preload every scene image, THEN start (so nothing ever loads mid-scroll) ---- */
 function boot(){
-  if(typeof maplibregl==='undefined'){ var l=document.querySelector('.loader .lt'); if(l) l.textContent='Could not load the map engine — check your connection.'; return; }
-  map=new maplibregl.Map({
-    container:'map', interactive:false, attributionControl:false, maxPitch:70, antialias:true,
-    maxTileCacheSize:3000, fadeDuration:0, refreshExpiredTiles:false,
-    center:[KF[0].lng,KF[0].lat], zoom:KF[0].z, pitch:KF[0].pitch, bearing:KF[0].bear,
-    style:{ version:8, projection:{type:'globe'},
-      sources:{ sat:{type:'raster', tiles:['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize:256, maxzoom:19, attribution:'Imagery © Esri, Maxar, Earthstar Geographics, and the GIS User Community'} },
-      layers:[ {id:'bg', type:'background', paint:{'background-color':'#04030e'}}, {id:'sat', type:'raster', source:'sat'} ]
-    }
-  });
-  map.addControl(new maplibregl.AttributionControl({compact:true}));
-  map.on('load',function(){
-    try{ map.setProjection({type:'globe'}); }catch(e){}
-    try{ map.setSky({'sky-color':'#0a1733','horizon-color':'#1a2a55','fog-color':'#04030e','sky-horizon-blend':.5,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,.7,6,.25,10,0]}); }catch(e){}
-    try{ var el=document.createElement('div'); el.className='ssaipin'; el.innerHTML='<span class="dot"></span>'; ssaiMarker=new maplibregl.Marker({element:el,anchor:'center'}).setLngLat(SSAI_LNGLAT).addTo(map); }catch(e){}
-    mapReady=true; prewarming=false; lastRenderP=-1; render(0);
-  });
-  map.on('idle', dismissLoader);
-  setTimeout(dismissLoader, 4500);
+  var srcs=SCENES.map(function(s){return 'assets/images/scenes/'+s.img+'.jpg';}); srcs.push('assets/images/sat-aqua.jpg','assets/images/sat-aura.jpg');
+  var done=0, total=srcs.length;
+  function one(){ if(++done>=total) start(); var lt=document.querySelector('.loader .lt'); if(lt) lt.textContent='Loading the journey · '+Math.min(done,total)+' / '+total; }
+  srcs.forEach(function(src){ var im=new Image(); im.onload=one; im.onerror=one; im.src=src; });
+  setTimeout(start, 9000); /* safety: never hang on a slow image */
 }
+var started=false;
+function start(){ if(started) return; started=true; render(0); requestAnimationFrame(tick); var l=document.getElementById('loader'); if(l) l.classList.add('gone'); }
 boot();
 
-window.__exp={get p(){return curP;}, set p(v){ curP=targetP=v; render(v); }, get map(){return map;}, camAt:camAt};
+window.__exp={get p(){return curP;}, set p(v){ curP=targetP=v; lastP=-1; render(v); }};
 </script>
 </body>
 </html>
