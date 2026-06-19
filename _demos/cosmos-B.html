@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SSAI — The Cosmos / Earthrise</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg:#04030e; --teal:#2fd9c3; --blue:#3c7be0; --indigo:#16145f; --star:#f4f5ff;
+  }
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;}
+  body{color:var(--star);font-family:"Tactic Sans","Helvetica Neue",Arial,sans-serif;}
+  #scene{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0;}
+  /* faint cinematic vignette */
+  #vig{position:fixed;inset:0;z-index:1;pointer-events:none;
+       background:radial-gradient(135% 135% at 50% 48%,rgba(0,0,0,0) 54%,rgba(0,0,0,.6) 100%);}
+  /* subtle label set — small, italic, uppercase, restrained */
+  .lbl{position:fixed;z-index:3;pointer-events:none;user-select:none;
+       font-style:italic;text-transform:uppercase;color:rgba(244,245,255,.6);
+       font-size:11px;letter-spacing:.34em;transition:opacity 1.1s ease;}
+  #lblTL{top:24px;left:26px;}
+  #lblBR{right:26px;bottom:22px;text-align:right;letter-spacing:.2em;color:rgba(244,245,255,.34);}
+  #lblBR b{color:var(--teal);font-weight:400;font-style:italic;letter-spacing:.24em;}
+  /* the waypoint caption that fades through the flight */
+  #cap{left:0;right:0;bottom:8.5%;text-align:center;letter-spacing:.46em;
+       font-size:12px;color:rgba(244,245,255,.72);opacity:0;}
+  @media (max-width:640px){
+    .lbl{font-size:9.5px;letter-spacing:.24em;}
+    #lblTL{left:16px;top:16px;} #lblBR{right:16px;bottom:16px;}
+    #cap{letter-spacing:.32em;font-size:10px;bottom:7%;}
+  }
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div id="vig"></div>
+<div class="lbl" id="lblTL">SSAI · THE COSMOS</div>
+<div class="lbl" id="lblBR">EARTH SCIENCE · <b id="phase">DEEP SPACE</b></div>
+<div class="lbl" id="cap"></div>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+
+/* ======================================================================
+   SSAI — OPENING ACT "The Cosmos", Art Direction B: EARTHRISE
+   Intimate, restrained flight: deep space + stars, the MOON featured
+   large and close, MARS a smaller ruddy point, gas giants only faint
+   distant points. The payoff: the camera crests the Moon's limb and
+   turns home, revealing EARTH rising and growing to fill the frame.
+   p:0 -> 1 scrubs the primary camera journey. Ambient motion always on.
+   ====================================================================== */
+
+const COL = {
+  bg:    0x04030e,
+  teal:  0x2fd9c3,
+  blue:  0x3c7be0,
+  indigo:0x16145f,
+  star:  0xf4f5ff,
+};
+const TEX = {
+  moon:    '../assets/images/planets/moon.jpg',
+  mars:    '../assets/images/planets/mars.jpg',
+  jupiter: '../assets/images/planets/jupiter.jpg',
+  saturn:  '../assets/images/planets/saturn.png',
+  earth:   '../assets/images/planets/earth.jpg',
+};
+
+/* ---- renderer / scene / camera ------------------------------------- */
+const canvas   = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.06;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(COL.bg);
+scene.fog = new THREE.FogExp2(COL.bg, 0.00018);
+
+const camera = new THREE.PerspectiveCamera(46, window.innerWidth/window.innerHeight, 0.1, 6000);
+
+const maxAniso = renderer.capabilities.getMaxAnisotropy();
+const texLoader = new THREE.TextureLoader();
+
+/* guarded texture load -> applies to material.map; on error leaves the
+   fallback solid color so a missing file never breaks the scene. */
+function loadMap(url, material, onReady){
+  texLoader.load(
+    url,
+    (tex)=>{
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = maxAniso;
+      tex.needsUpdate = true;
+      material.map = tex;
+      material.color.set(0xffffff);   // let the texture show at full value
+      material.needsUpdate = true;
+      if(onReady) onReady(tex);
+    },
+    undefined,
+    ()=>{ /* keep fallback color; scene stays intact */ }
+  );
+}
+
+/* ---- lighting ------------------------------------------------------- */
+const sunDir = new THREE.Vector3(-0.62, 0.34, 0.7).normalize(); // key "sun"
+const sun = new THREE.DirectionalLight(0xfff4e6, 2.5);
+sun.position.copy(sunDir).multiplyScalar(400);
+scene.add(sun);
+scene.add(new THREE.AmbientLight(0x223a66, 0.5));         // cool fill
+const rimFill = new THREE.DirectionalLight(0x16145f, 0.5); // indigo backlight
+rimFill.position.set(80, -40, -120);
+scene.add(rimFill);
+
+/* ====================================================================
+   STARFIELD — rich, subtle twinkle + slight parallax
+   ==================================================================== */
+function makeStarTexture(){
+  const s = 64, c = document.createElement('canvas'); c.width = c.height = s;
+  const g = c.getContext('2d');
+  const grd = g.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+  grd.addColorStop(0,   'rgba(255,255,255,1)');
+  grd.addColorStop(0.25,'rgba(255,255,255,0.85)');
+  grd.addColorStop(0.55,'rgba(220,228,255,0.28)');
+  grd.addColorStop(1,   'rgba(255,255,255,0)');
+  g.fillStyle = grd; g.fillRect(0,0,s,s);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+const starSprite = makeStarTexture();
+
+function buildStarLayer(count, radius, size, opacity){
+  const pos = new Float32Array(count*3);
+  const col = new Float32Array(count*3);
+  const pha = new Float32Array(count);
+  const cWarm = new THREE.Color(0xffffff);
+  const cTeal = new THREE.Color(COL.teal);
+  const cBlue = new THREE.Color(COL.blue);
+  const cStar = new THREE.Color(COL.star);
+  for(let i=0;i<count;i++){
+    // even spherical shell
+    const u = Math.random(), v = Math.random();
+    const th = 2*Math.PI*u, ph = Math.acos(2*v-1);
+    const r = radius * (0.78 + Math.random()*0.22);
+    pos[i*3+0] = r*Math.sin(ph)*Math.cos(th);
+    pos[i*3+1] = r*Math.cos(ph);
+    pos[i*3+2] = r*Math.sin(ph)*Math.sin(th);
+    // mostly starlight-white, a few tinted cool
+    const t = Math.random();
+    let c = cStar;
+    if(t>0.93)      c = cTeal;
+    else if(t>0.84) c = cBlue;
+    else if(t>0.5)  c = cWarm;
+    const tw = 0.62 + Math.random()*0.38;
+    col[i*3+0] = c.r*tw; col[i*3+1] = c.g*tw; col[i*3+2] = c.b*tw;
+    pha[i] = Math.random()*Math.PI*2;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col,3));
+  geo.setAttribute('phase',    new THREE.BufferAttribute(pha,1));
+
+  const mat = new THREE.PointsMaterial({
+    size, map:starSprite, vertexColors:true, transparent:true,
+    opacity, depthWrite:false, blending:THREE.AdditiveBlending,
+    sizeAttenuation:true,
+  });
+  // inject a gentle per-star twinkle via onBeforeCompile
+  mat.onBeforeCompile = (sh)=>{
+    sh.uniforms.uTime = { value: 0 };
+    mat.userData.sh = sh;
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>',
+        '#include <common>\nattribute float phase;\nuniform float uTime;\nvarying float vTw;')
+      .replace('#include <begin_vertex>',
+        '#include <begin_vertex>\nvTw = 0.72 + 0.28*sin(uTime*1.6 + phase);');
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>',
+        '#include <common>\nvarying float vTw;')
+      .replace('vec4 diffuseColor = vec4( diffuse, opacity );',
+        'vec4 diffuseColor = vec4( diffuse, opacity*vTw );');
+  };
+  const pts = new THREE.Points(geo, mat);
+  pts.frustumCulled = false;
+  return pts;
+}
+
+const starNear = buildStarLayer(3000, 1400, 5.5, 0.95);
+const starFar  = buildStarLayer(1800, 2600, 4.0, 0.7);
+scene.add(starNear); scene.add(starFar);
+
+/* a faint indigo "milky" nebula band, very subtle, for depth */
+function makeNebula(){
+  const s=512, c=document.createElement('canvas'); c.width=c.height=s;
+  const g=c.getContext('2d');
+  g.fillStyle='rgba(0,0,0,0)'; g.fillRect(0,0,s,s);
+  for(let i=0;i<26;i++){
+    const x=Math.random()*s, y=s*0.5+(Math.random()-0.5)*s*0.34;
+    const r=60+Math.random()*150;
+    const grd=g.createRadialGradient(x,y,0,x,y,r);
+    const a=0.05+Math.random()*0.06;
+    grd.addColorStop(0, `rgba(70,84,180,${a})`);
+    grd.addColorStop(0.5,`rgba(36,40,110,${a*0.5})`);
+    grd.addColorStop(1, 'rgba(8,8,30,0)');
+    g.fillStyle=grd; g.fillRect(0,0,s,s);
+  }
+  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t;
+}
+const nebula = new THREE.Mesh(
+  new THREE.SphereGeometry(3000, 32, 32),
+  new THREE.MeshBasicMaterial({ map:makeNebula(), side:THREE.BackSide,
+    transparent:true, opacity:0.32, depthWrite:false, blending:THREE.AdditiveBlending })
+);
+nebula.rotation.y = Math.PI*0.2;
+scene.add(nebula);
+
+/* ====================================================================
+   PLANET FACTORY — sphere w/ real texture + sun-lit terminator,
+   subtle additive atmosphere rim for richness (not gamey).
+   ==================================================================== */
+function atmosphereMesh(radius, color, strength, power){
+  const geo = new THREE.SphereGeometry(radius*1.045, 64, 48);
+  const mat = new THREE.ShaderMaterial({
+    transparent:true, side:THREE.BackSide, depthWrite:false,
+    blending:THREE.AdditiveBlending,
+    uniforms:{
+      uColor:{ value:new THREE.Color(color) },
+      uStrength:{ value:strength },
+      uPower:{ value:power },
+      uSun:{ value:sunDir.clone() },
+    },
+    vertexShader:`
+      varying vec3 vN; varying vec3 vW;
+      void main(){
+        vN = normalize(normalMatrix * normal);
+        vec4 wp = modelMatrix * vec4(position,1.0);
+        vW = wp.xyz;
+        gl_Position = projectionMatrix * viewMatrix * wp;
+      }`,
+    fragmentShader:`
+      varying vec3 vN; varying vec3 vW;
+      uniform vec3 uColor; uniform float uStrength; uniform float uPower; uniform vec3 uSun;
+      void main(){
+        vec3 viewDir = normalize(cameraPosition - vW);
+        float rim = pow(1.0 - max(dot(viewDir, normalize(vN)), 0.0), uPower);
+        // bias the glow toward the lit limb so it reads with the sun
+        float lit = clamp(dot(normalize(vN), uSun)*0.5+0.7, 0.25, 1.0);
+        float a = rim * uStrength * lit;
+        gl_FragColor = vec4(uColor, a);
+      }`
+  });
+  return new THREE.Mesh(geo, mat);
+}
+
+function makePlanet(opt){
+  const grp = new THREE.Group();
+  const geo = new THREE.SphereGeometry(opt.radius, 64, 48);
+  const mat = new THREE.MeshStandardMaterial({
+    color: opt.fallback, roughness: opt.roughness ?? 0.95, metalness: 0.0,
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+  grp.add(mesh);
+  if(opt.url) loadMap(opt.url, mat);
+
+  if(opt.atmo){
+    grp.add(atmosphereMesh(opt.radius, opt.atmo.color, opt.atmo.strength, opt.atmo.power));
+  }
+  grp.position.copy(opt.pos);
+  grp.rotation.z = opt.tilt ?? 0;
+  grp.userData = { mesh, spin: opt.spin ?? 0.02 };
+  scene.add(grp);
+  return grp;
+}
+
+/* ====================================================================
+   SPATIAL STAGING  (forward = -Z; camera starts at +Z and flies in)
+   The whole act lives on a deep -Z corridor so nothing looms by accident:
+     camera start ~ z=+170  ->  Moon (hero) ~ z=-120  ->  Earth ~ z=-880.
+   Earth begins as a small point far ahead and GROWS as we close on it.
+   ==================================================================== */
+
+/* --- THE MOON — featured large and close (the hero foreground) ------- */
+const moon = makePlanet({
+  url: TEX.moon, fallback: 0x9a958c, radius: 30, roughness: 1.0,
+  pos: new THREE.Vector3(46, -10, -120), tilt: 0.12, spin: 0.006,
+  // faint warm-grey rim so the dark limb reads against stars (no fake air)
+  atmo: { color: 0xb9b2a6, strength: 0.14, power: 3.6 },
+});
+
+/* --- MARS — a smaller ruddy "world we reach for" -------------------- */
+const mars = makePlanet({
+  url: TEX.mars, fallback: 0xb5512f, radius: 9,
+  pos: new THREE.Vector3(-150, 64, -340), tilt: 0.4, spin: 0.01,
+  atmo: { color: 0xd98a5a, strength: 0.26, power: 3.0 },
+});
+
+/* --- GAS GIANTS — only faint, distant points of grandeur ------------ */
+const jupiter = makePlanet({
+  url: TEX.jupiter, fallback: 0xc9a98a, radius: 26,
+  pos: new THREE.Vector3(520, 240, -1700), tilt: 0.05, spin: 0.02,
+  atmo: { color: 0xcdb089, strength: 0.16, power: 3.2 },
+});
+
+/* --- SATURN — distant ringed sprite (baked rings on transparency) --- */
+let saturn = null;
+(function buildSaturn(){
+  const mat = new THREE.SpriteMaterial({
+    color: 0xcdbf9a, transparent:true, opacity:0.0, depthWrite:false,
+    blending: THREE.NormalBlending,
+  });
+  const spr = new THREE.Sprite(mat);
+  spr.position.set(-720, 320, -2100);
+  spr.scale.set(150, 73, 1);   // ring aspect ~1800x871
+  spr.userData.baseOpacity = 0.85;
+  scene.add(spr);
+  saturn = spr;
+  // load ring texture; fallback stays a faint warm point (opacity ramps in anim)
+  texLoader.load(TEX.saturn, (tex)=>{
+    tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = maxAniso;
+    mat.map = tex; mat.color.set(0xffffff); mat.needsUpdate = true;
+  }, undefined, ()=>{ spr.scale.set(40,40,1); });
+})();
+
+/* --- EARTH — the destination / arrival ------------------------------ */
+/* Far down the -Z corridor and a touch low-left so it can "rise" into
+   frame as the camera turns home. Small at first, fills the frame at p=1. */
+const EARTH_R = 70;
+const earthPos = new THREE.Vector3(-92, -52, -1120);
+const earth = makePlanet({
+  url: TEX.earth, fallback: 0x244b86, radius: EARTH_R, roughness: 0.9,
+  pos: earthPos.clone(), tilt: 0.41, spin: 0.012,
+  atmo: { color: 0x4f8fe6, strength: 0.5, power: 3.0 },
+});
+// a second, wider blue halo for that soft hazy NASA-limb glow (no hard edge)
+earth.add(atmosphereMesh(EARTH_R*1.18, 0x6fa8ff, 0.26, 3.4));
+const earthMesh = earth.userData.mesh;
+
+/* ====================================================================
+   CAMERA JOURNEY (p: 0 -> 1)
+   Keyframed position + lookAt, eased & continuous. Designed so that:
+     p~0.0  : adrift in deep space, Moon ahead, slight forward push
+     p~0.35 : sweeping past the Moon's lit limb (crest)
+     p~0.6  : turning home — Earth swings into view rising over the dark
+     p~1.0  : Earth grown to ~fill frame, centered, lit (handoff)
+   ==================================================================== */
+
+// Catmull-Rom through hand-placed cinematic positions along the -Z corridor.
+// Camera flies forward, skims just OVER the Moon's lit upper-left limb, then
+// presses on toward Earth which grows from a distant point to fill the frame.
+const camKeys = [
+  new THREE.Vector3(  -4,  18,  185),  // 0  adrift in deep space, Moon ahead
+  new THREE.Vector3(   4,  24,   46),  // 1  forward push toward the Moon
+  new THREE.Vector3(  12,  38,  -72),  // 2  cresting the Moon's lit limb (close, above)
+  new THREE.Vector3(   2,  34, -240),  // 3  over the limb — Earth revealed far ahead
+  new THREE.Vector3( -36,   8, -560),  // 4  turning home, closing distance
+  new THREE.Vector3( -74, -28, -820),  // 5  Earth large, approach
+  new THREE.Vector3( -92, -52, -942),  // 6  arrival — Earth fills frame (handoff)
+];
+const camPath = new THREE.CatmullRomCurve3(camKeys, false, 'catmullrom', 0.2);
+
+// lookAt targets blended along the journey: first the Moon, then Earth
+const moonLook  = moon.position.clone();
+const earthLook = earthPos.clone();
+
+const _camPos  = new THREE.Vector3();
+const _look    = new THREE.Vector3();
+const _drift   = new THREE.Vector3();
+
+function easeInOut(t){ return t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+function smooth(t){ return t*t*(3-2*t); }
+function clamp01(v){ return v<0?0:v>1?1:v; }
+function lerp(a,b,t){ return a+(b-a)*t; }
+
+let progress = 0;
+
+function setDemoProgress(p){
+  progress = clamp01(p);
+  applyCamera(progress, performance.now()*0.001);
+}
+
+function applyCamera(p, time){
+  // ease, then keep strictly inside (0,1): three.js CatmullRomCurve3.getPoint
+  // on an open curve reads points[i+1] and throws exactly at t===1.
+  const e = Math.min(0.99999, Math.max(0.00001, easeInOut(p)));
+  camPath.getPoint(e, _camPos);
+
+  // continuous gentle drift so the frame is alive at any p (ambient)
+  const dz = 1 - smooth(clamp01((p-0.62)/0.38)); // calm the drift on arrival
+  _drift.set(
+    Math.sin(time*0.21)*1.4 * dz,
+    Math.cos(time*0.17)*1.1 * dz,
+    Math.sin(time*0.13)*0.8 * dz
+  );
+  camera.position.copy(_camPos).add(_drift);
+
+  // lookAt: Moon early -> Earth late, with a smooth handover ~0.34..0.60
+  const turn = smooth(clamp01((p-0.34)/0.26));
+  _look.copy(moonLook).lerp(earthLook, turn);
+  // a touch of look drift, easing out on arrival
+  _look.x += Math.sin(time*0.19)*1.2*dz;
+  _look.y += Math.cos(time*0.15)*0.9*dz;
+  camera.lookAt(_look);
+
+  // gentle dolly of FOV: a hair wider mid-flight, settling tighter on Earth
+  const fov = lerp(46, 41, smooth(clamp01((p-0.5)/0.5)));
+  if(Math.abs(camera.fov-fov)>0.01){ camera.fov=fov; camera.updateProjectionMatrix(); }
+
+  updateLabels(p);
+}
+
+/* ---- captions / phase labels (subtle, restrained) ------------------ */
+const capEl  = document.getElementById('cap');
+const phaseEl= document.getElementById('phase');
+let lastCap = '';
+function setCap(text){
+  if(text===lastCap) return;
+  lastCap = text;
+  capEl.style.opacity = '0';
+  setTimeout(()=>{ if(text){ capEl.textContent=text; capEl.style.opacity='0.72'; } }, 240);
+}
+function updateLabels(p){
+  let phase, cap;
+  if(p < 0.30){ phase='DEEP SPACE'; cap='ADRIFT · A QUARTER MILLION MILES'; }
+  else if(p < 0.50){ phase='THE MOON'; cap='PAST THE MOON · OUR FIRST WAYPOINT'; }
+  else if(p < 0.72){ phase='TURNING HOME'; cap='MARS · THE WORLD WE REACH FOR'; }
+  else if(p < 0.92){ phase='EARTHRISE'; cap='EARTH · RISING'; }
+  else { phase='ARRIVAL'; cap='HOME · WHERE THE SCIENCE BEGINS'; }
+  if(phaseEl.textContent!==phase) phaseEl.textContent = phase;
+  setCap(cap);
+}
+
+/* ====================================================================
+   ANIMATION LOOP — ambient motion ALWAYS on; auto-advance until first
+   external setDemoProgress() call, then hold (scrub-driven).
+   ==================================================================== */
+let autoplay = true;
+const DURATION = 26; // seconds for a full p:0->1 sweep
+let t0 = performance.now();
+
+function tick(now){
+  const time = now*0.001;
+  const dt = Math.min(0.05, (now - (tick._last||now))/1000);
+  tick._last = now;
+
+  if(autoplay){
+    let q = ((now - t0)/1000 / DURATION) % 1;
+    progress = q;
+  }
+  applyCamera(progress, time);
+
+  // self-rotation of planets (gentle, lit terminator drifts)
+  [moon, mars, jupiter, earth].forEach(g=>{
+    g.rotation.y += g.userData.spin * dt;
+  });
+
+  // distant gas-giant + saturn fade-in (faint points of grandeur)
+  if(saturn){
+    const target = saturn.userData.baseOpacity;
+    saturn.material.opacity += (target - saturn.material.opacity)*0.02;
+  }
+
+  // starfield: subtle twinkle + slight parallax counter to camera
+  if(starNear.material.userData.sh) starNear.material.userData.sh.uniforms.uTime.value = time;
+  if(starFar.material.userData.sh)  starFar.material.userData.sh.uniforms.uTime.value  = time*0.8;
+  starNear.rotation.y = time*0.005;
+  starFar.rotation.y  = time*0.003;
+  nebula.rotation.y   = Math.PI*0.2 + time*0.002;
+
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+/* ---- public scrub API ---------------------------------------------- */
+window.setDemoProgress = function(p){
+  if(autoplay){ autoplay = false; }   // first external call stops autoplay
+  setDemoProgress(p);
+};
+window.__demo = {
+  get p(){ return progress; },
+  set p(v){ window.setDemoProgress(v); }
+};
+
+/* ---- resize -------------------------------------------------------- */
+function onResize(){
+  const w = window.innerWidth, h = window.innerHeight;
+  camera.aspect = w/h; camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+}
+window.addEventListener('resize', onResize);
+
+// prime first frame
+applyCamera(0, 0);
+</script>
+</body>
+</html>

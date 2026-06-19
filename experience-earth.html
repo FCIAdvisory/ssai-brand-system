@@ -25,8 +25,12 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right{z-index:4}
 
 /* space + vignette grade so the brand copy always reads over the globe */
-.grade{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+.grade{position:fixed;inset:0;z-index:2;pointer-events:none;background:
   radial-gradient(135% 95% at 50% 40%,transparent 50%,rgba(4,3,14,.6) 100%)}
+/* the cosmos opening act (a real-planet Three.js flythrough) sits above the map until handoff */
+#cosmos{position:fixed;inset:0;width:100vw;height:100vh;border:0;z-index:1;pointer-events:none}
+/* atmosphere flash that masks the cosmos->map handoff so the engine swap is invisible */
+.flash{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 44%,rgba(198,216,255,1),rgba(96,134,232,.92) 58%,rgba(26,38,104,.78) 100%)}
 .stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.0;transition:opacity 1.2s}
 .stars.show{opacity:1}
 
@@ -80,7 +84,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .ssaipin .lbl{font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(8,6,28,.72);padding:5px 11px;border-radius:20px;border:1px solid var(--hair);white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 6px 20px -8px rgba(0,0,0,.8)}
 .ssaipin .dot{width:14px;height:14px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px rgba(47,217,195,.22),0 0 18px var(--teal);animation:pinpulse 2s ease-in-out infinite}
 @keyframes pinpulse{0%,100%{box-shadow:0 0 0 4px rgba(47,217,195,.28),0 0 16px var(--teal)}50%{box-shadow:0 0 0 11px rgba(47,217,195,0),0 0 22px var(--teal)}}
-.scroll{position:relative;z-index:2;width:100%;height:780vh}
+.scroll{position:relative;z-index:2;width:100%;height:1150vh}
 </style>
 </head>
 <body>
@@ -89,6 +93,8 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 
 <div class="stars" id="stars"></div>
 <div id="map"></div>
+<iframe id="cosmos" src="_demos/cosmos-B.html" title="The cosmos — planets" loading="eager"></iframe>
+<div class="flash" id="flash"></div>
 <div class="grade"></div>
 <div class="prog" id="prog"></div>
 
@@ -98,11 +104,11 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 </header>
 
 <div class="copylayer"><div class="inner" id="beats">
-  <div class="beat" data-a="-0.05" data-b="0.07"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
-  <div class="beat" data-a="0.085" data-b="0.185"><span class="k">The mountains</span><h1>Every range,<br>in <span class="em">relief.</span></h1><p>We measure the height and change of the world's mountains and ice — terrain read from orbit, to the metre.</p></div>
-  <div class="beat" data-a="0.345" data-b="0.45"><span class="k bl">The oceans</span><h1>The blue we<br><span class="em">measure.</span></h1><p>Ocean colour reveals the phytoplankton that make half the oxygen we breathe — read in a dozen wavelengths of light.</p></div>
-  <div class="beat" data-a="0.595" data-b="0.70"><span class="k">Mauna Kea · Hawai‘i</span><h1>Where we<br>watch the <span class="em">sky.</span></h1><p>From mountaintop observatories to instruments in orbit, SSAI helps keep watch on Earth and the space around it.</p></div>
-  <div class="beat" data-a="0.815" data-b="0.90"><span class="k bl">Coming home</span><h1>All the<br>way <span class="em">home.</span></h1><p>Every measurement, every model, every forecast comes back down to the people who put it to work.</p></div>
+  <div class="beat" data-a="0.305" data-b="0.378"><span class="k">Science Systems and Applications, Inc. · Est. 1977</span><h1>We have always<br>looked <span class="em">up.</span></h1><p>For nearly fifty years, SSAI has turned what we see from space into knowledge that improves life on Earth.</p></div>
+  <div class="beat" data-a="0.385" data-b="0.46"><span class="k">The mountains</span><h1>Every range,<br>in <span class="em">relief.</span></h1><p>We measure the height and change of the world's mountains and ice — terrain read from orbit, to the metre.</p></div>
+  <div class="beat" data-a="0.555" data-b="0.625"><span class="k bl">The oceans</span><h1>The blue we<br><span class="em">measure.</span></h1><p>Ocean colour reveals the phytoplankton that make half the oxygen we breathe — read in a dozen wavelengths of light.</p></div>
+  <div class="beat" data-a="0.735" data-b="0.80"><span class="k">Mauna Kea · Hawai‘i</span><h1>Where we<br>watch the <span class="em">sky.</span></h1><p>From mountaintop observatories to instruments in orbit, SSAI helps keep watch on Earth and the space around it.</p></div>
+  <div class="beat" data-a="0.875" data-b="0.925"><span class="k bl">Coming home</span><h1>All the<br>way <span class="em">home.</span></h1><p>Every measurement, every model, every forecast comes back down to the people who put it to work.</p></div>
   <div class="beat center" data-a="0.94" data-b="1.05"><div class="inr"><span class="k">The Aerospace Building · 10210 Greenbelt Rd · Lanham, MD</span><h1 style="font-size:clamp(38px,7.4vw,108px)"><span class="em">Where the science<br>is done.</span></h1><p style="margin-left:auto;margin-right:auto">Right here, beside NASA's Goddard Space Flight Center, SSAI turns raw light from across the planet into decisions the world can trust.</p><div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap"><a class="cta" href="interactive-kit.html">Explore the instruments</a><a class="cta ghost" href="brand-book.html">The brand</a></div><div style="margin-top:24px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · Founded 1977 · Lanham, Maryland</div></div></div>
 </div></div>
 
@@ -135,7 +141,7 @@ function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
 /* a full journey: spin eastward around the real planet, dipping to each place, then home.
    lng runs monotonically 60 -> 283 so the globe rotates one smooth direction (values >180 wrap). */
 var KF=[
-  {p:0.00, lng:60,     lat:15,      z:1.30, pitch:0,  bear:0},   // whole Earth (globe in space)
+  {p:0.00, lng:12,     lat:22,      z:2.35, pitch:0,  bear:0},   // arrived at Earth — bright North Africa/Sahara fills the frame (handoff view)
   {p:0.13, lng:86.925, lat:27.985,  z:10.6, pitch:66, bear:22},  // Himalayas / Everest (mountains)
   {p:0.26, lng:118,    lat:4,       z:2.70, pitch:12, bear:0},   // lift back to the globe
   {p:0.39, lng:145.78, lat:-16.10,  z:9.90, pitch:32, bear:0},   // Great Barrier Reef ribbons (ocean)
@@ -155,22 +161,34 @@ function camAt(p){
 
 var beats=[].slice.call(document.querySelectorAll('.beat'));
 var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap'), stars=document.getElementById('stars');
-var CH=[['The Descent',0],['The Himalayas',0.08],['The oceans',0.34],['Mauna Kea',0.60],['Coming home',0.81],['SSAI · Greenbelt, MD',0.94]];
+var CH=[['The Cosmos',0],['Approach · Earth',0.27],['The Himalayas',0.385],['The oceans',0.55],['Mauna Kea',0.73],['Coming home',0.87],['SSAI · Greenbelt, MD',0.95]];
 var scrollP=0, map=null, mapReady=false, ssaiMarker=null;
+var cosmosFrame=document.getElementById('cosmos'), cosmosWin=null, flash=document.getElementById('flash'), topbar=document.querySelector('.topbar'), HANDOFF=0.30;
+if(cosmosFrame){ cosmosFrame.addEventListener('load',function(){ try{cosmosWin=cosmosFrame.contentWindow;}catch(e){} applyScroll(); setTimeout(function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); },1500); }); }
 
 function applyScroll(){
   var p=scrollP;
-  if(map && mapReady){ var c=camAt(p);
-    map.jumpTo({center:[c.lng,c.lat], zoom:c.z, pitch:c.pitch, bearing:c.bear});
-  }
-  if(stars) stars.classList.toggle('show', p<0.34);
-  if(ssaiMarker){ ssaiMarker.getElement().style.opacity = (p>0.9 ? clamp01((p-0.9)/0.045) : 0); }
+  var cosmosP=clamp01(p/HANDOFF);                 // 0..1 across the opening cosmos act
+  var mapP=clamp01((p-HANDOFF)/(1-HANDOFF));       // 0..1 across the Earth flight
+  /* drive the cosmos opening */
+  if(cosmosWin && cosmosWin.setDemoProgress){ try{cosmosWin.setDemoProgress(cosmosP);}catch(e){} }
+  /* crossfade cosmos -> map, masked by an atmosphere flash so the engine swap is invisible */
+  var fs=HANDOFF-0.05, fe=HANDOFF+0.02;
+  if(cosmosFrame){ cosmosFrame.style.opacity=1-range(p,fs,fe); cosmosFrame.style.display=(p<fe+0.06?'block':'none'); }
+  var mc=document.getElementById('map'); if(mc) mc.style.opacity=range(p,fs,fe);
+  if(flash) flash.style.opacity=clamp01(1-Math.abs(p-HANDOFF)/0.055)*0.97;
+  /* drive the Earth flight */
+  if(map && mapReady){ var c=camAt(mapP);
+    map.jumpTo({center:[c.lng,c.lat], zoom:c.z, pitch:c.pitch, bearing:c.bear}); }
+  if(ssaiMarker){ ssaiMarker.getElement().style.opacity = (p>0.93 ? clamp01((p-0.93)/0.04) : 0); }
+  /* brand chrome is hidden during the cosmos (it carries its own labels), shown after handoff */
+  if(topbar) topbar.style.opacity=(p<HANDOFF-0.03?0:1);
   for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
     beats[j].style.opacity=bo;
     if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
   if(prog) prog.style.width=(clamp01(p)*100)+'%';
-  if(cue) cue.style.opacity=(1-range(p,0.03,0.10));
-  if(shellnav) shellnav.classList.toggle('show',p>0.88);
+  if(cue) cue.style.opacity=(1-range(p,0.02,0.07));
+  if(shellnav) shellnav.classList.toggle('show',p>0.95);
   var ci=0; for(var k=0;k<CH.length;k++){ if(p>=CH[k][1]-0.005) ci=k; }
   if(chap) chap.textContent=CH[ci][0];
 }
