@@ -123,6 +123,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; window.scrollTo(0,0); }catch(e){}  /* always open at the top so the pins start hidden */
 function clamp01(x){return x<0?0:(x>1?1:x);}
 function lerp(a,b,t){return a+(b-a)*t;}
 function range(p,a,b){return clamp01((p-a)/(b-a));}
@@ -151,7 +152,7 @@ function camAt(p){
 var beats=[].slice.call(document.querySelectorAll('.beat'));
 var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap'), stars=document.getElementById('stars');
 var CH=[['The Moon',0],['The landings',0.14],['The grey seas',0.355],['Hadley · Apennines',0.60],['Apollo 15',0.86]];
-var scrollP=0, map=null, mapReady=false;
+var scrollP=0, map=null, mapReady=false, pins=[];
 
 function applyScroll(){
   var p=scrollP;
@@ -159,6 +160,7 @@ function applyScroll(){
     map.jumpTo({center:[c.lng,c.lat], zoom:c.z, pitch:c.pitch, bearing:c.bear});
   }
   if(stars) stars.classList.toggle('show', p<0.34);
+  var po=range(p,0.10,0.17); for(var pi=0;pi<pins.length;pi++) pins[pi].style.opacity=po;  /* pins fade in after the opening headline */
   for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
     beats[j].style.opacity=bo;
     if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
@@ -188,7 +190,7 @@ function boot(){
     /* the Moon has no air — keep space black, no blue atmosphere glow */
     try{ map.setSky({'sky-color':'#03030a','horizon-color':'#0b0b1a','fog-color':'#03030a','sky-horizon-blend':.2,'horizon-fog-blend':.3,'fog-ground-blend':.1,'atmosphere-blend':0}); }catch(e){}
     /* pin the real landing sites (crewed Apollo = teal, robotic = grey). lat,lon */
-    try{ [['Apollo 11',0.674,23.473,1],['Apollo 12',-3.012,-23.42,1],['Apollo 14',-3.645,-17.471,1],['Apollo 15',26.132,3.634,1],['Apollo 16',-8.973,15.501,1],['Apollo 17',20.191,30.772,1],['Luna 9',7.08,-64.37,0],['Surveyor 1',-2.47,-43.34,0],['Chang’e 5',43.06,-51.92,0],['Chandrayaan-3',-69.37,32.32,0]].forEach(function(s){ var el=document.createElement('div'); el.className='lpin'+(s[3]?'':' rob'); el.innerHTML='<span class="d"></span><span class="lab">'+s[0]+'</span>'; new maplibregl.Marker({element:el,anchor:'top'}).setLngLat([s[2],s[1]]).addTo(map); }); }catch(e){}
+    try{ [['Apollo 11',0.674,23.473,1],['Apollo 12',-3.012,-23.42,1],['Apollo 14',-3.645,-17.471,1],['Apollo 15',26.132,3.634,1],['Apollo 16',-8.973,15.501,1],['Apollo 17',20.191,30.772,1],['Luna 9',7.08,-64.37,0],['Surveyor 1',-2.47,-43.34,0],['Chang’e 5',43.06,-51.92,0],['Chandrayaan-3',-69.37,32.32,0]].forEach(function(s){ var el=document.createElement('div'); el.className='lpin'+(s[3]?'':' rob'); el.innerHTML='<span class="d"></span><span class="lab">'+s[0]+'</span>'; new maplibregl.Marker({element:el,anchor:'top'}).setLngLat([s[2],s[1]]).addTo(map); el.style.opacity=0; el.style.transition='opacity .4s'; pins.push(el); }); }catch(e){}
     mapReady=true; applyScroll();
   });
   map.on('idle',function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
@@ -205,6 +207,7 @@ function rloop(){
   curP+=(targetP-curP)*(reduce?1:0.16);
   if(Math.abs(targetP-curP)<0.0005) curP=targetP;
   if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; applyScroll(); }
+  if(pins.length){ var _po=range(curP,0.10,0.17); for(var _q=0;_q<pins.length;_q++) pins[_q].style.opacity=_po; }  /* keep pins synced even when the camera is parked */
   requestAnimationFrame(rloop);
 }
 requestAnimationFrame(rloop);

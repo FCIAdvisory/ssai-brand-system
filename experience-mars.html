@@ -123,6 +123,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; window.scrollTo(0,0); }catch(e){}  /* always open at the top so the pins start hidden */
 function clamp01(x){return x<0?0:(x>1?1:x);}
 function lerp(a,b,t){return a+(b-a)*t;}
 function range(p,a,b){return clamp01((p-a)/(b-a));}
@@ -151,7 +152,7 @@ function camAt(p){
 var beats=[].slice.call(document.querySelectorAll('.beat'));
 var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap'), stars=document.getElementById('stars');
 var CH=[['Mars',0],['The rovers',0.14],['Isidis',0.355],['Jezero',0.60],['Perseverance',0.86]];
-var scrollP=0, map=null, mapReady=false;
+var scrollP=0, map=null, mapReady=false, pins=[];
 
 function applyScroll(){
   var p=scrollP;
@@ -159,6 +160,7 @@ function applyScroll(){
     map.jumpTo({center:[c.lng,c.lat], zoom:c.z, pitch:c.pitch, bearing:c.bear});
   }
   if(stars) stars.classList.toggle('show', p<0.34);
+  var po=range(p,0.10,0.17); for(var pi=0;pi<pins.length;pi++) pins[pi].style.opacity=po;  /* pins fade in after the opening headline */
   for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
     beats[j].style.opacity=bo;
     if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
@@ -180,7 +182,7 @@ function boot(){
         shade:{type:'raster', tiles:['https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/1/{z}/{x}/{y}.png'], tileSize:256, maxzoom:6, attribution:'Mars: NASA · USGS · MOLA · Viking / OpenPlanetaryMap'},
         color:{type:'raster', tiles:['https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/2/{z}/{x}/{y}.png'], tileSize:256, maxzoom:6}
       },
-      layers:[ {id:'bg', type:'background', paint:{'background-color':'#060403'}}, {id:'sat', type:'raster', source:'shade'}, {id:'sat2', type:'raster', source:'color', paint:{'raster-opacity':0.62}} ]
+      layers:[ {id:'bg', type:'background', paint:{'background-color':'#060403'}}, {id:'sat', type:'raster', source:'color', paint:{'raster-saturation':0.25,'raster-contrast':0.08}}, {id:'sat2', type:'raster', source:'shade', paint:{'raster-opacity':0.30}} ]
     }
   });
   map.addControl(new maplibregl.AttributionControl({compact:true}));
@@ -189,7 +191,7 @@ function boot(){
     /* Mars has a thin, dusty atmosphere — a faint rust-coloured haze at the limb, no blue */
     try{ map.setSky({'sky-color':'#0a0604','horizon-color':'#6a3420','fog-color':'#160c07','sky-horizon-blend':.35,'horizon-fog-blend':.4,'fog-ground-blend':.15,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,.5,5,.14,8,0]}); }catch(e){}
     /* pin the real landing sites (active rovers = teal, landers/past = grey). lat,lon */
-    try{ [['Viking 1',22.48,-49.97,0],['Viking 2',47.97,134.0,0],['Pathfinder',19.33,-33.55,0],['Spirit',-14.57,175.48,0],['Opportunity',-1.95,-5.53,0],['Curiosity',-4.59,137.44,1],['Perseverance',18.44,77.45,1],['InSight',4.50,135.62,0],['Zhurong',25.1,109.9,0]].forEach(function(s){ var el=document.createElement('div'); el.className='lpin'+(s[3]?'':' rob'); el.innerHTML='<span class="d"></span><span class="lab">'+s[0]+'</span>'; new maplibregl.Marker({element:el,anchor:'top'}).setLngLat([s[2],s[1]]).addTo(map); }); }catch(e){}
+    try{ [['Viking 1',22.48,-49.97,0],['Viking 2',47.97,134.0,0],['Pathfinder',19.33,-33.55,0],['Spirit',-14.57,175.48,0],['Opportunity',-1.95,-5.53,0],['Curiosity',-4.59,137.44,1],['Perseverance',18.44,77.45,1],['InSight',4.50,135.62,0],['Zhurong',25.1,109.9,0]].forEach(function(s){ var el=document.createElement('div'); el.className='lpin'+(s[3]?'':' rob'); el.innerHTML='<span class="d"></span><span class="lab">'+s[0]+'</span>'; new maplibregl.Marker({element:el,anchor:'top'}).setLngLat([s[2],s[1]]).addTo(map); el.style.opacity=0; el.style.transition='opacity .4s'; pins.push(el); }); }catch(e){}
     mapReady=true; applyScroll();
   });
   map.on('idle',function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
@@ -206,6 +208,7 @@ function rloop(){
   curP+=(targetP-curP)*(reduce?1:0.16);
   if(Math.abs(targetP-curP)<0.0005) curP=targetP;
   if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; applyScroll(); }
+  if(pins.length){ var _po=range(curP,0.10,0.17); for(var _q=0;_q<pins.length;_q++) pins[_q].style.opacity=_po; }  /* keep pins synced even when the camera is parked */
   requestAnimationFrame(rloop);
 }
 requestAnimationFrame(rloop);
