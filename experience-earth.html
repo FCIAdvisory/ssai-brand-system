@@ -124,8 +124,8 @@ var KF=[
   {p:0.13, lng:15.408,  lat:78.230,  z:12.9, pitch:42, bear:0},   // SvalSat (Svalbard) arrive
   {p:0.185,lng:15.408,  lat:78.230,  z:12.9, pitch:42, bear:0},   // · dwell
   {p:0.25, lng:95,      lat:46,      z:2.55, pitch:8,  bear:0},   // lift, fly east across Asia
-  {p:0.33, lng:204.525, lat:19.822,  z:13.3, pitch:52, bear:28},  // Mauna Kea arrive (-155.475)
-  {p:0.385,lng:204.525, lat:19.822,  z:13.3, pitch:52, bear:28},  // · dwell
+  {p:0.33, lng:204.525, lat:19.822,  z:13.0, pitch:44, bear:28},  // Mauna Kea arrive (-155.475)
+  {p:0.385,lng:204.525, lat:19.822,  z:13.0, pitch:44, bear:28},  // · dwell
   {p:0.45, lng:226,     lat:31,      z:3.30, pitch:10, bear:0},   // lift toward the US Southwest
   {p:0.51, lng:243.110, lat:35.427,  z:12.3, pitch:48, bear:16},  // Goldstone DSN arrive (-116.890)
   {p:0.565,lng:243.110, lat:35.427,  z:12.3, pitch:48, bear:16},  // · dwell
@@ -136,7 +136,7 @@ var KF=[
   {p:0.84, lng:280.160, lat:38.433,  z:13.6, pitch:46, bear:14},  // Green Bank arrive (-79.840)
   {p:0.885,lng:280.160, lat:38.433,  z:13.6, pitch:46, bear:14},  // · dwell
   {p:0.95, lng:282.40,  lat:38.86,   z:10.4, pitch:52, bear:18},  // approach SSAI
-  {p:1.00, lng:283.172, lat:38.99159,z:16.5, pitch:60, bear:20}   // SSAI · The Aerospace Building (-76.8283)
+  {p:1.00, lng:283.172, lat:38.99159,z:14.8, pitch:50, bear:20}   // SSAI · The Aerospace Building (-76.8283)
 ];
 var SSAI_LNGLAT=[-76.8282966, 38.9915921];
 function camAt(p){
@@ -164,49 +164,58 @@ function render(p){
   if(chap) chap.textContent=CH[ci][0];
 }
 
-/* ---- smooth, damped camera: scroll sets a target; a rAF loop glides toward it (no per-event jumps) ---- */
-var targetP=0, curP=0, lastRenderP=-1, loaderDone=false;
+/* ---- camera: scroll sets a target; a rAF loop eases curP toward it and SETTLES FAST so the
+        map can finish loading tiles before it moves on (perpetual motion was starving tiles) ---- */
+var targetP=0, curP=0, lastRenderP=-1, loaderDone=false, prewarming=true;
 function readTarget(){ var max=Math.max(1, document.documentElement.scrollHeight - innerHeight); targetP=clamp01((window.scrollY||window.pageYOffset||0)/max); }
 function dismissLoader(){ if(loaderDone) return; loaderDone=true; var l=document.getElementById('loader'); if(l) l.classList.add('gone'); }
 function tick(){
-  readTarget();
-  curP += (targetP - curP) * (reduce?1:0.10);
-  if(Math.abs(targetP-curP) < 0.00015) curP=targetP;
-  /* only touch the map when the camera actually moved — lets it settle to idle + saves work */
-  if(Math.abs(curP-lastRenderP) > 0.00002){ lastRenderP=curP; render(curP); }
-  if(mapReady && !loaderDone){ try{ if(map.areTilesLoaded()) dismissLoader(); }catch(e){} }
+  if(!prewarming){
+    readTarget();
+    curP += (targetP - curP) * (reduce?1:0.32);
+    if(Math.abs(targetP-curP) < 0.0008) curP=targetP;       /* snap + hold so tiles can settle */
+    if(Math.abs(curP-lastRenderP) > 0.00004){ lastRenderP=curP; render(curP); }
+  }
   requestAnimationFrame(tick);
 }
-
-/* Lenis just smooths the native scroll; the rAF above does the easing into the camera */
-if(!reduce && window.Lenis){ var lenis=new Lenis({duration:1.1, smoothWheel:true, wheelMultiplier:0.9});
+if(!reduce && window.Lenis){ var lenis=new Lenis({duration:0.85, smoothWheel:true, wheelMultiplier:0.9});
   function lraf(t){ lenis.raf(t); requestAnimationFrame(lraf); } requestAnimationFrame(lraf); }
 requestAnimationFrame(tick);
 
-/* ---- the real Earth: MapLibre globe + satellite imagery + terrain (free, no key) ---- */
+function waitTiles(maxMs){ return new Promise(function(res){ var s=Date.now(); (function chk(){ var d=false; try{d=map.areTilesLoaded();}catch(e){d=true;} if(d||Date.now()-s>maxMs) return res(); setTimeout(chk,140); })(); }); }
+/* PRE-WARM: visit every stop behind the loader so its tiles land in cache — then the scroll
+   re-uses the cache instead of streaming (this is what removes the black/pop on the way down). */
+async function prewarm(){
+  var idx=[3,6,9,12,15,17];
+  for(var i=0;i<idx.length;i++){ var s=KF[idx[i]];
+    var lt=document.querySelector('.loader .lt'); if(lt) lt.textContent='Preparing the journey · '+(i+1)+' / '+idx.length;
+    map.jumpTo({center:[s.lng,s.lat], zoom:s.z, pitch:s.pitch, bearing:s.bear});
+    await waitTiles(2600);
+  }
+  map.jumpTo({center:[KF[0].lng,KF[0].lat], zoom:KF[0].z, pitch:KF[0].pitch, bearing:KF[0].bear});
+  await waitTiles(1200);
+  prewarming=false; lastRenderP=-1; render(0); dismissLoader();
+}
+
+/* ---- the real Earth: MapLibre globe + satellite imagery (NO terrain — stripped for smoothness) ---- */
 function boot(){
-  if(typeof maplibregl==='undefined'){ var l=document.getElementById('loader'); if(l) l.querySelector('.lt').textContent='Could not load the map engine — check your connection.'; return; }
+  if(typeof maplibregl==='undefined'){ var l=document.querySelector('.loader .lt'); if(l) l.textContent='Could not load the map engine — check your connection.'; return; }
   map=new maplibregl.Map({
-    container:'map', interactive:false, attributionControl:false, maxPitch:85, antialias:true,
+    container:'map', interactive:false, attributionControl:false, maxPitch:70, antialias:true,
+    maxTileCacheSize:3000, fadeDuration:0, refreshExpiredTiles:false,
     center:[KF[0].lng,KF[0].lat], zoom:KF[0].z, pitch:KF[0].pitch, bearing:KF[0].bear,
     style:{ version:8, projection:{type:'globe'},
-      sources:{
-        sat:{type:'raster', tiles:['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize:256, maxzoom:19, attribution:'Imagery © Esri, Maxar, Earthstar Geographics, and the GIS User Community'},
-        dem:{type:'raster-dem', tiles:['https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png'], tileSize:256, maxzoom:14, encoding:'terrarium', attribution:'Terrain: AWS Open Data / Mapzen'}
-      },
+      sources:{ sat:{type:'raster', tiles:['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize:256, maxzoom:19, attribution:'Imagery © Esri, Maxar, Earthstar Geographics, and the GIS User Community'} },
       layers:[ {id:'bg', type:'background', paint:{'background-color':'#04030e'}}, {id:'sat', type:'raster', source:'sat'} ]
     }
   });
   map.addControl(new maplibregl.AttributionControl({compact:true}));
   map.on('load',function(){
     try{ map.setProjection({type:'globe'}); }catch(e){}
-    try{ map.setTerrain({source:'dem', exaggeration:1.15}); }catch(e){}
-    try{ map.setSky({'sky-color':'#0a1733','horizon-color':'#16145f','fog-color':'#04030e','sky-horizon-blend':.5,'horizon-fog-blend':.5,'fog-ground-blend':.15,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,.9,7,.35,11,0]}); }catch(e){}
+    try{ map.setSky({'sky-color':'#0a1733','horizon-color':'#1a2a55','fog-color':'#04030e','sky-horizon-blend':.5,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,.7,6,.25,10,0]}); }catch(e){}
     try{ var el=document.createElement('div'); el.className='ssaipin'; el.innerHTML='<span class="dot"></span>'; ssaiMarker=new maplibregl.Marker({element:el,anchor:'center'}).setLngLat(SSAI_LNGLAT).addTo(map); }catch(e){}
-    mapReady=true; lastRenderP=-1; render(curP);
-    setTimeout(function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); }, 3500);
+    mapReady=true; prewarm();
   });
-  map.on('idle',function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
 }
 boot();
 
