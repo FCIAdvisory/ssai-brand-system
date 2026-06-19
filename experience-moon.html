@@ -78,11 +78,11 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 
 /* moon-landing pins */
 .lpin{display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none}
-.lpin .d{width:9px;height:9px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(47,217,195,.20),0 0 10px var(--teal);animation:lpulse 2.4s ease-in-out infinite}
-.lpin .lab{font-family:var(--body);font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#fff;white-space:nowrap;text-shadow:0 1px 4px #000,0 0 8px #000}
-.lpin.rob .d{width:7px;height:7px;background:var(--nebula);box-shadow:0 0 0 2px rgba(166,171,230,.18),0 0 7px var(--nebula);animation:none}
-.lpin.rob .lab{color:var(--nebula);font-weight:500;font-size:9px}
-@keyframes lpulse{0%,100%{box-shadow:0 0 0 3px rgba(47,217,195,.28),0 0 10px var(--teal)}50%{box-shadow:0 0 0 9px rgba(47,217,195,0),0 0 14px var(--teal)}}
+.lpin .d{width:5.5px;height:5.5px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 2px rgba(47,217,195,.16),0 0 6px var(--teal);animation:lpulse 2.6s ease-in-out infinite}
+.lpin .lab{font-family:var(--body);font-size:7.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#fff;white-space:nowrap;text-shadow:0 1px 3px #000,0 0 6px #000}
+.lpin.rob .d{width:4px;height:4px;background:var(--nebula);box-shadow:0 0 0 1.5px rgba(166,171,230,.15),0 0 4px var(--nebula);animation:none}
+.lpin.rob .lab{color:var(--nebula);font-weight:500;font-size:6.5px}
+@keyframes lpulse{0%,100%{box-shadow:0 0 0 2px rgba(47,217,195,.24),0 0 6px var(--teal)}50%{box-shadow:0 0 0 6px rgba(47,217,195,0),0 0 9px var(--teal)}}
 .scroll{position:relative;z-index:2;width:100%;height:780vh}
 </style>
 </head>
@@ -138,8 +138,8 @@ var KF=[
   {p:0.00, lng:6,      lat:6,      z:0.92, pitch:0,  bear:0},   // the whole near-side Moon — every landing in view
   {p:0.34, lng:5,      lat:16,     z:2.6,  pitch:12, bear:0},   // north toward the Apennines
   {p:0.60, lng:4.2,    lat:23,     z:3.5,  pitch:26, bear:4},   // the Apennine mountain front
-  {p:0.82, lng:3.8,    lat:25.7,   z:4.2,  pitch:40, bear:12},  // Hadley
-  {p:1.00, lng:3.634,  lat:26.132, z:4.8,  pitch:46, bear:18}   // Apollo 15 · Hadley Rille (1971)
+  {p:0.82, lng:3.74,   lat:25.88,  z:5.0,  pitch:42, bear:14},  // Hadley
+  {p:1.00, lng:3.634,  lat:26.132, z:5.7,  pitch:48, bear:18}   // Apollo 15 · Hadley Rille (1971)
 ];
 function camAt(p){
   var i=0; while(i<KF.length-2 && p>KF[i+1].p) i++;
