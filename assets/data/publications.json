@@ -1,0 +1,542 @@
+[
+ {
+  "title": "A Global Stocktake on Electricity Access and Gaps From NASA Black Marble Nighttime Lights",
+  "authors": "Chakraborty et al.",
+  "venue": "Earth's Future",
+  "year": 2025,
+  "domain": "Earth",
+  "mission": "Black Marble",
+  "link": "https://doi.org/10.1029/2024ef005916"
+ },
+ {
+  "title": "Dynamics of the intermediate-mass-element ejecta in the supernova remnant Cassiopeia A studied with XRISM",
+  "authors": "Suzuki et al.",
+  "venue": "Publications of the Astronomical Society of Japan",
+  "year": 2025,
+  "domain": "Planetary & Astrophysics",
+  "mission": "XRISM",
+  "link": "https://doi.org/10.1093/pasj/psaf040"
+ },
+ {
+  "title": "NASA's Lucy Mission to Trojan Asteroids: Unraveling the History of the Outer Solar System",
+  "authors": "Levison et al.",
+  "venue": "Space Science Reviews",
+  "year": 2025,
+  "domain": "Planetary & Astrophysics",
+  "mission": "Lucy",
+  "link": "https://doi.org/10.1007/s11214-025-01173-7"
+ },
+ {
+  "title": "Galaxy clustering at cosmic dawn from JWST/NIRCam observations to redshift z~11",
+  "authors": "Dalmasso et al.",
+  "venue": "Monthly Notices of the Royal Astronomical Society",
+  "year": 2024,
+  "domain": "Planetary & Astrophysics",
+  "mission": "JWST",
+  "link": "https://doi.org/10.1093/mnras/stae2006"
+ },
+ {
+  "title": "JWST NIRSpec Spectroscopy of the Remarkable Bright Galaxy GHZ2/GLASS-z12 at Redshift 12.34",
+  "authors": "Castellano et al.",
+  "venue": "The Astrophysical Journal",
+  "year": 2024,
+  "domain": "Planetary & Astrophysics",
+  "mission": "JWST",
+  "link": "https://doi.org/10.3847/1538-4357/ad5f88"
+ },
+ {
+  "title": "Probing Shocked Ejecta in SN 1987A: A Novel Diagnostic Approach Using XRISM-Resolve",
+  "authors": "Sapienza et al.",
+  "venue": "The Astrophysical Journal Letters",
+  "year": 2024,
+  "domain": "Planetary & Astrophysics",
+  "mission": "XRISM",
+  "link": "https://doi.org/10.3847/2041-8213/ad16e3"
+ },
+ {
+  "title": "Selecting HyperNav deployment sites for calibrating and validating PACE ocean color observations",
+  "authors": "Chamberlain, Frouin, Tan et al.",
+  "venue": "Frontiers in Remote Sensing",
+  "year": 2024,
+  "domain": "Earth",
+  "mission": "PACE",
+  "link": "https://doi.org/10.3389/frsen.2024.1333851"
+ },
+ {
+  "title": "The Ocean Color Instrument (OCI) on the Plankton, Aerosol, Cloud, ocean Ecosystem (PACE) Mission: System Design and Prelaunch Radiometric Performance",
+  "authors": "Meister et al.",
+  "venue": "IEEE Transactions on Geoscience and Remote Sensing",
+  "year": 2024,
+  "domain": "Earth",
+  "mission": "PACE",
+  "link": "https://doi.org/10.1109/tgrs.2024.3383812"
+ },
+ {
+  "title": "Unlocking Discovery Potential for Decaying Dark Matter and Faint X-Ray Sources with XRISM",
+  "authors": "Zhou et al.",
+  "venue": "The Astrophysical Journal",
+  "year": 2024,
+  "domain": "Planetary & Astrophysics",
+  "mission": "XRISM",
+  "link": "https://doi.org/10.3847/1538-4357/ad83cf"
+ },
+ {
+  "title": "Black Marble Nighttime Light Data for Disaster Damage Assessment",
+  "authors": "Zhang et al.",
+  "venue": "Remote Sensing",
+  "year": 2023,
+  "domain": "Earth",
+  "mission": "Black Marble",
+  "link": "https://doi.org/10.3390/rs15174257"
+ },
+ {
+  "title": "Implications of z \u2273 12 JWST galaxies for galaxy formation at high redshift",
+  "authors": "Qin et al.",
+  "venue": "Monthly Notices of the Royal Astronomical Society",
+  "year": 2023,
+  "domain": "Planetary & Astrophysics",
+  "mission": "JWST",
+  "link": "https://doi.org/10.1093/mnras/stad2448"
+ },
+ {
+  "title": "Mechanical Cryocooler Noise Observed in the Ground Testing of the Resolve X-ray Microcalorimeter Onboard XRISM",
+  "authors": "Imamura et al.",
+  "venue": "Journal of Low Temperature Physics",
+  "year": 2023,
+  "domain": "Planetary & Astrophysics",
+  "mission": "XRISM",
+  "link": "https://doi.org/10.1007/s10909-022-02935-1"
+ },
+ {
+  "title": "Modern air-sea flux distributions reduce uncertainty in the future ocean carbon sink",
+  "authors": "McKinley, Bennington, Meinshausen et al.",
+  "venue": "Environmental Research Letters",
+  "year": 2023,
+  "domain": "Earth",
+  "mission": "\u2014",
+  "link": "https://doi.org/10.1088/1748-9326/acc195"
+ },
+ {
+  "title": "Origin and Evolution of Jupiter's Trojan Asteroids",
+  "authors": "Bottke et al.",
+  "venue": "Space Science Reviews",
+  "year": 2023,
+  "domain": "Planetary & Astrophysics",
+  "mission": "Lucy",
+  "link": "https://doi.org/10.1007/s11214-023-01031-4"
+ },
+ {
+  "title": "SAGE III/ISS aerosol/cloud categorization and its impact on GloSSAC",
+  "authors": "Kovilakam et al.",
+  "venue": "Atmospheric Measurement Techniques",
+  "year": 2023,
+  "domain": "Earth",
+  "mission": "SAGE III/ISS",
+  "link": "https://doi.org/10.5194/amt-16-2709-2023"
+ },
+ {
+  "title": "The CHROMA cloud-top pressure retrieval algorithm for the Plankton, Aerosol, Cloud, ocean Ecosystem (PACE) satellite mission",
+  "authors": "Sayer et al.",
+  "venue": "Atmospheric Measurement Techniques",
+  "year": 2023,
+  "domain": "Earth",
+  "mission": "PACE",
+  "link": "https://doi.org/10.5194/amt-16-969-2023"
+ },
+ {
+  "title": "The PACE-MAPP algorithm: Simultaneous aerosol and ocean polarimeter products using coupled atmosphere-ocean vector radiative transfer",
+  "authors": "Stamnes et al.",
+  "venue": "Frontiers in Remote Sensing",
+  "year": 2023,
+  "domain": "Earth",
+  "mission": "PACE",
+  "link": "https://doi.org/10.3389/frsen.2023.1174672"
+ },
+ {
+  "title": "Tropospheric ozone data assimilation in the NASA GEOS Composition Forecast modeling system (GEOS-CF v2.0) using satellite data for ozone vertical profiles (MLS), total ozone columns (OMI), and thermal infrared radiances (AIRS, IASI)",
+  "authors": "Kelp, Keller, Wargan et al.",
+  "venue": "Environmental Research Letters",
+  "year": 2023,
+  "domain": "Earth",
+  "mission": "GEOS-CF / OMI / MLS / AIRS",
+  "link": "https://doi.org/10.1088/1748-9326/acf0b7"
+ },
+ {
+  "title": "Elevation change of the Antarctic Ice Sheet: 1985 to 2020",
+  "authors": "Nilsson et al.",
+  "venue": "Earth System Science Data",
+  "year": 2022,
+  "domain": "Earth",
+  "mission": "ICESat-2",
+  "link": "https://doi.org/10.5194/essd-14-3573-2022"
+ },
+ {
+  "title": "ICESat-2 Mission: Contributions of a spaceborne lidar to ocean science",
+  "authors": "Neumann et al.",
+  "venue": "OCEANS 2022, Hampton Roads",
+  "year": 2022,
+  "domain": "Earth",
+  "mission": "ICESat-2",
+  "link": "https://doi.org/10.1109/OCEANS47191.2022.9977260"
+ },
+ {
+  "title": "Identification of smoke and sulfuric acid aerosol in SAGE III/ISS extinction spectra",
+  "authors": "Knepp et al.",
+  "venue": "Atmospheric Measurement Techniques",
+  "year": 2022,
+  "domain": "Earth",
+  "mission": "SAGE III/ISS",
+  "link": "https://doi.org/10.5194/amt-15-5235-2022"
+ },
+ {
+  "title": "NASA's Black Marble Multiangle Nighttime Lights Temporal Composites",
+  "authors": "Wang et al.",
+  "venue": "IEEE Geoscience and Remote Sensing Letters",
+  "year": 2022,
+  "domain": "Earth",
+  "mission": "Black Marble",
+  "link": "https://doi.org/10.1109/lgrs.2022.3176616"
+ },
+ {
+  "title": "Stratospheric ozone trends for 1984\u20132021 in the SAGE II\u2013OSIRIS\u2013SAGE III/ISS composite dataset",
+  "authors": "Bognar et al.",
+  "venue": "Atmospheric Chemistry and Physics",
+  "year": 2022,
+  "domain": "Earth",
+  "mission": "SAGE III/ISS",
+  "link": "https://doi.org/10.5194/acp-22-9553-2022"
+ },
+ {
+  "title": "Annual Time Series of Global VIIRS Nighttime Lights Derived from Monthly Averages: 2012 to 2019",
+  "authors": "Elvidge et al.",
+  "venue": "Remote Sensing",
+  "year": 2021,
+  "domain": "Earth",
+  "mission": "VIIRS",
+  "link": "https://doi.org/10.3390/rs13050922"
+ },
+ {
+  "title": "Dual Geostationary Lightning Mapper Observations",
+  "authors": "Rudlosky et al.",
+  "venue": "Monthly Weather Review",
+  "year": 2021,
+  "domain": "Earth",
+  "mission": "GOES-R",
+  "link": "https://doi.org/10.1175/mwr-d-20-0242.1"
+ },
+ {
+  "title": "Lucy Mission to the Trojan Asteroids: Instrumentation and Encounter Concept of Operations",
+  "authors": "Olkin et al.",
+  "venue": "The Planetary Science Journal",
+  "year": 2021,
+  "domain": "Planetary & Astrophysics",
+  "mission": "Lucy",
+  "link": "https://doi.org/10.3847/psj/abf83f"
+ },
+ {
+  "title": "Lucy Mission to the Trojan Asteroids: Science Goals",
+  "authors": "Levison et al.",
+  "venue": "The Planetary Science Journal",
+  "year": 2021,
+  "domain": "Planetary & Astrophysics",
+  "mission": "Lucy",
+  "link": "https://doi.org/10.3847/psj/abf840"
+ },
+ {
+  "title": "Multi-Stranded Coronal Loops: Quantifying Strand Number and Heating Frequency from Simulated Solar Dynamics Observatory (SDO) Atmospheric Imaging Assembly (AIA) Observations",
+  "authors": "Williams et al.",
+  "venue": "Solar Physics",
+  "year": 2021,
+  "domain": "Heliophysics",
+  "mission": "SDO",
+  "link": "https://doi.org/10.1007/s11207-021-01848-8"
+ },
+ {
+  "title": "Revolutionary Air-Pollution Applications from Future Tropospheric Emissions: Monitoring of Pollution (TEMPO) Observations",
+  "authors": "Naeger et al.",
+  "venue": "Bulletin of the American Meteorological Society",
+  "year": 2021,
+  "domain": "Earth",
+  "mission": "TEMPO",
+  "link": "https://doi.org/10.1175/bams-d-21-0050.1"
+ },
+ {
+  "title": "Early results and validation of SAGE III-ISS ozone profile measurements from onboard the International Space Station",
+  "authors": "McCormick et al.",
+  "venue": "Atmospheric Measurement Techniques",
+  "year": 2020,
+  "domain": "Earth",
+  "mission": "SAGE III/ISS",
+  "link": "https://doi.org/10.5194/amt-13-1287-2020"
+ },
+ {
+  "title": "Landsat Analysis Ready Data for Global Land Cover and Land Cover Change Mapping",
+  "authors": "Potapov et al.",
+  "venue": "Remote Sensing",
+  "year": 2020,
+  "domain": "Earth",
+  "mission": "Landsat",
+  "link": "https://doi.org/10.3390/rs12030426"
+ },
+ {
+  "title": "Landslide Susceptibility Assessment of Wildfire Burnt Areas through Earth-Observation Techniques and a Machine Learning-Based Approach",
+  "authors": "Di Napoli et al.",
+  "venue": "Remote Sensing",
+  "year": 2020,
+  "domain": "Data Science",
+  "mission": "\u2014",
+  "link": "https://doi.org/10.3390/rs12152505"
+ },
+ {
+  "title": "Preliminary detection efficiency and false alarm rate assessment of the Geostationary Lightning Mapper on the GOES-16 satellite",
+  "authors": "Bateman et al.",
+  "venue": "Journal of Applied Remote Sensing",
+  "year": 2020,
+  "domain": "Earth",
+  "mission": "GOES-R",
+  "link": "https://doi.org/10.1117/1.jrs.14.032406"
+ },
+ {
+  "title": "Representation of Tropical Cyclones by the Modern-Era Retrospective Analysis for Research and Applications Version 2",
+  "authors": "Kim, Lee, Kim et al.",
+  "venue": "Asia-Pacific Journal of Atmospheric Sciences",
+  "year": 2020,
+  "domain": "Earth",
+  "mission": "MERRA-2",
+  "link": "https://doi.org/10.1007/s13143-019-00169-y"
+ },
+ {
+  "title": "The Anomalous 2019 Antarctic Ozone Hole in the GEOS Constituent Data Assimilation System With MLS Observations",
+  "authors": "Wargan, Weir, Manney et al.",
+  "venue": "Journal of Geophysical Research: Atmospheres",
+  "year": 2020,
+  "domain": "Earth",
+  "mission": "GEOS / Aura MLS",
+  "link": "https://doi.org/10.1029/2020jd033335"
+ },
+ {
+  "title": "The Framework for Assimilating All-Sky GPM Microwave Imager Brightness Temperature Data in the NASA GEOS Data Assimilation System",
+  "authors": "Kim, Jin, El Akkraoui et al.",
+  "venue": "Monthly Weather Review",
+  "year": 2020,
+  "domain": "Earth",
+  "mission": "GPM / GEOS",
+  "link": "https://doi.org/10.1175/mwr-d-19-0100.1"
+ },
+ {
+  "title": "Worldwide validation of CAMS and MERRA-2 reanalysis aerosol optical depth products using 15 years of AERONET observations",
+  "authors": "Gueymard, Yang",
+  "venue": "Atmospheric Environment",
+  "year": 2020,
+  "domain": "Earth",
+  "mission": "MERRA-2",
+  "link": "https://doi.org/10.1016/j.atmosenv.2019.117216"
+ },
+ {
+  "title": "Assessment of ICESat-2 Ice Sheet Surface Heights, Based on Comparisons Over the Interior of the Antarctic Ice Sheet",
+  "authors": "Brunt et al.",
+  "venue": "Geophysical Research Letters",
+  "year": 2019,
+  "domain": "Earth",
+  "mission": "ICESat-2",
+  "link": "https://doi.org/10.1029/2019gl084886"
+ },
+ {
+  "title": "Compositional Constraints for Lucy Mission Trojan Asteroids via Near-infrared Spectroscopy",
+  "authors": "Sharkey et al.",
+  "venue": "The Astronomical Journal",
+  "year": 2019,
+  "domain": "Planetary & Astrophysics",
+  "mission": "Lucy",
+  "link": "https://doi.org/10.3847/1538-3881/ab46c0"
+ },
+ {
+  "title": "Geostationary Lightning Mapper and Earth Networks Lightning Detection Over the Contiguous United States and Dependence on Flash Characteristics",
+  "authors": "Marchand et al.",
+  "venue": "Journal of Geophysical Research: Atmospheres",
+  "year": 2019,
+  "domain": "Earth",
+  "mission": "GOES-R",
+  "link": "https://doi.org/10.1029/2019jd031039"
+ },
+ {
+  "title": "MODIS Aqua Reflective Solar Band Calibration for NASA's R2018 Ocean Color Products",
+  "authors": "Lee, Meister, Franz",
+  "venue": "Remote Sensing",
+  "year": 2019,
+  "domain": "Earth",
+  "mission": "MODIS Aqua",
+  "link": "https://doi.org/10.3390/rs11192187"
+ },
+ {
+  "title": "The ATL08 land and vegetation product for the ICESat-2 Mission",
+  "authors": "Neuenschwander et al.",
+  "venue": "Remote Sensing of Environment",
+  "year": 2019,
+  "domain": "Earth",
+  "mission": "ICESat-2",
+  "link": "https://doi.org/10.1016/J.RSE.2018.11.005"
+ },
+ {
+  "title": "Stratosphere\u2013troposphere separation of nitrogen dioxide columns from the TEMPO geostationary satellite instrument",
+  "authors": "Geddes et al.",
+  "venue": "Atmospheric Measurement Techniques",
+  "year": 2018,
+  "domain": "Earth",
+  "mission": "TEMPO",
+  "link": "https://doi.org/10.5194/amt-11-6271-2018"
+ },
+ {
+  "title": "Assimilation for skin SST in the NASA GEOS atmospheric data assimilation system",
+  "authors": "Akella, Todling, Suarez",
+  "venue": "Quarterly Journal of the Royal Meteorological Society",
+  "year": 2017,
+  "domain": "Earth",
+  "mission": "GEOS",
+  "link": "https://doi.org/10.1002/qj.2988"
+ },
+ {
+  "title": "Characterization and correction of OMPS nadir mapper measurements for ozone profile retrievals",
+  "authors": "Bak et al.",
+  "venue": "Atmospheric Measurement Techniques",
+  "year": 2017,
+  "domain": "Earth",
+  "mission": "OMPS",
+  "link": "https://doi.org/10.5194/amt-10-4373-2017"
+ },
+ {
+  "title": "Comparison of Elevation Change Detection Methods From ICESat Altimetry Over the Greenland Ice Sheet",
+  "authors": "Felikson et al.",
+  "venue": "IEEE Transactions on Geoscience and Remote Sensing",
+  "year": 2017,
+  "domain": "Earth",
+  "mission": "ICESat",
+  "link": "https://doi.org/10.1109/tgrs.2017.2709303"
+ },
+ {
+  "title": "Global trends in ocean phytoplankton: a new assessment using revised ocean colour data",
+  "authors": "Gregg, Rousseaux, Franz",
+  "venue": "Remote Sensing Letters",
+  "year": 2017,
+  "domain": "Earth",
+  "mission": "SeaWiFS / MODIS",
+  "link": "https://doi.org/10.1080/2150704x.2017.1354263"
+ },
+ {
+  "title": "New-generation NASA Aura Ozone Monitoring Instrument (OMI) volcanic SO2 dataset: algorithm description, initial results, and continuation with the Suomi-NPP Ozone Mapping and Profiler Suite (OMPS)",
+  "authors": "Li et al.",
+  "venue": "Atmospheric Measurement Techniques",
+  "year": 2017,
+  "domain": "Earth",
+  "mission": "OMI / OMPS",
+  "link": "https://doi.org/10.5194/amt-10-445-2017"
+ },
+ {
+  "title": "Size-resolved particulate matter concentrations derived from 4.4 km-resolution size-fractionated Multi-angle Imaging SpectroRadiometer (MISR) aerosol optical depth over Southern California",
+  "authors": "Franklin et al.",
+  "venue": "Remote Sensing of Environment",
+  "year": 2017,
+  "domain": "Earth",
+  "mission": "MISR / MAIA",
+  "link": "https://doi.org/10.1016/j.rse.2017.05.002"
+ },
+ {
+  "title": "The Ice, Cloud, and land Elevation Satellite-2 (ICESat-2): Science requirements, concept, and implementation",
+  "authors": "Markus et al.",
+  "venue": "Remote Sensing of Environment",
+  "year": 2017,
+  "domain": "Earth",
+  "mission": "ICESat-2",
+  "link": "https://doi.org/10.1016/J.RSE.2016.12.029"
+ },
+ {
+  "title": "The MERRA-2 Aerosol Reanalysis, 1980 Onward. Part I: System Description and Data Assimilation Evaluation",
+  "authors": "Randles, da Silva, Buchard et al.",
+  "venue": "Journal of Climate",
+  "year": 2017,
+  "domain": "Earth",
+  "mission": "MERRA-2",
+  "link": "https://doi.org/10.1175/jcli-d-16-0609.1"
+ },
+ {
+  "title": "The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2)",
+  "authors": "Gelaro, McCarty, Su\u00e1rez et al.",
+  "venue": "Journal of Climate",
+  "year": 2017,
+  "domain": "Earth",
+  "mission": "MERRA-2",
+  "link": "https://doi.org/10.1175/jcli-d-16-0758.1"
+ },
+ {
+  "title": "Evaluation of the surface PM2.5 in Version 1 of the NASA MERRA Aerosol Reanalysis over the United States",
+  "authors": "Buchard, da Silva, Randles et al.",
+  "venue": "Atmospheric Environment",
+  "year": 2016,
+  "domain": "Earth",
+  "mission": "MERRA-2",
+  "link": "https://doi.org/10.1016/j.atmosenv.2015.11.004"
+ },
+ {
+  "title": "Tropospheric column ozone response to ENSO in GEOS-5 assimilation of OMI and MLS ozone data",
+  "authors": "Olsen, Wargan, Pawson",
+  "venue": "Atmospheric Chemistry and Physics",
+  "year": 2016,
+  "domain": "Earth",
+  "mission": "GEOS-5 / OMI / MLS",
+  "link": "https://doi.org/10.5194/acp-16-7091-2016"
+ },
+ {
+  "title": "Using the OMI aerosol index and absorption aerosol optical depth to evaluate the NASA MERRA Aerosol Reanalysis",
+  "authors": "Buchard, da Silva, Colarco et al.",
+  "venue": "Atmospheric Chemistry and Physics",
+  "year": 2015,
+  "domain": "Earth",
+  "mission": "OMI / MERRA-2",
+  "link": "https://doi.org/10.5194/acp-15-5743-2015"
+ },
+ {
+  "title": "Continuous change detection and classification of land cover using all available Landsat data",
+  "authors": "Zhu et al.",
+  "venue": "Remote Sensing of Environment",
+  "year": 2014,
+  "domain": "Earth",
+  "mission": "Landsat",
+  "link": "https://doi.org/10.1016/j.rse.2014.01.011"
+ },
+ {
+  "title": "First estimates of global free-tropospheric NO2 abundances derived using a cloud-slicing technique applied to satellite observations from the Aura Ozone Monitoring Instrument (OMI)",
+  "authors": "Choi et al.",
+  "venue": "Atmospheric Chemistry and Physics",
+  "year": 2014,
+  "domain": "Earth",
+  "mission": "OMI",
+  "link": "https://doi.org/10.5194/acp-14-10565-2014"
+ },
+ {
+  "title": "Inferred basal friction and surface mass balance of the Northeast Greenland Ice Stream using data assimilation of ICESat",
+  "authors": "Larour et al.",
+  "venue": "The Cryosphere",
+  "year": 2014,
+  "domain": "Earth",
+  "mission": "ICESat",
+  "link": "https://doi.org/10.5194/tc-8-2335-2014"
+ },
+ {
+  "title": "Monitoring high-ozone events in the US Intermountain West using TEMPO geostationary satellite observations",
+  "authors": "Zoogman et al.",
+  "venue": "Atmospheric Chemistry and Physics",
+  "year": 2014,
+  "domain": "Earth",
+  "mission": "TEMPO",
+  "link": "https://doi.org/10.5194/acp-14-6261-2014"
+ },
+ {
+  "title": "Postlaunch performance of the Suomi National Polar-orbiting Partnership Ozone Mapping and Profiler Suite (OMPS) nadir sensors",
+  "authors": "Seftor et al.",
+  "venue": "Journal of Geophysical Research: Atmospheres",
+  "year": 2014,
+  "domain": "Earth",
+  "mission": "OMPS",
+  "link": "https://doi.org/10.1002/2013jd020472"
+ }
+]
