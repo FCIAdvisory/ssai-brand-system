@@ -4,22 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mission Operations &amp; Data Systems — SSAI</title>
-<meta name="description" content="SSAI operates the missions, runs the archives, and builds the software that turns a stream of bits into science the world can use — across mission operations, DAAC data systems, AI/ML, modeling, and high-performance computing.">
+<meta name="description" content="SSAI flies the missions and turns the downlink into science: spacecraft and instrument operations, NASA DAACs, mission software, data assimilation, AI/ML, modeling and high-performance computing — the unbroken chain from orbit to answer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="assets/site.css" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
+
 <header class="nav" id="nav">
   <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc."></a>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
   <nav class="nav-links" id="navLinks">
-    <a class="nav-link" href="company.html">Company</a>
-    <a class="nav-link" href="science.html">Science</a>
-    <a class="nav-link" href="instruments.html">Instruments</a>
-    <a class="nav-link active" href="mission-operations-data.html">Mission Ops &amp; Data</a>
+    <div class="nav-item has-sub"><a class="nav-link" href="company.html">Company</a><div class="nav-sub"><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="science.html">Science</a><div class="nav-sub"><a href="science.html">Overview</a><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link active" href="instruments.html">Instruments</a><div class="nav-sub"><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="careers.html">Careers</a><div class="nav-sub"><a href="careers.html">Overview</a><a href="benefits.html">Benefits</a><a href="life-at-ssai.html">Life at SSAI</a></div></div>
     <a class="nav-link" href="partner.html">Partner</a>
-    <a class="nav-link" href="careers.html">Careers</a>
     <a class="nav-link" href="newsroom.html">Newsroom</a>
     <a class="nav-link" href="contact.html">Contact</a>
     <a class="nav-link nav-cta" href="signin.html">Sign In</a>
@@ -28,63 +29,99 @@
 
 <main>
 
-  <!-- ============ HERO ============ -->
+  <!-- ===================== HERO ===================== -->
   <section class="phero">
     <div class="container">
       <span class="kick">Mission Operations &amp; Data Systems</span>
-      <h1>Where raw signal becomes <span class="em">trusted data</span></h1>
-      <p class="sub">An instrument is only as valuable as the data it returns. SSAI operates the missions, runs the archives, and builds the software that turns a stream of bits into science the world can use. We provide complete software life-cycle services — requirements, development, testing, deployment, and long-term maintenance — for spaceflight, airborne, and ground systems.</p>
+      <h1>From orbit <span class="em">to answer.</span></h1>
+      <p class="sub">A spacecraft only matters for what it sends home. SSAI flies the missions and then turns the downlink into something a scientist can use — commanding instruments, capturing the raw stream, calibrating it, archiving it, and serving it to the world. For nearly fifty years we have run the consoles, written the pipelines, and kept the data flowing long after launch day.</p>
       <div class="btn-row">
-        <a class="btn" href="#capabilities">Explore the stack</a>
-        <a class="btn ghost" href="partner.html">Partner with us</a>
+        <a class="btn" href="data-science-ai.html">Where the data becomes intelligence</a>
+        <a class="btn ghost" href="instruments.html">See the instruments we operate</a>
       </div>
     </div>
   </section>
 
-  <!-- ============ THE CAPABILITY STACK INTRO ============ -->
-  <section class="section" id="capabilities">
+  <!-- ===================== STATS BAR ===================== -->
+  <section class="section tight">
+    <div class="container">
+      <div class="stats">
+        <div class="stat"><b>150+</b><span>Earth &amp; Space Science Missions Supported</span></div>
+        <div class="stat"><b>~48</b><span>Years Operating Alongside NASA</span></div>
+        <div class="stat"><b>24/7</b><span>Mission Operations &amp; Anomaly Response</span></div>
+        <div class="stat"><b>Petabytes</b><span>Archived, Curated &amp; Distributed</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===================== THE CHAIN / OVERVIEW ===================== -->
+  <section class="section alt">
     <div class="container">
       <div class="lede-grid">
-        <div>
-          <span class="eyebrow">The capability stack</span>
-          <h2 class="dtitle mt-s">One discipline, end to <span class="em">end</span></h2>
-        </div>
+        <span class="eyebrow">The unbroken chain</span>
         <div class="body-col">
-          <p>From the moment a spacecraft reaches orbit to the moment a researcher opens a finished product, SSAI is in the loop. Our engineers keep instruments healthy on-orbit, define how their data is formatted and archived, and write the applications that put that data in front of scientists and citizens alike.</p>
-          <p>Six connected capabilities — mission operations, data systems and DAACs, software and applications, AI and machine learning, modeling and simulation, and high-performance computing — form a single continuous pipeline from raw sensor counts to science the world can trust.</p>
+          <p class="lead">Every observation has a long journey between the sensor and the published result. We are the team that keeps it intact end to end.</p>
+          <p>A photon strikes a detector in low-Earth orbit or a million miles out at L1. Seconds later that signal is a packet on a ground-station antenna; minutes later it is telemetry on a console; hours later it is a calibrated, geolocated science product in an archive; days later it is a figure in a paper or a feed driving a weather forecast. SSAI works at every link in that chain — and our value is that none of the links break.</p>
+          <p>We do not own the spacecraft and we do not build the flight hardware — NASA, NOAA, and their prime contractors do. What we provide is the operational discipline and the software that turn an asset on orbit into a dataset the public can trust: mission planning and command, real-time operations, calibration and validation, the Distributed Active Archive Centers that hold the record, and the modeling and machine-learning systems that extract meaning from it.</p>
         </div>
       </div>
+    </div>
+  </section>
 
+  <!-- ===================== CONTROL ROOM IMAGE ===================== -->
+  <section class="section tight">
+    <div class="container">
+      <div class="figure wide">
+        <img src="assets/images/site/people/jsc-white-flight-control-room.jpg" alt="Flight controllers at console workstations in a NASA mission control room beneath a world-map status wall" loading="lazy">
+        <span class="cred">NASA / Johnson Space Center</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHAT WE DO — CARDS ===================== -->
+  <section class="section">
+    <div class="container">
+      <span class="kick">Capabilities</span>
+      <h2 class="dtitle">What it takes to <span class="em">keep a mission flying.</span></h2>
+      <p class="lead">Six disciplines, one continuous workflow — from the command sent up to the science sent out.</p>
       <div class="grid grid-3">
         <div class="card">
-          <span class="n">01 — Operate</span>
-          <h3>Mission Operations</h3>
-          <p>Integration &amp; test, payload activation, and on-orbit testing for national science missions — keeping instruments healthy in space.</p>
+          <div class="n">01</div>
+          <h3>Spacecraft &amp; Instrument Operations</h3>
+          <p>Mission planning, command and control, health-and-safety monitoring, and anomaly response — keeping observatories and their instruments healthy, pointed, and productive across years on orbit.</p>
+          <span class="tag">Flight Operations</span>
         </div>
         <div class="card">
-          <span class="n">02 — Archive</span>
-          <h3>Data Systems &amp; DAACs</h3>
-          <p>Full ingest, archive, and distribution pipelines, including DAAC operations and direct-broadcast processing.</p>
+          <div class="n">02</div>
+          <h3>Ground Data Systems</h3>
+          <p>The pipelines that ingest the downlink, build Level 0 through Level 4 products, and move terabytes a day from antenna to archive without losing a packet or a calibration.</p>
+          <span class="tag">Pipelines</span>
         </div>
         <div class="card">
-          <span class="n">03 — Build</span>
-          <h3>Software &amp; Applications</h3>
-          <p>The development teams behind some of NASA's most visible and most-used science software.</p>
+          <div class="n">03</div>
+          <h3>DAACs &amp; Data Stewardship</h3>
+          <p>We help operate NASA's Distributed Active Archive Centers — cataloging, preserving, and freely distributing decades of Earth and space science data to researchers worldwide.</p>
+          <span class="tag">Archive &amp; Distribution</span>
         </div>
         <div class="card">
-          <span class="n">04 — Learn</span>
-          <h3>AI / Machine Learning</h3>
-          <p>A dedicated computer-science practice advancing AI and ML for Earth and space science.</p>
+          <div class="n">04</div>
+          <h3>Calibration &amp; Validation</h3>
+          <p>Field campaigns, instrument cross-comparison, and rigorous cal/val that turn raw counts into trustworthy geophysical measurements scientists can stand behind.</p>
+          <span class="tag">Cal / Val</span>
         </div>
         <div class="card">
-          <span class="n">05 — Model</span>
-          <h3>Modeling &amp; Simulation</h3>
-          <p>Global reanalysis, mesoscale and multi-scale modeling, and immersive scientific visualization.</p>
+          <div class="n">05</div>
+          <h3>Mission Software Engineering</h3>
+          <p>Custom flight and ground software, data systems, and operations tooling — built, tested, and sustained to the standards that 24/7 missions demand.</p>
+          <span class="tag">Software</span>
         </div>
         <div class="card">
-          <span class="n">06 — Compute</span>
-          <h3>HPC &amp; Networking</h3>
-          <p>The high-performance computing and secure networking that science at this scale demands.</p>
+          <div class="n">06</div>
+          <h3>Modeling, Assimilation &amp; HPC</h3>
+          <p>Data assimilation, Earth-system modeling, and high-performance computing that fuse billions of observations into coherent, predictive pictures of the planet.</p>
+          <span class="tag">HPC &amp; Models</span>
         </div>
       </div>
     </div>
@@ -92,198 +129,144 @@
 
   <div class="divider"></div>
 
-  <!-- ============ MISSION OPERATIONS ============ -->
-  <section class="section alt" id="operations">
-    <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">01 — Operate</span>
-          <h2 class="dtitle mt-s">Mission operations that don't <span class="em">sleep</span></h2>
-        </div>
-        <div class="body-col">
-          <p>SSAI staff manage integration and test, payload activation, and on-orbit testing for national science missions. Our engineers fill roles including Integration &amp; Test Manager and Deputy Mission Operations Manager — supporting orbit-raising, payload activation, and the daily work of keeping instruments healthy in space.</p>
-          <p>That includes the GOES program at NOAA's Satellite Operations Facility in Suitland, Maryland, where the difference between a healthy instrument and a lost one is measured in vigilance, not luck.</p>
+  <!-- ===================== CENTERPIECE — ORBITS ===================== -->
+  <section class="cp-section section">
+    <div class="container cp-split">
+      <div>
+        <span class="kick">Eyes that never blink</span>
+        <h2 class="dtitle">A fleet in <span class="em">constant motion.</span></h2>
+        <p class="lead">At any given moment, dozens of the missions we support are crossing the sky — heliophysics observatories at L1, Earth-science platforms in sun-synchronous orbit, geostationary weather satellites holding their station, and deep-space explorers carrying SSAI-operated instruments toward distant targets.</p>
+        <p>Each one is a node in a living network of ground stations, mission operations centers, and data systems. Our job is to keep every node talking — scheduling contacts, sequencing commands, watching the telemetry, and capturing every bit the moment it comes home. The choreography never stops, because the science never sleeps.</p>
+        <div class="btn-row">
+          <a class="btn" href="missions.html">Browse the mission catalog</a>
+          <a class="btn ghost" href="#archive">How the data is kept</a>
         </div>
       </div>
-
-      <ul class="flist">
-        <li>Integration &amp; test management for national science missions</li>
-        <li>Payload activation and on-orbit testing</li>
-        <li>Orbit-raising and early-operations support</li>
-        <li>Deputy Mission Operations Manager and Integration &amp; Test Manager roles</li>
-        <li>GOES program support at NOAA's Satellite Operations Facility, Suitland, MD</li>
-      </ul>
+      <div>
+        <div class="centerpiece" data-variant="orbits"></div>
+        <div class="cp-cap">A continuous, multi-orbit operations picture — the kind of common operating view SSAI teams maintain across NASA and NOAA missions.</div>
+      </div>
     </div>
   </section>
 
-  <!-- ============ DATA SYSTEMS & DAACs ============ -->
-  <section class="section" id="data-systems">
-    <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">02 — Archive</span>
-          <h2 class="dtitle mt-s">Data systems &amp; <span class="em">DAACs</span></h2>
-        </div>
-        <div class="body-col">
-          <p>SSAI operates the Atmospheric Science Data Center (ASDC) Distributed Active Archive Center at NASA Langley for the TEMPO and MAIA missions — defining data-product formats and metadata templates and running the full ingest, archive, and distribution pipeline.</p>
-          <p>We pioneered direct-broadcast processing for OMI and OMPS, the first Goddard package to take raw sensor data all the way through to finished products, and we disseminate NASA data through portals including the LAADS DAAC.</p>
-        </div>
-      </div>
+  <div class="divider"></div>
 
-      <div class="grid grid-3">
-        <div class="card feature">
-          <span class="n">ASDC DAAC — NASA Langley</span>
-          <h3>TEMPO &amp; MAIA</h3>
-          <p>Operating the Atmospheric Science Data Center, defining product formats and metadata templates, and running ingest, archive, and distribution end to end.</p>
-          <span class="tag">Full pipeline</span>
+  <!-- ===================== OPERATIONS — SPLIT ===================== -->
+  <section class="section alt">
+    <div class="container">
+      <div class="split">
+        <div class="body-col">
+          <span class="eyebrow">On the console</span>
+          <h2 class="dtitle">Operations that <span class="em">cannot pause.</span></h2>
+          <p>A satellite passes overhead for only minutes at a time. In that window, an operations team has to uplink the day's commands, confirm the instrument is healthy, and pull down everything recorded since the last contact — flawlessly, on a schedule set by orbital mechanics rather than by office hours.</p>
+          <p>SSAI staffs and supports mission operations across NASA centers, from Earth-observing platforms to deep-space science missions. Our controllers monitor spacecraft health and safety, plan and execute observation timelines, respond to anomalies, and coordinate with ground stations around the world. When a mission has waited years and billions of dollars to reach its target, there is no second pass — and that is exactly the standard we operate to.</p>
+          <ul class="flist">
+            <li>Real-time command, control, and telemetry monitoring</li>
+            <li>Observation planning, scheduling, and sequencing</li>
+            <li>Anomaly detection, response, and recovery</li>
+            <li>Ground-station coordination and contact management</li>
+          </ul>
         </div>
-        <div class="card">
-          <span class="n">Direct broadcast</span>
-          <h3>OMI &amp; OMPS</h3>
-          <p>The first Goddard package to carry raw sensor data all the way through to finished products in near-real time.</p>
-          <span class="tag">First of its kind</span>
-        </div>
-        <div class="card">
-          <span class="n">Dissemination</span>
-          <h3>LAADS DAAC</h3>
-          <p>Delivering NASA data to the world through trusted public archive portals and distribution services.</p>
-          <span class="tag">Public access</span>
+        <div class="figure tall">
+          <img src="assets/images/site/people/marshall-twin-control-rooms.jpg" alt="Engineers monitoring science and landing operations at glowing consoles facing a mission data wall in a NASA control room" loading="lazy">
+          <span class="cred">NASA / Marshall Space Flight Center</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ SOFTWARE & APPLICATIONS ============ -->
-  <section class="section alt" id="software">
+  <!-- ===================== DATA SYSTEMS & DAACs — SPLIT REV ===================== -->
+  <section class="section" id="archive">
     <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">03 — Build</span>
-          <h2 class="dtitle mt-s">Software &amp; <span class="em">applications</span></h2>
-        </div>
+      <div class="split rev">
         <div class="body-col">
-          <p>SSAI is home to the development teams behind some of NASA's most visible science software — tools used by millions of people, in classrooms and operations centers and on phones around the world.</p>
-          <p>From global satellite imagery to interactive model visualization to citizen science, our applications turn archived data into something anyone can explore.</p>
+          <span class="eyebrow">The archive</span>
+          <h2 class="dtitle">Decades of data, <span class="em">open to all.</span></h2>
+          <p>A mission's instruments may operate for a decade, but the data it produces must outlive it by generations. SSAI helps operate the data systems and NASA Distributed Active Archive Centers (DAACs) that ingest the downlink, generate science products at every processing level, and preserve the record so that a measurement made today can be reanalyzed fifty years from now.</p>
+          <p>That stewardship is what makes Earth and space science cumulative. The same archive that holds today's observation also holds the baseline that proves how the planet has changed — and it is freely distributed to researchers, agencies, and the public worldwide. We treat every byte as part of an irreplaceable scientific record.</p>
+          <ul class="flist">
+            <li>Level 0&ndash;4 product generation and reprocessing</li>
+            <li>Catalog, metadata, and provenance management</li>
+            <li>Long-term preservation and open distribution</li>
+            <li>Data quality, versioning, and integrity assurance</li>
+          </ul>
         </div>
-      </div>
-
-      <div class="grid grid-4">
-        <div class="card">
-          <span class="n">Imagery</span>
-          <h3>Worldview &amp; GIBS</h3>
-          <p>The Global Imagery Browse Services and Worldview put global satellite imagery in the hands of millions.</p>
-        </div>
-        <div class="card">
-          <span class="n">GMAO</span>
-          <h3>FLUID</h3>
-          <p>The Framework for Live User-Invoked Data drives interactive visualization of GMAO's models.</p>
-        </div>
-        <div class="card">
-          <span class="n">Citizen science</span>
-          <h3>GLOBE</h3>
-          <p>The GLOBE application connects citizen scientists across 125 countries.</p>
-        </div>
-        <div class="card">
-          <span class="n">NASA Langley</span>
-          <h3>OPMF</h3>
-          <p>The Open Project Management Framework, built by SSAI for NASA Langley.</p>
-        </div>
-      </div>
-
-      <div class="chips">
-        <span class="chip"><b>Worldview</b> · global imagery</span>
-        <span class="chip"><b>GIBS</b> · browse services</span>
-        <span class="chip"><b>FLUID</b> · model visualization</span>
-        <span class="chip"><b>GLOBE</b> · 125 countries</span>
-        <span class="chip"><b>OPMF</b> · project management</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ AI / MACHINE LEARNING ============ -->
-  <section class="section" id="ai-ml">
-    <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">04 — Learn</span>
-          <h2 class="dtitle mt-s">AI / machine <span class="em">learning</span></h2>
-        </div>
-        <div class="body-col">
-          <p>SSAI runs a dedicated computer-science practice advancing artificial intelligence and machine learning for Earth and space science — and leads the agency-wide Earth Science Data System Working Groups (ESDSWG).</p>
-          <p>Our work includes machine-learning models that retrieve ocean chlorophyll from OMI ultraviolet and visible measurements, matching established sensors with improved spatial coverage, and accurate satellite retrievals across TROPOMI, GEMS, PACE, and TEMPO.</p>
-        </div>
-      </div>
-
-      <div class="grid grid-2">
-        <div class="card feature">
-          <span class="n">Applied ML</span>
-          <h3>Ocean chlorophyll retrievals</h3>
-          <p>Machine-learning models retrieve ocean chlorophyll from OMI ultraviolet and visible measurements — matching established sensors with improved spatial coverage.</p>
-        </div>
-        <div class="card">
-          <span class="n">Cross-sensor science</span>
-          <h3>Accurate satellite retrievals</h3>
-          <p>Reliable retrievals across TROPOMI, GEMS, PACE, and TEMPO, advancing the precision of space-based Earth observation.</p>
-        </div>
-      </div>
-
-      <div class="chips">
-        <span class="chip">Leading the agency-wide <b>ESDSWG</b></span>
-        <span class="chip"><b>TROPOMI</b></span>
-        <span class="chip"><b>GEMS</b></span>
-        <span class="chip"><b>PACE</b></span>
-        <span class="chip"><b>TEMPO</b></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ MODELING, SIMULATION & HPC ============ -->
-  <section class="section alt" id="modeling-hpc">
-    <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">05 / 06 — Model &amp; Compute</span>
-          <h2 class="dtitle mt-s">Modeling, simulation &amp; <span class="em">high-performance computing</span></h2>
-        </div>
-        <div class="body-col">
-          <p>SSAI supports NASA's Global Modeling and Assimilation Office, where our team contributed to MERRA-2 — a model–data fusion reanalysis providing a continuous atmospheric record since 1980, recognized with a 2019 NASA Agency Honor Award (Group Achievement).</p>
-          <p>We develop immersive scientific visualization, run global mesoscale and multi-scale modeling, and manage the high-performance computing and networking that science at this scale demands — earning NASA Langley Authorization to Operate for the STARSS Science Support Network.</p>
-        </div>
-      </div>
-
-      <div class="stats">
-        <div class="stat"><b>1980</b><span>Continuous atmospheric record since — via MERRA-2 reanalysis</span></div>
-        <div class="stat"><b>2019</b><span>NASA Agency Honor Award, Group Achievement</span></div>
-        <div class="stat"><b>ATO</b><span>NASA Langley Authorization to Operate — STARSS network</span></div>
-      </div>
-
-      <div class="grid grid-3">
-        <div class="card">
-          <span class="n">GMAO</span>
-          <h3>MERRA-2 reanalysis</h3>
-          <p>A model–data fusion reanalysis providing a continuous atmospheric record since 1980 — an Honor-Award-winning contribution.</p>
-        </div>
-        <div class="card">
-          <span class="n">Simulation</span>
-          <h3>Mesoscale &amp; multi-scale modeling</h3>
-          <p>Global mesoscale and multi-scale modeling paired with immersive scientific visualization.</p>
-        </div>
-        <div class="card">
-          <span class="n">Infrastructure</span>
-          <h3>STARSS HPC &amp; networking</h3>
-          <p>High-performance computing and the secure Science Support Network behind science at this scale, with NASA Langley ATO.</p>
+        <div class="figure tall">
+          <img src="assets/images/site/people/nccs-data-exploration-theater.jpg" alt="A multi-screen visualization wall at the NASA Center for Climate Simulation displaying a high-resolution global Earth simulation" loading="lazy">
+          <span class="cred">NASA / Goddard Space Flight Center</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ CLOSING BAND ============ -->
-  <section class="band">
-    <div class="container band-cta">
-      <h2>From a stream of bits to <span class="em">science the world can use</span></h2>
+  <div class="divider"></div>
+
+  <!-- ===================== MODELING / HPC / AI ===================== -->
+  <section class="section alt">
+    <div class="container">
+      <div class="lede-grid">
+        <span class="eyebrow">Modeling, assimilation &amp; HPC</span>
+        <div class="body-col">
+          <p class="lead">Raw observations are scattered and incomplete. Modeling and data assimilation weave them into a single, coherent picture of the Earth and the space around it.</p>
+          <p>Some of the most demanding computing in science happens after the data lands. Through data assimilation, billions of individual measurements — from satellites, aircraft, balloons, ships, and ground stations — are fused with physics-based models to reconstruct the full state of the atmosphere and ocean, even where no instrument was looking. SSAI scientists and engineers build and run these systems on high-performance computing facilities, producing reanalyses and forecasts that anchor climate and weather science.</p>
+          <p>Our heritage here is concrete: SSAI played a central role in <strong>MERRA-2</strong>, NASA's modern-era atmospheric reanalysis, recognized with a <strong>2019 NASA Agency Honor Award</strong>. Increasingly, that work is amplified by AI and machine learning — accelerating modeling, sharpening anomaly detection, and pulling signal from petabyte-scale archives faster than any team could by hand.</p>
+          <div class="btn-row">
+            <a class="btn" href="data-science-ai.html">Explore Data Science &amp; AI</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HPC / HYPERWALL GALLERY ===================== -->
+  <section class="section tight">
+    <div class="container">
+      <span class="kick">Where the data is seen</span>
+      <h2 class="dtitle">Petabytes, made <span class="em">legible.</span></h2>
+      <p class="lead">High-performance computing and high-resolution visualization let scientists walk inside a dataset — and find the pattern a single chart would hide.</p>
+      <div class="media-grid media-2">
+        <div class="figure">
+          <img src="assets/images/site/people/nas-hyperwall-visualization.jpg" alt="Scientists studying a galaxy dataset on the hyperwall visualization system at the NASA Advanced Supercomputing facility" loading="lazy">
+          <span class="cred">NASA / Ames Research Center</span>
+        </div>
+        <div class="figure">
+          <img src="assets/images/site/people/artemis-firing-room-launch-team.jpg" alt="Members of a NASA launch team working their consoles during a terminal count simulation in a firing room" loading="lazy">
+          <span class="cred">NASA / Kennedy Space Center</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===================== PROOF / IMPACT — CHIPS + COPY ===================== -->
+  <section class="section">
+    <div class="container">
+      <div class="lede-grid">
+        <span class="eyebrow">When operations matter</span>
+        <div class="body-col">
+          <p class="lead">The proof of good operations is not in a dashboard — it is in the forecasts that hold, the records that endure, and the people who are reached because the data arrived.</p>
+          <p>Reliable mission operations and data systems are invisible when they work and catastrophic when they fail. Across decades of supporting NOAA and NASA, SSAI has helped keep operational missions running where the stakes are real — including the satellite systems behind NOAA's search-and-rescue capability, which has been credited with aiding roughly <strong>7,000 lives over more than 25 years</strong>. Behind every one of those rescues is a chain of operations, downlink, and data processing that simply had to work.</p>
+          <div class="chips">
+            <div class="chip"><b>SARSAT</b> ~7,000 lives aided, 25+ yrs (NOAA)</div>
+            <div class="chip"><b>MERRA-2</b> NASA atmospheric reanalysis</div>
+            <div class="chip"><b>GOES-R</b> Operational weather operations</div>
+            <div class="chip"><b>Black Marble</b> Nighttime-lights data product</div>
+            <div class="chip"><b>CMMI L3</b> &amp; ISO 9001:2015 processes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CLOSING BAND ===================== -->
+  <section class="band band-cta">
+    <div class="container">
+      <h2>The mission ends. <span class="em">The data is forever.</span></h2>
+      <p>Once the downlink is captured, calibrated, and archived, the real work begins — turning the view from space into intelligence on the ground.</p>
       <div class="btn-row">
-        <a class="btn" href="partner.html">Partner with us</a>
-        <a class="btn ghost" href="instruments.html">See the instruments</a>
+        <a class="btn" href="data-science-ai.html">Continue to Data Science &amp; AI</a>
+        <a class="btn ghost" href="partner.html">Partner with SSAI</a>
       </div>
     </div>
   </section>
@@ -292,21 +275,16 @@
 
 <footer class="footer">
   <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="assets/logo/ssai-white-full.png" alt="SSAI">
-      <p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p>
-    </div>
-    <div class="footer-col"><h4>Company</h4><a href="company.html">About</a><a href="company.html#history">History</a><a href="company.html#leadership">Leadership</a><a href="company.html#values">Values</a></div>
-    <div class="footer-col"><h4>Science</h4><a href="science.html#earth">Earth</a><a href="science.html#heliophysics">Heliophysics</a><a href="science.html#planetary">Planetary &amp; Astrophysics</a><a href="instruments.html">Instruments</a></div>
-    <div class="footer-col"><h4>Work</h4><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner With Us</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div>
-    <div class="footer-col"><h4>Connect</h4><a href="contact.html">Contact</a><a href="signin.html">MySSAI Sign In</a><a href="index.html">The Descent</a></div>
+    <div class="footer-brand"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p></div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div>
+    <div class="footer-col"><h4>Work</h4><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
   </div>
-  <div class="container footer-bottom">
-    <span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span>
-    <span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span>
-  </div>
+  <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
 </footer>
 
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script type="module" src="assets/js/centerpiece.js"></script>
 </body>
 </html>

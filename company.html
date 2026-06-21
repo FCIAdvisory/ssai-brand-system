@@ -4,22 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Company — Who We Are — SSAI</title>
-<meta name="description" content="Science Systems and Applications, Inc. — a woman-owned, family-led science, engineering, and information-analytics company founded in 1977 beside NASA Goddard. Our heritage, mission, leadership, and values.">
+<meta name="description" content="Science Systems and Applications, Inc. — a woman-owned, family-led science, engineering, and information-analytics company founded in 1977 beside NASA Goddard. Our mission, vision, founders, leadership, and values.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="assets/site.css" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
+
 <header class="nav" id="nav">
   <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc."></a>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
   <nav class="nav-links" id="navLinks">
-    <a class="nav-link active" href="company.html">Company</a>
-    <a class="nav-link" href="science.html">Science</a>
-    <a class="nav-link" href="instruments.html">Instruments</a>
-    <a class="nav-link" href="mission-operations-data.html">Mission Ops &amp; Data</a>
+    <div class="nav-item has-sub"><a class="nav-link active" href="company.html">Company</a><div class="nav-sub"><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="science.html">Science</a><div class="nav-sub"><a href="science.html">Overview</a><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="instruments.html">Instruments</a><div class="nav-sub"><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="careers.html">Careers</a><div class="nav-sub"><a href="careers.html">Overview</a><a href="benefits.html">Benefits</a><a href="life-at-ssai.html">Life at SSAI</a></div></div>
     <a class="nav-link" href="partner.html">Partner</a>
-    <a class="nav-link" href="careers.html">Careers</a>
     <a class="nav-link" href="newsroom.html">Newsroom</a>
     <a class="nav-link" href="contact.html">Contact</a>
     <a class="nav-link nav-cta" href="signin.html">Sign In</a>
@@ -28,177 +29,251 @@
 
 <main>
 
-  <!-- ============ HERO ============ -->
   <section class="phero">
     <div class="container">
       <span class="kick">Who We Are</span>
       <h1>A science company whose laboratory is <span class="em">space</span>.</h1>
-      <p class="sub">Science Systems and Applications, Inc. is a science, engineering, and information-analytics company founded in 1977 — the preferred partner of the agencies that ask the hardest questions about our planet and the universe.</p>
+      <p class="sub">Science Systems and Applications, Inc. — founded in 1977, family-led, and headquartered in the Aerospace Building beside NASA Goddard. For nearly fifty years we have been the preferred partner of the agencies that ask the hardest questions about our planet and the universe.</p>
       <div class="btn-row">
         <a class="btn" href="science.html">Explore our science</a>
-        <a class="btn ghost" href="partner.html">Partner with us</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ ABOUT ============ -->
-  <section class="section" id="about">
-    <div class="container">
-      <div class="lede-grid">
-        <h2 class="dtitle">About <span class="em">SSAI</span></h2>
-        <div class="body-col">
-          <p>For more than four decades we have been the preferred partner of the agencies that ask the hardest questions about our planet and the universe — transforming ideas into knowledge through innovation, inspiration, and discovery.</p>
-          <p>A certified woman-owned, family-led small business headquartered in the Aerospace Building beside NASA Goddard Space Flight Center, SSAI brings together expert scientists, engineers, data analysts, and IT professionals who share one commitment: to provide solutions for the unique needs of each customer — and to leave the planet a better place than we found it.</p>
-        </div>
-      </div>
-      <div class="stats">
-        <div class="stat"><b>1977</b><span>Founded on a passion for science</span></div>
-        <div class="stat"><b>40+</b><span>Years partnering with science agencies</span></div>
-        <div class="stat"><b>Woman-Owned</b><span>Certified, family-led small business</span></div>
-        <div class="stat"><b>NASA Goddard</b><span>Headquartered beside the center</span></div>
+        <a class="btn ghost" href="leadership.html">Meet our leadership</a>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- ============ MISSION & VISION ============ -->
-  <section class="section alt" id="mission">
+  <section class="section">
     <div class="container">
-      <span class="eyebrow">Why We Exist</span>
-      <h2 class="dtitle mt-s">Our mission and <span class="em">vision</span></h2>
+      <div class="lede-grid">
+        <div>
+          <span class="eyebrow">About SSAI</span>
+          <h2 class="dtitle">Transforming ideas into <span class="em">knowledge</span>.</h2>
+        </div>
+        <div class="body-col">
+          <p class="lead">Science Systems and Applications, Inc. (SSAI) is a science, engineering, and information-analytics company founded in 1977.</p>
+          <p>For more than four decades we have been the preferred partner of the agencies that ask the hardest questions about our planet and the universe — transforming ideas into knowledge through innovation, inspiration, and discovery.</p>
+          <p>A certified woman-owned, family-led small business headquartered in the Aerospace Building beside NASA Goddard Space Flight Center, SSAI brings together expert scientists, engineers, data analysts, and IT professionals who share one commitment: to provide solutions for the unique needs of each customer — and to leave the planet a better place than we found it.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>1977</b><span>Founded as a one-person company</span></div>
+        <div class="stat"><b>48 yrs</b><span>Alongside NASA on Earth &amp; space science</span></div>
+        <div class="stat"><b>150+</b><span>Earth &amp; space science missions</span></div>
+        <div class="stat"><b>3</b><span>Domains of science, one horizon</span></div>
+      </div>
+
+      <div class="figure wide">
+        <img src="assets/images/site/people/goddard-center-aerial.jpg" alt="Aerial view of NASA's Goddard Space Flight Center campus in Greenbelt, Maryland, surrounded by woodland." loading="lazy">
+        <span class="cred">NASA / Goddard Space Flight Center / Bill Hrybyk</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="eyebrow">Mission &amp; Vision</span>
+      <h2 class="dtitle">Why we do <span class="em">the work</span>.</h2>
       <div class="grid grid-2">
         <div class="card feature">
-          <div class="n">Mission</div>
-          <h3>Transforming ideas into knowledge</h3>
+          <span class="tag">Mission</span>
+          <h3>Our customers' preferred partner</h3>
           <p>To be our customers' preferred partner in transforming ideas into knowledge through innovation, inspiration, and discovery.</p>
-          <span class="tag">Innovation · Inspiration · Discovery</span>
         </div>
-        <div class="card feature">
-          <div class="n">Vision</div>
+        <div class="card">
+          <span class="tag">Vision</span>
           <h3>To improve life on Earth</h3>
           <p>To improve life on Earth through innovation and leadership in science, engineering, and data analytics, as we answer important societal and scientific questions.</p>
-          <span class="tag">Science · Engineering · Data</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ HISTORY ============ -->
-  <section class="section" id="history">
+  <section class="section">
     <div class="container">
-      <div class="lede-grid">
-        <h2 class="dtitle">Our history — a passion for <span class="em">science</span></h2>
+      <span class="eyebrow">Three Domains, One Horizon</span>
+      <h2 class="dtitle">The Sun, the Earth, and the <span class="em">universe</span>.</h2>
+      <p class="lead">SSAI helps the world's science agencies see across the full reach of observation — from the star that drives our weather, to the planet we are sworn to protect, to the deep universe beyond. Three domains of science, pursued with one purpose: to turn the view from space into understanding on the ground.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="n">01</span>
+          <span class="tag">Heliophysics</span>
+          <h3>The Sun</h3>
+          <p>We help observe the star at the center of it all — its flares, its storms, and the space weather that ripples outward to touch satellites, power grids, and life on Earth.</p>
+        </div>
+        <div class="card feature">
+          <span class="n">02</span>
+          <span class="tag">Earth Science · Our largest</span>
+          <h3>The Earth</h3>
+          <p>Our largest domain. Climate and oceans, ice and atmosphere — SSAI engineers the instruments, operates the missions, and assimilates the data that let agencies measure a changing planet and act on what they find.</p>
+        </div>
+        <div class="card">
+          <span class="n">03</span>
+          <span class="tag">Planetary &amp; Astrophysics</span>
+          <h3>The Universe</h3>
+          <p>From Lucy and JWST to Roman, Chandra, and XRISM, we help turn light from distant worlds and ancient galaxies into the data that rewrites what we know about the cosmos.</p>
+        </div>
+      </div>
+      <div class="btn-row">
+        <a class="btn ghost" href="science.html">Inside our three domains</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="cp-section section">
+    <div class="container cp-split">
+      <div>
+        <span class="kick">One Planet</span>
+        <h2 class="dtitle">Leave it better than we <span class="em">found it</span>.</h2>
+        <p class="lead">Every instrument we integrate, every mission we operate, every dataset we assimilate points back to one place. Earth is our largest domain — and our deepest responsibility. The data SSAI helps create informs how the world understands storms, oceans, ice, and a changing climate.</p>
+        <div class="btn-row">
+          <a class="btn" href="earth-science.html">Our Earth science</a>
+        </div>
+      </div>
+      <div>
+        <div class="centerpiece" data-variant="globe"></div>
+        <div class="cp-cap">A living planet, observed from space and understood on the ground.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="split">
         <div class="body-col">
+          <span class="eyebrow">Our History</span>
+          <h2 class="dtitle">A passion for <span class="em">science</span>.</h2>
           <p>A true passion for science led to SSAI's founding as a one-person company. From that humble beginning, SSAI has grown organically into the organization it is today.</p>
           <p>Founders Om and Sara Bahethi worked over four decades to create and maintain a culture that supports a spirit of scientific exploration and innovation, respect for our planet and its environment, and a desire to make things better for humankind.</p>
           <p>In 2021, Chairman Om and Secretary Saraswati Bahethi passed leadership to their son, Praveen. The family-centered values that were so important at our beginning remain central to who we are today.</p>
+          <div class="btn-row">
+            <a class="btn ghost" href="history.html">Read the full history</a>
+          </div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/people/nccs-data-exploration-theater.jpg" alt="The NASA Center for Climate Simulation Data Exploration Theater at Goddard, displaying a high-resolution global Earth simulation on a multi-screen visualization wall." loading="lazy">
+          <span class="cred">NASA / Goddard Space Flight Center</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ LEGACY OF DR. OM P. BAHETHI ============ -->
-  <section class="section alt" id="legacy">
+  <section class="section">
     <div class="container">
-      <span class="eyebrow">In Memoriam</span>
-      <h2 class="dtitle mt-s">The legacy of <span class="em">Dr. Om P. Bahethi</span></h2>
-      <div class="lede-grid mt-m">
+      <div class="split rev">
         <div class="body-col">
-          <p>For nearly 48 years, Dr. Om P. Bahethi built SSAI into a beacon of excellence in Earth and space science. His work with NASA and NOAA embodied a lifelong passion for discovery.</p>
+          <span class="eyebrow">In Memory</span>
+          <h2 class="dtitle">The legacy of <span class="em">Dr. Om P. Bahethi</span>.</h2>
+          <p class="lead">For nearly 48 years, Dr. Om P. Bahethi built SSAI into a beacon of excellence in Earth and space science.</p>
+          <p>His work with NASA and NOAA embodied a lifelong passion for discovery. That passion endures beyond the company — through the Bahethi Family Foundation, scholarships, and a commitment to STEM equity that carries his belief forward: that science, pursued with integrity, makes the world better.</p>
         </div>
-        <div class="body-col">
-          <p>That passion endures beyond the company — through the Bahethi Family Foundation, scholarships, and a commitment to STEM equity that carries his belief forward: that science, pursued with integrity, makes the world better.</p>
+        <div class="figure tall">
+          <img src="assets/images/site/earth/blue-marble.jpg" alt="The Blue Marble — a full-disk view of Earth showing the Americas, ocean, and swirling cloud systems against the black of space." loading="lazy">
+          <span class="cred">NASA / Goddard Space Flight Center</span>
         </div>
-      </div>
-      <div class="chips">
-        <div class="chip"><b>NASA</b> &nbsp;Earth &amp; space science</div>
-        <div class="chip"><b>NOAA</b> &nbsp;Environmental discovery</div>
-        <div class="chip"><b>Bahethi Family Foundation</b></div>
-        <div class="chip"><b>STEM equity</b> &nbsp;Scholarships</div>
       </div>
     </div>
   </section>
 
-  <!-- ============ LEADERSHIP ============ -->
-  <section class="section" id="leadership">
+  <div class="divider"></div>
+
+  <section class="section">
     <div class="container">
-      <span class="eyebrow">The People</span>
-      <h2 class="dtitle mt-s"><span class="em">Leadership</span></h2>
-      <p class="lead">SSAI is led by a team that pairs deep science with operational discipline.</p>
-      <div class="grid grid-2">
+      <span class="eyebrow">Leadership</span>
+      <h2 class="dtitle">Deep science, operational <span class="em">discipline</span>.</h2>
+      <p class="lead">SSAI is led by a team that pairs deep science with operational discipline — a family at its center, and decades of agency experience around it.</p>
+      <div class="grid grid-3">
         <div class="card">
-          <div class="n">Chief Executive Officer</div>
+          <span class="tag">Chief Executive Officer</span>
           <h3>Dr. Shilpa Bahethi, MD</h3>
           <p>A member of the Bahethi family and the company's former corporate treasurer, whose medical background sharpens SSAI's edge where science, technology, and health intersect.</p>
         </div>
         <div class="card">
-          <div class="n">President</div>
+          <span class="tag">President</span>
           <h3>Praveen Bahethi</h3>
           <p>An executive with a background managing technology firms, committed since 2021 to returning the company to its focus — scientific and engineering innovation.</p>
         </div>
         <div class="card">
-          <div class="n">Chief Financial Officer</div>
-          <h3>Rachit Mahajan</h3>
-          <p>Two decades of expertise in finance, accounting, business systems, and taxation.</p>
-        </div>
-        <div class="card">
-          <div class="n">Chief Operating Officer</div>
-          <h3>Kevin Cooley</h3>
-          <p>Former Environmental Intelligence Advisor to the U.S. Department of Homeland Security and NOAA–DHS liaison; directed the National Weather Service Office of Planning and Programming, leading 1,500 personnel and $650M in annual mission capabilities; Federal Senior Executive Service, 2002–2025.</p>
-        </div>
-        <div class="card">
-          <div class="n">Chief Corporate Scientist</div>
+          <span class="tag">Chief Corporate Scientist</span>
           <h3>Oreste Reale, Ph.D.</h3>
           <p>Oversees the science SSAI researchers conduct; 25 years at NASA Goddard focused on atmospheric dynamics, hurricanes, weather forecasting, and the data assimilation of hyperspectral infrared sensors.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Chief Operating Officer</span>
+          <h3>Kevin Cooley</h3>
+          <p>Former NOAA–DHS liaison who directed the National Weather Service Office of Planning and Programming — leading 1,500 personnel and $650M in annual mission capabilities. Federal Senior Executive Service, 2002–2025.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Chief Financial Officer</span>
+          <h3>Rachit Mahajan</h3>
+          <p>Two decades of expertise in finance, accounting, business systems, and taxation, anchoring the discipline behind every mission SSAI takes on.</p>
+        </div>
+        <div class="card feature">
+          <span class="tag">The full team</span>
+          <h3>Meet everyone</h3>
+          <p>From the executive team to the scientists and engineers behind 150+ missions — see the people who make SSAI's work possible.</p>
+          <div class="btn-row"><a class="btn ghost" href="leadership.html">View leadership</a></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ CORE VALUES ============ -->
-  <section class="section alt" id="values">
+  <section class="section alt">
     <div class="container">
-      <span class="eyebrow">What Holds</span>
-      <h2 class="dtitle mt-s">Our core <span class="em">values</span></h2>
-      <p class="lead">Five values hold across every mission we touch.</p>
+      <span class="eyebrow">Our Core Values</span>
+      <h2 class="dtitle">Five values, every <span class="em">mission</span>.</h2>
+      <p class="lead">Five values hold across every mission we touch — the constant that connects a one-person company in 1977 to the institution SSAI is today.</p>
       <div class="grid grid-3">
         <div class="card">
-          <div class="n">01</div>
+          <span class="n">01</span>
           <h3>Trust</h3>
           <p>We instill trust through honesty and transparency.</p>
         </div>
         <div class="card">
-          <div class="n">02</div>
+          <span class="n">02</span>
           <h3>Integrity</h3>
           <p>We exercise scientific integrity and uncompromising engineering as the foundation of our professional ethics.</p>
         </div>
         <div class="card">
-          <div class="n">03</div>
+          <span class="n">03</span>
           <h3>Teamwork</h3>
           <p>We build strong teams to execute our business practices.</p>
         </div>
         <div class="card">
-          <div class="n">04</div>
+          <span class="n">04</span>
           <h3>Passion</h3>
           <p>We innovate and evolve by engaging our collective sense of wonder and enthusiasm.</p>
         </div>
         <div class="card">
-          <div class="n">05</div>
+          <span class="n">05</span>
           <h3>Accountability</h3>
           <p>We take ownership of our decisions and everything we do.</p>
         </div>
+        <div class="card feature">
+          <span class="tag">Credentials</span>
+          <h3>Held to standard</h3>
+          <p>CMMI Level 3 · ISO 9001:2015 · SBA-certified small business — the marks of a company that pairs scientific ambition with operational rigor.</p>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>Woman-owned</b> small business</span>
+        <span class="chip"><b>Family-led</b> since 1977</span>
+        <span class="chip"><b>CMMI</b> Level 3</span>
+        <span class="chip"><b>ISO</b> 9001:2015</span>
       </div>
     </div>
   </section>
 
-  <!-- ============ CLOSING BAND ============ -->
-  <section class="band">
-    <div class="container band-cta">
-      <h2>Science and technology, <span class="em">with passion</span>.</h2>
+  <section class="section">
+    <div class="band band-cta">
+      <h2>Science and Technology <span class="em">with Passion</span>.</h2>
+      <p class="lead">For nearly fifty years, turning the view from space into understanding on the ground. See where that passion takes us next.</p>
       <div class="btn-row">
-        <a class="btn" href="science.html">See our science</a>
-        <a class="btn ghost" href="careers.html">Join the team</a>
+        <a class="btn" href="science.html">Explore our science</a>
+        <a class="btn ghost" href="partner.html">Partner with us</a>
       </div>
     </div>
   </section>
@@ -207,21 +282,16 @@
 
 <footer class="footer">
   <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="assets/logo/ssai-white-full.png" alt="SSAI">
-      <p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p>
-    </div>
-    <div class="footer-col"><h4>Company</h4><a href="company.html">About</a><a href="company.html#history">History</a><a href="company.html#leadership">Leadership</a><a href="company.html#values">Values</a></div>
-    <div class="footer-col"><h4>Science</h4><a href="science.html#earth">Earth</a><a href="science.html#heliophysics">Heliophysics</a><a href="science.html#planetary">Planetary &amp; Astrophysics</a><a href="instruments.html">Instruments</a></div>
-    <div class="footer-col"><h4>Work</h4><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner With Us</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div>
-    <div class="footer-col"><h4>Connect</h4><a href="contact.html">Contact</a><a href="signin.html">MySSAI Sign In</a><a href="index.html">The Descent</a></div>
+    <div class="footer-brand"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p></div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div>
+    <div class="footer-col"><h4>Work</h4><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
   </div>
-  <div class="container footer-bottom">
-    <span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span>
-    <span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span>
-  </div>
+  <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
 </footer>
 
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script type="module" src="assets/js/centerpiece.js"></script>
 </body>
 </html>

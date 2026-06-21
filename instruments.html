@@ -8,18 +8,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="assets/site.css" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
 <header class="nav" id="nav">
   <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc."></a>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
   <nav class="nav-links" id="navLinks">
-    <a class="nav-link" href="company.html">Company</a>
-    <a class="nav-link" href="science.html">Science</a>
-    <a class="nav-link active" href="instruments.html">Instruments</a>
-    <a class="nav-link" href="mission-operations-data.html">Mission Ops &amp; Data</a>
+    <div class="nav-item has-sub"><a class="nav-link" href="company.html">Company</a><div class="nav-sub"><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="science.html">Science</a><div class="nav-sub"><a href="science.html">Overview</a><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link active" href="instruments.html">Instruments</a><div class="nav-sub"><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="careers.html">Careers</a><div class="nav-sub"><a href="careers.html">Overview</a><a href="benefits.html">Benefits</a><a href="life-at-ssai.html">Life at SSAI</a></div></div>
     <a class="nav-link" href="partner.html">Partner</a>
-    <a class="nav-link" href="careers.html">Careers</a>
     <a class="nav-link" href="newsroom.html">Newsroom</a>
     <a class="nav-link" href="contact.html">Contact</a>
     <a class="nav-link nav-cta" href="signin.html">Sign In</a>
@@ -28,94 +28,57 @@
 
 <main>
 
-  <!-- ===================== HERO ===================== -->
   <section class="phero">
     <div class="container">
-      <span class="kick">The Instrument Portfolio</span>
-      <h1>From sensor <span class="em">to science.</span></h1>
-      <p class="sub">SSAI specializes in the sensors that must work the first time, in the harshest environments there are. We do not sell satellites — we make them succeed. Across more than 150 missions, our engineers have carried instruments through every phase: study, design, fabrication, integration and test, verification, and on-orbit operations.</p>
+      <span class="kick">Instruments</span>
+      <h1>From <span class="em">sensor</span> to science.</h1>
+      <p class="sub">We do not sell satellites — we make them succeed. Across more than 150 missions, SSAI engineers have carried spaceborne instruments through every phase: study, design, fabrication, integration and test, verification, and on-orbit operations. The flight hardware belongs to NASA, NOAA, and their primes. The engineering, integration, operations, and data pipelines that make it work are ours.</p>
       <div class="btn-row">
-        <a class="btn" href="interactive-kit.html">Explore the portfolio interactively</a>
-        <a class="btn ghost" href="mission-operations-data.html">See how we operate them</a>
+        <a class="btn" href="interactive-kit.html">Explore the portfolio</a>
+        <a class="btn ghost" href="missions.html">Browse the missions</a>
       </div>
     </div>
   </section>
 
-  <!-- ===================== STATS / HERITAGE BAR ===================== -->
-  <section class="section tight">
+  <div class="divider"></div>
+
+  <section class="section">
     <div class="container">
+      <div class="lede-grid">
+        <span class="eyebrow">The instruments we help fly</span>
+        <div class="body-col">
+          <p class="lead">SSAI specializes in the sensors that must work the first time, in the harshest environments there are.</p>
+          <p>Our Electrical Systems Engineering Services team — more than 180 engineers and technicians supporting NASA Goddard and other centers — fills the roles missions depend on: Integration &amp; Test Manager, Instrument Systems Engineer, Instrument Manager, subsystem leads for power, communications, and command-and-data-handling, and Deputy Mission Operations Manager.</p>
+          <p>An instrument is only finished when the data arrives. That end-to-end view — from the first parts-engineering decision to the first calibrated product released from a data center — is the heritage this page reframes as a portfolio.</p>
+        </div>
+      </div>
       <div class="stats">
-        <div class="stat"><b>150+</b><span>Missions Carried Through Development &amp; Operations</span></div>
-        <div class="stat"><b>180+</b><span>Engineers &amp; Technicians in Electrical Systems Engineering Services</span></div>
-        <div class="stat"><b>13</b><span>Flagship Instruments in the Featured Portfolio</span></div>
-        <div class="stat"><b>1977</b><span>Engineering Spaceflight Hardware Since</span></div>
+        <div class="stat"><b>150+</b><span>Earth &amp; space science missions</span></div>
+        <div class="stat"><b>180+</b><span>Engineers &amp; technicians, ESES team</span></div>
+        <div class="stat"><b>48</b><span>Years engineering for NASA</span></div>
+        <div class="stat"><b>6</b><span>Lifecycle phases, study to on-orbit</span></div>
       </div>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- ===================== THE TEAM BEHIND THE PORTFOLIO ===================== -->
-  <section class="section alt" id="ese">
+  <section class="section alt">
     <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">The instruments we help fly</span>
-          <h2 class="dtitle mt-s">The people who make instruments <span class="em">succeed.</span></h2>
-        </div>
+      <div class="split">
         <div class="body-col">
-          <p>Our Electrical Systems Engineering Services team — more than 180 engineers and technicians supporting NASA Goddard and other centers — fills the roles missions depend on. We are not the satellite prime and we do not own the flight hardware; we are the engineering, integration, operations, and data discipline that carries it from a study concept to finished, validated science.</p>
-          <p>On any given program you will find SSAI staff in the seats that decide whether an instrument flies: Integration &amp; Test Manager, Instrument Systems Engineer, Instrument Manager, subsystem leads for power, communications, and command-and-data-handling, and Deputy Mission Operations Manager.</p>
-          <div class="chips">
-            <span class="chip"><b>Integration &amp; Test Manager</b></span>
-            <span class="chip"><b>Instrument Systems Engineer</b></span>
-            <span class="chip"><b>Instrument Manager</b></span>
-            <span class="chip">Power &amp; <b>C&amp;DH</b> Leads</span>
-            <span class="chip"><b>Deputy</b> Mission Ops Manager</span>
-          </div>
+          <span class="eyebrow">What we do with an instrument</span>
+          <h2 class="dtitle">Engineer. Integrate &amp; test. <span class="em">Operate.</span></h2>
+          <p>Every instrument in our portfolio passed through some combination of five things our hands can honestly own. We frame our role in the verbs we can stand behind — not the manufacturer's badge, but the discipline that gets a sensor to orbit and keeps it returning science.</p>
+          <ul class="flist">
+            <li><b>Engineer</b> — parts engineering, electronics, harness design, and subsystem leadership for power, comms, and command-and-data-handling.</li>
+            <li><b>Integrate &amp; test</b> — assembly, environmental and thermal-vacuum verification, and the discipline of making it work the first time.</li>
+            <li><b>Manage</b> — Instrument Manager and I&amp;T Manager roles that carry a sensor through every review gate.</li>
+            <li><b>Operate</b> — payload operations centers and mission-operations support that fly the instrument on-orbit.</li>
+            <li><b>Turn into data</b> — the pipelines that take raw sensor counts to finished, calibrated, archived science products.</li>
+          </ul>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== WHAT WE DO WITH AN INSTRUMENT (THE VERBS) ===================== -->
-  <section class="section" id="verbs">
-    <div class="container">
-      <span class="eyebrow center" style="display:block">What we do with an instrument</span>
-      <h2 class="dtitle center" style="margin:14px auto 0;max-width:24ch">Engineer. Integrate. Operate. <span class="em">Turn into data.</span></h2>
-      <p class="lead center" style="margin-left:auto;margin-right:auto">Every instrument in our portfolio passed through some combination of these hands. We frame our role in the verbs we can stand behind — the flight hardware belongs to NASA, NOAA, and their primes; the engineering, integration, operations, and data pipelines that make it work are ours.</p>
-
-      <div class="grid grid-3">
-        <div class="card">
-          <span class="n">01 — Engineer</span>
-          <h3>Engineer</h3>
-          <p>Parts engineering, electronics, harness, and subsystem design for instruments that get one chance to perform. We carry hardware from a study concept through fabrication.</p>
-        </div>
-        <div class="card">
-          <span class="n">02 — Integrate &amp; Test</span>
-          <h3>Integrate &amp; Test</h3>
-          <p>Integration and test management, verification, and the environmental gauntlet that proves a sensor will survive launch and operate on orbit exactly as specified.</p>
-        </div>
-        <div class="card">
-          <span class="n">03 — Manage &amp; Operate</span>
-          <h3>Manage &amp; Operate</h3>
-          <p>Instrument and mission management seats, plus payload operations centers we build and run — commanding instruments and keeping them healthy across years on orbit.</p>
-        </div>
-        <div class="card feature">
-          <span class="n">04 — Turn Into Data</span>
-          <h3>Turn Into Data</h3>
-          <p>The step that makes the rest matter: raw sensor counts processed, calibrated, formatted, archived, and distributed as finished science products the world can use.</p>
-          <span class="tag">From counts to science</span>
-        </div>
-        <div class="card">
-          <span class="n">Phases</span>
-          <h3>Every Phase</h3>
-          <p>Study. Design. Fabrication. Integration &amp; test. Verification. On-orbit operations. We have staffed each of them — repeatedly, across more than 150 missions.</p>
-        </div>
-        <div class="card">
-          <span class="n">Honesty</span>
-          <h3>What's Ours</h3>
-          <p>We do not manufacture or own flight hardware. We make it work. Every claim on this page is a verb SSAI can stand behind in front of NASA, NOAA, and their primes.</p>
+        <div class="figure tall">
+          <img src="assets/images/site/instruments/webb-instrument-integration.jpg" alt="Engineers precisely install the MIRI science instrument into the James Webb Space Telescope structure in a clean room." loading="lazy">
+          <span class="cred">NASA/Goddard Space Flight Center</span>
         </div>
       </div>
     </div>
@@ -123,167 +86,215 @@
 
   <div class="divider"></div>
 
-  <!-- ===================== EARTH-OBSERVING INSTRUMENTS ===================== -->
-  <section class="section alt" id="earth">
+  <section class="section">
     <div class="container">
-      <span class="eyebrow">Portfolio · 01</span>
-      <h2 class="dtitle mt-s">Earth-observing <span class="em">instruments.</span></h2>
-      <p class="lead">The sensors that watch the planet — ocean color, air quality, thermal heat, ozone, and aerosols. SSAI engineers their electronics and, for many, runs the pipeline that turns their raw data into the products scientists and agencies depend on.</p>
-
+      <span class="eyebrow">Portfolio · I</span>
+      <h2 class="dtitle">Earth-observing <span class="em">instruments</span></h2>
+      <p class="lead">The largest part of the catalog — sensors that read the ocean, the air, the ozone layer, and the land, mission after mission.</p>
       <div class="grid grid-3">
-        <div class="card">
-          <span class="n">PACE · Earth Observation</span>
-          <h3>OCI</h3>
-          <p>SSAI-led electrical engineering on the Ocean Color Instrument, measuring ocean color, aerosols, and clouds aboard the PACE observatory.</p>
-          <span class="tag">On-orbit</span>
+        <div class="card feature">
+          <div class="n">01</div>
+          <h3>OCI — Ocean Color Instrument</h3>
+          <p>SSAI-led electrical engineering on the PACE instrument measuring ocean color, aerosols, and clouds across the visible and near-infrared.</p>
+          <span class="tag">PACE · On-orbit</span>
         </div>
         <div class="card">
-          <span class="n">Landsat 9 · Thermal Imaging</span>
-          <h3>TIRS-2</h3>
-          <p>The Thermal Infrared Sensor-2, carried through all phases of development — parts engineering, electronics and harness, integration and test.</p>
-          <span class="tag">On-orbit</span>
+          <div class="n">02</div>
+          <h3>TIRS-2 — Thermal Infrared Sensor-2</h3>
+          <p>All phases of development on the Landsat 9 thermal sensor — parts engineering, electronics and harness, integration and test.</p>
+          <span class="tag">Landsat 9 · On-orbit</span>
         </div>
         <div class="card">
-          <span class="n">Air Quality · North America</span>
+          <div class="n">03</div>
           <h3>TEMPO</h3>
-          <p>Tropospheric Emissions: Monitoring of Pollution — hourly air-quality measurements over North America. SSAI runs the data pipeline at the ASDC DAAC.</p>
-          <span class="tag">On-orbit</span>
+          <p>Hourly air-quality measurements over North America. SSAI operates the data pipeline at the ASDC DAAC, from raw observation to public product.</p>
+          <span class="tag">Geostationary · On-orbit</span>
         </div>
         <div class="card">
-          <span class="n">Aerosols · Public Health</span>
-          <h3>MAIA</h3>
-          <p>The Multi-Angle Imager for Aerosols, supporting aerosol and public-health science. Data products are formatted, archived, and distributed by SSAI at the ASDC DAAC.</p>
-          <span class="tag">In development</span>
+          <div class="n">04</div>
+          <h3>MAIA — Multi-Angle Imager for Aerosols</h3>
+          <p>Aerosol and public-health science. Data products are formatted, archived, and distributed by SSAI at the ASDC DAAC.</p>
+          <span class="tag">Earth science · In development</span>
         </div>
-        <div class="card feature">
-          <span class="n">Aura · Suomi-NPP · NOAA-20</span>
+        <div class="card">
+          <div class="n">05</div>
           <h3>OMI / OMPS</h3>
-          <p>SSAI built the first GSFC package to take raw sensor data through to finished ozone and aerosol products — a milestone in instrument-to-science processing.</p>
-          <span class="tag">On-orbit</span>
+          <p>SSAI built the first GSFC package to carry raw sensor data through to finished ozone and aerosol products — on Aura, Suomi-NPP, and NOAA-20.</p>
+          <span class="tag">Ozone &amp; aerosol · On-orbit</span>
         </div>
         <div class="card">
-          <span class="n">JPSS · Operational Weather</span>
+          <div class="n">06</div>
           <h3>VIIRS</h3>
-          <p>The Visible Infrared Imaging Radiometer Suite. Electrical-engineering contributions across the operational weather satellite series.</p>
-          <span class="tag">On-orbit</span>
+          <p>Electrical-engineering contributions across the operational weather series on the Joint Polar Satellite System.</p>
+          <span class="tag">JPSS · On-orbit</span>
         </div>
+      </div>
+      <div class="figure wide" style="margin-top:clamp(30px,4vh,52px)">
+        <img src="assets/images/site/spacecraft/pace-spacecraft.jpg" alt="NASA's PACE spacecraft, carrying the Ocean Color Instrument, during processing at Goddard Space Flight Center." loading="lazy">
+        <span class="cred">NASA/Goddard Space Flight Center</span>
       </div>
     </div>
   </section>
 
-  <!-- ===================== WEATHER & SPACE-WEATHER INSTRUMENTS ===================== -->
-  <section class="section" id="weather">
+  <section class="section alt">
     <div class="container">
-      <span class="eyebrow">Portfolio · 02</span>
-      <h2 class="dtitle mt-s">Weather &amp; <span class="em">space-weather.</span></h2>
-      <p class="lead">From geostationary orbit and the L1 point, these instruments watch storms, lightning, the Sun, and the solar wind. SSAI ran Integration &amp; Test across the GOES-R series and continues to support operations from NOAA's Satellite Operations Facility.</p>
-
-      <div class="grid grid-3">
-        <div class="card feature">
-          <span class="n">GOES-R / S / T / U · I&amp;T</span>
-          <h3>GOES-R Suite</h3>
-          <p>SSAI ran Integration &amp; Test across the GOES-R series — GLM, SUVI, EXIS, SEISS, CCOR, and the Magnetometer. GOES-U launched June 25, 2024; SSAI continues to support GOES operations from NOAA's Satellite Operations Facility.</p>
-          <span class="tag">On-orbit · operating</span>
+      <span class="eyebrow">Portfolio · II</span>
+      <h2 class="dtitle">Weather &amp; space-weather <span class="em">instruments</span></h2>
+      <p class="lead">Across the GOES-R/S/T/U geostationary series, SSAI ran Integration &amp; Test for the program — the suite that watches Earth's storms and the Sun that drives them.</p>
+      <div class="split rev">
+        <div class="body-col">
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>GLM</h3>
+              <p>Geostationary Lightning Mapper — continuous total-lightning detection across the hemisphere.</p>
+            </div>
+            <div class="card">
+              <h3>SUVI</h3>
+              <p>Solar Ultraviolet Imager — full-disk imaging of the Sun's corona for space-weather forecasting.</p>
+            </div>
+            <div class="card">
+              <h3>EXIS</h3>
+              <p>Extreme Ultraviolet and X-ray Irradiance Sensors — measuring the solar energy that drives the space environment.</p>
+            </div>
+            <div class="card">
+              <h3>SEISS</h3>
+              <p>Space Environment In-Situ Suite — charged-particle measurements for radiation-hazard monitoring.</p>
+            </div>
+            <div class="card">
+              <h3>CCOR</h3>
+              <p>Compact Coronagraph — imaging the solar wind to give early warning of coronal mass ejections.</p>
+            </div>
+            <div class="card">
+              <h3>Magnetometer</h3>
+              <p>The GOES Magnetometer — measuring the geomagnetic field that shapes near-Earth space.</p>
+            </div>
+          </div>
+          <ul class="flist">
+            <li>GOES-U launched June 25, 2024 — SSAI led instrument Integration &amp; Test.</li>
+            <li>SSAI continues to support GOES operations from NOAA's Satellite Operations Facility.</li>
+          </ul>
         </div>
-        <div class="card">
-          <span class="n">JPSS · Operational Series</span>
-          <h3>VIIRS</h3>
-          <p>The imaging radiometer that anchors the U.S. operational weather record — day/night imagery, sea-surface temperature, and active fire detection across the JPSS satellites.</p>
-          <span class="tag">On-orbit</span>
-        </div>
-        <div class="card">
-          <span class="n">L1 Point · Solar Wind</span>
-          <h3>DSCOVR</h3>
-          <p>Deep-space observation of Earth and the solar wind from the L1 Lagrange point — a vantage that delivers both full-disk Earth imagery and space-weather early warning.</p>
-          <span class="tag">On-orbit</span>
+        <div class="figure tall">
+          <img src="assets/images/site/spacecraft/goes-full-disk-earth.jpg" alt="Full-disk view of Earth captured by the NASA/NOAA GOES geostationary weather satellite." loading="lazy">
+          <span class="cred">NASA/NOAA GOES Project</span>
         </div>
       </div>
-
-      <ul class="flist" style="margin-top:46px;max-width:none">
-        <li><strong>GLM</strong> — Geostationary Lightning Mapper, tracking total lightning across the hemisphere.</li>
-        <li><strong>SUVI</strong> — Solar Ultraviolet Imager, watching the Sun for flares and eruptions.</li>
-        <li><strong>EXIS</strong> — Extreme Ultraviolet and X-ray Irradiance Sensors.</li>
-        <li><strong>SEISS</strong> — Space Environment In-Situ Suite, plus the CCOR Compact Coronagraph and the GOES Magnetometer.</li>
-      </ul>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- ===================== HERITAGE & DEEP-SPACE INSTRUMENTS ===================== -->
-  <section class="section alt" id="deep-space">
+  <section class="section">
     <div class="container">
-      <span class="eyebrow">Portfolio · 03</span>
-      <h2 class="dtitle mt-s">Heritage &amp; <span class="em">deep-space.</span></h2>
-      <p class="lead">The instruments that reach furthest — from the International Space Station and a flagship X-ray observatory to the Roman Space Telescope, the lunar surface, and aircraft flying field campaigns through the atmosphere.</p>
-
+      <span class="eyebrow">Portfolio · III</span>
+      <h2 class="dtitle">Heritage &amp; deep-space <span class="em">instruments</span></h2>
+      <p class="lead">From a payload operations center SSAI built and runs, to flagship astrophysics electronics, to a lunar spectrometer of our own — and an instrument that flies on aircraft, not only spacecraft.</p>
       <div class="grid grid-3">
-        <div class="card">
-          <span class="n">ISS · Atmospheric Science</span>
-          <h3>SAGE III</h3>
-          <p>SSAI built and operates the SAGE III Payload Operations Center (SPOC) aboard the International Space Station, supporting stratospheric ozone and aerosol science.</p>
-          <span class="tag">On-orbit</span>
-        </div>
         <div class="card feature">
-          <span class="n">Roman Space Telescope</span>
+          <div class="n">07</div>
+          <h3>SAGE III — ISS</h3>
+          <p>SSAI built and operates the SAGE III Payload Operations Center (SPOC), supporting stratospheric ozone and aerosol science from the International Space Station.</p>
+          <span class="tag">ISS · On-orbit · We operate it</span>
+        </div>
+        <div class="card">
+          <div class="n">08</div>
           <h3>Wide Field Instrument</h3>
-          <p>SSAI-led electrical engineering on a flagship astrophysics instrument — the wide-field eye of NASA's next great space observatory.</p>
-          <span class="tag">In development</span>
+          <p>SSAI-led electrical engineering on a flagship astrophysics instrument for the Nancy Grace Roman Space Telescope.</p>
+          <span class="tag">Roman · In development</span>
         </div>
         <div class="card">
-          <span class="n">XRISM · X-ray Spectroscopy</span>
+          <div class="n">09</div>
           <h3>Resolve</h3>
-          <p>Electrical-engineering support on the soft X-ray spectrometer aboard XRISM, resolving the universe's hottest, most energetic structures.</p>
-          <span class="tag">On-orbit</span>
+          <p>Electrical-engineering support on the soft X-ray spectrometer aboard the XRISM observatory.</p>
+          <span class="tag">XRISM · On-orbit</span>
         </div>
         <div class="card">
-          <span class="n">NASA CLPS · Lunar Surface</span>
+          <div class="n">10</div>
+          <h3>DSCOVR</h3>
+          <p>Deep-space observation of Earth and the solar wind from the L1 Lagrange point, a million miles from home.</p>
+          <span class="tag">L1 · On-orbit</span>
+        </div>
+        <div class="card">
+          <div class="n">11</div>
           <h3>HOLMS</h3>
-          <p>The Heterodyne OH Lunar Miniaturized Spectrometer — an SSAI-developed instrument to measure the Moon's water cycle from the surface, via NASA CLPS and tied to Artemis.</p>
-          <span class="tag">In development</span>
+          <p>The Heterodyne OH Lunar Miniaturized Spectrometer — an SSAI-developed lunar-surface instrument to measure the Moon's water cycle, flying via NASA CLPS.</p>
+          <span class="tag">CLPS / Artemis · In development</span>
         </div>
         <div class="card">
-          <span class="n">Airborne · SABRE 2023</span>
-          <h3>DLH</h3>
-          <p>The Diode Laser Hygrometer — an SSAI airborne instrument that measured water vapor during the 2023 SABRE field campaign. Proof our instruments fly on aircraft, not only spacecraft.</p>
-          <span class="tag">Flying</span>
+          <div class="n">12</div>
+          <h3>DLH — Diode Laser Hygrometer</h3>
+          <p>An SSAI airborne instrument that measured water vapor during the 2023 SABRE field campaign — proof our instruments fly on aircraft, not only spacecraft.</p>
+          <span class="tag">Airborne · Flying</span>
         </div>
-        <div class="card">
-          <span class="n">The Through-Line</span>
-          <h3>One Discipline</h3>
-          <p>Spacecraft, station, deep space, the Moon, aircraft — the platform changes, the discipline does not. The same engineering and data rigor carries every sensor from first power-on to finished science.</p>
+      </div>
+      <div class="media-grid media-2">
+        <div class="figure wide">
+          <img src="assets/images/site/instruments/imaging-spectrometer-closeup.jpg" alt="An engineer works on an imaging spectrometer in a clean room — the kind of precision instrument work SSAI engineers support." loading="lazy">
+          <span class="cred">NASA/JPL-Caltech</span>
+        </div>
+        <div class="figure wide">
+          <img src="assets/images/site/spacecraft/webb-primary-mirror.jpg" alt="The James Webb Space Telescope's fully assembled 18-segment gold primary mirror at NASA Goddard Space Flight Center." loading="lazy">
+          <span class="cred">NASA/Goddard Space Flight Center</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== EXPLORE INTERACTIVELY ===================== -->
-  <section class="section" id="explore">
+  <section class="cp-section section alt">
+    <div class="container cp-split">
+      <div>
+        <span class="kick">Explore interactively</span>
+        <h2 class="dtitle">A portfolio <span class="em">150 missions</span> deep.</h2>
+        <p class="lead">See what each sensor measures, the missions it flies on, and the role SSAI played — from sensor to science.</p>
+        <p>Our interactive instruments library lets you walk the catalog by domain, platform, and lifecycle status. Each entry follows one schema: name, mission and platform, what it measures, SSAI's role, and where it is now — in development, launched, or on-orbit.</p>
+        <div class="btn-row">
+          <a class="btn" href="interactive-kit.html">Open the interactive kit</a>
+          <a class="btn ghost" href="missions.html">See the missions</a>
+        </div>
+      </div>
+      <div>
+        <div class="centerpiece" data-variant="orbits"></div>
+        <div class="cp-cap">Instruments across orbits — Earth-observing, geostationary weather, and deep-space astrophysics.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
     <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">Explore the portfolio</span>
-          <h2 class="dtitle mt-s">An instrument library, <span class="em">150 missions deep.</span></h2>
+      <span class="eyebrow">Where it all leads</span>
+      <h2 class="dtitle">Integration &amp; test, the <span class="em">moment of truth.</span></h2>
+      <p class="lead">A sensor that has never left a clean room has never proven anything. Verification is where SSAI's engineering becomes flight-readiness.</p>
+      <div class="split">
+        <div class="figure tall">
+          <img src="assets/images/site/instruments/europa-clipper-integration.jpg" alt="Engineers and technicians integrate hardware onto a spacecraft propulsion module in a clean room." loading="lazy">
+          <span class="cred">NASA/JPL · Goddard clean room</span>
         </div>
         <div class="body-col">
-          <p>Our interactive instruments library lets you see what each sensor measures, the missions it flies on, and the role SSAI played — from sensor to science. Filter by what an instrument observes, the platform it rides, and its status: in development, launched, or on-orbit.</p>
-          <p>Each entry reads the same way: name, mission and platform, what it measures, SSAI's role, and current status — the honest, verb-by-verb account of how we make these instruments succeed.</p>
-          <div class="btn-row">
-            <a class="btn" href="interactive-kit.html">Explore the portfolio interactively</a>
-            <a class="btn ghost" href="science.html">See the science it serves</a>
+          <p>Integration and test is the discipline of finding every problem on the ground, where it can still be fixed. SSAI engineers staff the I&amp;T Manager and Instrument Manager roles that own this phase — running thermal-vacuum and environmental verification, closing every review gate, and signing off only when a sensor will work the first time, in the harshest environments there are.</p>
+          <div class="chips">
+            <span class="chip"><b>I&amp;T</b> Integration &amp; Test</span>
+            <span class="chip"><b>TVAC</b> Thermal-vacuum</span>
+            <span class="chip"><b>Cal/Val</b> Calibration</span>
+            <span class="chip"><b>Ops</b> Payload operations</span>
+            <span class="chip"><b>Data</b> Science pipelines</span>
+          </div>
+          <div class="btn-row" style="margin-top:clamp(28px,4vh,40px)">
+            <a class="btn ghost" href="mission-operations-data.html">Mission ops &amp; data</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== CLOSING BAND ===================== -->
   <section class="band">
     <div class="container band-cta">
-      <h2>We don't sell satellites.<br>We make them <span class="em">succeed.</span></h2>
+      <h2>Explore every instrument, <span class="em">mission by mission.</span></h2>
+      <p class="lead">The interactive kit opens the full catalog — filter by domain, platform, and status, and trace each sensor from study to on-orbit.</p>
       <div class="btn-row">
-        <a class="btn" href="partner.html">Partner with us</a>
-        <a class="btn ghost" href="interactive-kit.html">Browse all instruments</a>
+        <a class="btn" href="interactive-kit.html">Open the interactive kit</a>
+        <a class="btn ghost" href="missions.html">Browse the missions</a>
       </div>
     </div>
   </section>
@@ -292,20 +303,16 @@
 
 <footer class="footer">
   <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="assets/logo/ssai-white-full.png" alt="SSAI">
-      <p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p>
-    </div>
-    <div class="footer-col"><h4>Company</h4><a href="company.html">About</a><a href="company.html#history">History</a><a href="company.html#leadership">Leadership</a><a href="company.html#values">Values</a></div>
-    <div class="footer-col"><h4>Science</h4><a href="science.html#earth">Earth</a><a href="science.html#heliophysics">Heliophysics</a><a href="science.html#planetary">Planetary &amp; Astrophysics</a><a href="instruments.html">Instruments</a></div>
-    <div class="footer-col"><h4>Work</h4><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner With Us</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div>
-    <div class="footer-col"><h4>Connect</h4><a href="contact.html">Contact</a><a href="signin.html">MySSAI Sign In</a><a href="index.html">The Descent</a></div>
+    <div class="footer-brand"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p></div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div>
+    <div class="footer-col"><h4>Work</h4><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
   </div>
-  <div class="container footer-bottom">
-    <span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span>
-    <span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span>
-  </div>
+  <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
 </footer>
+
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script type="module" src="assets/js/centerpiece.js"></script>
 </body>
 </html>

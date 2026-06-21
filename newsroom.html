@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="assets/site.css" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
 <header class="nav" id="nav">
@@ -34,12 +35,9 @@
       <span class="kick">Newsroom</span>
       <h1>The latest <span class="em">from SSAI</span></h1>
       <p class="sub">News, announcements, success stories, and events from across SSAI — filterable by category and by year. From mission milestones to company recognition, this is where the work shows up.</p>
-      <div class="chips">
-        <span class="chip"><b>All</b></span>
-        <span class="chip">Announcements</span>
-        <span class="chip">Success Stories</span>
-        <span class="chip">Events</span>
-        <span class="chip">Press &amp; Media</span>
+      <div class="btn-row">
+        <a class="btn" href="#announcements">Read announcements</a>
+        <a class="btn ghost" href="#press">Press &amp; media</a>
       </div>
     </div>
   </section>
@@ -49,42 +47,38 @@
     <div class="container">
       <div class="lede-grid">
         <div>
-          <span class="eyebrow">01 — Announcements</span>
-          <h2 class="dtitle mt-s">Recognition &amp; <span class="em">milestones</span></h2>
+          <span class="eyebrow">Announcements</span>
+          <h2 class="dtitle mt-s">Company <span class="em">milestones</span></h2>
         </div>
         <div class="body-col">
-          <p>Where the company shows up in the record: workplace honors, capability appraisals, and leadership in the rooms where the future of health IT and federal science is being shaped.</p>
+          <p>Recognition, certification, and the moments that mark a company built on rigor. Each item below is a matter of record — the appraisals we earned, the workplaces we keep, and the science conversations we are invited to lead.</p>
         </div>
       </div>
-
       <div class="grid grid-2">
-        <article class="card feature">
+        <div class="card feature">
           <span class="n">Announcement · 2024</span>
-          <h3>A Top Workplace, Five Years Running</h3>
-          <p>SSAI named a Top 2024 Workplace by The Washington Post — its fifth consecutive year on the list, drawn from a survey of more than 137,000 employee responses across the region.</p>
-          <span class="tag">Culture</span>
-        </article>
-
-        <article class="card">
+          <h3>Top Workplace — Five Years Running</h3>
+          <p>SSAI was named a 2024 Top Workplace by The Washington Post — the fifth consecutive year — in a regional survey drawing more than 137,000 employee responses. The recognition reflects a culture our founders built and our people sustain.</p>
+          <span class="tag">The Washington Post</span>
+        </div>
+        <div class="card">
           <span class="n">Announcement · May 12, 2024</span>
-          <h3>CMMI Maturity Level 3, Appraised</h3>
-          <p>SSAI achieves CMMI Maturity Level 3 for Development — an independent appraisal that affirms our process discipline and enables work on complex, high-reliability software.</p>
-          <span class="tag">Engineering</span>
-        </article>
-
-        <article class="card">
-          <span class="n">Announcement · Feb 6, 2025 · Bethesda</span>
+          <h3>CMMI Maturity Level 3</h3>
+          <p>SSAI achieved CMMI Maturity Level 3 for Development, appraised May 12, 2024 — enabling our teams to take on complex, high-reliability software for the missions that cannot afford to fail.</p>
+          <span class="tag">Process Maturity</span>
+        </div>
+        <div class="card">
+          <span class="n">Event · Feb 6, 2025 · Bethesda, MD</span>
           <h3>Innovation in Health IT</h3>
-          <p>SSAI featured at an Innovation in Health IT convening, with CEO Dr. Shilpa Bahethi appearing alongside the Acting Director of NITAAC to discuss the road ahead for federal health technology.</p>
-          <span class="tag">Leadership</span>
-        </article>
-
-        <article class="card">
+          <p>SSAI CEO Dr. Shilpa Bahethi, MD, joined the Acting Director of NITAAC to discuss innovation in health IT — where SSAI's science, technology, and health expertise intersect.</p>
+          <span class="tag">Health IT</span>
+        </div>
+        <div class="card">
           <span class="n">Announcement · 2026</span>
-          <h3>Large Business of the Year Finalist</h3>
-          <p>SSAI named a finalist for Large Business of the Year by the Central Maryland Chamber of Commerce — recognition of sustained growth and contribution in the region we call home.</p>
-          <span class="tag">Recognition</span>
-        </article>
+          <h3>Large Business of the Year — Finalist</h3>
+          <p>SSAI was named a finalist for Large Business of the Year by the Central Maryland Chamber of Commerce, recognizing our growth and contribution to the regional science and technology economy.</p>
+          <span class="tag">Central Maryland Chamber</span>
+        </div>
       </div>
     </div>
   </section>
@@ -92,46 +86,56 @@
   <div class="divider"></div>
 
   <!-- ============ SUCCESS STORIES ============ -->
-  <section class="section alt" id="success-stories">
+  <section class="section alt" id="stories">
     <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">02 — Success Stories</span>
-          <h2 class="dtitle mt-s">The work, <span class="em">in depth</span></h2>
+      <span class="eyebrow">Success stories</span>
+      <h2 class="dtitle mt-s">Where the work <span class="em">shows up</span></h2>
+      <p class="lead">From flight-hardware electrical engineering to the machine-learning models behind accurate satellite retrievals — the missions, in our own words. Each links to a full case study.</p>
+      <div class="grid grid-2">
+        <div class="card">
+          <span class="n">Success Story · Instruments</span>
+          <h3>Roman · PACE · Landsat 9</h3>
+          <p>SSAI-led electrical engineering teams made critical contributions across three flagship observatories — the Roman Space Telescope, PACE, and Landsat 9 — carrying instruments through design, integration, and test.</p>
+          <span class="tag">Read the story</span>
         </div>
-        <div class="body-col">
-          <p>Longer-form case studies on the missions and methods where SSAI made the difference — from electrical engineering on flagship observatories to machine learning that sharpens what satellites can see. Each links to a full article.</p>
+        <div class="card">
+          <span class="n">Success Story · Jun 25, 2024</span>
+          <h3>Inside GOES-R I&amp;T</h3>
+          <p>How SSAI helped GOES-U reach orbit. Launched June 25, 2024, GOES-U completed the GOES-R series — with SSAI running Integration &amp; Test for the program and supporting operations at NOAA's Satellite Operations Facility.</p>
+          <span class="tag">Read the story</span>
+        </div>
+        <div class="card">
+          <span class="n">Success Story · Data Science &amp; AI</span>
+          <h3>Machine Learning for Retrievals</h3>
+          <p>SSAI leverages machine learning for accurate satellite retrievals across TROPOMI, GEMS, PACE, and TEMPO — matching established sensors with improved spatial coverage and consistency.</p>
+          <span class="tag">Read the story</span>
+        </div>
+        <div class="card">
+          <span class="n">Success Story · Earth Science</span>
+          <h3>Black Marble</h3>
+          <p>Turning night lights into science. The SSAI team behind NASA's Black Marble nighttime-lights product helps researchers study disaster impact, urbanization, and human displacement from orbit.</p>
+          <span class="tag">Read the story</span>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="grid grid-2">
-        <article class="card">
-          <span class="n">Case Study · Flight Hardware</span>
-          <h3>Engineering Roman, PACE &amp; Landsat 9</h3>
-          <p>SSAI-led electrical engineering teams make critical contributions to three landmark observatories — Roman, PACE, and Landsat 9 — across design, integration, and test.</p>
-          <span class="tag">Read the story</span>
-        </article>
-
-        <article class="card feature">
-          <span class="n">Case Study · Jun 25, 2024</span>
-          <h3>Inside GOES-R: How GOES-U Reached Orbit</h3>
-          <p>A look inside the GOES-R Integration &amp; Test program and how SSAI helped GOES-U reach orbit on its June 25, 2024 launch — the work behind a weather sentinel.</p>
-          <span class="tag">Read the story</span>
-        </article>
-
-        <article class="card">
-          <span class="n">Case Study · Machine Learning</span>
-          <h3>Sharper Retrievals with ML</h3>
-          <p>SSAI leverages machine learning for accurate satellite retrievals across TROPOMI, GEMS, PACE, and TEMPO — turning raw radiances into trustworthy science data.</p>
-          <span class="tag">Read the story</span>
-        </article>
-
-        <article class="card">
-          <span class="n">Case Study · Earth at Night</span>
-          <h3>Black Marble: Night Lights into Science</h3>
-          <p>How SSAI turns the planet's night lights into measurable science — tracking disaster impact, urbanization, and human displacement from orbit.</p>
-          <span class="tag">Read the story</span>
-        </article>
+  <!-- ============ FEATURE IMAGE ============ -->
+  <section class="section tight">
+    <div class="container">
+      <div class="split">
+        <div class="body-col">
+          <span class="eyebrow">In the field</span>
+          <h2 class="dtitle mt-s">From clean room to <span class="em">orbit</span></h2>
+          <p>Behind every announcement is hardware that had to work the first time. SSAI engineers carry instruments through study, design, fabrication, integration and test, verification, and on-orbit operations — including the PACE mission, whose Ocean Color Instrument SSAI helped engineer and now feeds the data pipelines our scientists turn into discovery.</p>
+          <div class="btn-row">
+            <a class="btn ghost" href="instruments.html">See the instruments</a>
+          </div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/spacecraft/pace-spacecraft.jpg" alt="NASA's PACE spacecraft during processing at Goddard Space Flight Center" loading="lazy">
+          <span class="cred">NASA / Goddard Space Flight Center</span>
+        </div>
       </div>
     </div>
   </section>
@@ -143,50 +147,69 @@
     <div class="container">
       <div class="lede-grid">
         <div>
-          <span class="eyebrow">03 — Events</span>
-          <h2 class="dtitle mt-s">Where Earth &amp; space <span class="em">science happens</span></h2>
+          <span class="eyebrow">Events</span>
+          <h2 class="dtitle mt-s">Where Earth &amp; space science <span class="em">happen</span></h2>
         </div>
         <div class="body-col">
-          <p>Find SSAI at the conferences and workshops where Earth and space science happen. Recent and upcoming gatherings where our scientists and engineers present, convene, and listen.</p>
+          <p>Find SSAI at the conferences and workshops that move the field forward. We present, we listen, and we meet the partners and future colleagues who share our sense of wonder. Recent and upcoming appearances below.</p>
         </div>
       </div>
-
       <div class="grid grid-2">
-        <article class="card">
+        <div class="card">
           <span class="n">Conference · Annual</span>
           <h3>AGU Annual Meeting</h3>
-          <p>SSAI joins the American Geophysical Union (AGU) Annual Meeting — the gathering point for the global Earth and space science community.</p>
-        </article>
-
-        <article class="card feature">
+          <p>The American Geophysical Union Annual Meeting — the gathering of the Earth and space science community, where SSAI scientists present peer-reviewed work and connect with collaborators across the agencies.</p>
+          <span class="tag">American Geophysical Union</span>
+        </div>
+        <div class="card feature">
           <span class="n">Workshop · Apr 13–17, 2026 · Reston, VA</span>
           <h3>2026 JACIE Workshop</h3>
-          <p>SSAI is proud to support the 2026 JACIE Workshop at USGS Headquarters in Reston, Virginia — a working forum on civil and commercial imagery calibration and quality.</p>
-          <span class="tag">Proud to support</span>
-        </article>
+          <p>The Joint Agency Commercial Imagery Evaluation (JACIE) Workshop at USGS Headquarters in Reston, Virginia, April 13–17, 2026 — which SSAI is proud to support. A forum for calibration, validation, and the quality of the data the world depends on.</p>
+          <span class="tag">USGS Headquarters</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CENTERPIECE (small globe) ============ -->
+  <section class="cp-section section alt">
+    <div class="container cp-split">
+      <div>
+        <span class="kick">By the numbers</span>
+        <h2 class="dtitle">Nearly fifty years <span class="em">of the record</span></h2>
+        <p class="lead">Every headline traces back to the same continuous thread — the missions, the data systems, and the people who keep the view from space honest. The newsroom is simply where that work surfaces.</p>
+        <div class="stats">
+          <div class="stat"><b>150+</b><span>Earth &amp; Space Missions</span></div>
+          <div class="stat"><b>~48</b><span>Years Since 1977</span></div>
+          <div class="stat"><b>5</b><span>Years Top Workplace</span></div>
+        </div>
+        <div class="btn-row">
+          <a class="btn ghost" href="company.html">About SSAI</a>
+        </div>
+      </div>
+      <div>
+        <div class="centerpiece" data-variant="globe"></div>
+        <div class="cp-cap">Mission activity across the globe</div>
       </div>
     </div>
   </section>
 
   <!-- ============ PRESS & MEDIA ============ -->
-  <section class="section alt" id="press">
+  <section class="section" id="press">
     <div class="container">
       <div class="lede-grid">
         <div>
-          <span class="eyebrow">04 — Press &amp; Media</span>
+          <span class="eyebrow">Press &amp; media</span>
           <h2 class="dtitle mt-s">For the <span class="em">press</span></h2>
         </div>
         <div class="body-col">
           <p>For media inquiries, interviews, or background on SSAI's missions and capabilities, contact us at <a href="mailto:BD@ssaihq.com" style="color:var(--gold)">BD@ssaihq.com</a>. Members of the press can request fact sheets, mission summaries, and approved imagery.</p>
           <ul class="flist">
-            <li>Fact sheets and capability summaries</li>
-            <li>Mission overviews and program background</li>
-            <li>Approved imagery and brand assets</li>
+            <li>Fact sheets on SSAI's three science domains</li>
+            <li>Mission and instrument summaries</li>
+            <li>Approved imagery and leadership bios</li>
+            <li>Interview requests with subject-matter experts</li>
           </ul>
-          <div class="btn-row">
-            <a class="btn" href="mailto:BD@ssaihq.com">Contact Media Relations</a>
-            <a class="btn ghost" href="contact.html">General Contact</a>
-          </div>
         </div>
       </div>
     </div>
@@ -195,10 +218,10 @@
   <!-- ============ CLOSING BAND ============ -->
   <section class="band">
     <div class="container band-cta">
-      <h2>See the work <span class="em">up close</span></h2>
+      <h2>Talk with <span class="em">our team</span></h2>
       <div class="btn-row">
-        <a class="btn" href="science.html">Explore Our Science</a>
-        <a class="btn ghost" href="partner.html">Partner With Us</a>
+        <a class="btn" href="mailto:BD@ssaihq.com">BD@ssaihq.com</a>
+        <a class="btn ghost" href="contact.html">Contact SSAI</a>
       </div>
     </div>
   </section>
@@ -207,21 +230,15 @@
 
 <footer class="footer">
   <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="assets/logo/ssai-white-full.png" alt="SSAI">
-      <p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p>
-    </div>
-    <div class="footer-col"><h4>Company</h4><a href="company.html">About</a><a href="company.html#history">History</a><a href="company.html#leadership">Leadership</a><a href="company.html#values">Values</a></div>
-    <div class="footer-col"><h4>Science</h4><a href="science.html#earth">Earth</a><a href="science.html#heliophysics">Heliophysics</a><a href="science.html#planetary">Planetary &amp; Astrophysics</a><a href="instruments.html">Instruments</a></div>
-    <div class="footer-col"><h4>Work</h4><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner With Us</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div>
-    <div class="footer-col"><h4>Connect</h4><a href="contact.html">Contact</a><a href="signin.html">MySSAI Sign In</a><a href="index.html">The Descent</a></div>
+    <div class="footer-brand"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p></div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div>
+    <div class="footer-col"><h4>Work</h4><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
   </div>
-  <div class="container footer-bottom">
-    <span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span>
-    <span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span>
-  </div>
+  <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
 </footer>
-
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script type="module" src="assets/js/centerpiece.js"></script>
 </body>
 </html>

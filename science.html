@@ -4,22 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Science — Sun, Earth &amp; the Universe — SSAI</title>
-<meta name="description" content="SSAI's science spans three domains — the Earth, the Sun, and the universe beyond — turning observation into understanding across atmospheric, oceanic, terrestrial, heliophysics, planetary, and astrophysics research.">
+<meta name="description" content="SSAI organizes its science around three domains — the Earth, the Sun, and the universe beyond — turning what the world's observing systems see into understanding on the ground.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="assets/site.css" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
+
 <header class="nav" id="nav">
   <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc."></a>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
   <nav class="nav-links" id="navLinks">
-    <a class="nav-link active" href="science.html">Science</a>
-    <a class="nav-link" href="company.html">Company</a>
-    <a class="nav-link" href="instruments.html">Instruments</a>
-    <a class="nav-link" href="mission-operations-data.html">Mission Ops &amp; Data</a>
+    <div class="nav-item has-sub"><a class="nav-link" href="company.html">Company</a><div class="nav-sub"><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link active" href="science.html">Science</a><div class="nav-sub"><a href="science.html">Overview</a><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="instruments.html">Instruments</a><div class="nav-sub"><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="careers.html">Careers</a><div class="nav-sub"><a href="careers.html">Overview</a><a href="benefits.html">Benefits</a><a href="life-at-ssai.html">Life at SSAI</a></div></div>
     <a class="nav-link" href="partner.html">Partner</a>
-    <a class="nav-link" href="careers.html">Careers</a>
     <a class="nav-link" href="newsroom.html">Newsroom</a>
     <a class="nav-link" href="contact.html">Contact</a>
     <a class="nav-link nav-cta" href="signin.html">Sign In</a>
@@ -28,117 +29,149 @@
 
 <main>
 
-  <!-- ============================ HERO ============================ -->
   <section class="phero">
     <div class="container">
-      <span class="kick">The Science of SSAI</span>
+      <span class="kick">Our Science</span>
       <h1>From observation to <span class="em">understanding</span></h1>
-      <p class="sub">For more than forty years, SSAI has invested in the science behind Earth's complex systems and our place in the universe. We organize that work around three domains — the Earth, the Sun, and the universe beyond — designing and maintaining the instruments that observe each, and managing the data they return.</p>
+      <p class="sub">For more than forty years, SSAI has invested in the science behind Earth's complex systems and our place in the universe. We organize that work around three domains — the Sun, the Earth, and the universe beyond — and the discipline that ties them together: turning what the world's observing systems see into understanding on the ground.</p>
       <div class="btn-row">
         <a class="btn" href="#earth">Explore the domains</a>
-        <a class="btn ghost" href="instruments.html">See the instruments</a>
+        <a class="btn ghost" href="publications.html">Read the research</a>
       </div>
     </div>
   </section>
 
-  <!-- ===================== INTRO / THE WEDGE ===================== -->
   <section class="section">
     <div class="container">
       <div class="lede-grid">
-        <div>
-          <span class="eyebrow">The Practice</span>
-          <h2 class="dtitle">Science is the <span class="em">work</span>, not the byproduct</h2>
-        </div>
+        <h2 class="dtitle">One question, asked <span class="em">three ways</span></h2>
         <div class="body-col">
-          <p>Whether designing, building, maintaining, or upgrading ground- and space-based instruments — or managing, analyzing, and distributing the data they return — SSAI contributes to advances across the oceanic, terrestrial, atmospheric, biological, and astronomical sciences.</p>
-          <p>The view from space is only the beginning. Our value lies in the distance traveled between a raw measurement and a validated, calibrated, distributable answer — the wedge that turns observation into understanding.</p>
+          <p class="lead">Whether designing, building, maintaining, or upgrading ground- and space-based instruments — or managing, analyzing, and distributing the data they return — SSAI contributes to advances across the oceanic, terrestrial, atmospheric, biological, and astronomical sciences.</p>
+          <p>We do not own the satellites or build the flight hardware; NASA, NOAA, and their primes do. What SSAI brings is the science discipline around the measurement — engineering and integrating instruments, operating them on orbit, validating and calibrating what they return, and writing the algorithms and models that turn a raw signal into a number a scientist can trust. The same craft applies whether the instrument is pointed at the Sun, at the Earth below, or out toward the edge of the observable universe.</p>
         </div>
       </div>
       <div class="stats">
-        <div class="stat"><b>40+</b><span>Years investing in Earth and space science</span></div>
-        <div class="stat"><b>3</b><span>Science domains — Earth, Sun, Universe</span></div>
-        <div class="stat"><b>5</b><span>Disciplines: ocean, land, atmosphere, biology, astronomy</span></div>
-      </div>
-      <div class="chips">
-        <span class="chip"><b>Remote sensing</b></span>
-        <span class="chip"><b>Algorithm development</b></span>
-        <span class="chip"><b>Data validation</b></span>
-        <span class="chip"><b>Calibration</b></span>
-        <span class="chip"><b>High-performance computing</b></span>
-        <span class="chip"><b>Geospatial processing</b></span>
+        <div class="stat"><b>3</b><span>Science domains</span></div>
+        <div class="stat"><b>150+</b><span>Earth &amp; space science missions</span></div>
+        <div class="stat"><b>~48</b><span>Years alongside NASA</span></div>
+        <div class="stat"><b>1977</b><span>Founded, beside Goddard</span></div>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- ========================== EARTH ========================== -->
   <section class="section alt" id="earth">
     <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">Domain 01 — The Earth</span>
-          <h2 class="dtitle">Earth <span class="em">Science</span></h2>
-          <p class="note mt-s">Our largest practice.</p>
-        </div>
+      <span class="kick">Domain 01 — The Earth</span>
+      <h2 class="dtitle">Earth Science — our <span class="em">largest practice</span></h2>
+      <div class="split">
         <div class="body-col">
-          <p>SSAI scientists contribute to nearly every NASA observing system measuring Earth's atmosphere, water, ice, land, and biological activity. Our work spans remote sensing — from algorithm development through data validation, calibration, maintenance, and distribution.</p>
-          <p>We observe and model Earth-system components such as land surface and hydrology, the oceans, and the cryosphere, alongside geodesy and solid-Earth geophysics. We develop algorithms that detect and quantify water-related variables from satellite, airborne, and in-situ data, applying large-scale geospatial processing and high-performance computing to atmospheric correction and aquatic applications.</p>
+          <p class="lead">SSAI scientists contribute to nearly every NASA observing system measuring Earth's atmosphere, water, ice, land, and biological activity.</p>
+          <p>Our work spans remote sensing — from algorithm development through data validation, calibration, maintenance, and distribution — the observation and modeling of Earth-system components such as land surface and hydrology, the oceans, and the cryosphere, and geodesy and solid-Earth geophysics. We develop algorithms that detect and quantify water-related variables from satellite, airborne, and in-situ data, applying large-scale geospatial processing and high-performance computing to atmospheric correction and aquatic applications.</p>
+          <div class="btn-row">
+            <a class="btn" href="earth-science.html">Inside Earth Science</a>
+          </div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/earth/phytoplankton-bloom.jpg" alt="A phytoplankton bloom swirling through the deep blue of the central North Atlantic." loading="lazy">
+          <span class="cred">NASA (MODIS / NASA Goddard Space Flight Center)</span>
         </div>
       </div>
+      <div class="media-grid media-3">
+        <div class="figure sq">
+          <img src="assets/images/site/earth/hurricane-ivan.jpg" alt="Hurricane Ivan, its eye and spiral cloud bands filling the frame, seen from the ISS." loading="lazy">
+          <span class="cred">NASA (ISS Expedition 9)</span>
+        </div>
+        <div class="figure sq">
+          <img src="assets/images/site/earth/antarctic-sea-ice.jpg" alt="Sea ice and sky over Antarctica during a NASA Operation IceBridge survey flight." loading="lazy">
+          <span class="cred">NASA (Operation IceBridge)</span>
+        </div>
+        <div class="figure sq">
+          <img src="assets/images/site/earth/saharan-dust-storm.jpg" alt="A Saharan dust storm sweeping across the Algeria–Niger border, seen from the Space Shuttle." loading="lazy">
+          <span class="cred">NASA (STS-49, Space Shuttle Endeavour)</span>
+        </div>
+      </div>
+      <p class="lead">The reach of the practice shows in the missions our people help turn into trusted data.</p>
+      <div class="chips">
+        <span class="chip"><b>MERRA-2</b> reanalysis</span>
+        <span class="chip"><b>PACE</b> ocean &amp; aerosols</span>
+        <span class="chip"><b>TEMPO</b> air quality</span>
+        <span class="chip"><b>ICESat-2</b> ice &amp; elevation</span>
+        <span class="chip"><b>GOES-R</b> weather</span>
+        <span class="chip"><b>SAGE III</b> atmosphere</span>
+        <span class="chip"><b>OMI / OMPS</b> ozone</span>
+        <span class="chip"><b>Black Marble</b> night lights</span>
+      </div>
+    </div>
+  </section>
 
-      <div class="grid grid-3">
-        <div class="card">
-          <span class="n">Atmosphere &amp; Water</span>
-          <h3>Air, ice &amp; ocean</h3>
-          <p>Contributions to nearly every NASA observing system measuring Earth's atmosphere, water, ice, land, and biological activity — the full remote-sensing chain, from first algorithm to distributed product.</p>
+  <section class="cp-section section">
+    <div class="container cp-split">
+      <div>
+        <span class="kick">The view from above</span>
+        <h2 class="dtitle">A planet measured, <span class="em">layer by layer</span></h2>
+        <p class="lead">Earth is the most heavily instrumented object in the solar system — and SSAI helps tend almost every layer of that watch, from the top of the atmosphere to the bed of the ocean.</p>
+        <p>Atmosphere, ocean, ice, land, and the living biosphere are each observed by their own constellation of instruments. The science is in stitching those measurements into one coherent picture of a system that never holds still.</p>
+        <div class="btn-row">
+          <a class="btn" href="earth-science.html">Earth Science</a>
+          <a class="btn ghost" href="data-science-ai.html">Data Science &amp; AI</a>
         </div>
-        <div class="card">
-          <span class="n">Earth-System Modeling</span>
-          <h3>Land, sea &amp; cryosphere</h3>
-          <p>Observation and modeling of land surface and hydrology, the oceans, and the cryosphere, extended by geodesy and solid-Earth geophysics.</p>
-        </div>
-        <div class="card">
-          <span class="n">Aquatic Applications</span>
-          <h3>Water, quantified</h3>
-          <p>Algorithms that detect and quantify water-related variables from satellite, airborne, and in-situ data — large-scale geospatial processing and HPC applied to atmospheric correction.</p>
-        </div>
+      </div>
+      <div>
+        <div class="centerpiece" data-variant="globe"></div>
+        <div class="cp-cap">Earth as a single observed system — atmosphere, ocean, ice, land, and biosphere, watched continuously from orbit.</div>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- ====================== HELIOPHYSICS ====================== -->
   <section class="section" id="heliophysics">
     <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">Domain 02 — The Sun</span>
-          <h2 class="dtitle">Heliophysics</h2>
-        </div>
+      <span class="kick">Domain 02 — The Sun</span>
+      <h2 class="dtitle">Heliophysics — reading the <span class="em">space weather</span></h2>
+      <div class="split rev">
         <div class="body-col">
-          <p>SSAI studies the interaction of the solar wind with the upper atmosphere and the science of space weather — understanding and predicting solar activity and its interaction with Earth's magnetic field.</p>
-          <p>We support the development and operations of NAIRAS — the Nowcast for Aerospace Ionizing Radiation System, developed at NASA Langley — which computes in real time the radiation experienced by the crews of aircraft and spacecraft from galactic cosmic rays, solar energetic particles, and the radiation belts. We also study variations in total solar irradiance as a fundamental forcing of Earth's climate system.</p>
+          <p class="lead">SSAI studies the interaction of the solar wind with the upper atmosphere and the science of space weather — understanding and predicting solar activity and its interaction with Earth's magnetic field.</p>
+          <p>We support the development and operations of NAIRAS, the Nowcast for Aerospace Ionizing Radiation System developed at NASA Langley, which computes in real time the radiation experienced by the crews of aircraft and spacecraft from galactic cosmic rays, solar energetic particles, and the radiation belts. We also study variations in total solar irradiance as a fundamental forcing of Earth's climate system — the thread that ties the Sun directly back to the Earth domain.</p>
+          <div class="btn-row">
+            <a class="btn" href="heliophysics.html">Inside Heliophysics</a>
+          </div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/sun/solar-flare-xclass.jpg" alt="An X-class solar flare flashing from an active region, imaged in extreme ultraviolet light." loading="lazy">
+          <span class="cred">NASA/Goddard Space Flight Center (Solar Dynamics Observatory)</span>
         </div>
       </div>
-
       <div class="grid grid-3">
+        <div class="card">
+          <span class="n">01</span>
+          <h3>Solar wind &amp; the upper atmosphere</h3>
+          <p>How charged particles streaming from the Sun couple to Earth's ionosphere and magnetic field — the physics behind the aurora and behind disruptions to navigation and communication.</p>
+          <span class="tag">Space weather</span>
+        </div>
         <div class="card feature">
-          <span class="n">Space Weather · Operational</span>
-          <h3>NAIRAS</h3>
-          <p>The Nowcast for Aerospace Ionizing Radiation System, developed at NASA Langley, computes in real time the radiation experienced by aircraft and spacecraft crews from galactic cosmic rays, solar energetic particles, and the radiation belts.</p>
-          <span class="tag">Real-time nowcast</span>
+          <span class="n">02</span>
+          <h3>NAIRAS radiation nowcast</h3>
+          <p>Real-time radiation exposure for aircraft and spacecraft crews from cosmic rays, solar energetic particles, and the radiation belts — developed at NASA Langley, supported by SSAI.</p>
+          <span class="tag">Operations</span>
         </div>
         <div class="card">
-          <span class="n">Sun–Earth Coupling</span>
-          <h3>Solar wind</h3>
-          <p>The interaction of the solar wind with the upper atmosphere, and the prediction of solar activity as it meets Earth's magnetic field.</p>
+          <span class="n">03</span>
+          <h3>Total solar irradiance</h3>
+          <p>Tracking variations in the Sun's energy output as a fundamental forcing of Earth's climate system — quantifying how much of climate change the Sun itself drives.</p>
+          <span class="tag">Climate forcing</span>
         </div>
-        <div class="card">
-          <span class="n">Climate Forcing</span>
-          <h3>Solar irradiance</h3>
-          <p>Variations in total solar irradiance studied as a fundamental forcing of Earth's climate system.</p>
+      </div>
+      <div class="media-grid media-2">
+        <div class="figure wide">
+          <img src="assets/images/site/sun/active-region-loops-euv.jpg" alt="Magnetic loops arcing above a solar active region in extreme ultraviolet light." loading="lazy">
+          <span class="cred">NASA/JPL-Caltech (Solar Dynamics Observatory)</span>
+        </div>
+        <div class="figure wide">
+          <img src="assets/images/site/sun/aurora-borealis-canada.jpg" alt="A red and green aurora borealis over Canada's Gulf of St. Lawrence, seen from the ISS." loading="lazy">
+          <span class="cred">NASA/Johnson Space Center (ISS Expedition 72)</span>
         </div>
       </div>
     </div>
@@ -146,86 +179,114 @@
 
   <div class="divider"></div>
 
-  <!-- ============== PLANETARY & ASTROPHYSICS ============== -->
   <section class="section alt" id="planetary">
     <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">Domain 03 — The Universe</span>
-          <h2 class="dtitle">Planetary Science &amp; <span class="em">Astrophysics</span></h2>
-        </div>
+      <span class="kick">Domain 03 — The Universe</span>
+      <h2 class="dtitle">Planetary Science &amp; Astrophysics — to the <span class="em">edge of the observable</span></h2>
+      <div class="split">
         <div class="body-col">
-          <p>SSAI extends its science from the Moon to the edge of the observable universe. We are developing HOLMS — the Heterodyne OH Lunar Miniaturized Spectrometer — destined for the lunar surface through NASA's Commercial Lunar Payload Services initiative, to measure and understand the water cycle in the Moon's thin atmosphere.</p>
-          <p>That water will be crucial to Artemis, which aims to establish a permanent human presence on the Moon. Our instrument and engineering teams reach further still, into the astrophysics missions that map our place among the stars.</p>
+          <p class="lead">SSAI extends its science from the Moon to the edge of the observable universe.</p>
+          <p>We are developing HOLMS — the Heterodyne OH Lunar Miniaturized Spectrometer — destined for the lunar surface through NASA's Commercial Lunar Payload Services initiative, to measure and understand the water cycle in the Moon's thin atmosphere. That water will be crucial to Artemis, which aims to establish a permanent human presence on the Moon. Our instrument and engineering teams reach further still, into the astrophysics missions that map our place among the stars.</p>
+          <div class="btn-row">
+            <a class="btn" href="planetary-astrophysics.html">Inside Planetary &amp; Astrophysics</a>
+          </div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/universe/webb-carina-cosmic-cliffs.jpg" alt="The 'Cosmic Cliffs' of the Carina Nebula, a star-forming region captured by Webb's NIRCam." loading="lazy">
+          <span class="cred">NASA, ESA, CSA, STScI (James Webb Space Telescope)</span>
         </div>
       </div>
-
-      <div class="grid grid-3">
-        <div class="card feature">
-          <span class="n">Lunar Surface · In Development</span>
-          <h3>HOLMS</h3>
-          <p>The Heterodyne OH Lunar Miniaturized Spectrometer, destined for the lunar surface through NASA's Commercial Lunar Payload Services initiative, to measure the water cycle in the Moon's thin atmosphere.</p>
-          <span class="tag">CLPS payload</span>
+      <div class="media-grid media-3">
+        <div class="figure sq">
+          <img src="assets/images/site/universe/jwst-deep-field-smacs-0723.jpg" alt="Webb's First Deep Field — thousands of galaxies in cluster SMACS 0723." loading="lazy">
+          <span class="cred">NASA, ESA, CSA, STScI (JWST)</span>
         </div>
-        <div class="card">
-          <span class="n">Human Exploration</span>
-          <h3>Water for Artemis</h3>
-          <p>Lunar water will be crucial to Artemis, which aims to establish a permanent human presence on the Moon — making its measurement a foundation for what comes next.</p>
+        <div class="figure sq">
+          <img src="assets/images/site/universe/chandra-tycho-supernova-remnant.jpg" alt="A composite of the Tycho supernova remnant from Chandra X-ray and Spitzer infrared data." loading="lazy">
+          <span class="cred">NASA / Chandra + Spitzer (JPL)</span>
         </div>
-        <div class="card">
-          <span class="n">Astrophysics</span>
-          <h3>Among the stars</h3>
-          <p>Our instrument and engineering teams reach further still, into the astrophysics missions that map our place among the stars.</p>
+        <div class="figure sq">
+          <img src="assets/images/site/universe/hubble-sombrero-galaxy.jpg" alt="The edge-on Sombrero Galaxy ringed by a dramatic dust lane around its luminous bulge." loading="lazy">
+          <span class="cred">NASA / Hubble Space Telescope (JPL)</span>
         </div>
+      </div>
+      <p class="lead">From a lunar lander to the great observatories, the engineering craft is the same — and SSAI's people are inside these flagship missions.</p>
+      <div class="chips">
+        <span class="chip"><b>HOLMS</b> lunar water</span>
+        <span class="chip"><b>Lucy</b> Trojan asteroids</span>
+        <span class="chip"><b>JWST</b> infrared universe</span>
+        <span class="chip"><b>Roman</b> wide-field survey</span>
+        <span class="chip"><b>Chandra</b> X-ray astronomy</span>
+        <span class="chip"><b>XRISM</b> X-ray spectroscopy</span>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- ==================== SCIENTIFIC LEADERSHIP ==================== -->
   <section class="section">
     <div class="container">
-      <div class="lede-grid">
-        <div>
-          <span class="eyebrow">The People</span>
-          <h2 class="dtitle">Scientific <span class="em">leadership</span></h2>
-        </div>
+      <span class="kick">The connective tissue</span>
+      <h2 class="dtitle">Data science is where observation becomes <span class="em">knowledge</span></h2>
+      <div class="split rev">
         <div class="body-col">
-          <p>SSAI's research is overseen by Chief Corporate Scientist Oreste Reale, Ph.D., with 25 years of NASA Goddard experience in atmospheric dynamics, hurricanes, and data assimilation.</p>
-          <p>Our scientists lead and staff NASA working groups, sit on mission science teams, and publish the peer-reviewed work that turns observation into understanding — including the team behind NASA's Black Marble nighttime-lights product, used to study disaster impact, urbanization, and human displacement.</p>
+          <p class="lead">Across all three domains, the harder half of the work begins after the instrument returns its signal.</p>
+          <p>SSAI builds and runs the data systems and DAACs that archive and distribute mission data, develops the assimilation methods that fuse millions of observations into a single best estimate of a system's state, and applies AI and machine learning, modeling, and high-performance computing to problems that were intractable a decade ago. It is the discipline that lets a measurement of the Sun, the Earth, or a distant galaxy become a result a scientist anywhere can build on.</p>
+          <div class="btn-row">
+            <a class="btn" href="data-science-ai.html">Data Science &amp; AI</a>
+            <a class="btn ghost" href="mission-operations-data.html">Mission Ops &amp; Data</a>
+          </div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/people/nccs-data-exploration-theater.jpg" alt="The NASA Center for Climate Simulation Data Exploration Theater at Goddard, a multi-screen visualization of a global Earth simulation." loading="lazy">
+          <span class="cred">NASA / Goddard Space Flight Center</span>
         </div>
       </div>
-
-      <div class="grid grid-2">
-        <div class="card">
-          <span class="n">Chief Corporate Scientist</span>
-          <h3>Oreste Reale, Ph.D.</h3>
-          <p>Twenty-five years of NASA Goddard experience in atmospheric dynamics, hurricanes, and data assimilation, overseeing SSAI's research across all three domains.</p>
-        </div>
-        <div class="card feature">
-          <span class="n">Published Science</span>
-          <h3>Black Marble</h3>
-          <p>SSAI scientists are part of the team behind NASA's Black Marble nighttime-lights product, used to study disaster impact, urbanization, and human displacement.</p>
-          <span class="tag">Peer-reviewed</span>
-        </div>
-      </div>
-
       <ul class="flist">
-        <li>Lead and staff NASA working groups across Earth, heliophysics, and planetary science.</li>
-        <li>Sit on mission science teams shaping how observations are designed and interpreted.</li>
-        <li>Publish the peer-reviewed work that converts measurement into understanding.</li>
+        <li>Algorithm development, calibration, and validation across optical, infrared, microwave, and X-ray instruments</li>
+        <li>Data assimilation — fusing satellite, airborne, and in-situ observations into coherent system estimates</li>
+        <li>DAACs and data systems that archive and distribute mission data to scientists worldwide</li>
+        <li>AI/ML, modeling, and high-performance computing for atmospheric correction and aquatic applications</li>
       </ul>
     </div>
   </section>
 
-  <!-- ========================= CLOSING BAND ========================= -->
+  <div class="divider"></div>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="kick">Scientific leadership</span>
+      <h2 class="dtitle">Science overseen by people who have <span class="em">done the science</span></h2>
+      <div class="split">
+        <div class="body-col">
+          <p class="lead">SSAI's research is overseen by Chief Corporate Scientist Oreste Reale, Ph.D., with 25 years of NASA Goddard experience in atmospheric dynamics, hurricanes, and data assimilation.</p>
+          <p>Our scientists lead and staff NASA working groups, sit on mission science teams, and publish the peer-reviewed work that turns observation into understanding — including the team behind NASA's Black Marble nighttime-lights product, used to study disaster impact, urbanization, and human displacement. The MERRA-2 reanalysis earned a 2019 NASA Agency Honor Award. This is what distinguishes SSAI from a satellite operator: the wedge from observation to understanding runs straight through our people.</p>
+          <div class="btn-row">
+            <a class="btn" href="leadership.html">Meet the leadership</a>
+            <a class="btn ghost" href="publications.html">Browse publications</a>
+          </div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/people/nas-hyperwall-visualization.jpg" alt="Scientists study a galaxy dataset on the hyperwall visualization system at the NASA Advanced Supercomputing facility." loading="lazy">
+          <span class="cred">NASA / Ames Research Center</span>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>25 yrs</b><span>Chief Scientist at NASA Goddard</span></div>
+        <div class="stat"><b>2019</b><span>MERRA-2 NASA Agency Honor Award</span></div>
+        <div class="stat"><b>Black Marble</b><span>Night-lights science team</span></div>
+        <div class="stat"><b>Peer-reviewed</b><span>Published, cited research</span></div>
+      </div>
+    </div>
+  </section>
+
   <section class="band">
     <div class="container band-cta">
-      <h2>Observation, turned into <span class="em">understanding</span></h2>
+      <h2>Three domains. <span class="em">One discipline.</span></h2>
+      <p>The Sun, the Earth, and the universe beyond — each studied with the same care, and each turned into understanding the world can use. See where that science lands first.</p>
       <div class="btn-row">
-        <a class="btn" href="instruments.html">Explore the instruments</a>
-        <a class="btn ghost" href="partner.html">Partner with us</a>
+        <a class="btn" href="earth-science.html">Start with Earth Science</a>
+        <a class="btn ghost" href="missions.html">See the missions</a>
       </div>
     </div>
   </section>
@@ -234,20 +295,16 @@
 
 <footer class="footer">
   <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="assets/logo/ssai-white-full.png" alt="SSAI">
-      <p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p>
-    </div>
-    <div class="footer-col"><h4>Company</h4><a href="company.html">About</a><a href="company.html#history">History</a><a href="company.html#leadership">Leadership</a><a href="company.html#values">Values</a></div>
-    <div class="footer-col"><h4>Science</h4><a href="science.html#earth">Earth</a><a href="science.html#heliophysics">Heliophysics</a><a href="science.html#planetary">Planetary &amp; Astrophysics</a><a href="instruments.html">Instruments</a></div>
-    <div class="footer-col"><h4>Work</h4><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner With Us</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div>
-    <div class="footer-col"><h4>Connect</h4><a href="contact.html">Contact</a><a href="signin.html">MySSAI Sign In</a><a href="index.html">The Descent</a></div>
+    <div class="footer-brand"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p></div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div>
+    <div class="footer-col"><h4>Work</h4><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a href="partner.html">Partner</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
   </div>
-  <div class="container footer-bottom">
-    <span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span>
-    <span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span>
-  </div>
+  <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
 </footer>
+
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script type="module" src="assets/js/centerpiece.js"></script>
 </body>
 </html>
