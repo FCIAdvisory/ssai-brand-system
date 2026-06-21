@@ -386,7 +386,7 @@ function rloop(){
 requestAnimationFrame(rloop);
 applyScroll();
 
-window.__exp={ get p(){return scrollP;}, set p(v){scrollP=clamp01(v); targetP=curP=scrollP; applyScroll();}, camAt:camAt, get ready(){return ready;} };
+window.__exp={ get p(){return scrollP;}, set p(v){scrollP=clamp01(v); targetP=curP=scrollP; applyScroll(); renderer.render(scene,camera);}, camAt:camAt, get ready(){return ready;}, get three(){return {scene:scene,camera:camera,renderer:renderer};} };
 </script>
 </body>
 </html>
