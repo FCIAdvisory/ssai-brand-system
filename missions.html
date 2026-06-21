@@ -7,7 +7,7 @@
 <meta name="description" content="A catalog of the science missions SSAI helps make succeed — from Earth-observing flagships like PACE, TEMPO, ICESat-2, GOES-R, and MERRA-2 to exploration and astrophysics missions including Lucy, JWST, Roman, Chandra, and XRISM. We support, engineer, integrate, operate, and turn into data; we do not own the spacecraft.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="assets/site.css?v=6" rel="stylesheet">
+<link href="assets/site.css?v=7" rel="stylesheet">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
@@ -29,8 +29,9 @@
 
 <main>
 
-  <!-- ===================== HERO ===================== -->
-  <section class="phero shot" style="background-image:url('assets/images/site/spacecraft/sentinel6-over-earth.jpg')">
+  <!-- ===================== HERO (live orbits experience, baked in) ===================== -->
+  <section class="phero live">
+    <iframe class="phero-exp" src="experience-orbits.html?embed=1" title="" tabindex="-1" aria-hidden="true" loading="eager"></iframe>
     <div class="container">
       <span class="kick">The Mission Catalog</span>
       <h1>The missions we help <span class="em">make succeed.</span></h1>
@@ -334,19 +335,6 @@
     </div>
   </section>
 
-  <!-- ===================== EXPERIENCE BAND ===================== -->
-  <section class="section"><div class="container">
-    <span class="kick">Cinematic experience</span>
-    <a class="xband" style="margin-top:clamp(28px,4vh,46px);background-image:url('assets/images/site/earth/blue-marble.jpg')" href="experience-orbits.html">
-      <div class="xinner">
-        <span class="xk"><span class="pl">&#9654;</span> Scroll-driven tour</span>
-        <h3>Tour the orbits</h3>
-        <p>LEO, MEO, geostationary &mdash; the three highways every Earth-observing mission rides. Pull outward through the orbits we engineer and operate.</p>
-        <span class="go">Leave the ground &rarr;</span>
-      </div>
-    </a>
-  </div></section>
-
   <!-- ===================== CLOSING BAND ===================== -->
   <section class="band">
     <div class="container band-cta">
@@ -371,7 +359,7 @@
   <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
 </footer>
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
-<script type="module" src="assets/js/centerpiece.js?v=6"></script>
-<script src="assets/js/site.js?v=6"></script>
+<script type="module" src="assets/js/centerpiece.js?v=7"></script>
+<script src="assets/js/site.js?v=7"></script>
 </body>
 </html>

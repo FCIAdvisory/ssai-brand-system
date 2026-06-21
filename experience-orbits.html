@@ -22,7 +22,8 @@ html,body{background:var(--black);color:var(--starlight);font-family:var(--body)
 
 /* space + vignette grade so the brand copy always reads over the scene */
 .grade{position:fixed;inset:0;z-index:1;pointer-events:none;background:
-  radial-gradient(135% 100% at 50% 42%,transparent 48%,rgba(6,11,20,.72) 100%)}
+  radial-gradient(130% 105% at 56% 44%,transparent 46%,rgba(6,11,20,.55) 82%,rgba(6,11,20,.82) 100%),
+  linear-gradient(90deg,rgba(6,11,20,.46) 0%,rgba(6,11,20,.16) 30%,rgba(6,11,20,0) 56%)}
 
 .copylayer{position:fixed;inset:0;z-index:3;pointer-events:none}
 .copylayer .inner{position:relative;width:100%;max-width:1180px;height:100%;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
@@ -77,7 +78,36 @@ html,body{background:var(--black);color:var(--starlight);font-family:var(--body)
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .scroll{position:relative;z-index:2;width:100%;height:760vh}
+
+/* ---- EMBED MODE: live hero graphic. Hide ALL chrome + the narrative copy/beats,
+        kill the scroll, go transparent, and leave only the rendered scene (#scene)
+        + its starfield. The class is set on <html> BEFORE first paint so nothing flashes. ---- */
+html.embed,html.embed body{background:transparent!important;overflow:hidden!important;height:100%}
+html.embed .loader,
+html.embed .topbar,
+html.embed .copylayer,
+html.embed .cue,
+html.embed .prog,
+html.embed .shellnav,
+html.embed .alt,
+html.embed .grade{display:none!important}
+html.embed #scene{background:transparent}
+/* host page overlays a left-aligned headline: keep the left third darker so copy reads */
+html.embed .vibe{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(90deg,rgba(6,11,20,.60) 0%,rgba(6,11,20,.32) 26%,rgba(6,11,20,0) 56%),
+  radial-gradient(118% 118% at 64% 46%,transparent 54%,rgba(6,11,20,.46) 100%)}
+html:not(.embed) .vibe{display:none}
+html.embed .scroll{height:0!important;overflow:hidden}
 </style>
+<script>
+/* embed = ?embed=1 OR iframed. Flag the document element BEFORE first paint so no chrome flashes. */
+window.__EMBED=(function(){try{
+  var q=/[?&]embed=1\b/.test(location.search);
+  var framed=window.self!==window.top;
+  return q||framed;
+}catch(e){return true;}})();
+if(window.__EMBED){document.documentElement.classList.add('embed');}
+</script>
 </head>
 <body>
 
@@ -85,6 +115,7 @@ html,body{background:var(--black);color:var(--starlight);font-family:var(--body)
 
 <canvas id="scene"></canvas>
 <div class="grade"></div>
+<div class="vibe"></div>
 <div class="prog" id="prog"></div>
 
 <header class="topbar">
@@ -123,6 +154,7 @@ html,body{background:var(--black);color:var(--starlight);font-family:var(--body)
 <script type="module">
 import * as THREE from 'three';
 
+var EMBED=!!window.__EMBED;
 var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
 function clamp01(x){return x<0?0:(x>1?1:x);}
 function lerp(a,b,t){return a+(b-a)*t;}
@@ -142,15 +174,16 @@ var LEO_R=visR(LEO_KM), MEO_R=visR(MEO_KM), GEO_R=visR(GEO_KM);
 
 /* ===== renderer / scene / camera ===== */
 var canvas=document.getElementById('scene');
-var renderer=new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:false});
+var renderer=new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:EMBED});
 renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
 renderer.setSize(innerWidth,innerHeight,false);
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.05;
+renderer.toneMappingExposure=1.08;
 
 var scene=new THREE.Scene();
-scene.background=new THREE.Color(0x060b14);
+if(EMBED){ scene.background=null; }            // transparent for the host page
+else { scene.background=new THREE.Color(0x060b14); }
 var camera=new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.05, 2000);
 camera.position.set(0,1.6,9);
 
@@ -161,11 +194,12 @@ world.rotation.z=THREE.MathUtils.degToRad(-6);
 scene.add(world);
 
 /* ===== lights ===== */
-var sun=new THREE.DirectionalLight(0xfff4e6, 2.5);
-sun.position.set(5,2.5,4);
+var SUN_POS=new THREE.Vector3(5,2.5,4);
+var sun=new THREE.DirectionalLight(0xfff4e6, 2.6);
+sun.position.copy(SUN_POS);
 scene.add(sun);
-scene.add(new THREE.AmbientLight(0x24406a, 0.55));
-var rim=new THREE.DirectionalLight(0x4a86dd, 0.6);
+scene.add(new THREE.AmbientLight(0x223a60, 0.42));
+var rim=new THREE.DirectionalLight(0x4a86dd, 0.55);
 rim.position.set(-4,-1,-3);
 scene.add(rim);
 
@@ -177,60 +211,105 @@ loadMgr.onError=function(url){ var l=document.getElementById('loader'); if(l){ l
 var texLoader=new THREE.TextureLoader(loadMgr);
 var dayTex=texLoader.load('assets/images/scenes/journey/earth-day.jpg');
 var nightTex=texLoader.load('assets/images/scenes/journey/earth-night.jpg');
+var cloudTex=texLoader.load('assets/images/scenes/journey/earth-clouds.jpg');
 dayTex.colorSpace=THREE.SRGBColorSpace; nightTex.colorSpace=THREE.SRGBColorSpace;
 dayTex.anisotropy=renderer.capabilities.getMaxAnisotropy();
+cloudTex.anisotropy=renderer.capabilities.getMaxAnisotropy();
+cloudTex.wrapS=cloudTex.wrapT=THREE.RepeatWrapping;
 
-/* ===== Earth: day texture + custom night-side city lights via shader ===== */
-var earthGeo=new THREE.SphereGeometry(EARTH_R,96,96);
-var earthMat=new THREE.MeshStandardMaterial({ map:dayTex, roughness:1.0, metalness:0.0 });
+/* ===== Earth: day texture + night-side city lights + ocean sun-glint, all via shader ===== */
+var earthGeo=new THREE.SphereGeometry(EARTH_R,128,128);
+var earthMat=new THREE.MeshStandardMaterial({ map:dayTex, roughness:0.92, metalness:0.0 });
 earthMat.onBeforeCompile=function(sh){
   sh.uniforms.nightMap={value:nightTex};
-  sh.uniforms.sunDir={value:sun.position.clone().normalize()};
-  sh.vertexShader='varying vec3 vWN;\n'+sh.vertexShader.replace(
+  sh.uniforms.sunDir={value:SUN_POS.clone().normalize()};
+  sh.uniforms.camPos={value:new THREE.Vector3()};
+  earthMat.userData.sh=sh;
+  // world-space normal + world-space position so we can compute glint & terminator in world space
+  sh.vertexShader='varying vec3 vWN;\nvarying vec3 vWP;\n'+sh.vertexShader.replace(
     '#include <begin_vertex>',
-    '#include <begin_vertex>\n vWN = normalize( mat3(modelMatrix) * normal );'
+    '#include <begin_vertex>\n vWN = normalize( mat3(modelMatrix) * normal );\n vWP = ( modelMatrix * vec4(transformed,1.0) ).xyz;'
   );
-  sh.fragmentShader='uniform sampler2D nightMap;\nuniform vec3 sunDir;\nvarying vec3 vWN;\n'+sh.fragmentShader.replace(
+  sh.fragmentShader='uniform sampler2D nightMap;\nuniform vec3 sunDir;\nuniform vec3 camPos;\nvarying vec3 vWN;\nvarying vec3 vWP;\n'+sh.fragmentShader.replace(
     '#include <map_fragment>',
     '#include <map_fragment>\n'+
-    ' float ndl = dot( normalize(vWN), normalize(sunDir) );\n'+
-    ' float night = smoothstep(0.06, -0.18, ndl);\n'+
+    ' vec3 N = normalize(vWN);\n'+
+    ' vec3 L = normalize(sunDir);\n'+
+    ' float ndl = dot(N, L);\n'+
+    // night-side city lights — sharper, brighter, warm
+    ' float night = smoothstep(0.10, -0.16, ndl);\n'+
     ' vec3 city = texture2D( nightMap, vMapUv ).rgb;\n'+
-    ' city = pow(city, vec3(1.3)) * 2.4;\n'+
-    ' diffuseColor.rgb += city * night * vec3(1.0,0.92,0.72);\n'
+    ' float cityLum = dot(city, vec3(0.33));\n'+
+    ' city = pow(city, vec3(1.18)) * 3.0;\n'+
+    ' city *= smoothstep(0.04, 0.16, cityLum);\n'+   // gate faint noise so lights read crisp
+    ' diffuseColor.rgb += city * night * vec3(1.0,0.90,0.66);\n'+
+    // ocean specular sun-glint: bright on dark, low-saturation (water) pixels facing the sun
+    ' vec3 V = normalize(camPos - vWP);\n'+
+    ' vec3 H = normalize(L + V);\n'+
+    ' float spec = pow( max(dot(N,H),0.0), 90.0 );\n'+
+    ' float mx = max(max(diffuseColor.r,diffuseColor.g),diffuseColor.b);\n'+
+    ' float mn = min(min(diffuseColor.r,diffuseColor.g),diffuseColor.b);\n'+
+    ' float sat = mx>0.001 ? (mx-mn)/mx : 0.0;\n'+
+    ' float ocean = smoothstep(0.62,0.30,sat) * smoothstep(0.16,0.46,diffuseColor.b);\n'+ // dark-ish blue water
+    ' float day = clamp(ndl,0.0,1.0);\n'+
+    ' diffuseColor.rgb += spec * ocean * day * vec3(0.85,0.93,1.0) * 1.35;\n'+
+    // subtle terminator warmth at the day/night boundary
+    ' float term = smoothstep(0.0,0.42,ndl) * smoothstep(0.42,0.0,abs(ndl-0.12));\n'+
+    ' diffuseColor.rgb += term * vec3(0.10,0.05,0.02);\n'
   );
-  earthMat.userData.sh=sh;
 };
 var earth=new THREE.Mesh(earthGeo,earthMat);
 world.add(earth);
 
-/* ===== atmosphere: backside fresnel rim glow ===== */
+/* ===== clouds: thin additive shell, lit on the day side, fading at the terminator ===== */
+var cloudMat=new THREE.ShaderMaterial({
+  transparent:true, depthWrite:false, blending:THREE.NormalBlending,
+  uniforms:{ uMap:{value:cloudTex}, sunDir:{value:SUN_POS.clone().normalize()}, uOff:{value:0.0} },
+  vertexShader:'varying vec2 vUv; varying vec3 vWN;\nvoid main(){ vUv=uv; vWN=normalize(mat3(modelMatrix)*normal); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
+  fragmentShader:'varying vec2 vUv; varying vec3 vWN; uniform sampler2D uMap; uniform vec3 sunDir; uniform float uOff;\n'+
+    'void main(){ float c=texture2D(uMap, vec2(vUv.x+uOff, vUv.y)).r; c=smoothstep(0.34,0.92,c);\n'+
+    ' float ndl=dot(normalize(vWN), normalize(sunDir));\n'+
+    ' float lit=clamp(ndl*1.05+0.06,0.0,1.0); lit=pow(lit,0.85);\n'+
+    ' float a=c*lit*0.62;\n'+
+    ' vec3 col=mix(vec3(0.62,0.70,0.82), vec3(1.0), lit);\n'+
+    ' gl_FragColor=vec4(col, a); }'
+});
+var clouds=new THREE.Mesh(new THREE.SphereGeometry(EARTH_R*1.012,96,96), cloudMat);
+world.add(clouds);
+
+/* ===== atmosphere: backside fresnel rim glow (stronger but tasteful) ===== */
 var atmoMat=new THREE.ShaderMaterial({
   transparent:true, side:THREE.BackSide, blending:THREE.AdditiveBlending, depthWrite:false,
-  uniforms:{ uColor:{value:new THREE.Color(0x4a86dd)} },
+  uniforms:{ uColor:{value:new THREE.Color(0x5b9bff)}, sunDir:{value:SUN_POS.clone().normalize()} },
   vertexShader:'varying vec3 vN; varying vec3 vP;\nvoid main(){ vN=normalize(mat3(modelMatrix)*normal); vec4 wp=modelMatrix*vec4(position,1.0); vP=wp.xyz; gl_Position=projectionMatrix*viewMatrix*wp; }',
-  fragmentShader:'varying vec3 vN; varying vec3 vP; uniform vec3 uColor;\nvoid main(){ vec3 vd=normalize(cameraPosition-vP); float f=1.0-max(dot(vN,vd),0.0); f=pow(f,3.0); gl_FragColor=vec4(uColor, f*0.9); }'
+  fragmentShader:'varying vec3 vN; varying vec3 vP; uniform vec3 uColor; uniform vec3 sunDir;\n'+
+    'void main(){ vec3 vd=normalize(cameraPosition-vP); float f=1.0-max(dot(vN,vd),0.0);\n'+
+    ' float rim=pow(f,3.4);\n'+
+    ' float ndl=clamp(dot(normalize(-vN), normalize(sunDir))*0.5+0.5, 0.0, 1.0);\n'+ // day-side hemisphere brighter
+    ' float lit=mix(0.32,1.0,pow(ndl,1.4));\n'+
+    ' gl_FragColor=vec4(uColor, rim*lit*1.05); }'
 });
-var atmo=new THREE.Mesh(new THREE.SphereGeometry(EARTH_R*1.045,64,64), atmoMat);
+var atmo=new THREE.Mesh(new THREE.SphereGeometry(EARTH_R*1.055,96,96), atmoMat);
 world.add(atmo);
 
-/* ===== starfield ===== */
+/* ===== starfield (deeper: layered brightness + a few warm/cool tints) ===== */
 (function(){
-  var N=2600, pos=new Float32Array(N*3), col=new Float32Array(N*3);
-  for(var i=0;i<N;i++){ var r=120+Math.random()*420;
+  var N=EMBED?3600:3200, pos=new Float32Array(N*3), col=new Float32Array(N*3);
+  for(var i=0;i<N;i++){ var r=140+Math.random()*460;
     var th=Math.random()*Math.PI*2, ph=Math.acos(2*Math.random()-1);
     pos[i*3]=r*Math.sin(ph)*Math.cos(th); pos[i*3+1]=r*Math.cos(ph); pos[i*3+2]=r*Math.sin(ph)*Math.sin(th);
-    var b=0.5+Math.random()*0.5, tint=Math.random();
-    col[i*3]=b*(0.8+tint*0.2); col[i*3+1]=b*0.85; col[i*3+2]=b*(0.95+(1-tint)*0.05);
+    // brightness skewed so most stars are faint, a few are bright — gives depth
+    var b=Math.pow(Math.random(),2.2)*0.85+0.15, tint=Math.random();
+    col[i*3]=b*(0.82+tint*0.18); col[i*3+1]=b*0.86; col[i*3+2]=b*(0.95+(1-tint)*0.05);
   }
   var g=new THREE.BufferGeometry();
   g.setAttribute('position',new THREE.BufferAttribute(pos,3));
   g.setAttribute('color',new THREE.BufferAttribute(col,3));
-  var m=new THREE.PointsMaterial({size:0.9,sizeAttenuation:false,vertexColors:true,transparent:true,opacity:0.9,depthWrite:false});
+  var m=new THREE.PointsMaterial({size:1.05,sizeAttenuation:false,vertexColors:true,transparent:true,opacity:0.92,depthWrite:false});
   scene.add(new THREE.Points(g,m));
 })();
 
-/* ===== orbital rings + satellites ===== */
+/* ===== orbital rings + satellites with glowing craft and soft motion trails ===== */
 function makeRing(radius, color, opacity, tiltDeg, twistDeg){
   var g=new THREE.Group();
   var pts=[], SEG=256;
@@ -244,22 +323,36 @@ function makeRing(radius, color, opacity, tiltDeg, twistDeg){
   world.add(g);
   return g;
 }
+// a soft trailing arc behind a satellite: TRAIL_LEN points fading from craft-bright to transparent
+var TRAIL_LEN=22;
 function addSats(ring, count, color, size, speed, geoLock){
-  var geo=new THREE.SphereGeometry(size,12,12);
-  var glowGeo=new THREE.SphereGeometry(size*2.6,10,10);
-  var glowMat=new THREE.MeshBasicMaterial({color:color,transparent:true,opacity:0.28,depthWrite:false,blending:THREE.AdditiveBlending});
+  var geo=new THREE.SphereGeometry(size,14,14);
+  var glowGeo=new THREE.SphereGeometry(size*3.0,12,12);
+  var c3=new THREE.Color(color);
   for(var i=0;i<count;i++){
     var mat=new THREE.MeshBasicMaterial({color:color});
     var m=new THREE.Mesh(geo,mat);
+    var glowMat=new THREE.MeshBasicMaterial({color:color,transparent:true,opacity:0.30,depthWrite:false,blending:THREE.AdditiveBlending});
     var glow=new THREE.Mesh(glowGeo,glowMat); m.add(glow);
+
+    // trail geometry (a short polyline) — vertex-coloured so it fades along its length
+    var tg=new THREE.BufferGeometry();
+    var tpos=new Float32Array(TRAIL_LEN*3), tcol=new Float32Array(TRAIL_LEN*3);
+    for(var k=0;k<TRAIL_LEN;k++){ var f=1-(k/(TRAIL_LEN-1)); tcol[k*3]=c3.r*f; tcol[k*3+1]=c3.g*f; tcol[k*3+2]=c3.b*f; }
+    tg.setAttribute('position',new THREE.BufferAttribute(tpos,3));
+    tg.setAttribute('color',new THREE.BufferAttribute(tcol,3));
+    var tm=new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:0.55,depthWrite:false,blending:THREE.AdditiveBlending});
+    var trail=new THREE.Line(tg,tm);
+    ring.add(trail);
+
     var phase=geoLock!=null ? geoLock : Math.random()*Math.PI*2;
-    m.userData={phase:phase, speed:speed, r:ring.userData.radius, dot:mat, glow:glow};
+    m.userData={phase:phase, speed:speed, r:ring.userData.radius, dot:mat, glow:glow, trail:trail, tpos:tpos};
     ring.add(m); ring.userData.sats.push(m);
   }
 }
-var leoRing=makeRing(LEO_R,0x6fb0ff,0.34,18,0);
-var meoRing=makeRing(MEO_R,0x4a86dd,0.30,30,40);
-var geoRing=makeRing(GEO_R,0x9cc4ff,0.40,2,0);   // near-equatorial — GEO sits over the equator
+var leoRing=makeRing(LEO_R,0x6fb0ff,0.36,18,0);
+var meoRing=makeRing(MEO_R,0x4a86dd,0.32,30,40);
+var geoRing=makeRing(GEO_R,0x9cc4ff,0.42,2,0);   // near-equatorial — GEO sits over the equator
 addSats(leoRing, 26, 0x9cd2ff, 0.022, 0.9, null);
 addSats(meoRing, 10, 0x7fb0ff, 0.030, 0.30, null);
 // GEO: a few sats, each phase-locked so they appear to HANG fixed relative to Earth
@@ -288,6 +381,11 @@ function camAt(p){
   return { dist:lerp(A.dist,B.dist,t), height:lerp(A.height,B.height,t), fov:lerp(A.fov,B.fov,t) };
 }
 
+/* ===== EMBED hero composition =====
+   The single most beautiful frame: a close, glorious Earth with the LEO shell turning,
+   parked toward CENTRE-RIGHT with the LEFT third left dark for the host headline. */
+var HERO={ dist:dollyFor(LEO_R)*1.06, height:1.55, fov:38, az:0.62, offX:0.30 };
+
 /* ===== beats / chrome wiring ===== */
 var beats=[].slice.call(document.querySelectorAll('.beat'));
 var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap');
@@ -303,17 +401,40 @@ var ALT=[
 
 var scrollP=0;
 var camAngle=0; // slow continuous azimuth so the system feels alive
+var idleT=0;    // embed idle clock (drives breathing + continuous orbit)
+var hostDriven=false; // set true once a host explicitly drives __exp.p while embedded
+
+/* place the camera for a given target dist/height/fov/azimuth, optionally nudged
+   horizontally so the subject sits centre-right of frame (embed hero). The nudge is a
+   true screen-space shift: we offset the look target along the camera's RIGHT vector so
+   the subject (world origin) slides toward the right third while the left stays dark. */
+var _eye=new THREE.Vector3(), _fwd=new THREE.Vector3(), _right=new THREE.Vector3(),
+    _up=new THREE.Vector3(0,1,0), _target=new THREE.Vector3();
+function placeCamera(dist,height,fov,az,offX){
+  camera.fov=fov; camera.updateProjectionMatrix();
+  _eye.set(Math.sin(az)*dist, height, Math.cos(az)*dist);
+  camera.position.copy(_eye);
+  camera.up.set(0,1,0);
+  _target.set(0,0,0);
+  if(offX){
+    // camera forward + right (in world space) for a screen-horizontal target offset
+    _fwd.copy(_target).sub(_eye).normalize();
+    _right.crossVectors(_fwd,_up).normalize();
+    // shift target to the camera's RIGHT => subject appears toward the LEFT? No: looking to
+    // the right of the subject pushes the subject LEFT; we want it centre-RIGHT, so look LEFT
+    // of the subject => subtract right. Magnitude scales with framed size of the subject.
+    var apparent = dist*Math.tan(THREE.MathUtils.degToRad(fov*0.5));  // half-frame world extent
+    _target.addScaledVector(_right, -offX*apparent);
+  }
+  camera.lookAt(_target);
+}
 
 function applyScroll(){
   var p=scrollP;
   var c=camAt(p);
-  camera.fov=c.fov; camera.updateProjectionMatrix();
-  // orbit camera around the system; azimuth advances very slowly with scroll
+  // orbit camera around the system; azimuth advances very slowly with scroll + living drift
   var az=lerp(0.3, 2.4, clamp01(p)) + camAngle;
-  camera.position.x=Math.sin(az)*c.dist;
-  camera.position.z=Math.cos(az)*c.dist;
-  camera.position.y=c.height;
-  camera.lookAt(0,0,0);
+  placeCamera(c.dist,c.height,c.fov,az,0);
 
   for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
     beats[j].style.opacity=bo;
@@ -339,29 +460,61 @@ function applyScroll(){
   }
 }
 
-/* ===== render loop: animate sats + slow earth spin, draw only when needed-ish (rAF always for orbit life) ===== */
+/* EMBED idle: park on the hero composition and keep it alive — a slow continuous
+   azimuth orbit + a gentle ±0.02 breathing of distance/height. No snapping, no nausea. */
+function applyIdle(){
+  if(reduce){ placeCamera(HERO.dist,HERO.height,HERO.fov,HERO.az,HERO.offX); return; }
+  var az=HERO.az + idleT*0.045;                 // slow living orbit
+  var breath=Math.sin(idleT*0.32)*0.02;         // ±0.02 breathing
+  var dist=HERO.dist*(1+breath);
+  var height=HERO.height + Math.sin(idleT*0.21)*0.06;
+  placeCamera(dist,height,HERO.fov,az,HERO.offX);
+}
+
+/* ===== render loop: animate sats + slow earth spin; always rAF for orbit life ===== */
 var clock=new THREE.Clock();
+function updateSatTrail(s,t){
+  // build the fading trail behind the craft along its ring arc
+  var tp=s.userData.tpos, r=s.userData.r, sp=s.userData.speed, ph=s.userData.phase;
+  var head=ph + t*sp;
+  var span=0.16 + sp*0.9;                       // longer trail for faster craft
+  for(var k=0;k<TRAIL_LEN;k++){
+    var f=k/(TRAIL_LEN-1);
+    var ang=head - f*span;
+    tp[k*3]=Math.cos(ang)*r; tp[k*3+1]=0; tp[k*3+2]=Math.sin(ang)*r;
+  }
+  s.userData.trail.geometry.attributes.position.needsUpdate=true;
+}
 function animate(){
   var dt=reduce?0:clock.getDelta();
   var t=clock.elapsedTime;
   if(!reduce){
     earth.rotation.y+=dt*0.02;
+    clouds.rotation.y+=dt*0.024;                // clouds drift slightly faster than the surface
+    cloudMat.uniforms.uOff.value+=dt*0.004;     // gentle cloud churn
     camAngle+=dt*0.012;
-    // move satellites along their rings
+    idleT+=dt;
+    // move satellites along their rings + update glow pulse + trail
     [leoRing,meoRing,geoRing].forEach(function(ring){
       ring.userData.sats.forEach(function(s){
         var ang=s.userData.phase + t*s.userData.speed;
         s.position.set(Math.cos(ang)*s.userData.r,0,Math.sin(ang)*s.userData.r);
-        var pulse=0.22+0.12*Math.sin(t*2.2+s.userData.phase*3.0);
+        var pulse=0.26+0.14*Math.sin(t*2.2+s.userData.phase*3.0);
         s.userData.glow.material.opacity=pulse;
+        updateSatTrail(s,t);
       });
     });
-    // keep GEO sats rotating WITH Earth so they appear fixed over a point:
-    // earth spins +0.02/s; GEO speed set to match visually => looks locked to surface
-    applyScroll(); // camera azimuth advances each frame for living motion
+    // drive the camera: embed parks on the living hero (unless a host took over), full experience follows scroll
+    if(EMBED && !hostDriven) applyIdle();
+    else applyScroll();
+  } else if(EMBED && !hostDriven){
+    applyIdle();  // freeze on a beautiful hero frame
   }
-  // keep night-side sun direction synced
-  if(earthMat.userData.sh) earthMat.userData.sh.uniforms.sunDir.value.copy(sun.position).normalize();
+  // keep night-side sun direction + ocean-glint cam position synced each frame
+  if(earthMat.userData.sh){
+    earthMat.userData.sh.uniforms.sunDir.value.copy(SUN_POS).normalize();
+    earthMat.userData.sh.uniforms.camPos.value.copy(camera.position);
+  }
   renderer.render(scene,camera);
   requestAnimationFrame(animate);
 }
@@ -376,17 +529,31 @@ addEventListener('resize',function(){
 /* ===== scroll engine: damped rAF loop (matches experience-earth.html) ===== */
 var targetP=0, curP=0, lastP=-1;
 function rloop(){
-  var max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-  targetP=clamp01((window.scrollY||window.pageYOffset||0)/max);
-  curP+=(targetP-curP)*(reduce?1:0.16);
-  if(Math.abs(targetP-curP)<0.0005) curP=targetP;
-  if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; }
+  if(!EMBED){
+    var max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+    targetP=clamp01((window.scrollY||window.pageYOffset||0)/max);
+    curP+=(targetP-curP)*(reduce?1:0.16);
+    if(Math.abs(targetP-curP)<0.0005) curP=targetP;
+    if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; }
+  }
   requestAnimationFrame(rloop);
 }
 requestAnimationFrame(rloop);
-applyScroll();
+if(EMBED){ scrollP=0; applyIdle(); }          // start parked on the living hero composition
+else { applyScroll(); }
 
-window.__exp={ get p(){return scrollP;}, set p(v){scrollP=clamp01(v); targetP=curP=scrollP; applyScroll(); renderer.render(scene,camera);}, camAt:camAt, get ready(){return ready;}, get three(){return {scene:scene,camera:camera,renderer:renderer};} };
+/* ===== host hook: a host CAN drive p; embedded just defaults to the living auto-idle ===== */
+window.__exp={
+  get p(){return scrollP;},
+  set p(v){ scrollP=clamp01(v); targetP=curP=scrollP;
+    if(EMBED) hostDriven=true;   // host taking over: drive scroll cam instead of the auto-idle
+    applyScroll();
+    renderer.render(scene,camera);
+  },
+  camAt:camAt,
+  get ready(){return ready;},
+  get three(){return {scene:scene,camera:camera,renderer:renderer};}
+};
 </script>
 </body>
 </html>

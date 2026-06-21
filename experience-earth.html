@@ -29,6 +29,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
   radial-gradient(135% 95% at 50% 40%,transparent 50%,rgba(4,3,14,.6) 100%)}
 .stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.0;transition:opacity 1.2s}
 .stars.show{opacity:1}
+.vibe{display:none}
 
 .copylayer{position:fixed;inset:0;z-index:3;pointer-events:none}
 .copylayer .inner{position:relative;width:100%;max-width:1180px;height:100%;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
@@ -77,7 +78,33 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .scroll{position:relative;z-index:2;width:100%;height:780vh}
+
+/* ---- EMBED MODE: live hero graphic. Hide ALL chrome, kill scroll, go transparent,
+        leave only the rendered globe (#map) + starfield (#stars). Set on <html> early. ---- */
+html.embed,html.embed body{background:transparent!important;overflow:hidden!important;height:100%}
+html.embed .loader,
+html.embed .topbar,
+html.embed .copylayer,
+html.embed .cue,
+html.embed .prog,
+html.embed .shellnav,
+html.embed .grade{display:none!important}
+html.embed #map{background:transparent}
+/* host page overlays a left-aligned headline: keep the left third darker so copy reads */
+html.embed .vibe{display:block;position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(90deg,rgba(4,3,14,.62) 0%,rgba(4,3,14,.34) 26%,rgba(4,3,14,0) 56%),
+  radial-gradient(120% 120% at 64% 46%,transparent 52%,rgba(4,3,14,.55) 100%)}
+html.embed .scroll{height:0!important;overflow:hidden}
 </style>
+<script>
+/* embed = ?embed=1 OR iframed. Flag the document element BEFORE first paint so no chrome flashes. */
+window.__EMBED=(function(){try{
+  var q=/[?&]embed=1\b/.test(location.search);
+  var framed=window.self!==window.top;
+  return q||framed;
+}catch(e){return true;}})();
+if(window.__EMBED){document.documentElement.classList.add('embed');}
+</script>
 </head>
 <body>
 
@@ -86,6 +113,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 <div class="stars" id="stars"></div>
 <div id="map"></div>
 <div class="grade"></div>
+<div class="vibe"></div>
 <div class="prog" id="prog"></div>
 
 <header class="topbar">
@@ -117,6 +145,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+var EMBED=!!window.__EMBED;
 function clamp01(x){return x<0?0:(x>1?1:x);}
 function lerp(a,b,t){return a+(b-a)*t;}
 function range(p,a,b){return clamp01((p-a)/(b-a));}
@@ -182,27 +211,70 @@ function boot(){
     try{ map.setProjection({type:'globe'}); }catch(e){}
     try{ map.setTerrain({source:'dem', exaggeration:1.3}); }catch(e){}
     try{ map.setSky({'sky-color':'#0a1a3a','horizon-color':'#16145f','fog-color':'#04030e','sky-horizon-blend':.6,'horizon-fog-blend':.5,'fog-ground-blend':.2,'atmosphere-blend':['interpolate',['linear'],['zoom'],0,1,8,.4,12,0]}); }catch(e){}
-    mapReady=true; applyScroll();
+    mapReady=true;
+    /* embed: push the globe disc toward centre-right so a host headline can sit on the darker left */
+    if(EMBED){ try{ map.setPadding(embedPadding()); }catch(e){} }
+    applyScroll();
   });
   map.on('idle',function(){ var l=document.getElementById('loader'); if(l) l.classList.add('gone'); });
 }
 boot();
 
-/* ---- scroll engine: damped rAF loop — the camera GLIDES toward the scroll target and SETTLES
-        fast when you stop (no per-event jumps) — this is the only change to the one you loved ---- */
-var lenis=null, targetP=0, curP=0, lastP=-1;
-if(!reduce && window.Lenis){ lenis=new Lenis({duration:1.0,smoothWheel:true}); (function lr(t){lenis.raf(t);requestAnimationFrame(lr);})(0); }
-function rloop(){
-  var max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-  targetP=clamp01((window.scrollY||window.pageYOffset||0)/max);
-  curP+=(targetP-curP)*(reduce?1:0.16);
-  if(Math.abs(targetP-curP)<0.0005) curP=targetP;
-  if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; applyScroll(); }
-  requestAnimationFrame(rloop);
+/* ---- EMBED idle: a living Earth hero. No page scroll is consumed; instead we park the camera at the
+        single most beautiful whole-Earth GLOBE composition (near p=0.04) and keep it alive with the
+        globe's own slow rotation + a very slow, continuous camera azimuth drift + gentle progress breathing.
+        Composed centre-right (left third darker) via map padding. Reduced-motion freezes a beautiful frame. ---- */
+var EMBED_P=0.04;          // the glorious whole-Earth frame
+function embedPadding(){    // left padding shoves the globe disc toward the right; keeps the left third dark
+  var w=innerWidth||1280;
+  return {left:Math.round(w*0.30), right:0, top:0, bottom:0};
 }
-requestAnimationFrame(rloop);
-applyScroll();
-window.__exp={get p(){return scrollP;},set p(v){scrollP=v;applyScroll();}, get map(){return map;}, camAt:camAt};
+function startEmbedIdle(){
+  scrollP=EMBED_P; applyScroll();
+  if(reduce){ return; }     /* honour prefers-reduced-motion: freeze on the beautiful frame */
+  var spin=0;               // accumulated globe rotation (deg of longitude)
+  var t0=null;
+  function idle(ts){
+    if(t0===null) t0=ts;
+    var t=(ts-t0)/1000;     // seconds
+    if(map && mapReady){
+      var c=camAt(EMBED_P);
+      spin += 0.012;        // ~0.012°/frame ≈ a slow, dignified globe turn (no nausea)
+      var breathe=Math.sin(t*0.18)*0.012;   // ±0.012 progress breathing → subtle parallax
+      var cc=camAt(clamp01(EMBED_P+breathe));
+      var bear=cc.bear + Math.sin(t*0.05)*3.0;  // very slow ±3° azimuth orbit of the camera
+      map.jumpTo({ center:[c.lng - spin, c.lat], zoom:cc.z, pitch:cc.pitch, bearing:bear });
+    }
+    requestAnimationFrame(idle);
+  }
+  requestAnimationFrame(idle);
+}
+
+if(EMBED){
+  /* never consume page scroll; sit on the hero frame and breathe */
+  try{ window.scrollTo(0,0); }catch(e){}
+  applyScroll();
+  startEmbedIdle();
+}else{
+  /* ---- scroll engine: damped rAF loop — the camera GLIDES toward the scroll target and SETTLES
+          fast when you stop (no per-event jumps) — this is the one you loved, untouched ---- */
+  var lenis=null, targetP=0, curP=0, lastP=-1;
+  if(!reduce && window.Lenis){ lenis=new Lenis({duration:1.0,smoothWheel:true}); (function lr(t){lenis.raf(t);requestAnimationFrame(lr);})(0); }
+  (function rloop(){
+    var max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+    targetP=clamp01((window.scrollY||window.pageYOffset||0)/max);
+    curP+=(targetP-curP)*(reduce?1:0.16);
+    if(Math.abs(targetP-curP)<0.0005) curP=targetP;
+    if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; applyScroll(); }
+    requestAnimationFrame(rloop);
+  })();
+  applyScroll();
+}
+
+/* keep the globe disc composed centre-right when the iframe is resized */
+if(EMBED){ addEventListener('resize',function(){ if(map&&mapReady){ try{ map.setPadding(embedPadding()); }catch(e){} } }); }
+
+window.__exp={get p(){return scrollP;},set p(v){scrollP=v;applyScroll();}, get map(){return map;}, camAt:camAt, get ready(){return mapReady;}, get embed(){return EMBED;}};
 </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SSAI — Into the Sun</title>
-<meta name="description" content="A scroll-driven cinematic flight into the Sun — the star that governs every world. From a distant point of light to a churning million-degree surface, an eruptive prominence, the corona, and the solar wind that carries space weather to Earth. SSAI turns solar observation into forecasts that protect aircrews, satellites and power grids.">
+<meta name="description" content="A scroll-driven cinematic flight into the Sun — the star that governs every world. From a distant point of light to a churning million-degree photosphere with visible granulation, an eruptive prominence, the corona, and the solar wind that carries space weather to Earth. SSAI turns solar observation into forecasts that protect aircrews, satellites and power grids.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -74,7 +74,37 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .scroll{position:relative;z-index:2;width:100%;height:820vh}
+
+/* ---- EMBED MODE: live hero graphic. Hide ALL chrome + the narrative copy/beats,
+        kill the space/vignette grade + the scroll, go transparent, and leave only the
+        rendered scene (#scene). The class is set on <html> BEFORE first paint so nothing
+        flashes. Matches experience-orbits.html exactly. ---- */
+html.embed,html.embed body{background:transparent!important;overflow:hidden!important;height:100%}
+html.embed .loader,
+html.embed .topbar,
+html.embed .copylayer,
+html.embed .cue,
+html.embed .prog,
+html.embed .shellnav,
+html.embed .stars,
+html.embed .grade{display:none!important}
+html.embed #scene{background:transparent}
+/* host page overlays a left-aligned headline: keep the left third darker so copy reads */
+html.embed .vibe{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(90deg,rgba(4,3,14,.62) 0%,rgba(4,3,14,.34) 26%,rgba(4,3,14,0) 56%),
+  radial-gradient(120% 120% at 64% 46%,transparent 56%,rgba(4,3,14,.42) 100%)}
+html:not(.embed) .vibe{display:none}
+html.embed .scroll{height:0!important;overflow:hidden}
 </style>
+<script>
+/* embed = ?embed=1 OR iframed. Flag the document element BEFORE first paint so no chrome flashes. */
+window.__EMBED=(function(){try{
+  var q=/[?&]embed=1\b/.test(location.search);
+  var framed=window.self!==window.top;
+  return q||framed;
+}catch(e){return true;}})();
+if(window.__EMBED){document.documentElement.classList.add('embed');}
+</script>
 </head>
 <body>
 
@@ -83,6 +113,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 <div class="stars" id="stars"></div>
 <canvas id="scene"></canvas>
 <div class="grade"></div>
+<div class="vibe"></div>
 <div class="prog" id="prog"></div>
 
 <header class="topbar">
@@ -114,6 +145,7 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 <script type="module">
 import * as THREE from 'three';
 
+var EMBED=!!window.__EMBED;
 var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
 try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; window.scrollTo(0,0); }catch(e){}
 
@@ -137,8 +169,8 @@ function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
 var KF=[
   {p:0.00, dist:60.0, fov:42, ty: 0.00, roll: 0.00},   // a distant star among the field
   {p:0.18, dist:14.0, fov:46, ty: 0.05, roll: 0.04},   // the disc resolves — surface in revolt
-  {p:0.42, dist: 5.6, fov:54, ty:-0.18, roll: 0.10},   // close over the limb — prominence stages
-  {p:0.64, dist: 4.2, fov:60, ty: 0.04, roll: 0.06},   // the corona crown fills the frame
+  {p:0.42, dist: 5.4, fov:54, ty:-0.18, roll: 0.10},   // close over the limb — prominence stages
+  {p:0.64, dist: 4.1, fov:60, ty: 0.04, roll: 0.06},   // the corona crown fills the frame
   {p:0.82, dist: 9.5, fov:50, ty: 0.02, roll: 0.02},   // pull back — the solar wind streams out
   {p:1.00, dist:16.0, fov:44, ty: 0.00, roll: 0.00}    // wide — tiny blue Earth in the distance
 ];
@@ -158,28 +190,63 @@ var scrollP=0, ready=false;
    THREE.JS SCENE
    ============================================================ */
 var canvas=document.getElementById('scene');
-var renderer=new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:false});
+var renderer=new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:EMBED});
 renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
 renderer.setSize(innerWidth,innerHeight,false);
-renderer.setClearColor(0x04030e,1);
+if(EMBED){ renderer.setClearColor(0x000000,0); } else { renderer.setClearColor(0x04030e,1); }
 renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;     // photoreal highlight roll-off so the star never clips to flat
+renderer.toneMappingExposure=1.06;
 
 var scene=new THREE.Scene();
+if(EMBED){ scene.background=null; }
 var camera=new THREE.PerspectiveCamera(46, innerWidth/innerHeight, 0.01, 4000);
 camera.position.set(0,0,60);
 
 var solarGroup=new THREE.Group(); scene.add(solarGroup);   // holds the Sun, corona, particles, prominence
 var clock=new THREE.Clock();
 
+/* ============================================================
+   SHARED GLSL: 3D simplex noise + fbm. Used by the photosphere
+   granulation, the corona streamers and the prominence plasma.
+   Compact Ashima-style simplex (in-shader, no geometry cost).
+   ============================================================ */
+var GLSL_NOISE=[
+'vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}',
+'vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}',
+'vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}',
+'vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}',
+'float snoise(vec3 v){',
+'  const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);',
+'  vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);',
+'  vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);',
+'  vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;',
+'  i=mod289(i);',
+'  vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));',
+'  float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;',
+'  vec4 j=p-49.0*floor(p*ns.z*ns.z);',
+'  vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);',
+'  vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);',
+'  vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);',
+'  vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));',
+'  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;',
+'  vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);',
+'  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));',
+'  p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;',
+'  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;',
+'  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));',
+'}',
+'float fbm(vec3 p){ float f=0.0,a=0.5; for(int i=0;i<5;i++){ f+=a*snoise(p); p*=2.02; a*=0.5; } return f; }'
+].join('\n');
+
 /* ---- deep-space starfield (real points, so it parallaxes against the Sun) ---- */
 (function buildStars(){
   var N=2600, pos=new Float32Array(N*3), col=new Float32Array(N*3), c=new THREE.Color();
   for(var i=0;i<N;i++){
-    // distribute on a large shell well behind the Sun
     var r=900+Math.random()*1400;
     var u=Math.random()*2-1, th=Math.random()*Math.PI*2, s=Math.sqrt(1-u*u);
     pos[i*3]=r*s*Math.cos(th); pos[i*3+1]=r*s*Math.sin(th); pos[i*3+2]=r*u;
-    var w=0.62+Math.random()*0.38;                 // mostly white, a few cool/warm
+    var w=0.62+Math.random()*0.38;
     c.setRGB(w, w*(0.93+Math.random()*0.07), Math.min(1,w*(0.95+Math.random()*0.12)));
     col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
   }
@@ -190,7 +257,21 @@ var clock=new THREE.Clock();
   scene.add(new THREE.Points(g,m));
 })();
 
-/* ---- the Sun: real 8K solar texture + animated surface shimmer ---- */
+/* ============================================================
+   THE SUN — a fully shaded PHOTOREAL photosphere.
+   The sun-sphere.jpg albedo is the BASE; everything else is
+   computed in-shader so it reads as a real star (NASA SDO):
+     • convective GRANULATION: domain-warped fbm of bright cell
+       interiors + dark intergranular lanes, slowly boiling
+     • supergranulation: a second, larger, slower noise scale
+     • SUNSPOT active regions: a few dark umbra/penumbra wells
+       carved by a low-frequency mask, with brightened plage rims
+     • strong LIMB DARKENING (Eddington-like) — edges darker & redder
+     • bright thin CHROMOSPHERE rim via view-fresnel
+     • physically-warm tonemap: deep red-orange shadows ->
+       brilliant yellow-white highlights, fed through ACES.
+   No extra geometry — one sphere, all detail in the fragment shader.
+   ============================================================ */
 var loadMgr=new THREE.LoadingManager();
 var texLoader=new THREE.TextureLoader(loadMgr);
 var sunTex=texLoader.load('assets/images/scenes/journey/sun-sphere.jpg');
@@ -198,62 +279,140 @@ sunTex.colorSpace=THREE.SRGBColorSpace;
 sunTex.wrapS=sunTex.wrapT=THREE.RepeatWrapping;
 sunTex.anisotropy=renderer.capabilities.getMaxAnisotropy();
 
-/* surface material: emissive solar texture with a subtle live "boil" (granulation flow)
-   driven by a tiny onBeforeCompile uv-warp so the photosphere never looks static. */
-var sunUniforms={uTime:{value:0}};
-var sunMat=new THREE.MeshBasicMaterial({map:sunTex});
-sunMat.onBeforeCompile=function(sh){
-  sh.uniforms.uTime=sunUniforms.uTime;
-  sh.fragmentShader='uniform float uTime;\n'+sh.fragmentShader;
-  // warp the texture lookup slightly over time -> churning, convecting surface
-  sh.fragmentShader=sh.fragmentShader.replace(
-    '#include <map_fragment>',
-    [
-      '#ifdef USE_MAP',
-      '  vec2 wuv = vMapUv;',
-      '  wuv.x += 0.0065*sin(wuv.y*22.0 + uTime*0.45) + 0.0040*sin(wuv.y*9.0 - uTime*0.22);',
-      '  wuv.y += 0.0055*cos(wuv.x*20.0 + uTime*0.38);',
-      '  vec4 sampledDiffuseColor = texture2D( map, wuv );',
-      '  diffuseColor *= sampledDiffuseColor;',
-      '  // gentle bright pulse so active regions glow and breathe',
-      '  float pulse = 0.10*sin(uTime*0.6 + wuv.x*30.0)*sin(uTime*0.4 + wuv.y*24.0);',
-      '  diffuseColor.rgb *= (1.12 + pulse);',
-      '  diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb*vec3(1.18,0.86,0.55), 0.35);', // warm the photosphere
-      '#endif'
-    ].join('\n')
-  );
+var sunUniforms={
+  uTime:{value:0},
+  uMap:{value:sunTex},
+  uGran:{value:1.0},     // granulation strength (push up as we fly close)
+  uSpot:{value:1.0}      // sunspot prominence
 };
-var sun=new THREE.Mesh(new THREE.SphereGeometry(1,96,96), sunMat);
+var sunMat=new THREE.ShaderMaterial({
+  uniforms:sunUniforms,
+  vertexShader:[
+    'varying vec3 vObj;',     // object-space position -> stable 3D noise domain (rotates with the Sun)
+    'varying vec3 vN;',
+    'varying vec3 vEye;',
+    'varying vec2 vUv;',
+    'void main(){',
+    '  vObj=normalize(position);',
+    '  vUv=uv;',
+    '  vN=normalize(normalMatrix*normal);',
+    '  vec4 mv=modelViewMatrix*vec4(position,1.0);',
+    '  vEye=normalize(-mv.xyz);',
+    '  gl_Position=projectionMatrix*mv;',
+    '}'
+  ].join('\n'),
+  fragmentShader:[
+    'precision highp float;',
+    'uniform float uTime; uniform float uGran; uniform float uSpot;',
+    'uniform sampler2D uMap;',
+    'varying vec3 vObj; varying vec3 vN; varying vec3 vEye; varying vec2 vUv;',
+    GLSL_NOISE,
+    'void main(){',
+    '  vec3 dir=normalize(vObj);',
+    '  float t=uTime;',
+    // --- base albedo from the real 8K solar map ---
+    '  vec3 base=texture2D(uMap, vUv).rgb;',
+    '  float bl=dot(base,vec3(0.299,0.587,0.114));',
+    // --- GRANULATION: domain-warp the noise field so cells churn & boil ---
+    '  vec3 q=dir*9.0;',
+    '  vec3 warp=vec3(fbm(dir*4.0+vec3(0.0,0.0,t*0.05)), fbm(dir*4.0+vec3(5.2,1.3,t*0.05)), fbm(dir*4.0+vec3(1.7,9.2,t*0.05)));',
+    '  float gran=fbm(q+warp*0.9+vec3(0.0,0.0,t*0.10));',          // fine convection cells
+    '  float superg=fbm(dir*3.0+vec3(0.0,t*0.03,0.0));',           // slow supergranulation
+    '  float cells=gran*0.7+superg*0.3;',
+    // bright cell interiors, dark intergranular lanes (sharpen the lane network)
+    '  float lanes=smoothstep(0.18,-0.28,gran);',                 // dark boundaries
+    '  float interior=smoothstep(-0.10,0.42,gran);',
+    // --- SUNSPOT active regions: a few low-frequency dark wells ---
+    '  float spotField=fbm(dir*1.6+vec3(11.0,3.0,2.0));',
+    '  float umbra=smoothstep(0.46,0.62,spotField);',             // deep dark cores
+    '  float penumbra=smoothstep(0.30,0.50,spotField)-umbra;',
+    '  float spotMask=clamp(umbra*1.0+penumbra*0.45,0.0,1.0)*uSpot;',
+    // small flickering plage brightening around the active regions
+    '  float plage=smoothstep(0.24,0.32,spotField)*(1.0-umbra)*(0.5+0.5*sin(t*0.8+spotField*30.0));',
+    // --- assemble surface luminance ---
+    '  float surf=0.78 + 0.50*interior - 0.55*lanes;',            // convection contrast
+    '  surf+= cells*0.10;',
+    '  surf = mix(surf, surf*0.18, umbra*uSpot);',                // sunspot umbra darkens hard
+    '  surf = mix(surf, surf*0.50, penumbra*uSpot);',
+    '  surf+= plage*0.16;',
+    '  surf*= (0.85+0.30*bl);',                                   // let the real map modulate brightness
+    // --- LIMB DARKENING (Eddington): mu = cos(angle from view) ---
+    '  float mu=clamp(dot(normalize(vN),normalize(vEye)),0.0,1.0);',
+    '  float limb=0.34+0.66*pow(mu,0.62);',                       // classic limb-darkening curve
+    '  surf*=limb;',
+    // --- TEMPERATURE -> COLOUR ramp: deep red-orange shadows -> yellow-white highlights ---
+    '  float lum=clamp(surf,0.0,2.2);',
+    '  vec3 cShadow=vec3(0.50,0.19,0.04);',                       // dark red-orange
+    '  vec3 cMid   =vec3(1.00,0.57,0.17);',                       // golden orange photosphere
+    '  vec3 cHot   =vec3(1.00,0.83,0.42);',                       // brilliant yellow
+    '  vec3 cWhite =vec3(1.00,0.97,0.86);',                       // white-hot peaks
+    '  vec3 col=mix(cShadow,cMid,smoothstep(0.06,0.55,lum));',
+    '  col=mix(col,cHot,smoothstep(0.50,1.0,lum));',
+    '  col=mix(col,cWhite,smoothstep(1.05,1.7,lum));',
+    // tint the limb redder (cooler edge), warm the disc with the albedo hue
+    '  col=mix(col, col*vec3(1.06,0.74,0.42), (1.0-pow(mu,0.8))*0.36);',
+    '  col=mix(col, col*normalize(base+0.001)*1.7, 0.20);',      // a whisper of the real map's hue variation
+    // --- CHROMOSPHERE rim: a thin bright reddish edge from view-fresnel ---
+    '  float fres=pow(1.0-mu,3.0);',
+    '  col+=vec3(1.0,0.60,0.30)*fres*1.2;',
+    // --- emissive lift so the star drives bloom-like glow through ACES ---
+    '  float emi=1.55 + 0.9*smoothstep(0.7,1.6,lum) + plage*0.4;',
+    '  col*=emi;',
+    '  gl_FragColor=vec4(col,1.0);',
+    '}'
+  ].join('\n')
+});
+var sun=new THREE.Mesh(new THREE.SphereGeometry(1,160,160), sunMat);
 solarGroup.add(sun);
 
-/* ---- a thin, bright limb + inner glow shell (additive) ---- */
-function glowShell(scale, color, power, opacity){
+/* ---- a thin bright limb + layered additive corona shells (the SDO crown) ----
+   Each shell is back-side fresnel with shader streamer noise so the corona
+   shimmers and has structure (streamers/plumes) instead of a flat halo. */
+function coronaShell(scale, color, power, opacity, streak){
   var m=new THREE.ShaderMaterial({
     transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.BackSide,
-    uniforms:{uColor:{value:new THREE.Color(color)}, uPower:{value:power}, uOpacity:{value:opacity}},
-    vertexShader:'varying vec3 vN; varying vec3 vEye; void main(){ vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(position,1.0); vEye=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }',
-    fragmentShader:'uniform vec3 uColor; uniform float uPower; uniform float uOpacity; varying vec3 vN; varying vec3 vEye; void main(){ float rim=pow(1.0-abs(dot(vN,vEye)), uPower); gl_FragColor=vec4(uColor*rim, rim*uOpacity); }'
+    uniforms:{uColor:{value:new THREE.Color(color)}, uPower:{value:power}, uOpacity:{value:opacity}, uStreak:{value:streak}, uTime:{value:0}},
+    vertexShader:[
+      'varying vec3 vN; varying vec3 vEye; varying vec3 vObj;',
+      'void main(){ vObj=normalize(position); vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(position,1.0); vEye=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }'
+    ].join('\n'),
+    fragmentShader:[
+      'uniform vec3 uColor; uniform float uPower; uniform float uOpacity; uniform float uStreak; uniform float uTime;',
+      'varying vec3 vN; varying vec3 vEye; varying vec3 vObj;',
+      GLSL_NOISE,
+      'void main(){',
+      '  float rim=pow(1.0-abs(dot(normalize(vN),normalize(vEye))), uPower);',
+      // radial streamers: noise along the sphere modulates the rim into plumes
+      '  float s=fbm(vObj*3.2+vec3(0.0,0.0,uTime*0.05));',
+      '  float streamers=mix(1.0, 0.45+0.85*smoothstep(-0.2,0.6,s), uStreak);',
+      '  float shimmer=0.9+0.1*sin(uTime*0.6+s*8.0);',
+      '  float a=rim*streamers*shimmer*uOpacity;',
+      '  gl_FragColor=vec4(uColor*rim*streamers, a);',
+      '}'
+    ].join('\n')
   });
-  var s=new THREE.Mesh(new THREE.SphereGeometry(1,72,72), m); s.scale.setScalar(scale); return s;
+  var sm=new THREE.Mesh(new THREE.SphereGeometry(1,96,96), m); sm.scale.setScalar(scale);
+  sm.userData.mat=m; return sm;
 }
-var limb=glowShell(1.045, 0xfff0c8, 3.4, 0.95);   // thin bright limb hugging the disc
-var innerGlow=glowShell(1.20, 0xffb347, 2.0, 0.85); // warm orange inner corona
-var outerGlow=glowShell(1.95, 0xffb347, 1.5, 0.42); // broad orange halo fading out
-var farGlow=glowShell(3.20, 0xff9a3c, 1.15, 0.18);  // faint extended corona
-solarGroup.add(limb, innerGlow, outerGlow, farGlow);
+var limb     =coronaShell(1.035, 0xfff3d2, 4.2, 1.00, 0.0);   // razor-thin bright chromosphere edge
+var innerCor =coronaShell(1.22,  0xffcaa0, 2.2, 0.70, 0.6);   // warm-gold inner corona
+var midCor   =coronaShell(1.85,  0xffe6c0, 1.55,0.40, 1.0);   // white-gold streamers
+var outerCor =coronaShell(3.10,  0xffd9a8, 1.12,0.18, 1.0);   // broad faint extended corona
+solarGroup.add(limb, innerCor, midCor, outerCor);
+var coronaShells=[innerCor,midCor,outerCor];
 
-/* ---- drifting corona particles (warm sparks lofting off the surface) ---- */
+/* ---- drifting corona particles (white-gold sparks lofting off the limb, shimmering) ---- */
 var coronaPts;
 (function buildCorona(){
   var N=1400, pos=new Float32Array(N*3), seed=new Float32Array(N), c=new THREE.Color();
   var col=new Float32Array(N*3);
   for(var i=0;i<N;i++){
     var u=Math.random()*2-1, th=Math.random()*Math.PI*2, s=Math.sqrt(1-u*u);
-    var r=1.06+Math.pow(Math.random(),1.6)*1.8;     // lofted from just above the limb outward
+    var r=1.06+Math.pow(Math.random(),1.6)*2.0;
     pos[i*3]=r*s*Math.cos(th); pos[i*3+1]=r*s*Math.sin(th); pos[i*3+2]=r*u;
     seed[i]=Math.random();
     var w=Math.random();
-    c.setRGB(1.0, 0.72+w*0.22, 0.30+w*0.30);        // orange -> yellow sparks
+    c.setRGB(1.0, 0.80+w*0.18, 0.50+w*0.40);        // gold -> warm-white sparks
     col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
   }
   var g=new THREE.BufferGeometry();
@@ -268,9 +427,9 @@ var coronaPts;
       'void main(){ vC=color; vec3 p=position;',
       '  float t=uTime*(0.10+aSeed*0.12)+aSeed*6.28;',
       '  float rad=length(p); vec3 dir=p/max(rad,0.001);',
-      '  float drift=0.18*sin(t)+0.10*sin(t*1.7+aSeed*3.0);',   // slow radial breathing drift
+      '  float drift=0.20*sin(t)+0.12*sin(t*1.7+aSeed*3.0);',
       '  p+=dir*drift;',
-      '  vA=0.45+0.45*sin(uTime*0.9+aSeed*20.0);',              // twinkle
+      '  vA=0.40+0.45*sin(uTime*0.9+aSeed*20.0);',
       '  vec4 mv=modelViewMatrix*vec4(p,1.0);',
       '  gl_PointSize=uSize*(60.0/-mv.z);',
       '  gl_Position=projectionMatrix*mv; }'
@@ -284,59 +443,62 @@ var coronaPts;
   coronaPts=new THREE.Points(g,m); solarGroup.add(coronaPts);
 })();
 
-/* ---- the eruptive PROMINENCE / flare arc off the limb (stages mid-flight) ---- */
-var prominence, promMat;
-(function buildProminence(){
-  // a torus-knot-ish arc anchored on the limb at the upper-left, pointing off into space
-  var curve=new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-0.55, 0.95, 0.10),
-    new THREE.Vector3(-0.95, 1.55, 0.05),
-    new THREE.Vector3(-1.05, 2.35,-0.10),
-    new THREE.Vector3(-0.55, 2.95,-0.25),
-    new THREE.Vector3( 0.20, 3.05,-0.30),
-    new THREE.Vector3( 0.75, 2.45,-0.20),
-    new THREE.Vector3( 0.80, 1.55,-0.05)
-  ]);
-  var geo=new THREE.TubeGeometry(curve, 120, 0.085, 12, false);
-  promMat=new THREE.ShaderMaterial({
+/* ---- eruptive PROMINENCES on magnetic arcs off the limb (multiple loops, plasma flows) ----
+   Tube geometry following a magnetic loop; the shader carries hot plasma along the arc,
+   reveals it as the field "gives way", and fades the apex (the eruption). */
+var prominences=[];
+function buildProm(ctrl, radius, hue, phase){
+  var curve=new THREE.CatmullRomCurve3(ctrl.map(function(a){return new THREE.Vector3(a[0],a[1],a[2]);}));
+  var geo=new THREE.TubeGeometry(curve, 130, radius, 14, false);
+  var mat=new THREE.ShaderMaterial({
     transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide,
-    uniforms:{uTime:{value:0}, uReveal:{value:0}},
-    vertexShader:'varying float vU; void main(){ vU=uv.x; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
+    uniforms:{uTime:{value:0}, uReveal:{value:0}, uHue:{value:new THREE.Color(hue)}, uPhase:{value:phase}},
+    vertexShader:'varying float vU; varying vec2 vUv; void main(){ vU=uv.x; vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
     fragmentShader:[
-      'uniform float uTime; uniform float uReveal; varying float vU;',
+      'uniform float uTime; uniform float uReveal; uniform vec3 uHue; uniform float uPhase; varying float vU; varying vec2 vUv;',
       'void main(){',
-      '  float flow=0.5+0.5*sin(vU*40.0 - uTime*3.0);',          // plasma flowing along the arc
-      '  float gate=smoothstep(uReveal-0.18, uReveal, 1.0-vU) * smoothstep(0.0,0.12,uReveal);',
-      '  vec3 hot=mix(vec3(1.0,0.42,0.12), vec3(1.0,0.86,0.5), flow);',
-      '  float a=(0.55+0.45*flow)*uReveal;',
-      '  gl_FragColor=vec4(hot, a*0.9);',
+      '  float flow=0.5+0.5*sin(vU*46.0 - uTime*3.2 + uPhase);',       // plasma streaming along the loop
+      '  float strand=0.6+0.4*sin(vUv.y*18.0 + uTime*1.4);',          // fine filamentary strands across the tube
+      '  float gate=smoothstep(uReveal-0.20, uReveal, 1.0-vU) * smoothstep(0.0,0.12,uReveal);',
+      '  vec3 hot=mix(uHue, vec3(1.0,0.90,0.62), flow);',
+      '  float apex=1.0-smoothstep(0.35,0.5,abs(vU-0.5));',           // brightest at the loop apex
+      '  float a=(0.40+0.55*flow)*gate*strand*(0.6+0.5*apex);',
+      '  gl_FragColor=vec4(hot, a*0.95);',
       '}'
     ].join('\n')
   });
-  prominence=new THREE.Mesh(geo,promMat); solarGroup.add(prominence);
-})();
+  var mesh=new THREE.Mesh(geo,mat); solarGroup.add(mesh);
+  prominences.push({mesh:mesh, mat:mat});
+}
+// the hero eruptive loop (upper-left limb), plus two smaller supporting arcs
+buildProm([[-0.55,0.95,0.10],[-0.95,1.55,0.05],[-1.05,2.35,-0.10],[-0.55,2.95,-0.25],[0.20,3.05,-0.30],[0.75,2.45,-0.20],[0.80,1.55,-0.05]], 0.085, 0xff5a1e, 0.0);
+buildProm([[0.90,0.60,0.35],[1.35,1.05,0.30],[1.55,1.65,0.20],[1.35,2.20,0.10],[0.85,2.30,0.05]], 0.052, 0xff7a2a, 2.1);
+buildProm([[-0.30,-0.95,0.40],[-0.70,-1.45,0.30],[-0.55,-2.05,0.18],[0.10,-2.15,0.10],[0.55,-1.60,0.05]], 0.046, 0xff6a22, 4.2);
 
 /* ---- the solar-wind stream + a tiny blue Earth in the distance (end of flight) ---- */
 var EARTH_POS=new THREE.Vector3(13.0, -1.4, -4.0);
 var earth, earthGlow, windPts, windMat;
 (function buildWindAndEarth(){
-  // tiny blue Earth (lit simply; it is a distant point of context, not the subject)
-  var eMat=new THREE.MeshStandardMaterial({color:0x2a6fd0, emissive:0x0a1f44, emissiveIntensity:0.6, roughness:0.85, metalness:0.0});
+  var eMat=new THREE.MeshStandardMaterial({color:0x2a6fd0, emissive:0x0a1f44, emissiveIntensity:0.6, roughness:0.85, metalness:0.0, transparent:true, opacity:0});
   earth=new THREE.Mesh(new THREE.SphereGeometry(0.16,32,32), eMat);
-  earth.position.copy(EARTH_POS);
-  var eg=glowShell(1.7, 0x5a9bff, 2.2, 0.7); eg.position.copy(EARTH_POS); eg.scale.setScalar(0.16*1.7);
-  earthGlow=eg;
-  // a soft sun-side light so Earth's near face catches warmth
+  earth.position.copy(EARTH_POS); earth.visible=false;
+  // small back-side fresnel glow for Earth
+  var egMat=new THREE.ShaderMaterial({
+    transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.BackSide,
+    uniforms:{uColor:{value:new THREE.Color(0x5a9bff)}},
+    vertexShader:'varying vec3 vN; varying vec3 vEye; void main(){ vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(position,1.0); vEye=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }',
+    fragmentShader:'uniform vec3 uColor; varying vec3 vN; varying vec3 vEye; void main(){ float rim=pow(1.0-abs(dot(vN,vEye)),2.2); gl_FragColor=vec4(uColor*rim, rim*0.7); }'
+  });
+  earthGlow=new THREE.Mesh(new THREE.SphereGeometry(0.16,32,32), egMat);
+  earthGlow.position.copy(EARTH_POS); earthGlow.scale.setScalar(1.7); earthGlow.visible=false;
   var sunLight=new THREE.PointLight(0xffd9a0, 3.0, 0, 1.6); sunLight.position.set(0,0,0); scene.add(sunLight);
   scene.add(new THREE.AmbientLight(0x223355, 0.5));
   scene.add(earth, earthGlow);
 
-  // stream of solar-wind particles flowing from the Sun toward Earth
   var N=900, pos=new Float32Array(N*3), seed=new Float32Array(N);
   var dir=EARTH_POS.clone().normalize();
   for(var i=0;i<N;i++){
     seed[i]=Math.random();
-    // jitter around the Sun->Earth axis to make a broad stream
     var along=Math.random();
     var p=dir.clone().multiplyScalar(1.1+along*(EARTH_POS.length()-1.3));
     p.x+=(Math.random()-0.5)*1.5; p.y+=(Math.random()-0.5)*1.5; p.z+=(Math.random()-0.5)*1.5;
@@ -352,7 +514,7 @@ var earth, earthGlow, windPts, windMat;
       'uniform float uTime; uniform float uReveal; uniform float uSize; uniform vec3 uDir; uniform float uLen;',
       'attribute float aSeed; varying float vA;',
       'void main(){ vec3 p=position;',
-      '  float flow=mod(uTime*0.55+aSeed, 1.0);',                 // particles march sunward->Earth
+      '  float flow=mod(uTime*0.55+aSeed, 1.0);',
       '  p+=uDir*flow*1.4;',
       '  float t=clamp(dot(p,uDir)/uLen,0.0,1.0);',
       '  vA=uReveal*(0.35+0.5*sin(uTime*1.4+aSeed*30.0))*(1.0-0.4*t);',
@@ -364,38 +526,59 @@ var earth, earthGlow, windPts, windMat;
       'varying float vA;',
       'void main(){ vec2 d=gl_PointCoord-0.5; float r=length(d); if(r>0.5) discard;',
       '  float a=smoothstep(0.5,0.0,r)*clamp(vA,0.0,1.0);',
-      '  gl_FragColor=vec4(0.55,0.78,1.0,a); }'                   // cool blue space-weather stream
+      '  gl_FragColor=vec4(0.55,0.78,1.0,a); }'
     ].join('\n')
   });
   windPts=new THREE.Points(g,windMat); scene.add(windPts);
 })();
 
-/* ---- drive the scene from scrollP (only when curP changes; see rAF loop) ---- */
-var camDir=new THREE.Vector3();
+/* ============================================================
+   EMBED hero composition: the single most beautiful CLOSE frame
+   of the Sun, parked toward CENTRE-RIGHT with the LEFT third
+   darker (host overlays a left-aligned headline). Granulation
+   visible, a prominence alive on the limb. Kept alive by the
+   intrinsic shader animation + a very slow azimuth orbit.
+   ============================================================ */
+var HERO={ dist:4.55, fov:52, ty:0.02, az:0.30, offX:0.34 };
+var idleT=0, hostDriven=false, camAngle=0;
+
+/* place camera at a given dist/fov with azimuth orbit + optional centre-right offset */
+function placeCamera(dist,fov,ty,roll,az,offX){
+  camera.position.set(Math.sin(az)*dist, ty*dist*0.18, Math.cos(az)*dist);
+  camera.up.set(Math.sin(roll),Math.cos(roll),0);
+  var lx=offX?offX*dist*0.14:0;   // look slightly LEFT so the Sun drifts centre-right
+  camera.lookAt(lx,0,0);
+  if(Math.abs(camera.fov-fov)>0.001){ camera.fov=fov; camera.updateProjectionMatrix(); }
+}
+
+/* ---- drive the scene from scrollP (full experience) ---- */
 function applyScroll(){
   var p=scrollP;
   var c=camAt(p);
 
-  // camera flies straight back along +Z, looking at the Sun; slight vertical offset + roll for life
-  camera.position.set(0, c.ty*c.dist*0.18, c.dist);
+  placeCamera(c.dist, c.fov, c.ty, c.roll, camAngle*0.0, 0);
+  // straight-back flight (azimuth 0) but allow the living camAngle to nudge it for life
+  camera.position.set(Math.sin(camAngle*0.15)*c.dist*0.04, c.ty*c.dist*0.18, c.dist);
   camera.up.set(Math.sin(c.roll),Math.cos(c.roll),0);
   camera.lookAt(0,0,0);
   if(Math.abs(camera.fov-c.fov)>0.001){ camera.fov=c.fov; camera.updateProjectionMatrix(); }
 
-  // starfield fades as we close on the Sun; returns a touch at the wide finish
+  // granulation reads stronger as we close on the disc, eases off at the wide finish
+  sunUniforms.uGran.value=lerp(0.7,1.25,range(p,0.10,0.42))*(1.0-0.3*range(p,0.82,1.0));
+
   if(stars) stars.classList.toggle('show', p<0.20 || p>0.92);
 
-  // prominence reveals across beat 3 and lingers
-  if(promMat) promMat.uniforms.uReveal.value=fadeOp(p,0.30,0.78,0.06);
-  // corona sparks strongest through the corona beat
-  if(coronaPts) coronaPts.material.opacity=1;
+  // prominences reveal across beat 3 and linger
+  var rev=fadeOp(p,0.30,0.80,0.06);
+  for(var pi=0;pi<prominences.length;pi++){ prominences[pi].mat.uniforms.uReveal.value=rev; }
+
   // wind + Earth reveal in the back half (space-weather connection)
   if(windMat) windMat.uniforms.uReveal.value=range(p,0.70,0.84);
   var ev=range(p,0.66,0.82);
   if(earth){ earth.visible=ev>0.001; earth.material.opacity=ev; }
   if(earthGlow){ earthGlow.visible=ev>0.001; }
 
-  // ---- beats (identical fade/translate logic to the gold-standard) ----
+  // ---- beats ----
   for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
     beats[j].style.opacity=bo;
     if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
@@ -406,12 +589,29 @@ function applyScroll(){
   if(chap) chap.textContent=CH[ci][0];
 }
 
-/* ---- render: animate the living Sun every frame; the camera only moves with scroll ---- */
+/* ---- EMBED idle: park on the close hero Sun and keep it alive: slow azimuth
+       orbit + a very gentle ±0.02 distance breathing. Granulation, flares, drifting
+       corona all churn via their own clocks. A living photograph, no nausea. ---- */
+function applyIdle(){
+  // prominences alive on the limb in the hero, granulation pushed for close detail
+  sunUniforms.uGran.value=1.2;
+  for(var pi=0;pi<prominences.length;pi++){ prominences[pi].mat.uniforms.uReveal.value=0.85; }
+  if(reduce){ placeCamera(HERO.dist,HERO.fov,HERO.ty,0,HERO.az,HERO.offX); return; }
+  var az=HERO.az + idleT*0.020;                  // very slow living orbit
+  var breath=Math.sin(idleT*0.30)*0.02;          // ±0.02 breathing
+  var dist=HERO.dist*(1+breath);
+  var ty=HERO.ty + Math.sin(idleT*0.21)*0.03;
+  placeCamera(dist,HERO.fov,ty,0,az,HERO.offX);
+}
+
+/* ---- render: animate the living Sun every frame; the camera only moves with scroll/idle ---- */
 function renderFrame(){
   var t=clock.getElapsedTime();
   sunUniforms.uTime.value=t;
+  for(var s=0;s<coronaShells.length;s++){ coronaShells[s].userData.mat.uniforms.uTime.value=t; }
+  limb.userData.mat.uniforms.uTime.value=t;
   if(coronaPts) coronaPts.material.uniforms.uTime.value=t;
-  if(promMat) promMat.uniforms.uTime.value=t;
+  for(var pi=0;pi<prominences.length;pi++){ prominences[pi].mat.uniforms.uTime.value=t; }
   if(windMat) windMat.uniforms.uTime.value=t;
   solarGroup.rotation.y = t*0.012;            // a slow, dignified solar rotation
   if(earth) earth.rotation.y = t*0.25;
@@ -420,12 +620,15 @@ function renderFrame(){
 
 /* ---- loader dismiss once the texture is in and the first frame is drawn ---- */
 loadMgr.onLoad=function(){
-  ready=true; applyScroll(); renderFrame();
+  ready=true;
+  if(EMBED){ applyIdle(); } else { applyScroll(); }
+  renderFrame();
   var l=document.getElementById('loader'); if(l) l.classList.add('gone');
 };
 loadMgr.onError=function(){
-  // still show the scene even if a texture stalls
-  ready=true; applyScroll(); renderFrame();
+  ready=true;
+  if(EMBED){ applyIdle(); } else { applyScroll(); }
+  renderFrame();
   var l=document.getElementById('loader'); if(l){ l.classList.add('gone'); }
 };
 // safety: never trap the viewer behind the loader
@@ -439,32 +642,49 @@ addEventListener('resize',function(){
 
 /* ============================================================
    SCROLL ENGINE — the same damped-rAF pattern from the
-   gold-standard experience: scroll sets targetP; a rAF loop
-   eases curP toward it and drives the scene only when curP
-   changes. The Sun itself animates every frame (renderFrame),
-   the camera/beats only update on scroll change.
+   gold-standard experience. In EMBED mode the scroll is killed
+   and the camera auto-idles on the hero (unless a host drives p).
+   The Sun itself animates every frame regardless.
    ============================================================ */
 var lenis=null, targetP=0, curP=0, lastP=-1;
-if(!reduce && window.Lenis){ lenis=new Lenis({duration:1.0,smoothWheel:true}); (function lr(t){lenis.raf(t);requestAnimationFrame(lr);})(0); }
+if(!EMBED && !reduce && window.Lenis){ lenis=new Lenis({duration:1.0,smoothWheel:true}); (function lr(t){lenis.raf(t);requestAnimationFrame(lr);})(0); }
 function rloop(){
-  var max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-  targetP=clamp01((window.scrollY||window.pageYOffset||0)/max);
-  curP+=(targetP-curP)*(reduce?1:0.16);
-  if(Math.abs(targetP-curP)<0.0005) curP=targetP;
-  if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; applyScroll(); }
+  if(!EMBED){
+    var max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+    targetP=clamp01((window.scrollY||window.pageYOffset||0)/max);
+    curP+=(targetP-curP)*(reduce?1:0.16);
+    if(Math.abs(targetP-curP)<0.0005) curP=targetP;
+    camAngle+=0.0016;
+    if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; applyScroll(); }
+  } else {
+    idleT+=1/60;
+    if(!hostDriven && !reduce) applyIdle();
+  }
   renderFrame();                                  // keep the star alive every frame
   requestAnimationFrame(rloop);
 }
 requestAnimationFrame(rloop);
-applyScroll();
+if(EMBED){ applyIdle(); } else { applyScroll(); }
 
-/* ---- prefers-reduced-motion: park at an evocative static-ish frame, no scroll churn ---- */
+/* ---- prefers-reduced-motion: park at a beautiful frame, no scroll churn ---- */
 if(reduce){
-  scrollP=0.50; applyScroll(); renderFrame();
+  if(EMBED){ applyIdle(); }
+  else { scrollP=0.50; applyScroll(); }
+  renderFrame();
 }
 
-/* ---- verification hook (parity with __exp on the other experiences) ---- */
-window.__exp={get p(){return scrollP;},set p(v){scrollP=v;applyScroll();renderFrame();}, get ready(){return ready;}, camAt:camAt, get three(){return {scene:scene,camera:camera,renderer:renderer};}};
+/* ---- verification hook (parity with __exp on the other experiences) ----
+   A host CAN drive p; embedded otherwise defaults to the living auto-idle. */
+window.__exp={
+  get p(){return scrollP;},
+  set p(v){ scrollP=clamp01(v); targetP=curP=scrollP;
+    if(EMBED) hostDriven=true;     // host taking over: drive scroll cam instead of the auto-idle
+    applyScroll(); renderFrame();
+  },
+  get ready(){return ready;},
+  camAt:camAt,
+  get three(){return {scene:scene,camera:camera,renderer:renderer};}
+};
 </script>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <meta name="description" content="The science of the Sun and space weather — solar dynamics, the corona, flares, and the heliosphere that shapes every world. SSAI supports the heliophysics missions and data systems that help predict solar activity and protect life on Earth and in flight.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="assets/site.css?v=6" rel="stylesheet">
+<link href="assets/site.css?v=7" rel="stylesheet">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
@@ -28,8 +28,9 @@
 
 <main>
 
-  <!-- ============================ HERO ============================ -->
-  <section class="phero shot" style="background-image:url('assets/images/site/sun/active-region-loops-euv.jpg')">
+  <!-- ============================ HERO (live Sun experience, baked in) ============================ -->
+  <section class="phero live">
+    <iframe class="phero-exp" src="experience-sun.html?embed=1" title="" tabindex="-1" aria-hidden="true" loading="eager"></iframe>
     <div class="container">
       <span class="kick">Science · Domain 02 — The Sun</span>
       <h1>The star that <span class="em">governs</span> every world</h1>
@@ -237,19 +238,6 @@
     </div>
   </section>
 
-  <!-- ===================== EXPERIENCE BAND ===================== -->
-  <section class="section"><div class="container">
-    <span class="kick">Cinematic experience</span>
-    <a class="xband" style="margin-top:clamp(28px,4vh,46px);background-image:url('assets/images/site/sun/eruptive-prominence.jpg')" href="experience-sun.html">
-      <div class="xinner">
-        <span class="xk"><span class="pl">&#9654;</span> Scroll-driven flight</span>
-        <h3>Fly into the Sun</h3>
-        <p>From a distant star to a churning, flaring surface &mdash; and the solar wind that reaches Earth. The space weather we help forecast, made cinematic.</p>
-        <span class="go">Approach the star &rarr;</span>
-      </div>
-    </a>
-  </div></section>
-
   <!-- ========================= CLOSING BAND ========================= -->
   <section class="band">
     <div class="container band-cta">
@@ -275,7 +263,7 @@
 </footer>
 
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
-<script type="module" src="assets/js/centerpiece.js?v=6"></script>
-<script src="assets/js/site.js?v=6"></script>
+<script type="module" src="assets/js/centerpiece.js?v=7"></script>
+<script src="assets/js/site.js?v=7"></script>
 </body>
 </html>
