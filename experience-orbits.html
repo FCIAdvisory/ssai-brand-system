@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSAI — Orbits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BoldItalic.woff2') format('woff2');font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BlackItalic.woff2') format('woff2');font-weight:800;font-style:italic;font-display:swap}
+@font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-MediumItalic.woff2') format('woff2');font-weight:500;font-style:italic;font-display:swap}
+:root{
+  --space:#0a1422; --black:#060b14; --starlight:#f3f6fb; --nebula:#93a5c1; --muted:#93a5c1;
+  --hair:rgba(147,165,193,.18); --blue:#4a86dd; --blue-deep:#114aa3; --indigo:#0f2a4d;
+  --disp:'Tactic Sans',system-ui,sans-serif; --body:'Inter',-apple-system,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--black);color:var(--starlight);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+#scene{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;background:var(--black);display:block}
+
+/* space + vignette grade so the brand copy always reads over the scene */
+.grade{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  radial-gradient(135% 100% at 50% 42%,transparent 48%,rgba(6,11,20,.72) 100%)}
+
+.copylayer{position:fixed;inset:0;z-index:3;pointer-events:none}
+.copylayer .inner{position:relative;width:100%;max-width:1180px;height:100%;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
+.beat{position:absolute;left:clamp(22px,5vw,64px);bottom:clamp(60px,13vh,128px);max-width:800px;opacity:0;will-change:opacity,transform}
+.beat .k{display:inline-flex;align-items:center;gap:9px;margin-bottom:16px;font-family:var(--body);font-weight:600;text-transform:uppercase;letter-spacing:.26em;font-size:11px;color:var(--nebula)}
+.beat .k::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px var(--blue)}
+.beat h1{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;
+  font-size:clamp(34px,7vw,100px);line-height:.92;letter-spacing:-.02em;text-shadow:0 2px 40px rgba(6,11,20,.85),0 0 50px rgba(74,134,221,.28)}
+.beat h1 .em{color:#cfe0fb;text-shadow:0 0 60px rgba(74,134,221,.7)}
+.beat p{margin-top:18px;color:#dce6f5;font-weight:300;font-size:clamp(15px,1.6vw,19px);max-width:48ch;line-height:1.6;text-shadow:0 1px 24px rgba(6,11,20,.95)}
+.beat .stat{display:flex;gap:30px;margin-top:26px;flex-wrap:wrap}
+.beat .stat div{border-left:1px solid var(--hair);padding-left:14px}
+.beat .stat b{display:block;font-family:var(--disp);font-style:italic;font-size:clamp(22px,3vw,34px);color:var(--blue);line-height:1}
+.beat .stat span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--nebula)}
+.beat .cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;pointer-events:auto;
+  font-family:var(--body);font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#fff;
+  background:var(--blue-deep);border-radius:30px;padding:14px 26px;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.beat .cta:hover{transform:translateY(-2px);box-shadow:0 14px 34px -10px rgba(74,134,221,.65)}
+.beat .cta.ghost{background:transparent;color:var(--starlight);border:1px solid var(--hair);margin-left:6px}
+.beat .cta svg{width:15px;height:15px}
+.beat.center{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);text-align:center;max-width:none}
+.beat.center .inr{max-width:1180px;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
+.beat.center .k{justify-content:center}
+.beat.center p{margin-left:auto;margin-right:auto}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(22px,5vw,46px);pointer-events:none;background:linear-gradient(rgba(6,11,20,.6),transparent)}
+.topbar img{height:24px;width:auto;pointer-events:auto;filter:drop-shadow(0 2px 14px rgba(74,134,221,.5))}
+.topbar .chap{font-family:var(--body);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);transition:color .4s}
+.prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:8;background:linear-gradient(90deg,var(--blue-deep),var(--blue));box-shadow:0 0 10px var(--blue)}
+.cue{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:6;font-family:var(--body);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--nebula);display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none}
+.cue .ar{width:1px;height:34px;background:linear-gradient(var(--blue),transparent);animation:fall 1.8s ease-in-out infinite}
+@keyframes fall{0%{transform:scaleY(.3);transform-origin:top;opacity:.3}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.3);transform-origin:bottom;opacity:.3}}
+
+.shellnav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:7;display:flex;gap:6px;align-items:center;padding:7px 9px;border-radius:30px;background:rgba(10,20,34,.62);border:1px solid var(--hair);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);font-family:var(--body);font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .5s}
+.shellnav.show{opacity:1}
+.shellnav a{color:var(--nebula);padding:5px 12px;border-radius:20px;text-decoration:none}
+.shellnav a.on{background:var(--blue-deep);color:#fff;font-weight:600}
+@media(max-width:640px){.shellnav{display:none}}
+
+/* small fixed altitude readout, lower-right — reinforces the science figures */
+.alt{position:fixed;right:clamp(20px,5vw,46px);bottom:clamp(58px,13vh,120px);z-index:5;text-align:right;pointer-events:none;opacity:0;transition:opacity .5s}
+.alt .label{font-family:var(--body);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--nebula);margin-bottom:4px}
+.alt .val{font-family:var(--disp);font-style:italic;font-weight:700;font-size:clamp(26px,4vw,46px);color:var(--blue);line-height:.95}
+.alt .unit{font-family:var(--body);font-style:normal;font-size:12px;letter-spacing:.06em;color:var(--nebula);margin-left:4px}
+@media(max-width:720px){.alt{display:none}}
+
+.loader{position:fixed;inset:0;z-index:30;background:var(--black);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity 1s ease}
+.loader.gone{opacity:0;pointer-events:none}
+.loader .spin{width:34px;height:34px;border-radius:50%;border:2px solid var(--hair);border-top-color:var(--blue);animation:spin 1s linear infinite}
+.loader .lt{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--nebula)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.scroll{position:relative;z-index:2;width:100%;height:760vh}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div class="spin"></div><div class="lt">Acquiring orbit…</div></div>
+
+<canvas id="scene"></canvas>
+<div class="grade"></div>
+<div class="prog" id="prog"></div>
+
+<header class="topbar">
+  <img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc.">
+  <span class="chap" id="chap">Orbits</span>
+</header>
+
+<div class="copylayer"><div class="inner" id="beats">
+  <div class="beat" data-a="-0.05" data-b="0.085"><span class="k">Science Systems and Applications, Inc.</span><h1>Everything we watch<br>the planet with<br><span class="em">rides an orbit.</span></h1><p>Every instrument that measures Earth circles it on one of three highways above our heads. Pull outward and meet them.</p></div>
+
+  <div class="beat" data-a="0.13" data-b="0.27"><span class="k">Low Earth Orbit · 160–2,000 km</span><h1>The close,<br>fast <span class="em">eyes.</span></h1><p>Just a few hundred kilometres up, satellites race around Earth every ~90 minutes — close enough to read the oceans, air, ice and fires in fine detail.</p><div class="stat"><div><b>~7.6 km/s</b><span>Orbital speed</span></div><div><b>PACE · TEMPO · ICESat-2</b><span>SSAI-supported LEO missions</span></div></div></div>
+
+  <div class="beat" data-a="0.33" data-b="0.47"><span class="k">Medium Earth Orbit · ~20,200 km</span><h1>The navigation<br><span class="em">backbone.</span></h1><p>Far higher and slower, a steady lattice of satellites circles twice a day. This is the realm of GPS — the timing and position layer the modern world runs on.</p><div class="stat"><div><b>~12 hrs</b><span>Orbital period</span></div><div><b>~20,200 km</b><span>GPS-class altitude</span></div></div></div>
+
+  <div class="beat" data-a="0.53" data-b="0.67"><span class="k">Geostationary Orbit · 35,786 km</span><h1>The ones that<br>never <span class="em">move.</span></h1><p>At one precise altitude a satellite circles Earth in exactly one day — so it appears to hang fixed over a single spot. The GOES weather satellites watch one face of the planet, continuously.</p><div class="stat"><div><b>23h 56m</b><span>Matches Earth's spin</span></div><div><b>GOES-R</b><span>Fixed weather watch</span></div></div></div>
+
+  <div class="beat" data-a="0.71" data-b="0.83"><span class="k">One system · three regimes</span><h1>A planet held<br>in <span class="em">view.</span></h1><p>Together these shells form an unbroken watch — close and fast, steady and global, fixed and continuous — three vantage points on a single living world.</p></div>
+
+  <div class="beat center" data-a="0.88" data-b="1.05"><div class="inr"><span class="k">SSAI · across every orbit</span><h1 style="font-size:clamp(38px,7.6vw,108px)">We engineer the<br>instruments and fly<br><span class="em">the missions.</span></h1><p>From low-orbit Earth observers to geostationary weather sentinels, SSAI builds the instruments and operates the missions across every one of these orbits.</p><div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-top:30px;flex-wrap:wrap"><a class="cta" href="missions.html">See the missions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="cta ghost" href="experience-earth.html">The descent</a></div><div style="margin-top:26px;font-family:var(--body);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Science Systems and Applications, Inc. · LEO · MEO · GEO</div></div></div>
+</div></div>
+
+<div class="alt" id="alt"><div class="label" id="altLabel">Altitude</div><div class="val"><span id="altVal">0</span><span class="unit">km</span></div></div>
+
+<div class="cue" id="cue">Scroll<div class="ar"></div></div>
+<nav class="shellnav" id="shellnav">
+  <a href="experience-orbits.html" class="on">Orbits</a>
+  <a href="missions.html">Missions</a>
+  <a href="instruments.html">Instruments</a>
+</nav>
+
+<div class="scroll" id="scroll"></div>
+
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+function clamp01(x){return x<0?0:(x>1?1:x);}
+function lerp(a,b,t){return a+(b-a)*t;}
+function range(p,a,b){return clamp01((p-a)/(b-a));}
+function fadeOp(p,a,b,f){return clamp01(Math.min((p-a)/f,(b-p)/f,1));}
+function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
+
+/* ===== Science: real altitudes (km), scaled to scene units around an Earth of radius EARTH_R ===== */
+var EARTH_KM=6371;
+var EARTH_R=2.0;                       // Earth radius in scene units
+function kmToScene(km){ return EARTH_R*(1+km/EARTH_KM); } // distance from Earth centre
+var LEO_KM=600, MEO_KM=20200, GEO_KM=35786;
+// Visual radii. GEO is ~6.6 Earth radii out; we COMPRESS the upper regimes logarithmically so the
+// whole system stays composable on screen while preserving correct ORDERING and labelled real figures.
+function visR(km){ return EARTH_R*(1+Math.log10(1+km/EARTH_KM*4.2)*1.95); }
+var LEO_R=visR(LEO_KM), MEO_R=visR(MEO_KM), GEO_R=visR(GEO_KM);
+
+/* ===== renderer / scene / camera ===== */
+var canvas=document.getElementById('scene');
+var renderer=new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:false});
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
+renderer.setSize(innerWidth,innerHeight,false);
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.05;
+
+var scene=new THREE.Scene();
+scene.background=new THREE.Color(0x060b14);
+var camera=new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.05, 2000);
+camera.position.set(0,1.6,9);
+
+/* world tilt so orbital rings read as a 3D system, not flat */
+var world=new THREE.Group();
+world.rotation.x=THREE.MathUtils.degToRad(20);
+world.rotation.z=THREE.MathUtils.degToRad(-6);
+scene.add(world);
+
+/* ===== lights ===== */
+var sun=new THREE.DirectionalLight(0xfff4e6, 2.5);
+sun.position.set(5,2.5,4);
+scene.add(sun);
+scene.add(new THREE.AmbientLight(0x24406a, 0.55));
+var rim=new THREE.DirectionalLight(0x4a86dd, 0.6);
+rim.position.set(-4,-1,-3);
+scene.add(rim);
+
+/* ===== loader / textures ===== */
+var loadMgr=new THREE.LoadingManager();
+var ready=false;
+loadMgr.onLoad=function(){ ready=true; var l=document.getElementById('loader'); if(l) l.classList.add('gone'); applyScroll(); };
+loadMgr.onError=function(url){ var l=document.getElementById('loader'); if(l){ l.querySelector('.lt').textContent='Could not load a texture — check your connection.'; } };
+var texLoader=new THREE.TextureLoader(loadMgr);
+var dayTex=texLoader.load('assets/images/scenes/journey/earth-day.jpg');
+var nightTex=texLoader.load('assets/images/scenes/journey/earth-night.jpg');
+dayTex.colorSpace=THREE.SRGBColorSpace; nightTex.colorSpace=THREE.SRGBColorSpace;
+dayTex.anisotropy=renderer.capabilities.getMaxAnisotropy();
+
+/* ===== Earth: day texture + custom night-side city lights via shader ===== */
+var earthGeo=new THREE.SphereGeometry(EARTH_R,96,96);
+var earthMat=new THREE.MeshStandardMaterial({ map:dayTex, roughness:1.0, metalness:0.0 });
+earthMat.onBeforeCompile=function(sh){
+  sh.uniforms.nightMap={value:nightTex};
+  sh.uniforms.sunDir={value:sun.position.clone().normalize()};
+  sh.vertexShader='varying vec3 vWN;\n'+sh.vertexShader.replace(
+    '#include <begin_vertex>',
+    '#include <begin_vertex>\n vWN = normalize( mat3(modelMatrix) * normal );'
+  );
+  sh.fragmentShader='uniform sampler2D nightMap;\nuniform vec3 sunDir;\nvarying vec3 vWN;\n'+sh.fragmentShader.replace(
+    '#include <map_fragment>',
+    '#include <map_fragment>\n'+
+    ' float ndl = dot( normalize(vWN), normalize(sunDir) );\n'+
+    ' float night = smoothstep(0.06, -0.18, ndl);\n'+
+    ' vec3 city = texture2D( nightMap, vMapUv ).rgb;\n'+
+    ' city = pow(city, vec3(1.3)) * 2.4;\n'+
+    ' diffuseColor.rgb += city * night * vec3(1.0,0.92,0.72);\n'
+  );
+  earthMat.userData.sh=sh;
+};
+var earth=new THREE.Mesh(earthGeo,earthMat);
+world.add(earth);
+
+/* ===== atmosphere: backside fresnel rim glow ===== */
+var atmoMat=new THREE.ShaderMaterial({
+  transparent:true, side:THREE.BackSide, blending:THREE.AdditiveBlending, depthWrite:false,
+  uniforms:{ uColor:{value:new THREE.Color(0x4a86dd)} },
+  vertexShader:'varying vec3 vN; varying vec3 vP;\nvoid main(){ vN=normalize(mat3(modelMatrix)*normal); vec4 wp=modelMatrix*vec4(position,1.0); vP=wp.xyz; gl_Position=projectionMatrix*viewMatrix*wp; }',
+  fragmentShader:'varying vec3 vN; varying vec3 vP; uniform vec3 uColor;\nvoid main(){ vec3 vd=normalize(cameraPosition-vP); float f=1.0-max(dot(vN,vd),0.0); f=pow(f,3.0); gl_FragColor=vec4(uColor, f*0.9); }'
+});
+var atmo=new THREE.Mesh(new THREE.SphereGeometry(EARTH_R*1.045,64,64), atmoMat);
+world.add(atmo);
+
+/* ===== starfield ===== */
+(function(){
+  var N=2600, pos=new Float32Array(N*3), col=new Float32Array(N*3);
+  for(var i=0;i<N;i++){ var r=120+Math.random()*420;
+    var th=Math.random()*Math.PI*2, ph=Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(ph)*Math.cos(th); pos[i*3+1]=r*Math.cos(ph); pos[i*3+2]=r*Math.sin(ph)*Math.sin(th);
+    var b=0.5+Math.random()*0.5, tint=Math.random();
+    col[i*3]=b*(0.8+tint*0.2); col[i*3+1]=b*0.85; col[i*3+2]=b*(0.95+(1-tint)*0.05);
+  }
+  var g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  g.setAttribute('color',new THREE.BufferAttribute(col,3));
+  var m=new THREE.PointsMaterial({size:0.9,sizeAttenuation:false,vertexColors:true,transparent:true,opacity:0.9,depthWrite:false});
+  scene.add(new THREE.Points(g,m));
+})();
+
+/* ===== orbital rings + satellites ===== */
+function makeRing(radius, color, opacity, tiltDeg, twistDeg){
+  var g=new THREE.Group();
+  var pts=[], SEG=256;
+  for(var i=0;i<=SEG;i++){ var a=i/SEG*Math.PI*2; pts.push(new THREE.Vector3(Math.cos(a)*radius,0,Math.sin(a)*radius)); }
+  var lg=new THREE.BufferGeometry().setFromPoints(pts);
+  var lm=new THREE.LineBasicMaterial({color:color,transparent:true,opacity:opacity});
+  var line=new THREE.Line(lg,lm); line.userData.mat=lm; g.add(line);
+  g.rotation.x=THREE.MathUtils.degToRad(tiltDeg);
+  g.rotation.y=THREE.MathUtils.degToRad(twistDeg);
+  g.userData={lineMat:lm,sats:[],radius:radius};
+  world.add(g);
+  return g;
+}
+function addSats(ring, count, color, size, speed, geoLock){
+  var geo=new THREE.SphereGeometry(size,12,12);
+  var glowGeo=new THREE.SphereGeometry(size*2.6,10,10);
+  var glowMat=new THREE.MeshBasicMaterial({color:color,transparent:true,opacity:0.28,depthWrite:false,blending:THREE.AdditiveBlending});
+  for(var i=0;i<count;i++){
+    var mat=new THREE.MeshBasicMaterial({color:color});
+    var m=new THREE.Mesh(geo,mat);
+    var glow=new THREE.Mesh(glowGeo,glowMat); m.add(glow);
+    var phase=geoLock!=null ? geoLock : Math.random()*Math.PI*2;
+    m.userData={phase:phase, speed:speed, r:ring.userData.radius, dot:mat, glow:glow};
+    ring.add(m); ring.userData.sats.push(m);
+  }
+}
+var leoRing=makeRing(LEO_R,0x6fb0ff,0.34,18,0);
+var meoRing=makeRing(MEO_R,0x4a86dd,0.30,30,40);
+var geoRing=makeRing(GEO_R,0x9cc4ff,0.40,2,0);   // near-equatorial — GEO sits over the equator
+addSats(leoRing, 26, 0x9cd2ff, 0.022, 0.9, null);
+addSats(meoRing, 10, 0x7fb0ff, 0.030, 0.30, null);
+// GEO: a few sats, each phase-locked so they appear to HANG fixed relative to Earth
+addSats(geoRing, 3, 0xcfe2ff, 0.034, 0.0668, 0.0);
+geoRing.userData.sats.forEach(function(s,i){ s.userData.phase=i*(Math.PI*2/3); s.userData.speed=0.0668; });
+
+/* faint equatorial plane disc to ground the GEO ring */
+var discMat=new THREE.MeshBasicMaterial({color:0x16345f,transparent:true,opacity:0.0,side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending});
+var disc=new THREE.Mesh(new THREE.RingGeometry(EARTH_R*1.1,GEO_R*1.02,96),discMat);
+disc.rotation.x=THREE.MathUtils.degToRad(90+2);
+world.add(disc);
+
+/* ===== camera keyframes: pull outward LEO -> MEO -> GEO -> whole system ===== */
+function dollyFor(r){ return r*2.3+3.0; }  // a framing distance for a given regime radius
+var KF=[
+  {p:0.00, dist:dollyFor(LEO_R)*1.18, height:1.7, fov:42},  // close on Earth + LEO shell
+  {p:0.20, dist:dollyFor(LEO_R),      height:1.4, fov:40},  // LEO
+  {p:0.40, dist:dollyFor(MEO_R)*0.92, height:2.4, fov:44},  // MEO
+  {p:0.60, dist:dollyFor(GEO_R)*0.90, height:2.0, fov:46},  // GEO
+  {p:0.78, dist:dollyFor(GEO_R)*1.16, height:3.2, fov:48},  // whole system
+  {p:1.00, dist:dollyFor(GEO_R)*1.20, height:2.6, fov:46}   // settle on full system for the tie-in
+];
+function camAt(p){
+  var i=0; while(i<KF.length-2 && p>KF[i+1].p) i++;
+  var A=KF[i],B=KF[i+1]; var t=easeIO(clamp01((p-A.p)/(B.p-A.p)));
+  return { dist:lerp(A.dist,B.dist,t), height:lerp(A.height,B.height,t), fov:lerp(A.fov,B.fov,t) };
+}
+
+/* ===== beats / chrome wiring ===== */
+var beats=[].slice.call(document.querySelectorAll('.beat'));
+var prog=document.getElementById('prog'), cue=document.getElementById('cue'), shellnav=document.getElementById('shellnav'), chap=document.getElementById('chap');
+var altBox=document.getElementById('alt'), altVal=document.getElementById('altVal'), altLabel=document.getElementById('altLabel');
+var CH=[['Orbits',0],['Low Earth Orbit',0.13],['Medium Earth Orbit',0.33],['Geostationary',0.53],['One system',0.71],['Across every orbit',0.88]];
+
+// altitude readout segments: [from, to, label, displayKm, color]
+var ALT=[
+  {a:0.13,b:0.27, label:'Low Earth Orbit', km:LEO_KM},
+  {a:0.33,b:0.47, label:'Medium Earth Orbit', km:MEO_KM},
+  {a:0.53,b:0.67, label:'Geostationary Orbit', km:GEO_KM}
+];
+
+var scrollP=0;
+var camAngle=0; // slow continuous azimuth so the system feels alive
+
+function applyScroll(){
+  var p=scrollP;
+  var c=camAt(p);
+  camera.fov=c.fov; camera.updateProjectionMatrix();
+  // orbit camera around the system; azimuth advances very slowly with scroll
+  var az=lerp(0.3, 2.4, clamp01(p)) + camAngle;
+  camera.position.x=Math.sin(az)*c.dist;
+  camera.position.z=Math.cos(az)*c.dist;
+  camera.position.y=c.height;
+  camera.lookAt(0,0,0);
+
+  for(var j=0;j<beats.length;j++){var ba=+beats[j].dataset.a,bb=+beats[j].dataset.b;var bo=fadeOp(p,ba,bb,0.03);
+    beats[j].style.opacity=bo;
+    if(!beats[j].classList.contains('center')) beats[j].style.transform='translateY('+lerp(22,-14,range(p,ba,bb))+'px)';}
+
+  if(prog) prog.style.width=(clamp01(p)*100)+'%';
+  if(cue) cue.style.opacity=(1-range(p,0.03,0.10));
+  if(shellnav) shellnav.classList.toggle('show',p>0.88);
+  var ci=0; for(var k=0;k<CH.length;k++){ if(p>=CH[k][1]-0.005) ci=k; }
+  if(chap) chap.textContent=CH[ci][0];
+
+  // altitude readout: show within whichever regime band we're in, counting up
+  var shown=null;
+  for(var a=0;a<ALT.length;a++){ var seg=ALT[a]; if(p>=seg.a-0.02 && p<=seg.b+0.02){ shown=seg; break; } }
+  if(altBox){
+    if(shown){
+      altBox.style.opacity=fadeOp(p,shown.a-0.02,shown.b+0.02,0.03);
+      var tt=easeIO(range(p,shown.a-0.02,shown.a+0.05));
+      var v=Math.round(shown.km*tt);
+      altVal.textContent=v.toLocaleString('en-US');
+      altLabel.textContent=shown.label;
+    } else { altBox.style.opacity=0; }
+  }
+}
+
+/* ===== render loop: animate sats + slow earth spin, draw only when needed-ish (rAF always for orbit life) ===== */
+var clock=new THREE.Clock();
+function animate(){
+  var dt=reduce?0:clock.getDelta();
+  var t=clock.elapsedTime;
+  if(!reduce){
+    earth.rotation.y+=dt*0.02;
+    camAngle+=dt*0.012;
+    // move satellites along their rings
+    [leoRing,meoRing,geoRing].forEach(function(ring){
+      ring.userData.sats.forEach(function(s){
+        var ang=s.userData.phase + t*s.userData.speed;
+        s.position.set(Math.cos(ang)*s.userData.r,0,Math.sin(ang)*s.userData.r);
+        var pulse=0.22+0.12*Math.sin(t*2.2+s.userData.phase*3.0);
+        s.userData.glow.material.opacity=pulse;
+      });
+    });
+    // keep GEO sats rotating WITH Earth so they appear fixed over a point:
+    // earth spins +0.02/s; GEO speed set to match visually => looks locked to surface
+    applyScroll(); // camera azimuth advances each frame for living motion
+  }
+  // keep night-side sun direction synced
+  if(earthMat.userData.sh) earthMat.userData.sh.uniforms.sunDir.value.copy(sun.position).normalize();
+  renderer.render(scene,camera);
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+
+/* ===== resize ===== */
+addEventListener('resize',function(){
+  renderer.setSize(innerWidth,innerHeight,false);
+  camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+});
+
+/* ===== scroll engine: damped rAF loop (matches experience-earth.html) ===== */
+var targetP=0, curP=0, lastP=-1;
+function rloop(){
+  var max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+  targetP=clamp01((window.scrollY||window.pageYOffset||0)/max);
+  curP+=(targetP-curP)*(reduce?1:0.16);
+  if(Math.abs(targetP-curP)<0.0005) curP=targetP;
+  if(Math.abs(curP-lastP)>0.00006){ lastP=curP; scrollP=curP; }
+  requestAnimationFrame(rloop);
+}
+requestAnimationFrame(rloop);
+applyScroll();
+
+window.__exp={ get p(){return scrollP;}, set p(v){scrollP=clamp01(v); targetP=curP=scrollP; applyScroll();}, camAt:camAt, get ready(){return ready;} };
+</script>
+</body>
+</html>
