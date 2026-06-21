@@ -1,16 +1,17 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>(function(){try{if(localStorage.getItem('ssai-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <title>SSAI — Interactive Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BoldItalic.woff2') format('woff2');font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-BlackItalic.woff2') format('woff2');font-weight:800;font-style:italic;font-display:swap}
 :root{
-  --accent:#3cc8ff;--accent-rgb:60,200,255;--accent-ink:#04121c;
-  --space:#050314;--space-2:#080620;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--mut:#7e84bf;
+  --accent:#f2c14e;--accent-rgb:242,193,78;--accent-ink:#1c1503;
+  --space:#05060a;--space-2:#070814;--indigo:#16145f;--star:#f4f5ff;--neb:#a6abe6;--mut:#7e84bf;
   --hair:rgba(166,171,230,.14);--hair-2:rgba(166,171,230,.26);
   --card:rgba(120,128,220,.045);--card-2:rgba(120,128,220,.08);
-  --disp:'Chakra Petch';
+  --disp:'Tactic Sans','Chakra Petch',sans-serif;
 }
 html[data-theme="light"]{--space:#eef0fb;--space-2:#e4e7f7;--star:#16145f;--neb:#4a4f86;--mut:#6b70a3;--hair:rgba(22,20,95,.12);--hair-2:rgba(22,20,95,.22);--card:rgba(22,20,95,.04);--card-2:rgba(22,20,95,.07);}
 *{box-sizing:border-box;}
@@ -19,8 +20,45 @@ body{overflow-x:hidden;}
 a{color:inherit;text-decoration:none;}
 .wrap{max-width:1280px;margin:0 auto;padding:0 clamp(18px,4vw,46px);}
 
+/* ---------- site nav (matches the rest of ssai.com) ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:clamp(15px,2vw,24px) clamp(18px,4vw,46px);transition:background .4s,backdrop-filter .4s,padding .3s,border-color .4s;border-bottom:1px solid transparent;}
+.nav.solid{background:rgba(5,5,13,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom-color:var(--hair);padding-top:13px;padding-bottom:13px;}
+.nav-logo img{height:clamp(38px,4vw,48px);width:auto;filter:drop-shadow(0 2px 14px rgba(60,123,224,.45));}
+.nav-links{display:flex;align-items:center;gap:clamp(14px,1.6vw,24px);}
+.nav-link{font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--neb);transition:color .2s;white-space:nowrap;font-family:'Inter',sans-serif;}
+.nav-link:hover,.nav-link.active{color:#fff;}
+.nav-cta{border:1px solid var(--hair-2);border-radius:30px;padding:9px 18px;color:#fff!important;}
+.nav-cta:hover{border-color:var(--accent);color:var(--accent)!important;}
+.nav-item{position:relative;display:flex;align-items:center;}
+.nav-item.has-sub>.nav-link::after{content:"";display:inline-block;width:5px;height:5px;margin-left:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);opacity:.55;}
+.nav-sub{position:absolute;top:100%;left:-14px;min-width:224px;padding:10px;background:rgba(8,9,20,.975);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid var(--hair);border-radius:14px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .22s,transform .22s,visibility .22s;box-shadow:0 26px 54px -22px rgba(0,0,0,.75);z-index:60;}
+.nav-item.has-sub:hover .nav-sub,.nav-item.has-sub:focus-within .nav-sub{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-sub a{font-size:13px;letter-spacing:.03em;text-transform:none;color:var(--neb);padding:9px 12px;border-radius:9px;white-space:nowrap;font-family:'Inter',sans-serif;}
+.nav-sub a:hover{background:rgba(166,171,230,.08);color:#fff;}
+.nav-sub a.active{color:var(--accent);}
+.nav-toggle{display:none;background:none;border:0;color:#fff;font-size:22px;cursor:pointer;}
+@media(max-width:1080px){
+  .nav-links{position:fixed;inset:0 0 0 auto;width:min(360px,86vw);flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:6px;padding:96px 34px 40px;overflow-y:auto;background:rgba(7,8,20,.98);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-left:1px solid var(--hair);transform:translateX(102%);transition:transform .4s cubic-bezier(.6,0,.2,1);}
+  .nav-links.open{transform:translateX(0);}
+  .nav-link{font-size:15px;padding:6px 0;}
+  .nav-toggle{display:block;z-index:51;}
+  .nav-item{flex-direction:column;align-items:flex-start;width:100%;}
+  .nav-item.has-sub>.nav-link::after{display:none;}
+  .nav-sub{position:static;opacity:1;visibility:visible;transform:none;background:none;border:0;box-shadow:none;padding:2px 0 6px 14px;min-width:0;border-left:1px solid var(--hair);margin:2px 0 6px;}
+  .nav-sub a{font-size:13.5px;padding:6px 10px;}
+}
+/* ---------- site footer ---------- */
+.site-foot{background:#04030e;border-top:1px solid var(--hair);padding:54px 0 40px;margin-top:40px;}
+.site-foot .cols{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start;}
+.site-foot .fb img{height:40px;opacity:.9;}
+.site-foot .fb p{font-size:12.5px;color:var(--mut);line-height:1.8;max-width:38ch;margin:14px 0 0;}
+.site-foot nav{display:flex;gap:22px;flex-wrap:wrap;}
+.site-foot nav a{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--neb);}
+.site-foot nav a:hover{color:#fff;}
+.site-foot .copy{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#54588a;margin-top:34px;}
+
 /* ---------- hero ---------- */
-.lib-hero{position:relative;padding:clamp(40px,7vw,96px) 0 clamp(26px,4vw,46px);overflow:hidden;}
+.lib-hero{position:relative;padding:clamp(104px,10vw,132px) 0 clamp(26px,4vw,46px);overflow:hidden;}
 .lib-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
   radial-gradient(120% 90% at 80% -10%,rgba(22,20,95,.55),transparent 55%),
   radial-gradient(90% 80% at 0% 100%,rgba(var(--accent-rgb),.10),transparent 55%);}
@@ -36,7 +74,7 @@ a{color:inherit;text-decoration:none;}
 .lib-stat .l{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-top:7px;}
 
 /* ---------- controls ---------- */
-.lib-controls{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--space) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--hair);padding:13px 0;margin-top:14px;}
+.lib-controls{position:sticky;top:58px;z-index:30;background:color-mix(in srgb,var(--space) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--hair);padding:13px 0;margin-top:14px;}
 .lib-controls .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
 .lib-pills{display:flex;gap:7px;flex-wrap:wrap;flex:1;min-width:0;}
 .pill{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.02em;padding:7px 13px;border-radius:999px;cursor:pointer;background:var(--card);border:1px solid var(--hair);color:var(--neb);transition:all .18s ease;white-space:nowrap;}
@@ -120,7 +158,20 @@ footer.lib-foot a{color:var(--neb);}
 </style></head>
 <body>
 
-<a class="backlink" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg> Overview</a>
+<header class="nav" id="nav">
+  <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI — Science Systems and Applications, Inc."></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="nav-links" id="navLinks">
+    <div class="nav-item has-sub"><a class="nav-link" href="company.html">Company</a><div class="nav-sub"><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="science.html">Science</a><div class="nav-sub"><a href="science.html">Overview</a><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link active" href="instruments.html">Instruments</a><div class="nav-sub"><a href="instruments.html">Instruments</a><a href="missions.html">Missions</a><a href="mission-operations-data.html">Mission Ops &amp; Data</a><a class="active" href="interactive-kit.html">Instruments Studio</a></div></div>
+    <div class="nav-item has-sub"><a class="nav-link" href="careers.html">Careers</a><div class="nav-sub"><a href="careers.html">Overview</a><a href="benefits.html">Benefits</a><a href="life-at-ssai.html">Life at SSAI</a></div></div>
+    <a class="nav-link" href="partner.html">Partner</a>
+    <a class="nav-link" href="newsroom.html">Newsroom</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+    <a class="nav-link nav-cta" href="signin.html">Sign In</a>
+  </nav>
+</header>
 
 <section class="lib-hero">
   <canvas class="lib-stars"></canvas>
@@ -145,11 +196,20 @@ footer.lib-foot a{color:var(--neb);}
 <main class="wrap" id="collections"></main>
 <div class="empty" id="empty">No instruments match — try another filter.</div>
 
-<footer class="lib-foot">
-  <div><strong style="color:var(--neb)">SSAI Interactive Library</strong> · 56 modules · vanilla, dependency-free</div>
-  <div style="margin-top:8px">Imagery &amp; data: NASA · NASA Earth Observatory · NASA/SDO · NASA/JPL-Caltech (public domain); ESA/Webb &amp; Copernicus Sentinel-1 (CC BY-SA 4.0); NOAA. NASA / ESA logos shown as data-source credit.</div>
-  <div style="margin-top:8px">Prepared by <strong style="color:var(--neb)">FCI Advisory</strong> for <strong style="color:var(--neb)">SSAI</strong> · 2026</div>
-</footer>
+<footer class="site-foot"><div class="wrap">
+  <div class="cols">
+    <div class="fb"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. The Interactive Library runs on real NASA, NOAA &amp; ESA open data, shown with source credit.</p></div>
+    <nav>
+      <a href="instruments.html">Instruments</a>
+      <a href="missions.html">Missions</a>
+      <a href="science.html">Science</a>
+      <a href="publications.html">Publications</a>
+      <a href="contact.html">Contact</a>
+      <a href="sitemap.html">Sitemap</a>
+    </nav>
+  </div>
+  <div class="copy">&copy; 1977&ndash;2026 Science Systems and Applications, Inc. &middot; The Aerospace Building, 10210 Greenbelt Road, Lanham, MD &middot; Imagery &amp; data: NASA / NOAA / ESA (public domain &amp; CC).</div>
+</div></footer>
 
 <!-- viewer -->
 <div class="viewer" id="viewer" role="dialog" aria-modal="true">
@@ -287,5 +347,6 @@ fetch('modules/manifest.json').then(function(r){return r.json();}).then(function
   var q=new URLSearchParams(location.search).get('m'); if(q && FLAT.some(function(m){return m.slug===q;})) openModule(q);
 }).catch(function(){document.getElementById('collections').innerHTML='<p style="color:var(--neb);padding:40px 0">Could not load the module manifest.</p>';});
 </script>
-<script src="assets/js/theme.js"></script><script src="assets/js/switcher.js"></script>
+<script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script src="assets/js/site.js"></script>
 </body></html>

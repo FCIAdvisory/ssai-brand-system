@@ -47,10 +47,21 @@ function init(el) {
   }
   resize(); new ResizeObserver(resize).observe(el);
 
+  let mx = 0, my = 0;
+  if (!REDUCE) window.addEventListener('mousemove', (e) => {
+    mx = (e.clientX / window.innerWidth - 0.5) * 2;
+    my = (e.clientY / window.innerHeight - 0.5) * 2;
+  }, { passive: true });
+
   const clock = new THREE.Clock();
   function frame() {
     const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
-    if (!REDUCE) updaters.forEach(u => u(dt, t));
+    if (!REDUCE) {
+      updaters.forEach(u => u(dt, t));
+      camera.position.x += (mx * 0.5 - camera.position.x) * 0.05;   // subtle mouse parallax (camera, so it never fights a variant's spin)
+      camera.position.y += (-my * 0.4 - camera.position.y) * 0.05;
+      camera.lookAt(0, 0, 0);
+    }
     renderer.render(scene, camera);
     if (!REDUCE) requestAnimationFrame(frame);
   }
