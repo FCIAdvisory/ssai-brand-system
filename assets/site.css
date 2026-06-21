@@ -68,12 +68,21 @@ img{max-width:100%;display:block}
   font-size:clamp(40px,7vw,96px);line-height:.92;letter-spacing:-.025em;max-width:16ch;text-shadow:0 2px 40px rgba(4,3,14,.6)}
 .phero h1 .em{color:var(--gold);text-shadow:0 0 50px rgba(74,134,221,.4)}
 .phero .sub{margin-top:26px;font-size:clamp(16px,1.6vw,21px);font-weight:300;color:var(--text);max-width:62ch;line-height:1.65}
+/* full-bleed cinematic image hero — set per page with style="--shot:url(...)" */
+.phero.shot{min-height:clamp(460px,66vh,740px);display:flex;align-items:center;padding-top:clamp(120px,16vh,172px);
+  background-size:cover;background-position:center;background-repeat:no-repeat}
+.phero.shot::before{background:
+  linear-gradient(90deg,rgba(8,14,26,.86) 0%,rgba(8,14,26,.42) 50%,rgba(8,14,26,.08) 100%),
+  linear-gradient(0deg,var(--space) 0%,rgba(8,14,26,.45) 22%,rgba(8,14,26,.04) 56%,rgba(8,14,26,.35) 100%);opacity:1}
+.phero.shot .container{width:100%;position:relative;z-index:1}
+.phero.shot h1{text-shadow:0 3px 30px rgba(4,8,16,.7)}
+.phero.shot .sub{text-shadow:0 1px 16px rgba(4,8,16,.8)}
 
 /* ---------- sections ---------- */
 .section{padding:clamp(62px,8.5vh,118px) 0}
 .section.alt{background:linear-gradient(180deg,var(--panel),var(--space))}
 .section.tight{padding:clamp(48px,7vh,90px) 0}
-.dtitle{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;font-size:clamp(28px,4.4vw,58px);line-height:.98;letter-spacing:-.02em;max-width:20ch}
+.dtitle{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;font-size:clamp(28px,4.4vw,58px);line-height:.98;letter-spacing:-.02em;max-width:20ch;overflow-wrap:break-word}
 .dtitle .em{color:var(--gold)}
 .lead{margin-top:24px;font-size:clamp(16px,1.45vw,20px);font-weight:300;color:var(--text);line-height:1.7;max-width:64ch}
 .body-col{max-width:68ch}
@@ -81,7 +90,7 @@ img{max-width:100%;display:block}
 .body-col p:first-child{margin-top:0}
 .divider{height:1px;background:var(--hair);max-width:var(--maxw);margin:0 auto}
 .eyebrow{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.lede-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(30px,5vw,72px);align-items:start}
+.lede-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:clamp(30px,5vw,72px);align-items:start}
 @media(max-width:840px){.lede-grid{grid-template-columns:1fr;gap:30px}}
 
 /* ---------- grids / cards ---------- */
@@ -104,8 +113,9 @@ img{max-width:100%;display:block}
 .card.feature .lead-photo{border-color:rgba(74,134,221,.55)}
 
 /* ---------- stats ---------- */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:clamp(20px,3vw,46px);margin-top:clamp(36px,5vh,64px)}
-.stat b{display:block;font-family:var(--disp);font-style:italic;font-weight:800;font-size:clamp(32px,4.6vw,62px);color:var(--gold);line-height:1}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:clamp(20px,3vw,46px);margin-top:clamp(36px,5vh,64px)}
+.stat{min-width:0}
+.stat b{display:block;font-family:var(--disp);font-style:italic;font-weight:800;font-size:clamp(30px,4vw,56px);color:var(--gold);line-height:1.02;overflow-wrap:break-word;hyphens:none}
 .stat span{display:block;margin-top:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--nebula);line-height:1.5}
 
 /* ---------- chips / pills ---------- */
