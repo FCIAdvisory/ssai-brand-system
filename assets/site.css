@@ -265,3 +265,8 @@ img{max-width:100%;display:block}
 .nm-col a{display:block;font-family:var(--body);font-size:13px;font-weight:500;color:var(--nebula);text-decoration:none;padding:7px 10px;margin:0 -10px;border-radius:9px;transition:background .2s,color .2s}
 .nm-col a:hover{background:rgba(74,134,221,.12);color:var(--starlight)}
 @media(max-width:900px){.nav-mega.about{width:auto}.nm-cols{grid-template-columns:1fr;gap:4px}.nm-col{margin-bottom:8px}}
+
+/* ---------- practice WebGL hero (full-bleed living canvas) ---------- */
+.phero.live .phero-webgl{position:absolute;inset:0;z-index:0;pointer-events:none}
+.phero.live.wgl{background:radial-gradient(120% 90% at 72% 32%, #0c1830 0%, var(--space) 62%)}
+.phero.live.wgl::before{background:linear-gradient(100deg,rgba(8,14,26,.95) 0%,rgba(8,14,26,.66) 40%,rgba(8,14,26,.18) 68%,rgba(8,14,26,.5) 100%)}

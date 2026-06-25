@@ -11,7 +11,7 @@
   root.classList.add('wow-on');
   if (reduce) root.classList.add('wow-reduce');
 
-  var heroes = [].slice.call(document.querySelectorAll('.phero.shot'));
+  var heroes = [].slice.call(document.querySelectorAll('.phero.shot, .phero.live'));
 
   // global failsafe: after the entrance window, force all copy visible no matter what
   setTimeout(function () { root.classList.add('wow-force'); }, 2200);
