@@ -26,7 +26,7 @@
   if (!reduce && 'IntersectionObserver' in window) {
     document.body.classList.add('reveal-on');
     var sel = '.section .kick, .section .eyebrow, .section .dtitle, .section .lead, .section .body-col, ' +
-              '.card, .stat, .chip, .figure, .flist > li, .band-cta > *, .phero .sub, .phero .btn-row, ' +
+              '.card, .stat, .chip, .figure, .flist > li, .band-cta > *, ' +
               '.cp-split > div, .media-grid > .figure, .grid > .card';
     var els = [].slice.call(document.querySelectorAll(sel)).filter(function (el) {
       return !el.closest('.nav, .footer, .site-foot, .nav-links');

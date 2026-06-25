@@ -1,0 +1,80 @@
+/* ============================================================================
+   SSAI — "wow" layer (cinematic restraint) for CONTENT pages.
+   Mirrors the homepage DNA: Lenis momentum scroll, fade/rise reveals, the
+   signature cubic-bezier(.2,.7,.2,1) easing, Tactic headlines, soft glow,
+   parallax + slow Ken Burns on photo heroes, filmic grain.
+   Loaded on content pages only. NEVER on index.html. Reduced-motion safe.
+   ============================================================================ */
+
+html.wow-on { scroll-behavior: auto; }            /* Lenis drives the scroll */
+
+/* ---------- photo hero: parallax layer + slow Ken Burns + filmic grain ------ */
+.wow-on .phero.shot { isolation: isolate; }
+.wow-on .phero.shot::before { z-index: 1; }        /* keep the scrim above our image */
+.wow-on .phero.shot .container { z-index: 2; }     /* keep the copy on top */
+
+.wow-hero-bg {
+  position: absolute; inset: -10% 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+}
+.wow-hero-img {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transform: scale(1.08); will-change: transform;
+}
+.wow-on:not(.wow-reduce) .wow-hero-img {
+  animation: wowKenBurns 28s ease-in-out infinite alternate;
+}
+@keyframes wowKenBurns {
+  from { transform: scale(1.05); }
+  to   { transform: scale(1.12) translate3d(0, -1.2%, 0); }
+}
+/* faint filmic grain over the hero image only */
+.wow-hero-bg::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  opacity: .06; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- hero headline: word-by-word rise (echoes the home beats) -------- */
+.wow-w { display: inline-block; }
+.wow-w > span {
+  display: inline-block;
+  transform: translateY(.6em); opacity: 0;
+  transition: transform .82s cubic-bezier(.2,.7,.2,1), opacity .66s ease;
+}
+.wow-in .wow-w > span { transform: none; opacity: 1; }
+
+/* ---------- hero sub + actions: soft rise, staggered after the headline ----- */
+.wow-on .phero.shot .sub,
+.wow-on .phero.shot .btn-row {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.2,1);
+}
+.wow-on .phero.shot.wow-in .sub      { opacity: 1; transform: none; transition-delay: .34s; }
+.wow-on .phero.shot.wow-in .btn-row  { opacity: 1; transform: none; transition-delay: .48s; }
+
+/* ---------- premium motion on buttons (magnetic JS sets the transform) ------ */
+.wow-on .btn, .wow-on .cta, .wow-on .btn.ghost {
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, background .3s, color .3s, border-color .3s;
+}
+/* promote to a GPU layer only while actually interacting (not permanently) */
+.wow-on .btn:hover, .wow-on .cta:hover, .wow-on .capcard:hover, .wow-on .card:hover { will-change: transform; }
+
+/* ---------- subtle glow on gold accents in section titles ------------------- */
+.wow-on .dtitle .em { text-shadow: 0 0 58px rgba(74,134,221,.32); }
+
+/* ---------- image cards: a touch more lift + a gold edge on hover ----------- */
+.wow-on .capcard, .wow-on .card { transition: transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s, box-shadow .4s; }
+.wow-on .capcard:hover { box-shadow: 0 30px 60px -34px rgba(0,0,0,.7); }
+
+/* ---------- failsafe: after a beat, force everything visible (never hide copy) */
+.wow-force .wow-w > span { opacity: 1 !important; transform: none !important; transition: none !important; }
+.wow-force .phero.shot .sub, .wow-force .phero.shot .btn-row { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+/* ---------- reduced motion: kill all of it ---------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .wow-hero-img { animation: none; transform: scale(1.04); }
+  .wow-w > span { transform: none; opacity: 1; transition: none; }
+  .wow-on .phero.shot .sub, .wow-on .phero.shot .btn-row { opacity: 1 !important; transform: none !important; transition: none !important; }
+}

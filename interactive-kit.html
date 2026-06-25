@@ -155,7 +155,10 @@ footer.lib-foot a{color:var(--neb);}
 .backlink{position:fixed;top:18px;left:20px;z-index:40;display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--neb);background:color-mix(in srgb,var(--space) 70%,transparent);border:1px solid var(--hair);border-radius:999px;padding:8px 14px;backdrop-filter:blur(8px);}
 .backlink:hover{color:var(--star);border-color:var(--hair-2);}
 .backlink svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;}
-</style></head>
+</style><link href="assets/css/wow.css?v=19" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script defer src="assets/js/wow.js?v=19"></script>
+</head>
 <body>
 
 <header class="nav" id="nav">
@@ -348,5 +351,5 @@ fetch('modules/manifest.json').then(function(r){return r.json();}).then(function
 }).catch(function(){document.getElementById('collections').innerHTML='<p style="color:var(--neb);padding:40px 0">Could not load the module manifest.</p>';});
 </script>
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
-<script src="assets/js/site.js?v=13"></script>
+<script src="assets/js/site.js?v=14"></script>
 </body></html>
