@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Capability Statement : Science Systems and Applications, Inc. (SSAI)</title>
-<meta name="description" content="Science Systems and Applications, Inc. (SSAI): a leading science and engineering partner to U.S. agencies. Turning science into mission advantage for over four decades. Print-ready capability statement.">
+<title>Defense &amp; National Security Capability Statement : SSAI</title>
+<meta name="description" content="Science Systems and Applications, Inc. (SSAI): igniting defense innovation through science-powered solutions. Cleared facility, zero-trust cyber, AI/ML, CREST digital twin, Mil-spec manufacturing, and space operations for defense and national security.">
 <style>
 /* ============================================================================
-   SSAI : Corporate Capability Statement
+   SSAI : Defense & National Security Capability Statement
    Self-contained. Premium navy on screen, clean print to US Letter.
    ============================================================================ */
 @font-face{font-family:'Tactic Sans';src:url('assets/fonts/TacticSans-MediumItalic.woff2') format('woff2');font-weight:500;font-style:italic;font-display:swap}
@@ -27,17 +27,16 @@
 html{-webkit-text-size-adjust:100%}
 body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden}
 
-/* deep navy field with a soft blue aura, on screen only */
 .stage{position:relative;min-height:100vh;
   background:
-    radial-gradient(1100px 620px at 78% -8%,rgba(74,134,221,.22),transparent 60%),
-    radial-gradient(900px 600px at 8% 108%,rgba(17,74,163,.20),transparent 62%),
-    linear-gradient(180deg,#0a1422 0%,#0a1626 48%,#081120 100%);
+    radial-gradient(1100px 640px at 82% -10%,rgba(74,134,221,.24),transparent 60%),
+    radial-gradient(900px 600px at 6% 110%,rgba(17,74,163,.22),transparent 62%),
+    linear-gradient(180deg,#0a1422 0%,#0a1626 46%,#08101e 100%);
 }
 
 .sheet{max-width:1080px;margin:0 auto;padding:clamp(34px,5vw,72px) clamp(22px,4vw,56px) 40px}
 
-/* ---- print/save toolbar ---- */
+/* ---- toolbar ---- */
 .toolbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:16px;
   padding:14px clamp(22px,4vw,56px);background:rgba(7,12,22,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--hair)}
@@ -56,15 +55,17 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
 .kicker{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
 .kicker::before{content:"";width:24px;height:1px;background:var(--accent)}
 .cap-head h1{font-family:var(--disp);font-style:italic;font-weight:800;text-transform:uppercase;color:#fff;
-  font-size:clamp(26px,3.6vw,42px);line-height:.96;letter-spacing:-.015em}
+  font-size:clamp(25px,3.4vw,39px);line-height:.98;letter-spacing:-.015em;max-width:16ch}
+.cap-head h1 .em{color:var(--accent)}
 .cap-head .tag{margin-top:12px;font-family:var(--disp);font-style:italic;font-weight:500;text-transform:uppercase;
   color:var(--accent);font-size:clamp(13px,1.3vw,16px);letter-spacing:.02em}
 .pid{font-size:12px;line-height:1.85;color:var(--nebula);text-align:right;min-width:210px;border-left:1px solid var(--hair);padding-left:22px}
 .pid b{color:var(--starlight);font-weight:600}
 .pid .uei{color:var(--accent);font-weight:600}
+.pid .ts{color:var(--accent);font-weight:600}
 
-/* ---- positioning line ---- */
-.position{margin-top:26px;font-size:clamp(16px,1.7vw,20px);font-weight:300;color:var(--text);line-height:1.6;max-width:74ch}
+/* ---- positioning ---- */
+.position{margin-top:26px;font-size:clamp(16px,1.7vw,20px);font-weight:300;color:var(--text);line-height:1.6;max-width:76ch}
 .position b{color:#fff;font-weight:500}
 
 /* ---- metric strip ---- */
@@ -75,25 +76,35 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
 .metric span{display:block;margin-top:7px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--nebula);line-height:1.4}
 @media(max-width:820px){.metrics{grid-template-columns:repeat(3,1fr)}}
 
-/* ---- section scaffolding ---- */
+/* ---- sections ---- */
 .sec{margin-top:clamp(34px,4.5vw,52px)}
 .eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .stitle{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;
   font-size:clamp(21px,2.6vw,30px);line-height:1;letter-spacing:-.01em;margin:8px 0 4px}
 .stitle .em{color:var(--accent)}
-.slead{font-size:14.5px;font-weight:300;color:var(--nebula);line-height:1.6;max-width:80ch;margin-top:4px}
+.slead{font-size:14.5px;font-weight:300;color:var(--nebula);line-height:1.6;max-width:82ch;margin-top:4px}
 
-/* ---- core capabilities (5 horizontals) ---- */
+/* ---- defense capabilities ---- */
 .caps{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
 .cap{border:1px solid var(--hair);border-radius:14px;padding:18px 20px;background:rgba(120,140,200,.04);position:relative}
+.cap.lead{border-color:rgba(74,134,221,.4);background:linear-gradient(135deg,rgba(17,74,163,.16),rgba(74,134,221,.05))}
 .cap .num{font-family:var(--disp);font-style:italic;font-weight:800;font-size:13px;color:var(--steel);letter-spacing:.04em}
+.cap.lead .num{color:var(--accent)}
 .cap h3{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;
   font-size:16px;line-height:1.05;letter-spacing:-.01em;margin:6px 0 7px}
 .cap p{color:var(--text);font-weight:300;font-size:13px;line-height:1.5}
 .cap.span2{grid-column:1 / -1}
 @media(max-width:760px){.caps{grid-template-columns:1fr}.cap.span2{grid-column:auto}}
 
-/* ---- differentiators ---- */
+/* ---- DIU portfolio map ---- */
+.diu{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:20px}
+.diu .pf{border:1px solid var(--hair);border-radius:12px;padding:13px 12px;background:rgba(17,74,163,.06);text-align:center}
+.diu .pf h4{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;font-size:12px;line-height:1.05;margin-bottom:7px}
+.diu .pf p{color:var(--nebula);font-weight:300;font-size:10.5px;line-height:1.4}
+@media(max-width:900px){.diu{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.diu{grid-template-columns:repeat(2,1fr)}}
+
+/* ---- differentiators / clearance ---- */
 .split{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;margin-top:22px}
 @media(max-width:760px){.split{grid-template-columns:1fr;gap:26px}}
 .flist{list-style:none;display:grid;gap:11px;margin-top:4px}
@@ -103,6 +114,8 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
 .certrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .chip{border:1px solid var(--hair2);border-radius:30px;padding:7px 14px;font-size:11px;letter-spacing:.05em;color:var(--nebula)}
 .chip b{color:var(--accent);font-weight:600}
+.chip.hot{border-color:rgba(74,134,221,.55);background:rgba(74,134,221,.1)}
+.chip.hot b{color:#fff}
 
 /* ---- subsidiaries ---- */
 .subs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
@@ -122,15 +135,6 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
 @media(max-width:680px){.pp li{grid-template-columns:1fr;gap:3px}.pp .val{text-align:left}}
 .flagships{margin-top:16px;font-size:12.5px;color:var(--text);font-weight:300;line-height:1.65}
 .flagships b{color:var(--accent);font-weight:600}
-
-/* ---- markets ---- */
-.mkts{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:18px}
-.mkt{border:1px solid var(--hair);border-radius:12px;padding:14px 16px;background:rgba(120,140,200,.04)}
-.mkt h4{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;font-size:13px;line-height:1.1;margin-bottom:5px}
-.mkt p{color:var(--nebula);font-weight:300;font-size:11.5px;line-height:1.45}
-@media(max-width:760px){.mkts{grid-template-columns:1fr}}
-.served{margin-top:16px;font-size:12.5px;color:var(--nebula);font-weight:300;line-height:1.7}
-.served b{color:var(--text);font-weight:600}
 
 /* ---- corporate data ---- */
 .data{display:grid;grid-template-columns:repeat(2,1fr);gap:0 34px;margin-top:18px;list-style:none;
@@ -163,14 +167,15 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
   .sheet{max-width:100%!important;padding:0!important}
 
   .cap-head{gap:14pt;align-items:flex-start}
-  .cap-head .brand img{height:30pt!important;margin-bottom:7pt!important;filter:none}
+  .cap-head .brand img{height:30pt!important;margin-bottom:7pt!important}
   .kicker{color:#114aa3!important;font-size:7.5pt!important;margin-bottom:4pt!important}
   .kicker::before{background:#114aa3!important;width:16px}
-  .cap-head h1{color:#0c1730!important;font-size:21pt!important}
+  .cap-head h1{color:#0c1730!important;font-size:20pt!important;max-width:18ch!important}
+  .cap-head h1 .em{color:#114aa3!important}
   .cap-head .tag{color:#114aa3!important;font-size:9.5pt!important;margin-top:4pt!important}
   .pid{color:#3a5170!important;font-size:8pt!important;line-height:1.55!important;border-left:1px solid #c2cede!important;padding-left:12pt!important;min-width:0}
   .pid b{color:#16243a!important}
-  .pid .uei{color:#114aa3!important}
+  .pid .uei,.pid .ts{color:#114aa3!important}
 
   .position{color:#243650!important;font-size:9.5pt!important;margin-top:8pt!important;max-width:none!important;line-height:1.4!important}
   .position b{color:#0c1730!important}
@@ -188,10 +193,16 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
 
   .caps{grid-template-columns:repeat(2,1fr)!important;gap:5pt 14pt!important;margin-top:5pt!important}
   .cap{border:0!important;border-radius:0!important;padding:0 0 1pt 10pt!important;background:none!important;position:relative;break-inside:avoid}
+  .cap.lead{background:none!important;border:0!important}
   .cap::before{content:"";position:absolute;left:0;top:3.5pt;width:4pt;height:4pt;border-radius:50%;background:#114aa3!important}
-  .cap .num{color:#7a8aa3!important;font-size:7pt!important}
+  .cap .num,.cap.lead .num{color:#7a8aa3!important;font-size:7pt!important}
   .cap h3{color:#0c1730!important;font-size:9pt!important;margin:0 0 1pt!important}
   .cap p{color:#41526b!important;font-size:7.6pt!important;line-height:1.28!important}
+
+  .diu{grid-template-columns:repeat(7,1fr)!important;gap:5pt!important;margin-top:5pt!important}
+  .diu .pf{border:1px solid #d3dceb!important;border-radius:4px!important;padding:5pt 5pt!important;background:#f4f7fc!important;break-inside:avoid}
+  .diu .pf h4{color:#0c1730!important;font-size:7pt!important;margin-bottom:2pt!important;line-height:1.05!important}
+  .diu .pf p{color:#48597a!important;font-size:5.8pt!important;line-height:1.22!important}
 
   .split{grid-template-columns:1.05fr .95fr!important;gap:16pt!important;margin-top:5pt!important}
   .flist{gap:3pt!important}
@@ -199,8 +210,8 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
   .flist li::before{background:#114aa3!important;width:5px;height:5px;top:4pt}
   .flist li b{color:#0c1730!important}
   .certrow{gap:4pt!important;margin-top:6pt!important}
-  .chip{border:1px solid #c2cede!important;padding:2pt 7pt!important;font-size:7pt!important;color:#41526b!important;border-radius:20px!important}
-  .chip b{color:#114aa3!important}
+  .chip,.chip.hot{border:1px solid #c2cede!important;background:#f4f7fc!important;padding:2pt 7pt!important;font-size:7pt!important;color:#41526b!important;border-radius:20px!important}
+  .chip b,.chip.hot b{color:#114aa3!important}
 
   .subs{grid-template-columns:repeat(3,1fr)!important;gap:7pt!important;margin-top:6pt!important}
   .sub{border:1px solid #d3dceb!important;border-radius:5px!important;padding:6pt 8pt!important;background:#f4f7fc!important;break-inside:avoid}
@@ -215,13 +226,6 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
   .pp .val .cf{color:#7a8aa3!important;font-size:5.6pt!important}
   .flagships{color:#243650!important;font-size:7.8pt!important;margin-top:5pt!important;line-height:1.4!important}
   .flagships b{color:#114aa3!important}
-
-  .mkts{grid-template-columns:repeat(6,1fr)!important;gap:5pt!important;margin-top:5pt!important}
-  .mkt{border:1px solid #d3dceb!important;border-radius:4px!important;padding:5pt 6pt!important;background:#f4f7fc!important;break-inside:avoid}
-  .mkt h4{color:#0c1730!important;font-size:7.4pt!important;margin-bottom:2pt!important;line-height:1.05!important}
-  .mkt p{color:#48597a!important;font-size:6.2pt!important;line-height:1.22!important}
-  .served{color:#48597a!important;font-size:7.6pt!important;margin-top:5pt!important;line-height:1.45!important}
-  .served b{color:#243650!important}
 
   .data{grid-template-columns:1fr 1fr!important;gap:0 18pt!important;margin-top:5pt!important;border:1px solid #c2cede!important;
     border-radius:0!important;padding:6pt 10pt!important;background:#f4f7fc!important}
@@ -243,11 +247,11 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
 <div class="stage">
 
   <div class="toolbar no-print">
-    <span class="tb-label">SSAI : Corporate Capability Statement</span>
+    <span class="tb-label">SSAI : Defense &amp; National Security</span>
     <div class="tb-actions">
-      <a class="btn" href="assets/docs/SSAI-Capability-Statement.pdf" download>Download PDF</a>
+      <a class="btn" href="assets/docs/SSAI-Capability-Statement-Defense.pdf" download>Download PDF</a>
       <button class="btn ghost" type="button" onclick="window.print()">Print</button>
-      <a class="btn ghost" href="capability-statement-defense.html">Defense Statement</a>
+      <a class="btn ghost" href="capability-statement.html">Corporate Statement</a>
     </div>
   </div>
 
@@ -257,66 +261,81 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
     <header class="cap-head">
       <div class="brand">
         <img src="assets/logo/ssai-color-full.png" alt="SSAI : Science Systems and Applications, Inc.">
-        <span class="kicker">Capability Statement</span>
-        <h1>Science Systems and Applications, Inc.</h1>
+        <span class="kicker">Defense &amp; National Security</span>
+        <h1>Igniting defense innovation through <span class="em">science-powered solutions</span>.</h1>
         <p class="tag">Science and Technology with Passion</p>
       </div>
       <div class="pid">
+        <span class="ts">Top Secret Facility Clearance</span><br>
         <span class="uei">UEI PJ2SP76D3HJ3</span><br>
         <b>CAGE</b> 5S009<br>
         <b>NAICS</b> 541715 (small) / 541330<br>
-        WOSB &middot; ITAR Registered<br>
-        ISO 9001 &middot; AS9100 &middot; CMMI L3<br>
-        <b>Top Secret</b> Facility Clearance
+        ITAR Registered &middot; WOSB<br>
+        AS9100 &middot; CMMI L3 &middot; ISO 9001
       </div>
     </header>
 
     <!-- POSITIONING -->
     <p class="position">
-      <b>Turning science into mission advantage.</b> SSAI is a leading science and engineering partner to U.S. agencies, with expertise in Earth and space data, AI/ML analytics, instrument engineering, and secure IT solutions. For over four decades, we have transformed complex science into actionable insights that drive national missions. Engineering excellence trusted on NASA's flagship missions, now enabling defense and national security.
+      <b>Engineering excellence trusted on NASA's flagship missions, now enabling defense and national security.</b> SSAI is a science-powered science, technology, and engineering company. We bring zero-trust cybersecurity, AI/ML, a cleared Mil-spec manufacturing base, deep-space operations, and instrument engineering to the defense enterprise. Built for national security, focused on operational dominance.
     </p>
 
     <!-- METRICS -->
     <div class="metrics">
       <div class="metric"><b>1977</b><span>Founded &middot; 45+ years</span></div>
       <div class="metric"><b>575+</b><span>Scientists, engineers &amp; IT professionals</span></div>
-      <div class="metric"><b>160+</b><span>Missions served</span></div>
+      <div class="metric"><b>TS FCL</b><span>Top Secret Facility Clearance</span></div>
+      <div class="metric"><b>42K</b><span>Sq ft cleared manufacturing &amp; machine shop</span></div>
       <div class="metric"><b>100+</b><span>Major instruments, models &amp; missions</span></div>
-      <div class="metric"><b>10,000+</b><span>Publications &amp; data products</span></div>
       <div class="metric"><b>3</b><span>Wholly-owned subsidiaries</span></div>
     </div>
 
-    <!-- CORE CAPABILITIES -->
+    <!-- DEFENSE CAPABILITIES -->
     <section class="sec">
-      <span class="eyebrow">Core Capabilities</span>
-      <h2 class="stitle">Science and technology solutions for <span class="em">every mission space</span>.</h2>
-      <p class="slead">Five capability horizontals span the full arc from research and instrument engineering to manufacturing, geospatial intelligence, and secure digital defense.</p>
+      <span class="eyebrow">Defense Capabilities</span>
+      <h2 class="stitle">Built for <span class="em">national security</span>, focused on operational dominance.</h2>
+      <p class="slead">A cleared, vertically-integrated provider spanning digital defense, cleared manufacturing, space operations, and mission-grade engineering.</p>
       <div class="caps">
-        <div class="cap">
+        <div class="cap lead span2">
           <span class="num">01</span>
-          <h3>Science, Technology &amp; Engineering Services</h3>
-          <p>Systems engineering, requirements and V&amp;V, avionics design, software engineering (CMMI L3), FPGA design, EEE parts processing, system integration and testing, and manufacturing engineering. AS9100 and ITAR, J-STD-001F workmanship. Proven on NASA flagships, now enabling defense and national security.</p>
+          <h3>Cybersecurity &amp; Digital Defense</h3>
+          <p>Advanced IT and cybersecurity built on zero-trust architectures, with AI/ML for anomaly detection, autonomy, and cross-agency support. Our CREST framework (Coupled Reusable Earth System Tensor) is an AI-enabled Python framework for operational digital twins. Custom AI engineered for the mission, from sensor to decision.</p>
         </div>
-        <div class="cap">
+        <div class="cap lead">
           <span class="num">02</span>
-          <h3>Space Operations</h3>
-          <p>Deep space and space weather. We operate NASA's GEOS Data Assimilation System (millions of observations daily), global atmospheric reanalysis, and 24/7 operational modeling for NOAA and NASA, plus deep-space instrument development and calibration, trajectory design, and mission operations from pre-launch through on-orbit.</p>
-        </div>
-        <div class="cap">
-          <span class="num">03</span>
           <h3>Satellite &amp; Space Systems Manufacturing</h3>
-          <p>A 32,000 sq ft electronics manufacturing facility and a 10,000 sq ft machine shop under two miles from NASA Goddard. ESD-protected floor, three clean rooms, cleared personnel, Mil-spec CNC machining, and certified aerospace machinists. End-to-end, prototyping to production.</p>
+          <p>A 32,000 sq ft cleared electronics manufacturing facility (PCB design, fab, and test; FPGA board repair; ESD-protected floor; three clean rooms; cleared personnel) and a 10,000 sq ft Mil-spec machine shop (Mil-I-45208A, Mil-std-45662; CNC, lathes, presses, mills; certified aerospace machinists) under two miles from NASA Goddard.</p>
+        </div>
+        <div class="cap lead">
+          <span class="num">03</span>
+          <h3>Space Operations</h3>
+          <p>Deep-space and space-weather operations: 24/7 operational modeling, deep-space instrument development and calibration, trajectory design and atmospheric-entry modeling, and mission operations from pre-launch through on-orbit. Space domain expertise that transfers directly to defense and resilient space.</p>
         </div>
         <div class="cap">
           <span class="num">04</span>
-          <h3>Environmental Intelligence</h3>
-          <p>Geospatial and remote sensing. We transform raw data into actionable intelligence: data assimilation, remote sensing, oceanography, hydrology, biosphere modeling, and weather and space-weather forecasting across instruments including OMI, OMPS, MODIS, VIIRS, MISR, ICESat-2, AVIRIS-NG, TROPOMI, and GEMS.</p>
+          <h3>Mission-Grade Engineering</h3>
+          <p>Systems engineering, requirements and V&amp;V, avionics and FPGA design, software engineering (CMMI L3), EEE parts processing, and system integration and testing. AS9100, ITAR registered, J-STD-001F workmanship. The engineering rigor that flies NASA flagships, applied to defense hardware.</p>
         </div>
-        <div class="cap span2">
+        <div class="cap">
           <span class="num">05</span>
-          <h3>Cybersecurity &amp; Digital Defense</h3>
-          <p>Advanced IT, cybersecurity (zero-trust architectures), and AI/ML built for national security: custom AI for digital twins, anomaly detection, and cross-agency support, anchored by CREST (Coupled Reusable Earth System Tensor), an AI-enabled Python digital-twin framework. Focused on operational dominance.</p>
+          <h3>Environmental Intelligence</h3>
+          <p>Geospatial and remote-sensing analytics that turn raw sensor data into actionable intelligence: data assimilation, remote sensing, weather and space-weather forecasting, and multi-source fusion for ISR and operational decision advantage.</p>
         </div>
+      </div>
+    </section>
+
+    <!-- DIU PORTFOLIO MAP -->
+    <section class="sec">
+      <span class="eyebrow">Mission Alignment</span>
+      <h2 class="stitle">Mapped to the <span class="em">defense portfolios</span> that matter.</h2>
+      <div class="diu">
+        <div class="pf"><h4>AI / ML</h4><p>CREST digital twins, anomaly detection, custom AI.</p></div>
+        <div class="pf"><h4>Autonomy</h4><p>Autonomous sensing, modeling, and decision support.</p></div>
+        <div class="pf"><h4>Cyber &amp; Telecom</h4><p>Zero-trust architectures, secure IT and comms.</p></div>
+        <div class="pf"><h4>Space</h4><p>Space operations, instruments, resilient space.</p></div>
+        <div class="pf"><h4>Emerging Technology</h4><p>FPGA, digital twin, advanced analytics.</p></div>
+        <div class="pf"><h4>Energy</h4><p>Environmental modeling and resource intelligence.</p></div>
+        <div class="pf"><h4>Human Systems</h4><p>Decision-grade data products and visualization.</p></div>
       </div>
     </section>
 
@@ -325,25 +344,25 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
       <div class="split">
         <div>
           <span class="eyebrow">Differentiators</span>
-          <h2 class="stitle">Why <span class="em">SSAI</span>.</h2>
+          <h2 class="stitle">Cleared, certified, <span class="em">corridor-based</span>.</h2>
           <ul class="flist">
-            <li><b>Beside NASA Goddard, in the D.C. defense corridor.</b> Headquartered minutes from NASA Goddard and the Washington defense community, embedded where missions are engineered and flown.</li>
-            <li><b>45+ years of mission heritage.</b> Founded 1977, with 575+ scientists, engineers, and IT professionals delivering across 160+ missions.</li>
-            <li><b>A single, trusted source.</b> Three wholly-owned subsidiaries bring electronics manufacturing, cybersecurity engineering, and precision machining in house.</li>
-            <li><b>Cleared and certified.</b> Top Secret Facility Clearance and ITAR registration, paired with appraised process maturity and aerospace-grade quality systems.</li>
+            <li><b>Top Secret Facility Clearance.</b> Cleared facility and cleared personnel, ITAR registered, ready for classified work.</li>
+            <li><b>Cleared, Mil-spec manufacturing base.</b> 42,000 sq ft of in-house electronics manufacturing and precision machining under two miles from NASA Goddard.</li>
+            <li><b>In the D.C. defense corridor.</b> Minutes from NASA Goddard and the Washington defense community, where requirements are written and missions are run.</li>
+            <li><b>Aerospace-grade engineering.</b> AS9100, CMMI L3 for Development, ISO 9001:2015, EEE parts processing, and J-STD-001F workmanship.</li>
           </ul>
           <div class="certrow">
+            <span class="chip hot"><b>Top Secret</b> FCL</span>
+            <span class="chip hot"><b>ITAR</b> Registered</span>
             <span class="chip"><b>AS9100</b> Aerospace Quality</span>
             <span class="chip"><b>CMMI L3</b> Development</span>
             <span class="chip"><b>ISO 9001:2015</b></span>
-            <span class="chip"><b>Top Secret</b> FCL</span>
-            <span class="chip"><b>ITAR</b> Registered</span>
           </div>
         </div>
         <div>
           <span class="eyebrow">Subsidiaries</span>
-          <h2 class="stitle">Mission-ready, <span class="em">in house</span>.</h2>
-          <p class="slead">A single, trusted source for mission-ready capability.</p>
+          <h2 class="stitle">A single, <span class="em">trusted source</span>.</h2>
+          <p class="slead">Three wholly-owned subsidiaries deliver mission-ready capability in house.</p>
           <div class="subs">
             <div class="sub">
               <h4>Advanced Mission Partners</h4>
@@ -374,7 +393,7 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
         </li>
         <li>
           <span class="name">HBG</span>
-          <span class="desc">Hydrospheres, Biospheres and Geophysics. NASA Goddard, Earth Sciences Division (CPFF). Scientific research services across space, airborne, in-situ, and laboratory observations. 04/2020 to 11/2025.</span>
+          <span class="desc">Hydrospheres, Biospheres and Geophysics. NASA Goddard, Earth Sciences Division (CPFF). Scientific research across space, airborne, in-situ, and laboratory observations. 04/2020 to 11/2025.</span>
           <span class="val">$425M<span class="cf">SSAI to confirm</span></span>
         </li>
         <li>
@@ -384,7 +403,7 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
         </li>
         <li>
           <span class="name">SAMDA</span>
-          <span class="desc">Support for Atmospheric Modeling and Data Assimilation. NASA Goddard, Global Modeling and Assimilation Office (CPFF). Research across the Earth Sciences Division. 03/2017 to 11/2025.</span>
+          <span class="desc">Support for Atmospheric Modeling and Data Assimilation. NASA Goddard, Global Modeling and Assimilation Office (CPFF). 03/2017 to 11/2025.</span>
           <span class="val">$298M<span class="cf">SSAI to confirm</span></span>
         </li>
         <li>
@@ -394,21 +413,6 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
         </li>
       </ul>
       <p class="flagships"><b>Flagship missions:</b> OCI / PACE &middot; Roman Space Telescope &middot; Lucy &middot; Mars Sample Return / CCRS &middot; Dragonfly &middot; GeoXO &middot; DAVINCI+ &middot; TSIS-2 &middot; JWST.</p>
-    </section>
-
-    <!-- MARKETS SERVED -->
-    <section class="sec">
-      <span class="eyebrow">Markets Served</span>
-      <h2 class="stitle">Trusted across <span class="em">six customer verticals</span>.</h2>
-      <div class="mkts">
-        <div class="mkt"><h4>Defense &amp; National Security</h4><p>DoD and defense labs.</p></div>
-        <div class="mkt"><h4>Federal Civilian</h4><p>NASA, NOAA, USGS, EPA, USDA, GSA, Commerce, Interior.</p></div>
-        <div class="mkt"><h4>Intelligence Community</h4><p>Secure mission support.</p></div>
-        <div class="mkt"><h4>State &amp; Local</h4><p>LA World Airports, LA Unified School District.</p></div>
-        <div class="mkt"><h4>Commercial</h4><p>Industry and partners.</p></div>
-        <div class="mkt"><h4>OCONUS / International</h4><p>World Bank and global programs.</p></div>
-      </div>
-      <p class="served"><b>Customer set:</b> NASA (Goddard, Langley), NOAA, USGS, EPA, USDA, GSA, Department of Commerce, Department of the Interior, DoD and defense labs, LAWA, LAUSD, and the World Bank.</p>
     </section>
 
     <!-- CORPORATE DATA -->
@@ -422,8 +426,8 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
         <li><b>Business Status</b><span>WOSB, SBA 2024<span class="cf">confirm</span></span></li>
         <li><b>GSA MAS</b><span>47QRAA23D0014<span class="cf">confirm</span></span></li>
         <li><b>IDIQ Vehicle</b><span>OASIS Small Business<span class="cf">confirm</span></span></li>
-        <li><b>Quality &amp; Maturity</b><span>ISO 9001:2015, AS9100, CMMI L3</span></li>
         <li><b>Security</b><span>Top Secret FCL, ITAR Registered</span></li>
+        <li><b>Quality &amp; Maturity</b><span>AS9100, CMMI L3, ISO 9001:2015</span></li>
         <li><b>Founded</b><span>1977</span></li>
         <li><b>Headquarters</b><span>Lanham, MD</span></li>
       </ul>
