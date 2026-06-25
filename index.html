@@ -104,6 +104,14 @@ html,body{background:var(--space);color:var(--starlight);font-family:var(--body)
 .nm-feature h4{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;font-size:15px;line-height:1.1;margin:7px 0 12px}
 .nm-flink{display:block;font-family:var(--body);font-size:12px;font-weight:600;color:var(--starlight);text-decoration:none;padding:5px 0;letter-spacing:.01em;transition:color .2s}
 .nm-flink:hover{color:var(--gold)}
+/* capability-statement popup viewer */
+.capmodal{position:fixed;inset:0;z-index:200;display:none}
+.capmodal.open{display:block}
+.capmodal-backdrop{position:absolute;inset:0;background:rgba(3,6,12,.84);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.capmodal-panel{position:absolute;inset:clamp(14px,4vh,44px) clamp(14px,4vw,60px);background:var(--space);border:1px solid var(--hair);border-radius:18px;overflow:hidden;box-shadow:0 50px 110px -34px rgba(0,0,0,.88)}
+.capmodal-frame{width:100%;height:100%;border:0;display:block;background:var(--space)}
+.capmodal-close{position:absolute;top:13px;right:15px;z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid var(--hair);background:rgba(8,12,22,.82);color:#fff;font-size:23px;line-height:1;cursor:pointer}
+.capmodal-close:hover{border-color:var(--gold)}
 @media(max-width:900px){.topbar nav .ts.mega{position:static;display:flex;flex-direction:column;width:auto;transform:none;padding:6px 0}.nm-list{grid-template-columns:1fr}.nm-feature{display:none}}
 .topbar .menu-btn{display:none;background:none;border:0;color:#fff;font-size:25px;line-height:1;cursor:pointer;padding:4px 6px;z-index:21}
 @media(max-width:860px){
@@ -244,11 +252,11 @@ footer .copy{max-width:1240px;margin:46px auto 0;font-size:10.5px;letter-spacing
     <h2>We turn science into <span class="em">mission advantage.</span></h2>
     <p class="lead">SSAI delivers mission-critical science, engineering, and technology to the agencies that explore, observe, and defend. For more than four decades, we have turned complex science into systems that perform when the mission cannot fail, from NASA and NOAA to defense and national security.</p>
     <div class="capgrid">
-      <a class="capcard" href="cap-engineering.html"><div class="ph" style="background-image:url('assets/images/site/instruments/webb-instrument-integration.jpg')"></div><div class="body"><div class="num">01</div><h3>Science, Technology &amp; Engineering</h3><p>We engineer the instruments and systems that have to work the first time, on missions that cannot fail.</p><span class="go">Explore &rarr;</span></div></a>
-      <a class="capcard" href="cap-space-operations.html"><div class="ph" style="background-image:url('assets/images/site/spacecraft/sentinel6-over-earth.jpg')"></div><div class="body"><div class="num">02</div><h3>Space Operations</h3><p>We keep the mission running around the clock, from deep space to space weather.</p><span class="go">Explore &rarr;</span></div></a>
-      <a class="capcard" href="cap-manufacturing.html"><div class="ph" style="background-image:url('assets/images/site/instruments/imaging-spectrometer-closeup.jpg')"></div><div class="body"><div class="num">03</div><h3>Satellite &amp; Space Systems Manufacturing</h3><p>We build flight hardware engineered to work the first time, two miles from NASA Goddard.</p><span class="go">Explore &rarr;</span></div></a>
-      <a class="capcard" href="cap-environmental-intelligence.html"><div class="ph" style="background-image:url('assets/images/site/earth/phytoplankton-bloom.jpg')"></div><div class="body"><div class="num">04</div><h3>Environmental Intelligence</h3><p>We turn what sensors see into decisions the mission can act on.</p><span class="go">Explore &rarr;</span></div></a>
-      <a class="capcard" href="cap-cyber.html"><div class="ph" style="background-image:url('assets/images/site/earth/city-lights-iss-night.jpg')"></div><div class="body"><div class="num">05</div><h3>Cybersecurity &amp; Digital Defense</h3><p>We secure the mission and accelerate the decision. Built for national security.</p><span class="go">Explore &rarr;</span></div></a>
+      <a class="capcard" href="cap-engineering.html"><div class="ph" style="background-image:url('assets/images/site/instruments/roman-coronagraph-electronics-assembly.jpg')"></div><div class="body"><div class="num">01</div><h3>Science, Technology &amp; Engineering</h3><p>We engineer the instruments and systems that have to work the first time, on missions that cannot fail.</p><span class="go">Explore &rarr;</span></div></a>
+      <a class="capcard" href="cap-space-operations.html"><div class="ph" style="background-image:url('assets/images/site/spacecraft/mission-control-flight-room.jpg')"></div><div class="body"><div class="num">02</div><h3>Space Operations</h3><p>We keep the mission running around the clock, from deep space to space weather.</p><span class="go">Explore &rarr;</span></div></a>
+      <a class="capcard" href="cap-manufacturing.html"><div class="ph" style="background-image:url('assets/images/site/instruments/printed-circuit-board-assembly.jpg')"></div><div class="body"><div class="num">03</div><h3>Satellite &amp; Space Systems Manufacturing</h3><p>We build flight hardware engineered to work the first time, two miles from NASA Goddard.</p><span class="go">Explore &rarr;</span></div></a>
+      <a class="capcard" href="cap-environmental-intelligence.html"><div class="ph" style="background-image:url('assets/images/site/earth/kamchatka-volcanic-eruption.jpg')"></div><div class="body"><div class="num">04</div><h3>Environmental Intelligence</h3><p>We turn what sensors see into decisions the mission can act on.</p><span class="go">Explore &rarr;</span></div></a>
+      <a class="capcard" href="cap-cyber.html"><div class="ph" style="background-image:url('assets/images/site/data/discover-supercomputer-nccs.jpg')"></div><div class="body"><div class="num">05</div><h3>Cybersecurity &amp; Digital Defense</h3><p>We secure the mission and accelerate the decision. Built for national security.</p><span class="go">Explore &rarr;</span></div></a>
     </div>
     <div class="chips" style="margin-top:clamp(28px,4vh,44px)">
       <span class="chip"><b>575+</b> scientists, engineers &amp; IT professionals</span>
@@ -471,6 +479,18 @@ function rloop(){
 requestAnimationFrame(rloop);
 applyScroll();
 window.__home={get p(){return scrollP;}, set p(v){scrollP=v;applyScroll();}, get map(){return map;}, get jwin(){return jwin;}, camAt:camAt};
+</script>
+<script>
+(function(){
+  var sel='a[href$="capability-statement.html"],a[href$="capability-statement-defense.html"]';
+  var modal,frame;
+  function build(){modal=document.createElement('div');modal.className='capmodal';modal.innerHTML='<div class="capmodal-backdrop"></div><div class="capmodal-panel"><button class="capmodal-close" aria-label="Close">\u00d7</button><iframe class="capmodal-frame" title="Capability statement"></iframe></div>';document.body.appendChild(modal);frame=modal.querySelector('.capmodal-frame');modal.querySelector('.capmodal-backdrop').addEventListener('click',cl);modal.querySelector('.capmodal-close').addEventListener('click',cl);}
+  function op(src){if(!modal)build();frame.src=src;modal.classList.add('open');document.documentElement.style.overflow='hidden';}
+  function cl(){if(!modal)return;modal.classList.remove('open');document.documentElement.style.overflow='';setTimeout(function(){if(frame)frame.src='about:blank';},300);}
+  document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest(sel);if(a&&!a.hasAttribute('download')){e.preventDefault();op(a.getAttribute('href'));}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')cl();});
+  window.addEventListener('message',function(e){if(e&&e.data==='close-capmodal')cl();});
+})();
 </script>
 </body>
 </html>

@@ -245,6 +245,7 @@ body{background:var(--space);color:var(--text);font-family:var(--body);-webkit-f
   <div class="toolbar no-print">
     <span class="tb-label">SSAI : Corporate Capability Statement</span>
     <div class="tb-actions">
+      <button class="btn ghost" type="button" onclick="if(window.parent!==window){parent.postMessage(&apos;close-capmodal&apos;,&apos;*&apos;)}else if(history.length>1){history.back()}else{location.href=&apos;capabilities.html&apos;}">Close</button>
       <a class="btn" href="assets/docs/SSAI-Capability-Statement.pdf" download>Download PDF</a>
       <button class="btn ghost" type="button" onclick="window.print()">Print</button>
       <a class="btn ghost" href="capability-statement-defense.html">Defense Statement</a>

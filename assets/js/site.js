@@ -89,3 +89,28 @@
     nums.forEach(function (el) { nio.observe(el); });
   }
 })();
+
+/* ---------------- capability-statement popup viewer ---------------- */
+(function () {
+  if (/capability-statement/.test(location.pathname)) return; // don't intercept on the statement pages
+  var sel = 'a[href$="capability-statement.html"],a[href$="capability-statement-defense.html"]';
+  var modal, frame;
+  function build() {
+    modal = document.createElement('div');
+    modal.className = 'capmodal';
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML = '<div class="capmodal-backdrop"></div><div class="capmodal-panel"><button class="capmodal-close" aria-label="Close">×</button><iframe class="capmodal-frame" title="Capability statement"></iframe></div>';
+    document.body.appendChild(modal);
+    frame = modal.querySelector('.capmodal-frame');
+    modal.querySelector('.capmodal-backdrop').addEventListener('click', close);
+    modal.querySelector('.capmodal-close').addEventListener('click', close);
+  }
+  function open(src) { if (!modal) build(); frame.src = src; modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.documentElement.style.overflow = 'hidden'; }
+  function close() { if (!modal) return; modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.documentElement.style.overflow = ''; setTimeout(function () { if (frame) frame.src = 'about:blank'; }, 300); }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest(sel);
+    if (a && !a.hasAttribute('download') && a.getAttribute('target') !== '_blank') { e.preventDefault(); open(a.getAttribute('href')); }
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  window.addEventListener('message', function (e) { if (e && e.data === 'close-capmodal') close(); });
+})();
