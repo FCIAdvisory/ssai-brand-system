@@ -270,3 +270,19 @@ img{max-width:100%;display:block}
 .phero.live .phero-webgl{position:absolute;inset:0;z-index:0;pointer-events:none}
 .phero.live.wgl{background:radial-gradient(120% 90% at 72% 32%, #0c1830 0%, var(--space) 62%)}
 .phero.live.wgl::before{background:linear-gradient(100deg,rgba(8,14,26,.95) 0%,rgba(8,14,26,.66) 40%,rgba(8,14,26,.18) 68%,rgba(8,14,26,.5) 100%)}
+
+/* ---------- practice journey (scroll-driven WebGL narrative) ---------- */
+.practice-journey{position:relative;height:480vh;background:radial-gradient(120% 70% at 70% 22%, #0c1830 0%, var(--space) 60%)}
+.practice-journey.pj-static{height:100vh}
+.pj-stage{position:sticky;top:0;height:100vh;overflow:hidden}
+.pj-canvas{position:absolute;inset:0;z-index:0}
+.pj-stage::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,rgba(8,14,26,.82) 0%,rgba(8,14,26,.42) 38%,rgba(8,14,26,0) 60%,rgba(8,14,26,.42) 100%)}
+.pj-beat{position:absolute;left:clamp(22px,6vw,84px);top:50%;transform:translateY(-50%);max-width:560px;z-index:2;opacity:0;will-change:opacity,transform}
+.pj-beat .kick{font-family:var(--body);font-weight:600;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:18px}
+.pj-beat h1,.pj-beat h2{font-family:var(--disp);font-style:italic;font-weight:800;text-transform:uppercase;color:#fff;font-size:clamp(34px,5.4vw,76px);line-height:.96;letter-spacing:-.02em;margin:0}
+.pj-beat h1 .em,.pj-beat h2 .em{color:var(--gold)}
+.pj-beat p{margin-top:22px;font-size:clamp(15px,1.5vw,20px);font-weight:300;color:var(--text);line-height:1.6;max-width:46ch}
+.pj-beat .btn-row{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+.pj-cue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:2;font-family:var(--body);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--nebula);display:flex;flex-direction:column;align-items:center;gap:8px}
+.pj-cue::after{content:"";width:1px;height:34px;background:linear-gradient(var(--nebula),transparent)}
+@media(max-width:760px){.pj-beat{left:22px;right:22px;max-width:none}}

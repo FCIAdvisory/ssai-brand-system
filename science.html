@@ -7,7 +7,7 @@
 <meta name="description" content="SSAI's Science practice turns observation into understanding for the agencies that explore, observe, and defend. Earth, atmosphere, oceans, ice, heliophysics, and planetary science, delivered through remote sensing, modeling, data assimilation, and AI/ML, trusted at NASA Goddard and across the federal and defense mission.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="assets/site.css?v=16" rel="stylesheet">
+<link href="assets/site.css?v=17" rel="stylesheet">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <link href="assets/css/wow.css?v=19" rel="stylesheet">
 <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
@@ -25,16 +25,36 @@
 
 <main>
 
-  <section class="phero live wgl">
-    <div class="phero-webgl" data-hero="globe"></div>
-    <div class="container">
-      <span class="kick">The Science Practice</span>
-      <h1>We turn observation into <span class="em">understanding.</span></h1>
-      <p class="sub">From orbit, the field, and the supercomputer, SSAI converts raw measurements into the science that agencies act on. We engineer the instruments, operate the missions, assimilate the data, and enrich it with AI/ML, so decision makers see clearly when the mission cannot fail.</p>
-      <div class="btn-row">
-        <a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a>
-        <a class="btn ghost" href="earth-science.html">Explore Earth Science</a>
+  <section class="practice-journey" data-journey="science">
+    <div class="pj-stage">
+      <div class="pj-canvas"></div>
+      <div class="pj-beat" data-a="0" data-b="0.16">
+        <span class="kick">The Science Practice</span>
+        <h1>We turn observation into <span class="em">understanding.</span></h1>
+        <p>From orbit, the field, and the supercomputer, SSAI converts raw measurement into the science that agencies act on.</p>
+        <div class="btn-row"><a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a><a class="btn ghost" href="earth-science.html">Explore Earth Science</a></div>
       </div>
+      <div class="pj-beat" data-a="0.22" data-b="0.4">
+        <span class="kick">From orbit</span>
+        <h2>We see the <span class="em">whole planet.</span></h2>
+        <p>Remote sensing across ocean, ice, land, atmosphere, and the Sun, on more than 160 NASA and NOAA missions.</p>
+      </div>
+      <div class="pj-beat" data-a="0.46" data-b="0.64">
+        <span class="kick">Into data</span>
+        <h2>We turn signal into <span class="em">science.</span></h2>
+        <p>Calibration, assimilation, global modeling, and AI/ML that make remotely sensed data trustworthy and fast.</p>
+      </div>
+      <div class="pj-beat" data-a="0.7" data-b="0.88">
+        <span class="kick">Into decisions</span>
+        <h2>So the mission <span class="em">acts.</span></h2>
+        <p>Forecasts, warnings, and decision products for the agencies that watch, warn, and respond.</p>
+      </div>
+      <div class="pj-beat" data-a="0.92" data-b="1">
+        <span class="kick">The Science Practice</span>
+        <h2>Explore the <span class="em">practice.</span></h2>
+        <div class="btn-row"><a class="btn" href="earth-science.html">Earth Science</a><a class="btn ghost" href="mailto:BD@ssaihq.com">Talk to our team</a></div>
+      </div>
+      <div class="pj-cue">Scroll</div>
     </div>
   </section>
 
@@ -162,6 +182,6 @@
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
 <script type="module" src="assets/js/centerpiece.js?v=14"></script>
 <script src="assets/js/site.js?v=14"></script>
-  <script type="module" src="assets/js/practice-hero.js?v=1"></script>
+  <script type="module" src="assets/js/practice-journey.js?v=1"></script>
 </body>
 </html>
