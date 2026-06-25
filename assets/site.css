@@ -286,3 +286,19 @@ img{max-width:100%;display:block}
 .pj-cue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:2;font-family:var(--body);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--nebula);display:flex;flex-direction:column;align-items:center;gap:8px}
 .pj-cue::after{content:"";width:1px;height:34px;background:linear-gradient(var(--nebula),transparent)}
 @media(max-width:760px){.pj-beat{left:22px;right:22px;max-width:none}}
+
+/* ---------- full-page practice experience (persistent WebGL backdrop) ---------- */
+.px-bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+.px-canvas{position:absolute;inset:0}
+.px-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,34,.30) 0%,rgba(10,20,34,.12) 24%,rgba(10,20,34,.52) 100%)}
+main.px{position:relative;z-index:1}
+.px .section,.px .section.alt,.px .band{background:transparent !important}
+.px .section.alt .container,.px .band .container{position:relative}
+.px-hero{min-height:100vh;display:flex;align-items:center;border-bottom:0 !important;padding:clamp(120px,16vh,184px) 0 clamp(70px,10vh,120px)}
+.px-hero::before{background:linear-gradient(100deg,rgba(8,14,26,.72) 0%,rgba(8,14,26,.34) 42%,rgba(8,14,26,0) 66%) !important}
+.px-cue{margin-top:clamp(40px,8vh,92px);font-family:var(--body);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--nebula);display:flex;align-items:center;gap:13px}
+.px-cue::after{content:"";width:48px;height:1px;background:linear-gradient(90deg,var(--nebula),transparent)}
+
+/* reading scrim for text-heavy sections over the backdrop */
+.px-scrim{position:relative}
+.px-scrim::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(100deg,rgba(7,12,22,.92) 0%,rgba(7,12,22,.74) 46%,rgba(7,12,22,.34) 74%,rgba(7,12,22,.64) 100%)}
