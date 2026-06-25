@@ -2,6 +2,22 @@
    SSAI — site-wide interactivity (scroll reveal + count-up stats)
    Progressive enhancement: if JS is off, nothing is hidden.
    ============================================================================ */
+
+/* ---------------- nav active-state (set on the link matching this page) ------ */
+(function () {
+  try {
+    var page = (location.pathname.split('/').pop() || 'index.html');
+    document.querySelectorAll('.nav-links a[href]').forEach(function (a) {
+      var href = (a.getAttribute('href') || '').split('#')[0];
+      if (href && href === page) {
+        a.classList.add('active');
+        var item = a.closest('.nav-item');
+        if (item) { var top = item.querySelector('.nav-link'); if (top) top.classList.add('active'); }
+      }
+    });
+  } catch (e) {}
+})();
+
 (function () {
   var reduce = false;
   try { reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
