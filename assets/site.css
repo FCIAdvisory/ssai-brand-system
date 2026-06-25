@@ -55,7 +55,7 @@ img{max-width:100%;display:block}
 .nm-fimg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
 .nm-feature:hover .nm-fimg{transform:scale(1.07)}
 .nm-feature::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(5,8,16,.12) 0%,rgba(5,8,16,.4) 42%,rgba(5,8,16,.9) 100%)}
-.nm-feature>*{position:relative;z-index:2}
+.nm-feature>:not(.nm-fimg){position:relative;z-index:2}
 .nm-fk{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
 .nm-feature h4{font-family:var(--disp);font-style:italic;font-weight:700;text-transform:uppercase;color:#fff;font-size:15px;line-height:1.1;margin:7px 0 12px}
 .nm-flink{display:block;font-family:var(--body);font-size:12px;font-weight:600;color:var(--starlight);text-decoration:none;padding:5px 0;letter-spacing:.01em;transition:color .2s}
