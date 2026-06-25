@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Human Performance &amp; Crew Health | SSAI</title>
+<meta name="description" content="SSAI treats crew health as a data and modeling problem. We fuse medical wearables, environmental sensors, and diagnostic imaging into real-time physiological situational awareness, addressing NASA HRP's 30+ Human System Risks for Artemis and deep space.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="assets/site.css?v=15" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<link href="assets/css/wow.css?v=19" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script defer src="assets/js/wow.js?v=19"></script>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI, Science Systems and Applications, Inc."></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="nav-links" id="navLinks">
+    <div class="nav-item has-sub has-mega"><a class="nav-link" href="science.html">Science</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="earth-science.html"><span class="nm-n">01</span><span class="nm-t">Earth Science &amp; Remote Sensing</span><span class="nm-d">Oceans, ice, land and atmosphere from orbit</span></a><a class="nm-cap" href="climate-atmosphere.html"><span class="nm-n">02</span><span class="nm-t">Atmosphere, Climate &amp; Modeling</span><span class="nm-d">Global Earth-system modeling and data assimilation</span></a><a class="nm-cap" href="heliophysics.html"><span class="nm-n">03</span><span class="nm-t">Heliophysics &amp; Space Weather</span><span class="nm-d">Earth-Sun interaction and radiation</span></a><a class="nm-cap" href="planetary-astrophysics.html"><span class="nm-n">04</span><span class="nm-t">Planetary &amp; Astrophysics</span><span class="nm-d">Lunar water, Mars and the universe</span></a><a class="nm-cap" href="mission-science-data.html"><span class="nm-n">05</span><span class="nm-t">Mission Science &amp; Data</span><span class="nm-d">Calibration, validation and science data products</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/earth/blue-marble.jpg')"></div><span class="nm-fk">The Science Practice</span><h4>Turning observation into understanding.</h4><a class="nm-flink" href="science.html">Explore Science &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="technology.html">Technology</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="ai-ml.html"><span class="nm-n">01</span><span class="nm-t">AI &amp; Machine Learning</span><span class="nm-d">IntelliCore, our mission-aligned AI/ML framework</span></a><a class="nm-cap" href="cap-cyber.html"><span class="nm-n">02</span><span class="nm-t">Cybersecurity</span><span class="nm-d">CYBERSAFE, zero-trust for public-sector missions</span></a><a class="nm-cap" href="data-science-ai.html"><span class="nm-n">03</span><span class="nm-t">Data Science &amp; Analytics</span><span class="nm-d">Turning data into decision advantage</span></a><a class="nm-cap" href="mission-it.html"><span class="nm-n">04</span><span class="nm-t">Mission IT &amp; High-Performance Computing</span><span class="nm-d">Secure IT, data centers and HPC at scale</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/data/discover-supercomputer-nccs.jpg')"></div><span class="nm-fk">The Technology Practice</span><h4>Making the mission smarter and secure.</h4><a class="nm-flink" href="technology.html">Explore Technology &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="engineering.html">Engineering</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="cap-engineering.html"><span class="nm-n">01</span><span class="nm-t">Instrument &amp; Systems Engineering</span><span class="nm-d">Systems, avionics, EEE parts and FPGA</span></a><a class="nm-cap" href="cap-manufacturing.html"><span class="nm-n">02</span><span class="nm-t">Electronics Manufacturing</span><span class="nm-d">Flight-grade circuit cards and hardware</span></a><a class="nm-cap" href="machining-additive.html"><span class="nm-n">03</span><span class="nm-t">Precision Machining &amp; Additive</span><span class="nm-d">CNC and additive for mission hardware</span></a><a class="nm-cap" href="cap-space-operations.html"><span class="nm-n">04</span><span class="nm-t">Space &amp; Mission Operations</span><span class="nm-d">Pre-launch through on-orbit</span></a><a class="nm-cap" href="test-evaluation.html"><span class="nm-n">05</span><span class="nm-t">Test, Evaluation &amp; Integration</span><span class="nm-d">IV&amp;V, DT&amp;E and integration testing</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/instruments/webb-instrument-integration.jpg')"></div><span class="nm-fk">The Engineering Practice</span><h4>Building the systems the mission depends on.</h4><a class="nm-flink" href="engineering.html">Explore Engineering &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="aerospace-medicine.html">Aerospace Medicine</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="crew-health.html"><span class="nm-n">01</span><span class="nm-t">Human Performance &amp; Crew Health</span><span class="nm-d">Physiological monitoring and human-system risk</span></a><a class="nm-cap" href="clinical-decision-support.html"><span class="nm-n">02</span><span class="nm-t">Autonomous Clinical Decision Support</span><span class="nm-d">CDSS, air-gapped medical AI for deep space</span></a><a class="nm-cap" href="space-radiation.html"><span class="nm-n">03</span><span class="nm-t">Space Radiation &amp; Environmental Risk</span><span class="nm-d">Crew radiation modeling and forecasting</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/spacecraft/iss-solar-array-wing-orbit.jpg')"></div><span class="nm-fk">The Aerospace Medicine Practice</span><h4>Keeping crews healthy where help is hours away.</h4><a class="nm-flink" href="aerospace-medicine.html">Explore Aerospace Medicine &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="company.html">About</a><div class="nav-mega about"><div class="nm-cols"><div class="nm-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div><div class="nm-col"><h4>Who We Serve</h4><a href="market-defense.html">Defense &amp; National Security</a><a href="market-federal-civilian.html">Federal Civilian</a><a href="market-intelligence.html">Intelligence Community</a><a href="market-state-local.html">State &amp; Local</a><a href="market-commercial.html">Commercial</a><a href="market-oconus.html">OCONUS &amp; International</a></div><div class="nm-col"><h4>Doing Business</h4><a href="partner.html">Contracting &amp; Vehicles</a><a href="past-performance.html">Past Performance</a><a href="subsidiaries.html">Subsidiaries</a></div></div></div></div><div class="nav-item"><a class="nav-link" href="contact.html">Contact</a></div><div class="nav-item"><a class="nav-link nav-cta" href="signin.html">Sign In</a></div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="phero shot" style="background-image:url('assets/images/site/spacecraft/mission-control-flight-room.jpg')">
+    <div class="container">
+      <span class="kick">Human Performance &amp; Crew Health</span>
+      <h1>We see the problem forming <span class="em">before it becomes an emergency.</span></h1>
+      <p class="sub">A crew far from Earth has no second chance and no nearby help. SSAI treats crew health as a data and modeling problem, fusing medical wearables, environmental sensors, and diagnostic imaging into real-time physiological situational awareness, so flight surgeons and crews act on a risk while there is still time to act.</p>
+      <div class="btn-row">
+        <a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a>
+        <a class="btn ghost" href="aerospace-medicine.html">Back to Aerospace Medicine</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="lede-grid">
+        <div>
+          <span class="eyebrow">The Capability</span>
+          <h2 class="dtitle">Physiological monitoring <span class="em">at scale</span>.</h2>
+        </div>
+        <div class="body-col">
+          <p class="lead">We give flight surgeons and crews a continuous, fused picture of human health in the space environment, built from the same data discipline SSAI has applied to Earth and space science for nearly five decades.</p>
+          <p>A single waveform tells a flight surgeon very little. The signal is in the relationships: heart rate against carbon dioxide, sleep against cognitive performance, hydration against an exercise load and the cabin around it. We fuse medical wearables, environmental sensors, and diagnostic imaging into one Internet of Medical Things (IoMT) layer, then model it so a forming problem surfaces as an early, actionable signal rather than a late alarm.</p>
+          <p>This is the front end of SSAI's Aerospace Medicine practice. It feeds the autonomous clinical decision support that acts when Earth is too far to ask, and it draws on the space-radiation and environmental modeling that defines the risk a crew is flying through. We build it the way we build every mission system: grounded in data, accountable for outcomes, ready the first time, and every time.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>30+</b><span>NASA HRP Human System Risks addressed as data and modeling problems</span></div>
+        <div class="stat"><b>49+</b><span>Years measuring the space environment that acts on the body</span></div>
+        <div class="stat"><b>24/7</b><span>Continuous physiological situational awareness, on-orbit and beyond</span></div>
+        <div class="stat"><b>350+</b><span>Scientists and engineers across SSAI</span></div>
+      </div>
+
+      <div class="figure wide">
+        <img src="assets/images/site/data/geos5-global-weather-simulation.jpg" alt="A high-resolution GEOS-5 global simulation rendered on a visualization wall, the kind of physics-based modeling SSAI applies to fused crew-health data." loading="lazy">
+        <span class="cred">NASA / Goddard Space Flight Center / GEOS-5</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="eyebrow">What We Do</span>
+      <h2 class="dtitle">From raw signal to <span class="em">a decision in time</span>.</h2>
+      <p class="lead">We treat the crew as an instrumented system. We capture the signals, fuse them into one picture, model the trajectory, and hand a flight surgeon something they can act on before the window closes.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="n">01</span>
+          <span class="tag">Sensor Fusion</span>
+          <h3>One IoMT layer for the crew and the cabin</h3>
+          <p>We integrate medical wearables, environmental sensors, and onboard diagnostic imaging into a single Internet of Medical Things layer. The body and the cabin are read together, because the same carbon dioxide, radiation, and noise that load the vehicle load the crew inside it.</p>
+        </div>
+        <div class="card">
+          <span class="n">02</span>
+          <span class="tag">Situational Awareness</span>
+          <h3>Real-time crew health, not a daily readout</h3>
+          <p>We turn fused telemetry into continuous physiological situational awareness, a live picture a flight surgeon can hold in their head. Status is current, not a report from yesterday, so the crew and the ground share the same view of how the mission is acting on the people flying it.</p>
+        </div>
+        <div class="card">
+          <span class="n">03</span>
+          <span class="tag">Predictive Modeling</span>
+          <h3>Early signals, not late alarms</h3>
+          <p>We model the trajectory of a crew member's physiology against the space environment to surface deviation before it becomes an event. The goal is lead time: a forming problem seen early enough that a flight surgeon, or an autonomous system, still has a choice to make.</p>
+        </div>
+        <div class="card">
+          <span class="n">04</span>
+          <span class="tag">Human System Risk</span>
+          <h3>NASA HRP risks as data problems</h3>
+          <p>NASA's Human Research Program tracks 30+ Human System Risks, from cognitive and behavioral health to cardiovascular and sensorimotor adaptation. We address them as data and modeling problems, mapping each risk to the signals that reveal it and the model that forecasts it.</p>
+        </div>
+        <div class="card">
+          <span class="n">05</span>
+          <span class="tag">Diagnostic Imaging</span>
+          <h3>Onboard imaging, read where it is taken</h3>
+          <p>We bring diagnostic imaging into the fused picture and into reach of automated analysis, so an ultrasound or scan acquired in flight informs the crew-health model directly. The interpretation does not have to wait for a downlink to the ground.</p>
+        </div>
+        <div class="card feature">
+          <span class="tag">Built on heritage</span>
+          <h3>Earth-system rigor, turned inward</h3>
+          <p>The data assimilation and physics-based modeling SSAI has delivered for NASA and NOAA for decades is the same discipline we now apply to the human body. We are not learning the method here. We are pointing it at the crew.</p>
+          <div class="btn-row"><a class="btn ghost" href="aerospace-medicine.html">The full practice</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Why It Matters</span>
+      <h2 class="dtitle">Distance turns routine care into a <span class="em">self-contained problem</span>.</h2>
+      <div class="grid grid-2">
+        <div class="card feature">
+          <span class="tag">The deep-space gap</span>
+          <h3>When the nearest specialist is millions of miles behind you</h3>
+          <p>On the International Space Station, a flight surgeon on the ground sees the crew in near real time. On Artemis and the road to Mars, that link stretches to a 1.3 second delay at the Moon and 4 to 24 minutes at Mars, and the crew operates largely on its own. The ground can no longer be the eyes on the patient minute to minute.</p>
+          <p>Crew-health monitoring is what closes that gap. By fusing the signals and modeling the trajectory on board, the system carries the situational awareness a distant flight surgeon used to provide, so the people on the mission, and the autonomous tools supporting them, are never reading the crew blind.</p>
+          <div class="btn-row"><a class="btn ghost" href="clinical-decision-support.html">Where the model drives action</a></div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/people/marshall-twin-control-rooms.jpg" alt="Mission controllers at consoles in a NASA control room, the ground team whose situational awareness deep-space crew-health monitoring must carry on board." loading="lazy">
+          <span class="cred">NASA / Marshall Space Flight Center</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="eyebrow">Proof &amp; Customers</span>
+      <h2 class="dtitle">A record measuring the environment that <span class="em">drives the risk</span>.</h2>
+      <p class="lead">SSAI brings something most newcomers to crew health cannot: nearly five decades measuring the very space environment that acts on the human body, and the modeling discipline to turn those measurements into forecasts agencies act on.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="tag">Heritage</span>
+          <h3>49+ years of mission delivery</h3>
+          <p>Founded in 1977, SSAI has delivered mission-critical science, engineering, and technology across 160+ missions and 175+ contracts, with 10,000+ publications and data products to show for it. That is the foundation the crew-health work is built on.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Customers</span>
+          <h3>Trusted by the agencies that explore</h3>
+          <p>Our space-environment, atmospheric, and instrument science has been delivered for NASA (Goddard, Code 600), NOAA, USGS, and EPA for decades. That same heritage now feeds the models behind crew health for Artemis and deep space.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Standards</span>
+          <h3>Held to a mission standard</h3>
+          <p>ISO 9001:2015, CMMI Level 3, and a Top Secret Facility Clearance are the credentials a partner earns to be trusted on work that cannot fail. We apply that same rigor to the systems that watch over a crew.</p>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>ISO</b> 9001:2015</span>
+        <span class="chip"><b>CMMI</b> Level 3</span>
+        <span class="chip"><b>Top Secret</b> Facility Clearance</span>
+        <span class="chip"><b>WOSB</b> SBA-certified woman-owned</span>
+        <span class="chip"><b>CMMC</b> Self-Assessed</span>
+        <span class="chip"><b>NASA</b> Goddard &middot; Code 600</span>
+        <span class="chip"><b>NOAA</b> Operational forecasting</span>
+        <span class="chip"><b>Physician-led</b> practice</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Related Capabilities</span>
+      <h2 class="dtitle">One crew, three <span class="em">fronts</span>.</h2>
+      <p class="lead">Crew health is the front end of a connected practice. The fused, modeled picture we build here feeds the systems that act on it and the environmental science that defines the risk.</p>
+      <div class="capgrid">
+        <a class="capcard" href="clinical-decision-support.html">
+          <div class="ph" style="background-image:url('assets/images/site/data/nas-hyperwall-visualization.jpg')"></div>
+          <div class="body">
+            <div class="num">02</div>
+            <h3>Autonomous Clinical Decision Support</h3>
+            <p>We build air-gapped, agentic medical AI that turns crew-health signals into a recommended course of action when Earth is too far to ask. The monitoring picture is what the CDSS reasons over.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+        <a class="capcard" href="space-radiation.html">
+          <div class="ph" style="background-image:url('assets/images/site/sun/aurora-australis-pacific.jpg')"></div>
+          <div class="body">
+            <div class="num">03</div>
+            <h3>Space Radiation &amp; Environmental Risk</h3>
+            <p>We forecast and model the radiation crews fly through, from galactic cosmic rays to solar particle events, defining the environmental load that the crew-health picture has to account for.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+        <a class="capcard" href="aerospace-medicine.html">
+          <div class="ph" style="background-image:url('assets/images/site/spacecraft/deep-space-network-antenna-night.jpg')"></div>
+          <div class="body">
+            <div class="num">00</div>
+            <h3>The Aerospace Medicine Practice</h3>
+            <p>See how human performance, autonomous clinical decision support, and space-radiation risk come together into one practice built to keep crews healthy where help is hours away.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-cta">
+      <h2>We see the risk forming while there is still <span class="em">time to act</span>.</h2>
+      <p class="lead">SSAI turns crew health into a data and modeling problem, fusing the signals and forecasting the trajectory so the people on the mission are never reading the crew blind. Talk to us about putting it to work on yours.</p>
+      <div class="btn-row">
+        <a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a>
+        <a class="btn ghost" href="aerospace-medicine.html">Back to Aerospace Medicine</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p></div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div>
+    <div class="footer-col"><h4>Work With Us</h4><a href="capabilities.html">Capabilities</a><a href="past-performance.html">Past Performance</a><a href="partner.html">Contracting</a><a href="capability-statement.html">Capability Statement</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
+  </div>
+  <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
+</footer>
+
+<script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script type="module" src="assets/js/centerpiece.js?v=14"></script>
+<script src="assets/js/site.js?v=14"></script>
+</body>
+</html>

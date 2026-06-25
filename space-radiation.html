@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space Radiation &amp; Environmental Risk | SSAI Aerospace Medicine</title>
+<meta name="description" content="SSAI applies decades of heliophysics and space-weather modeling to crew radiation exposure risk for Artemis and deep space, aviation radiation, and environmental risk forecasting. We turn the physics of the Sun-Earth system into health protection for the missions that cannot fail.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="assets/site.css?v=15" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<link href="assets/css/wow.css?v=19" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script defer src="assets/js/wow.js?v=19"></script>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI, Science Systems and Applications, Inc."></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="nav-links" id="navLinks">
+    <div class="nav-item has-sub has-mega"><a class="nav-link" href="science.html">Science</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="earth-science.html"><span class="nm-n">01</span><span class="nm-t">Earth Science &amp; Remote Sensing</span><span class="nm-d">Oceans, ice, land and atmosphere from orbit</span></a><a class="nm-cap" href="climate-atmosphere.html"><span class="nm-n">02</span><span class="nm-t">Atmosphere, Climate &amp; Modeling</span><span class="nm-d">Global Earth-system modeling and data assimilation</span></a><a class="nm-cap" href="heliophysics.html"><span class="nm-n">03</span><span class="nm-t">Heliophysics &amp; Space Weather</span><span class="nm-d">Earth-Sun interaction and radiation</span></a><a class="nm-cap" href="planetary-astrophysics.html"><span class="nm-n">04</span><span class="nm-t">Planetary &amp; Astrophysics</span><span class="nm-d">Lunar water, Mars and the universe</span></a><a class="nm-cap" href="mission-science-data.html"><span class="nm-n">05</span><span class="nm-t">Mission Science &amp; Data</span><span class="nm-d">Calibration, validation and science data products</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/earth/blue-marble.jpg')"></div><span class="nm-fk">The Science Practice</span><h4>Turning observation into understanding.</h4><a class="nm-flink" href="science.html">Explore Science &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="technology.html">Technology</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="ai-ml.html"><span class="nm-n">01</span><span class="nm-t">AI &amp; Machine Learning</span><span class="nm-d">IntelliCore, our mission-aligned AI/ML framework</span></a><a class="nm-cap" href="cap-cyber.html"><span class="nm-n">02</span><span class="nm-t">Cybersecurity</span><span class="nm-d">CYBERSAFE, zero-trust for public-sector missions</span></a><a class="nm-cap" href="data-science-ai.html"><span class="nm-n">03</span><span class="nm-t">Data Science &amp; Analytics</span><span class="nm-d">Turning data into decision advantage</span></a><a class="nm-cap" href="mission-it.html"><span class="nm-n">04</span><span class="nm-t">Mission IT &amp; High-Performance Computing</span><span class="nm-d">Secure IT, data centers and HPC at scale</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/data/discover-supercomputer-nccs.jpg')"></div><span class="nm-fk">The Technology Practice</span><h4>Making the mission smarter and secure.</h4><a class="nm-flink" href="technology.html">Explore Technology &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="engineering.html">Engineering</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="cap-engineering.html"><span class="nm-n">01</span><span class="nm-t">Instrument &amp; Systems Engineering</span><span class="nm-d">Systems, avionics, EEE parts and FPGA</span></a><a class="nm-cap" href="cap-manufacturing.html"><span class="nm-n">02</span><span class="nm-t">Electronics Manufacturing</span><span class="nm-d">Flight-grade circuit cards and hardware</span></a><a class="nm-cap" href="machining-additive.html"><span class="nm-n">03</span><span class="nm-t">Precision Machining &amp; Additive</span><span class="nm-d">CNC and additive for mission hardware</span></a><a class="nm-cap" href="cap-space-operations.html"><span class="nm-n">04</span><span class="nm-t">Space &amp; Mission Operations</span><span class="nm-d">Pre-launch through on-orbit</span></a><a class="nm-cap" href="test-evaluation.html"><span class="nm-n">05</span><span class="nm-t">Test, Evaluation &amp; Integration</span><span class="nm-d">IV&amp;V, DT&amp;E and integration testing</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/instruments/webb-instrument-integration.jpg')"></div><span class="nm-fk">The Engineering Practice</span><h4>Building the systems the mission depends on.</h4><a class="nm-flink" href="engineering.html">Explore Engineering &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="aerospace-medicine.html">Aerospace Medicine</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="crew-health.html"><span class="nm-n">01</span><span class="nm-t">Human Performance &amp; Crew Health</span><span class="nm-d">Physiological monitoring and human-system risk</span></a><a class="nm-cap" href="clinical-decision-support.html"><span class="nm-n">02</span><span class="nm-t">Autonomous Clinical Decision Support</span><span class="nm-d">CDSS, air-gapped medical AI for deep space</span></a><a class="nm-cap" href="space-radiation.html"><span class="nm-n">03</span><span class="nm-t">Space Radiation &amp; Environmental Risk</span><span class="nm-d">Crew radiation modeling and forecasting</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/spacecraft/iss-solar-array-wing-orbit.jpg')"></div><span class="nm-fk">The Aerospace Medicine Practice</span><h4>Keeping crews healthy where help is hours away.</h4><a class="nm-flink" href="aerospace-medicine.html">Explore Aerospace Medicine &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="company.html">About</a><div class="nav-mega about"><div class="nm-cols"><div class="nm-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div><div class="nm-col"><h4>Who We Serve</h4><a href="market-defense.html">Defense &amp; National Security</a><a href="market-federal-civilian.html">Federal Civilian</a><a href="market-intelligence.html">Intelligence Community</a><a href="market-state-local.html">State &amp; Local</a><a href="market-commercial.html">Commercial</a><a href="market-oconus.html">OCONUS &amp; International</a></div><div class="nm-col"><h4>Doing Business</h4><a href="partner.html">Contracting &amp; Vehicles</a><a href="past-performance.html">Past Performance</a><a href="subsidiaries.html">Subsidiaries</a></div></div></div></div><div class="nav-item"><a class="nav-link" href="contact.html">Contact</a></div><div class="nav-item"><a class="nav-link nav-cta" href="signin.html">Sign In</a></div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="phero shot" style="background-image:url('assets/images/site/sun/solar-flare-xclass.jpg')">
+    <div class="container">
+      <span class="kick">Space Radiation &amp; Environmental Risk</span>
+      <h1>We model the radiation environment <span class="em">crews fly through.</span></h1>
+      <p class="sub">From the surface of the Sun to the cabin of a spacecraft, SSAI turns the physics of the Sun-Earth system into exposure risk a flight surgeon can act on. We apply nearly fifty years of heliophysics and space-weather heritage to crew radiation for Artemis and deep space, to radiation at aviation altitude, and to environmental risk forecasting for the missions that cannot fail.</p>
+      <div class="btn-row">
+        <a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a>
+        <a class="btn ghost" href="aerospace-medicine.html">Back to Aerospace Medicine</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="lede-grid">
+        <div>
+          <span class="eyebrow">The Capability</span>
+          <h2 class="dtitle">Where heliophysics meets <span class="em">human health</span>.</h2>
+        </div>
+        <div class="body-col">
+          <p class="lead">Radiation is the deep-space hazard with no shielding shortcut. Beyond low Earth orbit, crews leave the protection of the magnetosphere and face galactic cosmic rays and solar particle events that can change in minutes.</p>
+          <p>SSAI sits at the intersection few teams occupy. We have spent decades observing the Sun and modeling space weather for NASA and NOAA, and we bring that physics directly to the question that matters to a flight surgeon: how much dose, to which crew member, over what mission profile, and what to do about it. We connect the source, the Sun, to the outcome, the health of the people in the cockpit, the cabin, and the habitat.</p>
+          <p>The result is exposure intelligence the mission can plan around. We quantify the environment, forecast how it will change, and translate physics into the operational decisions that keep crews inside acceptable risk when help is hours or days away.</p>
+        </div>
+      </div>
+
+      <div class="figure wide">
+        <img src="assets/images/site/sun/sun-sdo-full-disk.jpg" alt="A full-disk extreme ultraviolet view of the Sun, showing active regions and the hot, structured corona that drives space weather." loading="lazy">
+        <span class="cred">NASA / Solar Dynamics Observatory</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="eyebrow">What We Do</span>
+      <h2 class="dtitle">From the Sun to the <span class="em">crew</span>.</h2>
+      <p class="lead">We deliver the full chain of radiation and environmental risk, from observing the source to advising the operator. Three capabilities, one continuous picture of exposure.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="n">01</span>
+          <span class="tag">Crew Radiation Exposure</span>
+          <h3>Dose risk for Artemis &amp; deep space</h3>
+          <p>We model galactic cosmic ray and solar particle event exposure across mission profiles, from cislunar transit to lunar surface operations and Mars-class durations. We translate the radiation environment into crew dose estimates, organ-level risk, and the trade space behind shielding, shelter, and timeline decisions when crews are beyond the magnetosphere.</p>
+        </div>
+        <div class="card">
+          <span class="n">02</span>
+          <span class="tag">Aviation Radiation</span>
+          <h3>Exposure at altitude</h3>
+          <p>Radiation does not stop at the edge of space. Cosmic radiation and solar events raise dose for crews and passengers on high-altitude and polar flight routes. We model that exposure environment so aviation operators can quantify dose, understand how solar activity reshapes risk, and protect the people who fly the most.</p>
+        </div>
+        <div class="card">
+          <span class="n">03</span>
+          <span class="tag">Environmental Risk Forecasting</span>
+          <h3>Space weather, ahead of the event</h3>
+          <p>Exposure is a moving target. We forecast the evolving space-weather environment, flares, coronal mass ejections, and solar particle events, so operators see elevated risk before it arrives. We turn observation and modeling into lead time, the window a mission needs to shelter a crew, reroute a flight, or hold a critical operation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div class="body-col">
+          <span class="eyebrow">Heritage</span>
+          <h2 class="dtitle">Nearly fifty years reading <span class="em">the Sun</span>.</h2>
+          <p class="lead">This capability is not new ground for SSAI. It is the human-health application of work we have done since 1977.</p>
+          <p>Our scientists have supported the nation's heliophysics and space-weather missions for decades, observing solar activity, modeling the Sun-Earth connection, and building the data products that operators depend on. That same physics governs the radiation a crew absorbs. We extend it from spacecraft and grid protection to the protection of the people themselves.</p>
+          <p>It is the heritage of a 350-plus scientist and engineer organization that has served 160-plus missions and produced more than 10,000 publications and data products. When the question is radiation risk to a human crew, that depth is the difference between a number and a decision.</p>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/sun/eruptive-prominence.jpg" alt="A towering eruptive solar prominence arcing off the limb of the Sun, the kind of activity that drives solar particle events and crew radiation risk." loading="lazy">
+          <span class="cred">NASA / Solar Dynamics Observatory</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="eyebrow">How We Work</span>
+      <h2 class="dtitle">Physics in, decisions <span class="em">out</span>.</h2>
+      <p class="lead">We close the loop from solar observation to operational guidance, so the people responsible for a crew are never working from the radiation environment alone.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="n">01</span>
+          <span class="tag">Observe</span>
+          <h3>The source, measured</h3>
+          <p>We draw on solar observation and space-weather monitoring to characterize the radiation environment, the active regions, the events, and the conditions that set the exposure a mission will face.</p>
+        </div>
+        <div class="card">
+          <span class="n">02</span>
+          <span class="tag">Model</span>
+          <h3>The dose, quantified</h3>
+          <p>We propagate the environment through transport and exposure models to estimate dose by mission phase, vehicle, and shielding, producing risk figures grounded in physics rather than rules of thumb.</p>
+        </div>
+        <div class="card">
+          <span class="n">03</span>
+          <span class="tag">Forecast</span>
+          <h3>The window, delivered</h3>
+          <p>We forecast how the environment will change and surface elevated risk with lead time, giving operators the warning to shelter, reroute, or reschedule before exposure becomes a hazard.</p>
+        </div>
+        <div class="card feature">
+          <span class="tag">The outcome</span>
+          <h3>Exposure a flight surgeon can act on</h3>
+          <p>The product is not a research result. It is operational risk intelligence: who is exposed, how much, when, and what the mission should do about it, delivered in time to matter.</p>
+        </div>
+        <div class="card">
+          <span class="n">04</span>
+          <span class="tag">Integrate</span>
+          <h3>Inside the medical picture</h3>
+          <p>Radiation risk does not stand alone. We connect exposure to the broader crew-health picture so dose is weighed alongside physiology, performance, and the clinical decisions a crew depends on.</p>
+        </div>
+        <div class="card">
+          <span class="n">05</span>
+          <span class="tag">Autonomy-ready</span>
+          <h3>Built for where help is far</h3>
+          <p>Deep-space crews cannot wait on a ground call. We build the radiation picture to support autonomous operations, so the guidance holds the first time, and every time, even with the comms link stretched thin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Proof &amp; Customers</span>
+      <h2 class="dtitle">Trusted on the missions that <span class="em">cannot fail</span>.</h2>
+      <p class="lead">The agencies that explore, observe, and defend rely on SSAI for the science behind space weather and human spaceflight. Our radiation and environmental risk work is built on that record.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="tag">Customers</span>
+          <h3>The agencies we serve</h3>
+          <p>We support NASA, including Goddard Space Flight Center and Code 600, NOAA, and the defense and national-security community, the institutions responsible for both space weather and the health of human crews.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Record</span>
+          <h3>Depth that holds up</h3>
+          <p>Founded in 1977, SSAI brings 49-plus years of mission delivery, 350-plus scientists and engineers, 175-plus contracts, and 160-plus missions to the radiation question, with more than 10,000 publications and data products behind it.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Held to standard</span>
+          <h3>Credentials the mission requires</h3>
+          <p>SSAI is a certified Woman-Owned Small Business holding ISO 9001:2015, CMMI Level 3, and a Top Secret Facility Clearance, the standards a partner earns to be trusted on missions that cannot fail.</p>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>NASA</b> Goddard &amp; Code 600</span>
+        <span class="chip"><b>NOAA</b> Space Weather</span>
+        <span class="chip"><b>DoD</b> Defense &amp; National Security</span>
+        <span class="chip"><b>ISO</b> 9001:2015</span>
+        <span class="chip"><b>CMMI</b> Level 3</span>
+        <span class="chip"><b>Top Secret</b> Facility Clearance</span>
+        <span class="chip"><b>WOSB</b> Woman-owned small business</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>1977</b><span>Founded, now 49+ years of mission delivery</span></div>
+        <div class="stat"><b>350+</b><span>Scientists &amp; engineers</span></div>
+        <div class="stat"><b>160+</b><span>Missions served</span></div>
+        <div class="stat"><b>10,000+</b><span>Publications &amp; data products delivered</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="split rev">
+        <div class="body-col">
+          <span class="eyebrow">Why It Matters</span>
+          <h2 class="dtitle">The hazard you cannot <span class="em">see coming</span>.</h2>
+          <p class="lead">A solar particle event can raise the radiation environment around a crew in minutes, and there is no wall thick enough to ignore it.</p>
+          <p>For a crew in cislunar space or on a lunar surface, the difference between a managed event and a dangerous one is lead time and a plan. SSAI builds both. We give the people responsible for crew safety a clear read on the environment, an honest estimate of the dose, and the warning to act before exposure becomes harm.</p>
+          <p>That is the discipline behind this work. Quantify the risk, forecast the change, and deliver guidance that holds when the mission cannot fail.</p>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/earth/aurora-iss.jpg" alt="Aurora glowing green over Earth's limb, seen from the International Space Station, a visible signature of charged particles interacting with the upper atmosphere." loading="lazy">
+          <span class="cred">NASA / ISS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Related Capabilities</span>
+      <h2 class="dtitle">Across the Aerospace Medicine <span class="em">practice</span>.</h2>
+      <p class="lead">Radiation risk is one part of keeping crews healthy where help is hours away. Explore the capabilities it connects to.</p>
+      <div class="capgrid">
+        <a class="capcard" href="crew-health.html">
+          <div class="ph" style="background-image:url('assets/images/site/spacecraft/iss-solar-array-wing-orbit.jpg')"></div>
+          <div class="body">
+            <div class="num">01</div>
+            <h3>Human Performance &amp; Crew Health</h3>
+            <p>Physiological monitoring and human-system risk for crews operating far from definitive care, where radiation dose is weighed alongside the whole picture of crew health.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+        <a class="capcard" href="clinical-decision-support.html">
+          <div class="ph" style="background-image:url('assets/images/site/people/jsc-white-flight-control-room.jpg')"></div>
+          <div class="body">
+            <div class="num">02</div>
+            <h3>Autonomous Clinical Decision Support</h3>
+            <p>Air-gapped medical AI and decision support that lets deep-space crews act on guidance without a ground call, the same autonomy our radiation forecasting is built to serve.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+        <a class="capcard" href="heliophysics.html">
+          <div class="ph" style="background-image:url('assets/images/site/sun/active-region-loops-euv.jpg')"></div>
+          <div class="body">
+            <div class="num">03</div>
+            <h3>Heliophysics &amp; Space Weather</h3>
+            <p>The science heritage this capability is built on: Earth-Sun interaction, solar activity, and the space-weather modeling that turns the physics of the Sun into operational risk.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-cta">
+      <h2>Plan the mission around the <span class="em">radiation environment</span>.</h2>
+      <p class="lead">From Artemis and deep space to aviation altitude, SSAI turns the physics of the Sun-Earth system into exposure risk your team can act on. Let us show you how decades of heliophysics heritage protect the crews that cannot fail.</p>
+      <div class="btn-row">
+        <a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a>
+        <a class="btn ghost" href="aerospace-medicine.html">Back to Aerospace Medicine</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p></div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div>
+    <div class="footer-col"><h4>Work With Us</h4><a href="capabilities.html">Capabilities</a><a href="past-performance.html">Past Performance</a><a href="partner.html">Contracting</a><a href="capability-statement.html">Capability Statement</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
+  </div>
+  <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
+</footer>
+
+<script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script type="module" src="assets/js/centerpiece.js?v=14"></script>
+<script src="assets/js/site.js?v=14"></script>
+</body>
+</html>

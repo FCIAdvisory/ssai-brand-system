@@ -1199,7 +1199,7 @@ a{color:inherit;text-decoration:none}
   var data=[];
   (function(){
     var seed=20260612;
-    function rnd(){ seed=(seed*1103515245+12345)&0x7fffffff; return seed/0x7fffffff; }
+    function rnd(){ seed=(seed*1103515249+12345)&0x7fffffff; return seed/0x7fffffff; }
     for(var y=YEAR0;y<=YEAR1;y++){
       var t=(y-YEAR0)/(YEAR1-YEAR0);
       // accelerating warming trend, baseline ~ -0.1 rising past +1.2

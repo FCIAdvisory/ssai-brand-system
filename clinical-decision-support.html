@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autonomous Clinical Decision Support | SSAI</title>
+<meta name="description" content="SSAI builds the Disconnected Clinical Decision Support System: air-gapped, agentic medical AI on Microsoft Azure AI Foundry and Azure Local that reasons through crew records, symptoms, and sensor data to recommend a course of action with no uplink. Built for Artemis and deep space, where Earth is 1.3 seconds to 24 minutes away.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="assets/site.css?v=15" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<link href="assets/css/wow.css?v=19" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script defer src="assets/js/wow.js?v=19"></script>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI, Science Systems and Applications, Inc."></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="nav-links" id="navLinks">
+    <div class="nav-item has-sub has-mega"><a class="nav-link" href="science.html">Science</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="earth-science.html"><span class="nm-n">01</span><span class="nm-t">Earth Science &amp; Remote Sensing</span><span class="nm-d">Oceans, ice, land and atmosphere from orbit</span></a><a class="nm-cap" href="climate-atmosphere.html"><span class="nm-n">02</span><span class="nm-t">Atmosphere, Climate &amp; Modeling</span><span class="nm-d">Global Earth-system modeling and data assimilation</span></a><a class="nm-cap" href="heliophysics.html"><span class="nm-n">03</span><span class="nm-t">Heliophysics &amp; Space Weather</span><span class="nm-d">Earth-Sun interaction and radiation</span></a><a class="nm-cap" href="planetary-astrophysics.html"><span class="nm-n">04</span><span class="nm-t">Planetary &amp; Astrophysics</span><span class="nm-d">Lunar water, Mars and the universe</span></a><a class="nm-cap" href="mission-science-data.html"><span class="nm-n">05</span><span class="nm-t">Mission Science &amp; Data</span><span class="nm-d">Calibration, validation and science data products</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/earth/blue-marble.jpg')"></div><span class="nm-fk">The Science Practice</span><h4>Turning observation into understanding.</h4><a class="nm-flink" href="science.html">Explore Science &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="technology.html">Technology</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="ai-ml.html"><span class="nm-n">01</span><span class="nm-t">AI &amp; Machine Learning</span><span class="nm-d">IntelliCore, our mission-aligned AI/ML framework</span></a><a class="nm-cap" href="cap-cyber.html"><span class="nm-n">02</span><span class="nm-t">Cybersecurity</span><span class="nm-d">CYBERSAFE, zero-trust for public-sector missions</span></a><a class="nm-cap" href="data-science-ai.html"><span class="nm-n">03</span><span class="nm-t">Data Science &amp; Analytics</span><span class="nm-d">Turning data into decision advantage</span></a><a class="nm-cap" href="mission-it.html"><span class="nm-n">04</span><span class="nm-t">Mission IT &amp; High-Performance Computing</span><span class="nm-d">Secure IT, data centers and HPC at scale</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/data/discover-supercomputer-nccs.jpg')"></div><span class="nm-fk">The Technology Practice</span><h4>Making the mission smarter and secure.</h4><a class="nm-flink" href="technology.html">Explore Technology &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="engineering.html">Engineering</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="cap-engineering.html"><span class="nm-n">01</span><span class="nm-t">Instrument &amp; Systems Engineering</span><span class="nm-d">Systems, avionics, EEE parts and FPGA</span></a><a class="nm-cap" href="cap-manufacturing.html"><span class="nm-n">02</span><span class="nm-t">Electronics Manufacturing</span><span class="nm-d">Flight-grade circuit cards and hardware</span></a><a class="nm-cap" href="machining-additive.html"><span class="nm-n">03</span><span class="nm-t">Precision Machining &amp; Additive</span><span class="nm-d">CNC and additive for mission hardware</span></a><a class="nm-cap" href="cap-space-operations.html"><span class="nm-n">04</span><span class="nm-t">Space &amp; Mission Operations</span><span class="nm-d">Pre-launch through on-orbit</span></a><a class="nm-cap" href="test-evaluation.html"><span class="nm-n">05</span><span class="nm-t">Test, Evaluation &amp; Integration</span><span class="nm-d">IV&amp;V, DT&amp;E and integration testing</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/instruments/webb-instrument-integration.jpg')"></div><span class="nm-fk">The Engineering Practice</span><h4>Building the systems the mission depends on.</h4><a class="nm-flink" href="engineering.html">Explore Engineering &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="aerospace-medicine.html">Aerospace Medicine</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="crew-health.html"><span class="nm-n">01</span><span class="nm-t">Human Performance &amp; Crew Health</span><span class="nm-d">Physiological monitoring and human-system risk</span></a><a class="nm-cap" href="clinical-decision-support.html"><span class="nm-n">02</span><span class="nm-t">Autonomous Clinical Decision Support</span><span class="nm-d">CDSS, air-gapped medical AI for deep space</span></a><a class="nm-cap" href="space-radiation.html"><span class="nm-n">03</span><span class="nm-t">Space Radiation &amp; Environmental Risk</span><span class="nm-d">Crew radiation modeling and forecasting</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/spacecraft/iss-solar-array-wing-orbit.jpg')"></div><span class="nm-fk">The Aerospace Medicine Practice</span><h4>Keeping crews healthy where help is hours away.</h4><a class="nm-flink" href="aerospace-medicine.html">Explore Aerospace Medicine &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="company.html">About</a><div class="nav-mega about"><div class="nm-cols"><div class="nm-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div><div class="nm-col"><h4>Who We Serve</h4><a href="market-defense.html">Defense &amp; National Security</a><a href="market-federal-civilian.html">Federal Civilian</a><a href="market-intelligence.html">Intelligence Community</a><a href="market-state-local.html">State &amp; Local</a><a href="market-commercial.html">Commercial</a><a href="market-oconus.html">OCONUS &amp; International</a></div><div class="nm-col"><h4>Doing Business</h4><a href="partner.html">Contracting &amp; Vehicles</a><a href="past-performance.html">Past Performance</a><a href="subsidiaries.html">Subsidiaries</a></div></div></div></div><div class="nav-item"><a class="nav-link" href="contact.html">Contact</a></div><div class="nav-item"><a class="nav-link nav-cta" href="signin.html">Sign In</a></div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="phero shot" style="background-image:url('assets/images/site/data/nas-hyperwall-visualization.jpg')">
+    <div class="container">
+      <span class="kick">Autonomous Clinical Decision Support</span>
+      <h1>We put a clinical reasoner on board, even when <span class="em">Earth cannot answer.</span></h1>
+      <p class="sub">SSAI builds the Disconnected Clinical Decision Support System: air-gapped, agentic medical AI that reasons through crew records, symptoms, and sensor data and recommends a course of action with no uplink. It is built for the moment the link is down and the decision still has to be right.</p>
+      <div class="btn-row">
+        <a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a>
+        <a class="btn ghost" href="aerospace-medicine.html">Back to Aerospace Medicine</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="lede-grid">
+        <div>
+          <span class="eyebrow">The Capability</span>
+          <h2 class="dtitle">Care that does not wait for <span class="em">the ground</span>.</h2>
+        </div>
+        <div class="body-col">
+          <p class="lead">On the Moon a transmission takes 1.3 seconds each way. On the way to Mars it takes 4 to 24 minutes. In that window an emergency cannot wait for mission control. SSAI's Disconnected Clinical Decision Support System closes the gap by reasoning on board.</p>
+          <p>The system is agentic medical AI built on Microsoft Azure AI Foundry and deployed to Azure Local, running fully air-gapped on the vehicle. It analyzes crew medical records, presenting symptoms, and live sensor and physiological data, then recommends a course of action without a round trip to Earth. A hands-free speech interface lets a crew member work the problem while their hands are busy with the patient.</p>
+          <p>This is the flagship capability of SSAI's Aerospace Medicine practice. We build it the way we build every system we deliver: grounded in data, accountable for the outcome, and ready the first time, and every time.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>1.3s</b><span>One-way signal delay to the Moon</span></div>
+        <div class="stat"><b>4&ndash;24 min</b><span>One-way signal delay to Mars</span></div>
+        <div class="stat"><b>0</b><span>Uplinks required to reach a recommendation</span></div>
+        <div class="stat"><b>49+</b><span>Years of space-environment data behind the models</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="eyebrow">What We Do</span>
+      <h2 class="dtitle">How the CDSS <span class="em">reasons</span>.</h2>
+      <p class="lead">The system runs disconnected by design. Every input it needs is on the vehicle, every decision it reaches is local, and every recommendation is traceable back to the data that produced it.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="n">01</span>
+          <span class="tag">Air-gapped by design</span>
+          <h3>No uplink in the loop</h3>
+          <p>We deploy agentic clinical agents on Microsoft Azure AI Foundry and Azure Local, running fully air-gapped on the vehicle. The system reaches a recommendation with no connection to Earth, so the 4 to 24 minute delay to Mars never sits between a crew and a decision.</p>
+        </div>
+        <div class="card">
+          <span class="n">02</span>
+          <span class="tag">Local reasoning</span>
+          <h3>Crew records, symptoms, and sensors</h3>
+          <p>The agents reason over the crew's medical history, the symptoms in front of them, and live physiological and environmental sensor data, the same inputs a flight surgeon would weigh. They synthesize all of it on board and recommend a course of action the crew can act on.</p>
+        </div>
+        <div class="card">
+          <span class="n">03</span>
+          <span class="tag">Onboard resources</span>
+          <h3>Grounded in what is on the vehicle</h3>
+          <p>A recommendation is only useful if the crew can carry it out. The CDSS reasons against the medication, equipment, and procedures actually aboard, so the course of action it recommends fits the resources the mission is flying, not a hospital on Earth.</p>
+        </div>
+        <div class="card">
+          <span class="n">04</span>
+          <span class="tag">Hands-free interface</span>
+          <h3>A speech interface for both hands busy</h3>
+          <p>In an emergency a crew member's hands are on the patient. We pair the system with a hands-free speech interface, so the crew can describe what they see, ask for guidance, and hear the next step without leaving the patient to touch a screen.</p>
+        </div>
+        <div class="card">
+          <span class="n">05</span>
+          <span class="tag">Agentic workflow</span>
+          <h3>Agents that work the problem</h3>
+          <p>Rather than return a single answer, the clinical agents work the problem the way a care team does: gather data, weigh differentials, check against onboard resources, and converge on a recommended course of action the crew can confirm and follow.</p>
+        </div>
+        <div class="card">
+          <span class="n">06</span>
+          <span class="tag">Built for Artemis</span>
+          <h3>Ready for the missions ahead</h3>
+          <p>Artemis returns crews to the Moon and sets the path to Mars, where distance turns routine care into a self-contained problem. The CDSS is built for those missions, so crew care holds up the same way at 1.3 seconds and at 24 minutes from home.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Inside the System</span>
+      <h2 class="dtitle">A disconnected system, by <span class="em">design</span>.</h2>
+      <div class="grid grid-2">
+        <div class="card feature">
+          <span class="tag">Disconnected CDSS</span>
+          <h3>Mission-grade AI that runs with the link down</h3>
+          <p>SSAI's Disconnected Clinical Decision Support System is built on Microsoft Azure AI Foundry and deployed to Azure Local, the platform that lets the same agentic AI run on the vehicle as would run in the cloud. Because it is air-gapped, the system carries everything it needs to reason: the models, the crew's records, and the onboard medical resource picture.</p>
+          <p>When a crew member presents a problem, the agents pull together symptoms, history, and live sensor data, weigh the options against what is actually aboard, and recommend a course of action. No uplink is requested and none is required. The system is designed for the windows when the link is delayed or down and the decision still has to be right.</p>
+          <div class="btn-row"><a class="btn ghost" href="aerospace-medicine.html">See the full practice</a></div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/instruments/mars-rover-circuit-boards.jpg" alt="Densely populated flight-grade circuit boards of the kind that carry edge compute on a deep-space vehicle." loading="lazy">
+          <span class="cred">NASA / Jet Propulsion Laboratory</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="split">
+        <div class="body-col">
+          <span class="eyebrow">Why It Matters</span>
+          <h2 class="dtitle">When the nearest hospital is <span class="em">millions of miles back</span>.</h2>
+          <p class="lead">For a crew on the Moon or bound for Mars, every routine assumption of terrestrial medicine breaks. There is no specialist to call in real time, no resupply, and no way to evacuate. Care has to be self-contained.</p>
+          <p>SSAI brings something most newcomers to crew health do not: nearly five decades measuring the space environment that drives the risk. The same physics-based modeling and AI/ML we have delivered for NASA and NOAA now feed a clinical reasoner that holds up when Earth cannot answer.</p>
+          <p>The work is led by a physician CEO, joining clinical judgment to the engineering discipline behind every system we deliver, so the capability answers to clinical reality and mission rigor at once.</p>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/spacecraft/deep-space-network-antenna-night.jpg" alt="A large Deep Space Network antenna against a night sky, the link that crew communications depend on across millions of miles." loading="lazy">
+          <span class="cred">NASA / Jet Propulsion Laboratory</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Heritage &amp; Standards</span>
+      <h2 class="dtitle">The foundation under the <span class="em">capability</span>.</h2>
+      <p class="lead">SSAI builds this system on five decades of mission delivery for the agencies that explore and defend, and on the certifications a partner earns to be trusted on work that cannot fail.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="tag">Heritage</span>
+          <h3>Nearly five decades for NASA and NOAA</h3>
+          <p>Founded in 1977, SSAI has measured and modeled the space environment for the nation's science agencies for more than four decades, the body of data and modeling that now grounds our clinical reasoning.</p>
+        </div>
+        <div class="card">
+          <span class="tag">People</span>
+          <h3>350+ scientists and engineers</h3>
+          <p>A team of more than 350 scientists and engineers stands behind the practice, the same depth that has delivered across 160+ missions and 175+ contracts.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Platform</span>
+          <h3>Microsoft Azure AI Foundry and Azure Local</h3>
+          <p>We build the CDSS on Microsoft Azure AI Foundry and deploy it to Azure Local, so the same agentic AI that would run in the cloud runs air-gapped on the vehicle.</p>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>ISO</b> 9001:2015</span>
+        <span class="chip"><b>CMMI</b> Level 3</span>
+        <span class="chip"><b>Top Secret</b> Facility Clearance</span>
+        <span class="chip"><b>SBA</b> Woman-owned small business</span>
+        <span class="chip"><b>CMMC</b> Self-Assessed</span>
+        <span class="chip"><b>Azure</b> AI Foundry &middot; Azure Local</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="eyebrow">Related Capabilities</span>
+      <h2 class="dtitle">The rest of the <span class="em">practice</span>.</h2>
+      <p class="lead">Autonomous clinical decision support is one of three fronts in SSAI's Aerospace Medicine practice. Together they keep a crew alive and effective far from home.</p>
+      <div class="capgrid">
+        <a class="capcard" href="crew-health.html">
+          <div class="ph" style="background-image:url('assets/images/site/people/jsc-white-flight-control-room.jpg')"></div>
+          <div class="body">
+            <div class="num">01</div>
+            <h3>Human Performance &amp; Crew Health</h3>
+            <p>We model how the space environment acts on the human body and turn physiological monitoring into early, actionable risk signals, so flight surgeons and crews see a problem forming before it becomes an emergency.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+        <a class="capcard" href="space-radiation.html">
+          <div class="ph" style="background-image:url('assets/images/site/sun/aurora-australis-pacific.jpg')"></div>
+          <div class="body">
+            <div class="num">03</div>
+            <h3>Space Radiation &amp; Environmental Risk</h3>
+            <p>We forecast and model the radiation crews fly through, from galactic cosmic rays to solar particle events, translating space-weather science into dose estimates and shelter guidance that protect the people on the mission.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+        <a class="capcard" href="aerospace-medicine.html">
+          <div class="ph" style="background-image:url('assets/images/site/spacecraft/iss-solar-array-wing-orbit.jpg')"></div>
+          <div class="body">
+            <div class="num">00</div>
+            <h3>The Aerospace Medicine Practice</h3>
+            <p>See how the three fronts come together, where nearly five decades of space-environment science meets modern medical AI to keep crews healthy where help is hours away.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-cta">
+      <h2>A clinical reasoner that does not need <span class="em">the ground</span>.</h2>
+      <p class="lead">SSAI's Disconnected CDSS brings air-gapped, agentic medical AI to Artemis and deep space, reasoning through crew records, symptoms, and sensor data to recommend a course of action with no uplink. Talk to us about putting it to work on your mission.</p>
+      <div class="btn-row">
+        <a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a>
+        <a class="btn ghost" href="aerospace-medicine.html">Back to Aerospace Medicine</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p></div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div>
+    <div class="footer-col"><h4>Work With Us</h4><a href="capabilities.html">Capabilities</a><a href="past-performance.html">Past Performance</a><a href="partner.html">Contracting</a><a href="capability-statement.html">Capability Statement</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
+  </div>
+  <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
+</footer>
+
+<script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script type="module" src="assets/js/centerpiece.js?v=14"></script>
+<script src="assets/js/site.js?v=14"></script>
+</body>
+</html>

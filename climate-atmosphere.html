@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atmosphere, Climate &amp; Modeling | SSAI</title>
+<meta name="description" content="SSAI builds and operates the global Earth-system models, data assimilation systems, and atmospheric-chemistry diagnostics that let federal agencies measure a changing planet and act on what they find. Proven on NASA Goddard's SAMDA work, trusted across NASA, NOAA, and defense.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="assets/site.css?v=15" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<link href="assets/css/wow.css?v=19" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script defer src="assets/js/wow.js?v=19"></script>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="nav-logo" href="index.html"><img src="assets/logo/ssai-white-full.png" alt="SSAI, Science Systems and Applications, Inc."></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="nav-links" id="navLinks">
+    <div class="nav-item has-sub has-mega"><a class="nav-link" href="science.html">Science</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="earth-science.html"><span class="nm-n">01</span><span class="nm-t">Earth Science &amp; Remote Sensing</span><span class="nm-d">Oceans, ice, land and atmosphere from orbit</span></a><a class="nm-cap" href="climate-atmosphere.html"><span class="nm-n">02</span><span class="nm-t">Atmosphere, Climate &amp; Modeling</span><span class="nm-d">Global Earth-system modeling and data assimilation</span></a><a class="nm-cap" href="heliophysics.html"><span class="nm-n">03</span><span class="nm-t">Heliophysics &amp; Space Weather</span><span class="nm-d">Earth-Sun interaction and radiation</span></a><a class="nm-cap" href="planetary-astrophysics.html"><span class="nm-n">04</span><span class="nm-t">Planetary &amp; Astrophysics</span><span class="nm-d">Lunar water, Mars and the universe</span></a><a class="nm-cap" href="mission-science-data.html"><span class="nm-n">05</span><span class="nm-t">Mission Science &amp; Data</span><span class="nm-d">Calibration, validation and science data products</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/earth/blue-marble.jpg')"></div><span class="nm-fk">The Science Practice</span><h4>Turning observation into understanding.</h4><a class="nm-flink" href="science.html">Explore Science &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="technology.html">Technology</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="ai-ml.html"><span class="nm-n">01</span><span class="nm-t">AI &amp; Machine Learning</span><span class="nm-d">IntelliCore, our mission-aligned AI/ML framework</span></a><a class="nm-cap" href="cap-cyber.html"><span class="nm-n">02</span><span class="nm-t">Cybersecurity</span><span class="nm-d">CYBERSAFE, zero-trust for public-sector missions</span></a><a class="nm-cap" href="data-science-ai.html"><span class="nm-n">03</span><span class="nm-t">Data Science &amp; Analytics</span><span class="nm-d">Turning data into decision advantage</span></a><a class="nm-cap" href="mission-it.html"><span class="nm-n">04</span><span class="nm-t">Mission IT &amp; High-Performance Computing</span><span class="nm-d">Secure IT, data centers and HPC at scale</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/data/discover-supercomputer-nccs.jpg')"></div><span class="nm-fk">The Technology Practice</span><h4>Making the mission smarter and secure.</h4><a class="nm-flink" href="technology.html">Explore Technology &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="engineering.html">Engineering</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="cap-engineering.html"><span class="nm-n">01</span><span class="nm-t">Instrument &amp; Systems Engineering</span><span class="nm-d">Systems, avionics, EEE parts and FPGA</span></a><a class="nm-cap" href="cap-manufacturing.html"><span class="nm-n">02</span><span class="nm-t">Electronics Manufacturing</span><span class="nm-d">Flight-grade circuit cards and hardware</span></a><a class="nm-cap" href="machining-additive.html"><span class="nm-n">03</span><span class="nm-t">Precision Machining &amp; Additive</span><span class="nm-d">CNC and additive for mission hardware</span></a><a class="nm-cap" href="cap-space-operations.html"><span class="nm-n">04</span><span class="nm-t">Space &amp; Mission Operations</span><span class="nm-d">Pre-launch through on-orbit</span></a><a class="nm-cap" href="test-evaluation.html"><span class="nm-n">05</span><span class="nm-t">Test, Evaluation &amp; Integration</span><span class="nm-d">IV&amp;V, DT&amp;E and integration testing</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/instruments/webb-instrument-integration.jpg')"></div><span class="nm-fk">The Engineering Practice</span><h4>Building the systems the mission depends on.</h4><a class="nm-flink" href="engineering.html">Explore Engineering &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="aerospace-medicine.html">Aerospace Medicine</a><div class="nav-mega"><div class="nm-list"><a class="nm-cap" href="crew-health.html"><span class="nm-n">01</span><span class="nm-t">Human Performance &amp; Crew Health</span><span class="nm-d">Physiological monitoring and human-system risk</span></a><a class="nm-cap" href="clinical-decision-support.html"><span class="nm-n">02</span><span class="nm-t">Autonomous Clinical Decision Support</span><span class="nm-d">CDSS, air-gapped medical AI for deep space</span></a><a class="nm-cap" href="space-radiation.html"><span class="nm-n">03</span><span class="nm-t">Space Radiation &amp; Environmental Risk</span><span class="nm-d">Crew radiation modeling and forecasting</span></a></div><div class="nm-feature"><div class="nm-fimg" style="background-image:url('assets/images/site/spacecraft/iss-solar-array-wing-orbit.jpg')"></div><span class="nm-fk">The Aerospace Medicine Practice</span><h4>Keeping crews healthy where help is hours away.</h4><a class="nm-flink" href="aerospace-medicine.html">Explore Aerospace Medicine &rarr;</a></div></div></div><div class="nav-item has-sub has-mega"><a class="nav-link" href="company.html">About</a><div class="nav-mega about"><div class="nm-cols"><div class="nm-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a></div><div class="nm-col"><h4>Who We Serve</h4><a href="market-defense.html">Defense &amp; National Security</a><a href="market-federal-civilian.html">Federal Civilian</a><a href="market-intelligence.html">Intelligence Community</a><a href="market-state-local.html">State &amp; Local</a><a href="market-commercial.html">Commercial</a><a href="market-oconus.html">OCONUS &amp; International</a></div><div class="nm-col"><h4>Doing Business</h4><a href="partner.html">Contracting &amp; Vehicles</a><a href="past-performance.html">Past Performance</a><a href="subsidiaries.html">Subsidiaries</a></div></div></div></div><div class="nav-item"><a class="nav-link" href="contact.html">Contact</a></div><div class="nav-item"><a class="nav-link nav-cta" href="signin.html">Sign In</a></div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="phero shot" style="background-image:url('assets/images/site/earth/hurricane-ivan.jpg')">
+    <div class="container">
+      <span class="kick">Atmosphere, Climate &amp; Modeling</span>
+      <h1>We model the atmosphere the mission has to <span class="em">act on</span>.</h1>
+      <p class="sub">SSAI builds and operates the global Earth-system models, data assimilation systems, and atmospheric-chemistry diagnostics that turn raw observation into a coherent picture of a changing planet. We run this work inside NASA Goddard's modeling and assimilation enterprise, and we deliver it the first time, and every time.</p>
+      <div class="btn-row">
+        <a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a>
+        <a class="btn ghost" href="science.html">Back to Science</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="lede-grid">
+        <div>
+          <span class="eyebrow">The Capability</span>
+          <h2 class="dtitle">From observation to a model the mission can <span class="em">trust</span>.</h2>
+        </div>
+        <div class="body-col">
+          <p class="lead">Satellites and ground networks produce a flood of measurements. On their own they are scattered, gapped, and uncalibrated. SSAI turns them into a single, physically consistent state of the atmosphere and the Earth system around it.</p>
+          <p>We assimilate observations into global models, run the simulations that project how the atmosphere will behave, and diagnose the chemistry that drives air quality and climate. This is the work behind storm forecasts, ozone records, and the climate reanalyses agencies depend on. Much of it runs through the Science and Mission Data Assimilation (SAMDA) effort at NASA Goddard, where our scientists support the models and data systems that the agency's flagship Earth-science programs are built on.</p>
+          <p>We have done this kind of science since 1977. Our atmospheric modelers, assimilation specialists, and air-quality scientists sit inside the agency teams they support, so the model improvements they make reach the operational systems that have to perform when the mission cannot fail.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>SAMDA</b><span>Science &amp; Mission Data Assimilation at NASA Goddard</span></div>
+        <div class="stat"><b>350+</b><span>Scientists &amp; engineers across the company</span></div>
+        <div class="stat"><b>10,000+</b><span>Publications &amp; data products delivered</span></div>
+        <div class="stat"><b>Code 600</b><span>Embedded in Goddard's Sciences &amp; Exploration Directorate</span></div>
+      </div>
+
+      <div class="figure wide">
+        <img src="assets/images/site/data/geos5-global-weather-simulation.jpg" alt="A high-resolution global atmospheric simulation showing swirling weather systems, cloud bands, and storm structure across the full disk of Earth." loading="lazy">
+        <span class="cred">NASA / Goddard Space Flight Center / GEOS global modeling</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="eyebrow">What We Do</span>
+      <h2 class="dtitle">Four lines of <span class="em">modeling science</span>.</h2>
+      <p class="lead">We cover the full chain from raw observation to operational product: assimilating data, modeling the Earth system, diagnosing the climate record, and tracking the chemistry that determines the air people breathe.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="n">01</span>
+          <span class="tag">Capability</span>
+          <h3>Global Earth-System Modeling</h3>
+          <p>We develop and run coupled atmosphere, ocean, land, and aerosol models that simulate the Earth system as one connected machine. We support the global modeling frameworks used at NASA Goddard to forecast weather, project seasonal behavior, and study how the system responds to change.</p>
+        </div>
+        <div class="card">
+          <span class="n">02</span>
+          <span class="tag">Capability</span>
+          <h3>Data Assimilation</h3>
+          <p>We fuse millions of satellite and in-situ observations into a single, physically consistent atmospheric state. Our assimilation work, central to the SAMDA effort, includes hyperspectral infrared sounders and the methods that let new observing systems improve the model from the day they reach orbit.</p>
+        </div>
+        <div class="card">
+          <span class="n">03</span>
+          <span class="tag">Capability</span>
+          <h3>Climate Diagnostics &amp; Reanalysis</h3>
+          <p>We build and analyze the long, consistent records that turn decades of observation into climate understanding. We diagnose trends, validate reanalyses, and quantify how the atmosphere is changing, giving agencies a defensible baseline for the decisions that follow.</p>
+        </div>
+        <div class="card">
+          <span class="n">04</span>
+          <span class="tag">Capability</span>
+          <h3>Atmospheric Chemistry &amp; Air Quality</h3>
+          <p>We model the chemistry that drives air quality, from stratospheric and tropospheric ozone to surface PM2.5. We track aerosols, smoke, and pollutants across the globe and translate the science into forecasts and assessments that protect public health.</p>
+        </div>
+        <div class="card">
+          <span class="n">05</span>
+          <span class="tag">Capability</span>
+          <h3>Hurricane &amp; Severe-Weather Science</h3>
+          <p>We study how the atmosphere organizes into tropical cyclones and severe storms, and how new observations sharpen the forecast. Our scientists' work on atmospheric dynamics and hurricane prediction informs the assimilation methods agencies rely on to see a storm forming earlier.</p>
+        </div>
+        <div class="card feature">
+          <span class="tag">One chain, end to end</span>
+          <h3>Observation to decision</h3>
+          <p>We own the full path from a raw satellite radiance to a product a decision-maker can act on. That is what lets the model improvements our scientists make show up where the mission actually feels them.</p>
+          <div class="btn-row"><a class="btn ghost" href="earth-science.html">See the observing systems</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div class="body-col">
+          <span class="eyebrow">Inside SAMDA</span>
+          <h2 class="dtitle">Science delivered where the <span class="em">models run</span>.</h2>
+          <p class="lead">Our atmosphere and climate work is anchored in the Science and Mission Data Assimilation effort at NASA Goddard, in Code 600's Sciences and Exploration Directorate.</p>
+          <p>Embedded with the agency's modeling teams, our scientists advance the data assimilation systems, run the global simulations, and diagnose the results that feed NASA and partner programs. The work spans hyperspectral infrared sounding, aerosol and chemistry modeling, and the reanalyses that anchor the climate record.</p>
+          <p>Because we sit inside the enterprise, the methods we develop do not stop at a paper. They reach the operational and research systems that the nation's Earth-science missions are built on, and they hold up under the scrutiny of the agencies that use them.</p>
+          <div class="btn-row">
+            <a class="btn ghost" href="mission-science-data.html">Mission science &amp; data</a>
+          </div>
+        </div>
+        <div class="figure tall">
+          <img src="assets/images/site/data/aerosol-particle-model-visualization.jpg" alt="A global model visualization of atmospheric aerosols, showing dust, smoke, and sea-salt particles transported in colored plumes across the oceans and continents." loading="lazy">
+          <span class="cred">NASA / Goddard Space Flight Center / GEOS aerosol modeling</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <span class="eyebrow">Who We Serve</span>
+      <h2 class="dtitle">Trusted on the missions that measure the <span class="em">planet</span>.</h2>
+      <p class="lead">Our atmosphere, climate, and chemistry science supports the agencies responsible for forecasting weather, protecting air quality, and maintaining the nation's climate record. The same modeling and assimilation discipline carries into defense and national-security environmental intelligence.</p>
+      <div class="grid grid-2">
+        <div class="card feature">
+          <span class="tag">Core customer</span>
+          <h3>NASA Goddard, Code 600</h3>
+          <p>We support the Science and Mission Data Assimilation enterprise inside the Sciences and Exploration Directorate: global modeling, data assimilation, atmospheric chemistry, and the reanalyses behind NASA's Earth-science programs.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Operational forecasting</span>
+          <h3>NOAA &amp; the weather enterprise</h3>
+          <p>Our atmospheric modeling and assimilation work informs the operational forecasting and environmental prediction that NOAA and its partners depend on, around the clock.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Air quality &amp; environment</span>
+          <h3>EPA &amp; civil agencies</h3>
+          <p>Our air-quality and atmospheric-chemistry science, from ozone to PM2.5, supports the federal agencies charged with assessing and protecting environmental and public health.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Defense &amp; national security</span>
+          <h3>DoD environmental intelligence</h3>
+          <p>The same modeling and assimilation rigor extends to defense, where atmospheric state, aerosols, and space-weather inputs shape environmental intelligence for the mission.</p>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>NASA</b> Goddard, Code 600</span>
+        <span class="chip"><b>NOAA</b> Environmental prediction</span>
+        <span class="chip"><b>EPA</b> Air quality</span>
+        <span class="chip"><b>USGS</b> Earth observation</span>
+        <span class="chip"><b>DoD</b> Environmental intelligence</span>
+        <span class="chip"><b>ISO</b> 9001:2015</span>
+        <span class="chip"><b>CMMI</b> Level 3</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Related Capabilities</span>
+      <h2 class="dtitle">More from the Science <span class="em">practice</span>.</h2>
+      <p class="lead">Atmosphere and climate modeling is one of five capabilities in our Science practice. It draws on the observing systems that feed the models and the space-weather science that bounds them.</p>
+      <div class="capgrid">
+        <a class="capcard" href="earth-science.html">
+          <div class="ph" style="background-image:url('assets/images/site/earth/saharan-dust-storm.jpg')"></div>
+          <div class="body">
+            <div class="num">01</div>
+            <h3>Earth Science &amp; Remote Sensing</h3>
+            <p>We engineer the instruments and process the observations of oceans, ice, land, and atmosphere from orbit. These are the measurements our models assimilate, and the ground truth that holds them honest.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+        <a class="capcard" href="heliophysics.html">
+          <div class="ph" style="background-image:url('assets/images/site/spacecraft/pace-spacecraft.jpg')"></div>
+          <div class="body">
+            <div class="num">02</div>
+            <h3>Heliophysics &amp; Space Weather</h3>
+            <p>We study the Sun-Earth connection and the space weather that drives the upper atmosphere. It sets the boundary conditions our atmospheric models inherit and the radiation environment missions plan around.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+        <a class="capcard" href="planetary-astrophysics.html">
+          <div class="ph" style="background-image:url('assets/images/site/earth/blue-marble.jpg')"></div>
+          <div class="body">
+            <div class="num">03</div>
+            <h3>Planetary &amp; Astrophysics</h3>
+            <p>The modeling and data-assimilation methods we sharpen on Earth's atmosphere carry outward, to the planetary atmospheres and astrophysical observations that extend our reach beyond this world.</p>
+            <span class="go">Explore &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-cta">
+      <h2>Put a modeling team inside your <span class="em">mission</span>.</h2>
+      <p class="lead">From global assimilation to air-quality chemistry, we deliver the atmosphere and climate science that holds up when the mission cannot fail. Tell us what you need to see, and we will model it the first time, and every time.</p>
+      <div class="btn-row">
+        <a class="btn" href="mailto:BD@ssaihq.com">Talk to our team</a>
+        <a class="btn ghost" href="science.html">Explore the Science practice</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><img src="assets/logo/ssai-white-full.png" alt="SSAI"><p>Science and Technology with Passion. For nearly fifty years, turning the view from space into understanding on the ground.</p></div>
+    <div class="footer-col"><h4>Company</h4><a href="company.html">Overview</a><a href="leadership.html">Leadership</a><a href="history.html">History</a><a href="locations.html">Locations</a></div>
+    <div class="footer-col"><h4>Science</h4><a href="earth-science.html">Earth Science</a><a href="heliophysics.html">Heliophysics</a><a href="planetary-astrophysics.html">Planetary &amp; Astrophysics</a><a href="data-science-ai.html">Data Science &amp; AI</a><a href="publications.html">Publications</a></div>
+    <div class="footer-col"><h4>Work With Us</h4><a href="capabilities.html">Capabilities</a><a href="past-performance.html">Past Performance</a><a href="partner.html">Contracting</a><a href="capability-statement.html">Capability Statement</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="careers.html">Careers</a><a href="newsroom.html">Newsroom</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
+  </div>
+  <div class="container footer-bottom"><span>&copy; 1977&ndash;2026 Science Systems and Applications, Inc.</span><span>The Aerospace Building &middot; 10210 Greenbelt Road, Suite 600 &middot; Lanham, MD 20706 &middot; (301) 867-2000</span></div>
+</footer>
+
+<script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
+<script type="module" src="assets/js/centerpiece.js?v=14"></script>
+<script src="assets/js/site.js?v=14"></script>
+</body>
+</html>
