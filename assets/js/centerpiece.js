@@ -53,6 +53,7 @@ function init(el) {
     my = (e.clientY / window.innerHeight - 0.5) * 2;
   }, { passive: true });
 
+  let visible = true, looping = true;
   const clock = new THREE.Clock();
   function frame() {
     const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
@@ -63,9 +64,16 @@ function init(el) {
       camera.lookAt(0, 0, 0);
     }
     renderer.render(scene, camera);
-    if (!REDUCE) requestAnimationFrame(frame);
+    if (!REDUCE && visible) { requestAnimationFrame(frame); } else { looping = false; }
   }
   frame();
+  // pause the render loop while the canvas is scrolled out of view (saves battery/GPU)
+  if (!REDUCE && 'IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      visible = entries[0].isIntersecting;
+      if (visible && !REDUCE && !looping) { looping = true; requestAnimationFrame(frame); }
+    }, { rootMargin: '300px' }).observe(el);
+  }
   if (REDUCE) { updaters.forEach(u => u(0.4, 0.4)); renderer.render(scene, camera); }
 }
 
