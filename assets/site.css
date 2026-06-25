@@ -169,9 +169,9 @@ img{max-width:100%;display:block}
 .card.feature .lead-photo{border-color:rgba(74,134,221,.55)}
 
 /* ---------- stats ---------- */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:clamp(20px,3vw,46px);margin-top:clamp(36px,5vh,64px)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(26px,3.4vh,50px) clamp(24px,2.4vw,42px);margin-top:clamp(36px,5vh,64px)}
 .stat{min-width:0}
-.stat b{display:block;font-family:var(--disp);font-style:italic;font-weight:800;font-size:clamp(30px,4vw,56px);color:var(--gold);line-height:1.02;overflow-wrap:break-word;hyphens:none}
+.stat b{display:block;font-family:var(--disp);font-style:italic;font-weight:800;font-size:clamp(30px,3.3vw,46px);color:var(--gold);line-height:1.02;white-space:nowrap}
 .stat span{display:block;margin-top:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--nebula);line-height:1.5}
 
 /* ---------- chips / pills ---------- */
