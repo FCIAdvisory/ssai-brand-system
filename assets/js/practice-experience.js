@@ -43,33 +43,44 @@ function offset(host) { return (host.clientWidth || innerWidth) > 820 ? 1 : 0; }
 const GKF = [{ p: 0, pos: [0.2, 0.5, 9.6], rv: 0.18 }, { p: 0.22, pos: [1.4, 0.2, 8.0], rv: 1 }, { p: 0.55, pos: [2.0, 0.7, 7.4], rv: 1 }, { p: 0.8, pos: [1.2, 1.0, 8.2], rv: 1 }, { p: 1, pos: [0.4, 0.4, 9.2], rv: 1 }];
 function kf(K, p) { let i = 0; while (i < K.length - 2 && p > K[i + 1].p) i++; const A = K[i], B = K[i + 1], t = easeIO(clamp01((p - A.p) / (B.p - A.p))); return { x: lerp(A.pos[0], B.pos[0], t), y: lerp(A.pos[1], B.pos[1], t), z: lerp(A.pos[2], B.pos[2], t), rv: lerp(A.rv, B.rv, t) }; }
 function buildGlobe(ctx) {
-  const { scene, root, camera, host } = ctx; root.rotation.z = 0.36;
+  const { root, camera, host } = ctx; root.rotation.z = 0.36;
   const R = 2.25, globe = new THREE.Group(); root.add(globe);
-  const shellMat = new THREE.PointsMaterial({ color: BLUE, size: 0.02, transparent: true, opacity: 0.3, depthWrite: false });
-  (function () { const N = 2200, pos = new Float32Array(N * 3); for (let i = 0; i < N; i++) { const v = sphere(R); pos[i*3]=v.x; pos[i*3+1]=v.y; pos[i*3+2]=v.z; } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); globe.add(new THREE.Points(g, shellMat)); })();
-  const landGeo = new THREE.BufferGeometry(), landMat = new THREE.PointsMaterial({ color: ICE, size: 0.035, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
-  globe.add(new THREE.Points(landGeo, landMat)); const anchors = [];
-  sampleLand('assets/images/scenes/journey/earth-day.jpg', R, (pos, a) => { landGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); anchors.push(...a); for (let i = 0; i < 18; i++) addArc(); });
-  const atmo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x3c7be0, transparent: true, opacity: 0.5, depthWrite: false })); atmo.scale.set(R * 4.5, R * 4.5, 1); atmo.position.z = -0.6; globe.add(atmo);
+  const L = new THREE.TextureLoader(), B = 'assets/textures/earth/';
+  const day = L.load(B + '2k_earth_daymap.jpg'), night = L.load(B + '2k_earth_nightmap.jpg'), spec = L.load(B + '2k_earth_specular.jpg'), cloud = L.load(B + '2k_earth_clouds.jpg');
+  [day, night, spec, cloud].forEach(t => { try { t.colorSpace = THREE.SRGBColorSpace; } catch (e) {} });
+  const sunDir = new THREE.Vector3(1.0, 0.35, 0.55).normalize();
+  const earth = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 64), new THREE.ShaderMaterial({
+    uniforms: { dayMap: { value: day }, nightMap: { value: night }, specMap: { value: spec }, sunDir: { value: sunDir } },
+    vertexShader: 'varying vec2 vUv; varying vec3 vN; void main(){ vUv=uv; vN=normalize(mat3(modelMatrix)*normal); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
+    fragmentShader: 'uniform sampler2D dayMap,nightMap,specMap; uniform vec3 sunDir; varying vec2 vUv; varying vec3 vN; void main(){ float s=dot(normalize(vN),sunDir); float t=smoothstep(-0.12,0.30,s); vec3 d=texture2D(dayMap,vUv).rgb; vec3 n=texture2D(nightMap,vUv).rgb*1.5; vec3 col=mix(n, d*(0.3+0.9*t), t); float oc=texture2D(specMap,vUv).r; col += vec3(0.55,0.7,1.0)*pow(max(s,0.0),16.0)*oc*0.6; gl_FragColor=vec4(col,1.0); }'
+  })); globe.add(earth);
+  const cloudMat = new THREE.MeshBasicMaterial({ map: cloud, alphaMap: cloud, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
+  const clouds = new THREE.Mesh(new THREE.SphereGeometry(R * 1.015, 64, 48), cloudMat); globe.add(clouds);
+  const atmoMat = new THREE.ShaderMaterial({ transparent: true, side: THREE.BackSide, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: { op: { value: 0 } },
+    vertexShader: 'varying vec3 vN; varying vec3 vWP; void main(){ vN=normalize(mat3(modelMatrix)*normal); vec4 wp=modelMatrix*vec4(position,1.0); vWP=wp.xyz; gl_Position=projectionMatrix*viewMatrix*wp; }',
+    fragmentShader: 'uniform float op; varying vec3 vN; varying vec3 vWP; void main(){ vec3 vd=normalize(cameraPosition-vWP); float f=pow(1.0-max(dot(vd,vN),0.0),3.2); gl_FragColor=vec4(0.32,0.56,1.0, f*op); }' });
+  globe.add(new THREE.Mesh(new THREE.SphereGeometry(R * 1.18, 64, 48), atmoMat));
+  const anchors = []; for (let i = 0; i < 48; i++) anchors.push(sphere(R * 1.004));
   const sats = [];
-  [[R*1.45,0.5,0,GOLD],[R*1.8,-0.7,1.2,BLUE],[R*2.2,0.3,2.4,GOLD],[R*2.6,1.0,0.7,ICE]].forEach(([rad,tilt,ph,col]) => {
+  [[R*1.35,0.5,0,GOLD],[R*1.7,-0.7,1.2,BLUE],[R*2.05,0.3,2.4,GOLD],[R*2.45,1.0,0.7,ICE]].forEach(([rad,tilt,ph,col]) => {
     const grp = new THREE.Group(); grp.rotation.x = Math.PI/2 + tilt; grp.rotation.y = ph; root.add(grp);
     const seg = 160, op = new Float32Array((seg+1)*3); for (let i = 0; i <= seg; i++) { const a = i/seg*Math.PI*2; op[i*3]=Math.cos(a)*rad; op[i*3+2]=Math.sin(a)*rad; }
     const og = new THREE.BufferGeometry(); og.setAttribute('position', new THREE.BufferAttribute(op, 3));
     const lineMat = new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0 }); grp.add(new THREE.Line(og, lineMat));
-    const sat = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 12), new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0 }));
-    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: col, transparent: true, opacity: 0, depthWrite: false })); glow.scale.set(0.4, 0.4, 1); sat.add(glow); grp.add(sat);
+    const sat = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 12), new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0 }));
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: col, transparent: true, opacity: 0, depthWrite: false })); glow.scale.set(0.42, 0.42, 1); sat.add(glow); grp.add(sat);
     sats.push({ sat, glow, lineMat, satMat: sat.material, rad, a: Math.random()*6.28, spd: 0.16 + Math.random()*0.16 });
   });
   const arcGroup = new THREE.Group(); globe.add(arcGroup); const arcs = [];
-  function addArc() { if (anchors.length < 2) return; const a = anchors[(Math.random()*anchors.length)|0], b = anchors[(Math.random()*anchors.length)|0]; if (a === b) return; const mid = a.clone().add(b).multiplyScalar(0.5).normalize().multiplyScalar(R * (1.3 + Math.random()*0.35)); const pts = new THREE.QuadraticBezierCurve3(a, mid, b).getPoints(46); const m = new THREE.LineBasicMaterial({ color: Math.random() > 0.5 ? GOLD : ICE, transparent: true, opacity: 0 }); arcGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), m)); arcs.push({ m, life: Math.random()*4, dur: 3 + Math.random()*3 }); }
+  function addArc() { const a = anchors[(Math.random()*anchors.length)|0], b = anchors[(Math.random()*anchors.length)|0]; if (a === b) return; const mid = a.clone().add(b).multiplyScalar(0.5).normalize().multiplyScalar(R * (1.22 + Math.random()*0.3)); const pts = new THREE.QuadraticBezierCurve3(a, mid, b).getPoints(46); const m = new THREE.LineBasicMaterial({ color: Math.random() > 0.5 ? GOLD : ICE, transparent: true, opacity: 0 }); arcGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), m)); arcs.push({ m, life: Math.random()*4, dur: 3 + Math.random()*3 }); }
+  for (let i = 0; i < 16; i++) addArc();
   let spin = 0;
   return function (p, dt, mx, my) {
     const c = kf(GKF, p); root.position.x = 2.4 * offset(host);
     camera.position.set(c.x + mx * 0.5, c.y - my * 0.4, c.z); camera.lookAt(root.position.x * 0.62, 0, 0);
-    landMat.opacity = 0.74 * c.rv; shellMat.opacity = 0.12 + 0.2 * c.rv; atmo.material.opacity = 0.5 * c.rv;
-    const netw = ramp(p, 0.3, 0.72); sats.forEach(s => { s.lineMat.opacity = 0.22 * netw; s.satMat.opacity = netw; s.glow.material.opacity = 0.8 * netw; s.a += dt * s.spd; s.sat.position.set(Math.cos(s.a)*s.rad, 0, Math.sin(s.a)*s.rad); });
-    const arcI = ramp(p, 0.2, 0.7); spin += dt * (0.035 + 0.05 * p); globe.rotation.y = spin; globe.scale.setScalar(1 + Math.sin(spin * 1.1) * 0.01);
+    atmoMat.uniforms.op.value = 0.9; cloudMat.opacity = 0.45 * ramp(p, 0.02, 0.3);
+    const netw = ramp(p, 0.3, 0.72); sats.forEach(s => { s.lineMat.opacity = 0.24 * netw; s.satMat.opacity = netw; s.glow.material.opacity = 0.85 * netw; s.a += dt * s.spd; s.sat.position.set(Math.cos(s.a)*s.rad, 0, Math.sin(s.a)*s.rad); });
+    const arcI = ramp(p, 0.2, 0.7); spin += dt * (0.025 + 0.04 * p); globe.rotation.y = spin; clouds.rotation.y = spin * 1.18;
     arcs.forEach(o => { o.life += dt; o.m.opacity = Math.sin((o.life % o.dur) / o.dur * Math.PI) * 0.7 * arcI; });
   };
 }
