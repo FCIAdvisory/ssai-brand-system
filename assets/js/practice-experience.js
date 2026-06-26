@@ -94,23 +94,24 @@ function buildGlobe(ctx) {
 /* ---------------- TECHNOLOGY: a data/neural network that grows + lights up ---------------- */
 function buildNetwork(ctx) {
   const { root, camera, host } = ctx;
-  const N = 260, nodes = [], npos = new Float32Array(N * 3);
-  for (let i = 0; i < N; i++) { const v = sphere(2.3 + Math.random() * 1.0); npos[i*3]=v.x; npos[i*3+1]=v.y; npos[i*3+2]=v.z; nodes.push(v); }
+  const N = 380, nodes = [], npos = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) { const v = sphere(2.1 + Math.random() * 1.25); npos[i*3]=v.x; npos[i*3+1]=v.y; npos[i*3+2]=v.z; nodes.push(v); }
   const ng = new THREE.BufferGeometry(); ng.setAttribute('position', new THREE.BufferAttribute(npos, 3));
   const nodeMat = new THREE.PointsMaterial({ color: ICE, size: 0.07, transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending });
   root.add(new THREE.Points(ng, nodeMat));
   const segs = [], pairs = [];
-  for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) { if (nodes[i].distanceTo(nodes[j]) < 1.0 && Math.random() < 0.55) { segs.push(nodes[i].x,nodes[i].y,nodes[i].z, nodes[j].x,nodes[j].y,nodes[j].z); pairs.push([nodes[i], nodes[j]]); if (pairs.length > 520) { i = N; break; } } }
+  for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) { if (nodes[i].distanceTo(nodes[j]) < 1.0 && Math.random() < 0.55) { segs.push(nodes[i].x,nodes[i].y,nodes[i].z, nodes[j].x,nodes[j].y,nodes[j].z); pairs.push([nodes[i], nodes[j]]); if (pairs.length > 760) { i = N; break; } } }
   const lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(segs), 3));
   const linkMat = new THREE.LineBasicMaterial({ color: BLUE, transparent: true, opacity: 0 }); root.add(new THREE.LineSegments(lg, linkMat));
   const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x2f6fd0, transparent: true, opacity: 0.4, depthWrite: false })); core.scale.set(7, 7, 1); root.add(core);
-  const pulses = []; for (let i = 0; i < 14; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: i % 3 ? ICE : GOLD, transparent: true, opacity: 0, depthWrite: false })); s.scale.set(0.26, 0.26, 1); root.add(s); pulses.push({ s, lk: pairs[(Math.random()*pairs.length)|0], t: Math.random(), spd: 0.4 + Math.random() * 0.6 }); }
+  const gridMat = new THREE.MeshBasicMaterial({ color: BLUE, wireframe: true, transparent: true, opacity: 0, depthWrite: false }); root.add(new THREE.Mesh(new THREE.IcosahedronGeometry(1.85, 2), gridMat));
+  const pulses = []; for (let i = 0; i < 26; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: i % 3 ? ICE : GOLD, transparent: true, opacity: 0, depthWrite: false })); s.scale.set(0.26, 0.26, 1); root.add(s); pulses.push({ s, lk: pairs[(Math.random()*pairs.length)|0], t: Math.random(), spd: 0.4 + Math.random() * 0.6 }); }
   let spin = 0;
   return function (p, dt, mx, my) {
     root.position.x = 1.7 * offset(host); spin += dt * (0.05 + 0.05 * p); root.rotation.y = spin; root.rotation.x = 0.2 + Math.sin(spin * 0.3) * 0.08;
     camera.position.set(lerp(8.4, 6.6, p) + mx * 0.6, 0.3 - my * 0.45, 0.001); camera.lookAt(root.position.x * 0.6, 0, 0);
     const rev = ramp(p, 0.04, 0.6); nodeMat.opacity = 0.2 + 0.75 * rev;
-    linkMat.opacity = 0.5 * ramp(p, 0.12, 0.78);
+    linkMat.opacity = 0.5 * ramp(p, 0.12, 0.78); gridMat.opacity = 0.13 * ramp(p, 0.06, 0.5);
     pulses.forEach(pl => { pl.t += dt * pl.spd; if (pl.t > 1) { pl.t = 0; pl.lk = pairs[(Math.random()*pairs.length)|0]; } if (pl.lk) { pl.s.position.lerpVectors(pl.lk[0], pl.lk[1], pl.t); pl.s.material.opacity = Math.sin(pl.t * Math.PI) * 0.95 * ramp(p, 0.18, 0.55); } });
   };
 }
@@ -155,12 +156,19 @@ function buildPulse(ctx) {
     orbits.push({ grp, m, spd: 0.12 + Math.random() * 0.16, reveal: rad });
   });
   // expanding pulse rings on each beat
-  const prings = []; for (let i = 0; i < 3; i++) { const g = new THREE.RingGeometry(0.95, 1.0, 64); const m = new THREE.MeshBasicMaterial({ color: WARM, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false }); const mesh = new THREE.Mesh(g, m); mesh.rotation.x = Math.PI / 2.3; root.add(mesh); prings.push({ mesh, m, ph: i / 3 }); }
+  const prings = []; for (let i = 0; i < 5; i++) { const g = new THREE.RingGeometry(0.95, 1.0, 64); const m = new THREE.MeshBasicMaterial({ color: WARM, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false }); const mesh = new THREE.Mesh(g, m); mesh.rotation.x = Math.PI / 2.3; root.add(mesh); prings.push({ mesh, m, ph: i / 5 }); }
+  // EKG vital-trace ring: a heartbeat waveform baked around a ring, slowly rotating, brightening on each beat
+  const EK = 320, ekgPos = new Float32Array(EK * 3), ekgR = 2.05;
+  for (let i = 0; i < EK; i++) { const x = i / EK, a = x * Math.PI * 2; const spike = Math.exp(-Math.pow((x-0.5)/0.010,2))*0.6 - Math.exp(-Math.pow((x-0.474)/0.008,2))*0.2 - Math.exp(-Math.pow((x-0.527)/0.009,2))*0.24 + Math.exp(-Math.pow((x-0.35)/0.02,2))*0.08 + Math.exp(-Math.pow((x-0.63)/0.03,2))*0.06; const r = ekgR + spike; ekgPos[i*3]=Math.cos(a)*r; ekgPos[i*3+1]=Math.sin(a)*r; ekgPos[i*3+2]=0; }
+  const ekgGeo = new THREE.BufferGeometry(); ekgGeo.setAttribute('position', new THREE.BufferAttribute(ekgPos, 3));
+  const ekgMat = new THREE.LineBasicMaterial({ color: 0x8fe6d4, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+  const ekgGrp = new THREE.Group(); ekgGrp.rotation.x = Math.PI / 2.2; ekgGrp.add(new THREE.LineLoop(ekgGeo, ekgMat)); root.add(ekgGrp);
   let t = 0, spin = 0;
   return function (p, dt, mx, my) {
     t += dt; spin += dt * 0.05; root.position.x = 1.5 * offset(host); root.rotation.y = spin;
     camera.position.set(lerp(8.5, 6.8, p) + mx * 0.5, 0.4 - my * 0.4, 0.001); camera.lookAt(root.position.x * 0.6, 0, 0);
     const bt = beat(t), s = 1 + bt * 0.16; coreGlow.scale.set(2.4 * s, 2.4 * s, 1); coreGlow.material.opacity = 0.7 + bt * 0.3; coreShell.scale.setScalar(s); coreShell.material.opacity = 0.7 + bt * 0.3;
+    ekgGrp.rotation.z += dt * 0.3; ekgMat.opacity = (0.3 + bt * 0.45) * ramp(p, 0.1, 0.5);
     orbits.forEach((o, i) => { o.grp.rotation.z += dt * o.spd; o.m.opacity = 0.85 * ramp(p, 0.08 + i * 0.12, 0.4 + i * 0.13); });
     prings.forEach(pr => { const ph = (t * 0.5 + pr.ph) % 1; pr.mesh.scale.setScalar(0.8 + ph * 3.2); pr.m.opacity = (1 - ph) * 0.4 * (bt > 0.3 ? 1 : 0.5) * ramp(p, 0.1, 0.5); });
   };
