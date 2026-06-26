@@ -91,28 +91,57 @@ function buildGlobe(ctx) {
   };
 }
 
-/* ---------------- TECHNOLOGY: a data/neural network that grows + lights up ---------------- */
+/* ---------------- TECHNOLOGY: IntelliCore mission-AI core - raw data fires through neural layers into resolved intelligence ---------------- */
 function buildNetwork(ctx) {
-  const { root, camera, host } = ctx;
-  const N = 380, nodes = [], npos = new Float32Array(N * 3);
-  for (let i = 0; i < N; i++) { const v = sphere(2.1 + Math.random() * 1.25); npos[i*3]=v.x; npos[i*3+1]=v.y; npos[i*3+2]=v.z; nodes.push(v); }
-  const ng = new THREE.BufferGeometry(); ng.setAttribute('position', new THREE.BufferAttribute(npos, 3));
-  const nodeMat = new THREE.PointsMaterial({ color: ICE, size: 0.07, transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending });
+  const { root, camera, host } = ctx; root.rotation.y = 0.5; root.rotation.x = 0.12;
+  const lx = [-2.6, -1.75, -0.9, 0, 0.9, 1.75, 2.6];
+  const lr = [1.55, 1.78, 1.95, 2.05, 1.78, 1.35, 0.95];
+  const ln = [46, 76, 102, 114, 90, 58, 28];
+  const NTOT = ln.reduce((a, b) => a + b, 0);
+  const pos = new Float32Array(NTOT * 3); const layerNodes = []; let k = 0;
+  for (let li = 0; li < lx.length; li++) {
+    const R = lr[li], N = ln[li], arr = [];
+    for (let i = 0; i < N; i++) {
+      let y, z;
+      if (li === lx.length - 1) { const a = (i / N) * Math.PI * 2; y = Math.cos(a) * R * 0.72; z = Math.sin(a) * R * 0.72; }
+      else if (li === 0) { const v = sphere(R * (0.55 + Math.random() * 0.55)); y = v.y; z = v.z; }
+      else { const a = Math.random() * Math.PI * 2, r = R * Math.sqrt(Math.random()); y = Math.cos(a) * r; z = Math.sin(a) * r; }
+      pos[k * 3] = lx[li]; pos[k * 3 + 1] = y; pos[k * 3 + 2] = z; arr.push(k); k++;
+    }
+    layerNodes.push(arr);
+  }
+  const ng = new THREE.BufferGeometry(); ng.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const nodeMat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    uniforms: { uTime: { value: 0 }, uReveal: { value: 0 }, uIntensity: { value: 0 }, uColor: { value: new THREE.Color(0x6fa8ff) }, uHot: { value: new THREE.Color(0xfff0d8) } },
+    vertexShader: 'uniform float uTime,uReveal,uIntensity; varying float vB; void main(){ float x=position.x; float span=6.6; float w=mod(uTime*0.9,span)-span*0.5; float w2=mod(uTime*0.9+3.3,span)-span*0.5; float dx=(x-w)*2.0; float dy=(x-w2)*2.0; float act=exp(-dx*dx)+exp(-dy*dy); vB=(0.22+1.25*act*uIntensity)*uReveal; vec4 mv=modelViewMatrix*vec4(position,1.0); gl_PointSize=(1.7+7.5*act*uIntensity)*uReveal*(250.0/-mv.z); gl_Position=projectionMatrix*mv; }',
+    fragmentShader: 'uniform vec3 uColor,uHot; varying float vB; void main(){ vec2 c=gl_PointCoord-0.5; float d=length(c); if(d>0.5)discard; float a=smoothstep(0.5,0.0,d); vec3 col=mix(uColor,uHot,clamp(vB-0.3,0.0,1.0)); gl_FragColor=vec4(col, a*clamp(vB,0.0,1.0)); }'
+  });
   root.add(new THREE.Points(ng, nodeMat));
-  const segs = [], pairs = [];
-  for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) { if (nodes[i].distanceTo(nodes[j]) < 1.0 && Math.random() < 0.55) { segs.push(nodes[i].x,nodes[i].y,nodes[i].z, nodes[j].x,nodes[j].y,nodes[j].z); pairs.push([nodes[i], nodes[j]]); if (pairs.length > 760) { i = N; break; } } }
+  const segs = [];
+  for (let li = 0; li < lx.length - 1; li++) {
+    const A = layerNodes[li], B = layerNodes[li + 1];
+    for (let j = 0; j < B.length; j++) { for (let c = 0; c < 2; c++) { const ai = A[(Math.random() * A.length) | 0], bi = B[j]; segs.push(pos[ai * 3], pos[ai * 3 + 1], pos[ai * 3 + 2], pos[bi * 3], pos[bi * 3 + 1], pos[bi * 3 + 2]); } }
+  }
   const lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(segs), 3));
-  const linkMat = new THREE.LineBasicMaterial({ color: BLUE, transparent: true, opacity: 0 }); root.add(new THREE.LineSegments(lg, linkMat));
-  const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x2f6fd0, transparent: true, opacity: 0.4, depthWrite: false })); core.scale.set(7, 7, 1); root.add(core);
-  const gridMat = new THREE.MeshBasicMaterial({ color: BLUE, wireframe: true, transparent: true, opacity: 0, depthWrite: false }); root.add(new THREE.Mesh(new THREE.IcosahedronGeometry(1.85, 2), gridMat));
-  const pulses = []; for (let i = 0; i < 26; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: i % 3 ? ICE : GOLD, transparent: true, opacity: 0, depthWrite: false })); s.scale.set(0.26, 0.26, 1); root.add(s); pulses.push({ s, lk: pairs[(Math.random()*pairs.length)|0], t: Math.random(), spd: 0.4 + Math.random() * 0.6 }); }
-  let spin = 0;
+  const linkMat = new THREE.LineBasicMaterial({ color: 0x3f6fb5, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
+  root.add(new THREE.LineSegments(lg, linkMat));
+  const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x9fc4ff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); core.scale.set(4.6, 4.6, 1); root.add(core);
+  const inGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x88a8ff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); inGlow.position.x = -2.6; inGlow.scale.set(1.8, 2.4, 1); root.add(inGlow);
+  const outGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xffe2b0, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); outGlow.position.x = 2.6; outGlow.scale.set(1.6, 1.6, 1); root.add(outGlow);
+  let t = 0, spin = 0;
   return function (p, dt, mx, my) {
-    root.position.x = 1.7 * offset(host); spin += dt * (0.05 + 0.05 * p); root.rotation.y = spin; root.rotation.x = 0.2 + Math.sin(spin * 0.3) * 0.08;
-    camera.position.set(lerp(8.4, 6.6, p) + mx * 0.6, 0.3 - my * 0.45, 0.001); camera.lookAt(root.position.x * 0.6, 0, 0);
-    const rev = ramp(p, 0.04, 0.6); nodeMat.opacity = 0.2 + 0.75 * rev;
-    linkMat.opacity = 0.5 * ramp(p, 0.12, 0.78); gridMat.opacity = 0.13 * ramp(p, 0.06, 0.5);
-    pulses.forEach(pl => { pl.t += dt * pl.spd; if (pl.t > 1) { pl.t = 0; pl.lk = pairs[(Math.random()*pairs.length)|0]; } if (pl.lk) { pl.s.position.lerpVectors(pl.lk[0], pl.lk[1], pl.t); pl.s.material.opacity = Math.sin(pl.t * Math.PI) * 0.95 * ramp(p, 0.18, 0.55); } });
+    t += dt; spin += dt;
+    root.position.x = 1.7 * offset(host);
+    root.rotation.y = 0.5 + spin * 0.06 + mx * 0.25; root.rotation.x = 0.12 - my * 0.2;
+    camera.position.set(mx * 0.4, 0.2 - my * 0.3, lerp(9.6, 7.4, p)); camera.lookAt(root.position.x * 0.62, 0, 0);
+    const rev = ramp(p, 0.04, 0.5), intens = ramp(p, 0.15, 0.66);
+    nodeMat.uniforms.uTime.value = t; nodeMat.uniforms.uReveal.value = rev; nodeMat.uniforms.uIntensity.value = intens;
+    linkMat.opacity = 0.16 * rev;
+    const pulse = 0.5 + 0.5 * Math.sin(t * 2.2);
+    core.material.opacity = (0.22 + 0.34 * pulse) * intens;
+    inGlow.material.opacity = (0.4 + 0.3 * Math.sin(t * 3.0)) * rev;
+    outGlow.material.opacity = (0.3 + 0.5 * Math.max(0.0, Math.sin(t * 1.8))) * intens;
   };
 }
 
