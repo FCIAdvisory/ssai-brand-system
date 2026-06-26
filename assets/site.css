@@ -315,14 +315,16 @@ main.px ~ .footer{position:relative;z-index:1}
 @keyframes pxpulse{0%,100%{opacity:.45}50%{opacity:1}}
 @media (prefers-reduced-motion:reduce){.px-readout-dot{animation:none}}
 
-/* engineering end band only: telescope LEFT, CTA RIGHT over a left-transparent gradient */
-.r-split::before{background:linear-gradient(100deg,rgba(7,12,22,0) 0%,rgba(7,12,22,.04) 36%,rgba(7,12,22,.5) 58%,rgba(7,12,22,.9) 100%) !important}
-.r-split .band-cta{margin-left:auto;margin-right:0;max-width:min(540px,50%);text-align:left}
-.r-split .band-cta h2{font-size:clamp(26px,3.2vw,44px);line-height:1.02}
+/* engineering end band only: telescope LEFT, CTA RIGHT, full-height so the whole CTA shows */
+.r-split{min-height:100vh;display:flex;align-items:center}
+.r-split::before{background:linear-gradient(100deg,rgba(7,12,22,0) 0%,rgba(7,12,22,.03) 40%,rgba(7,12,22,.46) 62%,rgba(7,12,22,.9) 100%) !important}
+.r-split .band-cta{margin-left:auto;margin-right:clamp(40px,7vw,150px);padding-top:0;padding-bottom:0;max-width:min(500px,42%);text-align:left}
+.r-split .band-cta h2{font-size:clamp(26px,3vw,42px);line-height:1.04}
 .r-split .band-cta .lead{max-width:none}
 .r-split .band-cta .btn-row{justify-content:flex-start}
 @media(max-width:860px){
+  .r-split{min-height:auto;display:block}
   .r-split::before{background:linear-gradient(180deg,rgba(7,12,22,.5),rgba(7,12,22,.86)) !important}
-  .r-split .band-cta{max-width:100%;margin:0 auto;text-align:center}
+  .r-split .band-cta{max-width:100%;margin:0 auto;padding-top:clamp(60px,10vh,90px);padding-bottom:clamp(60px,10vh,90px);text-align:center}
   .r-split .band-cta .btn-row{justify-content:center}
 }
