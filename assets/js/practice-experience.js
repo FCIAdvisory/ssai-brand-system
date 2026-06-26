@@ -53,7 +53,7 @@ function buildGlobe(ctx) {
   const R = 2.25, globe = new THREE.Group(); root.add(globe);
   const L = new THREE.TextureLoader(), B = 'assets/textures/earth/layers/';
   const mk = f => { const t = L.load(B + f); try { t.colorSpace = THREE.SRGBColorSpace; } catch (e) {} return t; };
-  const base = mk('true_color.jpg');
+  const base = mk('blue_marble.jpg');
   const dataTex = [null, mk('ndvi.png'), mk('aerosol.png'), mk('sst.png'), mk('chlorophyll.png'), mk('night.png')];
   const labels = ['True Color', 'Vegetation · NDVI', 'Aerosol · Optical Depth', 'Sea Surface Temp', 'Ocean Chlorophyll', 'Earth at Night'];
   const sunDir = new THREE.Vector3(0.9, 0.32, 0.5).normalize();
