@@ -9,6 +9,9 @@ import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const REDUCE = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
 const GOLD = 0xf2c14e, BLUE = 0x4a86dd, ICE = 0xcfe0ff, WARM = 0xffcf8a;
@@ -49,7 +52,7 @@ function buildGlobe(ctx) {
   const { root, camera, host } = ctx; root.rotation.z = 0.36;
   const R = 2.25, globe = new THREE.Group(); root.add(globe);
   const L = new THREE.TextureLoader(), B = 'assets/textures/earth/';
-  const day = L.load(B + '2k_earth_daymap.jpg'), night = L.load(B + '2k_earth_nightmap.jpg'), spec = L.load(B + '2k_earth_specular.jpg'), cloud = L.load(B + '2k_earth_clouds.jpg');
+  const day = L.load(B + 'earth_day.jpg'), night = L.load(B + 'earth_night.png'), spec = L.load(B + 'earth_specular.jpg'), cloud = L.load(B + 'earth_clouds.png');
   [day, night, spec, cloud].forEach(t => { try { t.colorSpace = THREE.SRGBColorSpace; } catch (e) {} });
   const sunDir = new THREE.Vector3(1.0, 0.35, 0.55).normalize();
   const earth = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 64), new THREE.ShaderMaterial({
@@ -113,29 +116,28 @@ function buildNetwork(ctx) {
 }
 
 /* ---------------- ENGINEERING: a wireframe spacecraft that assembles part by part -------- */
-function wf(geo, col) { return new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: col, wireframe: true, transparent: true, opacity: 0 })); }
 function buildAssembly(ctx) {
-  const { root, camera, host } = ctx; root.rotation.x = 0.2;
-  const PARTS = [
-    { m: wf(new THREE.BoxGeometry(1.1, 1.4, 1.1), ICE), at: [0, 0, 0], t0: 0.0 },
-    { m: wf(new THREE.BoxGeometry(2.6, 0.9, 0.05), BLUE), at: [-2.0, 0, 0], t0: 0.12 },
-    { m: wf(new THREE.BoxGeometry(2.6, 0.9, 0.05), BLUE), at: [2.0, 0, 0], t0: 0.18 },
-    { m: wf(new THREE.BoxGeometry(0.12, 0.85, 0.05), GOLD), at: [-0.62, 0, 0], t0: 0.30 },
-    { m: wf(new THREE.BoxGeometry(0.12, 0.85, 0.05), GOLD), at: [0.62, 0, 0], t0: 0.34 },
-    { m: wf(new THREE.ConeGeometry(0.62, 0.5, 22, 1, true), ICE), at: [0, 0, 1.0], rot: [Math.PI/2, 0, 0], t0: 0.46 },
-    { m: wf(new THREE.CylinderGeometry(0.03, 0.03, 1.5, 8), GOLD), at: [0, 1.2, 0], t0: 0.58 },
-    { m: wf(new THREE.BoxGeometry(0.16, 0.16, 0.16), ICE), at: [0, 1.95, 0], t0: 0.66 },
-    { m: wf(new THREE.BoxGeometry(0.5, 0.5, 0.7), BLUE), at: [0, -0.95, 0.18], t0: 0.74 },
-  ];
-  PARTS.forEach(P => { const a = new THREE.Vector3(...P.at); P.aPos = a; P.aRot = new THREE.Euler(...(P.rot || [0,0,0])); const dir = a.clone().normalize(); if (dir.length() < 0.01) dir.set(0, 1, 0); P.ePos = a.clone().add(dir.multiplyScalar(4 + Math.random() * 3)).add(new THREE.Vector3((Math.random()-0.5)*3, (Math.random()-0.5)*3, (Math.random()-0.5)*3)); P.eRot = new THREE.Euler(Math.random()*3, Math.random()*3, Math.random()*3); root.add(P.m); });
-  // a few precision orbit rings around the build
-  const rings = []; [[3.3, 0.5], [3.9, -0.6]].forEach(([rad, tilt]) => { const seg = 140, op = new Float32Array((seg+1)*3); for (let i = 0; i <= seg; i++) { const a = i/seg*Math.PI*2; op[i*3]=Math.cos(a)*rad; op[i*3+2]=Math.sin(a)*rad; } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(op, 3)); const grp = new THREE.Group(); grp.rotation.x = Math.PI/2 + tilt; const m = new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0 }); grp.add(new THREE.Line(g, m)); root.add(grp); rings.push(m); });
+  const { scene, root, camera, host, renderer } = ctx;
+  try { const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; } catch (e) {}
+  const sun = new THREE.DirectionalLight(0xfff4e6, 4.2); sun.position.set(5, 3, 5); scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xbcd4ff, 1.6); fill.position.set(-4, -1, 3); scene.add(fill);
+  scene.add(new THREE.AmbientLight(0x4a566c, 1.2));
+  scene.add(new THREE.HemisphereLight(0x9ab8ff, 0x0a0f18, 0.9));
+  const holder = new THREE.Group(); root.add(holder); let ready = false;
+  const draco = new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
+  const loader = new GLTFLoader(); loader.setDRACOLoader(draco);
+  loader.load('assets/models/hubble.glb', (g) => {
+    const m = g.scene; const box = new THREE.Box3().setFromObject(m); const c = box.getCenter(new THREE.Vector3()), sz = box.getSize(new THREE.Vector3());
+    m.position.sub(c); m.scale.setScalar(3.8 / Math.max(sz.x, sz.y, sz.z));
+    m.traverse(o => { const mm = o.material; if (mm) { if ('envMapIntensity' in mm) mm.envMapIntensity = 2.0; if (mm.metalness > 0.9) mm.metalness = 0.6; if (mm.roughness !== undefined && mm.roughness < 0.25) mm.roughness = 0.35; mm.needsUpdate = true; } });
+    holder.add(m); holder.scale.setScalar(1); ready = true;
+  }, undefined, (e) => console.warn('[hubble] load failed', e));
   let spin = 0;
   return function (p, dt, mx, my) {
-    root.position.x = 1.7 * offset(host); spin += dt * 0.2; root.rotation.y = spin;
-    camera.position.set(lerp(9.5, 7.2, p) + mx * 0.6, lerp(2.4, 0.8, easeIO(p)) - my * 0.5, 0.001); camera.lookAt(root.position.x * 0.6, 0, 0);
-    PARTS.forEach(P => { const lt = easeOut(clamp01((p - P.t0) / 0.26)); P.m.position.lerpVectors(P.ePos, P.aPos, lt); P.m.rotation.set(lerp(P.eRot.x, P.aRot.x, lt), lerp(P.eRot.y, P.aRot.y, lt), lerp(P.eRot.z, P.aRot.z, lt)); P.m.material.opacity = 0.12 + 0.66 * lt; });
-    rings.forEach(m => m.opacity = 0.22 * ramp(p, 0.5, 0.9));
+    root.position.x = 0; spin += dt * 0.16;
+    holder.position.set(0, -0.45, -1.7 * offset(host));
+    holder.rotation.y = spin + p * 2.4; holder.rotation.x = 0.16 + Math.sin(spin * 0.25) * 0.1;
+    camera.position.set(lerp(8.8, 7.4, p) + mx * 0.6, lerp(0.7, 0.15, easeIO(p)) - my * 0.5, 0.001); camera.lookAt(0, -0.35, 0);
   };
 }
 
@@ -174,7 +176,7 @@ function init(host) {
   host.appendChild(renderer.domElement); renderer.domElement.style.cssText = 'width:100%;height:100%;display:block';
   const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
   const root = new THREE.Group(); scene.add(root); starfield(scene);
-  const setProgress = (SCENES[name] || buildGlobe)({ scene, root, camera, host });
+  const setProgress = (SCENES[name] || buildGlobe)({ scene, root, camera, host, renderer });
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
   const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.6, 0.5, 0.72);
