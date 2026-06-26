@@ -318,10 +318,10 @@ main.px ~ .footer{position:relative;z-index:1}
 /* engineering end band only: telescope LEFT, CTA RIGHT; sized to its content so the whole CTA + footer fit at the page bottom */
 .r-split{min-height:auto}
 .r-split::before{background:linear-gradient(100deg,rgba(7,12,22,0) 0%,rgba(7,12,22,.03) 40%,rgba(7,12,22,.46) 62%,rgba(7,12,22,.9) 100%) !important}
-.r-split .band-cta{margin-left:auto;margin-right:clamp(40px,7vw,150px);padding-top:clamp(38px,5vh,56px);padding-bottom:clamp(38px,5vh,56px);max-width:min(500px,42%);text-align:left}
-.r-split .band-cta h2{font-size:clamp(24px,2.6vw,36px);line-height:1.04}
-.r-split .band-cta .lead{max-width:none;margin-top:14px;font-size:15.5px;line-height:1.55}
-.r-split .band-cta .btn-row{justify-content:flex-start;margin-top:22px}
+.r-split .band-cta{margin-left:auto;margin-right:clamp(32px,4vw,80px);padding-top:clamp(38px,5vh,56px);padding-bottom:clamp(38px,5vh,56px);max-width:min(700px,52%);text-align:left}
+.r-split .band-cta h2{font-size:clamp(24px,2.3vw,33px);line-height:1.06}
+.r-split .band-cta .lead{max-width:none;margin-top:16px;font-size:15.5px;line-height:1.6}
+.r-split .band-cta .btn-row{justify-content:flex-start;margin-top:24px}
 @media(max-width:860px){
   .r-split::before{background:linear-gradient(180deg,rgba(7,12,22,.5),rgba(7,12,22,.86)) !important}
   .r-split .band-cta{max-width:100%;margin:0 auto;text-align:center}

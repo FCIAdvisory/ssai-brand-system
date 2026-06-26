@@ -125,7 +125,7 @@ function buildAssembly(ctx) {
   scene.add(new THREE.AmbientLight(0x4a566c, 1.2));
   scene.add(new THREE.HemisphereLight(0x9ab8ff, 0x0a0f18, 0.9));
   // the deep-space object the telescope observes
-  const H = new THREE.Vector3(0, -0.6, 0), T = new THREE.Vector3(0, 2.0, -2.3);
+  const H = new THREE.Vector3(0, 0, 0), T = new THREE.Vector3(2.0, 0.3, 0);
   const tGrp = new THREE.Group(); tGrp.position.copy(T); root.add(tGrp);
   const tGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xffd9b8, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); tGlow.scale.set(2.6, 2.6, 1); tGrp.add(tGlow);
   const tCore = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xfff0e8, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); tCore.scale.set(0.9, 0.9, 1); tGrp.add(tCore);
@@ -136,7 +136,7 @@ function buildAssembly(ctx) {
       fragmentShader: 'uniform sampler2D map; uniform float op; varying vec2 vUv; void main(){ vec4 t=texture2D(map,vUv); float d=distance(vUv,vec2(0.5)); float vig=smoothstep(0.55,0.08,d); gl_FragColor=vec4(t.rgb, t.a*vig*op); }' });
     const pl = new THREE.Mesh(new THREE.PlaneGeometry(4.8, 4.2), mat); tGrp.add(pl); tImg = pl; }, undefined, () => {});
   // aim: local aperture axis -> direction to target
-  const apDir = new THREE.Vector3(0, 1, 0).normalize();
+  const apDir = new THREE.Vector3(0, -1, 0).normalize();
   const aimed = new THREE.Quaternion().setFromUnitVectors(apDir, T.clone().sub(H).normalize());
   const holder = new THREE.Group(); holder.position.copy(H); root.add(holder); let ready = false; const parts = [];
   const draco = new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
@@ -154,9 +154,9 @@ function buildAssembly(ctx) {
   let spin = 0;
   return function (p, dt, mx, my) {
     root.position.x = 0; spin += dt * 0.3;
-    const off = offset(host), slide = off ? ramp(p, 0.48, 0.8) : 0, shiftX = -2.5 * slide, camY = lerp(0.3, 0.1, easeIO(p));
-    holder.position.x = shiftX; holder.position.y = lerp(-0.6, camY + 1.35, slide); holder.scale.setScalar(lerp(1, 0.64, slide));
-    tGrp.position.set(shiftX, holder.position.y + 0.35, -2.3);
+    const off = offset(host), slide = off ? ramp(p, 0.48, 0.8) : 0, shiftX = -3.7 * slide, camY = lerp(0.3, 0.1, easeIO(p));
+    holder.position.x = shiftX; holder.position.y = lerp(-0.6, camY + 0.85, slide); holder.scale.setScalar(lerp(1, 0.66, slide));
+    tGrp.position.set(shiftX + 2.0, holder.position.y + 0.3, 0);
     camera.position.set(mx * 0.5, camY - my * 0.4, lerp(9.6, 12.6, p));
     camera.lookAt(0.7 * slide, lerp(0.5, camY, slide), -0.5);
     for (let i = 0; i < parts.length; i++) { const pt = parts[i], f = REDUCE ? 0 : 1 - easeOut(ramp(p, pt.t0, pt.t0 + 0.4)); pt.mesh.position.copy(pt.home).addScaledVector(pt.scatter, f); }
@@ -166,7 +166,7 @@ function buildAssembly(ctx) {
     const pulse = 0.82 + Math.sin(spin * 1.6) * 0.18;
     tGlow.material.opacity = (0.1 + 0.45 * lock) * pulse;
     tCore.material.opacity = (0.08 + 0.5 * lock) * pulse;
-    if (tImg) { tImg.material.uniforms.op.value = 0.4 * lock; tImg.quaternion.copy(camera.quaternion); }
+    if (tImg) { tImg.material.uniforms.op.value = 0.55 * lock; tImg.quaternion.copy(camera.quaternion); }
     tGrp.scale.setScalar(lerp(0.7, 1.0, lock));
   };
 }
