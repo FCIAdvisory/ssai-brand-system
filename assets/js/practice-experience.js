@@ -155,8 +155,8 @@ function buildAssembly(ctx) {
   return function (p, dt, mx, my) {
     root.position.x = 0; spin += dt * 0.3;
     const off = offset(host), slide = off ? ramp(p, 0.48, 0.8) : 0, shiftX = -2.5 * slide, camY = lerp(0.3, 0.1, easeIO(p));
-    holder.position.x = shiftX; holder.position.y = lerp(-0.6, camY + 1.44, slide); holder.scale.setScalar(lerp(1, 0.9, slide));
-    tGrp.position.set(shiftX, holder.position.y + 0.4, -2.3);
+    holder.position.x = shiftX; holder.position.y = lerp(-0.6, camY + 1.35, slide); holder.scale.setScalar(lerp(1, 0.64, slide));
+    tGrp.position.set(shiftX, holder.position.y + 0.35, -2.3);
     camera.position.set(mx * 0.5, camY - my * 0.4, lerp(9.6, 12.6, p));
     camera.lookAt(0.7 * slide, lerp(0.5, camY, slide), -0.5);
     for (let i = 0; i < parts.length; i++) { const pt = parts[i], f = REDUCE ? 0 : 1 - easeOut(ramp(p, pt.t0, pt.t0 + 0.4)); pt.mesh.position.copy(pt.home).addScaledVector(pt.scatter, f); }
@@ -166,7 +166,7 @@ function buildAssembly(ctx) {
     const pulse = 0.82 + Math.sin(spin * 1.6) * 0.18;
     tGlow.material.opacity = (0.1 + 0.45 * lock) * pulse;
     tCore.material.opacity = (0.08 + 0.5 * lock) * pulse;
-    if (tImg) { tImg.material.uniforms.op.value = 0.6 * lock; tImg.quaternion.copy(camera.quaternion); }
+    if (tImg) { tImg.material.uniforms.op.value = 0.4 * lock; tImg.quaternion.copy(camera.quaternion); }
     tGrp.scale.setScalar(lerp(0.7, 1.0, lock));
   };
 }
