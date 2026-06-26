@@ -292,6 +292,7 @@ img{max-width:100%;display:block}
 .px-canvas{position:absolute;inset:0}
 .px-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,34,.30) 0%,rgba(10,20,34,.12) 24%,rgba(10,20,34,.52) 100%)}
 main.px{position:relative;z-index:1}
+main.px ~ .footer{position:relative;z-index:1}
 .px .section,.px .section.alt,.px .band{background:transparent !important}
 .px .section.alt .container,.px .band .container{position:relative}
 .px-hero{min-height:100vh;display:flex;align-items:center;border-bottom:0 !important;padding:clamp(120px,16vh,184px) 0 clamp(70px,10vh,120px)}

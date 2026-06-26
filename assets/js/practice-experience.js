@@ -116,7 +116,7 @@ function buildNetwork(ctx) {
   };
 }
 
-/* ---------------- ENGINEERING: a wireframe spacecraft that assembles part by part -------- */
+/* ---------------- ENGINEERING: the real NASA Hubble, scattered components reassembling on scroll -------- */
 function buildAssembly(ctx) {
   const { scene, root, camera, host, renderer } = ctx;
   try { const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; } catch (e) {}
@@ -124,20 +124,24 @@ function buildAssembly(ctx) {
   const fill = new THREE.DirectionalLight(0xbcd4ff, 1.6); fill.position.set(-4, -1, 3); scene.add(fill);
   scene.add(new THREE.AmbientLight(0x4a566c, 1.2));
   scene.add(new THREE.HemisphereLight(0x9ab8ff, 0x0a0f18, 0.9));
-  const holder = new THREE.Group(); root.add(holder); let ready = false;
+  const holder = new THREE.Group(); root.add(holder); let ready = false; const parts = [];
   const draco = new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
   const loader = new GLTFLoader(); loader.setDRACOLoader(draco);
   loader.load('assets/models/hubble.glb', (g) => {
     const m = g.scene; const box = new THREE.Box3().setFromObject(m); const c = box.getCenter(new THREE.Vector3()), sz = box.getSize(new THREE.Vector3());
     m.position.sub(c); m.scale.setScalar(3.8 / Math.max(sz.x, sz.y, sz.z));
     m.traverse(o => { const mm = o.material; if (mm) { if ('envMapIntensity' in mm) mm.envMapIntensity = 2.0; if (mm.metalness > 0.9) mm.metalness = 0.6; if (mm.roughness !== undefined && mm.roughness < 0.25) mm.roughness = 0.35; mm.needsUpdate = true; } });
+    m.updateMatrixWorld(true);
+    const pgrp = new THREE.Group(); m.add(pgrp); const meshes = []; m.traverse(o => { if (o.isMesh) meshes.push(o); }); const maxDim = Math.max(sz.x, sz.y, sz.z);
+    meshes.forEach((mesh, i) => { pgrp.attach(mesh); const home = mesh.position.clone(); let dir = home.clone(); if (dir.length() < maxDim * 0.04) { dir.copy(sphere(1)); } dir.normalize(); parts.push({ mesh, home, scatter: dir.multiplyScalar(maxDim * (0.6 + 0.5 * (i % 3))), t0: 0.18 + i * 0.08 }); });
     holder.add(m); holder.scale.setScalar(1); ready = true;
   }, undefined, (e) => console.warn('[hubble] load failed', e));
   let spin = 0;
   return function (p, dt, mx, my) {
     root.position.x = 0; spin += dt * 0.16;
     holder.position.set(0, -0.45, -1.7 * offset(host));
-    holder.rotation.y = spin + p * 2.4; holder.rotation.x = 0.16 + Math.sin(spin * 0.25) * 0.1;
+    holder.rotation.y = spin + p * 1.1; holder.rotation.x = 0.16 + Math.sin(spin * 0.25) * 0.1;
+    for (let i = 0; i < parts.length; i++) { const pt = parts[i], f = REDUCE ? 0 : 1 - easeOut(ramp(p, pt.t0, pt.t0 + 0.4)); pt.mesh.position.copy(pt.home).addScaledVector(pt.scatter, f); }
     camera.position.set(lerp(8.8, 7.4, p) + mx * 0.6, lerp(0.7, 0.15, easeIO(p)) - my * 0.5, 0.001); camera.lookAt(0, -0.35, 0);
   };
 }
