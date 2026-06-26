@@ -306,3 +306,11 @@ main.px ~ .footer{position:relative;z-index:1}
 
 /* glass cards over the live backdrop */
 .px .card{background:rgba(10,16,28,.6) !important;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border-color:rgba(114,135,159,.26)}
+
+/* science: live data-layer readout */
+.px-readout{position:fixed;left:clamp(18px,4vw,46px);bottom:30px;z-index:40;display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--nebula);pointer-events:none;font-family:var(--body)}
+.px-readout-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pxpulse 2.2s ease-in-out infinite}
+.px-readout-k{color:var(--faint)}
+.px-readout-v{color:var(--starlight);font-weight:600}
+@keyframes pxpulse{0%,100%{opacity:.45}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.px-readout-dot{animation:none}}
