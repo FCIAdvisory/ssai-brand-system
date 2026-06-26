@@ -147,7 +147,7 @@ function buildAssembly(ctx) {
     m.traverse(o => { const mm = o.material; if (mm) { if ('envMapIntensity' in mm) mm.envMapIntensity = 2.0; if (mm.metalness > 0.9) mm.metalness = 0.6; if (mm.roughness !== undefined && mm.roughness < 0.25) mm.roughness = 0.35; mm.needsUpdate = true; } });
     m.updateMatrixWorld(true);
     const pgrp = new THREE.Group(); m.add(pgrp); const meshes = []; m.traverse(o => { if (o.isMesh) meshes.push(o); }); const maxDim = Math.max(sz.x, sz.y, sz.z);
-    meshes.forEach((mesh, i) => { pgrp.attach(mesh); const home = mesh.position.clone(); let dir = home.clone(); if (dir.length() < maxDim * 0.04) { dir.copy(sphere(1)); } dir.normalize(); parts.push({ mesh, home, scatter: dir.multiplyScalar(maxDim * (0.4 + 0.4 * (i % 3))), t0: 0.16 + i * 0.08 }); });
+    meshes.forEach((mesh, i) => { pgrp.attach(mesh); const home = mesh.position.clone(); let dir = home.clone(); if (dir.length() < maxDim * 0.04) { dir.copy(sphere(1)); } dir.normalize(); parts.push({ mesh, home, homeQuat: mesh.quaternion.clone(), axis: sphere(1).normalize(), ang: (Math.random() * 2 - 1) * 2.6, scatter: dir.multiplyScalar(maxDim * (0.95 + 0.7 * (i % 3))), t0: 0.1 + i * 0.085 }); });
     holder.add(m); holder.scale.setScalar(1); ready = true;
   }, undefined, (e) => console.warn('[hubble] load failed', e));
   const te = new THREE.Euler(), tumble = new THREE.Quaternion();
@@ -159,7 +159,7 @@ function buildAssembly(ctx) {
     tGrp.position.set(shiftX + 2.0, holder.position.y + 0.3, 0);
     camera.position.set(mx * 0.5, camY - my * 0.4, lerp(9.6, 12.6, p));
     camera.lookAt(0.7 * slide, lerp(0.5, camY, slide), -0.5);
-    for (let i = 0; i < parts.length; i++) { const pt = parts[i], f = REDUCE ? 0 : 1 - easeOut(ramp(p, pt.t0, pt.t0 + 0.4)); pt.mesh.position.copy(pt.home).addScaledVector(pt.scatter, f); }
+    for (let i = 0; i < parts.length; i++) { const pt = parts[i], f = REDUCE ? 0 : 1 - easeOut(ramp(p, pt.t0, pt.t0 + 0.42)); pt.mesh.position.copy(pt.home).addScaledVector(pt.scatter, f); pt.mesh.quaternion.copy(pt.homeQuat); pt.mesh.rotateOnAxis(pt.axis, pt.ang * f); }
     const lock = REDUCE ? 1 : easeIO(ramp(p, 0.4, 0.95));
     te.set(0.3 + Math.sin(spin * 0.4) * 0.25, spin, 0.15); tumble.setFromEuler(te);
     holder.quaternion.slerpQuaternions(tumble, aimed, lock);
