@@ -6,6 +6,9 @@
    assembly (Engineering), pulse (Health). Reduced-motion = one still frame.
    ============================================================================ */
 import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
 const REDUCE = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
 const GOLD = 0xf2c14e, BLUE = 0x4a86dd, ICE = 0xcfe0ff, WARM = 0xffcf8a;
@@ -165,22 +168,27 @@ const SCENES = { globe: buildGlobe, network: buildNetwork, assembly: buildAssemb
 
 function init(host) {
   const name = host.dataset.scene || 'globe';
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.setClearColor(0x080d18, 1);
   host.appendChild(renderer.domElement); renderer.domElement.style.cssText = 'width:100%;height:100%;display:block';
   const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
   const root = new THREE.Group(); scene.add(root); starfield(scene);
   const setProgress = (SCENES[name] || buildGlobe)({ scene, root, camera, host });
-  function resize() { const w = host.clientWidth || innerWidth, h = host.clientHeight || innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.6, 0.5, 0.72);
+  composer.addPass(bloom);
+  function resize() { const w = host.clientWidth || innerWidth, h = host.clientHeight || innerHeight; renderer.setSize(w, h, false); composer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
   resize(); window.addEventListener('resize', resize);
   let mx = 0, my = 0; if (!REDUCE) window.addEventListener('mousemove', (e) => { mx = (e.clientX / innerWidth - 0.5) * 2; my = (e.clientY / innerHeight - 0.5) * 2; }, { passive: true });
   let targetP = 0, curP = 0; const clock = new THREE.Clock();
   function loop() {
     const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
     targetP = clamp01((window.scrollY || window.pageYOffset || 0) / max); curP += (targetP - curP) * 0.08; if (Math.abs(targetP - curP) < 0.0004) curP = targetP;
-    setProgress(curP, Math.min(clock.getDelta(), 0.05), mx, my); renderer.render(scene, camera); requestAnimationFrame(loop);
+    setProgress(curP, Math.min(clock.getDelta(), 0.05), mx, my); composer.render(); requestAnimationFrame(loop);
   }
-  if (REDUCE) { setProgress(0.45, 0.4, 0, 0); renderer.render(scene, camera); } else requestAnimationFrame(loop);
+  if (REDUCE) { setProgress(0.45, 0.4, 0, 0); composer.render(); } else requestAnimationFrame(loop);
 }
 function boot() { document.querySelectorAll('.px-canvas').forEach(el => { try { init(el); } catch (e) { console.warn('practice-experience failed', e); } }); }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
