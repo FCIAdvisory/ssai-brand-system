@@ -315,17 +315,14 @@ main.px ~ .footer{position:relative;z-index:1}
 @keyframes pxpulse{0%,100%{opacity:.45}50%{opacity:1}}
 @media (prefers-reduced-motion:reduce){.px-readout-dot{animation:none}}
 
-/* engineering (px-right): graphic on the LEFT, content + reading scrim on the RIGHT */
-.px-right .px-hero::before{background:linear-gradient(100deg,rgba(8,14,26,0) 0%,rgba(8,14,26,0) 34%,rgba(8,14,26,.5) 60%,rgba(8,14,26,.88) 100%) !important}
-.px-right .px-scrim::before{background:linear-gradient(100deg,rgba(7,12,22,0) 0%,rgba(7,12,22,.1) 34%,rgba(7,12,22,.62) 62%,rgba(7,12,22,.92) 100%)}
-.px-right .px-hero .container,.px-right .px-scrim .container{margin-left:auto;margin-right:0;max-width:min(620px,54%)}
-.px-right .lede-grid{grid-template-columns:1fr;gap:16px}
-.px-right .band-cta{text-align:left}
-.px-right .band-cta .btn-row{justify-content:flex-start}
-@media(max-width:840px){
-  .px-right .px-hero::before{background:linear-gradient(180deg,rgba(8,14,26,.55) 0%,rgba(8,14,26,.3) 42%,rgba(8,14,26,.72) 100%) !important}
-  .px-right .px-scrim::before{background:linear-gradient(180deg,rgba(7,12,22,.5),rgba(7,12,22,.85))}
-  .px-right .px-hero .container,.px-right .px-scrim .container{max-width:100%;margin:0 auto}
-  .px-right .band-cta{text-align:center}
-  .px-right .band-cta .btn-row{justify-content:center}
+/* engineering end band only: telescope LEFT, CTA RIGHT over a left-transparent gradient */
+.r-split::before{background:linear-gradient(100deg,rgba(7,12,22,0) 0%,rgba(7,12,22,.04) 36%,rgba(7,12,22,.5) 58%,rgba(7,12,22,.9) 100%) !important}
+.r-split .band-cta{margin-left:auto;margin-right:0;max-width:min(540px,50%);text-align:left}
+.r-split .band-cta h2{font-size:clamp(26px,3.2vw,44px);line-height:1.02}
+.r-split .band-cta .lead{max-width:none}
+.r-split .band-cta .btn-row{justify-content:flex-start}
+@media(max-width:860px){
+  .r-split::before{background:linear-gradient(180deg,rgba(7,12,22,.5),rgba(7,12,22,.86)) !important}
+  .r-split .band-cta{max-width:100%;margin:0 auto;text-align:center}
+  .r-split .band-cta .btn-row{justify-content:center}
 }

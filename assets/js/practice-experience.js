@@ -130,7 +130,11 @@ function buildAssembly(ctx) {
   const tGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xffd9b8, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); tGlow.scale.set(2.6, 2.6, 1); tGrp.add(tGlow);
   const tCore = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xfff0e8, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); tCore.scale.set(0.9, 0.9, 1); tGrp.add(tCore);
   let tImg = null;
-  new THREE.TextureLoader().load('assets/textures/space/target.jpg', tex => { try { tex.colorSpace = THREE.SRGBColorSpace; } catch (e) {} const pl = new THREE.Mesh(new THREE.PlaneGeometry(7.2, 6.3), new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); tGrp.add(pl); tImg = pl; }, undefined, () => {});
+  new THREE.TextureLoader().load('assets/textures/space/target.jpg', tex => { try { tex.colorSpace = THREE.SRGBColorSpace; } catch (e) {}
+    const mat = new THREE.ShaderMaterial({ uniforms: { map: { value: tex }, op: { value: 0 } }, transparent: true, depthWrite: false,
+      vertexShader: 'varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
+      fragmentShader: 'uniform sampler2D map; uniform float op; varying vec2 vUv; void main(){ vec4 t=texture2D(map,vUv); float d=distance(vUv,vec2(0.5)); float vig=smoothstep(0.55,0.08,d); gl_FragColor=vec4(t.rgb, t.a*vig*op); }' });
+    const pl = new THREE.Mesh(new THREE.PlaneGeometry(6.6, 5.7), mat); tGrp.add(pl); tImg = pl; }, undefined, () => {});
   // aim: local aperture axis -> direction to target
   const apDir = new THREE.Vector3(0, 1, 0).normalize();
   const aimed = new THREE.Quaternion().setFromUnitVectors(apDir, T.clone().sub(H).normalize());
@@ -150,10 +154,10 @@ function buildAssembly(ctx) {
   let spin = 0;
   return function (p, dt, mx, my) {
     root.position.x = 0; spin += dt * 0.3;
-    const off = offset(host), shiftX = off ? -2.2 : 0;
+    const off = offset(host), slide = off ? ramp(p, 0.62, 0.94) : 0, shiftX = -2.4 * slide;
     holder.position.x = shiftX; tGrp.position.x = shiftX;
     camera.position.set(mx * 0.5, lerp(0.3, 0.1, easeIO(p)) - my * 0.4, lerp(9.5, 12.8, p));
-    camera.lookAt(off ? 0.9 : 0, 0.5, -0.6);
+    camera.lookAt(1.0 * slide, 0.5, -0.6);
     for (let i = 0; i < parts.length; i++) { const pt = parts[i], f = REDUCE ? 0 : 1 - easeOut(ramp(p, pt.t0, pt.t0 + 0.4)); pt.mesh.position.copy(pt.home).addScaledVector(pt.scatter, f); }
     const lock = REDUCE ? 1 : easeIO(ramp(p, 0.4, 0.95));
     te.set(0.3 + Math.sin(spin * 0.4) * 0.25, spin, 0.15); tumble.setFromEuler(te);
@@ -161,7 +165,7 @@ function buildAssembly(ctx) {
     const pulse = 0.82 + Math.sin(spin * 1.6) * 0.18;
     tGlow.material.opacity = (0.1 + 0.45 * lock) * pulse;
     tCore.material.opacity = (0.08 + 0.5 * lock) * pulse;
-    if (tImg) { tImg.material.opacity = 0.9 * lock; tImg.quaternion.copy(camera.quaternion); }
+    if (tImg) { tImg.material.uniforms.op.value = 0.95 * lock; tImg.quaternion.copy(camera.quaternion); }
     tGrp.scale.setScalar(lerp(0.7, 1.0, lock));
   };
 }
