@@ -7,7 +7,7 @@
 <meta name="description" content="SSAI builds the systems the mission depends on. Instrument and systems engineering, flight-hardware manufacturing, precision machining and additive, mission operations, and test and evaluation, delivered for federal and defense programs that cannot fail.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="assets/site.css?v=19" rel="stylesheet">
+<link href="assets/site.css?v=20" rel="stylesheet">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <link href="assets/css/wow.css?v=19" rel="stylesheet">
 <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
@@ -23,9 +23,11 @@
   </nav>
 </header>
 
-<main>
+<div class="px-bg"><div class="px-canvas" data-scene="assembly"></div></div>
 
-  <section class="phero shot" style="background-image:url('assets/images/site/instruments/roman-coronagraph-electronics-assembly.jpg')">
+<main class="px">
+
+  <section class="phero px-hero">
     <div class="container">
       <span class="kick">Engineering</span>
       <h1>We build the systems the mission <span class="em">depends on.</span></h1>
@@ -39,7 +41,7 @@
 
   <div class="divider"></div>
 
-  <section class="section">
+  <section class="section px-scrim">
     <div class="container">
       <div class="lede-grid">
         <div>
@@ -161,7 +163,7 @@
     </div>
   </section>
 
-  <section class="band">
+  <section class="band px-scrim">
     <div class="container band-cta">
       <h2>Build the system the mission <span class="em">depends on</span>.</h2>
       <p class="lead">Bring us the requirement, the interface, or the program. We engineer, manufacture, machine, and test the hardware that performs the first time, and every time. Let us show you how we deliver.</p>
@@ -188,5 +190,6 @@
 <script>(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('solid',(window.scrollY||0)>40);}addEventListener('scroll',s,{passive:true});s();var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');if(t)t.addEventListener('click',function(){l.classList.toggle('open');});})();</script>
 <script type="module" src="assets/js/centerpiece.js?v=14"></script>
 <script src="assets/js/site.js?v=14"></script>
+  <script type="module" src="assets/js/practice-experience.js?v=3"></script>
 </body>
 </html>

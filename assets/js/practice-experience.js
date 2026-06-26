@@ -1,22 +1,22 @@
 /* ============================================================================
    SSAI — practice experience: the ENTIRE practice page is one scroll-
-   choreographed piece. A single persistent WebGL backdrop (fixed, full-viewport)
-   lives behind the whole page and EVOLVES with overall scroll, while the content
-   sections choreograph in over it (reveals handled by site.js). One continuous
-   experience from the opening headline to the footer.
-   Mount: <div class="px-bg"><div class="px-canvas" data-scene="globe"></div></div>
-   Reduced-motion: a single still frame, no scroll drive.
+   choreographed piece over a single persistent WebGL backdrop that EVOLVES with
+   overall scroll. Content sections choreograph over it (reveals via site.js).
+   Scenes (data-scene): globe (Science), network (Technology),
+   assembly (Engineering), pulse (Health). Reduced-motion = one still frame.
    ============================================================================ */
 import * as THREE from 'three';
 
 const REDUCE = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
-const GOLD = 0xf2c14e, BLUE = 0x4a86dd, ICE = 0xcfe0ff;
+const GOLD = 0xf2c14e, BLUE = 0x4a86dd, ICE = 0xcfe0ff, WARM = 0xffcf8a;
 const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
 const lerp = (a, b, t) => a + (b - a) * t;
 const easeIO = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+const easeOut = t => 1 - Math.pow(1 - t, 3);
 const ramp = (p, a, b) => clamp01((p - a) / (b - a));
 function sphere(r) { const u = Math.random(), v = Math.random(), th = 2 * Math.PI * u, ph = Math.acos(2 * v - 1); return new THREE.Vector3(r * Math.sin(ph) * Math.cos(th), r * Math.cos(ph), r * Math.sin(ph) * Math.sin(th)); }
 function glowTex() { if (glowTex._c) return glowTex._c; const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.4, 'rgba(255,255,255,0.5)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, 64, 64); glowTex._c = new THREE.CanvasTexture(c); return glowTex._c; }
+function starfield(scene) { const N = 1200, pos = new Float32Array(N * 3); for (let i = 0; i < N; i++) { const v = sphere(27 + Math.random() * 26); pos[i*3]=v.x; pos[i*3+1]=v.y; pos[i*3+2]=v.z; } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); scene.add(new THREE.Points(g, new THREE.PointsMaterial({ color: ICE, size: 0.05, transparent: true, opacity: 0.45, depthWrite: false }))); }
 function sampleLand(url, R, cb) {
   const img = new Image(); img.crossOrigin = 'anonymous';
   img.onload = () => {
@@ -37,89 +37,139 @@ function sampleLand(url, R, cb) {
   };
   img.onerror = () => cb(new Float32Array(0), []); img.src = url;
 }
+function offset(host) { return (host.clientWidth || innerWidth) > 820 ? 1 : 0; }
 
-// gentle backdrop camera: the globe sits center-right and slowly orbits as you scroll
-const KF = [
-  { p: 0.00, pos: [0.2, 0.5, 9.6], reveal: 0.18 },
-  { p: 0.22, pos: [1.4, 0.2, 8.0], reveal: 1.0 },
-  { p: 0.55, pos: [2.0, 0.7, 7.4], reveal: 1.0 },
-  { p: 0.80, pos: [1.2, 1.0, 8.2], reveal: 1.0 },
-  { p: 1.00, pos: [0.4, 0.4, 9.2], reveal: 1.0 },
-];
-function camAt(p) { let i = 0; while (i < KF.length - 2 && p > KF[i + 1].p) i++; const A = KF[i], B = KF[i + 1], t = easeIO(clamp01((p - A.p) / (B.p - A.p))); return { x: lerp(A.pos[0], B.pos[0], t), y: lerp(A.pos[1], B.pos[1], t), z: lerp(A.pos[2], B.pos[2], t), reveal: lerp(A.reveal, B.reveal, t) }; }
-
-function init(host) {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  host.appendChild(renderer.domElement);
-  renderer.domElement.style.cssText = 'width:100%;height:100%;display:block';
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-  const root = new THREE.Group(); scene.add(root); root.rotation.z = 0.36;
-  // push the subject toward the right so the left-aligned copy reads over dark space
-  const rootOffset = () => (host.clientWidth || innerWidth) > 820 ? 2.4 : 0;
-
-  (function stars() { const N = 1200, pos = new Float32Array(N * 3); for (let i = 0; i < N; i++) { const v = sphere(27 + Math.random() * 26); pos[i*3]=v.x; pos[i*3+1]=v.y; pos[i*3+2]=v.z; } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); scene.add(new THREE.Points(g, new THREE.PointsMaterial({ color: ICE, size: 0.05, transparent: true, opacity: 0.45, depthWrite: false }))); })();
-
+/* ---------------- SCIENCE: a particle Earth whose data network builds ---------------- */
+const GKF = [{ p: 0, pos: [0.2, 0.5, 9.6], rv: 0.18 }, { p: 0.22, pos: [1.4, 0.2, 8.0], rv: 1 }, { p: 0.55, pos: [2.0, 0.7, 7.4], rv: 1 }, { p: 0.8, pos: [1.2, 1.0, 8.2], rv: 1 }, { p: 1, pos: [0.4, 0.4, 9.2], rv: 1 }];
+function kf(K, p) { let i = 0; while (i < K.length - 2 && p > K[i + 1].p) i++; const A = K[i], B = K[i + 1], t = easeIO(clamp01((p - A.p) / (B.p - A.p))); return { x: lerp(A.pos[0], B.pos[0], t), y: lerp(A.pos[1], B.pos[1], t), z: lerp(A.pos[2], B.pos[2], t), rv: lerp(A.rv, B.rv, t) }; }
+function buildGlobe(ctx) {
+  const { scene, root, camera, host } = ctx; root.rotation.z = 0.36;
   const R = 2.25, globe = new THREE.Group(); root.add(globe);
   const shellMat = new THREE.PointsMaterial({ color: BLUE, size: 0.02, transparent: true, opacity: 0.3, depthWrite: false });
-  (function shell() { const N = 2200, pos = new Float32Array(N * 3); for (let i = 0; i < N; i++) { const v = sphere(R); pos[i*3]=v.x; pos[i*3+1]=v.y; pos[i*3+2]=v.z; } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); globe.add(new THREE.Points(g, shellMat)); })();
-
-  const landGeo = new THREE.BufferGeometry();
-  const landMat = new THREE.PointsMaterial({ color: ICE, size: 0.035, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
-  globe.add(new THREE.Points(landGeo, landMat));
-  const landAnchors = [];
-  sampleLand('assets/images/scenes/journey/earth-day.jpg', R, (pos, anchors) => { landGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); landAnchors.push(...anchors); for (let i = 0; i < 18; i++) addArc(); });
-
-  const atmo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x3c7be0, transparent: true, opacity: 0.5, depthWrite: false }));
-  atmo.scale.set(R * 4.5, R * 4.5, 1); atmo.position.z = -0.6; globe.add(atmo);
-
+  (function () { const N = 2200, pos = new Float32Array(N * 3); for (let i = 0; i < N; i++) { const v = sphere(R); pos[i*3]=v.x; pos[i*3+1]=v.y; pos[i*3+2]=v.z; } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); globe.add(new THREE.Points(g, shellMat)); })();
+  const landGeo = new THREE.BufferGeometry(), landMat = new THREE.PointsMaterial({ color: ICE, size: 0.035, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
+  globe.add(new THREE.Points(landGeo, landMat)); const anchors = [];
+  sampleLand('assets/images/scenes/journey/earth-day.jpg', R, (pos, a) => { landGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); anchors.push(...a); for (let i = 0; i < 18; i++) addArc(); });
+  const atmo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x3c7be0, transparent: true, opacity: 0.5, depthWrite: false })); atmo.scale.set(R * 4.5, R * 4.5, 1); atmo.position.z = -0.6; globe.add(atmo);
   const sats = [];
-  [[R*1.45,0.5,0,GOLD],[R*1.8,-0.7,1.2,BLUE],[R*2.2,0.3,2.4,GOLD],[R*2.6,1.0,0.7,ICE]].forEach(([rad,tilt,phase,col]) => {
-    const grp = new THREE.Group(); grp.rotation.x = Math.PI/2 + tilt; grp.rotation.y = phase; root.add(grp);
-    const seg = 160, op = new Float32Array((seg+1)*3); for (let i = 0; i <= seg; i++) { const a = i/seg*Math.PI*2; op[i*3]=Math.cos(a)*rad; op[i*3+1]=0; op[i*3+2]=Math.sin(a)*rad; }
+  [[R*1.45,0.5,0,GOLD],[R*1.8,-0.7,1.2,BLUE],[R*2.2,0.3,2.4,GOLD],[R*2.6,1.0,0.7,ICE]].forEach(([rad,tilt,ph,col]) => {
+    const grp = new THREE.Group(); grp.rotation.x = Math.PI/2 + tilt; grp.rotation.y = ph; root.add(grp);
+    const seg = 160, op = new Float32Array((seg+1)*3); for (let i = 0; i <= seg; i++) { const a = i/seg*Math.PI*2; op[i*3]=Math.cos(a)*rad; op[i*3+2]=Math.sin(a)*rad; }
     const og = new THREE.BufferGeometry(); og.setAttribute('position', new THREE.BufferAttribute(op, 3));
     const lineMat = new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0 }); grp.add(new THREE.Line(og, lineMat));
     const sat = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 12), new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0 }));
     const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: col, transparent: true, opacity: 0, depthWrite: false })); glow.scale.set(0.4, 0.4, 1); sat.add(glow); grp.add(sat);
     sats.push({ sat, glow, lineMat, satMat: sat.material, rad, a: Math.random()*6.28, spd: 0.16 + Math.random()*0.16 });
   });
-
   const arcGroup = new THREE.Group(); globe.add(arcGroup); const arcs = [];
-  function addArc() { if (landAnchors.length < 2) return; const a = landAnchors[(Math.random()*landAnchors.length)|0], b = landAnchors[(Math.random()*landAnchors.length)|0]; if (a === b) return; const mid = a.clone().add(b).multiplyScalar(0.5).normalize().multiplyScalar(R * (1.3 + Math.random()*0.35)); const pts = new THREE.QuadraticBezierCurve3(a, mid, b).getPoints(46); const m = new THREE.LineBasicMaterial({ color: Math.random() > 0.5 ? GOLD : ICE, transparent: true, opacity: 0 }); arcGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), m)); arcs.push({ m, life: Math.random()*4, dur: 3 + Math.random()*3 }); }
-
-  let spin = 0, mx = 0, my = 0;
-  if (!REDUCE) window.addEventListener('mousemove', (e) => { mx = (e.clientX / window.innerWidth - 0.5) * 2; my = (e.clientY / window.innerHeight - 0.5) * 2; }, { passive: true });
-
-  function setProgress(p, dt) {
-    const c = camAt(p);
-    root.position.x = rootOffset();
-    camera.position.set(c.x + mx * 0.5, c.y - my * 0.4, c.z);
-    camera.lookAt(root.position.x * 0.62, 0, 0);
-    landMat.opacity = 0.74 * c.reveal; shellMat.opacity = 0.12 + 0.2 * c.reveal; atmo.material.opacity = 0.5 * c.reveal;
-    const netw = ramp(p, 0.3, 0.72);
-    sats.forEach(s => { s.lineMat.opacity = 0.22 * netw; s.satMat.opacity = netw; s.glow.material.opacity = 0.8 * netw; });
-    const arcI = ramp(p, 0.2, 0.7);
-    spin += dt * (0.035 + 0.05 * p); globe.rotation.y = spin; globe.scale.setScalar(1 + Math.sin(spin * 1.1) * 0.01);
+  function addArc() { if (anchors.length < 2) return; const a = anchors[(Math.random()*anchors.length)|0], b = anchors[(Math.random()*anchors.length)|0]; if (a === b) return; const mid = a.clone().add(b).multiplyScalar(0.5).normalize().multiplyScalar(R * (1.3 + Math.random()*0.35)); const pts = new THREE.QuadraticBezierCurve3(a, mid, b).getPoints(46); const m = new THREE.LineBasicMaterial({ color: Math.random() > 0.5 ? GOLD : ICE, transparent: true, opacity: 0 }); arcGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), m)); arcs.push({ m, life: Math.random()*4, dur: 3 + Math.random()*3 }); }
+  let spin = 0;
+  return function (p, dt, mx, my) {
+    const c = kf(GKF, p); root.position.x = 2.4 * offset(host);
+    camera.position.set(c.x + mx * 0.5, c.y - my * 0.4, c.z); camera.lookAt(root.position.x * 0.62, 0, 0);
+    landMat.opacity = 0.74 * c.rv; shellMat.opacity = 0.12 + 0.2 * c.rv; atmo.material.opacity = 0.5 * c.rv;
+    const netw = ramp(p, 0.3, 0.72); sats.forEach(s => { s.lineMat.opacity = 0.22 * netw; s.satMat.opacity = netw; s.glow.material.opacity = 0.8 * netw; s.a += dt * s.spd; s.sat.position.set(Math.cos(s.a)*s.rad, 0, Math.sin(s.a)*s.rad); });
+    const arcI = ramp(p, 0.2, 0.7); spin += dt * (0.035 + 0.05 * p); globe.rotation.y = spin; globe.scale.setScalar(1 + Math.sin(spin * 1.1) * 0.01);
     arcs.forEach(o => { o.life += dt; o.m.opacity = Math.sin((o.life % o.dur) / o.dur * Math.PI) * 0.7 * arcI; });
-  }
-
-  function resize() { const w = host.clientWidth || innerWidth, h = host.clientHeight || innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
-  resize(); window.addEventListener('resize', resize);
-
-  let targetP = 0, curP = 0; const clock = new THREE.Clock();
-  function loop() {
-    const max = Math.max(1, (document.documentElement.scrollHeight - innerHeight));
-    targetP = clamp01((window.scrollY || window.pageYOffset || 0) / max);
-    curP += (targetP - curP) * 0.08; if (Math.abs(targetP - curP) < 0.0004) curP = targetP;
-    setProgress(curP, Math.min(clock.getDelta(), 0.05));
-    renderer.render(scene, camera);
-    requestAnimationFrame(loop);
-  }
-  if (REDUCE) { setProgress(0.4, 0.4); renderer.render(scene, camera); }
-  else requestAnimationFrame(loop);
+  };
 }
 
+/* ---------------- TECHNOLOGY: a data/neural network that grows + lights up ---------------- */
+function buildNetwork(ctx) {
+  const { root, camera, host } = ctx;
+  const N = 260, nodes = [], npos = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) { const v = sphere(2.3 + Math.random() * 1.0); npos[i*3]=v.x; npos[i*3+1]=v.y; npos[i*3+2]=v.z; nodes.push(v); }
+  const ng = new THREE.BufferGeometry(); ng.setAttribute('position', new THREE.BufferAttribute(npos, 3));
+  const nodeMat = new THREE.PointsMaterial({ color: ICE, size: 0.07, transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending });
+  root.add(new THREE.Points(ng, nodeMat));
+  const segs = [], pairs = [];
+  for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) { if (nodes[i].distanceTo(nodes[j]) < 1.0 && Math.random() < 0.55) { segs.push(nodes[i].x,nodes[i].y,nodes[i].z, nodes[j].x,nodes[j].y,nodes[j].z); pairs.push([nodes[i], nodes[j]]); if (pairs.length > 520) { i = N; break; } } }
+  const lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(segs), 3));
+  const linkMat = new THREE.LineBasicMaterial({ color: BLUE, transparent: true, opacity: 0 }); root.add(new THREE.LineSegments(lg, linkMat));
+  const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x2f6fd0, transparent: true, opacity: 0.4, depthWrite: false })); core.scale.set(7, 7, 1); root.add(core);
+  const pulses = []; for (let i = 0; i < 14; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: i % 3 ? ICE : GOLD, transparent: true, opacity: 0, depthWrite: false })); s.scale.set(0.26, 0.26, 1); root.add(s); pulses.push({ s, lk: pairs[(Math.random()*pairs.length)|0], t: Math.random(), spd: 0.4 + Math.random() * 0.6 }); }
+  let spin = 0;
+  return function (p, dt, mx, my) {
+    root.position.x = 1.7 * offset(host); spin += dt * (0.05 + 0.05 * p); root.rotation.y = spin; root.rotation.x = 0.2 + Math.sin(spin * 0.3) * 0.08;
+    camera.position.set(lerp(8.4, 6.6, p) + mx * 0.6, 0.3 - my * 0.45, 0.001); camera.lookAt(root.position.x * 0.6, 0, 0);
+    const rev = ramp(p, 0.04, 0.6); nodeMat.opacity = 0.2 + 0.75 * rev;
+    linkMat.opacity = 0.5 * ramp(p, 0.12, 0.78);
+    pulses.forEach(pl => { pl.t += dt * pl.spd; if (pl.t > 1) { pl.t = 0; pl.lk = pairs[(Math.random()*pairs.length)|0]; } if (pl.lk) { pl.s.position.lerpVectors(pl.lk[0], pl.lk[1], pl.t); pl.s.material.opacity = Math.sin(pl.t * Math.PI) * 0.95 * ramp(p, 0.18, 0.55); } });
+  };
+}
+
+/* ---------------- ENGINEERING: a wireframe spacecraft that assembles part by part -------- */
+function wf(geo, col) { return new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: col, wireframe: true, transparent: true, opacity: 0 })); }
+function buildAssembly(ctx) {
+  const { root, camera, host } = ctx; root.rotation.x = 0.2;
+  const PARTS = [
+    { m: wf(new THREE.BoxGeometry(1.1, 1.4, 1.1), ICE), at: [0, 0, 0], t0: 0.0 },
+    { m: wf(new THREE.BoxGeometry(2.6, 0.9, 0.05), BLUE), at: [-2.0, 0, 0], t0: 0.12 },
+    { m: wf(new THREE.BoxGeometry(2.6, 0.9, 0.05), BLUE), at: [2.0, 0, 0], t0: 0.18 },
+    { m: wf(new THREE.BoxGeometry(0.12, 0.85, 0.05), GOLD), at: [-0.62, 0, 0], t0: 0.30 },
+    { m: wf(new THREE.BoxGeometry(0.12, 0.85, 0.05), GOLD), at: [0.62, 0, 0], t0: 0.34 },
+    { m: wf(new THREE.ConeGeometry(0.62, 0.5, 22, 1, true), ICE), at: [0, 0, 1.0], rot: [Math.PI/2, 0, 0], t0: 0.46 },
+    { m: wf(new THREE.CylinderGeometry(0.03, 0.03, 1.5, 8), GOLD), at: [0, 1.2, 0], t0: 0.58 },
+    { m: wf(new THREE.BoxGeometry(0.16, 0.16, 0.16), ICE), at: [0, 1.95, 0], t0: 0.66 },
+    { m: wf(new THREE.BoxGeometry(0.5, 0.5, 0.7), BLUE), at: [0, -0.95, 0.18], t0: 0.74 },
+  ];
+  PARTS.forEach(P => { const a = new THREE.Vector3(...P.at); P.aPos = a; P.aRot = new THREE.Euler(...(P.rot || [0,0,0])); const dir = a.clone().normalize(); if (dir.length() < 0.01) dir.set(0, 1, 0); P.ePos = a.clone().add(dir.multiplyScalar(4 + Math.random() * 3)).add(new THREE.Vector3((Math.random()-0.5)*3, (Math.random()-0.5)*3, (Math.random()-0.5)*3)); P.eRot = new THREE.Euler(Math.random()*3, Math.random()*3, Math.random()*3); root.add(P.m); });
+  // a few precision orbit rings around the build
+  const rings = []; [[3.3, 0.5], [3.9, -0.6]].forEach(([rad, tilt]) => { const seg = 140, op = new Float32Array((seg+1)*3); for (let i = 0; i <= seg; i++) { const a = i/seg*Math.PI*2; op[i*3]=Math.cos(a)*rad; op[i*3+2]=Math.sin(a)*rad; } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(op, 3)); const grp = new THREE.Group(); grp.rotation.x = Math.PI/2 + tilt; const m = new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0 }); grp.add(new THREE.Line(g, m)); root.add(grp); rings.push(m); });
+  let spin = 0;
+  return function (p, dt, mx, my) {
+    root.position.x = 1.7 * offset(host); spin += dt * 0.2; root.rotation.y = spin;
+    camera.position.set(lerp(9.5, 7.2, p) + mx * 0.6, lerp(2.4, 0.8, easeIO(p)) - my * 0.5, 0.001); camera.lookAt(root.position.x * 0.6, 0, 0);
+    PARTS.forEach(P => { const lt = easeOut(clamp01((p - P.t0) / 0.26)); P.m.position.lerpVectors(P.ePos, P.aPos, lt); P.m.rotation.set(lerp(P.eRot.x, P.aRot.x, lt), lerp(P.eRot.y, P.aRot.y, lt), lerp(P.eRot.z, P.aRot.z, lt)); P.m.material.opacity = 0.12 + 0.66 * lt; });
+    rings.forEach(m => m.opacity = 0.22 * ramp(p, 0.5, 0.9));
+  };
+}
+
+/* ---------------- HEALTH: a steady pulse in the void, orbits building around it ---------- */
+function beat(t) { const x = (t % 1.15) / 1.15; const a = Math.exp(-Math.pow((x - 0.0) / 0.06, 2)), b = Math.exp(-Math.pow((x - 0.16) / 0.07, 2)) * 0.7; return a + b; }
+function buildPulse(ctx) {
+  const { root, camera, host } = ctx;
+  const coreGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: WARM, transparent: true, opacity: 0.9, depthWrite: false })); coreGlow.scale.set(2.4, 2.4, 1); root.add(coreGlow);
+  const coreShell = (function () { const N = 900, pos = new Float32Array(N * 3); for (let i = 0; i < N; i++) { const v = sphere(0.62); pos[i*3]=v.x; pos[i*3+1]=v.y; pos[i*3+2]=v.z; } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); const m = new THREE.Points(g, new THREE.PointsMaterial({ color: WARM, size: 0.03, transparent: true, opacity: 0.9, depthWrite: false, blending: THREE.AdditiveBlending })); root.add(m); return m; })();
+  // orbiting particle rings
+  const orbits = []; [[1.5, 0.4, ICE], [2.1, -0.7, BLUE], [2.8, 0.3, ICE], [3.5, 1.0, GOLD]].forEach(([rad, tilt, col]) => {
+    const M = 60, pos = new Float32Array(M * 3); for (let i = 0; i < M; i++) { const a = Math.random()*Math.PI*2; pos[i*3]=Math.cos(a)*rad; pos[i*3+1]=(Math.random()-0.5)*0.1; pos[i*3+2]=Math.sin(a)*rad; }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); const grp = new THREE.Group(); grp.rotation.x = Math.PI/2 + tilt;
+    const m = new THREE.PointsMaterial({ color: col, size: 0.05, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }); grp.add(new THREE.Points(g, m)); root.add(grp);
+    orbits.push({ grp, m, spd: 0.12 + Math.random() * 0.16, reveal: rad });
+  });
+  // expanding pulse rings on each beat
+  const prings = []; for (let i = 0; i < 3; i++) { const g = new THREE.RingGeometry(0.95, 1.0, 64); const m = new THREE.MeshBasicMaterial({ color: WARM, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false }); const mesh = new THREE.Mesh(g, m); mesh.rotation.x = Math.PI / 2.3; root.add(mesh); prings.push({ mesh, m, ph: i / 3 }); }
+  let t = 0, spin = 0;
+  return function (p, dt, mx, my) {
+    t += dt; spin += dt * 0.05; root.position.x = 1.5 * offset(host); root.rotation.y = spin;
+    camera.position.set(lerp(8.5, 6.8, p) + mx * 0.5, 0.4 - my * 0.4, 0.001); camera.lookAt(root.position.x * 0.6, 0, 0);
+    const bt = beat(t), s = 1 + bt * 0.16; coreGlow.scale.set(2.4 * s, 2.4 * s, 1); coreGlow.material.opacity = 0.7 + bt * 0.3; coreShell.scale.setScalar(s); coreShell.material.opacity = 0.7 + bt * 0.3;
+    orbits.forEach((o, i) => { o.grp.rotation.z += dt * o.spd; o.m.opacity = 0.85 * ramp(p, 0.08 + i * 0.12, 0.4 + i * 0.13); });
+    prings.forEach(pr => { const ph = (t * 0.5 + pr.ph) % 1; pr.mesh.scale.setScalar(0.8 + ph * 3.2); pr.m.opacity = (1 - ph) * 0.4 * (bt > 0.3 ? 1 : 0.5) * ramp(p, 0.1, 0.5); });
+  };
+}
+
+const SCENES = { globe: buildGlobe, network: buildNetwork, assembly: buildAssembly, pulse: buildPulse };
+
+function init(host) {
+  const name = host.dataset.scene || 'globe';
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  host.appendChild(renderer.domElement); renderer.domElement.style.cssText = 'width:100%;height:100%;display:block';
+  const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+  const root = new THREE.Group(); scene.add(root); starfield(scene);
+  const setProgress = (SCENES[name] || buildGlobe)({ scene, root, camera, host });
+  function resize() { const w = host.clientWidth || innerWidth, h = host.clientHeight || innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  resize(); window.addEventListener('resize', resize);
+  let mx = 0, my = 0; if (!REDUCE) window.addEventListener('mousemove', (e) => { mx = (e.clientX / innerWidth - 0.5) * 2; my = (e.clientY / innerHeight - 0.5) * 2; }, { passive: true });
+  let targetP = 0, curP = 0; const clock = new THREE.Clock();
+  function loop() {
+    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    targetP = clamp01((window.scrollY || window.pageYOffset || 0) / max); curP += (targetP - curP) * 0.08; if (Math.abs(targetP - curP) < 0.0004) curP = targetP;
+    setProgress(curP, Math.min(clock.getDelta(), 0.05), mx, my); renderer.render(scene, camera); requestAnimationFrame(loop);
+  }
+  if (REDUCE) { setProgress(0.45, 0.4, 0, 0); renderer.render(scene, camera); } else requestAnimationFrame(loop);
+}
 function boot() { document.querySelectorAll('.px-canvas').forEach(el => { try { init(el); } catch (e) { console.warn('practice-experience failed', e); } }); }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();

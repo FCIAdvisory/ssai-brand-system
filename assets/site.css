@@ -302,3 +302,6 @@ main.px{position:relative;z-index:1}
 /* reading scrim for text-heavy sections over the backdrop */
 .px-scrim{position:relative}
 .px-scrim::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(100deg,rgba(7,12,22,.92) 0%,rgba(7,12,22,.74) 46%,rgba(7,12,22,.34) 74%,rgba(7,12,22,.64) 100%)}
+
+/* glass cards over the live backdrop */
+.px .card{background:rgba(10,16,28,.6) !important;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border-color:rgba(114,135,159,.26)}
