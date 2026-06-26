@@ -118,7 +118,7 @@ function buildNetwork(ctx) {
 
 /* ---------------- ENGINEERING: the real NASA Hubble, scattered components reassembling on scroll -------- */
 function buildAssembly(ctx) {
-  const { scene, root, camera, renderer } = ctx;
+  const { scene, root, camera, host, renderer } = ctx;
   try { const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; } catch (e) {}
   const sun = new THREE.DirectionalLight(0xfff4e6, 4.2); sun.position.set(5, 3, 5); scene.add(sun);
   const fill = new THREE.DirectionalLight(0xbcd4ff, 1.6); fill.position.set(-4, -1, 3); scene.add(fill);
@@ -150,8 +150,10 @@ function buildAssembly(ctx) {
   let spin = 0;
   return function (p, dt, mx, my) {
     root.position.x = 0; spin += dt * 0.3;
+    const off = offset(host), shiftX = off ? -2.2 : 0;
+    holder.position.x = shiftX; tGrp.position.x = shiftX;
     camera.position.set(mx * 0.5, lerp(0.3, 0.1, easeIO(p)) - my * 0.4, lerp(9.5, 12.8, p));
-    camera.lookAt(0, 0.5, -0.6);
+    camera.lookAt(off ? 0.9 : 0, 0.5, -0.6);
     for (let i = 0; i < parts.length; i++) { const pt = parts[i], f = REDUCE ? 0 : 1 - easeOut(ramp(p, pt.t0, pt.t0 + 0.4)); pt.mesh.position.copy(pt.home).addScaledVector(pt.scatter, f); }
     const lock = REDUCE ? 1 : easeIO(ramp(p, 0.4, 0.95));
     te.set(0.3 + Math.sin(spin * 0.4) * 0.25, spin, 0.15); tumble.setFromEuler(te);
