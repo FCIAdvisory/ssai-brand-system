@@ -118,13 +118,23 @@ function buildNetwork(ctx) {
 
 /* ---------------- ENGINEERING: the real NASA Hubble, scattered components reassembling on scroll -------- */
 function buildAssembly(ctx) {
-  const { scene, root, camera, host, renderer } = ctx;
+  const { scene, root, camera, renderer } = ctx;
   try { const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; } catch (e) {}
   const sun = new THREE.DirectionalLight(0xfff4e6, 4.2); sun.position.set(5, 3, 5); scene.add(sun);
   const fill = new THREE.DirectionalLight(0xbcd4ff, 1.6); fill.position.set(-4, -1, 3); scene.add(fill);
   scene.add(new THREE.AmbientLight(0x4a566c, 1.2));
   scene.add(new THREE.HemisphereLight(0x9ab8ff, 0x0a0f18, 0.9));
-  const holder = new THREE.Group(); root.add(holder); let ready = false; const parts = [];
+  // the deep-space object the telescope observes
+  const H = new THREE.Vector3(0, -0.5, 0), T = new THREE.Vector3(0, 1.7, -2.6);
+  const tGrp = new THREE.Group(); tGrp.position.copy(T); root.add(tGrp);
+  const tGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xffd9b8, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); tGlow.scale.set(2.6, 2.6, 1); tGrp.add(tGlow);
+  const tCore = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xfff0e8, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); tCore.scale.set(0.9, 0.9, 1); tGrp.add(tCore);
+  let tImg = null;
+  new THREE.TextureLoader().load('assets/textures/space/target.jpg', tex => { try { tex.colorSpace = THREE.SRGBColorSpace; } catch (e) {} const pl = new THREE.Mesh(new THREE.PlaneGeometry(7.2, 6.3), new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); tGrp.add(pl); tImg = pl; }, undefined, () => {});
+  // aim: local aperture axis -> direction to target
+  const apDir = new THREE.Vector3(0, 1, 0).normalize();
+  const aimed = new THREE.Quaternion().setFromUnitVectors(apDir, T.clone().sub(H).normalize());
+  const holder = new THREE.Group(); holder.position.copy(H); root.add(holder); let ready = false; const parts = [];
   const draco = new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
   const loader = new GLTFLoader(); loader.setDRACOLoader(draco);
   loader.load('assets/models/hubble.glb', (g) => {
@@ -133,16 +143,24 @@ function buildAssembly(ctx) {
     m.traverse(o => { const mm = o.material; if (mm) { if ('envMapIntensity' in mm) mm.envMapIntensity = 2.0; if (mm.metalness > 0.9) mm.metalness = 0.6; if (mm.roughness !== undefined && mm.roughness < 0.25) mm.roughness = 0.35; mm.needsUpdate = true; } });
     m.updateMatrixWorld(true);
     const pgrp = new THREE.Group(); m.add(pgrp); const meshes = []; m.traverse(o => { if (o.isMesh) meshes.push(o); }); const maxDim = Math.max(sz.x, sz.y, sz.z);
-    meshes.forEach((mesh, i) => { pgrp.attach(mesh); const home = mesh.position.clone(); let dir = home.clone(); if (dir.length() < maxDim * 0.04) { dir.copy(sphere(1)); } dir.normalize(); parts.push({ mesh, home, scatter: dir.multiplyScalar(maxDim * (0.6 + 0.5 * (i % 3))), t0: 0.18 + i * 0.08 }); });
+    meshes.forEach((mesh, i) => { pgrp.attach(mesh); const home = mesh.position.clone(); let dir = home.clone(); if (dir.length() < maxDim * 0.04) { dir.copy(sphere(1)); } dir.normalize(); parts.push({ mesh, home, scatter: dir.multiplyScalar(maxDim * (0.4 + 0.4 * (i % 3))), t0: 0.16 + i * 0.08 }); });
     holder.add(m); holder.scale.setScalar(1); ready = true;
   }, undefined, (e) => console.warn('[hubble] load failed', e));
+  const te = new THREE.Euler(), tumble = new THREE.Quaternion();
   let spin = 0;
   return function (p, dt, mx, my) {
-    root.position.x = 0; spin += dt * 0.16;
-    holder.position.set(0, -0.45, -1.7 * offset(host));
-    holder.rotation.y = spin + p * 1.1; holder.rotation.x = 0.16 + Math.sin(spin * 0.25) * 0.1;
+    root.position.x = 0; spin += dt * 0.3;
+    camera.position.set(mx * 0.5, lerp(0.3, 0.1, easeIO(p)) - my * 0.4, lerp(9.5, 12.8, p));
+    camera.lookAt(0, 0.5, -0.6);
     for (let i = 0; i < parts.length; i++) { const pt = parts[i], f = REDUCE ? 0 : 1 - easeOut(ramp(p, pt.t0, pt.t0 + 0.4)); pt.mesh.position.copy(pt.home).addScaledVector(pt.scatter, f); }
-    camera.position.set(lerp(8.8, 7.4, p) + mx * 0.6, lerp(0.7, 0.15, easeIO(p)) - my * 0.5, 0.001); camera.lookAt(0, -0.35, 0);
+    const lock = REDUCE ? 1 : easeIO(ramp(p, 0.4, 0.95));
+    te.set(0.3 + Math.sin(spin * 0.4) * 0.25, spin, 0.15); tumble.setFromEuler(te);
+    holder.quaternion.slerpQuaternions(tumble, aimed, lock);
+    const pulse = 0.82 + Math.sin(spin * 1.6) * 0.18;
+    tGlow.material.opacity = (0.1 + 0.45 * lock) * pulse;
+    tCore.material.opacity = (0.08 + 0.5 * lock) * pulse;
+    if (tImg) { tImg.material.opacity = 0.9 * lock; tImg.quaternion.copy(camera.quaternion); }
+    tGrp.scale.setScalar(lerp(0.7, 1.0, lock));
   };
 }
 
