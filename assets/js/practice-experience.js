@@ -155,7 +155,8 @@ function buildAssembly(ctx) {
   return function (p, dt, mx, my) {
     root.position.x = 0; spin += dt * 0.3;
     const off = offset(host), slide = off ? ramp(p, 0.48, 0.8) : 0, shiftX = -2.5 * slide, camY = lerp(0.3, 0.1, easeIO(p));
-    holder.position.x = shiftX; holder.position.y = lerp(-0.6, camY + 0.05, slide); tGrp.position.x = shiftX; tGrp.position.y = lerp(2.0, 2.7, slide);
+    holder.position.x = shiftX; holder.position.y = lerp(-0.6, camY + 1.7, slide);
+    tGrp.position.set(shiftX, holder.position.y, -2.3);
     camera.position.set(mx * 0.5, camY - my * 0.4, lerp(9.6, 12.6, p));
     camera.lookAt(0.7 * slide, lerp(0.5, camY, slide), -0.5);
     for (let i = 0; i < parts.length; i++) { const pt = parts[i], f = REDUCE ? 0 : 1 - easeOut(ramp(p, pt.t0, pt.t0 + 0.4)); pt.mesh.position.copy(pt.home).addScaledVector(pt.scatter, f); }
