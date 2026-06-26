@@ -2,8 +2,9 @@
    SSAI — practice experience: the ENTIRE practice page is one scroll-
    choreographed piece over a single persistent WebGL backdrop that EVOLVES with
    overall scroll. Content sections choreograph over it (reveals via site.js).
-   Scenes (data-scene): globe (Science), network (Technology),
-   assembly (Engineering), pulse (Health). Reduced-motion = one still frame.
+   Scenes (data-scene): globe (Science), orbit (Technology = real GOES weather
+   satellite over the real Earth), assembly (Engineering), pulse (Health).
+   Reduced-motion = one still frame.
    ============================================================================ */
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -91,57 +92,106 @@ function buildGlobe(ctx) {
   };
 }
 
-/* ---------------- TECHNOLOGY: IntelliCore mission-AI core - raw data fires through neural layers into resolved intelligence ---------------- */
-function buildNetwork(ctx) {
-  const { root, camera, host } = ctx; root.rotation.y = 0.5; root.rotation.x = 0.12;
-  const lx = [-2.6, -1.75, -0.9, 0, 0.9, 1.75, 2.6];
-  const lr = [1.55, 1.78, 1.95, 2.05, 1.78, 1.35, 0.95];
-  const ln = [46, 76, 102, 114, 90, 58, 28];
-  const NTOT = ln.reduce((a, b) => a + b, 0);
-  const pos = new Float32Array(NTOT * 3); const layerNodes = []; let k = 0;
-  for (let li = 0; li < lx.length; li++) {
-    const R = lr[li], N = ln[li], arr = [];
-    for (let i = 0; i < N; i++) {
-      let y, z;
-      if (li === lx.length - 1) { const a = (i / N) * Math.PI * 2; y = Math.cos(a) * R * 0.72; z = Math.sin(a) * R * 0.72; }
-      else if (li === 0) { const v = sphere(R * (0.55 + Math.random() * 0.55)); y = v.y; z = v.z; }
-      else { const a = Math.random() * Math.PI * 2, r = R * Math.sqrt(Math.random()); y = Math.cos(a) * r; z = Math.sin(a) * r; }
-      pos[k * 3] = lx[li]; pos[k * 3 + 1] = y; pos[k * 3 + 2] = z; arr.push(k); k++;
-    }
-    layerNodes.push(arr);
-  }
-  const ng = new THREE.BufferGeometry(); ng.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const nodeMat = new THREE.ShaderMaterial({
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uReveal: { value: 0 }, uIntensity: { value: 0 }, uColor: { value: new THREE.Color(0x6fa8ff) }, uHot: { value: new THREE.Color(0xfff0d8) } },
-    vertexShader: 'uniform float uTime,uReveal,uIntensity; varying float vB; void main(){ float x=position.x; float span=6.6; float w=mod(uTime*0.9,span)-span*0.5; float w2=mod(uTime*0.9+3.3,span)-span*0.5; float dx=(x-w)*2.0; float dy=(x-w2)*2.0; float act=exp(-dx*dx)+exp(-dy*dy); vB=(0.22+1.25*act*uIntensity)*uReveal; vec4 mv=modelViewMatrix*vec4(position,1.0); gl_PointSize=(1.7+7.5*act*uIntensity)*uReveal*(250.0/-mv.z); gl_Position=projectionMatrix*mv; }',
-    fragmentShader: 'uniform vec3 uColor,uHot; varying float vB; void main(){ vec2 c=gl_PointCoord-0.5; float d=length(c); if(d>0.5)discard; float a=smoothstep(0.5,0.0,d); vec3 col=mix(uColor,uHot,clamp(vB-0.3,0.0,1.0)); gl_FragColor=vec4(col, a*clamp(vB,0.0,1.0)); }'
-  });
-  root.add(new THREE.Points(ng, nodeMat));
-  const segs = [];
-  for (let li = 0; li < lx.length - 1; li++) {
-    const A = layerNodes[li], B = layerNodes[li + 1];
-    for (let j = 0; j < B.length; j++) { for (let c = 0; c < 2; c++) { const ai = A[(Math.random() * A.length) | 0], bi = B[j]; segs.push(pos[ai * 3], pos[ai * 3 + 1], pos[ai * 3 + 2], pos[bi * 3], pos[bi * 3 + 1], pos[bi * 3 + 2]); } }
-  }
-  const lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(segs), 3));
-  const linkMat = new THREE.LineBasicMaterial({ color: 0x3f6fb5, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
-  root.add(new THREE.LineSegments(lg, linkMat));
-  const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x9fc4ff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); core.scale.set(4.6, 4.6, 1); root.add(core);
-  const inGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x88a8ff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); inGlow.position.x = -2.6; inGlow.scale.set(1.8, 2.4, 1); root.add(inGlow);
-  const outGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xffe2b0, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); outGlow.position.x = 2.6; outGlow.scale.set(1.6, 1.6, 1); root.add(outGlow);
-  let t = 0, spin = 0;
+/* ---------------- TECHNOLOGY: a real NASA/NOAA GOES weather satellite observes the real Earth, turning observation into a secured, delivered forecast ---------------- */
+function buildOrbit(ctx) {
+  const { scene, root, camera, host, renderer } = ctx;
+  try { const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; } catch (e) {}
+  const sun = new THREE.DirectionalLight(0xfff4e6, 4.4); sun.position.set(5, 4, 4); scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xbcd4ff, 1.4); fill.position.set(-5, -1, 3); scene.add(fill);
+  scene.add(new THREE.AmbientLight(0x4a566c, 1.0));
+  scene.add(new THREE.HemisphereLight(0x9ab8ff, 0x0a0f18, 0.8));
+
+  // real Earth (sun-lit; scan band sweeps; forecast layer cross-fades). No atmosphere halo.
+  const RE = 3.8, earthC = new THREE.Vector3(0, -5.6, 0);
+  const earthGrp = new THREE.Group(); earthGrp.position.copy(earthC); root.add(earthGrp);
+  const TL = new THREE.TextureLoader(), TB = 'assets/textures/earth/layers/';
+  const mk = f => { const t = TL.load(TB + f); try { t.colorSpace = THREE.SRGBColorSpace; } catch (e) {} return t; };
+  const euni = { baseTex: { value: mk('blue_marble.jpg') }, layA: { value: mk('sst.png') }, ov: { value: 0 }, scanV: { value: -1 }, scanOn: { value: 0 }, ambient: { value: 0.5 }, sunDir: { value: new THREE.Vector3(0.55, 0.5, 0.6).normalize() }, scanCol: { value: new THREE.Color(0x9fc4ff) } };
+  const earth = new THREE.Mesh(new THREE.SphereGeometry(RE, 96, 64), new THREE.ShaderMaterial({
+    uniforms: euni,
+    vertexShader: 'varying vec2 vUv; varying vec3 vN; void main(){ vUv=uv; vN=normalize(mat3(modelMatrix)*normal); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
+    fragmentShader: 'uniform sampler2D baseTex,layA; uniform float ov,scanV,scanOn,ambient; uniform vec3 sunDir,scanCol; varying vec2 vUv; varying vec3 vN; void main(){ vec3 b=texture2D(baseTex,vUv).rgb; vec4 a=texture2D(layA,vUv); float band=smoothstep(0.05,0.0,abs(vUv.y-scanV))*scanOn; float reveal=clamp(max(band,ov*a.a),0.0,1.0); vec3 surf=mix(b,a.rgb,reveal*0.85); surf+=band*scanCol*0.7; float lt=ambient+(1.0-ambient)*smoothstep(-0.35,0.7,dot(normalize(vN),sunDir)); gl_FragColor=vec4(surf*lt,1.0); }'
+  }));
+  earthGrp.add(earth);
+
+  const obsPt = new THREE.Vector3(0, RE * 0.92, RE * 0.38).normalize().multiplyScalar(RE).add(earthC);
+  const gndPt = new THREE.Vector3(RE * 0.5, RE * 0.6, RE * 0.62).normalize().multiplyScalar(RE).add(earthC);
+
+  // the satellite (real GOES glTF) rises into station and holds
+  const SAT = new THREE.Vector3(1.2, 0.85, 1.2), CORE = new THREE.Vector3(1.0, 0.35, 1.05);
+  const holder = new THREE.Group(); holder.position.copy(SAT); root.add(holder);
+  const draco = new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
+  const loader = new GLTFLoader(); loader.setDRACOLoader(draco);
+  loader.load('assets/models/goes.glb', (g) => {
+    const m = g.scene; const box = new THREE.Box3().setFromObject(m); const c = box.getCenter(new THREE.Vector3()), sz = box.getSize(new THREE.Vector3());
+    m.position.sub(c); const maxDim = Math.max(sz.x, sz.y, sz.z); m.scale.setScalar(3.7 / maxDim);
+    m.traverse(o => { const mm = o.material; if (mm) { if ('envMapIntensity' in mm) mm.envMapIntensity = 1.9; if (mm.metalness > 0.9) mm.metalness = 0.6; if (mm.roughness !== undefined && mm.roughness < 0.25) mm.roughness = 0.35; mm.needsUpdate = true; } });
+    holder.add(m);
+  }, undefined, (e) => console.warn('[goes] load failed', e));
+  const satGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x9fc4ff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); satGlow.scale.set(3.4, 3.4, 1); root.add(satGlow);
+
+  // observation sightline (satellite -> Earth)
+  const sightMat = new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+  root.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([SAT, obsPt]), sightMat));
+
+  // rising data stream (Earth surface -> core)
+  const NS = 150, sp = new Float32Array(NS * 3), sjx = new Float32Array(NS), sjz = new Float32Array(NS), sphase = new Float32Array(NS);
+  for (let i = 0; i < NS; i++) { sphase[i] = Math.random(); sjx[i] = (Math.random() - 0.5) * 0.24; sjz[i] = (Math.random() - 0.5) * 0.24; }
+  const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+  const streamMat = new THREE.PointsMaterial({ color: 0x9fc4ff, size: 0.06, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
+  root.add(new THREE.Points(sg, streamMat));
+
+  // AI core ignites between satellite and Earth
+  const C_COOL = new THREE.Color(0x6fa8ff), C_WARM = new THREE.Color(0xd6e6ff);
+  const coreGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0x9fc4ff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); coreGlow.position.copy(CORE); root.add(coreGlow);
+  const coreHot = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xfff0e0, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); coreHot.position.copy(CORE); coreHot.scale.set(0.8, 0.8, 1); root.add(coreHot);
+
+  // zero-trust shell closes inward (calm enclosure, not alarm)
+  const ico = new THREE.IcosahedronGeometry(2.5, 1);
+  const shellLines = new THREE.LineSegments(new THREE.WireframeGeometry(ico), new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const shellFaces = new THREE.Mesh(ico, new THREE.MeshBasicMaterial({ color: 0x2a4a86, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const shell = new THREE.Group(); shell.position.set(1.1, 0.8, 1.0); shell.add(shellFaces); shell.add(shellLines); root.add(shell);
+
+  // decision beam + ground station (deliver to AWIPS)
+  const beamMat = new THREE.LineBasicMaterial({ color: 0x8fe6d4, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+  root.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([SAT, gndPt]), beamMat));
+  const gnd = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: 0xbff7e6, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); gnd.position.copy(gndPt); gnd.scale.set(0.95, 0.95, 1); root.add(gnd);
+
+  const cap = (typeof document !== 'undefined') ? document.getElementById('pxLayer') : null; const capV = cap ? cap.querySelector('.px-readout-v') : null;
+  const phases = [[0, 'Standing up'], [0.16, 'Observing Earth'], [0.36, 'Streaming data'], [0.54, 'Forecasting'], [0.74, 'Securing'], [0.9, 'Delivered']]; let lastPh = -1;
+  let t = 0, spin = 0, espin = 0;
   return function (p, dt, mx, my) {
-    t += dt; spin += dt;
-    root.position.x = 1.7 * offset(host);
-    root.rotation.y = 0.5 + spin * 0.06 + mx * 0.25; root.rotation.x = 0.12 - my * 0.2;
-    camera.position.set(mx * 0.4, 0.2 - my * 0.3, lerp(9.6, 7.4, p)); camera.lookAt(root.position.x * 0.62, 0, 0);
-    const rev = ramp(p, 0.04, 0.5), intens = ramp(p, 0.15, 0.66);
-    nodeMat.uniforms.uTime.value = t; nodeMat.uniforms.uReveal.value = rev; nodeMat.uniforms.uIntensity.value = intens;
-    linkMat.opacity = 0.16 * rev;
-    const pulse = 0.5 + 0.5 * Math.sin(t * 2.2);
-    core.material.opacity = (0.22 + 0.34 * pulse) * intens;
-    inGlow.material.opacity = (0.4 + 0.3 * Math.sin(t * 3.0)) * rev;
-    outGlow.material.opacity = (0.3 + 0.5 * Math.max(0.0, Math.sin(t * 1.8))) * intens;
+    t += dt; espin += dt * 0.05; root.position.x = 2.6 * offset(host); earthGrp.rotation.y = espin;
+
+    const rise = REDUCE ? 1 : easeOut(ramp(p, 0.0, 0.13));
+    holder.position.set(SAT.x, lerp(SAT.y - 1.5, SAT.y, rise), SAT.z);
+    holder.scale.setScalar(lerp(0.64, 1.0, rise));
+    spin += dt * lerp(0.16, 0.015, easeIO(clamp01(p))); holder.rotation.set(0.16, spin, 0.04);
+    satGlow.position.copy(holder.position); satGlow.material.opacity = 0.3 * rise;
+
+    sightMat.opacity = 0.5 * ramp(p, 0.16, 0.30);
+    euni.scanV.value = -0.1 + 1.2 * ramp(p, 0.16, 0.40); euni.scanOn.value = Math.sin(clamp01(ramp(p, 0.14, 0.44)) * Math.PI);
+
+    streamMat.opacity = 0.9 * ramp(p, 0.36, 0.56);
+    for (let i = 0; i < NS; i++) { const e = easeIO((sphase[i] + t * 0.16) % 1); sp[i*3] = lerp(obsPt.x, CORE.x, e) + sjx[i] * (1 - e); sp[i*3+1] = lerp(obsPt.y, CORE.y, e); sp[i*3+2] = lerp(obsPt.z, CORE.z, e) + sjz[i] * (1 - e); }
+    sg.attributes.position.needsUpdate = true;
+
+    const ign = ramp(p, 0.54, 0.74); euni.ov.value = ign;
+    const pulse = 0.72 + 0.28 * Math.sin(t * 2.2);
+    coreGlow.material.color.lerpColors(C_COOL, C_WARM, ign);
+    coreGlow.material.opacity = 0.72 * ign * pulse; coreGlow.scale.setScalar(lerp(1.3, 2.3, ign) * (0.92 + 0.12 * pulse));
+    coreHot.material.opacity = 0.6 * ign * pulse;
+
+    const sec = easeIO(ramp(p, 0.74, 0.9));
+    shell.scale.setScalar(lerp(1.5, 1.0, sec) * (1 + 0.02 * Math.sin(t * 1.1) * sec)); shellLines.material.opacity = 1.0 * sec; shellFaces.material.opacity = 0.12 * sec;
+
+    const del = ramp(p, 0.9, 1.0); beamMat.opacity = 0.85 * del; gnd.material.opacity = (0.5 + 0.5 * Math.sin(t * 3.0)) * del;
+
+    const zoom = easeIO(clamp01(ramp(p, 0.06, 0.6))), pull = ramp(p, 0.82, 1.0);
+    camera.position.set(mx * 0.45, 0.35 - my * 0.4, lerp(10.8, 9.8, zoom) + 1.3 * pull);
+    camera.lookAt(root.position.x * 0.5, -0.1, 0);
+
+    let ph = 0; for (let i = 0; i < phases.length; i++) if (p >= phases[i][0]) ph = i; if (capV && ph !== lastPh) { capV.textContent = phases[ph][1]; lastPh = ph; }
   };
 }
 
@@ -232,7 +282,7 @@ function buildPulse(ctx) {
   };
 }
 
-const SCENES = { globe: buildGlobe, network: buildNetwork, assembly: buildAssembly, pulse: buildPulse };
+const SCENES = { globe: buildGlobe, orbit: buildOrbit, assembly: buildAssembly, pulse: buildPulse };
 
 function init(host) {
   const name = host.dataset.scene || 'globe';
